@@ -1,0 +1,554 @@
+{
+  "site": {
+    "name": "Sketchpad Arcade",
+    "owner": "Restless Faith Media LLC",
+    "url": "https://www.sketchpadarcade.com",
+    "headline": "Games drawn in a sketchbook",
+    "intro": "Free puzzle and arcade games that look like a kid drew them in pencil. No downloads, no sign-ups, and nothing you wouldn't want your kids to see.",
+    "description": "Free, family-friendly browser games drawn in a hand-sketched pencil style. Play on a phone, tablet or computer with no downloads and no sign-ups.",
+    "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
+    "policy_date": "October 8, 2026",
+    "picks": [
+      "sea-merge",
+      "seaside-sprint",
+      "lighthouse-drop",
+      "tiki-putt",
+      "plank-plunk",
+      "letter-lagoon",
+      "crab-hop",
+      "splash-slice"
+    ],
+    "also": {
+      "text": "Like these in full colour? The painted originals live at Beach Day Arcade.",
+      "url": "https://www.beachdayarcade.com",
+      "cta": "Beach Day Arcade"
+    }
+  },
+  "games": [
+    {
+      "slug": "sea-merge",
+      "name": "Sea Merge",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "tagline": "Drop sea friends in the tank and merge matching pairs, all the way up to a dolphin.",
+      "meta": "Play Sea Merge free online. Drop sand dollars, shells, crabs and more into a glass tank, merge matching pairs into bigger sea friends and try to make a dolphin. Works on phone and computer.",
+      "lead": "A relaxing merge puzzle in a sunny glass tank. Drop sea friends from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny sand dollar all the way to a dolphin, but don't let the tank overflow.",
+      "facts": [
+        "Puzzle",
+        "Drag and drop",
+        "Endless high-score play",
+        "Saves your best score"
+      ],
+      "how": [
+        "Move to aim, then let go to drop a sea friend into the tank.",
+        "When two of the same kind touch, they merge into the next sea friend and you score points.",
+        "Merges climb from Sand Dollar to Moon Snail, Scallop, Starfish, Crab, Clownfish, Pufferfish, Jellyfish, Octopus, Sea Turtle and Dolphin.",
+        "Two dolphins swim off together for a 100 point bonus.",
+        "The game ends when the stack stays above the dotted line at the top of the tank."
+      ],
+      "controls": [
+        "Drag or move your mouse to aim, then release or click to drop. On a keyboard, use the arrow keys and Space.",
+        "Pop removes one sea friend of your choice. You start with one and earn another every 500 points.",
+        "New game starts over, and the Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Keep small sea friends together and big ones along the bottom or sides.",
+        "Check the Next window before you drop so you can plan where the following piece will go.",
+        "A merge can bump into a matching neighbor and set off a combo, so line up chains when you can.",
+        "Save your Pop for a small piece stuck between two big ones."
+      ]
+    },
+    {
+      "slug": "2048-drop",
+      "name": "2048 DROP",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "title": "2048 DROP – Free Number Merge Game | Beach Day Arcade",
+      "tagline": "Drop numbers, merge matching balls and work your way to 2048.",
+      "meta": "Drop numbers, combine matching balls, and work your way toward 2048. How high can you merge before the container fills?",
+      "lead": "A number-merging physics puzzle in a sea-glass jar. Drop numbered balls, watch them roll and settle, and merge matching numbers into bigger ones: 2 and 2 make 4, 4 and 4 make 8, all the way up to 2048 and beyond. Keep the pile below the danger line to stay in the game.",
+      "facts": [
+        "Puzzle",
+        "Drag and drop",
+        "Endless: 2048 and beyond",
+        "Saves your best and daily scores"
+      ],
+      "how": [
+        "Move your mouse or drag your finger to slide the waiting ball left and right above the jar.",
+        "Click, or let go of the screen, to drop it. Gravity takes over, and the ball rolls and settles on the pile.",
+        "When two balls with the same number touch, they merge into one ball worth double. Merges can set off chain reactions.",
+        "Every merge scores the value of the new ball, and chain merges earn a bonus. Bigger merges are worth far more.",
+        "Keep the pile below the dashed red danger line. If a ball sits above it for about two and a half seconds, the game ends."
+      ],
+      "controls": [
+        "Computer: move the mouse to aim and click to drop. Arrow keys aim and Space drops.",
+        "Phone and tablet: drag to aim and lift your finger to drop.",
+        "NEXT shows the ball you'll drop next, plus a smaller preview of the one after it. The Sound button turns effects on or off."
+      ],
+      "tips_title": "Strategy tips",
+      "tips": [
+        "Keep your biggest numbers together in one corner so they can merge with each other as they grow.",
+        "Check NEXT before every drop and leave a spot for it beside a matching number.",
+        "Avoid stranding small balls between big ones. A lonely 2 at the bottom can block a whole column.",
+        "Keep open space in the middle of the jar so new balls have room to land and roll.",
+        "Chain merges score extra, so line up pairs that will set each other off.",
+        "A ball crossing the danger line for a moment is fine. Watch the countdown and clear the top before it runs out."
+      ],
+      "about": [
+        "2048 DROP is an original number-merging physics game made by Beach Day Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.",
+        "Reaching 2048 is a big moment, but it isn't the end. Skilled players can keep merging to 4096 and beyond. Your personal best, today's best and lifetime stats are saved on your device. No account needed."
+      ]
+    },
+    {
+      "slug": "octo-swing",
+      "name": "Octo Swing",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Grab pearls with a stretchy tentacle and swing a little octopus over the sea.",
+      "meta": "Play Octo Swing free online. Hold to grab glowing pearls with a stretchy tentacle, swing high and let go to fling a little octopus across the sea. Grab starfish, bounce on beach balls and see how far you can go. Works on phone and computer.",
+      "lead": "A one-button swinging game starring Ollie, a very bouncy octopus. Hold to grab the nearest pearl with a tentacle, swing down and up, then let go to fling forward. Catch the next pearl before you drop into the sea, collect starfish along the way and see how far you can swing.",
+      "facts": [
+        "Arcade",
+        "One button",
+        "Endless",
+        "Saves your best score"
+      ],
+      "how": [
+        "Press and hold to grab the nearest pearl with a tentacle. The dashed ring shows which pearl you'll grab.",
+        "Swing down and back up, then let go to fling forward through the air.",
+        "Hold again to catch the next pearl. If Ollie drops into the sea, the game is over.",
+        "Your score is the distance you swing plus 5 points for every starfish.",
+        "The farther you go, the farther apart the pearls get. Pink pearls bob up and down, and bubble pearls pop soon after you grab them."
+      ],
+      "controls": [
+        "Press and hold anywhere on the playfield to grab, and let go to fling. On a keyboard, hold Space or the Up arrow.",
+        "Bounce off the beach balls floating on the sea for a free boost.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Let go just after Ollie passes under the pearl and starts to rise. That gives the biggest fling.",
+        "Letting go too late sends you straight up. Letting go too early sends you down toward the water.",
+        "Starfish follow the swing paths, so a nice smooth swing usually scoops them up.",
+        "On a bubble pearl, swing once and let go fast before it pops."
+      ]
+    },
+    {
+      "slug": "bottle-words",
+      "name": "Bottle Words",
+      "genre": "Word",
+      "added": "2026-10-08",
+      "tagline": "Guess the secret word in the bottle in six tries, with colour clues after every guess.",
+      "meta": "Play Bottle Words free online. A secret word washes up in every bottle. Guess it using green and yellow letter clues, with Beginner, Intermediate and Advanced difficulty. Works on phone and computer.",
+      "lead": "A friendly word-guessing game on the beach. Every bottle that washes ashore hides a secret word. Type a guess and the letters light up to show which ones are right. Solve bottle after bottle as the words grow from 4 letters to 6, and see how many you can find before you run out of shells.",
+      "facts": [
+        "Word puzzle",
+        "Beginner, Intermediate and Advanced",
+        "Hints",
+        "Saves your best score"
+      ],
+      "how": [
+        "Pick Beginner, Intermediate or Advanced, then type a real word and press Enter.",
+        "After each guess the letters change colour. Green means the letter is in the right spot. Yellow means it's in the word but in a different spot. Grey means it isn't in the word.",
+        "Solve in fewer guesses for more points, and solve bottles in a row for a streak bonus.",
+        "Miss a word and you lose one of your 3 shells. Solve words in a row to win a shell back.",
+        "Beginner has 4 and 5-letter words, 7 tries and 2 hints. Intermediate grows from 4 to 6 letters with 6 tries and 1 hint. Advanced has 5 and 6-letter words, 5 tries and no hints."
+      ],
+      "controls": [
+        "Tap the letters on the on-screen keyboard, or type on your computer keyboard.",
+        "Enter checks your guess and the delete key removes a letter.",
+        "Hint shows you one letter of the secret word for half points. Beginner gets 2 hints per bottle, Intermediate 1, Advanced none."
+      ],
+      "tips": [
+        "Start with a word that uses lots of different common letters, like a word with A, E and S in it.",
+        "Grey keys on the keyboard are letters you can skip.",
+        "A yellow letter is in the word, so try it in a new spot on your next guess.",
+        "Save your hint for when you're down to your last couple of tries."
+      ]
+    },
+    {
+      "slug": "whirlpool-gulp",
+      "name": "Whirlpool Gulp",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Steer a hungry little whirlpool and gulp up the beach to grow.",
+      "meta": "Play Whirlpool Gulp free online. Steer a cute magic whirlpool around a busy beach, gulp down shells, buckets, umbrellas and even boats, and grow big enough to reach the next beach before time runs out. Works on phone and computer.",
+      "lead": "A swirly arcade game starring a very hungry little whirlpool. Glide around a busy beach and gulp down anything smaller than you. Start with shells and starfish, grow big enough for buckets and beach balls, then umbrellas, sandcastles, boats and beach huts. Fill the size meter before the clock runs out to reach the next, bigger beach.",
+      "facts": [
+        "Arcade",
+        "Endless levels",
+        "Grow bigger",
+        "Saves your best score"
+      ],
+      "how": [
+        "Steer your whirlpool around the beach.",
+        "Glide over things smaller than you to gulp them down. Every gulp makes you a little bigger.",
+        "Things that are too big get a red ring when you touch them. Come back when you've grown.",
+        "Fill the size meter before the timer runs out to clear the level. Time left over becomes bonus points.",
+        "Each new beach is bigger, with a bigger size goal."
+      ],
+      "controls": [
+        "On a phone or tablet, drag your finger and the whirlpool follows it.",
+        "With a mouse, move the pointer over the beach and the whirlpool swirls toward it.",
+        "On a keyboard, use the arrow keys or W, A, S and D.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Gulp lots of little things at the start. They add up fast.",
+        "Umbrella camps have towels, coolers, buckets and balls all close together. Swirl around them for a quick feast.",
+        "Big things are worth lots of points, so head for them as soon as they fit.",
+        "A banner tells you when a new kind of thing fits, so watch for it."
+      ]
+    },
+    {
+      "slug": "crab-hop",
+      "name": "Crab Hop",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Hop a little crab across busy boardwalks and splashy water.",
+      "meta": "Play Crab Hop free online. Help Crabby hop up the beach, step sideways or back to dodge traffic, dodge bikes and beach carts on the boardwalk, ride surfboards, rafts and tubes across the water and stay ahead of the tide. Grab shells for bonus points. Works on phone and computer.",
+      "lead": "An endless hopping game starring Crabby, a small crab with big plans. Hop forward one step at a time, dodge the bikes and beach carts on the boardwalks, and ride surfboards, rafts and tubes across the water. Keep moving, because the tide is coming in behind you. Grab shells for bonus points and see how far you can go.",
+      "facts": [
+        "Arcade",
+        "Endless",
+        "Hop any direction",
+        "Saves your best score"
+      ],
+      "how": [
+        "Hop forward, left, right or back with the arrow buttons under the beach. Step sideways or back to dodge traffic and get out of trouble.",
+        "Bikes and beach carts zoom along the boardwalks. Wait for a gap, then hop.",
+        "Cross the water by hopping onto surfboards, rafts and tubes. Hopping into the water ends the game.",
+        "Floats drift along, so hop off before Crabby rides off the edge.",
+        "The tide creeps in from behind. If it catches up, the game is over.",
+        "You score 1 point for every row forward and 5 points for every shell."
+      ],
+      "controls": [
+        "Tap the arrow buttons under the beach to hop forward, left, right or back.",
+        "You can also tap the beach to hop forward, or swipe in any direction.",
+        "On a keyboard, use the arrow keys or W, A, S and D. Space also hops forward.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "You can hop sideways on a boardwalk or a float to line up a safer path.",
+        "Long rafts are the easiest to land on. Little tubes need good timing.",
+        "Umbrellas, sandcastles, rocks and palm trees block the way, so plan around them.",
+        "Don't wait too long. A few quick hops keep you well ahead of the tide."
+      ]
+    },
+    {
+      "slug": "tide-gates",
+      "name": "Tide Gates",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "tagline": "Slide jelly blocks out through the gates that match their colour.",
+      "meta": "Play Tide Gates free online. Drag cute jelly blocks around a boardwalk board and slide each one out through the gate of the same colour. Clear every block before time runs out. New boards every level. Works on phone and computer.",
+      "lead": "A sliding block puzzle on a sunny boardwalk. The board is packed with cute jelly blocks, and the edges have coloured gates. Drag each block around the others and slide it into the gate that matches its colour to send it whooshing out to sea. Clear the whole board before time runs out. Every level is a brand new board, and they get bigger as you go.",
+      "facts": [
+        "Puzzle",
+        "Endless levels",
+        "Always solvable",
+        "Saves your best score"
+      ],
+      "how": [
+        "Drag a block to slide it. Blocks move around each other but can't overlap.",
+        "Slide a block into a gate of the same colour and it leaves the board.",
+        "A block only fits through a gate that is at least as wide as the block.",
+        "Clear every block before the timer runs out. Time left over becomes bonus points.",
+        "Run out of time and you lose a shell and get a new board. Lose all 3 shells and the game is over."
+      ],
+      "controls": [
+        "Press on a block and drag. It slides straight toward your finger, one square at a time, and stops when something is in the way.",
+        "Works with a finger on a phone or tablet and with a mouse on a computer.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Look for blocks that already have a clear path to their gate and send them out first.",
+        "Clearing one block often opens up room for the ones behind it.",
+        "Long blocks need wide gates, so check the gate sizes before you start sliding.",
+        "Every board can be solved, so if you feel stuck, try moving a different block out of the way."
+      ]
+    },
+    {
+      "slug": "shell-stacks",
+      "name": "Shell Stacks",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "tagline": "Stack shiny sea-glass shells by colour and pop them in tens.",
+      "meta": "Play Shell Stacks free online. Drag stacks of shiny sea-glass shells onto a sunny hexagon sandbar. Stacks with the same top colour hop together, and 10 of a colour pop for points. Chain pops for combos. New colours every level. Works on phone and computer.",
+      "lead": "A colour sorting puzzle on a little hexagon sandbar. Three stacks of shiny sea-glass shells wait in the driftwood tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one shell at a time. Get 10 or more of one colour on top and they pop in a splash of points. Pop enough shells to finish the level, but don't let the sandbar fill up. Every level adds a new colour, and later ones have rocks in the way.",
+      "facts": [
+        "Puzzle",
+        "Endless levels",
+        "Combo chains",
+        "Saves your best score"
+      ],
+      "how": [
+        "Drag a stack from the tray onto any empty spot on the sandbar.",
+        "Stacks next to each other with the same top colour hop together onto one stack.",
+        "When 10 or more shells of one colour sit on top of a stack, they pop for points.",
+        "One pop can set off another. Chains score combo points.",
+        "Pop enough shells to finish the level. If the sandbar fills up, the game is over."
+      ],
+      "controls": [
+        "Press on a stack in the tray and drag it onto the sandbar. You can also tap a stack and then tap an empty spot.",
+        "Works with a finger on a phone or tablet and with a mouse on a computer.",
+        "On a keyboard, press 1, 2 or 3 to pick a stack, move with the arrow keys and press Enter to drop it. W uses the Wave.",
+        "The Wave button washes one stack off the sandbar, once per level.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Keep each colour in its own corner of the sandbar so stacks can grow tall.",
+        "Look under the top colour. When it hops away, the colour below might match a neighbour and start a chain.",
+        "Save the Wave for when the sandbar is nearly full.",
+        "Don't fill every spot. An empty spot or two gives you room to move."
+      ]
+    },
+    {
+      "slug": "splash-slice",
+      "name": "Splash Slice",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Swipe to slice the tropical fruit that splashes up out of the waves.",
+      "meta": "Play Splash Slice free online. Juicy watermelons, pineapples, mangoes and more splash up out of the sea. Swipe to slice them, chain combos and dodge the spiky sea urchins. Works on phone and computer.",
+      "lead": "A juicy slicing game on a sunny beach. Watermelons, pineapples, coconuts, mangoes, kiwis and more come splashing up out of the waves. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the spiky sea urchins. The fruit comes faster and in bigger bunches the longer you last.",
+      "facts": [
+        "Arcade",
+        "Endless play",
+        "Combo bonuses",
+        "Saves your best score"
+      ],
+      "how": [
+        "Fruit splashes up out of the sea at the bottom of the beach.",
+        "Swipe across a fruit to slice it and score 10 points.",
+        "Slice two or more fruit in one swipe for a combo bonus.",
+        "Swiping a spiky sea urchin costs a shell, and so does letting a fruit fall back into the sea.",
+        "Lose all 3 shells and the game is over. Every 500 points gives you a lost shell back."
+      ],
+      "controls": [
+        "Press and drag your finger across the screen to slice. With a mouse, hold the button down and drag.",
+        "Works with a finger on a phone or tablet and with a mouse on a computer.",
+        "Press Enter or Space to start a new game.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Wait for the fruit to rise to the top of its jump, where it moves slowest, then slice.",
+        "Long sweeping swipes through a bunch of fruit score big combos.",
+        "Swipe around the sea urchins, not through them. Lift your finger if one is in the way.",
+        "Golden starfruit is worth 50 points, and a beach ball slows everything down for a few seconds."
+      ]
+    },
+    {
+      "slug": "shore-search",
+      "name": "Shore Search",
+      "genre": "Word",
+      "added": "2026-10-08",
+      "tagline": "Find the hidden beach words in a board of sandy letter tiles.",
+      "meta": "Play Shore Search free online. A beach word search with Beginner, Intermediate and Advanced levels and a new theme every round, from seashells and sandcastles to boardwalk snacks. Drag across the sandy letter tiles to find every hidden word before time runs out. Works on phone and computer.",
+      "lead": "A sunny word search on the shore. Every level has a beach theme, like Seashells, Boats or Island Fruits, and a list of words hidden in a board of sandy letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.",
+      "facts": [
+        "Word",
+        "Beginner, Intermediate and Advanced",
+        "Over 25 beach themes",
+        "Saves your best score"
+      ],
+      "how": [
+        "Pick Beginner, Intermediate or Advanced. Each one keeps its own best score.",
+        "Each level has a beach theme and a list of words to find.",
+        "Drag in a straight line from the first letter of a word to its last letter.",
+        "Beginner words only go across and down, with small boards and plenty of time. Intermediate adds slanted words, then backwards ones. Advanced has big boards with words hiding in every direction from the start, a tighter clock and double points.",
+        "Longer words score more, quick finds earn a bonus, and time left over is added at the end of the level.",
+        "Run out of time and you lose a shell and get a fresh puzzle. Lose all 3 shells and the game is over."
+      ],
+      "controls": [
+        "Press on the first letter of a word and drag to the last letter, then let go.",
+        "Works with a finger on a phone or tablet and with a mouse on a computer.",
+        "Tap Hint (or press H) to flash the first letter of a word you haven't found.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Look for unusual letters like K, Y, W or Z first. They are easy to spot and often start a word.",
+        "Find the longest words early, while the board is still full of letters to check.",
+        "Find words quickly one after another for bonus points.",
+        "You get one extra hint for every level you clear, so don't be afraid to use them."
+      ]
+    },
+    {
+      "slug": "tiki-putt",
+      "name": "Tiki Putt",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Pull back, aim and putt your way round a sunny tiki beach mini golf course.",
+      "meta": "Play Tiki Putt free online. A beach mini golf game seen from above. Pull back to aim, let go to putt, and sink the ball past sand traps, water, the tide, bouncy beach balls, a scuttling crab and a spinning umbrella. 36 holes, then an endless Back Nine Tour. Works on phone and computer.",
+      "lead": "A mini golf game on a tropical beach, seen from above. Each hole is a patch of green turf on the sand, with driftwood walls, rocks and tiki torches all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for sand traps, water, the tide, bouncy beach balls, a busy crab, a spinning beach umbrella and a sliding surfboard gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.",
+      "facts": [
+        "Arcade",
+        "36 holes plus endless tour",
+        "Every hole has a par",
+        "Saves your best score"
+      ],
+      "how": [
+        "Press anywhere on the course and pull back. The dotted line shows where the ball will go.",
+        "Pull further for a harder putt, then let go to hit the ball.",
+        "Sink the ball in the cup. Beat the par for big points, and a hole in one is worth 1000.",
+        "Sand slows the ball, the tide and slopes push it, beach balls bounce it and water costs a stroke.",
+        "Finish a hole over par and you lose a shell. Lose all 3 shells and the game is over."
+      ],
+      "controls": [
+        "Press anywhere, pull back to aim and set the power, then let go to putt.",
+        "Works with a finger on a phone or tablet and with a mouse on a computer.",
+        "On a keyboard, the left and right arrows aim, up and down set the power and Space putts.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "A soft putt that stops near the cup is often better than a big whack. A fast ball can roll right over the hole.",
+        "Use the walls! A bank shot off the driftwood is often the only way round a corner.",
+        "Wait for the crab and the spinning umbrella to move out of the way before you putt.",
+        "A hole in one wins back a lost shell, so it is worth going for it on the short holes."
+      ]
+    },
+    {
+      "slug": "letter-lagoon",
+      "name": "Letter Lagoon",
+      "genre": "Word",
+      "added": "2026-10-08",
+      "tagline": "Link words across a sunny lagoon and turn all twelve letters gold. Three difficulties.",
+      "meta": "Play Letter Lagoon free online. Tap letters around a sunny lagoon to make linked words, use all twelve letters in as few words as you can, and beat par. Beginner, Intermediate and Advanced. Works on phone and computer.",
+      "lead": "Twelve letters bob on buoys around a turquoise lagoon, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 lagoons, from breezy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest lagoons with 4-letter-minimum words and double points.",
+      "facts": [
+        "Word",
+        "72 puzzles",
+        "Beginner, Intermediate, Advanced",
+        "Phone, tablet and computer",
+        "Saves your best score and progress"
+      ],
+      "how": [
+        "Tap letters around the lagoon to spell a word. Each next letter must come from a different side.",
+        "Press Enter to play the word. Your next word starts with its last letter.",
+        "Letters can be used again. Used letters turn gold.",
+        "Turn all 12 letters gold to solve the lagoon. Try to do it in the par number of words.",
+        "Beginner: easy letters, 7 words per lagoon and 4 hints. Intermediate: all 72 lagoons, 6 words, points ×1.5. Advanced: tricky letters, 4+ letter words only, 5 words, points ×2.",
+        "You have 3 shell lives. Running out of words or skipping costs a shell.",
+        "Each difficulty saves its own progress and best score. Change it from the start screen, the ? card or the game-over card."
+      ],
+      "controls": [
+        "Computer: click or drag across letters, or type them on the keyboard. Enter plays the word and Backspace deletes a letter.",
+        "Phone or tablet: tap letters or slide your finger from letter to letter, then tap Enter.",
+        "Hint shows the next letter of a good solution. Restart clears your words for this lagoon.",
+        "The sound button turns the sound effects and waves on or off."
+      ],
+      "tips": [
+        "Long words that use letters from all four sides get you there fastest.",
+        "Think about the last letter: a word ending in a common letter like S, E or T gives you more choices next.",
+        "Deleting the first letter of a word takes back your previous word, so you can try another path.",
+        "Save hints for the hard lagoons. You earn a new hint shell every three puzzles you solve.",
+        "Under par pays the most: each word you save is worth 150 bonus points."
+      ]
+    },
+    {
+      "slug": "seaside-sprint",
+      "name": "Seaside Sprint",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Race a twisting boardwalk over ponds, rivers, marsh and woods. Swipe to turn, jump and slide.",
+      "meta": "Play Seaside Sprint free online, a fast endless runner. Pick Francis, Clare, George, Joan or one of four more kids and race a boardwalk that turns sharp corners over ponds, rivers, marshes and through the woods. Swipe to turn, jump gaps, slide under branches and grab gold rings. Works on phone and computer.",
+      "lead": "A fast endless runner with sharp corners. Pick your runner from eight beach kids, then race a boardwalk that twists left and right through five places: the beach, a lily-pad pond, a river, a reedy marsh and the woods. Swipe the way the arrow points to take each corner, jump missing planks and logs, slide under branches and nets, and grab gold rings for points. Catch a hang glider to fly, a magnet to pull rings in, a bubble that saves you once, or a rocket board to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Rings you collect add up between runs and unlock new runners.",
+      "facts": [
+        "Arcade",
+        "Endless running with corners",
+        "8 runners to unlock",
+        "Waves with score multipliers",
+        "Saves your best score"
+      ],
+      "how": [
+        "Your runner races down the boardwalk on their own and gets faster the longer you last.",
+        "The boardwalk turns 90 degrees left and right. An arrow sign and a rail mark each corner: swipe that way just before you reach it. Miss it and you run into the rail.",
+        "Change lanes to get around towers, crab traps, carts and fallen trees.",
+        "Jump over low things like logs, sandcastles and ducks, and over gaps where planks are missing. Slide under branches, towel lines and nets.",
+        "Grab gold rings for 10 points each. You also score for every meter you run and a bonus for every corner.",
+        "Bump into something head on and the run is over. Bump the side of something and you stumble, but a second stumble soon after ends the run.",
+        "Every 500 meters is a new wave: faster, with a bigger score multiplier. Shells add up between runs: Clare unlocks at 150, George at 400, Joan at 800, then John, Catherine, Joseph and Thérèse."
+      ],
+      "controls": [
+        "Computer: use the arrow keys or A and D to change lanes and turn corners, Up, W or Space to jump, and Down or S to slide. You can also drag with the mouse.",
+        "Phone or tablet: swipe left or right to change lanes, swipe up to jump and swipe down to slide.",
+        "Press P or Esc, or tap the pause button, to take a break.",
+        "The sound button turns sound on or off."
+      ],
+      "tips": [
+        "Look ahead, not at Pip. Big things in the distance give you lots of time to pick a lane.",
+        "Swipe down while you're in the air to drop fast, then slide straight under the next towel line.",
+        "Wait until you're past something before you switch lanes, or Pip will bump its side.",
+        "A kite lets you fly over everything and grab a line of shells in the sky.",
+        "Magnet starfish pull shells to you, and a bubble saves you from one bump."
+      ]
+    },
+    {
+      "slug": "lighthouse-drop",
+      "name": "Lighthouse Drop",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Spin a striped lighthouse and drop a bouncy beach ball down to the pool.",
+      "meta": "Play Lighthouse Drop free online. Spin the lighthouse to line up gaps, bounce a beach ball down disc by disc, dodge sea urchins and splash into the pool. Works on phone and computer.",
+      "lead": "A bouncy beach ball sits on top of a tall red and white lighthouse, and the only way down is through the gaps in the discs around it. Drag to spin the tower, drop through disc after disc, and steer clear of the prickly sea urchins and sliding jellyfish. Fall through three in a row and your ball glows with a rainbow that smashes right through the next disc.",
+      "facts": [
+        "Arcade",
+        "Endless levels",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "The beach ball bounces up and down on its own.",
+        "Drag left or right to spin the lighthouse and turn a gap under the ball.",
+        "Drop through each disc to score. More discs in a row score more.",
+        "Don't land on the purple sea urchins or the sliding pink jellyfish.",
+        "Fall through three discs without bouncing to glow, then smash the next disc to bits.",
+        "Splash into the pool at the bottom to clear the level and climb a taller lighthouse."
+      ],
+      "controls": [
+        "Computer: drag with the mouse, or hold the arrow keys or A and D to spin the lighthouse. Press Esc to pause.",
+        "Phone or tablet: drag left and right anywhere on the lighthouse.",
+        "The sound button turns the boings, splashes and waves on or off."
+      ],
+      "tips": [
+        "Start turning while the ball is still in the air so the gap is ready when it lands.",
+        "Little nudges work better than big swipes. The tower keeps spinning a bit after you let go.",
+        "Chain drops together for big points and a rainbow smash that even breaks urchins.",
+        "Watch the jellyfish slide before you land near them.",
+        "If you pop, Retry starts the same level again with the score you had when it began."
+      ]
+    },
+    {
+      "slug": "plank-plunk",
+      "name": "Plank Plunk",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "tagline": "Pull shell pins out of driftwood planks and sort them into sand pails.",
+      "meta": "Play Plank Plunk free online. Tap colorful shell pins out of stacked driftwood planks, fill sand pails by color and plunk every plank into the sea. Works on phone and computer.",
+      "lead": "A sunny pin-pulling puzzle on the beach. Driftwood planks are stacked on the sand and held down by bright shell pins. Tap a pin that no plank is lying on and it twists out and flies into the pail of its color. Pins with no pail wait in the little tide pool, so plan ahead before it fills up. Pull the last pin from a plank and it tumbles into the sea with a splash.",
+      "facts": [
+        "Puzzle",
+        "Endless levels",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap a shell pin that no plank is lying on. Pins under a plank look darker and can't be pulled yet.",
+        "The pin flies into a sand pail of the same color. Three pins fill a pail, and the next pail drops in.",
+        "If no pail wants that color, the pin waits in the tide pool. A new pail scoops up its color from there.",
+        "A plank with one pin left swings down, and it can cover other pins. Pull its last pin and it plunks into the sea.",
+        "Clear every plank to finish the level. If the tide pool is full and no pin fits a pail, the game is over."
+      ],
+      "controls": [
+        "Phone or tablet: tap a pin to pull it.",
+        "Computer: click a pin. On a keyboard, the arrow keys pick a free pin, Enter or Space pulls it, and + adds a slot.",
+        "The +1 slot button adds a sixth spot to the tide pool, once per level. Restart level tries the level again.",
+        "The sound button turns sound on or off."
+      ],
+      "tips": [
+        "Pull pins that match a waiting pail first. They don't use up tide pool space.",
+        "Check the Next sign at the top to see which pail colors are coming.",
+        "Look before you pull a plank's second-to-last pin. It will swing down and may cover pins below it.",
+        "Save +1 slot for when the tide pool is almost full."
+      ]
+    }
+  ]
+}

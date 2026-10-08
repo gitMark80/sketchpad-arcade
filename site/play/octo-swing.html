@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="robots" content="noindex">
+<title>Octo Swing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Octo Sketch: Octo Swing redrawn as a 10-year-old's pencil sketchbook. Paper sky and sea in graphite, wobbly borders;
+   starfish are yellow pencil (the thing to grab), bobbing pearls pink and popping bubbles blue so they read at speed. */
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.app{height:100%;max-width:520px;margin:0 auto;padding-inline:16px;padding-block:10px 14px;display:flex;flex-direction:column;gap:8px}
+.top{display:flex;align-items:center;gap:10px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);line-height:1;margin:0;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:var(--ink);text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center}
+.iconbtn{appearance:none;background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 1rem var(--body);white-space:nowrap;
+  border-radius:var(--wob);padding:8px 12px;box-shadow:2px 2px 0 var(--pencil);display:inline-flex;align-items:center;gap:6px;flex:none}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:none}
+.hud{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.stars{justify-self:start;display:flex;align-items:center;gap:6px;background:var(--yellow-wash);border:2px solid var(--yellow);color:var(--ink);font:400 1.15rem/1 var(--display);padding:4px 12px 4px 5px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);font-variant-numeric:tabular-nums}
+.stars svg{width:24px;height:24px}
+.scorebox{text-align:center}
+.score{position:relative;min-width:96px;padding:2px 18px;border:2px solid var(--ink);border-radius:var(--wob2);font:400 2rem/1.1 var(--display);color:var(--ink);background:var(--paper);box-shadow:3px 3px 0 var(--pencil);font-variant-numeric:tabular-nums}
+.dist{font:400 1rem/1 var(--display);color:var(--ink);margin-top:5px;font-variant-numeric:tabular-nums}
+.bestbox{justify-self:end;display:flex;flex-direction:column;align-items:center;background:var(--paper);border:2px solid var(--ink);color:var(--ink);padding:3px 14px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);min-width:70px}
+.bestbox small{font:400 .8rem/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bestbox b{font:400 1.25rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.field{flex:1;min-height:0;position:relative;border-radius:var(--wob);overflow:hidden;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--pencil);background:var(--paper)}
+#cv{display:block;width:100%;height:100%;touch-action:none;cursor:pointer}
+.banner{position:absolute;left:50%;top:18%;transform:translate(-50%,-50%) scale(.8) rotate(-2deg);font:400 2rem/1.05 var(--display);color:var(--ink);text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);
+  opacity:0;transition:opacity .2s,transform .25s;pointer-events:none;white-space:nowrap;text-align:center}
+.banner.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+.banner small{display:block;font:400 1.1rem var(--body);margin-top:4px;color:var(--pencil)}
+.cover{position:absolute;inset:0;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.55);overflow:auto;z-index:3}
+.card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:20px 18px 18px;width:100%;max-width:360px;text-align:center;box-shadow:4px 4px 0 var(--pencil);animation:rise .35s cubic-bezier(.2,1.4,.4,1)}
+.card>*{position:relative}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font:400 1.8rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
+.card p{margin:8px 0 0;color:var(--pencil);line-height:1.35;font-size:1.05rem}
+#mini{width:110px;height:110px;display:block;margin:0 auto 2px}
+.rules{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;line-height:1.25;color:var(--ink)}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
+.rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem/1 var(--display)}
+.rules strong{font-weight:400;color:var(--purple);text-decoration:underline wavy var(--purple)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 0}
+.stats div{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:6px 4px}
+.stats b{display:block;font:400 1.3rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.stats span{font-size:.85rem;color:var(--muted)}
+.big{position:relative;appearance:none;border:2px solid var(--ink);width:100%;margin-top:16px;border-radius:var(--wob2);padding:10px 18px;font:400 2rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);
+  background:var(--yellow-wash);box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
+.big:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.newbest{display:inline-block;background:var(--yellow-wash);color:var(--ink);font:400 1rem var(--body);border:2px solid var(--yellow);border-radius:var(--wob);padding:3px 10px 2px;margin-top:10px}
+.best{margin-top:12px;color:var(--muted);font-size:1rem}
+@media (prefers-reduced-motion:reduce){}
+</style>
+<style>.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
+<style>
+.bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
+@media (min-width:600px){.bda-sheet{align-items:center}}
+.bda-sheet[hidden]{display:none!important}
+.bda-card{width:100%;max-width:380px;background:#f6f3ea;color:#2e2e33;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c}
+.bda-card h2{margin:0 0 4px;font:400 1.3rem/1.2 "Gloria Hallelujah","Comic Sans MS",cursive;color:#2e2e33}
+.bda-card .u{margin:0 0 12px;font-size:.9rem;color:#7a7a80;overflow-wrap:anywhere}
+.bda-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.bda-opts a,.bda-opts button{appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#2e2e33;text-decoration:none;font:400 .85rem "Patrick Hand","Comic Sans MS",cursive;padding:4px 0;border-radius:12px}
+.bda-opts i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid #2e2e33;font:800 1.05rem system-ui,sans-serif;font-style:normal;color:#fff}
+.bda-opts a:focus-visible,.bda-opts button:focus-visible,.bda-x:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+.bda-x{appearance:none;border:2px solid #2e2e33;margin-top:12px;width:100%;padding:8px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;background:#f6f3ea;color:#2e2e33;font:400 1.05rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bda-toast[hidden]{display:none!important}
+</style>
+<style>@media (hover:hover) and (pointer:fine) and (min-aspect-ratio:3/4) and (min-width:700px){html{background:#e9e5d8!important;height:100%;overflow:hidden}html::before{content:'';position:fixed;inset:-60px;z-index:-1;background:#e9e5d8 url(../img/octo-swing.jpg) center/cover no-repeat;filter:blur(30px) opacity(.5)}body{width:min(100vw,calc(100vh*9/16));width:min(100vw,calc(100dvh*9/16));height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;transform:translateZ(0);box-shadow:0 0 0 2px #2e2e33,8px 8px 0 #55555c}body>.app,body>.wrap,body>#app{max-width:none!important}}</style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="sa-head"><a class="sa-back" href="../octo-swing.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Octo Swing</h1><button class="sa-share" type="button" aria-label="Share Octo Swing" data-share-url="https://www.sketchpadarcade.com/octo-swing" data-share-title="Octo Swing" data-share-text="Play Octo Swing free on Sketchpad Arcade! Grab pearls with a stretchy tentacle and swing a little octopus over the sea."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
+  </div>
+  <div class="hud">
+    <div class="stars" aria-label="Starfish collected"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 29 18 43 18 32 27 36 41 24 33 12 41 16 27 5 18 19 18Z" fill="#f3e6b0" stroke="#c99a1a" stroke-width="3" stroke-linejoin="round"/></svg><span id="starsEl">0</span></div>
+    <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div><div class="dist" id="distEl">0 m</div></div>
+    <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
+  </div>
+  <div class="field" id="field">
+    <canvas id="cv" aria-label="Sky over the sea. Press and hold to grab a pearl with a tentacle, let go to fling forward."></canvas>
+    <div class="banner" id="banner" role="status" aria-live="polite"></div>
+    <div class="cover" id="start">
+      <div class="card">
+        <canvas id="mini" width="220" height="220" aria-hidden="true"></canvas>
+        <h2>Octo Swing</h2>
+        <ul class="rules">
+          <li><b>1</b><span>Press and hold to grab the nearest pearl with a tentacle.</span></li>
+          <li><b>2</b><span>Swing down and up, then let go to fling forward.</span></li>
+          <li><b>3</b><span>Grab starfish for bonus points. Bounce off beach balls.</span></li>
+          <li><b>4</b><span>Don't drop into the sea! Swing as far as you can.</span></li>
+        </ul>
+        <button class="big" id="playBtn" type="button">Play</button>
+        <div class="best" id="bestLine">Best score: 0</div>
+      </div>
+    </div>
+    <div class="cover" id="over" hidden>
+      <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
+        <h2 id="overTitle">Splash!</h2>
+        <p id="overText">Ollie dropped into the sea.</p>
+        <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stDist">0 m</b><span>distance</span></div><div><b id="stStars">0</b><span>starfish</span></div></div>
+        <div class="newbest" id="newBest" hidden>New best score!</div>
+        <button class="big" id="againBtn" type="button">Swing again</button>
+        <div class="best" id="bestLine2">Best score: 0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(()=>{
+const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
+const $=s=>document.getElementById(s);
+const reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- saved data ---------- */
+const KEY='octo-swing-v1';
+let save={best:0,sound:true,bestDist:0};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)save=Object.assign(save,s)}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
+
+/* ---------- sound ---------- */
+let ac=null;
+function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended')ac.resume();return ac}
+function tone(f,d,type,v,when,f2){if(!save.sound)return;const a=audio();if(!a)return;const t=a.currentTime+(when||0);const o=a.createOscillator(),g=a.createGain();
+  o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.1,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
+function noise(d,v,freq){if(!save.sound)return;const a=audio();if(!a)return;const n=a.sampleRate*d,buf=a.createBuffer(1,n,a.sampleRate),ch=buf.getChannelData(0);
+  for(let i=0;i<n;i++)ch[i]=(Math.random()*2-1)*(1-i/n);const s=a.createBufferSource();s.buffer=buf;const f=a.createBiquadFilter();f.type='lowpass';f.frequency.value=freq||1200;
+  const g=a.createGain();g.gain.value=v||.2;s.connect(f);f.connect(g);g.connect(a.destination);s.start()}
+/* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
+   Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
+let amb=null;
+function ambStart(){
+  if(amb||!save.sound)return;const a=audio();if(!a)return;
+  const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
+  for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
+  // crossfade the loop ends so it repeats without a click
+  const xf=a.sampleRate*.5;for(let i=0;i<xf;i++){const u=i/xf;ch[i]=ch[i]*u+ch[len-xf+i]*(1-u)}
+  const src=a.createBufferSource();src.buffer=buf;src.loop=true;src.loopEnd=(len-xf)/a.sampleRate;
+  const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=500;lp.Q.value=.3;
+  const swell=a.createGain();swell.gain.value=.05;
+  const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=2500;
+  const foam=a.createGain();foam.gain.value=.01;
+  const master=a.createGain();master.gain.value=.0001;master.gain.setTargetAtTime(1,a.currentTime,.8);
+  src.connect(lp);lp.connect(swell);swell.connect(master);src.connect(hp);hp.connect(foam);foam.connect(master);master.connect(a.destination);
+  src.start();
+  amb={src,lp,swell,foam,master,timers:[]};
+  const wave=()=>{if(!amb)return;const t=a.currentTime,up=1.8+Math.random()*1.4,peak=.16+Math.random()*.1,gap=5+Math.random()*4;
+    amb.swell.gain.setTargetAtTime(peak,t,up/3);amb.lp.frequency.setTargetAtTime(1100+Math.random()*500,t,up/3);amb.foam.gain.setTargetAtTime(peak*.25,t+up*.7,.4);
+    amb.swell.gain.setTargetAtTime(.05,t+up,1.4);amb.lp.frequency.setTargetAtTime(450,t+up,1.4);amb.foam.gain.setTargetAtTime(.008,t+up+.6,1.2);
+    amb.timers.push(setTimeout(wave,gap*1000))};
+  const gull=()=>{if(!amb)return;const t=a.currentTime;
+    for(let k=0;k<2+Math.floor(Math.random()*2);k++){const o=a.createOscillator(),g=a.createGain(),st=t+k*.32;
+      o.type='sine';o.frequency.setValueAtTime(1500,st);o.frequency.exponentialRampToValueAtTime(950,st+.24);
+      g.gain.setValueAtTime(.0001,st);g.gain.exponentialRampToValueAtTime(.018,st+.03);g.gain.exponentialRampToValueAtTime(.0001,st+.26);
+      o.connect(g);g.connect(amb.master);o.start(st);o.stop(st+.3)}
+    amb.timers.push(setTimeout(gull,(14+Math.random()*16)*1000))};
+  wave();amb.timers.push(setTimeout(gull,6000));
+}
+function ambStop(){
+  if(!amb)return;const a=ac,m=amb;amb=null;m.timers.forEach(clearTimeout);
+  m.master.gain.setTargetAtTime(.0001,a.currentTime,.25);setTimeout(()=>{try{m.src.stop()}catch(e){}},1200);
+}
+addEventListener('pointerdown',ambStart);addEventListener('keydown',ambStart);
+document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden)ac.suspend();else if(save.sound||amb)ac.resume()});
+const sfx={
+  grab(){tone(420,.09,'sine',.16,0,700);tone(1200,.03,'triangle',.03)},
+  fling(){tone(500,.18,'triangle',.07,0,1300)},
+  star(){tone(1318,.08,'square',.04);tone(1760,.14,'square',.04,.06);tone(2637,.18,'sine',.03,.12)},
+  boing(){tone(180,.3,'sine',.25,0,520);tone(360,.2,'triangle',.06,.02,900)},
+  pop(){tone(900,.06,'square',.05,0,200);noise(.08,.12,3000)},
+  splash(){noise(.6,.35,900);tone(300,.4,'sine',.15,0,80)},
+  mile(){[784,988,1175,1568].forEach((f,i)=>tone(f,.2,'triangle',.07,i*.07))},
+  whiff(){tone(300,.08,'sine',.05,0,200)},
+  click(){tone(900,.04,'square',.03)}
+};
+
+/* ---------- canvas ---------- */
+const cv=$('cv');let ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1,S=1,VW=0,TOP=0;           // S = pixels per world unit, world is 600 units tall
+const WORLD_H=600,SEA=528,G=1500;
+function resize(){
+  const r=cv.getBoundingClientRect();DPR=Math.min(2,window.devicePixelRatio||1);
+  W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
+  S=Math.min(H/WORLD_H,W/440);VW=W/S;TOP=WORLD_H-H/S;
+}
+addEventListener('resize',()=>{resize();if(!running)draw(0)});
+
+/* ---------- world ---------- */
+let o,anchors,stars,balls,parts,camX,maxX,starCount,running,ready,holding,autoHold,lastAnchorX,spawnN,nextMile,time,shake,deadT;
+function reset(){
+  o={x:150,y:300,vx:0,vy:0,att:-1,len:150,face:1,squash:0};
+  anchors=[];stars=[];balls=[];parts=[];
+  camX=0;maxX=150;starCount=0;holding=false;autoHold=true;lastAnchorX=150;spawnN=0;nextMile=100;time=0;shake=0;deadT=0;
+  addAnchor(150,150,'pearl');
+  o.y=150+150;o.att=0;o.len=150;
+  while(lastAnchorX<camX+VW+900)spawn();
+}
+function addAnchor(x,y,type){anchors.push({x,y,y0:y,type,ph:Math.random()*6.28,gone:false,popT:0,grabbed:false});lastAnchorX=x}
+function meters(x){return Math.max(0,Math.floor((x-150)/20))}
+function spawn(){
+  spawnN++;
+  const d=meters(lastAnchorX);
+  const gap=230+Math.min(d*.35,150)+Math.random()*(70+Math.min(d*.1,60));
+  const x=lastAnchorX+gap;
+  const lo=Math.max(TOP+110,-260),hi=300,mid=(lo+hi)/2+40;
+  const spread=Math.min(.45+d*.002,1)*(hi-lo)/2;
+  const y=Math.max(lo,Math.min(hi,mid+(Math.random()*2-1)*spread));
+  let type='pearl';
+  const r=Math.random();
+  if(d>120&&r<.3)type='bob';
+  if(d>260&&r>.72)type='pop';
+  const prevX=lastAnchorX,prev=anchors[anchors.length-1];
+  addAnchor(x,y,type);
+  // starfish along the swing arc between two pearls
+  if(Math.random()<.75){
+    const n=2+Math.floor(Math.random()*3);
+    const midY=Math.min(SEA-90,(prev.y0+y)/2+120+Math.random()*80);
+    for(let i=0;i<n;i++){const t=(i+1)/(n+1);const sx=prevX+(x-prevX)*t;const sy=midY-Math.sin(t*Math.PI)*-30+(t-.5)*(t-.5)*-160+40;
+      stars.push({x:sx,y:Math.max(60,Math.min(SEA-60,sy)),got:false,ph:Math.random()*6})}
+  }
+  // a beach ball bobbing on the sea to bounce off now and then
+  if(d>60&&spawnN%4===0&&Math.random()<.8)balls.push({x:prevX+(x-prevX)*(.35+Math.random()*.3),r:34,squash:0});
+}
+
+/* ---------- input ---------- */
+function press(){
+  if(!running)return;
+  holding=true;
+  if(o.att<0)tryGrab();
+}
+function release(){
+  if(!running)return;
+  holding=false;
+  if(autoHold){autoHold=false}
+  if(o.att>=0)letGo();
+}
+function target(){
+  let best=-1,bd=1e9;
+  for(let i=0;i<anchors.length;i++){const a=anchors[i];if(a.gone)continue;
+    if(a.x<o.x-40)continue;
+    const d=Math.hypot(a.x-o.x,a.y-o.y);if(d>440)continue;
+    const score=d-(a.x>o.x?40:0);if(score<bd){bd=score;best=i}}
+  return best;
+}
+function tryGrab(){
+  const i=target();
+  if(i<0){sfx.whiff();return}
+  const a=anchors[i];
+  o.att=i;o.len=Math.max(90,Math.min(Math.hypot(a.x-o.x,a.y-o.y),380));
+  if(a.type==='pop'&&!a.grabbed){a.popT=.85}
+  a.grabbed=true;sfx.grab();
+}
+function letGo(){
+  o.att=-1;
+  const sp=Math.hypot(o.vx,o.vy);
+  if(sp>200){o.vx*=1.06;o.vy*=1.06;if(o.vy<0)o.vy-=60;sfx.fling()}
+}
+cv.addEventListener('pointerdown',e=>{e.preventDefault();audio();press()});
+addEventListener('pointerup',release);addEventListener('pointercancel',release);
+addEventListener('keydown',e=>{
+  if(e.code==='Space'||e.code==='ArrowUp'||e.code==='Enter'){
+    if(!$('start').hidden||!$('over').hidden){if(e.code!=='ArrowUp'&&document.activeElement===document.body){e.preventDefault();($('start').hidden?$('againBtn'):$('playBtn')).click()}return}
+    e.preventDefault();if(!e.repeat){audio();press()}
+  }
+});
+addEventListener('keyup',e=>{if(e.code==='Space'||e.code==='ArrowUp'||e.code==='Enter')release()});
+
+/* ---------- simulation ---------- */
+function step(dt){
+  time+=dt;
+  for(const a of anchors){if(a.type==='bob')a.y=a.y0+Math.sin(time*1.8+a.ph)*45}
+  if(o.att>=0){
+    const a=anchors[o.att];
+    if(a.type==='pop'&&a.popT>0){a.popT-=dt;if(a.popT<=0){a.gone=true;burst(a.x,a.y,'#2f6fb5',14);sfx.pop();o.att=-1}}
+  }
+  o.vy+=G*dt;
+  if(o.att>=0){
+    const a=anchors[o.att];
+    let nx=o.x-a.x,ny=o.y-a.y;const d=Math.hypot(nx,ny)||1;nx/=d;ny/=d;
+    // keep the swing lively: push along the direction of travel
+    let tx=-ny,ty=nx;const along=o.vx*tx+o.vy*ty;if(along<0){tx=-tx;ty=-ty}
+    const sp=Math.hypot(o.vx,o.vy);
+    if(sp<1350){o.vx+=tx*420*dt;o.vy+=ty*420*dt}
+    const maxLen=Math.min(200,SEA-70-a.y);if(o.len>maxLen)o.len=Math.max(maxLen,o.len-(o.len-maxLen>60?520:180)*dt);
+  }
+  o.x+=o.vx*dt;o.y+=o.vy*dt;
+  if(o.att>=0){
+    const a=anchors[o.att];
+    let nx=o.x-a.x,ny=o.y-a.y;const d=Math.hypot(nx,ny)||1;
+    if(d>o.len){nx/=d;ny/=d;o.x=a.x+nx*o.len;o.y=a.y+ny*o.len;const vr=o.vx*nx+o.vy*ny;if(vr>0){o.vx-=vr*nx;o.vy-=vr*ny}}
+  }
+  const sp=Math.hypot(o.vx,o.vy);if(sp>1700){o.vx*=1700/sp;o.vy*=1700/sp}
+  if(o.y<TOP+24){o.y=TOP+24;if(o.vy<0)o.vy*=-.3}
+  // beach balls
+  for(const b of balls){const by=SEA-b.r*.55;const dx=o.x-b.x,dy=o.y-by,d=Math.hypot(dx,dy);
+    if(d<b.r+22&&o.vy>0){o.vy=-Math.max(900,o.vy*.9);o.vx=Math.max(o.vx,260);b.squash=1;o.att=-1;sfx.boing();burst(b.x,by-b.r,GRAPH,8)}}
+  // starfish
+  for(const s of stars){if(!s.got&&Math.hypot(o.x-s.x,o.y-s.y)<40){s.got=true;starCount++;sfx.star();burst(s.x,s.y,'#c99a1a',10);hud()}}
+  if(o.vx>40)o.face=1;else if(o.vx<-40)o.face=-1;
+  if(o.x>maxX){maxX=o.x;const m=meters(maxX);if(m>=nextMile){showBanner(nextMile+' m!','Keep swinging');sfx.mile();nextMile+=100}hud()}
+  if(o.y>SEA-6){splash();return}
+}
+function burst(x,y,c,n){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=120+Math.random()*260;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-120,life:.6+Math.random()*.3,c,r:3+Math.random()*4})}}
+function splash(){
+  running=false;deadT=0;o.att=-1;
+  for(let i=0;i<26;i++){const a=-Math.PI/2+(Math.random()-.5)*1.6,s=250+Math.random()*450;parts.push({x:o.x,y:SEA,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.9,c:'#2f6fb5',r:4+Math.random()*5})}
+  sfx.splash();shake=10;
+  const sc=score();
+  const isBest=sc>save.best;
+  if(isBest)save.best=sc;
+  save.bestDist=Math.max(save.bestDist,meters(maxX));persist();
+  $('stScore').textContent=sc;$('stDist').textContent=meters(maxX)+' m';$('stStars').textContent=starCount;
+  $('newBest').hidden=!isBest||sc===0;$('bestLine2').textContent='Best score: '+save.best+' · Farthest: '+save.bestDist+' m';
+  const m=meters(maxX);
+  $('overText').textContent=m<30?'Ollie dropped into the sea. Hold to grab, let go when you swing up!':m<200?'Nice swinging! Ollie made a big splash.':'Wow, what a swing! Ollie is a star.';
+  hud();
+  setTimeout(()=>{$('over').hidden=false;window.BDA&&BDA.shareScore({score:sc,line:m+' m',into:'#over .card',after:'.stats'});$('againBtn').focus({preventScroll:true})},900);
+}
+function score(){return meters(maxX)+starCount*5}
+function hud(){$('scoreEl').textContent=score();$('distEl').textContent=meters(maxX)+' m';$('starsEl').textContent=starCount;$('bestEl').textContent=save.best}
+let bannerT=0;
+function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
+
+/* ---------- art (../assets/octo-swing/, served at /assets/octo-swing/); each draw falls back to the vector version until its image loads ---------- */
+const IMG={};
+['sky','wave','pearl','pearl-pink','pearl-bubble','star','tentacle','octo-frames','octo-pearl'].forEach(n=>{const i=new Image();i.decoding='async';i.src='../assets/octo-swing/'+n+'.webp';IMG[n]=i});
+function ok(n){const i=IMG[n];return i&&i.complete&&i.naturalWidth>0}
+// octo-frames.webp: 7 swing frames in 460x400 cells, each centred on the octopus's position.
+// Frame 0 faces right with tentacles trailing (moving right fast), 3 faces front (top of a swing), 6 faces left (moving left fast).
+const OCT_CELL=[460,400],OCT_K=.22; // world units per sprite pixel (eyes ~22 units apart)
+let octFrame=3,octT=0;
+function octoFrameFor(vx){return Math.max(0,Math.min(6,3-vx/300))}
+function drawOctoFrame(px,py,rot,k,f){
+  const im=IMG['octo-frames'],i=Math.round(f),[cw,ch]=OCT_CELL;
+  ctx.save();ctx.translate(px,py);ctx.rotate(rot);ctx.scale(k,k);ctx.drawImage(im,i*cw,0,cw,ch,-cw/2,-ch/2,cw,ch);ctx.restore();
+}
+
+/* ---------- drawing ---------- */
+const clouds=[...Array(7)].map((_,i)=>({x:i*260+Math.random()*120,y:-260+Math.random()*420,s:.7+Math.random()*.6}));
+function wx(x){return (x-camX)*S}
+function wy(y){return (y-TOP)*S}
+function drawBg(t){
+  if(ok('sky')){
+    // horizon (82.9% down the image) sits on the sea; on narrow screens the image is capped and the plain sky above is filled in
+    const im=IMG.sky,seaTop=wy(SEA),k=Math.min((seaTop-4*S)/(im.height*.829),2*W/(im.width/2)),tw=im.width*k,top=seaTop-4*S-im.height*.829*k;
+    ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
+    let x0=-(((camX*.15*S)%tw)+tw)%tw;
+    for(let x=x0;x<W;x+=tw)ctx.drawImage(im,x,top,tw,im.height*k);
+    // the sketched sky image's top edge is hatched; fade it into the plain paper above
+    const fg=ctx.createLinearGradient(0,top-1,0,top+im.height*k*.45);fg.addColorStop(0,'rgba(246,243,234,1)');fg.addColorStop(1,'rgba(246,243,234,0)');ctx.fillStyle=fg;ctx.fillRect(0,top-1,W,im.height*k*.45);
+    return;
+  }
+  ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
+  // a wobbly pencil sun with rays
+  const sx=W*.8,sy=H*.14,sr=Math.min(W,H)*.09;
+  ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineCap='round';ctx.fillStyle='#f3e6b0';
+  ctx.beginPath();for(let i=0;i<=40;i++){const a=i/40*7;const rr=sr*(1+.04*Math.sin(i*2.7));ctx.lineTo(sx+Math.cos(a)*rr,sy+Math.sin(a)*rr)}ctx.closePath();ctx.fill();ctx.stroke();
+  for(let i=0;i<12;i++){const a=i/12*7;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*sr*1.25,sy+Math.sin(a)*sr*1.25);ctx.lineTo(sx+Math.cos(a)*sr*(1.6+.15*(i%2)),sy+Math.sin(a)*sr*(1.6+.15*(i%2)));ctx.stroke()}
+  // outlined clouds (slow parallax)
+  for(const c of clouds){let x=((c.x-camX*.2)%(260*7)+260*7)%(260*7)-150;x*=S*.9;const y=wy(c.y);const s=c.s*S*1.1;
+    ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.beginPath();ctx.ellipse(x,y,46*s,18*s,0,0,7);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(x-26*s,y+4*s,26*s,14*s,0,0,7);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(x+12*s,y-12*s,28*s,20*s,0,0,7);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(x+34*s,y+3*s,24*s,13*s,0,0,7);ctx.fill();ctx.stroke()}
+  // far islands
+  const ip=camX*.35;
+  for(let k=-1;k<4;k++){const base=Math.floor(ip/700)*700+k*700;const x=(base-ip)*S+120*S;const y=wy(SEA-6);
+    ctx.fillStyle='#e4e2d8';ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(x,y,150*S,34*S,0,Math.PI,0);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#f0ece1';ctx.beginPath();ctx.ellipse(x,y,160*S,10*S,0,Math.PI,0);ctx.fill();ctx.stroke();
+    // palm
+    ctx.strokeStyle=INK;ctx.lineWidth=3*S;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x+30*S,y-20*S);ctx.quadraticCurveTo(x+38*S,y-70*S,x+56*S,y-100*S);ctx.stroke();
+    ctx.fillStyle='#dcebdd';ctx.strokeStyle='#5a9a6a';ctx.lineWidth=1.5;for(let j=0;j<5;j++){const ang=-2.8+j*.75;ctx.beginPath();ctx.ellipse(x+56*S+Math.cos(ang)*26*S,y-100*S+Math.sin(ang)*14*S+8*S,30*S,8*S,ang,0,7);ctx.fill();ctx.stroke()}
+  }
+}
+function drawSea(t){
+  const top=wy(SEA);
+  if(ok('wave')){
+    const im=IMG.wave,k=(H-top)/(im.height-47)*1.06,tw=im.width*k,y=top-47*k+Math.sin(t*2)*2*S;
+    ctx.fillStyle='#d9d7cf';ctx.fillRect(0,y+im.height*k-2,W,H);
+    let x0=-(((camX*S+t*18*S)%tw)+tw)%tw;
+    for(let x=x0;x<W;x+=tw)ctx.drawImage(im,x,y,tw+1,im.height*k);
+    return;
+  }
+  ctx.fillStyle='#d9d7cf';ctx.beginPath();ctx.moveTo(0,H);
+  for(let x=0;x<=W+10;x+=10){ctx.lineTo(x,top+Math.sin((x/S+camX)*.02+t*2)*5*S)}
+  ctx.lineTo(W,H);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();
+  for(let x=0;x<=W+10;x+=10){const y=top+Math.sin((x/S+camX)*.02+t*2)*5*S;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+  ctx.strokeStyle='rgba(46,46,51,.35)';ctx.lineWidth=1.2;
+  for(let r=1;r<3;r++){ctx.beginPath();for(let x=0;x<=W+10;x+=12){const y=top+r*22*S+Math.sin((x/S+camX*1.1)*.03+t*1.5+r)*4*S;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}
+}
+function drawStar(x,y,r,rot){
+  if(ok('star')){const im=IMG.star,w=r*2.7,h=w*im.height/im.width;ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return}
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+  ctx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();
+  ctx.lineJoin='round';ctx.lineWidth=r*.2;ctx.strokeStyle='#c99a1a';ctx.fillStyle='#f3e6b0';ctx.fill();ctx.stroke();
+  ctx.restore();
+}
+function drawAnchor(a,isTarget,t){
+  if(a.gone)return;
+  const x=wx(a.x),y=wy(a.y),r=19*S;
+  if(x<-60||x>W+60)return;
+  ctx.save();
+  if(a.type==='pop'&&a.popT>0){ctx.translate(x,y);ctx.scale(1+Math.sin(t*40)*.08,1-Math.sin(t*40)*.08);ctx.translate(-x,-y)}
+  // halo
+  ctx.strokeStyle=a.type==='pop'?'rgba(47,111,181,.35)':'rgba(46,46,51,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r*1.7,0,7);ctx.stroke();
+  const pn=a.type==='pop'?'pearl-bubble':a.type==='bob'?'pearl-pink':'pearl';
+  if(ok(pn)){
+    const im=IMG[pn],w=r*(pn==='pearl'?2.3:pn==='pearl-pink'?3.05:2.75),h=w*im.height/im.width;
+    // the white pearl sketches to almost nothing, so give it a pencil outline and a little hatching first
+    if(pn==='pearl'){ctx.fillStyle='#f0ece1';ctx.strokeStyle=INK;ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(x,y,r*.95,0,7);ctx.fill();ctx.stroke();ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let k=0;k<4;k++){ctx.beginPath();ctx.moveTo(x+r*.05+k*r*.2,y+r*.8);ctx.lineTo(x+r*.45+k*r*.2,y+r*.3);ctx.stroke()}}
+    ctx.drawImage(im,x-w/2,y-h/2,w,h);
+  }else if(a.type==='pop'){
+    ctx.fillStyle='rgba(214,228,242,.6)';ctx.strokeStyle='#2f6fb5';ctx.lineWidth=2*S;ctx.beginPath();ctx.arc(x,y,r*1.1,0,7);ctx.fill();ctx.stroke();
+    ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r*.75,-2.4,-1.2);ctx.stroke();
+  }else{
+    const bob=a.type==='bob';
+    ctx.fillStyle=bob?'#f0d5e2':PAPER;ctx.strokeStyle=bob?'#c45a8a':INK;ctx.lineWidth=2*S;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();ctx.stroke();
+    ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r*.7,-2.4,-1.2);ctx.stroke();
+    ctx.strokeStyle=GRAPH;for(let k=0;k<4;k++){ctx.beginPath();ctx.moveTo(x+r*.1+k*r*.2,y+r*.85);ctx.lineTo(x+r*.5+k*r*.2,y+r*.35);ctx.stroke()}
+    // clasp
+    ctx.strokeStyle='#c99a1a';ctx.lineWidth=2.5*S;ctx.beginPath();ctx.arc(x,y,r+3*S,.2,Math.PI-.2,true);ctx.stroke();
+  }
+  if(isTarget){ctx.strokeStyle=INK;ctx.lineWidth=3*S;ctx.setLineDash([7*S,6*S]);ctx.lineDashOffset=-t*40;ctx.beginPath();ctx.arc(x,y,r*1.9,0,7);ctx.stroke();ctx.setLineDash([])}
+  ctx.restore();
+}
+function drawBall(b,t){
+  const x=wx(b.x),r=b.r*S;if(x<-80||x>W+80)return;
+  b.squash*=.9;
+  const y=wy(SEA)-r*.55+Math.sin(t*2+b.x)*3*S;
+  ctx.save();ctx.translate(x,y);ctx.scale(1+b.squash*.25,1-b.squash*.25);
+  ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.stroke();
+  ctx.save();ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.clip();
+  const segs=['#e4e2d8',PAPER,'#e4e2d8'];
+  for(let i=0;i<3;i++){ctx.fillStyle=segs[i];ctx.beginPath();ctx.moveTo(0,-r);ctx.bezierCurveTo((i-1)*r*1.3-r*.5,-r*.4,(i-1)*r*1.3-r*.5,r*.4,0,r);ctx.bezierCurveTo((i-1)*r*1.3+r*.1,r*.4,(i-1)*r*1.3+r*.1,-r*.4,0,-r);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.2;ctx.stroke()}
+  ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let k=-3;k<=3;k++){ctx.beginPath();ctx.moveTo(k*r*.25-r*.2,r*.9);ctx.lineTo(k*r*.25+r*.3,r*.4);ctx.stroke()}
+  ctx.restore();
+  ctx.restore();
+}
+function drawOcto(px,py,t,scale,vx,vy,att,face){
+  // px,py in pixels
+  if(ok('octo-frames')&&ok('tentacle')){
+    const k=OCT_K*scale,live=ctx.canvas===cv;
+    // ease toward the frame that matches the sideways speed so the turn reads smoothly
+    const dt=Math.min(.05,Math.max(0,t-octT));octT=t;
+    const want=octoFrameFor(vx);octFrame=live?octFrame+(want-octFrame)*Math.min(1,dt*12):want;
+    const rot=Math.max(-.3,Math.min(.3,vx/3200));
+    if(att&&o&&o.att>=0&&live){
+      // tentacle from behind the head up to the pearl
+      const a=anchors[o.att],ax=wx(a.x),ay=wy(a.y),d=Math.hypot(ax-px,ay-py)||1,ux=(ax-px)/d,uy=(ay-py)/d;
+      const bx=px+ux*12*scale,by=py+uy*12*scale-8*scale,L=Math.hypot(ax-bx,ay-by),tw=15*scale,im=IMG.tentacle;
+      ctx.save();ctx.translate(bx,by);ctx.rotate(Math.atan2(ay-by,ax-bx)+Math.PI/2);ctx.drawImage(im,-tw/2,-L-2*scale,tw,L+10*scale);ctx.restore();
+    }
+    drawOctoFrame(px,py,rot,k,octFrame);
+    return;
+  }
+  const r=26*scale;
+  const sp=Math.hypot(vx,vy);
+  const ang=Math.max(-.5,Math.min(.5,vx/2500));
+  ctx.save();ctx.translate(px,py);
+  // tentacles trail behind the motion
+  const tx=-vx/sp||0,ty=-vy/sp||1;
+  ctx.lineCap='round';
+  for(let i=0;i<6;i++){
+    const off=(i-2.5)*r*.32;
+    const bx=off,by=r*.55;
+    const len=r*(1.25+(i%2)*.15);
+    const wig=Math.sin(t*9+i*1.3)*r*.35;
+    const ex=bx+(sp>80?tx*len*.8:0)+wig*.6,ey=by+(sp>80?Math.max(ty,0.2)*len:len);
+    ctx.strokeStyle=INK;ctx.lineWidth=r*.3;
+    ctx.beginPath();ctx.moveTo(bx,by);ctx.quadraticCurveTo(bx+wig,by+len*.5,ex,ey);ctx.stroke();
+    ctx.strokeStyle='#e9e6db';ctx.lineWidth=r*.18;ctx.beginPath();ctx.moveTo(bx,by);ctx.quadraticCurveTo(bx+wig,by+len*.5,ex,ey);ctx.stroke();
+  }
+  ctx.rotate(ang);
+  ctx.fillStyle='#e9e6db';ctx.strokeStyle=INK;ctx.lineWidth=r*.08;ctx.beginPath();ctx.ellipse(0,-r*.1,r*1.05,r,0,0,7);ctx.fill();ctx.stroke();
+  ctx.strokeStyle=GRAPH;ctx.lineWidth=r*.04;for(let k=-3;k<=3;k++){ctx.beginPath();ctx.moveTo(k*r*.22-r*.15,r*.75);ctx.lineTo(k*r*.22+r*.2,r*.35);ctx.stroke()}
+  // spots
+  ctx.fillStyle='rgba(85,85,92,.4)';[[.5,-.55,.12],[.65,-.2,.08],[-.7,-.1,.09]].forEach(([a,b,c])=>{ctx.beginPath();ctx.arc(a*r,b*r,c*r,0,7);ctx.fill()});
+  // eyes look the way we travel
+  const lx=Math.max(-1,Math.min(1,vx/700))*r*.08*face+r*.04*face,ly=Math.max(-1,Math.min(1,vy/700))*r*.08;
+  for(const ex of[-.36,.36]){ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=r*.06;ctx.beginPath();ctx.ellipse(ex*r+r*.06*face,-r*.05,r*.24,r*.29,0,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=INK;ctx.beginPath();ctx.arc(ex*r+r*.06*face+lx,-r*.02+ly,r*.13,0,7);ctx.fill()}
+  ctx.fillStyle='rgba(196,90,138,.35)';ctx.beginPath();ctx.ellipse(-r*.62,r*.25,r*.13,r*.08,0,0,7);ctx.ellipse(r*.62,r*.25,r*.13,r*.08,0,0,7);ctx.fill();
+  ctx.strokeStyle=INK;ctx.lineWidth=r*.09;ctx.beginPath();
+  if(att)ctx.arc(r*.04*face,r*.28,r*.17,.15,Math.PI-.15);else{ctx.ellipse(r*.04*face,r*.36,r*.1,r*.12,0,0,7)}ctx.stroke();
+  ctx.restore();
+}
+function drawGrab(t){
+  if(o.att<0)return;
+  if(ok('octo-frames')&&ok('tentacle'))return;
+  const a=anchors[o.att];
+  const x1=wx(o.x),y1=wy(o.y)+4*S,x2=wx(a.x),y2=wy(a.y);
+  const mx=(x1+x2)/2+Math.sin(t*6)*6*S,my=(y1+y2)/2+10*S;
+  ctx.lineCap='round';
+  ctx.strokeStyle=INK;ctx.lineWidth=7*S;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(mx,my,x2,y2);ctx.stroke();
+  ctx.strokeStyle='#e9e6db';ctx.lineWidth=4*S;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(mx,my,x2,y2);ctx.stroke();
+  // suckers
+  ctx.fillStyle=INK;
+  for(let i=1;i<8;i++){const u=i/8;const x=(1-u)*(1-u)*x1+2*(1-u)*u*mx+u*u*x2,y=(1-u)*(1-u)*y1+2*(1-u)*u*my+u*u*y2;ctx.beginPath();ctx.arc(x,y,1.8*S,0,7);ctx.fill()}
+}
+function draw(t){
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  let sx=0,sy=0;if(shake>0){sx=(Math.random()-.5)*shake;sy=(Math.random()-.5)*shake;shake*=.9;if(shake<.3)shake=0}
+  ctx.save();ctx.translate(sx,sy);
+  drawBg(t);
+  const tg=running&&o.att<0?target():-1;
+  for(let i=0;i<anchors.length;i++)drawAnchor(anchors[i],i===tg,t);
+  for(const s of stars){if(s.got)continue;const x=wx(s.x);if(x<-30||x>W+30)continue;drawStar(x,wy(s.y)+Math.sin(t*3+s.ph)*4*S,15*S,Math.sin(t*2+s.ph)*.3)}
+  drawGrab(t);
+  if(running||deadT<.15)drawOcto(wx(o.x),wy(o.y),t,S,o.vx,o.vy,o.att>=0,o.face);
+  drawSea(t);
+  for(const b of balls)drawBall(b,t);
+  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*1.6));ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(wx(p.x),wy(p.y),p.r*S,0,7);ctx.fill()}
+  ctx.globalAlpha=1;
+  ctx.restore();
+}
+
+/* ---------- loop ---------- */
+let last=0,acc=0,tt=0;
+function fixTrim(){const keep=[];let ni=-1;anchors.forEach((a,i)=>{if(a.x>camX-600||i===o.att){if(i===o.att)ni=keep.length;keep.push(a)}});anchors=keep;o.att=ni}
+
+function start(){
+  resize();reset();running=true;acc=0;
+  $('start').hidden=true;$('over').hidden=true;
+  o.vx=520;o.vy=0;
+  camX=o.x-VW*.3;
+  hud();showBanner('Let go to fling!','Hold to grab the next pearl');
+}
+$('playBtn').onclick=()=>{audio();sfx.click();start()};
+$('againBtn').onclick=()=>{audio();sfx.click();start()};
+function setSoundLabel(){$('soundBtn').textContent='Sound: '+(save.sound?'on':'off')}
+$('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audio();sfx.click();if(save.sound)ambStart();else ambStop()};
+setSoundLabel();
+$('bestLine').textContent='Best score: '+save.best+(save.bestDist?' · Farthest: '+save.bestDist+' m':'');
+
+/* mini octopus on the start card */
+const mc=$('mini').getContext('2d');
+function mini(t){mc.setTransform(1,0,0,1,0,0);mc.clearRect(0,0,220,220);
+  // a wobbly pencil circle behind Ollie
+  mc.strokeStyle=INK;mc.lineWidth=2;mc.beginPath();for(let i=0;i<=48;i++){const a=i/48*6.2832,r=102+2*Math.sin(i*2.3);mc.lineTo(110+Math.cos(a)*r,110+Math.sin(a)*r)}mc.closePath();mc.stroke();
+  mc.strokeStyle=GRAPH;mc.lineWidth=1;for(let y=172;y<205;y+=8){mc.beginPath();for(let x=30;x<=190;x+=10){const yy=y+Math.sin(x/15+y)*2;x===30?mc.moveTo(x,yy):mc.lineTo(x,yy)}mc.stroke()}
+  if(ok('octo-pearl')){
+    const im=IMG['octo-pearl'],w=180,h=w*im.height/im.width;mc.save();mc.translate(110,118+Math.sin(t*2.4)*6);mc.rotate(Math.sin(t*1.7)*.08);mc.drawImage(im,-w/2,-h/2,w,h);mc.restore();return}
+  const sw=Math.sin(t*2)*.5;const px=110+Math.sin(sw)*80,py=30+Math.cos(sw)*110;
+  mc.strokeStyle=INK;mc.lineWidth=6;mc.lineCap='round';mc.beginPath();mc.moveTo(110,30);mc.lineTo(px,py-6);mc.stroke();
+  mc.fillStyle=PAPER;mc.beginPath();mc.arc(110,30,13,0,7);mc.fill();mc.strokeStyle=INK;mc.lineWidth=2;mc.stroke();mc.strokeStyle='#c99a1a';mc.lineWidth=3;mc.beginPath();mc.arc(110,30,16,.2,Math.PI-.2,true);mc.stroke();
+  const save_=ctx;ctx=mc;drawOcto(px,py,t,1.05,Math.cos(sw)*Math.cos(t*2)*600,0,true,1);ctx=save_;
+}
+function miniLoop(n){if(!$('start').hidden)mini(n/1000);requestAnimationFrame(miniLoop)}
+
+resize();reset();
+requestAnimationFrame(function f2(now){
+  const dt=Math.min(.05,(now-last)/1000||0);last=now;tt+=dt;
+  if(running){
+    acc+=dt;const h=1/240;while(acc>=h){step(h);acc-=h;if(!running)break}
+    const want=o.x-VW*.3;camX+=(want-camX)*Math.min(1,dt*6);
+    while(lastAnchorX<camX+VW+900)spawn();
+    fixTrim();
+  }else deadT+=dt;
+  for(const p of parts){p.vy+=G*.6*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt}
+  parts=parts.filter(p=>p.life>0);
+  stars=stars.filter(s=>s.x>camX-200);balls=balls.filter(b=>b.x>camX-200);
+  draw(tt);
+  requestAnimationFrame(f2);
+});
+requestAnimationFrame(miniLoop);
+window.__os={get state(){return{running,x:o.x,y:o.y,att:o.att,score:score(),m:meters(maxX),stars:starCount}},press,release,target:()=>target(),o:()=>o,anchors:()=>anchors};
+})();
+</script>
+<script>window.BDA_GAME={"slug": "octo-swing", "name": "Octo Swing", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/octo-swing", "short": "sketchpadarcade.com/octo-swing"};</script>
+<script>(()=>{const s="octo-swing";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
+<script>
+(()=>{
+  let sheet,toastEl,tt;
+  const enc=encodeURIComponent;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='bda-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2200)}
+  async function copy(url){try{await navigator.clipboard.writeText(url);toast('Link copied')}catch(e){
+    const ta=document.createElement('textarea');ta.value=url;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Link copied':'Copy this link: '+url)}}
+  function openSheet(d){
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sheet';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet)sheet.hidden=true});document.body.appendChild(sheet)}
+    const msg=d.text+' '+d.url;
+    sheet.innerHTML='<div class="bda-card"><h2></h2><p class="u"></p><div class="bda-opts">'+
+      '<button type="button" data-a="copy"><i style="background:#0fa3b8">&#128279;</i>Copy link</button>'+
+      '<a href="https://www.facebook.com/sharer/sharer.php?u='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#1877f2">f</i>Facebook</a>'+
+      '<a href="https://twitter.com/intent/tweet?text='+enc(d.text)+'&url='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#111">X</i>X</a>'+
+      '<a href="https://wa.me/?text='+enc(msg)+'" target="_blank" rel="noopener"><i style="background:#25d366">W</i>WhatsApp</a>'+
+      '<a href="mailto:?subject='+enc(d.title)+'&body='+enc(msg)+'"><i style="background:#ff6f59">@</i>Email</a>'+
+      '</div><button type="button" class="bda-x">Close</button></div>';
+    sheet.querySelector('h2').textContent='Share '+d.title;sheet.querySelector('.u').textContent=d.url;
+    sheet.querySelector('[data-a=copy]').onclick=()=>{copy(d.url);sheet.hidden=true};
+    sheet.querySelector('.bda-x').onclick=()=>sheet.hidden=true;
+    sheet.hidden=false;sheet.querySelector('[data-a=copy]').focus();
+  }
+  async function share(el){
+    const d={url:el.dataset.shareUrl,title:el.dataset.shareTitle,text:el.dataset.shareText};
+    try{if(window.va)window.va('event',{name:'Share',data:{page:d.title}})}catch(e){}
+    const touch=matchMedia('(pointer:coarse)').matches;
+    if(navigator.share&&touch){try{await navigator.share({title:d.title,text:d.text,url:d.url});return}catch(e){if(e&&e.name==='AbortError')return}}
+    openSheet(d);
+  }
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-share-url]');if(el){e.preventDefault();share(el)}});
+})();
+</script>
+<style>
+.bda-scorebtn{appearance:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:9px 18px 9px 14px;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;font:400 1.15rem/1 "Patrick Hand","Comic Sans MS",cursive;
+  background:#f3e6b0;color:#2e2e33;box-shadow:3px 3px 0 #55555c;position:relative;transition:transform .12s}
+.bda-scorebtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #55555c}
+.bda-scorebtn svg{width:18px;height:18px;flex:none}
+.bda-scorebtn:focus-visible{outline:3px solid #2e2e33;outline-offset:3px}
+.bda-scorebtn.float{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9000;margin:0}
+.bda-scorebtn.float:active{transform:translate(-50%,2px)}
+.bda-sc{position:fixed;inset:0;z-index:10001;display:grid;place-items:center;padding:16px;background:rgba(46,46,51,.5);font-family:"Patrick Hand","Comic Sans MS",cursive;overflow:auto}
+.bda-sc[hidden]{display:none!important}
+.bda-sc .in{width:100%;max-width:400px;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:14px;box-shadow:4px 4px 0 #55555c;text-align:center}
+.bda-sc img{display:block;width:100%;height:auto;border:2px solid #2e2e33;border-radius:12px;background:#f6f3ea;aspect-ratio:1}
+.bda-sc .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.bda-sc .row button,.bda-sc .row a{appearance:none;border:2px solid #2e2e33;cursor:pointer;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;padding:9px 6px;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;display:flex;align-items:center;justify-content:center;color:#2e2e33;background:#f6f3ea}
+.bda-sc .go{background:#f3e6b0;box-shadow:2px 2px 0 #55555c}
+.bda-sc .alt{background:#f6f3ea}
+.bda-sc .x{appearance:none;border:0;margin-top:10px;width:100%;padding:9px;background:none;color:#7a7a80;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-sc button:focus-visible,.bda-sc a:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
+<script>
+/* Share-my-score card. A game calls BDA.shareScore({score, line, into, after, lead}) when a game ends:
+   score = the number to brag about, line = optional extra like "Level 5" or "Advanced",
+   into = the game-over card (element or selector) to put the button in, after = where in it; without into the button floats.
+   lead replaces "I scored" (e.g. "I reached" with score "Level 12"). */
+(()=>{
+  const G=window.BDA_GAME||{},nf=n=>typeof n==='number'?n.toLocaleString('en-US'):String(n);
+  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg>';
+  let floatBtn=null,sheet=null,cur=null;
+  const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+  function fitText(c,t,max,size,weight,fam){let s=size;do{c.font=weight+' '+s+'px '+fam;s-=2}while(c.measureText(t).width>max&&s>18);return c.font}
+  async function makeCard(d){
+    const F='"Gloria Hallelujah","Comic Sans MS",cursive',F2='"Patrick Hand","Comic Sans MS",cursive',INK='#2e2e33',PAPER='#f6f3ea';
+    try{await Promise.all([document.fonts.load('120px "Gloria Hallelujah"'),document.fonts.load('40px "Patrick Hand"')])}catch(e){}
+    const cover=await load('../img/'+G.slug+'.jpg');
+    const S=1080,cv=document.createElement('canvas');cv.width=cv.height=S;const c=cv.getContext('2d');
+    c.fillStyle=PAPER;c.fillRect(0,0,S,S);
+    // faint pencil grain and a doodled frame
+    c.fillStyle='rgba(46,46,51,.035)';for(let i=0;i<1400;i++){const x=(i*197)%S,y=(i*331+i*i)%S;c.fillRect(x,y,2,2)}
+    c.strokeStyle=INK;c.lineWidth=5;c.lineJoin='round';c.beginPath();for(let i=0;i<=80;i++){const t=i/80,p=t*4,k=Math.floor(p),f=p-k,w=12*Math.sin(i*1.7);
+      const pts=[[40,40],[S-40,40],[S-40,S-40],[40,S-40],[40,40]];const a=pts[k],b=pts[k+1]||pts[4];c.lineTo(a[0]+(b[0]-a[0])*f+(k%2?w:0),a[1]+(b[1]-a[1])*f+(k%2?0:w))}c.stroke();
+    // site name, hand lettered
+    c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=INK;c.font='62px '+F;c.fillText((G.site||'Sketchpad Arcade').toUpperCase(),S/2,120);
+    // cover art in a pencil frame
+    const cs=470,cx=(S-cs)/2,cy=162;
+    c.save();rr(c,cx,cy,cs,cs,26);c.clip();if(cover)c.drawImage(cover,cx,cy,cs,cs);c.restore();
+    c.lineWidth=6;c.strokeStyle=INK;rr(c,cx,cy,cs,cs,26);c.stroke();
+    // "I scored" + the big number
+    c.font='54px '+F2;c.fillStyle='#55555c';c.fillText(d.lead||'I scored',S/2,712);
+    const big=nf(d.score);fitText(c,big,S-120,150,400,F);
+    c.fillStyle=INK;c.fillText(big,S/2,852);
+    c.lineWidth=4;c.strokeStyle='#c99a1a';c.beginPath();c.moveTo(S/2-c.measureText(big).width/2-10,872);c.quadraticCurveTo(S/2,886,S/2+c.measureText(big).width/2+10,870);c.stroke();
+    const line=(d.line?d.line+' · ':'')+'in '+(G.name||'');
+    fitText(c,line,S-140,46,400,F2);c.fillStyle=INK;c.fillText(line,S/2,930);
+    // challenge + link, in a wobbly box
+    const pill='Can you beat me? '+(G.short||'sketchpadarcade.com');fitText(c,pill,S-200,38,400,F2);
+    const pw=c.measureText(pill).width+72,ph=72,px=(S-pw)/2,py=962;
+    c.fillStyle='#f3e6b0';rr(c,px,py,pw,ph,30);c.fill();c.lineWidth=4;c.strokeStyle=INK;c.stroke();
+    c.fillStyle=INK;c.fillText(pill,S/2,py+49);
+    return new Promise(r=>cv.toBlob(b=>r(b),'image/png'));
+  }
+  function message(d){return (d.lead||'I scored')+' '+nf(d.score)+(d.line?' ('+d.line+')':'')+' in '+G.name+' on '+(G.site||'Sketchpad Arcade')+'! Can you beat me?'}
+  async function open(d){
+    try{if(window.va)window.va('event',{name:'Share score',data:{game:G.slug}})}catch(e){}
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sc';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share your score');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet&&!sheet.hidden)close()});document.body.appendChild(sheet)}
+    sheet.innerHTML='<div class="in"><img alt="Your score card"><div class="row"><button type="button" class="go" data-a="share">Share</button><a class="alt" data-a="save" download>Save image</a><button type="button" class="alt" data-a="copy">Copy link</button></div><button type="button" class="x">Close</button></div>';
+    sheet.hidden=false;
+    const blob=await makeCard(d);const url=URL.createObjectURL(blob);
+    const img=sheet.querySelector('img');img.src=url;img.alt='Score card: '+message(d);
+    const file=new File([blob],(G.slug||'score')+'-score.png',{type:'image/png'});
+    const save=sheet.querySelector('[data-a=save]');save.href=url;save.download=file.name;
+    const text=message(d);
+    sheet.querySelector('[data-a=share]').onclick=async()=>{
+      try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:G.name,text:text+' '+G.url});return}
+        if(navigator.share){await navigator.share({title:G.name,text,url:G.url});return}}catch(e){if(e&&e.name==='AbortError')return}
+      copyText(text+' '+G.url,'Message and link copied')};
+    sheet.querySelector('[data-a=copy]').onclick=()=>copyText(G.url,'Link copied');
+    sheet.querySelector('.x').onclick=close;
+    sheet.querySelector('[data-a=share]').focus();
+  }
+  function close(){if(sheet)sheet.hidden=true}
+  async function copyText(t,msg){let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove()}
+    const b=sheet&&sheet.querySelector('[data-a=copy]');if(b){const o=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=o,1500)}}
+  function button(d){const b=document.createElement('button');b.type='button';b.className='bda-scorebtn';b.innerHTML=ICON+'<span>Share my score</span>';
+    b.addEventListener('click',e=>{e.stopPropagation();open(d)});return b}
+  window.BDA=window.BDA||{};
+  window.BDA.shareScore=function(d){
+    let host=d&&d.into;if(typeof host==='string')host=document.querySelector(host);
+    if(host)host.querySelectorAll('.bda-scorebtn').forEach(x=>x.remove());
+    if(!d||d.score==null||d.score===''||(typeof d.score==='number'&&!(d.score>0)))return;
+    cur=d;
+    if(host){const b=button(d);
+      const after=d.after&&host.querySelector(d.after);if(after)after.insertAdjacentElement('afterend',b);else host.appendChild(b);return b}
+    // no card given: a floating button that goes away on the next tap anywhere else
+    if(floatBtn)floatBtn.remove();floatBtn=button(d);floatBtn.classList.add('float');document.body.appendChild(floatBtn);
+    const fb=floatBtn;setTimeout(()=>document.addEventListener('pointerdown',function h(e){if(!fb.contains(e.target)&&!(sheet&&sheet.contains(e.target))){fb.remove();document.removeEventListener('pointerdown',h,true)}},true),400);
+    return fb};
+  window.BDA.hideScore=function(){if(floatBtn){floatBtn.remove();floatBtn=null}};
+})();
+</script>
+<script>
+(()=>{const h=document.querySelector('.sa-head h1');if(!h)return;let base=0;
+function fit(){h.style.fontSize='';base=parseFloat(getComputedStyle(h).fontSize);let fs=base;
+  while(h.scrollWidth>h.clientWidth+1&&fs>14){fs-=1;h.style.fontSize=fs+'px'}}
+fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>
