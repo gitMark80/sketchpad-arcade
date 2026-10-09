@@ -27,8 +27,32 @@ BDA = Path(os.environ.get("BDA_REPO") or ROOT.parent / "beach-day-arcade")  # th
 if not (BDA / "src/games").exists():
     sys.exit(f"Beach Day Arcade checkout not found at {BDA}; set BDA_REPO to its path")
 SRC_SLUG = sys.argv[1]
+# Sketchpad Arcade renamed its games (Oct 2026). Pass the Beach Day Arcade slug; output goes to the Sketchpad slug.
+RENAMED = {
+    "seaside-sprint": "sketch-sprint",
+    "plank-plunk": "pencil-plunk",
+    "letter-lagoon": "letter-links",
+    "lighthouse-drop": "doodle-drop",
+    "tide-clash": "draw-brawl",
+    "shore-search": "sketch-search",
+    "shell-stacks": "doodle-stacks",
+    "tiki-putt": "pencil-putt",
+    "splash-slice": "scribble-slice",
+    "sea-merge": "margin-merge",
+    "boardwalk-darts": "doodle-darts",
+    "word-waves": "word-workshop",
+    "tide-pop": "bubble-doodle",
+    "crab-hop": "sidewalk-hop",
+    "tide-gates": "paper-gates",
+    "four-by-sea": "four-in-a-frame",
+    "whirlpool-gulp": "eraser-gulp",
+    "bottle-words": "note-quest",
+    "octo-swing": "scribble-swing",
+    "treasure-trio": "margin-match",
+}
+SLUG = RENAMED.get(SRC_SLUG, SRC_SLUG)
 SRC = BDA / "src/assets" / SRC_SLUG
-DST = ROOT / "src/assets" / SRC_SLUG
+DST = ROOT / "src/assets" / SLUG
 
 INK = np.array([.20, .20, .22])       # graphite
 PAPER = np.array([.965, .953, .918])  # sketchbook page
@@ -173,12 +197,12 @@ def sketch_inline(html_path):
 def main():
     import shutil
     if "--inline" in sys.argv:
-        sketch_inline(ROOT / "src/games" / f"{SRC_SLUG}.html")
+        sketch_inline(ROOT / "src/games" / f"{SLUG}.html")
     cover = BDA / "src/img" / f"{SRC_SLUG}.jpg"
     if cover.exists():
         (ROOT / "src/img").mkdir(parents=True, exist_ok=True)
-        sketch_backdrop(Image.open(cover)).save(ROOT / "src/img" / cover.name, quality=86)
-        print(f"sketched cover src/img/{cover.name}")
+        sketch_backdrop(Image.open(cover)).save(ROOT / "src/img" / f"{SLUG}.jpg", quality=86)
+        print(f"sketched cover src/img/{SLUG}.jpg")
     if not SRC.exists():
         print(f"no asset folder for {SRC_SLUG}; cover only")
         return
@@ -198,7 +222,7 @@ def main():
         else:
             sketch_sprite(im, tint_for(f.stem)).save(DST / f.name, quality=72)
         n += 1
-    print(f"sketched {n} images into src/assets/{SRC_SLUG}")
+    print(f"sketched {n} images into src/assets/{SLUG}")
 
 if __name__ == "__main__":
     main()

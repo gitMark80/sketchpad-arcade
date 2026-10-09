@@ -1,4 +1,206 @@
 {
   "outputDirectory": "site",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/seaside-sprint",
+      "destination": "/sketch-sprint",
+      "permanent": true
+    },
+    {
+      "source": "/play/seaside-sprint",
+      "destination": "/play/sketch-sprint",
+      "permanent": true
+    },
+    {
+      "source": "/plank-plunk",
+      "destination": "/pencil-plunk",
+      "permanent": true
+    },
+    {
+      "source": "/play/plank-plunk",
+      "destination": "/play/pencil-plunk",
+      "permanent": true
+    },
+    {
+      "source": "/letter-lagoon",
+      "destination": "/letter-links",
+      "permanent": true
+    },
+    {
+      "source": "/play/letter-lagoon",
+      "destination": "/play/letter-links",
+      "permanent": true
+    },
+    {
+      "source": "/lighthouse-drop",
+      "destination": "/doodle-drop",
+      "permanent": true
+    },
+    {
+      "source": "/play/lighthouse-drop",
+      "destination": "/play/doodle-drop",
+      "permanent": true
+    },
+    {
+      "source": "/tide-clash",
+      "destination": "/draw-brawl",
+      "permanent": true
+    },
+    {
+      "source": "/play/tide-clash",
+      "destination": "/play/draw-brawl",
+      "permanent": true
+    },
+    {
+      "source": "/shore-search",
+      "destination": "/sketch-search",
+      "permanent": true
+    },
+    {
+      "source": "/play/shore-search",
+      "destination": "/play/sketch-search",
+      "permanent": true
+    },
+    {
+      "source": "/shell-stacks",
+      "destination": "/doodle-stacks",
+      "permanent": true
+    },
+    {
+      "source": "/play/shell-stacks",
+      "destination": "/play/doodle-stacks",
+      "permanent": true
+    },
+    {
+      "source": "/tiki-putt",
+      "destination": "/pencil-putt",
+      "permanent": true
+    },
+    {
+      "source": "/play/tiki-putt",
+      "destination": "/play/pencil-putt",
+      "permanent": true
+    },
+    {
+      "source": "/splash-slice",
+      "destination": "/scribble-slice",
+      "permanent": true
+    },
+    {
+      "source": "/play/splash-slice",
+      "destination": "/play/scribble-slice",
+      "permanent": true
+    },
+    {
+      "source": "/sea-merge",
+      "destination": "/margin-merge",
+      "permanent": true
+    },
+    {
+      "source": "/play/sea-merge",
+      "destination": "/play/margin-merge",
+      "permanent": true
+    },
+    {
+      "source": "/boardwalk-darts",
+      "destination": "/doodle-darts",
+      "permanent": true
+    },
+    {
+      "source": "/play/boardwalk-darts",
+      "destination": "/play/doodle-darts",
+      "permanent": true
+    },
+    {
+      "source": "/word-waves",
+      "destination": "/word-workshop",
+      "permanent": true
+    },
+    {
+      "source": "/play/word-waves",
+      "destination": "/play/word-workshop",
+      "permanent": true
+    },
+    {
+      "source": "/tide-pop",
+      "destination": "/bubble-doodle",
+      "permanent": true
+    },
+    {
+      "source": "/play/tide-pop",
+      "destination": "/play/bubble-doodle",
+      "permanent": true
+    },
+    {
+      "source": "/crab-hop",
+      "destination": "/sidewalk-hop",
+      "permanent": true
+    },
+    {
+      "source": "/play/crab-hop",
+      "destination": "/play/sidewalk-hop",
+      "permanent": true
+    },
+    {
+      "source": "/tide-gates",
+      "destination": "/paper-gates",
+      "permanent": true
+    },
+    {
+      "source": "/play/tide-gates",
+      "destination": "/play/paper-gates",
+      "permanent": true
+    },
+    {
+      "source": "/four-by-sea",
+      "destination": "/four-in-a-frame",
+      "permanent": true
+    },
+    {
+      "source": "/play/four-by-sea",
+      "destination": "/play/four-in-a-frame",
+      "permanent": true
+    },
+    {
+      "source": "/whirlpool-gulp",
+      "destination": "/eraser-gulp",
+      "permanent": true
+    },
+    {
+      "source": "/play/whirlpool-gulp",
+      "destination": "/play/eraser-gulp",
+      "permanent": true
+    },
+    {
+      "source": "/bottle-words",
+      "destination": "/note-quest",
+      "permanent": true
+    },
+    {
+      "source": "/play/bottle-words",
+      "destination": "/play/note-quest",
+      "permanent": true
+    },
+    {
+      "source": "/octo-swing",
+      "destination": "/scribble-swing",
+      "permanent": true
+    },
+    {
+      "source": "/play/octo-swing",
+      "destination": "/play/scribble-swing",
+      "permanent": true
+    },
+    {
+      "source": "/treasure-trio",
+      "destination": "/margin-match",
+      "permanent": true
+    },
+    {
+      "source": "/play/treasure-trio",
+      "destination": "/play/margin-match",
+      "permanent": true
+    }
+  ]
 }

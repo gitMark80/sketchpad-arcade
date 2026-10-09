@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2048 DROP – Free Number Merge Game | Beach Day Arcade</title>
+<title>2048 DROP – Free Number Merge Game | Sketchpad Arcade</title>
 <link rel="canonical" href="https://www.sketchpadarcade.com/2048-drop">
 <meta property="og:url" content="https://www.sketchpadarcade.com/2048-drop">
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.sketchpadarcade.com/brand/icon-32.png?v=2">
@@ -28,7 +28,7 @@
 .bda-toast[hidden]{display:none!important}
 </style>
 <meta name="description" content="Drop numbers, combine matching balls, and work your way toward 2048. How high can you merge before the container fills?">
-<meta property="og:title" content="2048 DROP – Free Number Merge Game | Beach Day Arcade">
+<meta property="og:title" content="2048 DROP – Free Number Merge Game | Sketchpad Arcade">
 <meta property="og:description" content="Drop numbers, combine matching balls, and work your way toward 2048. How high can you merge before the container fills?">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <meta name="twitter:card" content="summary_large_image">
@@ -130,13 +130,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 .strip .card{scroll-snap-align:start}
 @media (max-width:720px){.strip{grid-auto-columns:40%;gap:12px}.row>h2.sec{font-size:1.35rem}}
 @media (max-width:360px){.strip{grid-auto-columns:62%}}
+.sisterbtn{text-decoration:none;background:linear-gradient(180deg,#bfeaff 0%,#5ab9ea 55%,#2f8fd0 100%);color:#06324f;border:2px solid #2e2e33;border-radius:999px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;font-size:.95rem}@media (max-width:680px){.navr .sharebtn:not(.homebtn):not(.sisterbtn) span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.navr .sharebtn:not(.homebtn):not(.sisterbtn){padding:8px}}
+@media (max-width:680px){.logo{gap:6px;font-size:1rem!important;letter-spacing:.02em}.logo svg{width:22px!important;height:22px!important}.navr .sisterbtn{font-size:.85rem;padding:6px 9px;white-space:nowrap}.navr .homebtn{padding:7px 9px}}@media (max-width:680px){.logo span{white-space:normal;line-height:1;max-width:5.5em}}
+@media (max-width:420px){.nav{gap:4px}.navr{gap:3px}.navr .sisterbtn{padding:5px 7px;gap:4px}.navr .homebtn{padding:6px 8px;gap:4px}.logo svg{width:18px!important;height:18px!important}}
 </style>
+<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
 </head>
 <body>
 <div class="top"><nav class="wrap nav" aria-label="Main">
 <a class="logo" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/><path d="M24 10l6 6" stroke-width="1.6"/></svg><span>Sketchpad Arcade</span></a>
 <div class="navr"><a class="sharebtn homebtn" href="index.html" aria-current="page"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg><span>Home</span></a>
-<button class="sharebtn" type="button" data-share-url="https://www.sketchpadarcade.com/2048-drop" data-share-title="2048 DROP" data-share-text="Play 2048 DROP free on Sketchpad Arcade! Drop numbers, merge matching balls and work your way to 2048."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg><span>Share</span></button></div>
+<button class="sharebtn" type="button" data-share-url="https://www.sketchpadarcade.com/2048-drop" data-share-title="2048 DROP" data-share-text="Play 2048 DROP free on Sketchpad Arcade! Drop numbers, merge matching balls and work your way to 2048."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg><span>Share</span></button><a class="sharebtn sisterbtn" href="https://www.beachdayarcade.com" title="Play the same games at Beach Day Arcade" aria-label="Visit Beach Day Arcade"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16.5" cy="7" r="3"/><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 19.5c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg><span>Beach Day</span></a></div>
 </nav></div>
 <main><div class="wrap">
 <div class="crumbs"><a href="index.html">All games</a> / Puzzle</div>
@@ -156,35 +160,47 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Computer: move the mouse to aim and click to drop. Arrow keys aim and Space drops.</li><li>Phone and tablet: drag to aim and lift your finger to drop.</li><li>NEXT shows the ball you&#x27;ll drop next, plus a smaller preview of the one after it. The Sound button turns effects on or off.</li></ul></section>
   <section class="panel"><h2>Strategy tips</h2><ul><li>Keep your biggest numbers together in one corner so they can merge with each other as they grow.</li><li>Check NEXT before every drop and leave a spot for it beside a matching number.</li><li>Avoid stranding small balls between big ones. A lonely 2 at the bottom can block a whole column.</li><li>Keep open space in the middle of the jar so new balls have room to land and roll.</li><li>Chain merges score extra, so line up pairs that will set each other off.</li><li>A ball crossing the danger line for a moment is fine. Watch the countdown and clear the top before it runs out.</li></ul></section>
 </div>
-<section class="panel about"><h2>About 2048 DROP</h2><p>2048 DROP is an original number-merging physics game made by Beach Day Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.</p><p>Reaching 2048 is a big moment, but it isn&#x27;t the end. Skilled players can keep merging to 4096 and beyond. Your personal best, today&#x27;s best and lifetime stats are saved on your device. No account needed.</p></section>
-<section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="sea-merge.html" data-slug="sea-merge" data-added="2026-10-08" data-genre="Puzzle" aria-label="Sea Merge, Puzzle game" title="Sea Merge">
-<img class="thumb" src="img/sea-merge.jpg" alt="Sea Merge" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="octo-swing.html" data-slug="octo-swing" data-added="2026-10-08" data-genre="Arcade" aria-label="Octo Swing, Arcade game" title="Octo Swing">
-<img class="thumb" src="img/octo-swing.jpg" alt="Octo Swing" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="bottle-words.html" data-slug="bottle-words" data-added="2026-10-08" data-genre="Word" aria-label="Bottle Words, Word game" title="Bottle Words">
-<img class="thumb" src="img/bottle-words.jpg" alt="Bottle Words" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="whirlpool-gulp.html" data-slug="whirlpool-gulp" data-added="2026-10-08" data-genre="Arcade" aria-label="Whirlpool Gulp, Arcade game" title="Whirlpool Gulp">
-<img class="thumb" src="img/whirlpool-gulp.jpg" alt="Whirlpool Gulp" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="crab-hop.html" data-slug="crab-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Crab Hop, Arcade game" title="Crab Hop">
-<img class="thumb" src="img/crab-hop.jpg" alt="Crab Hop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="tide-gates.html" data-slug="tide-gates" data-added="2026-10-08" data-genre="Puzzle" aria-label="Tide Gates, Puzzle game" title="Tide Gates">
-<img class="thumb" src="img/tide-gates.jpg" alt="Tide Gates" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="shell-stacks.html" data-slug="shell-stacks" data-added="2026-10-08" data-genre="Puzzle" aria-label="Shell Stacks, Puzzle game" title="Shell Stacks">
-<img class="thumb" src="img/shell-stacks.jpg" alt="Shell Stacks" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="splash-slice.html" data-slug="splash-slice" data-added="2026-10-08" data-genre="Arcade" aria-label="Splash Slice, Arcade game" title="Splash Slice">
-<img class="thumb" src="img/splash-slice.jpg" alt="Splash Slice" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="shore-search.html" data-slug="shore-search" data-added="2026-10-08" data-genre="Word" aria-label="Shore Search, Word game" title="Shore Search">
-<img class="thumb" src="img/shore-search.jpg" alt="Shore Search" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="tiki-putt.html" data-slug="tiki-putt" data-added="2026-10-08" data-genre="Arcade" aria-label="Tiki Putt, Arcade game" title="Tiki Putt">
-<img class="thumb" src="img/tiki-putt.jpg" alt="Tiki Putt" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="letter-lagoon.html" data-slug="letter-lagoon" data-added="2026-10-08" data-genre="Word" aria-label="Letter Lagoon, Word game" title="Letter Lagoon">
-<img class="thumb" src="img/letter-lagoon.jpg" alt="Letter Lagoon" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="seaside-sprint.html" data-slug="seaside-sprint" data-added="2026-10-08" data-genre="Arcade" aria-label="Seaside Sprint, Arcade game" title="Seaside Sprint">
-<img class="thumb" src="img/seaside-sprint.jpg" alt="Seaside Sprint" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="lighthouse-drop.html" data-slug="lighthouse-drop" data-added="2026-10-08" data-genre="Arcade" aria-label="Lighthouse Drop, Arcade game" title="Lighthouse Drop">
-<img class="thumb" src="img/lighthouse-drop.jpg" alt="Lighthouse Drop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="plank-plunk.html" data-slug="plank-plunk" data-added="2026-10-08" data-genre="Puzzle" aria-label="Plank Plunk, Puzzle game" title="Plank Plunk">
-<img class="thumb" src="img/plank-plunk.jpg" alt="Plank Plunk" loading="lazy" width="640" height="640">
+<section class="panel about"><h2>About 2048 DROP</h2><p>2048 DROP is an original number-merging physics game made by Sketchpad Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.</p><p>Reaching 2048 is a big moment, but it isn&#x27;t the end. Skilled players can keep merging to 4096 and beyond. Your personal best, today&#x27;s best and lifetime stats are saved on your device. No account needed.</p></section>
+<section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="margin-merge.html" data-slug="margin-merge" data-added="2026-10-08" data-genre="Puzzle" aria-label="Margin Merge, Puzzle game" title="Margin Merge">
+<img class="thumb" src="img/margin-merge.jpg" alt="Margin Merge" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="scribble-swing.html" data-slug="scribble-swing" data-added="2026-10-08" data-genre="Arcade" aria-label="Scribble Swing, Arcade game" title="Scribble Swing">
+<img class="thumb" src="img/scribble-swing.jpg" alt="Scribble Swing" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="note-quest.html" data-slug="note-quest" data-added="2026-10-08" data-genre="Word" aria-label="Note Quest, Word game" title="Note Quest">
+<img class="thumb" src="img/note-quest.jpg" alt="Note Quest" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="eraser-gulp.html" data-slug="eraser-gulp" data-added="2026-10-08" data-genre="Arcade" aria-label="Eraser Gulp, Arcade game" title="Eraser Gulp">
+<img class="thumb" src="img/eraser-gulp.jpg" alt="Eraser Gulp" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="sidewalk-hop.html" data-slug="sidewalk-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Sidewalk Hop, Arcade game" title="Sidewalk Hop">
+<img class="thumb" src="img/sidewalk-hop.jpg" alt="Sidewalk Hop" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-gates.html" data-slug="paper-gates" data-added="2026-10-08" data-genre="Puzzle" aria-label="Paper Gates, Puzzle game" title="Paper Gates">
+<img class="thumb" src="img/paper-gates.jpg" alt="Paper Gates" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="doodle-stacks.html" data-slug="doodle-stacks" data-added="2026-10-08" data-genre="Puzzle" aria-label="Doodle Stacks, Puzzle game" title="Doodle Stacks">
+<img class="thumb" src="img/doodle-stacks.jpg" alt="Doodle Stacks" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="scribble-slice.html" data-slug="scribble-slice" data-added="2026-10-08" data-genre="Arcade" aria-label="Scribble Slice, Arcade game" title="Scribble Slice">
+<img class="thumb" src="img/scribble-slice.jpg" alt="Scribble Slice" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="sketch-search.html" data-slug="sketch-search" data-added="2026-10-08" data-genre="Word" aria-label="Sketch Search, Word game" title="Sketch Search">
+<img class="thumb" src="img/sketch-search.jpg" alt="Sketch Search" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="pencil-putt.html" data-slug="pencil-putt" data-added="2026-10-08" data-genre="Arcade" aria-label="Pencil Putt, Arcade game" title="Pencil Putt">
+<img class="thumb" src="img/pencil-putt.jpg" alt="Pencil Putt" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="letter-links.html" data-slug="letter-links" data-added="2026-10-08" data-genre="Word" aria-label="Letter Links, Word game" title="Letter Links">
+<img class="thumb" src="img/letter-links.jpg" alt="Letter Links" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="sketch-sprint.html" data-slug="sketch-sprint" data-added="2026-10-08" data-genre="Arcade" aria-label="Sketch Sprint, Arcade game" title="Sketch Sprint">
+<img class="thumb" src="img/sketch-sprint.jpg" alt="Sketch Sprint" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="doodle-drop.html" data-slug="doodle-drop" data-added="2026-10-08" data-genre="Arcade" aria-label="Doodle Drop, Arcade game" title="Doodle Drop">
+<img class="thumb" src="img/doodle-drop.jpg" alt="Doodle Drop" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="pencil-plunk.html" data-slug="pencil-plunk" data-added="2026-10-08" data-genre="Puzzle" aria-label="Pencil Plunk, Puzzle game" title="Pencil Plunk">
+<img class="thumb" src="img/pencil-plunk.jpg" alt="Pencil Plunk" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="draw-brawl.html" data-slug="draw-brawl" data-added="2026-10-08" data-genre="Arcade" aria-label="Draw Brawl, Arcade game" title="Draw Brawl">
+<img class="thumb" src="img/draw-brawl.jpg" alt="Draw Brawl" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="doodle-darts.html" data-slug="doodle-darts" data-added="2026-10-08" data-genre="Arcade" aria-label="Doodle Darts, Arcade game" title="Doodle Darts">
+<img class="thumb" src="img/doodle-darts.jpg" alt="Doodle Darts" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="word-workshop.html" data-slug="word-workshop" data-added="2026-10-08" data-genre="Word" aria-label="Word Workshop, Word game" title="Word Workshop">
+<img class="thumb" src="img/word-workshop.jpg" alt="Word Workshop" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="bubble-doodle.html" data-slug="bubble-doodle" data-added="2026-10-08" data-genre="Arcade" aria-label="Bubble Doodle, Arcade game" title="Bubble Doodle">
+<img class="thumb" src="img/bubble-doodle.jpg" alt="Bubble Doodle" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="four-in-a-frame.html" data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
+<img class="thumb" src="img/four-in-a-frame.jpg" alt="Four in a Frame" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="margin-match.html" data-slug="margin-match" data-added="2026-10-08" data-genre="Puzzle" aria-label="Margin Match, Puzzle game" title="Margin Match">
+<img class="thumb" src="img/margin-match.jpg" alt="Margin Match" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag puzzle">Puzzle</span></div></a></div></section>
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "2048 DROP", "description": "A number-merging physics puzzle in a sea-glass jar. Drop numbered balls, watch them roll and settle, and merge matching numbers into bigger ones: 2 and 2 make 4, 4 and 4 make 8, all the way up to 2048 and beyond. Keep the pile below the danger line to stay in the game.", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>

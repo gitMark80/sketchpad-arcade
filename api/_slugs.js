@@ -1,2 +1,2 @@
 // Written by build.py. Games the play counter accepts.
-export const SLUGS = ["sea-merge", "2048-drop", "octo-swing", "bottle-words", "whirlpool-gulp", "crab-hop", "tide-gates", "shell-stacks", "splash-slice", "shore-search", "tiki-putt", "letter-lagoon", "seaside-sprint", "lighthouse-drop", "plank-plunk"];
+export const SLUGS = ["margin-merge", "2048-drop", "scribble-swing", "note-quest", "eraser-gulp", "sidewalk-hop", "paper-gates", "doodle-stacks", "scribble-slice", "sketch-search", "pencil-putt", "letter-links", "sketch-sprint", "doodle-drop", "pencil-plunk", "draw-brawl", "doodle-darts", "word-workshop", "bubble-doodle", "four-in-a-frame", "margin-match"];

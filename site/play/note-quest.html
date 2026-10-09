@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="robots" content="noindex">
+<title>Note Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Bottle Sketch: Note Quest redrawn as a 10-year-old's pencil sketchbook. Paper, graphite tiles and keys, wobbly borders;
+   coloured pencil only where the game needs it read fast: green = right spot, yellow = wrong spot, grey hatch = not in the word, pink shells. */
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --hit:var(--green); --hit-wash:var(--green-wash); --near:var(--yellow); --near-wash:var(--yellow-wash); --miss:#8a8a90; --miss-wash:#e4e2d8;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;background-color:var(--paper);
+  background-image:linear-gradient(rgba(246,243,234,.55),rgba(246,243,234,.55)),url(../assets/note-quest/beach.webp);background-size:auto,cover;background-position:0 0,center bottom;background-repeat:no-repeat;
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.app{height:100%;max-width:520px;margin:0 auto;padding-inline:12px;padding-block:10px 10px;display:flex;flex-direction:column;gap:8px}
+.top{display:flex;align-items:center;gap:8px;padding-inline:4px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);line-height:1;margin:0;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:var(--ink);text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center}
+.iconbtn{appearance:none;background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 1rem var(--body);white-space:nowrap;
+  border-radius:var(--wob);padding:8px 12px;box-shadow:2px 2px 0 var(--pencil);display:inline-flex;align-items:center;gap:6px;flex:none}
+.iconbtn.round{width:38px;height:36px;justify-content:center;padding:0;font:400 1.3rem var(--display);border-radius:var(--wob2)}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:none}
+.hud{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding-inline:4px}
+.lives{justify-self:start;display:flex;gap:3px;background:var(--paper);border:2px solid var(--ink);padding:4px 9px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil)}
+.lives i{width:27px;height:24px;background:url(../assets/note-quest/shell.webp) center/contain no-repeat;transition:transform .3s}
+.lives i.lost{background-image:url(../assets/note-quest/shell-lost.webp);transform:scale(.82);opacity:.45}
+.score{position:relative;min-width:96px;padding:2px 18px;border:2px solid var(--ink);border-radius:var(--wob2);font:400 2rem/1.1 var(--display);color:var(--ink);text-align:center;background:var(--paper);box-shadow:3px 3px 0 var(--pencil);font-variant-numeric:tabular-nums}
+.score.pop{animation:pop .25s}
+@keyframes pop{50%{transform:scale(1.15)}}
+.bestbox{justify-self:end;display:flex;flex-direction:column;align-items:center;background:var(--paper);border:2px solid var(--ink);color:var(--ink);padding:3px 14px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);min-width:70px}
+.bestbox small{font:400 .8rem/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bestbox b{font:400 1.25rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.roundline{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-inline:4px}
+.roundline span{font:400 1.1rem/1 var(--display);color:var(--ink)}
+.hintbtn{appearance:none;border:2px solid var(--yellow);display:inline-flex;align-items:center;gap:5px;padding:4px 12px 4px 8px;border-radius:var(--wob);background:var(--yellow-wash);color:var(--ink);font:400 1rem var(--display);box-shadow:2px 2px 0 var(--pencil)}
+.hintbtn svg{width:20px;height:20px}
+.hintbtn:disabled{filter:grayscale(.9);opacity:.5;cursor:default}
+.hintbtn:active:not(:disabled){transform:translate(2px,2px);box-shadow:none}
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative}
+.paper{position:relative;padding:16px 14px 14px;border-radius:var(--wob);background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--pencil)}
+.paper::before{content:"";position:absolute;left:50%;top:-14px;width:46px;height:22px;transform:translateX(-50%);border-radius:8px 8px 4px 4px;background:var(--paper-2);border:2px solid var(--ink);box-sizing:border-box}
+.grid{display:grid;gap:6px}
+.row{display:grid;gap:6px}
+.row.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.cell{width:var(--c);height:var(--c);display:grid;place-items:center;padding-bottom:calc(var(--c)*.06);border-radius:14px;background:url(../assets/note-quest/tile-empty.webp) center/100% 100% no-repeat;font:400 calc(var(--c)*.6)/1 var(--display);color:var(--ink);text-transform:uppercase;position:relative}
+.cell.filled{background-image:url(../assets/note-quest/tile-typed.webp);animation:tap .12s}
+@keyframes tap{50%{transform:scale(1.08)}}
+.cell.ghost{color:rgba(46,46,51,.35)}
+.cell.hit,.cell.near,.cell.miss{color:var(--ink)}
+.cell.hit{background-image:url(../assets/note-quest/tile-hit.webp);color:#3d6e4a}
+.cell.near{background-image:url(../assets/note-quest/tile-near.webp);color:#8a6a10}
+.cell.miss{background-image:repeating-linear-gradient(135deg,rgba(85,85,92,.22) 0 2px,transparent 2px 7px),url(../assets/note-quest/tile-miss.webp);background-size:100% 100%,100% 100%;color:var(--muted)}
+.cell.flip{animation:flip .42s ease-in-out}
+@keyframes flip{50%{transform:rotateX(90deg)}}
+.cell.win{animation:hop .5s ease}
+@keyframes hop{40%{transform:translateY(-12px)}}
+.kb{display:grid;gap:6px;padding-bottom:2px}
+.kr{display:flex;gap:5px;justify-content:center}
+.key{appearance:none;border:2px solid var(--ink);flex:1;max-width:44px;height:52px;border-radius:var(--wob2);background:var(--paper);color:var(--ink);font:400 1.25rem/1 var(--display);box-shadow:2px 2px 0 var(--pencil);padding:0;text-transform:uppercase}
+.key.wide.del{flex:1.15}
+.key.wide{max-width:66px;flex:1.5;font-size:.95rem;font-family:var(--body)}
+.key:active{transform:translate(2px,2px);box-shadow:none}
+.key.hit{background:var(--hit-wash);border-color:var(--hit);color:#3d6e4a}
+.key.near{background:var(--near-wash);border-color:var(--near);color:#8a6a10}
+.key.miss{background:repeating-linear-gradient(135deg,rgba(85,85,92,.18) 0 2px,var(--miss-wash) 2px 7px);border-color:var(--faint);color:var(--muted);box-shadow:none}
+.toast{position:absolute;left:50%;top:6px;transform:translateX(-50%) rotate(-1deg);z-index:5;background:var(--ink);color:var(--paper);font:400 1.05rem var(--body);padding:6px 16px;border-radius:var(--wob);pointer-events:none;white-space:nowrap}
+.cover{position:fixed;inset:0;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.55);overflow:auto;z-index:30}
+.card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:20px 18px 18px;width:100%;max-width:360px;text-align:center;box-shadow:4px 4px 0 var(--pencil);animation:rise .35s cubic-bezier(.2,1.4,.4,1)}
+.card>*{position:relative}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font:400 1.8rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
+.card p{margin:8px 0 0;color:var(--pencil);line-height:1.35;font-size:1.05rem}
+.card .bottle{width:150px;height:auto;margin:0 auto 4px;display:block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px) rotate(-3deg)}}
+.legend{display:flex;justify-content:center;gap:4px;margin:10px 0 2px}
+.legend .cell{--c:38px;font-size:1.4rem}
+.rules{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;line-height:1.25;color:var(--ink)}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
+.rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem/1 var(--display)}
+.reveal{display:flex;justify-content:center;gap:4px;margin:10px 0 0}
+.reveal .cell{--c:40px;font-size:1.5rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 0}
+.stats div{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:6px 4px}
+.stats b{display:block;font:400 1.3rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.stats span{font-size:.85rem;color:var(--muted)}
+.big{position:relative;appearance:none;border:2px solid var(--ink);width:100%;margin-top:16px;border-radius:var(--wob2);padding:10px 18px;font:400 1.8rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);
+  background:var(--yellow-wash);box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
+.big:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.newbest{display:inline-block;background:var(--yellow-wash);color:var(--ink);font:400 1rem var(--body);border:2px solid var(--yellow);border-radius:var(--wob);padding:3px 10px 2px;margin-top:10px}
+.best{margin-top:12px;color:var(--muted);font-size:1rem}
+.pick{margin:14px 0 8px;font:400 1.15rem var(--display);color:var(--ink)}
+.modes{display:flex;flex-direction:column;gap:10px}
+.mode{display:flex;align-items:center;gap:12px;width:100%;border:2px dashed var(--faint);cursor:pointer;text-align:left;border-radius:var(--wob);padding:9px 14px;color:var(--ink);background:var(--paper);font-family:var(--body);box-shadow:2px 2px 0 var(--pencil)}
+.mode:active{transform:translate(2px,2px);box-shadow:none}
+.mode:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.mode .lv{display:flex;gap:3px;align-items:flex-end;flex:0 0 auto}
+.mode .lv i{width:6px;border-radius:2px;background:var(--paper);border:1.5px solid var(--pencil);box-sizing:border-box}
+.mode .lv i.on{background:var(--ink);border-color:var(--ink)}
+.mode .lv i:nth-child(1){height:10px}.mode .lv i:nth-child(2){height:16px}.mode .lv i:nth-child(3){height:22px}
+.mode b{display:block;font:400 1.25rem/1.1 var(--display)}
+.mode small{display:block;font-size:.9rem;color:var(--pencil);line-height:1.25}
+.mode em{margin-left:auto;font-style:normal;font-size:.85rem;background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--wob2);padding:2px 8px;white-space:nowrap}
+.mode.beg{border-color:var(--green)}.mode.int{border-color:var(--blue)}.mode.adv{border-color:var(--orange)}
+.mode.cur{border:2px solid var(--ink);background:var(--yellow-wash)}
+@media (max-height:700px){.key{height:44px}.brand{font-size:1.35rem}.score{font-size:1.6rem}}
+@media (prefers-reduced-motion:reduce){.card .bottle,.cell.flip,.cell.win,.row.shake{animation:none}}
+</style>
+<link rel="preload" as="image" href="../assets/note-quest/tile-hit.webp"><link rel="preload" as="image" href="../assets/note-quest/tile-near.webp"><link rel="preload" as="image" href="../assets/note-quest/tile-miss.webp">
+<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
+<style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
+<style>
+.bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
+@media (min-width:600px){.bda-sheet{align-items:center}}
+.bda-sheet[hidden]{display:none!important}
+.bda-card{width:100%;max-width:380px;background:#f6f3ea;color:#2e2e33;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c}
+.bda-card h2{margin:0 0 4px;font:400 1.3rem/1.2 "Gloria Hallelujah","Comic Sans MS",cursive;color:#2e2e33}
+.bda-card .u{margin:0 0 12px;font-size:.9rem;color:#7a7a80;overflow-wrap:anywhere}
+.bda-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.bda-opts a,.bda-opts button{appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#2e2e33;text-decoration:none;font:400 .85rem "Patrick Hand","Comic Sans MS",cursive;padding:4px 0;border-radius:12px}
+.bda-opts i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid #2e2e33;font:800 1.05rem system-ui,sans-serif;font-style:normal;color:#fff}
+.bda-opts a:focus-visible,.bda-opts button:focus-visible,.bda-x:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+.bda-x{appearance:none;border:2px solid #2e2e33;margin-top:12px;width:100%;padding:8px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;background:#f6f3ea;color:#2e2e33;font:400 1.05rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bda-toast[hidden]{display:none!important}
+</style>
+<style>@media (hover:hover) and (pointer:fine) and (min-aspect-ratio:3/4) and (min-width:700px){html{background:#e9e5d8!important;height:100%;overflow:hidden}html::before{content:'';position:fixed;inset:-60px;z-index:-1;background:#e9e5d8 url(../img/note-quest.jpg) center/cover no-repeat;filter:blur(30px) opacity(.5)}body{width:min(100vw,calc(100vh*9/16));width:min(100vw,calc(100dvh*9/16));height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;transform:translateZ(0);box-shadow:0 0 0 2px #2e2e33,8px 8px 0 #55555c}body>.app,body>.wrap,body>#app{max-width:none!important}}</style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Note Quest</h1><button class="sa-share" type="button" aria-label="Share Note Quest" data-share-url="https://www.sketchpadarcade.com/note-quest" data-share-title="Note Quest" data-share-text="Play Note Quest free on Sketchpad Arcade! Guess the secret word in the bottle in six tries, with colour clues after every guess."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
+    <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
+  </div>
+  <div class="hud">
+    <div class="lives" id="lives" aria-label="Shells left"></div>
+    <div class="score" id="scoreEl" aria-live="polite">0</div>
+    <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
+  </div>
+  <div class="roundline">
+    <span id="roundEl">Bottle 1 · 4 letters</span>
+    <button class="hintbtn" id="hintBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="1.6"/><path d="M9 19h6M10 22h4" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/></svg>Hint</button>
+  </div>
+  <div class="stage" id="stage">
+    <div class="paper"><div class="grid" id="grid" role="grid" aria-label="Your guesses"></div></div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+  <div class="kb" id="kb" aria-label="Keyboard"></div>
+</div>
+
+<div class="cover" id="startCover">
+  <div class="card">
+    <img class="bottle" src="../assets/note-quest/bottle.webp" alt="" width="150" height="94">
+    <h2>Note Quest</h2>
+    <ul class="rules">
+      <li><b>1</b><span>A secret word is hiding in each bottle. Guess it before your tries run out.</span></li>
+      <li><b>2</b><span>After each guess the letters change colour:</span></li>
+    </ul>
+    <div class="legend"><div class="cell hit">S</div><div class="cell near">E</div><div class="cell miss">A</div></div>
+    <p style="font-size:.95rem;margin-top:4px">Green: right spot. Yellow: in the word, wrong spot. Grey: not in the word.</p>
+    <ul class="rules">
+      <li><b>3</b><span>Words get longer as you go. Fewer guesses means more points.</span></li>
+      <li><b>4</b><span>Miss a word and you lose a shell. Lose all 3 and the game is over. Solve words in a row to win a shell back.</span></li>
+    </ul>
+    <div class="pick">Pick your difficulty</div>
+    <div class="modes" id="modes"></div>
+  </div>
+</div>
+
+<div class="cover" id="roundCover" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="rTitle">
+    <h2 id="rTitle">Found it!</h2>
+    <div class="reveal" id="rWord"></div>
+    <p id="rText">+120 points</p>
+    <button class="big" id="nextBtn" type="button">Next bottle</button>
+  </div>
+</div>
+
+<div class="cover" id="overCover" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="oTitle">
+    <h2 id="oTitle">Out of shells!</h2>
+    <p>The last word was</p>
+    <div class="reveal" id="oWord"></div>
+    <div class="stats"><div><b id="oScore">0</b><span>score</span></div><div><b id="oBest">0</b><span>best</span></div><div><b id="oWords">0</b><span>words found</span></div></div>
+    <p id="oMode" style="font-size:.85rem;margin-top:8px"></p>
+    <div class="newbest" id="oNew" hidden>New best score!</div>
+    <button class="big" id="againBtn" type="button">Play again</button>
+  </div>
+</div>
+
+<script>
+const ANSWERS={4:"BALL BARN BEAM BEAR BELL BIKE BIRD BLUE BOAT BOLD BOOK CAKE CALM CAMP CARE CAVE CLAM COLD COOL CORN COVE CRAB DAWN DECK DEER DIVE DOCK DOOR DRUM DUCK DUNE DUSK FARM FAST FERN FIRE FISH FLAG FOAM FREE FROG GAME GATE GIFT GLEN GLOW GOAT GOLD GULL HARE HATS HAZE HELP HILL HOME HOOP HOPE HORN HUGE HUGS JOKE JUMP KELP KIND KITE LAKE LAMB LAMP LEAF LILY LIME LION LOVE MAPS MILK MINT MIST MOON MULE NEAT NEST NOON NUTS OARS PALM PATH PEAK PEAR PIER PINK PLAY PLUM POND PUFF RAIN REEF RICE ROAD ROCK ROOF ROPE ROSE SAFE SAIL SALT SAND SEAL SEED SHIP SLOW SNAP SNOW SOAK SODA SOFT SONG SPIN STAR SURF SWAN SWIM TALL TAME TEAL TENT TIDE TIME TINY TOAD TREE TRIP TUNE WALL WARM WAVE WEEK WIDE WILD WIND WISH WOLF YARD YEAR ZOOM".split(" "),5:"ACORN AMBER APPLE BAGEL BANJO BAYOU BEACH BERRY BIKES BIRCH BISON BLOOM BOATS BOOKS BOWLS BRAVE BREAD BROOK BRUSH BUNNY CABIN CAMEL CAMPS CANDY CANOE CATCH CEDAR CHAIR CHALK CHARM CHEER CHIPS CLEAR CLIFF CLOCK CLOUD COAST COMET CORAL COUCH COURT CRABS CRANE CREAM CREEK CRISP DAISY DANCE DELTA DRESS DRIFT DRUMS DUNES EAGLE EARTH FIELD FLOAT FLUTE FORKS FRESH FROST FUDGE GAMES GLEAM GLIDE GLOSS GLOVE GOOSE GRAPE GRASS GREEN GRILL GULLS HAPPY HATCH HEART HERON HIPPO HONEY HORSE HOUSE IVORY JOLLY JUICE KAYAK KITTY KOALA LATCH LAUGH LEMON LIGHT LILAC LLAMA LOTUS MAGIC MANGO MAPLE MARSH MATCH MELON MERRY MOOSE MOUSE MUSIC NORTH OCEAN OLIVE ORBIT OTTER PAINT PANDA PAPER PARTY PASTA PATIO PEACH PEARL PETAL PIANO PITCH PIZZA PLANE PLANT PLATE PLAYS POEMS POINT PORCH PROUD PUPPY QUICK RAINY RALLY RHINO RHYME RIVER ROADS ROBIN ROUGE SAILS SALAD SALSA SANDY SCARF SCONE SCORE SEALS SEEDS SHARK SHEEP SHELF SHELL SHINE SHIRT SHOES SHORE SKATE SKIRT SMART SMILE SNAIL SOCKS SOUTH SPACE SPARK SPICY SPOON SPORT SPRAY SQUID STORK STORY SUGAR SUNNY SWAMP SWEET SWIFT SWIRL TABLE TEAMS THROW TIDAL TIGER TOAST TOWEL TOWER TRACK TRAIL TRAIN TREES TRICK TROUT TRUCK TULIP WAGON WAVES WHALE WINDY WORLD YACHT ZEBRA".split(" "),6:"ANCHOR AUTUMN BANANA BASKET BEACON BEAVER BREEZE BREEZY BRIDGE BRIGHT BUBBLE BUCKET BUTTER BUTTON CANDLE CANYON CARPET CARROT CASTLE CEREAL CHEERY CHEESE CHERRY CIRCLE CLOUDY COOKIE COOLER CRAYON DANCER DOODLE DRAGON FAMILY FLOWER FOREST FRIEND GALAXY GARAGE GARDEN GENTLE GIGGLE GINGER GOGGLE GOLDEN GUITAR HARBOR HIKING HOCKEY ISLAND JACKET JAGUAR JIGGLE JOYFUL KETTLE KITTEN KNIGHT LAGOON LAUGHS LEMONS LETTER MARKER MEADOW MIRROR MITTEN MONKEY MUFFIN NAPKIN NOODLE ORANGE OYSTER PARROT PEBBLE PENCIL PEPPER PICNIC PILLOW PLANET PLAYER POCKET POTATO PRINCE PUFFIN PURPLE PUZZLE RABBIT RIDDLE RIPPLE ROCKET ROWING SAILOR SANDAL SAUCER SHADOW SHELLS SHOVEL SILVER SINGER SKATER SOCCER SPIRAL SPLASH SPONGE SPRING SQUARE STAMPS STORMY STREAM SUMMER SUNSET SURFER TEAPOT TENNIS TICKET TICKLE TOMATO TOUCAN TOWELS TROPIC TUNNEL TURTLE VALLEY VIOLET VIOLIN WAFFLE WALRUS WIGGLE WINDOW WINTER WIZARD YELLOW ZIPPER".split(" ")};
+const VALID=new Set("AARGH ABACK ABACUS ABBA ABBEY ABBOT ABBOTS ABDUCT ABIDE ABLAZE ABLE ABOARD ABODE ABORT ABOUND ABOUT ABOVE ABROAD ABRUPT ABSENT ABSORB ABSURD ABUSE ABUSED ABUSER ABUT ACCENT ACCEPT ACCESS ACCORD ACCUSE ACED ACES ACHE ACHED ACHES ACHING ACID ACIDS ACING ACME ACNE ACORN ACRE ACRES ACROSS ACTED ACTIN ACTING ACTION ACTIVE ACTOR ACTORS ACTS ACTUAL ACUTE ADAGE ADAPT ADDED ADDICT ADDING ADDLED ADDS ADEPT ADHERE ADJUST ADMIRE ADMIT ADMITS ADOBE ADOPT ADORE ADORED ADORES ADULT ADULTS ADVENT ADVERT ADVICE ADVISE AERIAL AFAR AFFAIR AFFECT AFFIRM AFFORD AFLOAT AFOOT AFRAID AFTER AGAIN AGED AGEING AGENCY AGENDA AGENT AGENTS AGES AGILE AGIN AGING AGONY AGREE AGREED AGREES AHEAD AHEM AHOLD AHOY AIDE AIDED AIDES AIDING AIDS AILING AILS AIMED AIMING AIMS AIRING AIRMAN AIRMEN AIRS AIRWAY AISLE AISLES AJAR ALAMO ALAN ALARM ALARMS ALAS ALASKA ALBINO ALBUM ALBUMS ALCOVE ALEC ALERT ALERTS ALES ALGAE ALIAS ALIBI ALIBIS ALIEN ALIENS ALIGHT ALIKE ALIVE ALLEE ALLEY ALLEYS ALLIES ALLOW ALLOWS ALLURE ALLY ALMA ALMOND ALMOST ALOE ALOFT ALOHA ALONE ALONG ALOUD ALPHA ALPINE ALSO ALTAR ALTER ALTERS ALTO ALUMNI ALWAYS AMAH AMAZE AMAZED AMAZES AMAZON AMBER AMBUSH AMEN AMEND AMENDS AMIGO AMIGOS AMIN AMINO AMISS AMMO AMONG AMORAL AMOUNT AMPLE AMPLY AMPULE AMULET AMUSE AMUSED AMUSES ANCHOR ANEMIA ANEMIC ANEW ANGEL ANGELS ANGER ANGINA ANGLE ANGLES ANGORA ANGRY ANGST ANIMAL ANISE ANKLE ANKLES ANNA ANNALS ANNEX ANNOY ANNOYS ANNUAL ANNUL ANOINT ANON ANSWER ANTE ANTHEM ANTI ANTICS ANTLER ANTS ANTSY ANVIL ANYHOW ANYONE ANYWAY APACHE APART APATHY APES APEX APIECE APOLLO APPEAL APPEAR APPLE APPLES APPLY APRON APRONS APTLY AQUA ARBOR ARCADE ARCH ARCHED ARCHER ARCHES ARCTIC ARDENT AREA AREAS ARENA ARGON ARGUE ARGUED ARGUES ARGYLE ARIA ARID ARIEL ARIGHT ARISE ARISES ARMED ARMIES ARMING ARMOR ARMORY ARMOUR ARMS ARMY AROMA AROSE AROUND AROUSE ARRAY ARREST ARRIVE ARROW ARROWS ARROYO ARSON ARTERY ARTFUL ARTIST ARTS ARTSY ARTY ASCOT ASHES ASHORE ASHRAM ASIDE ASKED ASKEW ASKING ASKS ASLEEP ASPECT ASPEN ASPIRE ASSESS ASSET ASSETS ASSIGN ASSIST ASSUME ASSURE ASTHMA ASTRAL ASTRAY ASTUTE ASYLUM ATLAS ATOM ATOMIC ATOP ATRIUM ATTACH ATTACK ATTAIN ATTEND ATTEST ATTIC AUDIO AUDIT AUGER AUGHT AUGUST AULD AUNT AUNTIE AUNTS AURA AURAS AURORA AUTHOR AUTISM AUTO AUTUMN AVATAR AVENGE AVENUE AVERSE AVID AVOID AVOIDS AWAIT AWAITS AWAKE AWAKEN AWAKES AWARD AWARDS AWARE AWAY AWED AWFUL AWHILE AWOKE AWOL AWRY AXEL AXIS AXLE BABA BABBLE BABE BABES BABIES BABOON BABU BABY BACH BACK BACKED BACKER BACKS BACKUP BACON BADDER BADGE BADGES BADLY BAGEL BAGELS BAGGED BAGGY BAGMAN BAGS BAIL BAILED BAILEY BAILS BAIT BAITED BAKE BAKED BAKER BAKERS BAKERY BAKES BAKING BALBOA BALD BALE BALK BALL BALLED BALLER BALLET BALLON BALLOT BALLS BALLSY BALM BAMBOO BANAL BANANA BAND BANDIT BANDS BANE BANISH BANJO BANK BANKER BANKS BANNED BANNER BANTER BANZAI BARB BARBED BARBER BARBS BARD BARE BARED BARELY BARF BARFED BARGE BARGED BARGES BARING BARIUM BARK BARKED BARKER BARKS BARLEY BARLOW BARMAN BARN BARON BARRE BARRED BARREL BARREN BARRIO BARROW BARS BARTER BASE BASED BASES BASH BASHED BASIC BASICS BASIL BASIN BASIS BASK BASKET BASS BASTE BATCH BATES BATH BATHE BATHED BATHS BATMAN BATON BATS BATTED BATTER BATTLE BATTY BAUBLE BAWDY BAWL BAYOU BAYS BAZAAR BEACH BEACON BEADED BEADS BEAGLE BEAK BEAM BEAMED BEAMS BEAN BEANIE BEANS BEAR BEARD BEARDS BEARER BEARS BEAST BEASTS BEAT BEATEN BEATER BEATS BEAU BEAUTY BEAVER BECAME BECK BECKS BECOME BEDBUG BEDLAM BEDPAN BEDS BEECH BEEF BEEFED BEEFS BEEFY BEEN BEEP BEEPED BEEPER BEEPS BEER BEERS BEERY BEES BEETLE BEETS BEFALL BEFORE BEGAN BEGAT BEGETS BEGGAR BEGGED BEGIN BEGINS BEGS BEGUN BEHALF BEHAVE BEHIND BEHOLD BEIGE BEING BEINGS BELIE BELIEF BELIVE BELL BELLE BELLS BELLY BELONG BELOW BELT BELTED BELTS BENCH BEND BENDED BENDER BENDS BENDY BENE BENES BENIGN BENNET BENNY BENT BERATE BEREFT BERET BERG BERLIN BERRY BERTHA BESIDE BEST BESTED BESTOW BETA BETH BETRAY BETS BETTER BEWARE BEYOND BIALY BIAS BIASED BIBLE BIBLES BICKER BIDDER BIDE BIDING BIDS BIFF BIGAMY BIGGER BIGGIE BIGOT BIJOU BIKE BIKER BIKERS BIKES BIKING BIKINI BILGE BILL BILLIE BILLS BILLY BIMBO BIMBOS BINARY BIND BINDER BINDS BINGE BINGO BINS BIONIC BIOPSY BIOS BIRCH BIRD BIRDIE BIRDS BIRTH BIRTHS BISHOP BISON BISQUE BISTRO BITE BITES BITING BITS BITSY BITTEN BITTER BITTY BLAB BLACK BLACKS BLADE BLADES BLAH BLAM BLAME BLAMED BLAMES BLAND BLANK BLANKS BLAST BLAZE BLAZER BLAZES BLEACH BLEAK BLED BLEED BLEEDS BLEEP BLEND BLENDS BLESS BLEW BLIGHT BLIMEY BLIMP BLIND BLINDS BLINK BLINKS BLIP BLIPS BLISS BLITZ BLOB BLOC BLOCK BLOCKS BLOKE BLOKES BLOND BLONDE BLONDS BLOOM BLOOMS BLOT BLOTTO BLOUSE BLOW BLOWED BLOWER BLOWN BLOWS BLOWUP BLUE BLUER BLUES BLUEST BLUFF BLUFFS BLUME BLUNT BLUR BLURB BLURRY BLURT BLUSH BOAR BOARD BOARDS BOAST BOAT BOATS BOBBIN BOBBY BOBCAT BODEGA BODIES BODILY BODY BOGGLE BOGS BOGUS BOIL BOILED BOILER BOILS BOLD BOLDER BOLDLY BOLT BOLTED BOLTS BONBON BOND BONDED BONDS BONE BONED BONER BONERS BONES BONING BONNET BONNIE BONUS BONY BOOGER BOOGEY BOOGIE BOOK BOOKED BOOKER BOOKIE BOOKS BOOM BOOMER BOON BOOST BOOSTS BOOT BOOTED BOOTH BOOTHS BOOTS BOOTY BORA BORDER BORE BORED BORING BORN BORROW BOSOM BOSOMY BOSS BOSSED BOSSES BOSSY BOSTON BOTANY BOTH BOTHER BOTTLE BOTTOM BOUGHT BOUNCE BOUNCY BOUND BOUNDS BOUNTY BOURNE BOUT BOUTS BOWED BOWEL BOWELS BOWERS BOWERY BOWING BOWL BOWLED BOWLER BOWLS BOWMAN BOWS BOXCAR BOXED BOXER BOXERS BOXES BOXING BOYS BOZO BOZOS BRACE BRACES BRAD BRAG BRAGS BRAID BRAIN BRAINS BRAKE BRAKES BRAN BRANCH BRAND BRANDY BRASH BRASS BRAT BRATS BRAVA BRAVE BRAVED BRAVER BRAVO BRAWL BRAYS BRAZEN BRAZIL BREACH BREAD BREAK BREAKS BREATH BRED BREE BREECH BREED BREEDS BREEZE BREEZY BREN BRENT BREW BREWED BREWER BREWS BRIAR BRIBE BRIBED BRIBES BRICK BRICKS BRIDAL BRIDE BRIDES BRIDGE BRIE BRIEF BRIEFS BRIG BRIGHT BRILL BRIM BRIN BRING BRINGS BRINK BRIS BRIT BRITT BROAD BROADS BROCK BROKE BROKEN BROKER BRONCO BRONZE BROOCH BROOD BROODY BROOK BROOKS BROOM BROOMS BROS BROTH BROW BROWN BROWNS BROWSE BRUISE BRUMBY BRUNCH BRUNT BRUSH BRUTAL BRUTE BUBBLE BUBBLY BUCK BUCKET BUCKLE BUCKO BUCKS BUDDY BUDGE BUDGET BUDS BUFF BUFFER BUFFET BUFFS BUFFY BUGGED BUGGER BUGGY BUGLE BUGS BUILD BUILDS BUILT BULB BULBS BULGE BULK BULKY BULL BULLET BULLS BULLY BUMBLE BUMMED BUMMER BUMP BUMPED BUMPER BUMPS BUMPY BUMS BUNCH BUNDLE BUNGEE BUNION BUNK BUNKER BUNKS BUNNY BUNS BUNT BURA BURBS BURDEN BUREAU BURGER BURIAL BURIED BURIES BURKE BURLAP BURLEY BURLY BURN BURNED BURNER BURNS BURNT BURP BURRO BURST BURTON BURY BUSBOY BUSES BUSH BUSHEL BUSHES BUSIER BUST BUSTED BUSTER BUSTLE BUSTS BUSY BUTCH BUTLER BUTS BUTT BUTTED BUTTER BUTTON BUTTS BUYER BUYERS BUYING BUYOUT BUYS BUZZ BUZZED BUZZER BUZZES BWANA BYES BYLAWS BYLINE BYPASS CABIN CABINS CABLE CABLES CABS CACHE CACHET CACKLE CACTUS CADDIE CADDY CADET CAESAR CAFE CAFF CAGE CAGED CAGES CAGEY CAIN CAKE CAKES CALF CALICO CALL CALLED CALLER CALLS CALM CALMED CALMER CALMLY CALMS CALVES CAME CAMEL CAMELS CAMERA CAMP CAMPED CAMPER CAMPOS CAMPS CAMPUS CAMS CANAL CANAPE CANARY CANCEL CANCER CANDID CANDLE CANDOR CANDY CANE CANINE CANNED CANNON CANNOT CANOE CANOES CANOPY CANS CANT CANTER CANTON CANVAS CANYON CAPE CAPER CAPO CAPOTE CAPPER CAPS CARAT CARATS CARB CARBO CARBON CARBS CARD CARDS CARE CARED CAREER CARES CARESS CARGO CARING CARL CARLIN CARMEN CARNEY CARNIE CAROL CARP CARPET CARR CARROT CARRY CARS CART CARTED CARTEL CARTER CARTON CARTS CARVE CARVED CARVEL CARVER CASA CASBAH CASE CASED CASES CASH CASHED CASING CASINO CASKET CAST CASTE CASTLE CASTOR CASTS CASUAL CATCH CATCHY CATER CATERS CATES CATS CATSUP CATTLE CATTY CAUCUS CAUGHT CAUSE CAUSED CAUSES CAVE CAVED CAVERN CAVES CAVIAR CAVITY CAYMAN CEASE CEASED CEDAR CEDARS CELERY CELL CELLAR CELLED CELLO CELLS CEMENT CENSOR CENSUS CENT CENTER CENTRE CENTS CEREAL CHAD CHAFF CHAIN CHAINS CHAIR CHAIRS CHALET CHALK CHAMP CHAMPS CHANCE CHANG CHANGE CHANT CHANTS CHAOS CHAP CHAPEL CHAPS CHARGE CHARM CHARMS CHART CHARTS CHASE CHASED CHASER CHASES CHASM CHAT CHATTY CHEAP CHEAT CHEATS CHECK CHECKS CHEEK CHEEKS CHEEP CHEER CHEERS CHEERY CHEESE CHEESY CHEF CHEFS CHEMO CHEQUE CHERRY CHERUB CHESS CHEST CHESTS CHESTY CHEVY CHEW CHEWED CHEWY CHEZ CHIC CHICK CHICKS CHICO CHIEF CHIEFS CHILD CHILE CHILES CHILI CHILL CHILLS CHILLY CHIME CHIMP CHIMPS CHIN CHINA CHINO CHINS CHIP CHIPS CHIRP CHIRPY CHISEL CHIT CHOICE CHOIR CHOIRS CHOKE CHOKED CHOKER CHOKES CHOMP CHOOSE CHOOSY CHOP CHOPPY CHOPS CHORD CHORDS CHORE CHORES CHORUS CHOSE CHOSEN CHOW CHROME CHUBBY CHUCK CHUCKS CHUG CHUM CHUMMY CHUMS CHUNK CHUNKS CHUNKY CHURCH CHURN CHUTE CHUTES CIAO CICELY CIDER CIGAR CIGARS CINDER CINEMA CIPHER CIRCLE CIRCUS CISSY CITE CITED CITIES CITING CITRUS CITY CIVIC CIVICS CIVIL CLACK CLAD CLAIM CLAIMS CLAM CLAMMY CLAMP CLAMS CLAN CLANG CLAP CLASH CLASP CLASS CLASSY CLAUSE CLAW CLAWED CLAWS CLAY CLEAN CLEANS CLEAR CLEARS CLEATS CLEAVE CLEF CLENCH CLERGY CLERK CLERKS CLEVER CLICHE CLICK CLICKS CLIENT CLIFF CLIFFS CLIMAX CLIMB CLING CLINGS CLINGY CLINIC CLINK CLIP CLIPS CLIQUE CLOAK CLOCK CLOCKS CLOD CLODS CLOGS CLONE CLONED CLONES CLOP CLOSE CLOSED CLOSER CLOSES CLOSET CLOT CLOTH CLOTHE CLOTHS CLOTS CLOUD CLOUDS CLOUDY CLOUT CLOVEN CLOVER CLOVES CLOWN CLOWNS CLUB CLUBS CLUCK CLUE CLUES CLUMP CLUMPS CLUMSY CLUNG CLUNK CLUTCH COACH COAL COALS COAST COAT COATS COAX COBB COBRA COBRAS COBWEB COCA COCO COCOA CODDLE CODE CODED CODES CODING COED COEDS COERCE COFFEE COFFIN COGNAC COIL COILED COIN COINS COITUS COKE COKES COLA COLD COLDER COLDLY COLDS COLE COLES COLIC COLIN COLLAR COLLIE COLON COLONY COLOR COLORS COLOUR COLUMN COMA COMAS COMB COMBAT COMBO COME COMEDY COMER COMERS COMES COMET COMFY COMIC COMICS COMING COMMA COMMIE COMMIT COMMON COMP COMPEL COMPLY CONCUR CONDO CONDOR CONDOS CONE CONES CONEY CONFER CONFIT CONK CONKED CONN CONNED CONNER CONS CONSUL CONTRA CONVEY CONVOY COOING COOK COOKED COOKER COOKIE COOKS COOL COOLED COOLER COOLLY COOLS COOP COOPED COOPER COOT COPE COPIED COPIER COPIES COPING COPPER COPS COPTER COPY CORAL CORD CORDON CORDS CORE CORK CORKER CORKS CORKY CORN CORNED CORNER CORNY CORONA CORPS CORRAL CORSET CORTEX CORY COSIGN COSMIC COSMOS COST COSTA COSTLY COSTS COSY COTS COTTON COUCH COUGAR COUGH COUGHS COULD COUNT COUNTS COUNTY COUP COUPE COUPLE COUPON COURSE COURT COURTS COUSIN COVE COVEN COVER COVERS COVERT COVET COWARD COWBOY COWED COWER COWS COYOTE COZIER COZY CRAB CRABBY CRABS CRADLE CRAFT CRAFTS CRAFTY CRAM CRAMP CRAMPS CRANE CRANES CRANK CRANKS CRANKY CRANNY CRAPPY CRASH CRASS CRATE CRATED CRATER CRATES CRAVE CRAVES CRAWL CRAWLS CRAWLY CRAYON CRAZE CRAZED CRAZY CREAK CREAKY CREAM CREAMY CREASE CREATE CREDIT CREDO CREED CREEDS CREEK CREEP CREEPS CREEPY CREME CREPE CREPES CREPT CREST CREW CREWS CRIB CRIBS CRICK CRIED CRIER CRIES CRIKEY CRIME CRIMES CRIMP CRINGE CRIPES CRIS CRISES CRISIS CRISP CRISPS CRISPY CRITIC CROAK CROC CROCK CROFT CROOK CROOKS CROON CROP CROPS CROSS CROTCH CROUCH CROW CROWD CROWDS CROWED CROWN CROWNS CROWS CRUD CRUDDY CRUDE CRUEL CRUISE CRUMB CRUMBS CRUMMY CRUNCH CRUSH CRUST CRUSTS CRUSTY CRUTCH CRUX CRYING CRYPT CRYPTO CRYPTS CUBBY CUBE CUBED CUBES CUBIC CUBS CUCKOO CUDDLE CUDDLY CUDDY CUED CUFF CUFFED CUFFS CULPA CULT CUMIN CUPID CUPPA CUPS CURATE CURB CURD CURDLE CURE CURED CURES CURFEW CURIE CURING CURL CURLED CURLY CURRAN CURRY CURSE CURSED CURSES CURT CURTSY CURVE CURVES CUSHY CUSP CUSS CUSTOM CUTE CUTER CUTEST CUTESY CUTIE CUTLER CUTOFF CUTOUT CUTS CUTTER CYBORG CYCLE CYCLES CYMBAL CYNIC CYNICS CYPHER CYPRUS CYST CYSTIC DABBLE DADDY DADS DAFFY DAFT DAGGER DAGO DAHL DAHLIA DAILY DAINTY DAIRY DAIS DAISY DALE DALLY DALTON DAMAGE DAME DAMP DAMPER DAMSEL DANCE DANCED DANCER DANCES DANDY DANG DANGER DANGLE DANISH DAPHNE DAPPER DARE DARED DARES DARING DARK DARKEN DARKER DARKS DARN DARNED DART DARTS DASH DASHED DASHER DATA DATE DATED DATER DATES DATING DATO DAVY DAWN DAWNED DAYS DAZE DAZZLE DEACON DEAF DEAL DEALER DEALS DEALT DEAN DEAR DEARIE DEARLY DEARS DEBATE DEBIT DEBRIS DEBT DEBTS DEBUT DECADE DECAF DECAY DECEIT DECENT DECIDE DECK DECKED DECKER DECKS DECO DECOR DECOY DECOYS DECREE DEDUCE DEDUCT DEED DEEDED DEEDS DEEJAY DEEM DEEMED DEEP DEEPER DEEPLY DEER DEETS DEFEAT DEFECT DEFEND DEFIED DEFIES DEFINE DEFT DEFTLY DEFUSE DEFY DEGREE DEITY DEKE DELAY DELAYS DELETE DELI DELL DELLY DELTA DELTAS DELUDE DELUGE DELUXE DELVE DEMAND DEMEAN DEMISE DEMO DEMON DEMONS DEMUR DEMURE DENIAL DENIED DENIES DENSE DENT DENTAL DENTS DENY DEPART DEPEND DEPICT DEPLOY DEPORT DEPOSE DEPOT DEPTH DEPTHS DEPUTY DERAIL DERBY DERIVE DERRIS DESERT DESIGN DESIRE DESIST DESK DESKS DETACH DETAIL DETAIN DETECT DETEST DETOUR DEUCE DEUCES DEVICE DEVIL DEVILS DEVISE DEVON DEVOTE DEVOUR DEWARS DEWY DIAL DIALED DIALS DIAPER DIARY DIBS DICE DICED DICEY DIDDLY DIESEL DIET DIETER DIETS DIFFER DIGEST DIGGER DIGIT DIGITS DIGS DIKE DILL DILLS DILLY DILUTE DIME DIMES DIMLY DIMMER DIMPLE DIMWIT DINE DINED DINER DINERO DINERS DING DINGED DINGLE DINGO DINGS DINGY DINING DINK DINKS DINKY DINNER DIPPED DIPS DIRE DIRECT DIRK DIRT DIRTY DISARM DISC DISCO DISCS DISCUS DISH DISHES DISK DISKS DISMAL DISMAY DISOWN DISSED DITCH DITSY DITTO DITTY DITZ DIVA DIVAS DIVE DIVER DIVERS DIVERT DIVES DIVEST DIVIDE DIVINE DIVING DIVVY DIZZY DOBBIN DOBSON DOCK DOCKED DOCKS DOCS DOCTOR DODGE DODGED DODGER DODGY DOER DOES DOGGED DOGGIE DOGGY DOGS DOILY DOING DOJO DOLCE DOLE DOLING DOLL DOLLAR DOLLED DOLLOP DOLLS DOLLY DOLT DOMAIN DOME DOMES DONATE DONE DONG DONGS DONKEY DONNA DONOR DONORS DONUT DONUTS DOODLE DOOFUS DOOM DOOMED DOOR DOORS DOOZY DOPE DOPES DOPEY DOPING DORADO DORK DORKY DORM DORMS DORSAL DORY DOSAGE DOSE DOSED DOSES DOST DOTE DOTES DOTH DOTS DOTTED DOTTY DOUBLE DOUBLY DOUBT DOUBTS DOUCHE DOUGH DOUR DOUSED DOVE DOVES DOWDY DOWN DOWNED DOWNER DOWNS DOWNY DOWSER DOZE DOZED DOZEN DOZENS DOZER DOZING DRAB DRAFT DRAFTS DRAFTY DRAG DRAGON DRAGS DRAIN DRAKE DRAMA DRAMAS DRANK DRAPE DRAPES DRAW DRAWER DRAWN DRAWS DREAD DREAM DREAMS DREAMT DREAMY DREARY DRECK DREDGE DREGS DRESS DRESSY DREW DRIED DRIER DRIES DRIFT DRILL DRINK DRINKS DRIP DRIPPY DRIPS DRIVE DRIVEL DRIVEN DRIVER DRIVES DROLL DRONE DRONES DROOL DROOLS DROOP DROOPY DROP DROPS DROVE DROVES DROWN DROWSY DRUDGE DRUG DRUGS DRUM DRUMS DRYER DRYERS DRYING DUAL DUBBED DUCE DUCK DUCKED DUCKS DUCKY DUCT DUCTS DUDE DUDES DUDS DUEL DUES DUET DUFF DUFFEL DUFFLE DUGOUT DUKE DUKES DULCET DULL DULLED DULY DUMB DUMBER DUMDUM DUMMY DUMP DUMPED DUMPER DUMPS DUNE DUNES DUNG DUNK DUNKED DUNKS DUPED DUPLEX DURESS DURING DURNED DUSK DUSKY DUST DUSTED DUSTY DUTCH DUTIES DUTY DUVET DWARF DWARFS DWEEB DWELL DWELLS DYED DYEING DYER DYING DYNAMO EACH EAGER EAGLE EAGLES EARFUL EARL EARLY EARN EARNED EARNS EARS EARTH EARTHY EARWIG EASE EASEL EASES EASIER EASILY EASING EAST EASTER EASY EATEN EATER EATERS EATING EATS EAVES EBONY ECHO ECHOES ECZEMA EDDY EDEMA EDGE EDGED EDGES EDGING EDGY EDIBLE EDICT EDIT EDITED EDITOR EDITS EELS EERIE EERILY EFFECT EFFORT EGGING EGGNOG EGGS EGOS EIGHT EIGHTH EIGHTS EIGHTY EITHER EJECT EKING ELATED ELBOW ELBOWS ELDER ELDERS ELDEST ELECT ELEVEN ELICIT ELITE ELIXIR ELKS ELMS ELOPE ELOPED ELSE ELUDE ELUDED ELUDES ELVES EMBARK EMBER EMBLEM EMBODY EMBRYO EMERGE EMERY EMIT EMPIRE EMPLOY EMPTY ENABLE ENACT ENAMEL ENCORE ENDEAR ENDED ENDING ENDIVE ENDS ENDURE ENEMA ENEMY ENERGY ENGAGE ENGINE ENIGMA ENJOY ENJOYS ENLIST ENNUI ENOUGH ENRAGE ENRICH ENSIGN ENSUE ENSUED ENSURE ENTAIL ENTER ENTERS ENTICE ENTIRE ENTITY ENTREE ENTRY ENVIED ENVOY ENVY ENZYME EPIC EPOXY EQUAL EQUALS EQUITY ERASE ERASED ERASER ERASES ERECT ERGO ERICA ERODE EROS ERRAND ERRANT ERRED ERROR ERRORS ERUPT ESCAPE ESCORT ESSAY ESSAYS ESTATE ESTEEM ESTER ETCHED ETHER ETHIC ETHICS ETHNIC ETHYL EULOGY EUNUCH EURO EUROS EVADE EVEN EVENLY EVENS EVENT EVENTS EVER EVERY EVES EVICT EVIL EVILS EVOKED EVOLVE EXACT EXAM EXAMS EXCEED EXCEL EXCELS EXCEPT EXCESS EXCITE EXCUSE EXECS EXEMPT EXES EXHALE EXHUME EXILE EXILED EXILES EXIST EXISTS EXIT EXITED EXITS EXODUS EXOTIC EXPAND EXPECT EXPEL EXPERT EXPORT EXPOSE EXTEND EXTENT EXTORT EXTRA EXTRAS EYED EYEFUL EYEING EYES EYRE FABLE FABLED FABRIC FACE FACED FACES FACET FACETS FACIAL FACING FACT FACTOR FACTS FADE FADED FADES FADING FADS FAGGOT FAGGY FAIL FAILED FAILS FAINT FAIR FAIRER FAIRLY FAIRY FAITH FAJITA FAKE FAKED FAKING FALCON FALL FALLEN FALLOW FALLS FALSE FAME FAMED FAMILY FAMINE FAMOUS FANCY FANG FANGS FANNY FANS FARCE FARE FARED FARINA FARM FARMER FARMS FARROW FART FARTED FARTS FAST FASTEN FASTER FATAL FATE FATES FATHER FATHOM FATSO FATTEN FATTY FAUCET FAULT FAULTS FAULTY FAUN FAUNA FAUX FAVE FAVOR FAVORS FAVOUR FAXED FAXES FEAR FEARED FEARS FEAST FEAT FEATS FECES FEDORA FEDS FEEBLE FEED FEEDER FEEDS FEEL FEELS FEES FEET FEIGN FEISTY FELINE FELL FELLA FELLAH FELLAS FELLER FELLOW FELON FELONS FELONY FELT FEMALE FEMME FEMMES FEMUR FENCE FENCES FEND FENDER FERN FERRET FERRY FERVOR FESS FESTER FETA FETAL FETCH FETUS FEUD FEUDAL FEUDS FEVER FEWER FIANCE FIASCO FIBBER FIBER FIBERS FIBRE FICKLE FICUS FIDDLE FIDO FIELD FIELDS FIEND FIENDS FIERCE FIERY FIESTA FIFE FIFTH FIFTHS FIFTY FIGHT FIGHTS FIGURE FILE FILED FILES FILET FILING FILL FILLED FILLER FILLS FILLY FILM FILMED FILMS FILTER FILTH FILTHY FINAL FINALE FINALS FINCH FIND FINDER FINDS FINE FINED FINER FINES FINEST FINGER FINISH FINK FINS FIRE FIRED FIRES FIRING FIRM FIRMER FIRMLY FIRMS FIRS FIRST FISH FISHED FISHER FISHES FISHY FIST FISTED FISTS FITCH FITS FITTED FITTER FIVE FIVER FIVES FIXED FIXER FIXES FIXING FIZZ FIZZLE FLACK FLAG FLAGS FLAIL FLAIR FLAK FLAKE FLAKED FLAKES FLAKY FLAME FLAMER FLAMES FLAN FLANK FLANKS FLAP FLAPS FLARE FLARED FLARES FLASH FLASHY FLASK FLAT FLATS FLAUNT FLAVOR FLAW FLAWED FLAWS FLAY FLAYED FLEA FLEAS FLECKS FLED FLEE FLEECE FLEET FLESH FLESHY FLEW FLEX FLICK FLICKS FLIER FLIERS FLIES FLIGHT FLIMSY FLINCH FLING FLINT FLIP FLIPS FLIRT FLOAT FLOATS FLOCK FLOE FLOG FLOOD FLOODS FLOOR FLOORS FLOOZY FLOP FLOPPY FLOPS FLORA FLORAL FLORIN FLOSS FLOUR FLOW FLOWER FLOWN FLOWS FLUE FLUFF FLUFFY FLUID FLUIDS FLUKE FLUNG FLUNK FLUNKY FLURRY FLUSH FLUTE FLUTES FLUX FLYBOY FLYER FLYERS FLYING FOAL FOAM FOAMY FOCAL FOCUS FODDER FOGGED FOIL FOILED FOLD FOLDED FOLDER FOLDS FOLK FOLKS FOLKSY FOLLOW FOLLY FOND FONDER FONDLE FONDUE FONT FOOD FOODS FOOL FOOLED FOOLS FOOT FOOTED FOOTER FORAGE FORAY FORBID FORCE FORCED FORCES FORD FORE FOREGO FOREST FORGE FORGED FORGER FORGET FORGO FORGOT FORK FORKED FORKS FORM FORMAL FORMAT FORMED FORMER FORMS FORT FORTE FORTH FORTY FORUM FOSSE FOSSIL FOSTER FOUGHT FOUL FOULED FOUND FOUR FOURS FOURTH FOWL FOWLER FOXES FOXY FOYER FRAIL FRAME FRAMED FRAMES FRANC FRANCS FRANK FRANKS FRAT FRAUD FRAUDS FRAY FRAYED FREAK FREAKS FREAKY FREE FREED FREELY FREER FREES FREEZE FRENCH FRENZY FRESH FRET FRIDGE FRIED FRIEND FRIES FRIGHT FRIGID FRILLS FRINGE FRISK FRISKY FRITZ FRIZZY FROG FROGS FROLIC FROM FRONT FRONTS FROST FROSTY FROWN FROZE FROZEN FRUGAL FRUIT FRUITS FRUITY FRYER FRYING FUDGE FUDGED FUEL FUELED FUELS FUGU FUGUE FUHRER FULFIL FULL FULLER FULLY FUMBLE FUMES FUND FUNDED FUNDS FUNGAL FUNGI FUNGUS FUNK FUNKY FUNNY FURRY FURS FURY FUSE FUSED FUSES FUSION FUSS FUSSY FUTILE FUTON FUTURE FUZZ FUZZY GABBY GABY GADGET GAFF GAGA GAGE GAGGED GAGGLE GAGS GAIETY GAIN GAINED GAINS GALA GALAXY GALE GALL GALLON GALORE GALS GAMBIT GAMBLE GAME GAMER GAMES GAMMA GAMMY GAMS GAMUT GANDER GANG GANGED GANGLY GANGS GANJA GAPS GARAGE GARB GARCON GARDEN GARISH GARLIC GARNER GARNET GARTER GARTH GASBAG GASES GASKET GASP GASPED GASSED GASSES GASSY GATE GATED GATES GATHER GATOR GAUDY GAUGE GAULT GAUZE GAVE GAVEL GAWK GAYEST GAZE GAZEBO GAZED GEAR GEARED GEARS GECKO GEEK GEEKS GEEKY GEES GEESE GEEZ GEEZER GELATO GELS GEMMA GEMS GENDER GENE GENES GENEVA GENIE GENIUS GENOA GENOME GENRE GENTLE GENTLY GENTS GENUS GERBIL GERM GERMAN GERMS GETS GETTER GETUP GEYSER GHETTO GHOST GHOSTS GHOUL GIANT GIANTS GIBSON GIDDY GIFT GIFTED GIFTS GIGGLE GIGGLY GIGOLO GIGS GILDED GILL GILLS GIMBAL GIMLET GIMME GIMMIE GIMP GINGER GINNY GIRL GIRLIE GIRLS GIRLY GIRTH GIST GIVE GIVEN GIVENS GIVER GIVERS GIVES GIVING GIZMO GIZMOS GLAD GLADE GLADES GLADLY GLAMOR GLANCE GLAND GLANDS GLARE GLARES GLASS GLASSY GLAZE GLAZED GLAZER GLEAM GLEE GLEN GLIB GLIDE GLINT GLITCH GLOAT GLOBAL GLOBE GLOBES GLOOM GLOOMY GLOP GLORIA GLORY GLOSS GLOSSY GLOVE GLOVER GLOVES GLOW GLUE GLUED GLUES GLUING GLUM GNAT GNATS GNAW GNOME GNOMES GOAD GOAL GOALIE GOALS GOAT GOATEE GOATS GOBBLE GOBLET GOBLIN GOBS GODDAM GODLY GODS GODSON GOERS GOES GOFER GOGGLE GOING GOITER GOLD GOLDEN GOLF GOLLY GONE GONER GONERS GONG GONZO GOOBER GOOD GOODIE GOODLY GOODS GOODY GOOEY GOOF GOOFY GOOGLY GOON GOONEY GOONIE GOONS GOOPY GOOSE GOPHER GORGE GORY GOSH GOSPEL GOSSIP GOTHIC GOTTEN GOUGE GOUGED GOURD GOUT GOWN GOWNS GRAB GRABBY GRABS GRACE GRACED GRACES GRAD GRADE GRADED GRADER GRADES GRAFTS GRAHAM GRAIL GRAIN GRAINY GRAM GRAMPS GRAMS GRAN GRAND GRANGE GRANNY GRANT GRANTS GRAPE GRAPES GRAPHS GRASP GRASS GRASSY GRATE GRATED GRAVE GRAVEL GRAVES GRAVY GRAY GRAZED GREASE GREASY GREAT GREED GREEDY GREEK GREEN GREENS GREET GREETS GREW GREY GRID GRIEF GRIEVE GRIFF GRIFT GRILL GRILLS GRIM GRIME GRIMES GRIN GRIND GRINDS GRINGO GRINS GRIP GRIPE GRIPES GRIPS GRISLY GRITS GROCER GROG GROGGY GROIN GROOM GROOMS GROOVE GROOVY GROPE GROPED GROSS GROUCH GROUND GROUP GROUPS GROUSE GROVE GROVEL GROVES GROW GROWL GROWN GROWS GROWTH GRUB GRUBBY GRUBS GRUDGE GRUEL GRUMPY GRUNGE GRUNGY GRUNT GUARD GUARDS GUAVA GUESS GUEST GUESTS GUFF GUIDE GUIDED GUIDES GUILD GUILT GUILTY GUINEA GUITAR GULAG GULCH GULF GULL GULLS GUMS GUNK GUNMAN GUNMEN GUNNED GUNNER GURNEY GURU GUSH GUSHER GUSHY GUSTO GUTS GUTTER GUYS GYMS GYPPED GYPSY HABIT HABITS HACK HACKED HACKER HACKS HADES HADJ HAGGIS HAGS HAHA HAIL HAILED HAILS HAIR HAIRDO HAIRED HAIRS HAIRY HALE HALF HALL HALLO HALLS HALO HALT HALTER HALVES HAMLET HAMMER HAMPER HAMS HAND HANDED HANDLE HANDS HANDY HANG HANGED HANGER HANGS HANK HANKIE HANKS HANKY HANSOM HAPPEN HAPPY HAPS HARASS HARBOR HARD HARDEN HARDER HARDLY HARDY HARE HAREM HARLOT HARM HARMED HARMS HARP HARPER HARPS HARPY HARRY HARSH HART HARTS HASH HASSLE HAST HASTE HASTEN HASTY HATCH HATE HATED HATER HATES HATH HATING HATRED HATS HATTER HAUL HAULED HAULS HAUNT HAUNTS HAUTE HAVE HAVEN HAVING HAVOC HAWK HAWKER HAWKS HAZARD HAZE HAZEL HAZING HAZY HEAD HEADED HEADER HEADS HEADY HEAL HEALED HEALER HEALS HEALTH HEAP HEAPED HEAPS HEAR HEARD HEARS HEART HEARTS HEARTY HEAT HEATED HEATER HEATH HEATS HEAVE HEAVED HEAVEN HEAVY HECK HECKLE HECTIC HECTOR HEDGE HEDGES HEED HEEL HEELED HEELS HEFT HEFTY HEIFER HEIGH HEIGHT HEIL HEINIE HEIR HEIRS HEIST HELD HELIX HELLO HELM HELMET HELMS HELO HELP HELPED HELPER HELPS HEMP HENCE HENRY HENS HERALD HERB HERBAL HERBS HERD HERDS HERE HEREBY HEREIN HERESY HERNIA HERO HEROES HEROIC HERON HERPES HERS HERTZ HETERO HEXES HEYDAY HIATUS HICCUP HICK HICKEY HICKS HIDDEN HIDE HIDES HIDING HIGH HIGHER HIGHLY HIGHS HIKE HIKED HIKER HIKERS HIKING HILL HILLS HILT HIND HINGES HINT HINTED HINTS HIPPIE HIPPO HIPPOS HIPS HIRE HIRED HIRES HIRING HISS HISSED HISSES HITCH HITS HITTER HIVE HIVES HOAGIE HOAX HOAXES HOBBIT HOBBLE HOBBY HOBO HOBOES HOCK HOCKEY HOCKS HOCUS HOES HOGAN HOGS HOIST HOKEY HOLD HOLDEN HOLDER HOLDS HOLDUP HOLE HOLED HOLES HOLIER HOLIES HOLING HOLLER HOLLOW HOLLY HOLT HOLY HOMAGE HOMBRE HOME HOMELY HOMER HOMERS HOMES HOMEY HOMILY HOMING HONDA HONED HONEST HONEY HONG HONK HONKS HONOR HONORS HONOUR HOOCH HOOD HOODED HOOF HOOK HOOKED HOOKS HOOKUP HOOKY HOOP HOOPLA HOOPS HOORAY HOOT HOOTER HOOVES HOPE HOPED HOPES HOPING HOPPED HOPPER HOPPY HOPS HORA HORDE HORDES HORN HORNED HORNET HORNS HORRID HORROR HORSE HORSES HORSEY HOSE HOSED HOSES HOSING HOST HOSTED HOSTEL HOSTS HOTBED HOTDOG HOTEL HOTELS HOTS HOTTER HOUND HOUNDS HOUR HOURLY HOURS HOUSE HOUSED HOUSES HOVEL HOVER HOWDY HOWE HOWL HOWS HUBBUB HUBBY HUBRIS HUCK HUDDLE HUFFED HUFFY HUGE HUGEST HUGGED HUGGER HUGS HULA HULK HULL HULLO HUMAN HUMANE HUMANS HUMBLE HUMBLY HUMBUG HUMID HUMMED HUMMER HUMMUS HUMOR HUMOUR HUMS HUMUS HUNCH HUNG HUNGER HUNGRY HUNH HUNK HUNKER HUNKS HUNKY HUNS HUNT HUNTED HUNTER HURL HURLEY HURRAH HURRAY HURRY HURST HURT HURTS HUSH HUSHED HUSK HUSKS HUSKY HUSSY HUSTLE HUTCH HUTS HUZZAH HYBRID HYDRA HYENAS HYMN HYMNS HYPE HYPED HYPER HYPHEN HYPO IAMBIC ICEBOX ICED ICEMAN ICICLE ICING ICKY ICON ICONS IDEA IDEAL IDEALS IDEAS IDIOCY IDIOM IDIOT IDIOTS IDLE IDLING IDLY IDOL IDOLS IFFY IGLOO IGNITE IGNORE IGUANA ILIAD ILLS IMAGE IMAGES IMAM IMBUED IMMUNE IMPACT IMPALA IMPALE IMPART IMPLY IMPORT IMPOSE INBRED INCASE INCH INCHES INCITE INCOME INCUR INDEED INDEX INDICT INDIE INDIES INDIGO INDOOR INDUCE INEPT INFAMY INFANT INFECT INFLUX INFO INFORM INFRA INGEST INGLES INHALE INJECT INJURE INJURY INLAID INLAND INMATE INNER INNING INPUT INSANE INSECT INSERT INSIDE INSIST INSTEP INSULT INSURE INTACT INTAKE INTEND INTENT INTER INTERN INTO INTRO INTROS INVADE INVENT INVEST INVITE INVOKE IONS IPECAC IRIS IRON IRONED IRONIC IRONS IRONY ISLAND ISSUE ISSUED ISSUES ITCH ITCHES ITCHY ITEM ITEMS ITSELF IVORY JABBER JABOT JABS JACK JACKAL JACKED JACKET JACKS JADE JADED JAGGER JAGS JAGUAR JAIL JAILED JAKE JALOPY JAMMED JAMMER JAMS JANE JAPAN JARGON JARS JASPER JAUNT JAVA JAWED JAWS JAZZ JAZZED JEAN JEANS JEEP JEEPS JEEZ JEFE JELL JELLY JENNY JERK JERKED JERKIN JERKS JERKY JERRY JERSEY JESS JESSE JEST JESTER JESUIT JETS JEWEL JEWELS JEWS JIFF JIFFY JIGGLE JIGGLY JIGSAW JIHAD JILL JILTED JIMINY JIMMY JINGLE JINX JOBS JOCK JOCKEY JOCKS JOES JOEY JOGGER JOHN JOHNNY JOHNS JOIN JOINED JOINER JOINS JOINT JOINTS JOKE JOKED JOKER JOKERS JOKES JOKING JOLLY JOLT JONES JORDAN JOSEPH JOSH JOTTED JOUST JOYFUL JOYOUS JOYS JUDAS JUDGE JUDGED JUDGES JUDO JUGGLE JUGS JUICE JUICED JUICES JUICY JUKE JULEP JUMBLE JUMBO JUMP JUMPED JUMPER JUMPS JUMPY JUNGLE JUNIOR JUNK JUNKIE JUNKY JURIES JUROR JURORS JURY JUST KABOB KAHUNA KAISER KALE KANE KAON KAPPA KAPUT KARAT KARATE KARMA KASHA KAYAK KEEL KEELED KEEN KEEP KEEPER KEEPS KEGS KELLY KELP KELSON KENDO KENO KENT KEPT KERN KERRY KETCH KETTLE KEYS KHAKI KHAKIS KHAN KIBBLE KIBOSH KICK KICKED KICKER KICKS KICKY KIDDER KIDDIE KIDDO KIDNAP KIDNEY KIDS KILN KILO KILOS KILT KILTER KIMONO KIND KINDER KINDLY KINDS KING KINGS KINK KINS KIOSK KIRK KISMET KISS KISSED KISSER KISSES KISSY KITE KITES KITTEN KITTY KIWI KLUTZ KLUTZY KNACK KNEE KNEED KNEEL KNEES KNELT KNEW KNIFE KNIFED KNIGHT KNIT KNIVES KNOB KNOBBY KNOBS KNOCK KNOCKS KNOLL KNOT KNOTS KNOW KNOWN KNOWS KOALA KOBO KOOKS KOOKY KOSHER KOSS KRAFT KRIS KRONER KUDOS LABEL LABELS LABOR LABOUR LABS LACE LACED LACES LACEY LACK LACKED LACKS LACTIC LACY LADDER LADEN LADIES LADLE LADS LADY LAGER LAGOON LAID LAIR LAIRD LAKE LAKER LAKERS LAKES LAMA LAMB LAMBDA LAMBS LAME LAMENT LAMP LAMPS LANCE LANCER LAND LANDED LANDER LANDS LANE LANES LANG LANKY LAPDOG LAPEL LAPS LAPSE LAPSED LAPSES LAPTOP LARCH LARD LARGE LARGER LARK LARS LARVAE LARVAL LASER LASERS LASH LASHED LASHES LASS LASSIE LASSO LAST LASTED LASTS LATCH LATE LATELY LATENT LATER LATEST LATEX LATHE LATHER LATINO LATTE LATTER LATTES LAUGH LAUGHS LAUNCH LAURA LAUREL LAVA LAVISH LAWFUL LAWMAN LAWMEN LAWN LAWNS LAWS LAWYER LAYER LAYERS LAYING LAYMAN LAYOUT LAYS LAZAR LAZY LEAD LEADER LEADS LEAF LEAFS LEAFY LEAGUE LEAK LEAKED LEAKS LEAKY LEAN LEANED LEANS LEAP LEAPS LEAPT LEAR LEARN LEARNS LEARNT LEARY LEASE LEASED LEASH LEAST LEAVE LEAVER LEAVES LECH LEDGE LEDGER LEECH LEERY LEEWAY LEFT LEFTS LEFTY LEGACY LEGAL LEGEND LEGGED LEGGY LEGION LEGIT LEGS LEMON LEMONS LEMONY LEMUR LEND LENGTH LENO LENS LENSES LENT LEPER LEPERS LESS LESSEE LESSEN LESSER LESSON LEST LETHAL LETS LETTER LEVEE LEVEL LEVELS LEVER LEVITY LEVY LEWD LEWIS LIABLE LIANE LIAR LIARS LIBEL LIBIDO LICE LICHEN LICK LICKED LICKER LICKS LIDO LIDS LIED LIEGE LIEN LIER LIES LIEU LIFE LIFER LIFERS LIFT LIFTED LIFTS LIGHT LIGHTS LIKE LIKED LIKELY LIKES LIKING LILAC LILACS LILIES LILY LIMA LIMB LIMBER LIMBO LIMBS LIME LIMES LIMEY LIMIT LIMITS LIMO LIMOS LIMP LIMPS LINE LINEAR LINED LINEN LINENS LINER LINERS LINES LINEUP LING LINGER LINGO LINING LINK LINKED LINKS LINT LION LIONS LIPPED LIPPY LIPS LIQUID LIQUOR LIRA LIST LISTED LISTEN LISTS LITANY LITE LITER LITERS LITTER LITTLE LIVE LIVED LIVELY LIVEN LIVER LIVERS LIVES LIVID LIVING LIZARD LLAMA LOAD LOADED LOADS LOAF LOAN LOANED LOANS LOATH LOATHE LOBBY LOBE LOBES LOCA LOCAL LOCALE LOCALS LOCATE LOCH LOCK LOCKED LOCKER LOCKET LOCKS LOCKUP LOCO LOCUST LODE LODGE LODGED LOFT LOFTY LOGAN LOGGED LOGGER LOGIC LOGO LOGS LOIN LOINS LOLLY LONE LONELY LONER LONERS LONG LONGER LONGS LOOFAH LOOK LOOKED LOOKER LOOKS LOOM LOON LOONEY LOONS LOONY LOOP LOOPED LOOPS LOOS LOOSE LOOSEN LOOSER LOOT LOPPED LOPPER LORAN LORD LORDS LORE LORRY LOSE LOSER LOSERS LOSES LOSING LOSS LOSSES LOST LOTION LOTS LOTTE LOTTO LOTUS LOUD LOUDEN LOUDER LOUDLY LOUIE LOUIS LOUNGE LOUSE LOUSY LOUT LOUVRE LOVE LOVED LOVELY LOVER LOVERS LOVES LOVING LOWE LOWER LOWERS LOWERY LOWEST LOWLY LOWS LOYAL LUAU LUBE LUCE LUCID LUCK LUCKED LUCKY LUGE LULL LULU LUMBAR LUMBER LUMP LUMPS LUMPY LUNA LUNACY LUNAR LUNCH LUNG LUNGE LUNGED LUNGS LUPUS LURCH LURE LURED LURES LURING LURK LURKS LUSH LUST LUSTER LUSTS LUTZ LUXURY LYING LYMPH LYNX LYRICS MACAWS MACE MACH MACHE MACHO MACK MADAM MADAME MADDEN MADDER MADE MADLY MADMAN MADMEN MADRE MAFIA MAGGOT MAGIC MAGNET MAGNUM MAGS MAID MAIDEN MAIDS MAIL MAILED MAILER MAILS MAIM MAIMED MAIN MAINLY MAJOR MAJORS MAKE MAKER MAKERS MAKES MAKEUP MAKING MALE MALES MALICE MALIGN MALL MALLET MALLS MALT MAMA MAMIE MAMMA MANAGE MANGER MANGO MANGOS MANGY MANIAC MANIC MANILA MANLY MANNA MANNER MANO MANOR MANTEL MANTIS MANTLE MANTRA MANUAL MANURE MANY MAPLE MAPPED MAPS MARBLE MARC MARCEL MARCH MARE MARGE MARGIN MARIA MARINA MARINE MARK MARKED MARKER MARKET MARKS MARLIN MAROON MARROW MARRY MARS MARSH MART MARTEN MARTIN MARTYR MARVEL MASCOT MASH MASHED MASK MASKED MASKS MASON MASONS MASS MASSA MASSES MASTER MATCH MATE MATED MATES MATEY MATH MATING MATRIX MATRON MATS MATT MATTED MATTER MATURE MATZAH MATZOH MAUL MAULED MAVIS MAXI MAXIM MAYA MAYAN MAYBE MAYBES MAYDAY MAYHEM MAYO MAYOR MAYORS MAZE MEAD MEADOW MEAGER MEAL MEALS MEALY MEAN MEANER MEANIE MEANS MEANT MEASLY MEAT MEATS MEATY MECCA MEDAL MEDALS MEDDLE MEDIA MEDIC MEDICS MEDINA MEDIUM MEDLEY MEDUSA MEET MEETS MELLOW MELODY MELON MELONS MELT MELTED MELTS MEMBER MEMO MEMORY MEMOS MENACE MENAGE MEND MENDED MENIAL MENSA MENTAL MENTOR MENU MENUS MEOW MERCER MERCY MERE MERELY MERGER MERIT MERITS MERL MERLE MERLOT MERMAN MERRY MESA MESH MESS MESSED MESSES MESSY META METAL METALS METEOR METER METERS METRIC METRO METTLE MICE MICK MICKEY MICRO MIDDLE MIDGE MIDGET MIDST MIDWAY MIFFED MIGGS MIGHT MIGHTY MIGNON MIKE MIKES MILD MILDEW MILDLY MILE MILES MILK MILKED MILKY MILL MILLER MILLET MILLS MILO MILT MIME MIMES MIMIC MINA MINCE MIND MINDED MINDS MINE MINED MINER MINERS MINES MINGLE MINI MINING MINION MINK MINKS MINNOW MINOR MINORS MINT MINTS MINTY MINUS MINUTE MIRAGE MIRROR MIRTH MISERY MISFIT MISHAP MISLED MISS MISSED MISSES MISSIS MISSUS MISSY MIST MISTER MISTY MISUSE MITE MITES MITT MITTEN MITTS MIXED MIXER MIXERS MIXES MIXING MIXUP MOAN MOANS MOAT MOBILE MOBS MOCHA MOCK MOCKED MOCKS MODE MODEL MODELS MODEM MODERN MODEST MODULE MODUS MOHAIR MOHEL MOIL MOIST MOJO MOLARS MOLD MOLDED MOLDS MOLDY MOLE MOLES MOLL MOLLIE MOLLY MOLOCH MOLTEN MOLTO MOLY MOMENT MOMMA MOMMY MOMS MONDE MONDO MONEY MONEYS MONGER MONK MONKEY MONKS MONO MONTE MONTH MONTHS MOOCH MOOD MOODS MOODY MOOLA MOON MOONS MOORS MOOSE MOOT MOPE MOPED MOPES MOPEY MOPING MOPPED MOPS MORAL MORALE MORALS MORBID MORE MORGAN MORGUE MORN MORON MORONS MORPH MORRIS MORROW MORSE MORSEL MORT MORTAL MORTAR MOSEY MOSQUE MOSS MOST MOSTLY MOTE MOTEL MOTELS MOTH MOTHER MOTHS MOTIF MOTION MOTIVE MOTLEY MOTOR MOTORS MOTTO MOULD MOULIN MOUND MOUNDS MOUNT MOURN MOUSE MOUSEY MOUSSE MOUSY MOUTH MOUTHS MOUTHY MOVE MOVED MOVERS MOVES MOVIE MOVIES MOVING MOWED MOWER MOWERS MOWING MOXIE MUCH MUCK MUCOUS MUCUS MUDDLE MUDDY MUFF MUFFIN MUGGED MUGGER MUGGY MUGS MULCH MULE MULES MULEY MULLED MULLER MULLET MUMBLE MUMMY MUMPS MUMS MUNCH MURAL MURALS MURKY MURMUR MURPHY MUSCLE MUSE MUSES MUSEUM MUSH MUSHY MUSIC MUSING MUSKET MUSKIE MUSS MUST MUSTER MUTANT MUTE MUTINY MUTT MUTTON MUTUAL MUUMUU MUZZLE MYRIAD MYRTLE MYSELF MYSTIC MYTH MYTHIC MYTHS NACHO NACHOS NADA NAGGED NAIL NAILED NAILS NAIVE NAKED NAME NAMED NAMELY NAMES NAMING NANA NANCE NANCY NANNY NAPALM NAPKIN NAPPY NAPS NARC NARROW NARY NASAL NASTY NATION NATIVE NATTY NATURE NAUGHT NAUSEA NAVAL NAVY NEAR NEARBY NEARLY NEAT NEATLY NEBULA NECK NECKS NECTAR NEED NEEDED NEEDLE NEEDS NEEDY NEGATE NELLIE NELLY NELSON NEON NEPHEW NERD NERDS NERDY NERVE NERVES NESS NEST NETHER NEURAL NEVE NEVER NEWEST NEWLY NEWS NEWT NEWTON NEXT NEXUS NIBBLE NICE NICELY NICER NICEST NICHE NICK NICKED NICKEL NICKS NIECE NIECES NIFTY NIGH NIGHT NIGHTS NIGHTY NIMROD NINE NINES NINETY NINJA NINNY NINTH NIPPED NIPPER NIPPY NITE NITTY NITWIT NIXED NOBLE NOBODY NODDED NODE NODES NODS NOEL NOGGIN NOIR NOISE NOISES NOISY NOMAD NOMADS NOME NONE NOODLE NOON NOOSE NOPE NORDIC NORM NORMAL NORTH NOSE NOSED NOSES NOSEY NOSH NOSING NOSY NOTARY NOTCH NOTE NOTED NOTES NOTICE NOTIFY NOTING NOTION NOUGAT NOUN NOUS NOVA NOVEL NOVELS NOZZLE NUANCE NUBILE NUDGE NUKE NUKED NUKES NULL NUMB NUMBER NUNS NURSE NURSED NURSES NUTMEG NUTS NUTTY NYLON NYLONS NYMPH NYMPHO OAKS OARS OASIS OATH OATHS OATS OBESE OBEY OBEYED OBITS OBJECT OBLIGE OBOE OBSESS OBTAIN OBTUSE OCCULT OCCUPY OCCUR OCCURS OCEAN OCEANS OCTANE ODDEST ODDLY ODDS ODIOUS ODOR OFFEND OFFER OFFERS OFFICE OFFING OFFS OFFSET OFTEN OGLE OGLING OGRE OGRES OILED OILS OILY OINK OKAY OKAYED OKRA OLDEN OLDER OLDEST OLDIE OLDS OLIVE OLIVES OMEGA OMELET OMEN OMENS ONCE ONES ONION ONIONS ONLY ONTO ONWARD OODLES OOMPH OOPS OOZE OOZING OPAL OPEN OPENED OPENER OPENLY OPENS OPERA OPERAS OPIUM OPPOSE OPTED OPTIC OPTION OPUS ORACLE ORAL ORALLY ORANGE ORATOR ORBED ORBING ORBIT ORBS ORDEAL ORDER ORDERS ORGAN ORGANS ORGIES ORIGIN ORNATE ORNERY ORPHAN OTHER OTHERS OTTER OTTO OUCH OUGHT OUNCE OUNCES OURS OUTAGE OUTBID OUTDID OUTDO OUTER OUTFIT OUTING OUTLAW OUTLET OUTRUN OUTS OUTSET OUTWIT OVAL OVEN OVER OVERDO OVERLY OWED OWES OWING OWLS OWNED OWNER OWNERS OWNING OWNS OXEN OXFORD OXYGEN OYEZ OYSTER OZONE PACE PACED PACER PACES PACING PACK PACKED PACKER PACKET PACKS PACT PADDED PADDLE PADDY PADRE PADS PAELLA PAGAN PAGE PAGED PAGER PAGERS PAGES PAGING PAID PAIL PAIN PAINED PAINS PAINT PAINTS PAIR PAIRED PAIRS PAJAMA PALACE PALE PALER PALES PALM PALMER PALMS PALP PALS PALSY PALTRY PAMPER PANAMA PANDA PANE PANEL PANELS PANIC PANICS PANNED PANS PANSY PANT PANTRY PANTS PANTY PAPA PAPER PAPERS PAPPY PARA PARADE PARDON PARE PARENT PARIS PARISH PARK PARKA PARKED PARKER PARKS PARLOR PARODY PAROLE PARROT PART PARTED PARTLY PARTON PARTS PARTY PASS PASSED PASSER PASSES PAST PASTA PASTE PASTED PASTOR PASTRY PASTS PATCH PATE PATENT PATH PATHOS PATHS PATIO PATOIS PATROL PATRON PATSY PATTEN PATTER PATTY PAUSE PAUSES PAVE PAVED PAVING PAWING PAWN PAWS PAYDAY PAYING PAYOFF PAYS PEACE PEACH PEACHY PEAK PEAKED PEAKS PEANUT PEAR PEARL PEARLS PEARLY PEAS PEAT PEBBLE PECAN PECANS PECK PECKED PECKER PECKS PECS PEDAL PEDALS PEDDLE PEDRO PEED PEEING PEEK PEEKED PEEKS PEEL PEELED PEELS PEEP PEEPS PEER PEERS PEES PEEVED PEGGED PELE PELLET PELT PELTS PELVIC PENAL PENCE PENCIL PENNE PENNED PENNY PENS PEON PEOPLE PEPPER PERCH PERIL PERILS PERIOD PERISH PERK PERKS PERKY PERM PERMIT PERRY PERSON PERUSE PESKY PESOS PEST PESTER PESTO PESTS PETAL PETALS PETER PETERS PETIT PETITE PETROL PETS PETTY PEWTER PFFT PHASE PHASED PHASES PHEW PHOBIA PHOBIC PHOEBE PHONE PHONED PHONES PHONEY PHONY PHOOEY PHOTO PHOTOS PHRASE PHYSIC PIANO PIANOS PIAZZA PICK PICKED PICKER PICKET PICKLE PICKS PICKUP PICKY PICNIC PIECE PIECED PIECES PIED PIER PIERCE PIES PIFFLE PIGEON PIGGY PIGLET PIGS PIGSTY PIKE PILAR PILE PILED PILES PILING PILL PILLAR PILLOW PILLS PILOT PILOTS PINA PINATA PINCH PINE PINES PING PINING PINK PINKIE PINKS PINKY PINNED PINOT PINS PINT PINTO PINTS PIOUS PIPE PIPER PIPES PIPING PIQUED PIRATE PISTOL PISTON PITCH PITHY PITIED PITS PITTED PITY PIVOT PIXELS PIXIE PIXIES PIZZA PIZZAS PLACE PLACED PLACES PLACID PLAGUE PLAID PLAIN PLAINS PLAIT PLAN PLANE PLANES PLANET PLANK PLANS PLANT PLANTS PLAQUE PLASMA PLATE PLATED PLATES PLAY PLAYA PLAYED PLAYER PLAYS PLAZA PLEA PLEAD PLEADS PLEAS PLEASE PLED PLEDGE PLENTY PLIERS PLIGHT PLOP PLOT PLOTS PLOW PLOWED PLOY PLUCK PLUCKY PLUG PLUGS PLUM PLUMP PLUMS PLUNGE PLURAL PLUS PLUSES PLUSH POACH POCKET PODIUM PODS POEM POEMS POET POETIC POETRY POETS POINT POINTE POINTS POINTY POISE POISED POISON POKE POKED POKER POKES POKEY POKING POLAR POLE POLES POLICE POLICY POLIO POLISH POLITE POLKA POLL POLLED POLLEN POLLS POLO POLY PONCHO POND PONDER PONDS PONG PONIES PONY POOCH POODLE POOF POOFS POOFY POOH POOL POOLS POOP POOPED POOR POORER POORLY POPE POPPA POPPED POPPER POPPET POPPY POPS PORCH PORE PORES PORING PORK PORKY PORT PORTAL PORTER PORTS POSE POSED POSER POSES POSIES POSING POSSE POSSES POSSUM POST POSTAL POSTED POSTER POSTS POTATO POTENT POTION POTS POTSIE POTTED POTTER POTTY POUCH POUNCE POUND POUNDS POUR POURED POURS POUT POWDER POWER POWERS PRAISE PRAM PRANCE PRANK PRANKS PRAY PRAYED PRAYER PRAYS PREACH PREFER PREFIX PRELIM PREMED PREP PREPPY PRESS PRESTO PRETTY PREY PREYED PREYS PRICE PRICED PRICES PRICEY PRIDE PRIDED PRIEST PRIM PRIMA PRIMAL PRIME PRIMED PRIMER PRIMO PRINCE PRINT PRINTS PRIOR PRIORS PRISON PRISS PRISSY PRIVY PRIZE PRIZED PRIZES PROBE PROBES PROD PROF PROFIT PROM PROMO PROMPT PROMS PRONE PRONTO PROOF PROOFS PROP PROPER PROPS PROS PROSE PROUD PROVE PROVED PROVEN PROVES PROWL PROXY PRUDE PRUDES PRUNE PRUNES PRYING PSALM PSEUDO PSST PSYCH PSYCHE PSYCHO PUBES PUBIC PUBLIC PUCE PUCK PUCKER PUDDLE PUFF PUFFED PUFFIN PUFFS PUFFY PUKE PUKING PULL PULLED PULLER PULLS PULP PULPIT PULSE PULSES PUMMEL PUMP PUMPED PUMPS PUNCH PUNCHY PUNISH PUNK PUNKS PUNKY PUNS PUNT PUNY PUPIL PUPILS PUPPET PUPPY PURE PUREE PURELY PURER PUREST PURGE PURGED PURITY PURPLE PURR PURSE PURSUE PUSH PUSHED PUSHER PUSHES PUSHY PUSS PUTRID PUTS PUTTER PUTTY PUZZLE PYGMY PYRE QUACK QUACKS QUAD QUAHOG QUAINT QUAKE QUAKER QUALMS QUARK QUARRY QUART QUEASY QUEEN QUEENS QUELL QUERY QUEST QUEUE QUICHE QUICK QUID QUIET QUILT QUILTS QUINCE QUINTS QUIRK QUIRKS QUIRKY QUIT QUITE QUITS QUIVER QUIZ QUOTA QUOTE QUOTED QUOTES QUOTH RABBI RABBIT RABBLE RABID RABIES RACE RACED RACER RACES RACIAL RACING RACISM RACIST RACK RACKED RACKET RACKS RACY RADAR RADIAL RADIO RADIOS RADISH RADIUS RAFFLE RAFT RAGE RAGES RAGGED RAGING RAGS RAID RAIDED RAIDER RAIDS RAIL RAILS RAIN RAINED RAINS RAINY RAISE RAISED RAISER RAISES RAISIN RAJAH RAKE RAKED RALLY RALPH RAMBLE RAMMED RAMP RAMROD RAMUS RANCH RANCHO RANCID RAND RANDOM RANDY RANG RANGE RANGER RANGES RANK RANKS RANSOM RANT RANTS RAPID RAPIDS RAPING RAPTOR RARE RARELY RAREST RARING RARITY RASH RASHES RASHLY RATE RATED RATES RATH RATHER RATING RATIO RATION RATS RATTED RATTLE RATTY RAVAGE RAVE RAVED RAVEN RAVENS RAVINE RAVING RAVISH RAYED RAYS RAZOR RAZORS REACH REACT REACTS READ READER READS READY REAL REALLY REALM REALMS REALTY REAM REAMED REAP REAPER REAR REARED REARS REASON REBATE REBEL REBELS REBOOT REBORN RECALL RECANT RECAP RECENT RECESS RECIPE RECITE RECKON RECON RECORD RECTAL RECTUM RECUSE REDEEM REDIAL REDID REDO REDONE REDS REDUCE REED REEF REEFER REEFS REEK REEKS REEL REELED REELS REEVE REEVES REFER REFERS REFILL REFLEX REFORM REFUGE REFUND REFUSE REFUTE REGAIN REGAL REGARD REGENT REGGAE REGIME REGINA REGION REGRET REHAB REHASH REHEAT REIGN REIGNS REIN REJECT RELATE RELAX RELAY RELIC RELICS RELIEF RELIES RELISH RELIVE RELOAD RELY REMAIN REMAKE REMARK REMEDY REMIND REMOTE REMOVE RENAL RENAME RENDER RENEGE RENEW RENOWN RENT RENTAL RENTED RENTS REOPEN REPAID REPAIR REPAY REPEAL REPEAT REPENT REPLAY REPLY REPORT REPS REPUTE REREAD RERUNS RESCUE RESEDA RESENT RESET RESIGN RESIN RESIST RESORT REST RESTED RESTS RESULT RESUME RETAIL RETAIN RETAKE RETEST RETINA RETIRE RETORT RETRO RETURN REVAMP REVEAL REVELS REVERE REVERT REVIEW REVISE REVIVE REVOKE REWARD REWIND RHINO RHYME RHYMED RHYMES RHYTHM RIALTO RIBBED RIBBON RIBS RICE RICH RICHER RICHES RICK RICKEY RICKS RIDDEN RIDDLE RIDE RIDER RIDERS RIDES RIDGE RIDING RIFE RIFF RIFLE RIFLES RIFT RIGGED RIGHT RIGHTO RIGHTS RIGHTY RIGID RIGOR RIGS RILE RILED RILEY RING RINGER RINGS RINK RINSE RIOJA RIOT RIOTS RIPE RIPPED RIPPER RIPPLE RIPS RISE RISEN RISES RISING RISK RISKED RISKS RISKY RITE RITES RITTER RITUAL RITZ RITZY RIVAL RIVALS RIVER RIVERS ROACH ROAD ROADIE ROADS ROAM ROAR ROAST ROASTS ROBBED ROBBER ROBBIN ROBE ROBES ROBIN ROBINS ROBOT ROBOTS ROBS ROBUST ROCK ROCKED ROCKER ROCKET ROCKS ROCKY RODE RODENT RODEO RODMAN RODS ROGER ROGERS ROGUE ROGUES ROLE ROLES ROLF ROLL ROLLED ROLLER ROLLS ROMAN ROMEO ROMP ROMPER ROOF ROOFER ROOFS ROOK ROOKIE ROOM ROOMIE ROOMS ROOMY ROOST ROOT ROOTED ROOTS ROPE ROPED ROPES ROSCOE ROSE ROSES ROSIN ROSTER ROSY ROTARY ROTATE ROTO ROTS ROTTED ROTTEN ROUGE ROUGH ROUND ROUNDS ROUSE ROUST ROUTE ROUTED ROUTER ROUTES ROVER ROVING ROWAN ROWDY ROWING ROWS ROYAL ROYALS RUBBED RUBBER RUBBLE RUBE RUBES RUBIES RUBS RUBY RUCKUS RUDDER RUDE RUDELY RUDER RUFF RUFFLE RUGBY RUGGED RUIN RUINED RUINS RULE RULED RULER RULERS RULES RULING RUMBA RUMBLE RUMMY RUMOR RUMORS RUMOUR RUMP RUMPUS RUNE RUNES RUNG RUNNER RUNNY RUNOFF RUNS RUNT RUNWAY RURAL RUSE RUSH RUSHED RUSHES RUST RUSTED RUSTLE RUSTY RUTH SABE SABER SABERS SABIN SABLE SACK SACKS SACRED SADDER SADDLE SADE SADIST SADLY SAFARI SAFE SAFELY SAFER SAFES SAFEST SAFETY SAGA SAGE SAHIB SAID SAIL SAILED SAILOR SAILS SAINT SAINTS SAITH SAKE SAKES SAKI SALAAM SALAD SALADS SALAMI SALARY SALE SALES SALINA SALINE SALIVA SALLY SALMON SALON SALOON SALSA SALT SALTED SALTY SALUTE SAME SAMPLE SAND SANDAL SANDED SANDS SANDY SANE SANEST SANG SANITY SANK SANS SANTO SANTOS SAPPY SAPS SARAN SARGE SARK SASSY SATIN SATIRE SATYR SAUCE SAUCER SAUL SAUNA SAVAGE SAVE SAVED SAVER SAVES SAVIN SAVING SAVIOR SAVOR SAVOUR SAVVY SAWED SAWING SAWS SAWYER SAYER SAYING SAYS SCAB SCABBY SCABS SCAG SCALD SCALE SCALED SCALES SCALP SCAM SCAMP SCAMPI SCAMS SCAN SCANS SCANT SCAR SCARCE SCARE SCARED SCARES SCARF SCARS SCARY SCAT SCENE SCENES SCENIC SCENT SCENTS SCHEME SCHIZO SCHLEP SCHMO SCHNOZ SCHOOL SCOFF SCONE SCONES SCOOP SCOOPS SCOOT SCOPE SCOPES SCORCH SCORE SCORED SCORES SCOT SCOTCH SCOTIA SCOTS SCOUT SCOUTS SCOW SCRAM SCRAP SCRAPE SCREAM SCREEN SCRIPT SCROLL SCRUB SCRUBS SCRY SCUBA SCUD SCUFF SCUM SCUMMY SCURRY SCURVY SCUZZY SEAL SEALED SEALS SEAM SEAMAN SEAMEN SEAMS SEAR SEARCH SEARED SEARS SEAS SEASON SEAT SEATED SEATS SECOND SECRET SECTOR SECURE SEDAN SEDATE SEDUCE SEED SEEDS SEEDY SEEING SEEK SEEKER SEEKS SEEM SEEMED SEEMS SEEN SEEP SEER SEES SEESAW SEGUE SEIZE SEIZED SEIZES SELDOM SELECT SELF SELL SELLER SELLS SELVES SEMI SEMPLE SENATE SEND SENDER SENDS SENILE SENIOR SENOR SENORA SENSE SENSED SENSES SENSOR SENT SENTRY SEPTIC SEPTUM SEQUEL SERA SERENE SERGE SERIAL SERIES SERMON SERUM SERVE SERVED SERVER SERVES SESAME SETS SETTLE SETUP SEVEN SEVENS SEVER SEVERE SEWAGE SEWED SEWER SEWERS SEWING SEWN SHABBY SHACK SHAD SHADE SHADES SHADOW SHADY SHAFT SHAH SHAKE SHAKEN SHAKER SHAKES SHAKY SHALE SHALL SHALOM SHALT SHAM SHAMAN SHAME SHAMED SHANK SHANKS SHAPE SHAPED SHAPES SHARDS SHARE SHARED SHARES SHARK SHARKS SHARP SHAT SHAVE SHAVED SHAVEN SHAVER SHAVES SHAW SHAWL SHAWN SHAY SHEA SHEAR SHED SHEDS SHEEN SHEENY SHEEP SHEER SHEET SHEETS SHEILA SHELF SHELL SHELLS SHELVE SHERRY SHES SHIELD SHIFT SHIFTS SHIFTY SHILL SHIMMY SHIN SHINE SHINES SHINS SHINY SHIP SHIPS SHIRT SHIRTS SHIV SHIVA SHIVER SHOAL SHOCK SHOCKS SHODDY SHOE SHOES SHONE SHOO SHOOK SHOOT SHOOTS SHOP SHOPS SHORE SHORES SHORT SHORTS SHORTY SHOT SHOTS SHOULD SHOUT SHOUTS SHOVE SHOVED SHOVEL SHOVES SHOW SHOWED SHOWER SHOWN SHOWS SHOWY SHRED SHREDS SHREW SHREWD SHRIEK SHRIMP SHRINE SHRINK SHROUD SHRUB SHRUBS SHRUG SHRUGS SHRUNK SHTICK SHUCK SHUCKS SHUN SHUNT SHUSH SHUT SHUTS SICCED SICK SICKEN SICKER SICKLY SICKO SICKOS SIDE SIDED SIDES SIDING SIDLE SIEGE SIERRA SIESTA SIFT SIGH SIGHS SIGHT SIGHTS SIGMA SIGN SIGNAL SIGNED SIGNOR SIGNS SIKES SILENT SILK SILKEN SILKS SILKY SILL SILLY SILVA SILVER SIMMER SIMONY SIMP SIMPLE SIMPLY SIMS SINCE SINE SINFUL SING SINGE SINGED SINGER SINGLE SINGS SINK SINKER SINKS SINNED SINNER SINS SINUS SIPPED SIRE SIREE SIREN SIRENS SIRREE SIRS SISSY SISTER SITCOM SITE SITES SITS SITTER SIXES SIXTH SIXTY SIZE SIZED SIZES SIZING SIZZLE SKAG SKATE SKATED SKATER SKATES SKETCH SKEWED SKEWER SKID SKIDS SKIED SKIER SKIES SKIFF SKIING SKILL SKILLS SKIM SKIMP SKIMPY SKIN SKINNY SKINS SKIP SKIRT SKIRTS SKIS SKIT SKULK SKULL SKULLS SKUNK SLACK SLACKS SLAM SLAMS SLANG SLANT SLAP SLAPS SLASH SLATE SLATED SLATER SLAW SLAY SLAYED SLAYER SLEAZE SLEAZY SLED SLEDGE SLEEK SLEEP SLEEPS SLEEPY SLEET SLEEVE SLEIGH SLEPT SLEUTH SLEW SLICE SLICED SLICER SLICES SLICK SLID SLIDE SLIDER SLIDES SLIGHT SLIM SLIME SLIMY SLING SLINGS SLINK SLINKY SLIP SLIPS SLIT SLIVER SLOB SLOGAN SLOP SLOPE SLOPES SLOPPY SLOT SLOTS SLOUCH SLOUGH SLOW SLOWED SLOWER SLOWLY SLUDGE SLUG SLUGS SLUM SLUNG SLUR SLURP SLUSH SMACK SMACKS SMALL SMART SMARTS SMARTY SMASH SMEAR SMEARS SMELL SMELLS SMELLY SMELT SMILE SMILED SMILES SMILEY SMIRK SMITE SMITH SMOCK SMOG SMOKE SMOKED SMOKER SMOKES SMOKEY SMOKY SMOOCH SMOOTH SMUDGE SMUG SNACK SNACKS SNAG SNAGS SNAIL SNAILS SNAKE SNAKES SNAP SNAPPY SNAPS SNARKY SNARL SNATCH SNAZZY SNEAK SNEAKS SNEAKY SNEER SNEEZE SNIDE SNIFF SNIP SNIPE SNIPER SNIT SNITCH SNOB SNOBBY SNOOK SNOOP SNOOPY SNOOTY SNOOZE SNORE SNORES SNORT SNOT SNOTTY SNOUT SNOW SNOWED SNOWY SNUB SNUCK SNUFF SNUG SOAK SOAKED SOAP SOAPS SOAPY SOAR SOARED SOARS SOBER SOBS SOCCER SOCIAL SOCK SOCKED SOCKET SOCKS SODA SODAS SODIUM SODOMY SOFA SOFAS SOFT SOFTEN SOFTER SOFTLY SOFTY SOGGY SOIL SOILED SOIREE SOLACE SOLAR SOLD SOLE SOLELY SOLEMN SOLES SOLID SOLO SOLVE SOLVED SOLVES SOMBER SOME SONAR SONATA SONG SONGS SONICS SONNET SONNY SONS SOOK SOON SOONER SOOT SOOTHE SORBET SORDID SORE SOREL SORES SORREL SORROW SORRY SORT SORTED SORTS SOUGHT SOUL SOULS SOUND SOUNDS SOUP SOUPS SOUPY SOUR SOURCE SOUS SOUSE SOUTH SOVIET SOWING SOWN SPACE SPACED SPACES SPACEY SPADE SPADES SPAN SPANK SPANS SPAR SPARE SPARED SPARK SPARKS SPARKY SPAS SPASM SPASMS SPAT SPATE SPAWN SPEAK SPEAKS SPEAR SPEARS SPECK SPECS SPEECH SPEED SPEEDO SPEEDS SPEEDY SPELL SPELLS SPELT SPENCE SPEND SPENDS SPENT SPEW SPHERE SPHINX SPICE SPICY SPIDER SPIED SPIEL SPIES SPIKE SPIKED SPIKES SPIKEY SPIKY SPILL SPILLS SPIN SPINAL SPINE SPINS SPINY SPIRAL SPIRIT SPIT SPITE SPITS SPITZ SPLASH SPLAT SPLEEN SPLINT SPLIT SPLITS SPOIL SPOILS SPOKE SPOKEN SPOKES SPONGE SPOOK SPOOKS SPOOKY SPOOL SPOON SPOONS SPORES SPORT SPORTS SPORTY SPOT SPOTS SPOTTY SPOUSE SPRAIN SPRANG SPRAY SPRAYS SPREAD SPREE SPRING SPRINT SPRITE SPRUCE SPRUNG SPRY SPUD SPUN SPUR SPURS SPURT SPYING SQUAD SQUADS SQUALL SQUARE SQUASH SQUAT SQUAW SQUAWK SQUEAK SQUEAL SQUID SQUIRE SQUIRM SQUIRT SQUISH STAB STABLE STACK STACKS STAFF STAG STAGE STAGED STAGES STAIN STAINS STAIR STAIRS STAKE STAKED STAKES STALE STALK STALKS STALL STAMP STAMPS STANCE STAND STANDS STANG STANZA STAPLE STAR STARE STARED STARES STARK STARRY STARS START STARTS STARVE STASH STASIS STAT STATE STATED STATES STATIC STATS STATUE STATUS STAVE STAY STAYED STAYS STEAD STEADY STEAK STEAKS STEAL STEALS STEAM STEAMY STEED STEEL STEELY STEEP STEER STEIN STELLA STEM STEMS STENCH STENO STEP STEPPE STEPS STEREO STERN STEW STEWED STICK STICKS STICKY STIFF STIFLE STIGMA STILES STILL STILLS STILTS STING STINGS STINGY STINK STINKS STINKY STINT STIR STIRS STITCH STOCK STOCKS STOCKY STODGY STOIC STOKE STOKED STOKES STOLE STOLEN STOMP STONE STONER STONES STONEY STONY STOOD STOOGE STOOL STOOLS STOOP STOP STOPS STORE STORED STORES STORK STORM STORMS STORMY STORY STOVE STOW STOWED STRAIN STRAIT STRAND STRAP STRAPS STRAW STRAWS STRAY STREAK STREAM STREET STREP STRESS STREWN STRICT STRIDE STRIFE STRIKE STRING STRIP STRIPE STRIPS STRIVE STROBE STROKE STROLL STRONG STRUCK STRUNG STRUT STRUTS STUB STUBS STUCK STUD STUDIO STUDLY STUDS STUDY STUFF STUFFS STUFFY STUMP STUMPS STUN STUNG STUNK STUNT STUNTS STUPID STUPOR STURDY STYLE STYLED STYLES SUAVE SUBLET SUBMIT SUBTLE SUBTLY SUBURB SUBWAY SUCH SUCKED SUCKER SUDDEN SUDS SUED SUEDE SUES SUFFER SUGAR SUGARS SUGARY SUING SUIT SUITE SUITED SUITES SUITOR SUITS SULFUR SULK SULLEN SULTAN SULTRY SUMMED SUMMER SUMMIT SUMMON SUMO SUMP SUMS SUNDAE SUNG SUNK SUNKEN SUNNY SUNSET SUNTAN SUPER SUPERB SUPPER SUPPLE SUPPLY SURE SURELY SURF SURFED SURFER SURGE SURLY SURVEY SUSHI SUSS SUTRA SWAB SWABS SWAM SWAMI SWAMP SWAMPS SWAN SWANS SWAP SWARM SWAT SWATCH SWAY SWAYED SWEAR SWEARS SWEAT SWEATS SWEATY SWEDE SWEDES SWEEP SWEEPS SWEET SWEETS SWELL SWELLS SWEPT SWERVE SWIFT SWIG SWILL SWIM SWIMS SWINE SWING SWINGS SWIPE SWIPED SWIRL SWIRLY SWISS SWITCH SWIVEL SWOOP SWOOPS SWORD SWORDS SWORE SWORN SWUNG SYKES SYMBOL SYNC SYNCH SYNE SYPHON SYRUP SYSTEM TABBY TABLE TABLES TABLET TABS TACH TACIT TACK TACKED TACKLE TACKS TACKY TACO TACOS TACT TACTIC TAFFY TAGGED TAGS TAIL TAILED TAILOR TAILS TAINT TAKE TAKEN TAKER TAKERS TAKES TAKIN TAKING TALCUM TALE TALENT TALES TALK TALKED TALKER TALKIE TALKS TALKY TALL TALLER TALLY TALONS TAME TAMMY TAMPER TAMPON TANDEM TANGLE TANGO TANK TANKED TANKER TANKS TANNED TANNER TAPAS TAPE TAPED TAPES TAPING TAPPED TARDY TARGET TARMAC TAROT TARP TARRED TART TARTAR TARTS TARZAN TASK TASKS TASTE TASTED TASTES TASTY TATE TATER TATTLE TATTOO TAUGHT TAUNT TAUNTS TAUT TAVERN TAWDRY TAXED TAXES TAXI TAXING TAXIS TEACH TEACUP TEAL TEAM TEAMED TEAMS TEAPOT TEAR TEARS TEARY TEAS TEASE TEASED TEDDY TEED TEEN TEENS TEENSY TEENY TEETH TELEX TELL TELLER TELLS TELLY TEMP TEMPER TEMPLE TEMPO TEMPS TEMPT TENANT TEND TENDED TENDER TENDON TENDS TENETS TENNER TENNIS TENOR TENORS TENS TENSE TENT TENTH TENTHS TENTS TENURE TEPID TERM TERMS TERRA TERROR TERRY TEST TESTED TESTS TESTY TETHER TEXAS TEXT TEXTS THAN THANK THANKS THAT THAW THAWED THEE THEFT THEFTS THEIR THEIRS THEM THEME THEMED THEMES THEN THEORY THERE THERES THESE THESES THESIS THETA THEY THICK THIEF THIGH THIGHS THIN THINE THING THINGS THINK THINKS THINLY THINS THIRD THIRDS THIRST THIRTY THIS THORN THORNS THORPE THOSE THOU THOUGH THRALL THRASH THREAD THREAT THREE THREW THRICE THRIFT THRILL THRIVE THROAT THRONE THROW THROWN THROWS THRU THRUST THUG THUGS THUMB THUMBS THUS THUSLY THYME TIARA TIBIA TICK TICKED TICKER TICKET TICKLE TICKS TIDAL TIDE TIDES TIDY TIED TIER TIES TIFF TIGER TIGERS TIGHT TIGHTS TIKI TILE TILES TILL TILLER TILT TILTED TIMBER TIMBRE TIME TIMED TIMELY TIMER TIMERS TIMES TIMID TIMING TING TINGLE TINGLY TINKLE TINS TINSEL TINTED TINY TIPPED TIPPER TIPPY TIPS TIPSY TIPTOE TIRE TIRED TIRES TIRING TISSUE TITAN TITANS TITLE TITLES TITTY TIZZY TOAD TOAST TOASTS TOASTY TOBY TODAY TODDLE TODDY TOED TOES TOFFEE TOFU TOGA TOILET TOKE TOKEN TOKENS TOLD TOLL TOLLER TOLLS TOMATO TOMB TOMBS TOMCAT TOME TOMMY TOMS TONE TONED TONER TONES TONG TONGS TONGUE TONIC TONICS TONS TONSIL TONY TOOK TOOL TOOLS TOON TOONS TOOT TOOTH TOOTS TOPAZ TOPES TOPIC TOPICS TOPPED TOPPLE TOPS TORAH TORCH TORE TORN TORO TORQUE TORRID TORSO TORY TOSH TOSS TOSSED TOSSES TOTAL TOTALS TOTE TOTEM TOTING TOTS TOUCAN TOUCH TOUCHE TOUCHY TOUGH TOUPEE TOUR TOURED TOURS TOWARD TOWED TOWEL TOWELS TOWER TOWERS TOWN TOWNIE TOWNS TOXIC TOXIN TOXINS TOYED TOYING TOYS TRACE TRACED TRACER TRACES TRACK TRACKS TRADE TRADED TRADER TRADES TRAGIC TRAIL TRAILS TRAIN TRAINS TRAIT TRAITS TRAM TRAMP TRAMPS TRANCE TRANS TRAP TRAPS TRASH TRASHY TRAUMA TRAVEL TRAY TRAYS TREAD TREADS TREAT TREATS TREATY TREE TREES TREK TREMOR TRENCH TREND TRENDS TRENDY TREY TRIAD TRIAL TRIALS TRIBAL TRIBE TRICK TRICKS TRICKY TRIED TRIES TRIFLE TRIG TRIM TRIO TRIP TRIPE TRIPLE TRIPPY TRIPS TRITE TROLL TROLLS TROOP TROOPS TROPHY TROPIC TROT TROUPE TROUT TROVE TROY TRUANT TRUCE TRUCK TRUCKS TRUE TRUER TRUEST TRULY TRUMP TRUMPS TRUNK TRUNKS TRUSS TRUST TRUSTS TRUSTY TRUTH TRUTHS TRYING TRYOUT TUBA TUBBY TUBE TUBERS TUBES TUBING TUBS TUCK TUCKED TUCKER TULIP TULLE TUMBLE TUMMY TUMOR TUMORS TUNA TUNDRA TUNE TUNED TUNES TUNG TUNIC TUNING TUNNEL TURBAN TURBO TURD TURDS TURF TURK TURKEY TURKS TURN TURNED TURNER TURNS TURRET TURTLE TUSH TUSHIE TUSHY TUSK TUSSLE TUTOR TUTORS TUTTI TUTU TUXEDO TUXES TWAIN TWAS TWEAK TWEEN TWEET TWEEZE TWELVE TWENTY TWERP TWICE TWIG TWIGS TWIN TWINE TWINGE TWINS TWIRL TWIST TWISTS TWISTY TWIT TWITCH TWITS TWOS TYING TYKES TYPE TYPED TYPES TYPING TYPIST TYPO TYRANT TYRE TYRES UGLIES UGLY ULCER ULCERS ULTRA UMPIRE UNABLE UNBORN UNCLE UNCLES UNCOOL UNCUFF UNCUT UNDER UNDIES UNDO UNDONE UNDUE UNDULY UNEASY UNFAIR UNFIT UNFOLD UNHAND UNHOLY UNHOOK UNION UNIONS UNIQUE UNISEX UNIT UNITE UNITED UNITS UNITY UNLESS UNLIKE UNLOAD UNLOCK UNPACK UNPAID UNPLUG UNREAL UNREST UNRULY UNSAFE UNSAID UNSEAL UNSEAT UNSEEN UNSUNG UNSURE UNTIE UNTIED UNTIL UNTO UNTRUE UNVEIL UNWIND UNWISE UNWRAP UNZIP UPBEAT UPDATE UPHELD UPHILL UPHOLD UPKEEP UPLINK UPLOAD UPON UPPED UPPER UPPERS UPPING UPPITY UPROAR UPROOT UPSET UPSETS UPSHOT UPSIDE UPTAKE UPTOWN UPWARD URBAN URCHIN URGE URGED URGENT URGES URGING URINAL URINE URNS USABLE USED USEFUL USER USERS USES USHER USHERS USING USUAL UTERUS UTMOST UTOPIA UTTER VACANT VACATE VACUUM VAGUE VAIL VAIN VALET VALID VALISE VALLEY VALOR VALUE VALUED VALUES VALVE VALVES VAMP VAMPS VANISH VANITY VAPID VARIED VARIES VARY VASE VAST VASTLY VAULT VEAL VECTOR VEER VEERED VEGAN VEIL VEILED VEILS VEIN VEINS VELVET VENDOR VENEER VENOM VENT VENTED VENTS VENUE VENUES VERA VERBAL VERBS VERGE VERGER VERIFY VERILY VERMIN VERSE VERSED VERSUS VERY VESSEL VEST VESTA VESTED VESTS VETO VETOED VETS VETTED VIABLE VIAL VIALS VIBE VIBES VICAR VICE VICTIM VICTOR VIDEO VIDEOS VIEW VIEWED VIEWER VIEWS VIGIL VIGOR VIKING VILE VILL VILLA VILLAS VINE VINO VINYL VIOLA VIOLET VIOLIN VIPER VIPERS VIRAL VIRGIN VIRILE VIRTUE VIRUS VISA VISAGE VISAS VISION VISIT VISITS VISOR VISTA VISUAL VITAL VITALS VIVA VIVE VIVID VIXEN VIXENS VOCAL VOCALS VODKA VOGUE VOICE VOICED VOICES VOID VOILA VOLANT VOLT VOLTS VOLUME VOMIT VOODOO VORTEX VOTE VOTED VOTER VOTERS VOTES VOTING VOUCH VOWED VOWEL VOWELS VOWS VOYAGE VROOM VULGAR VYING WACK WACKO WACKOS WACKY WADDLE WADE WADING WAFFLE WAGE WAGER WAGES WAGING WAGON WAGONS WAHOO WAIF WAIL WAIST WAIT WAITED WAITER WAITS WAIVE WAIVED WAIVER WAKE WAKEN WAKES WAKING WALK WALKED WALKER WALKS WALL WALLA WALLED WALLET WALLOP WALLOW WALLS WALLY WALNUT WALRUS WALTZ WAMPUM WAND WANDER WANING WANT WANTED WANTON WANTS WARD WARDEN WARE WARES WARM WARMED WARMER WARMS WARMTH WARN WARNED WARNER WARP WARPED WARREN WARS WARSAW WART WARTS WARY WASH WASHED WASHER WASHES WASHY WASP WASPS WASTE WASTED WASTES WATCH WATER WATERS WATERY WATT WATTS WAVE WAVED WAVES WAVING WAVY WAXED WAXES WAXING WAXY WAYS WEAK WEAKEN WEAKER WEALTH WEAN WEAPON WEAR WEARER WEARS WEARY WEASEL WEAVE WEAVER WEBER WEBS WEDDED WEDGE WEDGES WEDGIE WEDS WEEK WEEKLY WEEKS WEENIE WEENSY WEENY WEEP WEEPY WEEVIL WEIGH WEIGHS WEIGHT WEINER WEIR WEIRD WEIRDO WELCH WELD WELDED WELDER WELL WELLS WELSH WELT WELTS WENCH WENT WEPT WERE WEST WETS WETTER WHACK WHACKO WHALE WHALES WHAM WHAMMO WHAMMY WHARF WHAT WHATS WHEAT WHEE WHEEL WHEELS WHEEZE WHEN WHENCE WHERE WHET WHEW WHEY WHICH WHIFF WHILE WHILST WHIM WHIMS WHIMSY WHINE WHINER WHINY WHIP WHIRL WHISK WHISKY WHIT WHITE WHITER WHITES WHITEY WHIZ WHOA WHOLE WHOLLY WHOM WHOOP WHOOPS WHOOSH WHOSE WHYS WICK WICKED WIDE WIDEN WIDER WIDOW WIDOWS WIDTH WIELD WIENER WIFE WIGGED WIGGLE WIGGLY WIGGY WIGS WILD WILDER WILDLY WILL WILLED WILLOW WILLS WILLY WILT WILY WIMP WIMPS WIMPY WINCH WIND WINDED WINDOW WINDS WINDY WINE WINERY WING WINGED WINGER WINGS WINING WINK WINKLE WINKS WINNER WINOS WINS WINTER WIPE WIPED WIPER WIPERS WIPES WIPING WIRE WIRED WIRES WIRING WISDOM WISE WISED WISELY WISER WISEST WISH WISHED WISHES WITCH WITCHY WITH WITHER WITHIN WITS WITTY WIVES WIZARD WOBBLE WOES WOKE WOKEN WOLF WOLVES WOMAN WOMB WOMEN WONDER WONKY WONT WOOD WOODED WOODEN WOODS WOODSY WOODY WOOED WOOF WOOING WOOL WOOLLY WOOPS WOOZY WORD WORDED WORDS WORE WORK WORKED WORKER WORKS WORKUP WORLD WORLDS WORM WORMED WORMS WORN WORRY WORSE WORST WORTH WORTHY WOULD WOUND WOUNDS WOVEN WOWED WRAITH WRAP WRAPS WRATH WREAK WREAKS WRECK WRECKS WRENCH WRETCH WRIGHT WRING WRIST WRISTS WRIT WRITE WRITER WRITES WRONG WRONGS WROTE WRUNG WUSS WUSSY WYNN XEROX YACHT YACHTS YAHOO YAMMER YAMS YANG YANK YANKED YANKS YARD YARDS YARN YAWN YEAH YEAR YEARNS YEARS YEAST YECH YELL YELLED YELLER YELLOW YELLS YETI YIELD YIELDS YIKES YIPE YIPPEE YIPPIE YODEL YOGA YOGI YOGURT YOKE YOKEL YOKELS YOLK YORE YOUNG YOUR YOURS YOUSE YOUTH YOUTHS YUAN YUCK YUMMY YUPPIE ZANDER ZANY ZAPPED ZEAL ZEBRA ZEBRAS ZEPHYR ZERO ZEROED ZEROES ZEROS ZEST ZESTY ZETA ZING ZIPPED ZIPPER ZIPPY ZITS ZLOTYS ZODIAC ZOMBIE ZONE ZONED ZONES ZONING ZONKED ZOOM".split(" "));
+
+(()=>{
+const $=s=>document.getElementById(s);
+const reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- saved data ---------- */
+const KEY='bottle-words-v1';
+let save={best:0,sound:true,mostWords:0,mode:'int',bests:null,most:null};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)save=Object.assign(save,s)}catch(e){}
+if(!save.bests){save.bests={beg:0,int:save.best||0,adv:0};save.most={beg:0,int:save.mostWords||0,adv:0}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
+
+/* ---------- sound ---------- */
+let ac=null;
+function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended')ac.resume();return ac}
+function tone(f,d,type,v,when,f2){if(!save.sound)return;const a=audio();if(!a)return;const t=a.currentTime+(when||0);const o=a.createOscillator(),g=a.createGain();
+  o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.1,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.03)}
+const sfx={
+  key(){tone(700+Math.random()*120,.05,'triangle',.07)},
+  del(){tone(380,.06,'triangle',.06,0,300)},
+  flip(i,kind){const f=kind==='hit'?880:kind==='near'?660:330;tone(f,.12,'triangle',.07,i*.25)},
+  bad(){tone(180,.18,'square',.05,0,140)},
+  win(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.28,'triangle',.09,i*.08));tone(2600,.4,'sine',.03,.3,3400)},
+  lose(){[392,330,262].forEach((f,i)=>tone(f,.3,'triangle',.08,i*.14))},
+  hint(){tone(1200,.08,'sine',.06);tone(1600,.16,'sine',.06,.07)},
+  life(){[784,1047,1319].forEach((f,i)=>tone(f,.2,'square',.04,i*.06))},
+  click(){tone(900,.04,'square',.03)}
+};
+
+/* ---------- state ---------- */
+const MAXLIFE=3;
+let answer='',len=5,tries=6,row=0,cur='',rows=[],lives=MAXLIFE,score=0,round=0,found=0,streak=0,hinted={},hintUsed=false,hintsLeft=1,playing=false,locked=false,keyState={};
+let bag={4:[],5:[],6:[]};
+function draw(n){if(!bag[n].length){bag[n]=ANSWERS[n].slice();for(let i=bag[n].length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[n][i],bag[n][j]]=[bag[n][j],bag[n][i]]}}return bag[n].pop()}
+/* ---------- difficulty ---------- Intermediate is the original game. */
+const MODES={
+  beg:{key:'beg',label:'Beginner',desc:'4–5 letter words, 7 tries, 2 hints',len:r=>r<=5?4:5,tries:()=>7,hints:2,lifeEvery:3},
+  int:{key:'int',label:'Intermediate',desc:'4–6 letter words, 6 tries, 1 hint',len:r=>r<=3?4:r<=8?5:6,tries:r=>r>=16?5:6,hints:1,lifeEvery:5},
+  adv:{key:'adv',label:'Advanced',desc:'5–6 letter words, 5 tries, no hints',len:r=>r<=3?5:6,tries:()=>5,hints:0,lifeEvery:5}
+};
+const MODE_ORDER=['beg','int','adv'];
+let mode=MODES[save.mode]||MODES.int;
+function lenFor(r){return mode.len(r)}
+function triesFor(r){return mode.tries(r)}
+function modeButtons(){
+  $('modes').innerHTML=MODE_ORDER.map((k,n)=>{const m=MODES[k];
+    return `<button class="mode ${k}${k===mode.key&&(playing||round)?' cur':''}" id="mode-${k}" type="button"><span class="lv">${[0,1,2].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</span><span><b>${m.label}</b><small>${m.desc}</small></span><em>Best ${save.bests[k]}</em></button>`}).join('');
+  MODE_ORDER.forEach(k=>$('mode-'+k).onclick=()=>{audio();sfx.click();mode=MODES[k];save.mode=k;persist();hide();newGame()});
+}
+
+/* ---------- layout ---------- */
+function buildGrid(){
+  const g=$('grid');g.innerHTML='';rows=[];
+  for(let r=0;r<tries;r++){const rw=document.createElement('div');rw.className='row';rw.style.gridTemplateColumns=`repeat(${len},var(--c))`;rw.setAttribute('role','row');
+    const cells=[];for(let c=0;c<len;c++){const el=document.createElement('div');el.className='cell';el.setAttribute('role','gridcell');rw.appendChild(el);cells.push(el)}
+    g.appendChild(rw);rows.push({el:rw,cells})}
+  fit();
+}
+function fit(){
+  const st=$('stage');const w=st.clientWidth-28-(len-1)*6,h=st.clientHeight-30-(tries-1)*6;
+  const c=Math.max(30,Math.min(64,Math.floor(Math.min(w/len,h/tries))));
+  $('grid').style.setProperty('--c',c+'px');
+}
+addEventListener('resize',fit);
+const KB=['qwertyuiop-','asdfghjkl','zxcvbnm+']; // - is delete (top right), + is Enter (bottom right)
+function buildKb(){
+  const kb=$('kb');kb.innerHTML='';
+  KB.forEach(r=>{const d=document.createElement('div');d.className='kr';
+    for(const ch of r){const b=document.createElement('button');b.type='button';b.className='key';
+      if(ch==='+'){b.textContent='Enter';b.classList.add('wide');b.dataset.k='Enter'}
+      else if(ch==='-'){b.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';b.setAttribute('aria-label','Delete');b.classList.add('wide','del');b.dataset.k='Backspace'}
+      else{b.textContent=ch;b.dataset.k=ch}
+      b.addEventListener('click',()=>{audio();input(b.dataset.k)});d.appendChild(b)}
+    kb.appendChild(d)});
+}
+function paintKeys(){document.querySelectorAll('.key').forEach(b=>{const k=b.dataset.k;b.classList.remove('hit','near','miss');if(keyState[k])b.classList.add(keyState[k])})}
+
+/* ---------- typing ---------- */
+function renderRow(){
+  const r=rows[row];if(!r)return;
+  r.cells.forEach((el,i)=>{const ch=cur[i];el.textContent=ch||(hinted[i]||'');el.classList.toggle('filled',!!ch);el.classList.toggle('ghost',!ch&&!!hinted[i])});
+}
+function input(k){
+  if(!playing||locked)return;
+  if(k==='Enter'){submit();return}
+  if(k==='Backspace'){if(cur.length){cur=cur.slice(0,-1);sfx.del();renderRow()}return}
+  if(/^[a-z]$/.test(k)&&cur.length<len){cur+=k;sfx.key();renderRow()}
+}
+addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const open=['startCover','roundCover','overCover'].find(id=>!$(id).hidden);
+  if(open){if(e.key==='Enter'||e.key===' '){if(document.activeElement&&document.activeElement.tagName==='BUTTON')return;e.preventDefault();$({startCover:'mode-'+mode.key,roundCover:'nextBtn',overCover:'againBtn'}[open]).click()}return}
+  if(e.key==='Enter'||e.key==='Backspace'){e.preventDefault();audio();input(e.key);return}
+  const k=e.key.toLowerCase();if(/^[a-z]$/.test(k)){audio();input(k)}
+});
+
+/* ---------- checking ---------- */
+function grade(guess,ans){
+  const res=Array(len).fill('miss'),left={};
+  for(let i=0;i<len;i++){if(guess[i]===ans[i])res[i]='hit';else left[ans[i]]=(left[ans[i]]||0)+1}
+  for(let i=0;i<len;i++){if(res[i]!=='hit'&&left[guess[i]]>0){res[i]='near';left[guess[i]]--}}
+  return res;
+}
+const RANK={miss:1,near:2,hit:3};
+function submit(){
+  if(cur.length<len){toast('Not enough letters');shake();return}
+  const up=cur.toUpperCase();
+  if(!VALID.has(up)){toast('Not in our word list');shake();return}
+  const res=grade(cur,answer);
+  locked=true;
+  const r=rows[row];
+  r.cells.forEach((el,i)=>{
+    const delay=reduced?0:i*250;
+    setTimeout(()=>{el.classList.add('flip');sfx.flip(0,res[i])},delay);
+    setTimeout(()=>{el.textContent=cur[i];el.classList.remove('filled','ghost');el.classList.add(res[i])},delay+(reduced?0:210));
+  });
+  const done=reduced?50:len*250+300;
+  const guess=cur;
+  setTimeout(()=>{
+    for(let i=0;i<len;i++){const k=guess[i];if(!keyState[k]||RANK[res[i]]>RANK[keyState[k]])keyState[k]=res[i]}
+    paintKeys();
+    if(guess===answer){won(r)}
+    else if(row+1>=tries){lost()}
+    else{row++;cur='';locked=false;renderRow()}
+  },done);
+}
+function shake(){sfx.bad();const r=rows[row].el;r.classList.remove('shake');void r.offsetWidth;r.classList.add('shake')}
+let toastT=0;
+function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,1300)}
+
+/* ---------- rounds ---------- */
+function reveal(el,word,kind){el.innerHTML=word.split('').map(c=>`<div class="cell ${kind}">${c}</div>`).join('')}
+function won(r){
+  playing=false;
+  r.cells.forEach((el,i)=>setTimeout(()=>el.classList.add('win'),i*80));
+  const used=row+1;
+  let pts=len*10*Math.max(1,7-used); // same scale on every difficulty: 1 try = x6 ... 6+ tries = x1
+  if(hintUsed)pts=Math.round(pts/2);
+  found++;streak++;
+  const bonus=streak>1?(streak-1)*10:0;
+  addScore(pts+bonus);
+  let extra='';
+  if(streak%mode.lifeEvery===0&&lives<MAXLIFE){lives++;drawLives();extra=' You won a shell back!';setTimeout(sfx.life,500)}
+  sfx.win();
+  $('rTitle').textContent=['Amazing!','Brilliant!','Great!','Nice one!','Got it!','Phew!'][Math.min(used-1,5)];
+  reveal($('rWord'),answer,'hit');
+  $('rText').textContent=`Solved in ${used} ${used===1?'try':'tries'}: +${pts}`+(bonus?` and streak bonus +${bonus}`:'')+'.'+extra;
+  setTimeout(()=>{$('roundCover').hidden=false;$('nextBtn').focus({preventScroll:true})},reduced?100:900);
+}
+function lost(){
+  playing=false;streak=0;lives--;drawLives();
+  if(lives<=0){gameOver();return}
+  sfx.lose();
+  $('rTitle').textContent='The tide took that one';
+  reveal($('rWord'),answer,'near');
+  $('rText').textContent=`The word was ${answer.toUpperCase()}. You lost a shell, ${lives} left.`;
+  setTimeout(()=>{$('roundCover').hidden=false;$('nextBtn').focus({preventScroll:true})},500);
+}
+function gameOver(){
+  sfx.lose();
+  const isBest=score>0&&score>=save.bests[mode.key];
+  save.most[mode.key]=Math.max(save.most[mode.key]||0,found);persist();
+  $('oMode').textContent=mode.label+' difficulty';
+  reveal($('oWord'),answer,'near');
+  $('oScore').textContent=score;$('oBest').textContent=save.bests[mode.key];$('oWords').textContent=found;$('oNew').hidden=!isBest;
+  setTimeout(()=>{$('overCover').hidden=false;window.BDA&&BDA.shareScore({score,line:mode.label+' · '+found+(found===1?' word':' words'),into:'#overCover .card',after:'.stats'});$('againBtn').focus({preventScroll:true})},600);
+}
+function addScore(n){score+=n;const s=$('scoreEl');s.textContent=score;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');
+  if(score>save.bests[mode.key]){save.bests[mode.key]=score;persist()}$('bestEl').textContent=save.bests[mode.key]}
+function drawLives(){$('lives').innerHTML=Array.from({length:MAXLIFE},(_,i)=>`<i class="${i<lives?'':'lost'}" aria-hidden="true"></i>`).join('');$('lives').setAttribute('aria-label',lives+' shells left')}
+function nextRound(){
+  const pLen=round?lenFor(round):0,pTries=round?triesFor(round):0;
+  round++;len=lenFor(round);tries=triesFor(round);answer=draw(len).toLowerCase();
+  row=0;cur='';hinted={};hintUsed=false;hintsLeft=mode.hints;keyState={};locked=false;playing=true;
+  $('roundEl').textContent=`Bottle ${round} · ${len} letters`+(tries!==6?` · ${tries} tries`:'');
+  $('hintBtn').hidden=!mode.hints;$('hintBtn').disabled=!hintsLeft;
+  buildGrid();paintKeys();renderRow();
+  if(round===1)toast(mode.label);else if(len>pLen)toast(`Now ${len}-letter words!`);else if(tries<pTries)toast(`Only ${tries} tries now!`);
+}
+function newGame(){$('bestEl').textContent=save.bests[mode.key];score=0;round=0;found=0;streak=0;lives=MAXLIFE;bag={4:[],5:[],6:[]};$('scoreEl').textContent=0;drawLives();nextRound()}
+$('hintBtn').onclick=()=>{
+  if(!playing||locked||hintsLeft<=0)return;
+  const known=new Set();rows.slice(0,row).forEach(r=>r.cells.forEach((el,i)=>{if(el.classList.contains('hit'))known.add(i)}));
+  const open=[...Array(len).keys()].filter(i=>!known.has(i)&&!hinted[i]);
+  if(!open.length)return;
+  const i=open[Math.floor(Math.random()*open.length)];
+  hinted[i]=answer[i];hintUsed=true;hintsLeft--;$('hintBtn').disabled=hintsLeft<=0;sfx.hint();
+  toast(`Letter ${i+1} is ${answer[i].toUpperCase()} (half points)`+(hintsLeft>0?` · ${hintsLeft} hint left`:''));renderRow();
+};
+function hide(){['startCover','roundCover','overCover'].forEach(id=>$(id).hidden=true)}
+$('againBtn').onclick=()=>{sfx.click();hide();newGame()};
+$('nextBtn').onclick=()=>{sfx.click();hide();nextRound()};
+$('helpBtn').onclick=()=>{sfx.click();modeButtons();$('startCover').hidden=false};
+function setSoundLabel(){$('soundBtn').textContent='Sound: '+(save.sound?'on':'off')}
+$('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audio();sfx.click()};
+
+setSoundLabel();buildKb();drawLives();$('bestEl').textContent=save.bests[mode.key];modeButtons();
+len=5;tries=6;buildGrid();
+window.__bw={get state(){return{answer,row,cur,score,lives,round,playing,locked,len,tries,mode:mode.key,hintsLeft}}};
+})();
+</script>
+<script>
+/* Home button on every end screen: added next to the game's own "Play again" style button, once per card. */
+(()=>{const RX=/(^|\s)again\b|^(retry|replay|try again|start over|new game|next level|next beach|back to start|keep going|play on)\b/i;
+const ICON="<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 11.5 12 4l9 7.5\"/><path d=\"M5.5 9.5V20h5v-5.5h3V20h5V9.5\"/></svg>";
+function vis(b){const r=b.getBoundingClientRect();if(r.width<2||r.height<2)return false;const c=getComputedStyle(b);return c.visibility!=='hidden'&&c.display!=='none'&&+c.opacity!==0}
+function scan(){document.querySelectorAll('.sa-endhome').forEach(h=>{const p=h.previousElementSibling;if(!p||!p.dataset.saHome){h.remove()}});document.querySelectorAll('[data-sa-home]').forEach(b=>{if(!b.nextElementSibling||!b.nextElementSibling.classList.contains('sa-endhome'))delete b.dataset.saHome});document.querySelectorAll('button,a').forEach(b=>{if(b.dataset.saHome||b.closest('.sa-head,.sa-endhome,nav,header'))return;
+  const t=(b.textContent||'').replace(/\s+/g,' ').trim();if(!t||t.length>24||!RX.test(t)||/^restart/i.test(t))return;if(!vis(b))return;
+  const box=b.parentElement;if(!box||box.querySelector(':scope>.sa-endhome'))return;b.dataset.saHome='1';
+  const a=document.createElement('a');a.className='sa-endhome';a.href='../';a.innerHTML=ICON+'<span>Home</span>';a.setAttribute('aria-label','Home: all games');
+  const fx=getComputedStyle(box).display;if(/flex|grid/.test(fx)&&getComputedStyle(box).flexDirection!=='column'&&fx.indexOf('grid')<0){a.style.margin='0 0 0 8px'}
+  b.insertAdjacentElement('afterend',a)})}
+let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class','style','open']});
+addEventListener('load',scan);setTimeout(scan,600)})();
+</script>
+<script>window.BDA_GAME={"slug": "note-quest", "name": "Note Quest", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/note-quest", "short": "sketchpadarcade.com/note-quest"};</script>
+<script>(()=>{const s="note-quest";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
+<script>
+(()=>{
+  let sheet,toastEl,tt;
+  const enc=encodeURIComponent;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='bda-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2200)}
+  async function copy(url){try{await navigator.clipboard.writeText(url);toast('Link copied')}catch(e){
+    const ta=document.createElement('textarea');ta.value=url;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Link copied':'Copy this link: '+url)}}
+  function openSheet(d){
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sheet';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet)sheet.hidden=true});document.body.appendChild(sheet)}
+    const msg=d.text+' '+d.url;
+    sheet.innerHTML='<div class="bda-card"><h2></h2><p class="u"></p><div class="bda-opts">'+
+      '<button type="button" data-a="copy"><i style="background:#0fa3b8">&#128279;</i>Copy link</button>'+
+      '<a href="https://www.facebook.com/sharer/sharer.php?u='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#1877f2">f</i>Facebook</a>'+
+      '<a href="https://twitter.com/intent/tweet?text='+enc(d.text)+'&url='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#111">X</i>X</a>'+
+      '<a href="https://wa.me/?text='+enc(msg)+'" target="_blank" rel="noopener"><i style="background:#25d366">W</i>WhatsApp</a>'+
+      '<a href="mailto:?subject='+enc(d.title)+'&body='+enc(msg)+'"><i style="background:#ff6f59">@</i>Email</a>'+
+      '</div><button type="button" class="bda-x">Close</button></div>';
+    sheet.querySelector('h2').textContent='Share '+d.title;sheet.querySelector('.u').textContent=d.url;
+    sheet.querySelector('[data-a=copy]').onclick=()=>{copy(d.url);sheet.hidden=true};
+    sheet.querySelector('.bda-x').onclick=()=>sheet.hidden=true;
+    sheet.hidden=false;sheet.querySelector('[data-a=copy]').focus();
+  }
+  async function share(el){
+    const d={url:el.dataset.shareUrl,title:el.dataset.shareTitle,text:el.dataset.shareText};
+    try{if(window.va)window.va('event',{name:'Share',data:{page:d.title}})}catch(e){}
+    const touch=matchMedia('(pointer:coarse)').matches;
+    if(navigator.share&&touch){try{await navigator.share({title:d.title,text:d.text,url:d.url});return}catch(e){if(e&&e.name==='AbortError')return}}
+    openSheet(d);
+  }
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-share-url]');if(el){e.preventDefault();share(el)}});
+})();
+</script>
+<style>
+.bda-scorebtn{appearance:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:9px 18px 9px 14px;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;font:400 1.15rem/1 "Patrick Hand","Comic Sans MS",cursive;
+  background:#f3e6b0;color:#2e2e33;box-shadow:3px 3px 0 #55555c;position:relative;transition:transform .12s}
+.bda-scorebtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #55555c}
+.bda-scorebtn svg{width:18px;height:18px;flex:none}
+.bda-scorebtn:focus-visible{outline:3px solid #2e2e33;outline-offset:3px}
+.bda-scorebtn.float{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9000;margin:0}
+.bda-scorebtn.float:active{transform:translate(-50%,2px)}
+.bda-sc{position:fixed;inset:0;z-index:10001;display:grid;place-items:center;padding:16px;background:rgba(46,46,51,.5);font-family:"Patrick Hand","Comic Sans MS",cursive;overflow:auto}
+.bda-sc[hidden]{display:none!important}
+.bda-sc .in{width:100%;max-width:400px;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:14px;box-shadow:4px 4px 0 #55555c;text-align:center}
+.bda-sc img{display:block;width:100%;height:auto;border:2px solid #2e2e33;border-radius:12px;background:#f6f3ea;aspect-ratio:1}
+.bda-sc .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.bda-sc .row button,.bda-sc .row a{appearance:none;border:2px solid #2e2e33;cursor:pointer;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;padding:9px 6px;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;display:flex;align-items:center;justify-content:center;color:#2e2e33;background:#f6f3ea}
+.bda-sc .go{background:#f3e6b0;box-shadow:2px 2px 0 #55555c}
+.bda-sc .alt{background:#f6f3ea}
+.bda-sc .x{appearance:none;border:0;margin-top:10px;width:100%;padding:9px;background:none;color:#7a7a80;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-sc button:focus-visible,.bda-sc a:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
+<script>
+/* Share-my-score card. A game calls BDA.shareScore({score, line, into, after, lead}) when a game ends:
+   score = the number to brag about, line = optional extra like "Level 5" or "Advanced",
+   into = the game-over card (element or selector) to put the button in, after = where in it; without into the button floats.
+   lead replaces "I scored" (e.g. "I reached" with score "Level 12"). */
+(()=>{
+  const G=window.BDA_GAME||{},nf=n=>typeof n==='number'?n.toLocaleString('en-US'):String(n);
+  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg>';
+  let floatBtn=null,sheet=null,cur=null;
+  const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+  function fitText(c,t,max,size,weight,fam){let s=size;do{c.font=weight+' '+s+'px '+fam;s-=2}while(c.measureText(t).width>max&&s>18);return c.font}
+  async function makeCard(d){
+    const F='"Gloria Hallelujah","Comic Sans MS",cursive',F2='"Patrick Hand","Comic Sans MS",cursive',INK='#2e2e33',PAPER='#f6f3ea';
+    try{await Promise.all([document.fonts.load('120px "Gloria Hallelujah"'),document.fonts.load('40px "Patrick Hand"')])}catch(e){}
+    const cover=await load('../img/'+G.slug+'.jpg');
+    const S=1080,cv=document.createElement('canvas');cv.width=cv.height=S;const c=cv.getContext('2d');
+    c.fillStyle=PAPER;c.fillRect(0,0,S,S);
+    // faint pencil grain and a doodled frame
+    c.fillStyle='rgba(46,46,51,.035)';for(let i=0;i<1400;i++){const x=(i*197)%S,y=(i*331+i*i)%S;c.fillRect(x,y,2,2)}
+    c.strokeStyle=INK;c.lineWidth=5;c.lineJoin='round';c.beginPath();for(let i=0;i<=80;i++){const t=i/80,p=t*4,k=Math.floor(p),f=p-k,w=12*Math.sin(i*1.7);
+      const pts=[[40,40],[S-40,40],[S-40,S-40],[40,S-40],[40,40]];const a=pts[k],b=pts[k+1]||pts[4];c.lineTo(a[0]+(b[0]-a[0])*f+(k%2?w:0),a[1]+(b[1]-a[1])*f+(k%2?0:w))}c.stroke();
+    // site name, hand lettered
+    c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=INK;c.font='62px '+F;c.fillText((G.site||'Sketchpad Arcade').toUpperCase(),S/2,120);
+    // cover art in a pencil frame
+    const cs=470,cx=(S-cs)/2,cy=162;
+    c.save();rr(c,cx,cy,cs,cs,26);c.clip();if(cover)c.drawImage(cover,cx,cy,cs,cs);c.restore();
+    c.lineWidth=6;c.strokeStyle=INK;rr(c,cx,cy,cs,cs,26);c.stroke();
+    // "I scored" + the big number
+    c.font='54px '+F2;c.fillStyle='#55555c';c.fillText(d.lead||'I scored',S/2,712);
+    const big=nf(d.score);fitText(c,big,S-120,150,400,F);
+    c.fillStyle=INK;c.fillText(big,S/2,852);
+    c.lineWidth=4;c.strokeStyle='#c99a1a';c.beginPath();c.moveTo(S/2-c.measureText(big).width/2-10,872);c.quadraticCurveTo(S/2,886,S/2+c.measureText(big).width/2+10,870);c.stroke();
+    const line=(d.line?d.line+' · ':'')+'in '+(G.name||'');
+    fitText(c,line,S-140,46,400,F2);c.fillStyle=INK;c.fillText(line,S/2,930);
+    // challenge + link, in a wobbly box
+    const pill='Can you beat me? '+(G.short||'sketchpadarcade.com');fitText(c,pill,S-200,38,400,F2);
+    const pw=c.measureText(pill).width+72,ph=72,px=(S-pw)/2,py=962;
+    c.fillStyle='#f3e6b0';rr(c,px,py,pw,ph,30);c.fill();c.lineWidth=4;c.strokeStyle=INK;c.stroke();
+    c.fillStyle=INK;c.fillText(pill,S/2,py+49);
+    return new Promise(r=>cv.toBlob(b=>r(b),'image/png'));
+  }
+  function message(d){return (d.lead||'I scored')+' '+nf(d.score)+(d.line?' ('+d.line+')':'')+' in '+G.name+' on '+(G.site||'Sketchpad Arcade')+'! Can you beat me?'}
+  async function open(d){
+    try{if(window.va)window.va('event',{name:'Share score',data:{game:G.slug}})}catch(e){}
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sc';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share your score');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet&&!sheet.hidden)close()});document.body.appendChild(sheet)}
+    sheet.innerHTML='<div class="in"><img alt="Your score card"><div class="row"><button type="button" class="go" data-a="share">Share</button><a class="alt" data-a="save" download>Save image</a><button type="button" class="alt" data-a="copy">Copy link</button></div><button type="button" class="x">Close</button></div>';
+    sheet.hidden=false;
+    const blob=await makeCard(d);const url=URL.createObjectURL(blob);
+    const img=sheet.querySelector('img');img.src=url;img.alt='Score card: '+message(d);
+    const file=new File([blob],(G.slug||'score')+'-score.png',{type:'image/png'});
+    const save=sheet.querySelector('[data-a=save]');save.href=url;save.download=file.name;
+    const text=message(d);
+    sheet.querySelector('[data-a=share]').onclick=async()=>{
+      try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:G.name,text:text+' '+G.url});return}
+        if(navigator.share){await navigator.share({title:G.name,text,url:G.url});return}}catch(e){if(e&&e.name==='AbortError')return}
+      copyText(text+' '+G.url,'Message and link copied')};
+    sheet.querySelector('[data-a=copy]').onclick=()=>copyText(G.url,'Link copied');
+    sheet.querySelector('.x').onclick=close;
+    sheet.querySelector('[data-a=share]').focus();
+  }
+  function close(){if(sheet)sheet.hidden=true}
+  async function copyText(t,msg){let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove()}
+    const b=sheet&&sheet.querySelector('[data-a=copy]');if(b){const o=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=o,1500)}}
+  function button(d){const b=document.createElement('button');b.type='button';b.className='bda-scorebtn';b.innerHTML=ICON+'<span>Share my score</span>';
+    b.addEventListener('click',e=>{e.stopPropagation();open(d)});return b}
+  window.BDA=window.BDA||{};
+  window.BDA.shareScore=function(d){
+    let host=d&&d.into;if(typeof host==='string')host=document.querySelector(host);
+    if(host)host.querySelectorAll('.bda-scorebtn').forEach(x=>x.remove());
+    if(!d||d.score==null||d.score===''||(typeof d.score==='number'&&!(d.score>0)))return;
+    cur=d;
+    if(host){const b=button(d);
+      const after=d.after&&host.querySelector(d.after);if(after)after.insertAdjacentElement('afterend',b);else host.appendChild(b);return b}
+    // no card given: a floating button that goes away on the next tap anywhere else
+    if(floatBtn)floatBtn.remove();floatBtn=button(d);floatBtn.classList.add('float');document.body.appendChild(floatBtn);
+    const fb=floatBtn;setTimeout(()=>document.addEventListener('pointerdown',function h(e){if(!fb.contains(e.target)&&!(sheet&&sheet.contains(e.target))){fb.remove();document.removeEventListener('pointerdown',h,true)}},true),400);
+    return fb};
+  window.BDA.hideScore=function(){if(floatBtn){floatBtn.remove();floatBtn=null}};
+})();
+</script>
+<script>
+(()=>{const h=document.querySelector('.sa-head h1');if(!h)return;let base=0;
+function fit(){h.style.fontSize='';base=parseFloat(getComputedStyle(h).fontSize);let fs=base;
+  while(h.scrollWidth>h.clientWidth+1&&fs>14){fs-=1;h.style.fontSize=fs+'px'}}
+fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>
