@@ -204,32 +204,32 @@
     },
     {
       "source": "/beach-link",
-      "destination": "/pencil-pairs",
+      "destination": "/no-2-pencil",
       "permanent": true
     },
     {
       "source": "/play/beach-link",
-      "destination": "/play/pencil-pairs",
+      "destination": "/play/no-2-pencil",
       "permanent": true
     },
     {
       "source": "/pearl-blocks",
-      "destination": "/graph-blocks",
+      "destination": "/scribble-blocks",
       "permanent": true
     },
     {
       "source": "/play/pearl-blocks",
-      "destination": "/play/graph-blocks",
+      "destination": "/play/scribble-blocks",
       "permanent": true
     },
     {
       "source": "/shell-swap",
-      "destination": "/scribble-swap",
+      "destination": "/drop-swap",
       "permanent": true
     },
     {
       "source": "/play/shell-swap",
-      "destination": "/play/scribble-swap",
+      "destination": "/play/drop-swap",
       "permanent": true
     },
     {
@@ -244,32 +244,32 @@
     },
     {
       "source": "/sonar-sub",
-      "destination": "/paper-sub",
+      "destination": "/space-blaster",
       "permanent": true
     },
     {
       "source": "/play/sonar-sub",
-      "destination": "/play/paper-sub",
+      "destination": "/play/space-blaster",
       "permanent": true
     },
     {
       "source": "/sea-glass",
-      "destination": "/color-by-pencil",
+      "destination": "/space-glass",
       "permanent": true
     },
     {
       "source": "/play/sea-glass",
-      "destination": "/play/color-by-pencil",
+      "destination": "/play/space-glass",
       "permanent": true
     },
     {
       "source": "/gem-cove",
-      "destination": "/gem-sketch",
+      "destination": "/chibi-chib",
       "permanent": true
     },
     {
       "source": "/play/gem-cove",
-      "destination": "/play/gem-sketch",
+      "destination": "/play/chibi-chib",
       "permanent": true
     },
     {
@@ -280,6 +280,66 @@
     {
       "source": "/play/word-plop",
       "destination": "/play/word-scribble",
+      "permanent": true
+    },
+    {
+      "source": "/paper-sub",
+      "destination": "/space-blaster",
+      "permanent": true
+    },
+    {
+      "source": "/play/paper-sub",
+      "destination": "/play/space-blaster",
+      "permanent": true
+    },
+    {
+      "source": "/gem-sketch",
+      "destination": "/chibi-chib",
+      "permanent": true
+    },
+    {
+      "source": "/play/gem-sketch",
+      "destination": "/play/chibi-chib",
+      "permanent": true
+    },
+    {
+      "source": "/color-by-pencil",
+      "destination": "/space-glass",
+      "permanent": true
+    },
+    {
+      "source": "/play/color-by-pencil",
+      "destination": "/play/space-glass",
+      "permanent": true
+    },
+    {
+      "source": "/graph-blocks",
+      "destination": "/scribble-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/play/graph-blocks",
+      "destination": "/play/scribble-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/pencil-pairs",
+      "destination": "/no-2-pencil",
+      "permanent": true
+    },
+    {
+      "source": "/play/pencil-pairs",
+      "destination": "/play/no-2-pencil",
+      "permanent": true
+    },
+    {
+      "source": "/scribble-swap",
+      "destination": "/drop-swap",
+      "permanent": true
+    },
+    {
+      "source": "/play/scribble-swap",
+      "destination": "/play/drop-swap",
       "permanent": true
     }
   ]

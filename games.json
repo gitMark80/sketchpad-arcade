@@ -762,13 +762,13 @@
       ]
     },
     {
-      "slug": "pencil-pairs",
-      "name": "Pencil Pairs",
+      "slug": "no-2-pencil",
+      "name": "No. 2 Pencil",
       "genre": "Puzzle",
       "added": "2026-10-09",
-      "tagline": "Link matching beach tiles before the timer runs out.",
-      "meta": "Play Pencil Pairs free online. Connect matching beach tiles with a path of up to two turns and clear the board before time runs out. Works on phone and computer.",
-      "lead": "A cheerful tile-matching puzzle set on the shore. Find two identical tiles, like a pair of crabs or two beach balls, and connect them with a path of no more than two turns. Clear the whole beach before the timer runs out.",
+      "tagline": "Link matching classroom doodles before the timer runs out.",
+      "meta": "Play No. 2 Pencil free online. Tap pencil-sketched classroom tiles to colour them in, connect matching pairs with a path of up to two turns and clear the desk before time runs out. Works on phone and computer.",
+      "lead": "A tile-matching puzzle drawn in plain No. 2 pencil. Every tile is a classroom doodle, like an apple, a globe, a school bus or a trophy, and it colours in when you tap it. Connect two matching tiles with a path of no more than two turns and clear the whole desk before the timer runs out.",
       "facts": [
         "Puzzle",
         "Tap or click",
@@ -776,9 +776,9 @@
         "Saves your level"
       ],
       "how": [
-        "Tap a tile to select it.",
+        "Tap a tile to select it and it colours in.",
         "Tap a matching tile. If a path with no more than two turns joins them, both tiles clear.",
-        "Paths can run around the outside edge of the board, but not through other tiles or sand rocks.",
+        "Paths can run around the outside edge of the board, but not through other tiles or blocked squares.",
         "Clear every tile before the timer empties to finish the level. Each match adds a second back."
       ],
       "controls": [
@@ -791,17 +791,17 @@
         "Linking tiles that are far apart earns more stars.",
         "Matching quickly builds a combo multiplier up to x5.",
         "From level 4, tiles slide after each match, so think one move ahead.",
-        "Save your hints for the bigger boards with sand rocks."
+        "Save your hints for the bigger boards."
       ]
     },
     {
-      "slug": "graph-blocks",
-      "name": "Graph Blocks",
+      "slug": "scribble-blocks",
+      "name": "Scribble Blocks",
       "genre": "Puzzle",
       "added": "2026-10-09",
       "tagline": "Drag shapes onto the board and clear rows and columns.",
-      "meta": "Play Graph Blocks free online. Drag glossy gem shapes onto an 8x8 board, fill rows and columns to clear them, and chain combos for big scores.",
-      "lead": "A relaxing block puzzle with glossy gem pieces. Place shapes on an 8x8 board, fill a row or column to clear it and chain clears together for big combos. Pearl blocks are worth bonus points.",
+      "meta": "Play Scribble Blocks free online. Drag bright coloured-pencil block shapes onto an 8x8 board, fill rows and columns to clear them, and chain combos for big scores.",
+      "lead": "A relaxing block puzzle with bright coloured-pencil pieces outlined in black. Place shapes on an 8x8 board, fill a row or column to clear it and chain clears together for big combos. Gold star blocks are worth bonus points.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -826,13 +826,13 @@
       ]
     },
     {
-      "slug": "scribble-swap",
-      "name": "Scribble Swap",
+      "slug": "drop-swap",
+      "name": "Drop Swap",
       "genre": "Puzzle",
       "added": "2026-10-09",
-      "tagline": "Swap beach treasures, match three and wash the sand away.",
-      "meta": "Play Scribble Swap free online. Swap shells, starfish, pearls and more to match three in a row, build power-ups and beat 30 beach levels. Works on phone and computer.",
-      "lead": "A sunny match-3 puzzle with 30 levels. Swap neighboring tiles to line up three or more scallops, starfish, pearls, palm trees, lifesavers or treasure chests. Each level has its own goal and a limited number of moves.",
+      "tagline": "Swap classroom doodles, match three and clear the scribbles.",
+      "meta": "Play Drop Swap free online. Swap apples, pencils, books, backpacks, crayons and star stickers to match three in a row, build power-ups and beat 30 levels. Works on phone and computer.",
+      "lead": "A bright match-3 puzzle with 30 levels, drawn in coloured pencil. Swap neighboring tiles to line up three or more apples, pencils, books, backpacks, crayons or star stickers. Each level has its own goal and a limited number of moves, and your stars decorate your classroom.",
       "facts": [
         "Puzzle",
         "30 levels",
@@ -841,8 +841,8 @@
       ],
       "how": [
         "Swap two neighboring tiles to line up three or more of the same kind.",
-        "Finish the level's goals before you run out of moves. Some levels ask you to collect certain tiles, and others ask you to wash away every patch of sand.",
-        "Sand clears when you make a match on top of it. Darker sand takes two matches.",
+        "Finish the level's goals before you run out of moves. Some levels ask you to collect certain tiles, and others ask you to clear every scribble.",
+        "Scribbles clear when you make a match on top of them. Darker scribbles take two matches.",
         "Moves you have left at the end turn into bonus points and can earn you up to 3 stars."
       ],
       "controls": [
@@ -852,9 +852,9 @@
         "The Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Match 4 in a line to make a striped tile that clears a whole row or column.",
-        "Make an L or T shape to build a bomb that clears the tiles around it.",
-        "Match 5 in a line to make a sun. Swap it with any tile to clear every tile of that kind.",
+        "Match 4 in a line to make a ruler that clears a whole row or column.",
+        "Make an L or T shape to make scissors that snip the tiles around them.",
+        "Match 5 in a line to make a paint palette. Swap it with any tile to clear every tile of that kind.",
         "Wait a few seconds and two tiles will pulse to show you a move."
       ]
     },
@@ -863,9 +863,9 @@
       "name": "Pencil Path",
       "genre": "Puzzle",
       "added": "2026-10-09",
-      "tagline": "Tap baby sea turtles to send them to the sea, one clear path at a time.",
-      "meta": "Play Pencil Path free online. Tap baby sea turtles to guide them off the sand and into the sea, but only when their path is clear. 60 levels of relaxing logic puzzles.",
-      "lead": "A calm logic puzzle on a sugar-white sand island in the emerald Gulf. Each baby sea turtle crawls straight the way it is facing, so tap the ones with a clear path to the water first and open the way for the rest. Bump into another turtle and you lose a heart.",
+      "tagline": "Tap pencils to send them off the notepad, one clear path at a time.",
+      "meta": "Play Pencil Path free online. Tap coloured pencils to send them sliding off a lined notepad, but only when their path is clear. 60 levels of relaxing logic puzzles.",
+      "lead": "A calm logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so tap the ones with a clear path off the page first and open the way for the rest. Bump into another pencil and you lose a heart.",
       "facts": [
         "Puzzle",
         "Tap or click",
@@ -873,30 +873,30 @@
         "Saves your progress"
       ],
       "how": [
-        "Tap a turtle to send it crawling straight ahead toward the sea.",
-        "It only makes it if nothing is in its way. If it bumps another turtle, you lose one of your 3 hearts.",
-        "Every turtle that leaves opens a path for others. Clear the whole island to finish the level.",
-        "Rocks appear in later levels. They never move, but every turtle can still reach the water."
+        "Tap a pencil to send it sliding straight the way its tip points.",
+        "It only gets off the page if nothing is in its way. If it bumps another pencil, you lose one of your 3 hearts.",
+        "Every pencil that leaves opens a path for others. Clear the whole page to finish the level.",
+        "Ink blots appear in later levels. They never move, but every pencil can still get off the page."
       ],
       "controls": [
-        "Tap or click a turtle to send it to the sea.",
-        "Hint glows on a turtle that can leave safely. You get 3 per level.",
-        "Restart level starts the island over, and Levels lets you replay any level you've unlocked."
+        "Tap or click a pencil to send it off the page.",
+        "Hint glows on a pencil that can leave safely. You get 3 per level.",
+        "Restart level starts the page over, and Levels lets you replay any level you've unlocked."
       ],
       "tips": [
-        "Start with turtles on the edges facing out. They always have a clear path.",
-        "Before tapping, trace the turtle's line all the way to the water.",
+        "Start with pencils on the edges pointing out. They always have a clear path.",
+        "Before tapping, trace the pencil's line all the way to the edge of the page.",
         "Finish without any bumps to earn all 3 stars."
       ]
     },
     {
-      "slug": "paper-sub",
-      "name": "Paper Sub",
+      "slug": "space-blaster",
+      "name": "Space Blaster",
       "genre": "Arcade",
       "added": "2026-10-09",
-      "tagline": "Steer a little yellow submarine and fire rapid streams of bubbles at the sea creatures swooping in.",
-      "meta": "Play Paper Sub free online. Steer a yellow submarine and fire rapid bubbles at schools of seahorses, dolphins, jellyfish, pufferfish and octopuses in this underwater arcade shooter, with every level harder than the last. Works on phone and computer.",
-      "lead": "A retro arcade shooter under the sea. Schools of seahorses, dolphins, jellyfish, pufferfish and octopuses swim in, line up in formation and swoop down at your little yellow submarine. Fire rapid streams of bubbles to float them up and away, dodge their ink, and see how many levels you can clear.",
+      "tagline": "Fly a little rocket and blast the UFOs swooping down from space.",
+      "meta": "Play Space Blaster free online. Steer a little rocket across grid-paper space and zap saucers, dome UFOs, ring ships, triangle ships and a shielded mothership in this retro arcade shooter, with every level harder than the last. Works on phone and computer.",
+      "lead": "A retro arcade shooter drawn on grid paper. UFOs of every shape and size, from tiny scouts to a shielded mothership, line up in formation and swoop down at your little rocket. Fire rapid laser bolts to zap them, dodge their alien goo, and see how many levels you can clear.",
       "facts": [
         "Arcade",
         "Hold and drag",
@@ -904,41 +904,41 @@
         "Saves your best score"
       ],
       "how": [
-        "Hold and drag to steer your submarine along the sea floor. It fires a rapid stream of bubbles while you hold.",
-        "Each bubble hit wraps a sea creature in a bubble and it floats away. Octopuses take two hits.",
-        "Creatures swoop down at you and squirt ink. Get bumped or inked and you lose a sub. You start with 3.",
-        "Clear every creature to finish the level. Each level the creatures swoop faster, dive more often and squirt more ink. Every third level is a bonus parade where nobody attacks."
+        "Hold and drag to steer your rocket along the bottom of the page. It fires a rapid stream of lasers while you hold.",
+        "Each hit zaps a UFO. The big mothership has a shield and takes two hits.",
+        "UFOs swoop down at you and drop alien goo. Get bumped or gooed and you lose a ship. You start with 3.",
+        "Clear every UFO to finish the level. Each level they swoop faster, dive more often and drop more goo."
       ],
       "controls": [
         "Hold and drag on the screen to steer and fire. With a mouse, move to steer and hold the button down to fire.",
-        "On a keyboard, use the arrow keys or A and D to move, Space to fire bubbles and P to pause.",
+        "On a keyboard, use the arrow keys or A and D to move, Space to fire and P to pause.",
         "Pause stops the action, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Creatures are worth double while they're diving, so stay brave.",
-        "Your bubbles fire a little faster every level and come out in two streams from level 5.",
-        "Boop the golden star for 12 seconds of an extra bubble stream.",
-        "Watch for ink and slide out of the way. Ink falls toward where you were.",
-        "You earn an extra sub at 20,000 points and again at 70,000."
+        "UFOs are worth double while they're diving, so stay brave.",
+        "Your lasers fire a little faster every level and come out in two streams from level 5.",
+        "Zap the power star for 12 seconds of an extra laser stream.",
+        "Watch for goo and slide out of the way. It falls toward where you were.",
+        "You earn an extra ship at 20,000 points and again at 70,000."
       ]
     },
     {
-      "slug": "color-by-pencil",
-      "name": "Color by Pencil",
+      "slug": "space-glass",
+      "name": "Space Glass",
       "genre": "Puzzle",
       "added": "2026-10-09",
-      "tagline": "Fill beach pictures with sparkly sea glass, one numbered color at a time.",
-      "meta": "Play Color by Pencil free online. A relaxing color-by-number puzzle: pick a color, tap or drag across the matching numbers and fill pixel pictures of starfish, crabs, sea turtles and sandcastles with glossy sea glass gems. Works on phone and computer.",
-      "lead": "A relaxing color-by-number puzzle on the beach. Each level is a pixel picture of something from the shore, like a starfish, a crab, a sea turtle or a sandcastle. Pick a numbered color, then tap or drag across the matching squares to fill them with sparkly sea glass until the whole picture shines.",
+      "tagline": "Colour space pictures by number, one pencil colour at a time.",
+      "meta": "Play Space Glass free online. A relaxing color-by-number puzzle on grid paper: pick a color, tap or drag across the matching numbers and fill detailed pixel pictures of rockets, astronauts, UFOs, planets and galaxies. Works on phone and computer.",
+      "lead": "A relaxing color-by-number puzzle on a sheet of grid paper. Each level is a detailed pixel picture from outer space, like a rocket, an astronaut, a UFO, a ringed planet or a galaxy. Pick a numbered color, then tap or drag across the matching squares and zoom in for the small details.",
       "facts": [
         "Puzzle",
         "Tap or drag",
-        "12 beach pictures",
+        "15 space pictures",
         "Saves your progress"
       ],
       "how": [
         "Pick a color from the tray at the bottom. Every square with its number lights up on the picture.",
-        "Tap a lit square to drop in a piece of sea glass, or hold and drag across several at once.",
+        "Tap a lit square to color it in, or hold and drag across several at once. Zoom in with + or a pinch for small squares.",
         "When a color is finished it gets a check mark and the next color is picked for you.",
         "Fill every square to finish the picture and move on to the next level."
       ],
@@ -955,25 +955,24 @@
       ]
     },
     {
-      "slug": "gem-sketch",
-      "name": "Gem Sketch",
+      "slug": "chibi-chib",
+      "name": "Chibi Chib",
       "genre": "Puzzle",
       "added": "2026-10-09",
-      "tagline": "Pick up scrambled gems and put each colour back to rebuild beach pictures.",
-      "meta": "Play Gem Sketch free online. A relaxing gem sorting puzzle: tap misplaced gems to pick them up with their matching neighbours, then stash them in the tray or drop them straight onto their spot to finish 20 cute beach pictures. Works on phone and computer.",
-      "lead": "A calm, colourful sorting puzzle. Every cute beach picture starts scrambled, with jewels sitting on squares of the wrong colour. Tap a gem to pick it up along with its matching neighbours, then stash them in the tray or drop them straight onto their spot, until the seagull, sea turtle, penguin and friends sparkle again.",
+      "tagline": "Pick up scrambled gems and put each colour back to rebuild cute chibi animals.",
+      "meta": "Play Chibi Chib free online. A relaxing gem sorting puzzle: tap misplaced gems to pick them up with their neighbours, then stash them in the tray or drop them onto their coloured squares to finish 17 detailed chibi animal pictures. Works on phone and computer.",
+      "lead": "A calm, colourful sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour. Each square shows the colour it wants, so zoom in, pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.",
       "facts": [
         "Puzzle",
-        "20 pictures",
+        "17 chibi pictures",
         "Zoom in for detail",
         "Saves your progress"
       ],
       "how": [
-        "Each square shows the colour it wants. Every gem starts on a square of the wrong colour.",
-        "Tap a misplaced gem to pick it up along with every touching gem of the same colour. Tap it again to put it back down.",
-        "Tap the tray to stash the gems you're holding, or tap an open square of their colour to drop them straight into the picture. If there isn't room for all of them, the rest stay in your hand.",
-        "You can also tap a colour in the tray, then tap an open square of that colour to place those gems.",
-        "Finish the picture with an empty tray to win. If the tray is full and nothing can be placed, the level is over."
+        "Each square shows the colour it wants with a small coloured dot. Every gem starts on a square of the wrong colour.",
+        "Tap a misplaced gem to pick up its little patch of matching gems. Tap it again to put them back down.",
+        "Tap the tray to stash the gems you're holding, or tap an open square of their colour to drop them straight into the picture.",
+        "Fill every square to finish the picture. The pictures get bigger and more detailed as you go."
       ],
       "controls": [
         "Tap or click gems, the tray, tray colours and squares.",
