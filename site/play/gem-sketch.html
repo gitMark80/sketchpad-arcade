@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="robots" content="noindex">
+<title>Gem Sketch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Layout: one portrait column. Title row, a slim HUD (level, picture, coins, sound), then one canvas holding the zoomable scrambled picture and the holding tray (rows of 16), with a booster dock below. Cards sit over the canvas.
+   Look: Gem Sketch, a 10-year-old's sketchbook page. Paper, graphite and wobbly borders; each gem colour stays its own colored-pencil hue. */
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;
+  background-color:var(--paper);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.app{height:100%;max-width:520px;margin:0 auto;padding-inline:14px;padding-block:10px 10px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box}
+.top{display:flex;align-items:center;gap:10px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);line-height:1.1;margin:0;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:var(--ink);text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center}
+.hud{display:flex;align-items:center;gap:8px}
+.lvl{flex:1;min-width:0;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:4px 12px;box-shadow:2px 2px 0 var(--pencil);line-height:1.1;white-space:nowrap;overflow:hidden}
+.lvl small{display:block;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lvl b{font:400 1.1rem/1.15 var(--display);color:var(--ink)}
+.coins{display:flex;align-items:center;gap:6px;background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 1.1rem/1 var(--display);padding:5px 12px 5px 6px;border-radius:var(--wob2);box-shadow:2px 2px 0 var(--pencil);font-variant-numeric:tabular-nums}
+.coin{width:20px;height:20px;border-radius:50%;background:var(--yellow-wash);border:2px solid var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow-wash),inset 0 0 0 3px rgba(201,154,26,.6)}
+.iconbtn{appearance:none;background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 1rem var(--body);white-space:nowrap;min-height:40px;
+  border-radius:var(--wob);padding:6px 11px;box-shadow:2px 2px 0 var(--pencil);flex:none}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:none}
+.stage{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+.zoom{position:absolute;right:4px;top:4px;display:grid;gap:6px;z-index:2}
+.zoom button{appearance:none;border:2px solid var(--ink);width:40px;height:40px;border-radius:var(--wob2);background:var(--paper);box-shadow:2px 2px 0 var(--pencil);font:400 1.4rem/1 var(--display);color:var(--ink);display:grid;place-items:center;padding:0}
+.zoom button:nth-child(2){border-radius:var(--wob)}
+.zoom button svg{width:20px;height:20px}
+.zoom button:active{transform:translate(2px,2px);box-shadow:none}
+.dock{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.boost{position:relative;appearance:none;border:2px solid var(--ink);border-radius:var(--wob);padding:5px 4px 4px;min-height:52px;background:var(--paper);box-shadow:3px 3px 0 var(--pencil);display:grid;justify-items:center;gap:1px;font:400 1rem/1.05 var(--body);color:var(--ink)}
+.boost:nth-child(2){border-radius:var(--wob2)}
+.boost svg{width:24px;height:24px}
+.boost .cost{display:flex;align-items:center;gap:3px;font:400 .8rem var(--display);color:var(--muted)}
+.boost .cost i{width:11px;height:11px;border-radius:50%;background:var(--yellow-wash);border:1.5px solid var(--yellow)}
+.boost:disabled{opacity:.5;cursor:default}
+.boost:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 var(--pencil)}
+.toast{position:absolute;left:50%;top:18%;transform:translate(-50%,-50%) scale(.85) rotate(-2deg);pointer-events:none;text-align:center;white-space:nowrap;
+  font:400 1.8rem/1.1 var(--display);color:var(--ink);text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);opacity:0;transition:opacity .2s,transform .25s}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+.toast small{display:block;font:400 1.1rem var(--body);margin-top:4px;color:var(--pencil)}
+.cover{position:absolute;inset:0;display:grid;place-items:center;padding:12px;background:rgba(246,243,234,.55);overflow:auto;z-index:3;border-radius:20px}
+.card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:16px 16px 16px;width:100%;max-width:340px;text-align:center;box-shadow:4px 4px 0 var(--pencil);animation:rise .35s cubic-bezier(.2,1.4,.4,1);box-sizing:border-box}
+.card>*{position:relative}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font:400 1.8rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
+.card p{margin:6px 0 0;color:var(--pencil);line-height:1.3;font-size:1.02rem}
+.card canvas.pic{display:block;margin:10px auto 0;max-width:100%}
+.rules{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;line-height:1.2;color:var(--ink)}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
+.rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem/1 var(--display)}
+.btn{position:relative;display:block;appearance:none;border:2px solid var(--ink);width:100%;margin-top:12px;border-radius:var(--wob2);padding:10px 16px;min-height:52px;
+  font:400 1.45rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);text-align:center;background:var(--yellow-wash);box-shadow:4px 4px 0 var(--pencil)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.btn.go{background:var(--green-wash);color:var(--ink);font:400 1.2rem/1.1 var(--body);text-transform:none;letter-spacing:0}
+.btn.alt{background:var(--paper);color:var(--ink);font:400 1.2rem/1.1 var(--body);text-transform:none;letter-spacing:0;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil)}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px;max-height:46vh;overflow:auto}
+.gal figure{margin:0;background:var(--paper);border:2px dashed var(--faint);border-radius:var(--wob2);padding:5px 3px 4px;display:grid;justify-items:center;gap:2px;min-width:0}
+.gal canvas{width:100%;max-width:64px;height:auto}
+.gal figcaption{font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.linkbtn{appearance:none;border:0;background:none;margin-top:10px;font:400 1.1rem var(--body);color:var(--ink);text-decoration:underline wavy var(--pencil);text-underline-offset:4px;min-height:36px}
+@media (prefers-reduced-motion:reduce){.card{animation:none}.brand{animation:none}.toast{transition:none}}
+</style>
+<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
+<style>.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
+<style>
+.bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
+@media (min-width:600px){.bda-sheet{align-items:center}}
+.bda-sheet[hidden]{display:none!important}
+.bda-card{width:100%;max-width:380px;background:#f6f3ea;color:#2e2e33;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c}
+.bda-card h2{margin:0 0 4px;font:400 1.3rem/1.2 "Gloria Hallelujah","Comic Sans MS",cursive;color:#2e2e33}
+.bda-card .u{margin:0 0 12px;font-size:.9rem;color:#7a7a80;overflow-wrap:anywhere}
+.bda-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.bda-opts a,.bda-opts button{appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#2e2e33;text-decoration:none;font:400 .85rem "Patrick Hand","Comic Sans MS",cursive;padding:4px 0;border-radius:12px}
+.bda-opts i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid #2e2e33;font:800 1.05rem system-ui,sans-serif;font-style:normal;color:#fff}
+.bda-opts a:focus-visible,.bda-opts button:focus-visible,.bda-x:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+.bda-x{appearance:none;border:2px solid #2e2e33;margin-top:12px;width:100%;padding:8px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;background:#f6f3ea;color:#2e2e33;font:400 1.05rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bda-toast[hidden]{display:none!important}
+</style>
+<style>@media (hover:hover) and (pointer:fine) and (min-aspect-ratio:3/4) and (min-width:700px){html{background:#e9e5d8!important;height:100%;overflow:hidden}html::before{content:'';position:fixed;inset:-60px;z-index:-1;background:#e9e5d8 url(../img/gem-sketch.jpg) center/cover no-repeat;filter:blur(30px) opacity(.5)}body{width:min(100vw,calc(100vh*9/16));width:min(100vw,calc(100dvh*9/16));height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;transform:translateZ(0);box-shadow:0 0 0 2px #2e2e33,8px 8px 0 #55555c}body>.app,body>.wrap,body>#app{max-width:none!important}}</style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="sa-head"><a class="sa-back" href="../gem-sketch.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Gem Sketch</h1><button class="sa-share" type="button" aria-label="Share Gem Sketch" data-share-url="https://www.sketchpadarcade.com/gem-sketch" data-share-title="Gem Sketch" data-share-text="Play Gem Sketch free on Sketchpad Arcade! Pick up scrambled gems and put each colour back to rebuild beach pictures."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <button class="iconbtn" id="soundBtn" type="button" aria-pressed="true">Sound: on</button>
+  </div>
+  <div class="hud">
+    <div class="lvl"><small id="lvlNo">Level 1</small><b id="picName">Seagull</b></div>
+    <div class="coins" aria-label="Coins"><span class="coin"></span><span id="coinsEl">0</span></div>
+  </div>
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="Gem Sketch board. Tap misplaced gems to pick them up, then tap the tray or a matching open square. Pinch or use the zoom buttons to zoom."></canvas>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="zoom" aria-label="Zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zout" aria-label="Zoom out">&minus;</button><button type="button" id="zfit" aria-label="Show whole picture"><svg viewBox="0 0 24 24" fill="none" stroke="#2e2e33" stroke-width="2.6" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+
+    <div class="cover" id="startCard">
+      <div class="card">
+        <h2>Gem Sketch</h2>
+        <canvas class="pic" id="startPic" width="160" height="160" aria-hidden="true"></canvas>
+        <ul class="rules">
+          <li><b>1</b><span>Every gem starts on a square of the wrong colour. Tap a gem to pick it up along with its same-colour neighbours.</span></li>
+          <li><b>2</b><span>Then tap the tray to stash them, or tap an open square of their colour to set them right in the picture. You can also tap a colour in the tray, then a matching square.</span></li>
+          <li><b>3</b><span>Pinch or use + to zoom. If the tray is full and nothing can be placed, the level is over.</span></li>
+        </ul>
+        <button class="btn" id="playBtn" type="button">Play level 1</button>
+        <button class="linkbtn" id="galBtn" type="button">My pictures (0)</button>
+      </div>
+    </div>
+
+    <div class="cover" id="winCard" hidden>
+      <div class="card" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+        <h2 id="winTitle">Picture complete!</h2>
+        <p id="winText">Seagull</p>
+        <canvas class="pic" id="winPic" width="170" height="170" aria-hidden="true"></canvas>
+        <p id="winCoins">+10 coins</p>
+        <button class="btn" id="nextBtn" type="button">Next level</button>
+      </div>
+    </div>
+
+    <div class="cover" id="loseCard" hidden>
+      <div class="card" role="dialog" aria-modal="true" aria-labelledby="loseTitle">
+        <h2 id="loseTitle">Tray is full!</h2>
+        <p>Nothing in the tray can be placed and there's no room for more. Add a row of 16 to keep going, or try the level again.</p>
+        <button class="btn go" id="saveBtn" type="button">+1 tray row · 30 coins</button>
+        <button class="btn" id="retryBtn" type="button">Try again</button>
+      </div>
+    </div>
+
+    <div class="cover" id="galCard" hidden>
+      <div class="card" role="dialog" aria-modal="true" aria-labelledby="galTitle">
+        <h2 id="galTitle">My pictures</h2>
+        <p id="galNote">Finish a level to add its picture here.</p>
+        <div class="gal" id="galGrid"></div>
+        <button class="btn alt" id="galClose" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="dock">
+    <button class="boost" id="hintBtn" type="button" aria-label="Hint: shows a good group to tap. Costs 10 coins.">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.8.6 1.1 1.4 1.1 2.2h5c0-.8.3-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="#f3e6b0"/></svg>
+      Hint<span class="cost"><i></i>10</span></button>
+    <button class="boost" id="slotBtn" type="button" aria-label="Add a row of 16 to the tray. Costs 30 coins.">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="7" width="18" height="11" rx="3" fill="#efeadd"/><path d="M12 9.5v6M9 12.5h6"/></svg>
+      +1 Row<span class="cost"><i></i>30</span></button>
+    <button class="boost" id="undoBtn" type="button" aria-label="Undo your last move. Costs 15 coins.">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+      Undo<span class="cost"><i></i>15</span></button>
+  </div>
+</div>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function track(name,data){try{if(typeof window.va==='function')window.va('event',data?{name,data}:{name})}catch(e){}}
+
+/* ---------------- pictures ---------------- */
+/* Gem Sketch pictures: cute pixel-art sprites, one character per square ("." = not part of the picture, a-p = colour index). */
+const LEVELS=[
+  {name:"Seagull",n:38,colors:["#040306", "#fdfefe", "#b4c4d2", "#3f75ac", "#da9247", "#f1942a", "#f0ba55", "#ea96a6", "#bf6a41", "#dd6e1d", "#4f5c74"],map:"....................aaaaa................................abbbbbaaaa...........................abaaaaabbba..........................aaabbbbbkbba........................aacbbbbbbkbkba........................abcbbkddddddda........................aacdddddaaaaaa.........................akddaaacbbbbaa.........................aaacbbbbbbbba.........................aacbbbbbbbbbca........................acbbbbaabbbbca........................acbbbaababbbca........................acbbbaaaabbaaaaaa.....................acbbbbaabbeffgggga....................acbbhhhbbbfffjfffga...................acbbhhhbbbijjjjjjfa...................acbbbbbbbbbaaaaaaia...................acbbbbbbbbbbca...aa.................aaacbbbbbbbbbbca....................aacccccbbbbbbbbbca..................aaccccccccbbbbbbbbca................aacccccccccccbbbbbbbca.............aaakcccccccccccabbbbbbbca.........aaaaakkkkkcccccccccabbbbbbbca.........akkkaakkkccccccccccabbbbbbbca..........akkkaakkkkccccccckabbbbbbcca...........akkkkakkkkccccccabbbbbbbca.............aaaaaakkkkkkkkabbbbbbbcca..............aacccaaaaaaaabbbbbbbcca.................aaccccccccbbbbbcccca....................aacccccccccccccaa.......................aaaaaaaaaaaaa.............................aiabbaia..............................aiabbaia..............................aiabbaia..............................aeaaaaeaaa............................aeeeeaeeeea...........................aaaaaaaaaaa..........."},
+  {name:"Starfish",n:35,colors:["#0c0202", "#f5b66d", "#ec9953", "#f99740", "#b94b2c", "#dd521e", "#ecbd88", "#210100", "#fdfdfd", "#d8543c", "#fc8e40"],map:"................aaa...............................ahbba.............................accddea............................abdfkda...........................aabddddaa..........................agdddddch..........................abddfdddh.........................agbddddddea........................abdddddddfa.......................aabdddfkddkha..................aaaaagdddddddddcaaaaa........aaaaaagbbbbdddddddddddccbbbaaaaaa.aagbbbbbbdddddddddddddddddddbbbbgaaagdddddddddcdcdddddddddcddddddddkcaabkfkkdkkdchaacdddddchaacdddkfkkfcaaekdkfkffdhiiaadddddhiiaacffkfkkfea.hefkkkffdaiiaadddddaiiaacffkkkfjh...hefkddkdaaaiadddddhaaiacdkddfjh.....aefddddcaaacdddddcaaacddddfja.......aefkdkkcccdddddddccckdkdfjh.........hjfkdjjjkdhccchcdjjjkkfjh...........hjfkdkdddchahcddddddfjh.............hfdddddddcccdddddddfh..............akdddddddddddddddddfa..............acdddddddddddddddddfa.............agdddffkddddddddffddkea............abddkffkddkfkdddffkddfh............abdddkkddkfffkddkdkddfh............acddfkddfffffffkddfddfh...........acdkddkkffjhaaeffkkddkfja..........akkfkkfffha...aaeffkdfkfa..........akdkkffjh.......hhjfkkkfa..........akdffjhh.........ahjffffh..........aefjha.............ahjfea...........ahaa...............aaha......"},
+  {name:"Crab",n:36,colors:["#0a0101", "#db836f", "#df7161", "#ee4f38", "#db5646", "#fdfcfc", "#c6282f", "#1d0000", "#ad363d", "#320202", "#fab688"],map:".................................................................aaaa................................abceh...............................aeddeh............................a..heddea...aaa....................aba.aeddda..abba....................aeeaaeddda.abeda.aa...aaa......aaa..addehedddaabddda.aa..affaa....affaa.adddedddgaacdddaabh..afaaa....afaaa.aeddddddgaaedddheeh..aaafa....aaafa..heddddgh.agdddigdh...aaa......aaa....higgij..aidddggga....aih....aia......ahha....aiedggj.....aeh....aea......aiia.....aahhh.....aaehaaaaaeha.....aega......aiih...aabcdeeeeeedcbaa..abgga......aigea.abcddddddddddddecaaiggj........highabdggddjeddejedggdchigj..........aihbegggddhhcehjddgggdeha............ajeddddddehahiedddddddea..........aaabddddddddebbcddddddddeaaa.......abeacddddddddddddddddddddgaceh.....acggheddddddddddddddddddddghigih...aighhaeddddddkkkkkkkkedddddghaaiia..aihfaaiddddkkkkkkkkkkkkdddggaafaih..aafaiijiddkkkkkkkkkkkkkkddgjiiafaa....aiihaigkkkkkkkkkkkkkkkkgiaaiia......aihffaiekkkkkkkkkkkkkkciaffaga......aiafaijcbbkkkkkkkkkkbbchihfaih......aa.aiiaaabbbbbbbbbbbbhaaiia.aa.........aij...aaaaaaaaaaaa...hia............aih..................aia............aih..................aia.............ha..................ah..............................................................................."},
+  {name:"Clownfish",n:36,colors:["#0f0101", "#eba85e", "#f78022", "#fefefd", "#e4aa73", "#e68239", "#db5523", "#f05c57", "#ba563b", "#db894c", "#c9d7e0"],map:".........................................................................................................................aaaaa..............................abgbaaa............................ajgccgjaa..........................aefccgccfia........................aaaaaaaafcga......................aaaebbbbbbaaaa.aaaaa..............aaddafccccccaddaaejffaa............aebaddajcccccadddaaafcfa...........aeccfaddajccccfadddajafca..........aeccccjaddafccccadddacfafa...aaa....abcccccfadafccccadddafcfaa..ajfaa..aecccccccadafcccfaddddaccfaaajcgiaa.abcccaafcfadafcfaaadddaccckdafgccaaaecccadaafcadaffajjaaddacccadafcggaaabcccaaaafcadajajcgiaddacccadafccciaafcccaaaafcadafgggggaddacccadafgccgaafcccfaafccadafgccccaddacccadafcggaaafccccchhhcadafgggcgaddaccgadaggccaaaicfafchhhcadajafccgaddacggaaaigggaa.aaajcccccfadafjaggadddaggaa..aggaa...ajcccccfadajccfaaddkaiaaia...aaa.....aggccfaddafcccjakkkaaagga............aaigakkaigggggakkaaiggga..............aakkaigggggaaaaaaggga................aaaaaaaaaaaa..aaaaa....................aaiggggia............................aafcccga.............................aafciaa..............................aaaaa.................................................................................................................................................................."},
+  {name:"Sea Turtle",n:36,colors:["#010700", "#a7cc6d", "#599d47", "#96c654", "#256f3b", "#57ac3a", "#5e9352", "#d08a71", "#95b770", "#0a3a24", "#dec89a"],map:"......................................................................................................................................................aaaaaaa...........................aabbbbbbbaa........................abbcdccccdbia......................aidcddcccddddia....................abdddddddddddddga...................abdddcdcdddddddda..................abdddddddddddddddbaaaaaaaa..........addddddddddddddddcaebdddbaaa........abaabddddddbaabddgaefffffdbaa.......aakaaddddddakaaddcageffffffdea......aaaaabdddddaaaaddcacfefffffefca.....aiaabddddddaaaiddcacfceeeeecffa.....aibbdddddddbgibddcacffecffeeffca....ahhbdadddabdbhhkcgacffeffffecffea...aibddbaaabdddbbggagcfeffffffeffea....aiddddbbdddddccgajefeffffffefeeja....agdddddddddccgaegjeeffffffeeejega....aaggggccccggaaaegjjeeeeeeejjgcja......aaaaaaaaaakagacccjjjjjjjccgja........aicgjakkkagcgajcccccccccjaa.........adccgjaaaabdceaaaaaaaaaaagia........adccga...abdddgakkkkkkaecddba.......aiccga...abddddaaaaaaaagddddba.......agcga...abddddga......agcccga........agga....abddddga......aaaaa..........aaa.....abddddga.............................aaiddga..............................aaaaaa..........................................................................................................................................................."},
+  {name:"Ice Cream",n:35,colors:["#080102", "#f2bbd3", "#f79ec1", "#ea77a3", "#cb8b54", "#1b0005", "#f7b56a", "#ca813b"],map:".............aaaaaaaa.........................aabcccccccfa.....................aabbbbccccccbcaa..................aabcbbbbccccccccfa.................abccbbbcccccccccca................abcbccccccccccccccda...............abccccccccccccccccdf..............abcccfaccccccccfaccdda.............acccfbaaccccccfbaacddf.............acccaaaaccccccaaaabddf.............acccbaabcfbcfcbaabcddf.............acccdcdccbffbccdddddda............aacccccccccccccccdddddfa..........afbccccccccccccccccdddcdfa.........acccccccccccccccccdddccdcf.........acddddddcccddddccddddddddf..........fdddffddccdffdddddfadddf............aaaeefdddfeefdddfeefaa...............aegefafehgefaaehea..................agheeehggheeehef...................agghghghhggghhha....................agghghgghghhha.....................aggghgggghghha.....................agghghgghghhea......................aeggghggggha.......................aegggghghhea........................ahghgghghf.........................aghgggghha..........................fghghhhf...........................agghghha............................agghhf.............................agggha..............................aghf...............................aeea................................aa................."},
+  {name:"Beach Ball",n:33,colors:["#0a0203", "#a35fb7", "#6eae4e", "#fbfef8", "#349ad7", "#a7e9fa", "#dadf73", "#fbda2d", "#d53028", "#e4836a", "#efa822"],map:"............aaaaaaaaac....................aaabbbbbbbbccaa................aabbbbbbbbbbbccccaa.............abbeeeeeeebbbdddcccca...........aeeeeeeeeeeeedddddcccca.........aeeeeffeeeeeeeddddddcccca.......aeeeefffeeeeeeedddddddcccca.....aeeeeeffeeeeeeeghddddddicccca....aeeefeeeeeeegghhhhddddiiiccca...aeeeeeeeeeegghhhhhhhhhiiiiiccca..aeeeeeeeeeghhhhhhhhhhhiiiiiicca..aeeeeeeeeghhhhhhhhhhhhhiiiiiica.aeeeeeeeeghhhhhhhhhhhhhhiiiiiiicaaeeeeeeeghhhhhhhhhhhhhhhiiiiiiicaaeeeeeeghhhhhhhhhhhhhhhhhiiiiiiiaaeeeeeghhhhhhhhhhhhhhhhhhiiiiiiiaaeeeeehhhaahhhhhhhhhaahhhiiiiiiiaaeeeeghhadaahhhhhhhadaahhiiiiiiiaaeeeehhhaaaahhhhhhhaaaahhiiiiiiiaaeeeehhhhaaghhhhhhhhaaghhiiiiiiiaaeeeghhhhhhhhhhhhhhhhhhhhiiiiiiia.aeehhhhjjhhhahhhhahhjjhiiiiiiia..aeehhhhhhhhhhaaaaghhhhhiiiiiiia..aeekhhhhhhhhhhhhhhhhhhhiiiiiiia...aekkhhhhhhhhhhhhhhhhhiiiiiiia....aekkkhhhhhhhhhhhhhhhhiiiiiiia.....akkkkkhhhhhhhhhhhhhiiiiiiia.......akkkkkkkhhhhhhhkkkiiiiiia.........akkkkkkkkkkkkkkkiiiiiia...........akkkkkkkkkkkkkiiiiiia.............aakkkkkkkkkkiiiiiaa................aaakkkkkkiiiaaa.....................aaaaaaaaa............"},
+  {name:"Pufferfish",n:36,colors:["#0a0201", "#daaf84", "#2e1100", "#f1c57a", "#f3ab49", "#653207", "#b66a1e", "#f6f3e8", "#e96c70", "#fce0b5", "#6f4d30"],map:"...................................................a......a............................aa....aa............................abaaaaaaa..aa..................aa..aaecdddddaaada..................abaaddeeeeeeeeeeea..................aadeeeeefeeeeffeeda...a..........aaaadefegeekfeegefeeedaaaa.........addadeeegeeefeeeeefeeeeeba..........aeadegeeeeeeeeeeeeeeeggega..........akaeeeeeeeeeeeeeeeeeegeeea...........adeeeeegffeeeeeeeeeeeeeeea.....aa...aefffeeegeeeeeeeeeeeeeeeea....adeaaaeefeeeeeeeeeeeeaaaeeeeeeaaa..adggeeaeeefeeeeeeeeeeaaahaeeeeaahaa.adegggeeeeeeeeaaeeeeeaaaaaeeeeaaaaa.adeeegeeeeeeeabeefeeeahaaaeeeeaaabaaadggggeeegeeeadggeeeeeaaabceeedaaabaadeeggedffeeeadeegeeeiibeeeaecediabaaceggfabjbdeeaeggeeegiiieeeaaaeeiaea.aeeaaabjjjjjaeeeceeeiibeeeahkeeiaea..aa..abjkjjjjaaajjjeeeeeegjjjjeeaa......ababjjjjjjjjjjjjeeeejjjjjjjba.......aaabbjjjjjjjkjjjjjjjjjjjjjja...........abbjkjjjjkkjjjjjjjjjkjjbaa..........abbbkkjjjjjjjjjjkjjkkjba...........ababbbjjjjjjjjjjkkjjjbba............aaaabbbbbjjkjjjjjjjbbbaba...............abbbbbbkkjjjjbbbbahaa................abgbbbkbbbbbbbba....................abaabbbbbbbbaaa.....................aa..aaaaaaaa.aa............................aa.....a............................a........................................................................................"},
+  {name:"Octopus",n:35,colors:["#0c0001", "#ef9a99", "#e27776", "#f26b6a", "#cd474f", "#faf8f5", "#250000", "#e9bfa8", "#824125", "#c27e5c", "#761920"],map:".............aaaaaaaa.........................aabbbbbbbcaa.....................aabbcdddddddcbaa..................abbccbbddddddddcca................aabddbbbddddddddddea...............abddcbbcddddddddedda..............abccbdddddddddddddddca.............acdbbdddddddddddddddca............acddcdddddddddddddddddea...........acddddddddddddddddddddea...........acddddddddddddddddddddea...........acddddddddddddddddddddea...........acddcaaacddddddcgacdddea...........acddaffaacdddddafaacddea...........acddaaaaacddddcaaaacddea...........acddaaafacdddddaafacddea............acdcaaacddddddcaacddegaaaa.........acddcccddgccgddccddcgahhhja....aaa..aceeedddcggcdddeedgjfjjjjja..aeca..acdddddddccdddddddajjjjjjja.aedg...acdddddddddddddddgjijjjjjijaaeda..aacdddddddddddddddajijjjjijjaaedcaaabddddddddddddddddgjiijjijjiaabecbbcdedddddddddddddddbajijijiijaagbedddegddeddddkddddeddgjjjjiijjg..aabeeegbdegbddegedddgedaijjjjaaa....aaaegbceeacddeaedddaedcaajjjaha.....aaabdddgbdddbaedddbgedcbaaaaa....aacccdeeegbddegageddcaeeddcccca....aeeeeeeegbddeba.abeddbgeeeeeeea.....akbbebgbddeeka.akedddcggcebkg.......aaaaabddeeba...abeedddcaaaa............aeeebaa.....aabeeeea................aaaaa.......aaaaaa............................................"},
+  {name:"Jellyfish",n:36,colors:["#03030b", "#f3f3fc", "#e7dbf8", "#b5daf6", "#718fac", "#c6adee", "#140627", "#e57dac", "#9a93d3", "#d1aee0", "#362f48"],map:".............aaaaaaaaaa........................aaabbbbbbbdaaa....................aabbcciiiiiiidddaa.................abbcjfjbffffffiiidda...............abcjjbbbjfffffbffiidda.............abcffbbbbfffffbbbjfiidea............aciffbbbjfffffidbjfffida...........abjifffjffbfffffffffffidda..........abifbfffffffffffffffffcida.........abjfjfffffffffffffffffffiida........abffffgaggjffffffjggggffiida........adfffgcbaagffffffgbbagaffida........adfffgbbgbgffffffgbbabaffida.......adifffgaagkaffffffgaagkafffida......adifffabaeeafffffjabaeeafffida......adiffffaaaajfajfajjaaaajfffida......adiffhhhjjffffaajffffjhhhfiida......adiffhhjfffffffffffffffhhfiida......adiiffiiifffffffffffiiiiffiida.......abiiidddiiiiiiiiiiiidddiiida.........adddaaadddddiddddddaaaddda...........aaaiiaaadaadaaaddaaiiaaa..............ajiakiaiiabaiaa.aija................aja.ajaijabaija.aija...............ajia.ajaijabaifa..ajja..............aja..ajaijabaifa...aja.............ajia..ajaijabaifja..ajja............aja...ajiafja.afjka..aja............aja...ajiaija..aija..aja............ajia..afiaajia.aija.aija............ajia.ajfa.ajia.aija.afja.............aia.ajia.ajia.aija.aia...............aa.ajia.ajia.aija.aa....................aa..ajia.aia............................ajia..aa.............................aa................."},
+  {name:"Whale",n:37,colors:["#010309", "#97cae6", "#89b6da", "#5788c7", "#cee8f8", "#2e5b99", "#00061c", "#b17bae", "#6188b8"],map:".............................................aaa..aaa............................abbbaabbba...........................abbbaabbba...........................abbbbbbbba...........................aabbbbbbaa............................aabbbbga..............................aabba.................................aia...................................a................................aaaaaaaaaa.........................aaaccccccccaaa......................aacccdddddddccaaa...................abcidddddddddddccaa.................abddbbddddddddddddcab...............accdbbidddddddddddddia...............acdddddddddddddddddddga..aa.......b.abidddddddddddddddddddia..aiaa...aaaaaiddddddddddddddddddddia..addig.aiiiaaidddddddddddddddddddddia.aiddigidddaaidddddddddddddddddddddda.agiddiddffaaidddddddddddddddddddddda..agiddddfg.aiddddddddigaiddddddddddg...agddfaa..aiddddddddgaeaidddddddddia..aidfa....adddddddddaaaaiddddddddddiaaiddfa....adddddddddiaaiddddddddddddiiddfg.....aiidddddigdihhhdddddddddddddddfa.....aagiddddgiddhhhddddddddddddddfg.......aeaaaagiddddiddidddddddddddffa.......aieebeeceeeddddgddddgidddfffg.........abbebeeceeeidiaidddigfffccg...........aieeceebceeeeeaidddigbbaa.............aaeecceeeccccbgidddaaaa................aaabcceeeeeeeafffaa....................aaaaaaaaaaaaaaga......................................................................................."},
+  {name:"Dolphin",n:36,colors:["#000309", "#86c9ea", "#51a2dc", "#3f6094", "#5ba6d7", "#2e75bd", "#6197c4", "#b9dcf5", "#000719"],map:"..........................................................aaaaaa...........................aaabbbbbba..................aaaaaaaaabbfffffda...............aaabbbbbbbbbcfffffdi..............aabbbbccccccebefffffi..............abebbbbcccccccccccfffa.............abebbecccccccccccccccfa............agbeececcccccccccccccccia...........abbeccccccccccccccccccegia.........abcccceeeccccccccccccccccgia........abcccgiigcccccccccccccccccei........aecccihaaecccccccccccccccccda.......aecccaaaaecccccccccccccccccei.......abeccgaagcccccccccccccccccccda.....abecccccgddgcccccccccccccccccbi....abcccfehhhhhhgccccccccccccccccei....abfddhhhhhhhhhibccccfccccccccccga...aighhhgaaaaaaaabccceihhhcccccccca....aaaaaa.addddaaibcceaahhhecccccca............addda.adcccaaaahheccccca.............addi..aieeaa.aahhecccca..............ada...aagga...ahhcccca...............aa.....aaa....aheccca..............................abecca..............................ahfcea...............................ifcfa.............................aaafcfia...........................aggffffgaa.........................agfffffffdi........................aefffffffffga.......................afffffidffffa.......................affiaa.adfffa.......................aai.....aiida..................................aa...................................."},
+  {name:"Seahorse",n:36,colors:["#0b0109", "#ab6c9e", "#af5c9f", "#df96c3", "#e281c4", "#f8f7f7", "#f8d793", "#f6cb6e", "#dd7d9f", "#8a408b", "#854b87"],map:"..............a..aaaa............................abaabcbaaa..........................accbcjccbaaaa.......................abaaaaaacccca.......................aadddddbaccja......................addeeeeeeeacjaa....................adeeeeeeeeeeajjka...................adeeaaeeeeeecakka...................adeafaaeeeeecaja...................aadeaaaaeeeeecakaa................aaadeedaabeeeeecajka...............addeeeeeeeiieeeecajka...............adjeeeeeeeeeeaeecaja................aabcaaacccccjeeecaca.................aaa...aaaaaeeeeakca........................aghgdeecaka........................aghhhiecakka.......................aggghieecakaaa.....................aghhhheeecaaabba...................agggggieecaabccca...................aghgggieecakjjccka..................ahhhhhieecajjcccka..................aghhhgieecakjjcca...................faghhhgeeecaakcaa....................aahhhhieecafaaa......................aaghhgeeeca...........................aaghgeeca.............................aagieeca.........................aaaffageeca........................adddafagdeca.......................addaaafageeca.......................aceafffadecaa.......................acedaaadecca.........................abeeddeccaa..........................acccccaaa............................aaaaaa..............."},
+  {name:"Hermit Crab",n:34,colors:["#0c0101", "#cd9a7e", "#955739", "#c47d53", "#dea076", "#fcfafa", "#b53032", "#ed5037", "#250000", "#d75544", "#b64f4a"],map:".aaaaaaa..........................abeeeebaaaaa......................acdddeaabeebaa....................acddcibeddddbaaaaa................acccaeddddaaabeeeeaa..............accabdddiabeeddeeeeba.............aciddddabedddddddddeba............aacdddabddddddddddddda.............acdcabdddddddddaaaaaaaa..........acccacdddddddiaaeeeeeeeeaa........accacddddddaabeeddddddeeeea.......accacdddddabedddddddddddddea......acaccdddcabdddddddddddddeddba.....acaccddcabdddddddddddddddddea.....acaccccicdddddddddddddddddddba.....accccicddddddddddddddddddddda.....accccacddddddddiacccccciaddda.....acccaccdddddddaafaccccafaadda.....acccaccdddddccaafaaaaaafaacda.....aaccacccdddccaaaaaggggiaaacca......accaccccccaakgiakhhhhjiaaaa.......aaaccccccakgghhhhhhhhhhjjaaaa.......acccccaagghhhhhijhijhhhikjja......accciikaighhhhhjiijhhhhaijhga.....accikgikaaiijhhhjjhhhgijjijjaa.....aakjgigakjgighhhhhhiikhhaaika......aggikgijjhjiaggggaakjhhaakja.....akgiaigijhhhjiaaaaakiihhaaaja.....ajgaakiaghhiaka...ajaahja.aja.....agi.aja.ighiaja...ajajjia.aja.....aka.aja.aghjaka....aakia..aa......aa..aja..igjaa......aa.................aa...aaa.................................................."},
+  {name:"Penguin",n:34,colors:["#050207", "#3e4163", "#fbfbfc", "#f6ced8", "#d97c43", "#c86583", "#8edabc", "#33babd", "#e3d162", "#d93f83", "#f3a922"],map:"..........aaaaaaaaa.......................aabbbbbbbbbaa....................abbbbbbbbbbbbba..................abbbbbbbbbbbbbbba................abbbbbbbbbbbbbbbbba..............abbbcccbbbbbbbcccbbba.............abbcccccbbbbbcccccbba............abbcccccccbbbcccccccbba...........abbccaacccbbccccaaccbba...........abccacaaccbbcccacaaccba...........abccaaaaccbbcccaaaaccba...........abcccaaccikkicccaacccba...........abcccdcccekkkecccdcccba...........abccffdccceeecccdffcbba............abccccccccccccccccbba.............abbccccccccccccccbbbaa...........abbbbccccccccccccbbbbba..........abbbbccccccccccaaabbbbbaaaaaaa...abbbbbcccccccaaagggabbbbbahhhhha..abbbbcccccaaaggghhhhabbbbahhiiia.abbabbcccaaggghhhhhhhabbbbaiiejjfaabbabbcaagghhhhhhhhhiiabbbafjjjja.abbabaagghhhhhhhiiiiejabbbajjjja...aaaagghhhhhhiiijjjjjjjabbajjaa......ahhhhhhiiijjjjjjjjjjaabaaa.......ahhiiiifjjjjjjjjjjjjjjaaa........aiiijjjjjjjjjjjjjjjjaaaaa..........affjjjjjjjjjjjjjaaacbbaa...........aaaaaaaaaaaaaaacccbbba..............abbbcccccccccccbbba................abbbbbbbbbbbbbbba................aaeeeeeaaaaaeeeeeaa...............aikkkkea...aekkkkia................aaaaaa.....aaaaaa..........."},
+  {name:"Seal",n:36,colors:["#010107", "#b6cde6", "#474657", "#ca7f99", "#8ca1c3", "#64779e", "#010312", "#69677c"],map:".............................................................................................aaaaaaaa..........................aabbbeebbeaa.......................abeeeeeeeeeeea.....................aeeebbeeeeeeeeea...................abeeeeeeeeeeeeeeeg..................aeeeeeeeeeeeeeeeea.................abeeegaeeeeeeegaeeeg................aeeeabaaeeeeegbaaeea................aeeeaaaaeeeeeaaaaeea................aeeeeaabeeggeeaaeeea................aeeeeeebeeceeebeeeea...............aaeeeddeegbegegbdddea.............aaeeeeeeeeeegddgeeeeeea...........aaebefeeeeeeeeeeeeeeeeeea.........aaeeeeeeeeeeeeeeeeeeeeeeefa........aabeffeeeeeeeeeeeeeeeeeeeeg.........aeeffeefeeeeeeeeeeebbbbeefa........aeefeeeeeeeeeeeeeeebbbbbbefa...aaaa.aeeeeeeeeeeeeeeeeebbbbbbbeg...aeeeegeeeeeeeeeeeeeeeeeebbbbbbega...agfffeeeeeeeeeeeegeeeegebbbbbeeaa....aaageefffeeeeeegeeeeeabbbbbeegffa.....aeefggffffffgeeeeefgbeeeeegcfffa...geeefgcaagffgeeeeefgbbeeggahaaaaa..affefgcccccggeeeeefgaaagaccchhccg...affefachhhhcafffffgacccccchhhhhcca..affcghhhhhhhcgaaaaccchhhhhhhhhccca.acaaacchhhhhhhccccchhhhhhhhhhccccccaaccccccccchhhhhhhhhhhhhhhccccccccccaacccccccccccccccccccccccccccccccccca.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa............................................................................................................."},
+  {name:"Narwhal",n:36,colors:["#010309", "#f2f9fb", "#9e9697", "#aed5ef", "#c8bfc9", "#dc8db0", "#6891b3"],map:"..........................................................................................................aa.................................aba................................abea...............................abea...............................abba......................aaaaaaaa.abcea....................aabbbbbbbbabbba...................aabbbddddddabcbca..................aabdbbdddddabcbca..................aabdddddddddabbccaa.................abdddddddddddaeeadda...............abdbdddddddddddaaddda...............abddddddddddddddddddda.............abdddddddaadddddddddaaa.............abddddddaabadddddddabaa.............abddddddaaaadddddddaaaa............abddddddddaadddddddddada............addddddddeeddddaddaddeea............adddddddfffdddddaadddfea........a...adddddddddddddddddddddda.......ada..adddddddddddddddddddddga......adda..adddddddddddddbbbbbddda..aaaaaddda.addddadddddddbbbbbbbbdda..adddaddda.adddaddddaddbbbbbbbbdda...agdddddabadddaadddaddbbbbbbbbdda.....aggdddaaddddagddaddbbbbbbbbddda......aaaadddddddaaaaddbbbbbbbdddda..........aagdddddddddbbbbbbbddddaa............aaddbbbbbbbbbbbddddddaa...............addddddddddddddddaa..................aaadddddddddaaaa.......................aaaaaaaaa......................................................................................."},
+  {name:"Pineapple",n:37,colors:["#050401", "#93c16b", "#7cbe4e", "#356738", "#4c8e48", "#f3dc6f", "#ea9f13", "#e4ae35", "#8283b3", "#302d55", "#f9d228"],map:".................aa...................................aa..................................abba............................aaa..abca..aaa.......................abca.abca.abba.......................aaccaaccaabcaa........................accabccbacca......................aaaadbaccccabdaaaa...................abccaaaccccaaabcea....................aeccdaccceadccea......................aeccaeeeeaccea........................aeeeaeeaeeea..........................aaaaaaaaaa.........................aafkgkkkkggkaa......................afkhfkgkkgkkghha....................akkgffkkggkkkkggka...................akgffkkkggkkkkggka..................afgffhkkgkkgkkgkggha.................ahfffkggkkkkggkkkgga...............aaaaaaaaaaafkaaaaaaaaaaa.............aaajjjjjjjaaaaajjjjjjjaa.............aajjjijjjjaaaajjjiijjjaa..............ajjiijjjjaffajjiijjjja...............ajijjjjjjakkajiijjjjja...............ajjjjjjjjakkajijjjjjja...............aajjjjjjafkkkajjjjjjaa...............aajjjjjakkkkkhajjjjjaa...............afaaaaafkkkkkkkaaaaaha...............ahkkkkhkakkkkakhkhkgga...............afkgkgkkkaaaafkkggggha................akkgkkkkkhgkkkggggga.................akgkgkkkgkkgkgggggha..................akkkgkgkkkkgggggga...................ahggkgkkkkggggggha....................ahkgggggggggggga......................aahgggggggggaa.........................aaaaaaaaaa.............."},
+  {name:"Sandcastle",n:36,colors:["#080201", "#bb3b3b", "#e2403b", "#1e0803", "#ebcc98", "#f2ca84", "#d19f64", "#86542a", "#55300e", "#321d0a"],map:".................aaaa................................abcbdaaaa...........................accccbbba...........................abccccbd............................aaddcccba...........................a...aaaa............................aa.................................aeea..........................aaaa.aeffga.aaaa....................aeea.affffa.aeea....................aefaaeffffeaaffa....................aeffeffffffeeffa....................aeffffffgffffffa....................eaffffffffffffaj.....................affffffffffgfa......................aehhffhhffhhea............aaa.aaa.aaaehhffhhffhheaaa.aaa.aaa..aeeaaeaaeeaehhffhhffhheaeeaaeaaeea..afffeffeffaffffffffffffafffffffffa..aeffffffggaffffffffffffaefffffffga...agggggggdadfiiiffiiifdaagggggggd....aefffgggjegfifeiiefifgfaefffggga....aefffffgjggggffffffggggaefffffga....aefhhgfgjgffffffffffffgaefhhgfga....aefhhhfgjgffffffffffffgaefhhhfga....aefhhhfgjgfgffffffffgfgdffhhhfga....aefhhhfgjgffffhhhhffffgdefhhhfga....aefffffgjgfffhhhhhhfffgdefffffga....aefffffgjgfffhhhhhhfffgdefffffga....aefffffgjgfffhhhhhhfffgdegffffga....aegffffgjgfffhhhhhhfffgdefffffgd...aefffffffgjgffhhhhhhffgjefffffgfea.aeffggffffffhhhhhhhhhhhhfffggfffgfeaefgffffffffggffffffffffffgfffffffgffefffffffffffffffffffffffffffffffffff...................................."},
+  {name:"Treasure Chest",n:36,colors:["#0b0202", "#d48c3a", "#f1cf61", "#fbefb0", "#673623", "#f9eae8", "#6dbfd8", "#d12f87", "#c32142", "#9dd672", "#e98c9a"],map:"................................................................................aaaaaaaaaaaaaaaaaaaaaaa............accaeeeeeeeeeeeeeeeacccbaa.........accaeeeeeaaaaeeeeeeeacbbbbba.......accaaaaaaadcceaaaaaaaccbbaabba.....accccccccccccbbddddddccbbaeeaba.....aaaaaaaaaaccbaaaaaaaaaabaeeeeaba.....aeeeeeeaeaaaeeeeeeeeeabaeeeeaba.....aeeeeeeaeeeeeeeeeeeeeeabaeeeaba......aeeeeeeaeeeeeeeeeeeeeeabaeeaba......aeeeeeeaeeeeeeeceeeeeeabaeeaba..cf...aeeeeaaeeeeeeccceeeeeeabaeaba.fccf...aeeeaeeeeeeeeceeeeeeeabaabbacccccd..aeeeaeaaaaeeeeeeeeceeeababa..fcd.....aeaaaffggaeeeeeebcbeeabbba...cf...aaaaaaffggggaaaaaaabeeeeaba....f...aakkiaaggggggaafffhaaaaaaaa........affkkiajaggggajaffhhhaeeeaaa........affiiiajjaggajjakhhhhaeaabba......aaaakiiiajjagaajjakhhhaaabbbba.....aaaaaaaaaaaaaaaaaaaaaaaabbbaaba.....acccccccadccccacccccccbbbaaeaba.....acaaaaaaadbaccaaaaaaacbbaeeeaba.....acaeeeeeadcaccaeeeeeacbbaeeeaba.....acaeeeeeaccaccaeeeeeacbbaeeeaba.....acaeeeeeeacccaeeeeeeacbbaeeeaba.....acaeeeeeeeaaaeeeeeeeacbbaeeabba.....acaeeeeeeeeeeeeeeeeeacbbaeaabba.....accaeeeeeeeeeeeeeeeaccbbaabbbea.....acccaaaaaaaaaaaaaaacdcbbbbbaa.......acccccccccccccccccccccbbeaa.........aaaaaaaaaaaaaaaaaaaaaaaaa....................................................................................................................."}
+].map(p=>({name:p.name,n:p.n,colors:p.colors.map(pencilHex),cells:[...p.map].map(ch=>ch==="."?-1:ch.charCodeAt(0)-97)}));
+
+/* ---------------- saved progress ---------------- */
+const store={get(k,d){try{const v=localStorage.getItem('gemcove.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('gemcove.'+k,JSON.stringify(v))}catch(e){}}};
+let levelNo=store.get('level',1),coins=store.get('coins',60),done=new Set(store.get('done2',[])),muted=store.get('muted',false);
+function save(){store.set('level',levelNo);store.set('coins',coins);store.set('done2',[...done]);}
+
+/* ---------------- sound ---------------- */
+let ac=null,master=null;
+try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+function audio(){if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;try{ac=new A();master=ac.createGain();master.gain.value=muted?0:1;master.connect(ac.destination)}catch(e){return null}}if(ac.state!=='running'){try{const p=ac.resume();if(p&&p.catch)p.catch(()=>{})}catch(e){}}return ac}
+['pointerup','touchend','keydown','click'].forEach(ev=>addEventListener(ev,()=>{const a=audio();if(!a)return;try{const b=a.createBuffer(1,1,22050),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(0)}catch(e){}},{capture:true,passive:true}));
+function tone(f,d=.12,type='sine',v=.07,slide=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+slide),t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.03)}catch(e){}}
+let tinkN=0,tinkT=0;
+const sfx={
+  lift(n){tone(520,.18,'sine',.06,520);tone(1040,.12,'triangle',.025,600,.04)},
+  drop(){tone(330,.06,'triangle',.05,-90)},
+  pick(){tone(988,.06,'triangle',.05,120)},
+  place(){tone(784,.1,'triangle',.04,0)},
+  tink(){const now=performance.now();tinkN=now-tinkT<260?tinkN+1:0;tinkT=now;const f=1047*2**(Math.min(tinkN,12)/12);tone(f,.14,'triangle',.045);tone(f*2,.08,'sine',.02,0,.01)},
+  win(){[0,4,7,12,16,19,24].forEach((n,i)=>tone(523*2**(n/12),.4,'triangle',.08,0,i*.09))},
+  lose(){[7,4,0,-5].forEach((n,i)=>tone(523*2**(n/12),.3,'triangle',.07,0,i*.14))},
+  boost(){tone(660,.12,'triangle',.07,660)},
+  nope(){tone(200,.12,'square',.03)}
+};
+function renderSound(){$('soundBtn').textContent=muted?'Sound: off':'Sound: on';$('soundBtn').setAttribute('aria-pressed',String(!muted))}
+$('soundBtn').addEventListener('click',()=>{muted=!muted;store.set('muted',muted);audio();if(master)master.gain.value=muted?0:1;renderSound();if(!muted)tone(880,.08,'triangle',.05)});
+
+/* ---------------- color + gem drawing ---------------- */
+function rgb(h){const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]}
+function mix(h,b,t){const A=rgb(h),B=rgb(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')+')'}
+function lum(h){const[r,g,b]=rgb(h);return(.299*r+.587*g+.114*b)/255}
+const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
+/* colored pencil: each gem keeps its own hue, a little softer and greyer so it reads as pencil on paper */
+function pencilHex(h){const c=rgb(h),m=(c[0]+c[1]+c[2])/3,P=[246,243,234];
+  return '#'+c.map((v,i)=>{let x=v+(m-v)*.2;x=x+(P[i]-x)*.08;return Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')}).join('')}
+const gemCache=new Map();
+function gemSprite(hex,s){const key=hex+'|'+Math.round(s*dpr);if(gemCache.has(key))return gemCache.get(key);
+  const px=Math.max(4,Math.round(s*dpr)),c=document.createElement('canvas');c.width=c.height=px;const g=c.getContext('2d');
+  // a pencil-drawn octagon gem: coloured-pencil fill, darker-lead hatching, the table and facet lines drawn in, outlined in a dark lead
+  const oct=(m,k)=>{const a=m,b=px-m,q=(px-2*m)*k;return[[a+q,a],[b-q,a],[b,a+q],[b,b-q],[b-q,b],[a+q,b],[a,b-q],[a,a+q]]};
+  const path=pts=>{g.beginPath();pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath()};
+  const lw=Math.max(.8,px*.06),O=oct(lw/2,.27),T=oct(px*.29,.29),line=mix(hex,INK,.55),dark=mix(hex,INK,.3);
+  path(O);g.fillStyle=hex;g.fill();
+  if(px>10){g.save();path(O);g.clip();g.strokeStyle=dark;g.globalAlpha=.5;g.lineWidth=Math.max(.6,px*.035);const st=Math.max(2.2,px*.13);g.beginPath();for(let k=-px;k<px;k+=st){g.moveTo(k,px);g.lineTo(k+px,0)}g.stroke();g.restore();
+    path(T);g.fillStyle=mix(hex,PAPER,.3);g.fill();g.strokeStyle=dark;g.lineWidth=Math.max(.5,px*.03);g.stroke();
+    g.beginPath();for(let k=0;k<8;k++){g.moveTo(O[k][0],O[k][1]);g.lineTo(T[k][0],T[k][1])}g.stroke()}
+  path(O);g.strokeStyle=line;g.lineWidth=lw;g.stroke();
+  gemCache.set(key,c);return c}
+
+/* ---------------- canvas + layout ---------------- */
+const cv=$('cv'),ctx=cv.getContext('2d');
+let SW=0,SH=0,dpr=1,L=null,dirty=true;
+function fit(){const r=$('stage').getBoundingClientRect();SW=r.width;SH=r.height;dpr=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(SW*dpr);cv.height=Math.round(SH*dpr);gemCache.clear();layout();dirty=true}
+let fitT=0;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(fit,60)});
+const COLS=16; // the holding tray is rows of 16
+function layout(){
+  if(!lv)return;
+  const rows=Math.ceil(trayCap/COLS),ts=Math.min(26,Math.floor((SW-24)/COLS)-2),trayW=COLS*(ts+2)-2,trayH=rows*(ts+3)+14;
+  const vp={x:0,y:0,w:SW,h:SH-trayH-12};
+  const cs0=Math.min((vp.w-8)/lv.n,(vp.h-8)/lv.n);
+  L={vp,cs0,tray:{x0:(SW-trayW)/2,y:SH-trayH+7,ts,rows,w:trayW,h:trayH}};
+  clampView();
+}
+// zoom and pan: a cell's screen position is view.tx + col*cs, with cs = cs0*view.z
+let view={z:1,tx:0,ty:0};
+function cs(){return L.cs0*view.z}
+function resetView(){if(!L)return;view.z=1;const s=cs()*lv.n;view.tx=L.vp.x+(L.vp.w-s)/2;view.ty=L.vp.y+(L.vp.h-s)/2;dirty=true}
+function clampView(){if(!L||!lv)return;view.z=Math.max(1,Math.min(7,view.z));const s=cs()*lv.n,vp=L.vp;
+  if(s<=vp.w)view.tx=vp.x+(vp.w-s)/2;else view.tx=Math.min(vp.x+40,Math.max(vp.x+vp.w-s-40,view.tx));
+  if(s<=vp.h)view.ty=vp.y+(vp.h-s)/2;else view.ty=Math.min(vp.y+40,Math.max(vp.y+vp.h-s-40,view.ty));dirty=true}
+function zoomAt(f,px,py){const z0=view.z,z1=Math.max(1,Math.min(7,z0*f)),k=z1/z0;view.tx=px-(px-view.tx)*k;view.ty=py-(py-view.ty)*k;view.z=z1;clampView()}
+
+/* ---------------- level state ---------------- */
+// lv.cells holds each spot's target colour (-1 = not part of the picture); cur holds the gem sitting there now (-1 = empty)
+let lv=null,cur=null,tray=[],trayCap=32,flights=[],parts=[],pops=new Map(),phase='menu',hint=null,boostersUsed=0,shake=0,shine=0,levelStart=0,rowsBought=0,undoStack=[],moves=0,GROUP=16;
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return((s>>>0)%1e6)/1e6}}
+const isWrong=(i,a=cur)=>a[i]>=0&&a[i]!==lv.cells[i];
+let pid=null; // which patch each gem was dealt in: a tap lifts that patch together
+function groupAt(i,a=cur){ // the misplaced gems of the tapped patch
+  const n=lv.n,c=a[i],out=[i],seen=new Set([i]),p=pid[i];
+  for(let k=0;k<out.length;k++){const j=out[k],x=j%n;for(const m of [x>0?j-1:-1,x<n-1?j+1:-1,j-n,j+n]){if(m<0||m>=a.length||seen.has(m))continue;if(a[m]===c&&isWrong(m,a)){seen.add(m);out.push(m)}}}
+  return out}
+function allGroups(a=cur){const seen=new Uint8Array(a.length),gs=[];for(let i=0;i<a.length;i++){if(seen[i]||!isWrong(i,a))continue;const g=groupAt(i,a);g.forEach(j=>seen[j]=1);gs.push(g)}return gs}
+const trayLive=()=>tray.filter(t=>!t.gone);
+const trayFree=()=>trayCap-trayLive().length;
+
+function setupLevel(){
+  const idx=(levelNo-1)%LEVELS.length,tier=Math.floor((levelNo-1)/LEVELS.length);
+  lv=LEVELS[idx];tileCache.clear();sel=-1;bsel=null;flights=[];parts=[];pops.clear();hint=null;boostersUsed=0;rowsBought=0;shine=0;undoStack=[];moves=0;tray=[];
+  // patch size grows with the level; the tray is three rows of 16 (two rows once the pictures repeat)
+  GROUP=Math.min(16,(idx<6?8:idx<12?10:12)+tier*2);trayCap=tier?32:48;
+  // deal until the hint can finish it; if no deal passes, give the tray another row and try again
+  let good=-1;for(let round=0;round<3&&good<0;round++){for(let attempt=0;attempt<4;attempt++){const sd=levelNo*7919+13+attempt*101;scramble(sd);if(greedySolve()){good=sd;break}}if(good<0)trayCap+=COLS}
+  scramble(good<0?levelNo*7919+13:good);
+  phase='play';levelStart=performance.now();
+  $('lvlNo').textContent='Level '+levelNo;$('picName').textContent=lv.name;layout();resetView();paintCoins();dirty=true;
+}
+// Scramble. 1) Cut the picture into patches of 16 squares that all want the same colour, and swap colours between them
+// (lifting one leaves 16 holes of one colour, and another patch carries exactly that colour).
+// 2) The scraps left over are cut into compact mixed patches and dealt a shifted run of the remaining colours.
+// Nearly every gem starts on a square of another colour; a tap lifts the whole patch it was dealt in.
+function scramble(seed){
+  const R=rng(seed),n=lv.n,T=lv.cells;cur=new Int16Array(T.length).fill(-1);pid=new Int32Array(T.length).fill(-1);
+  const owner=pid,patches=[];
+  const nb=j=>{const x=j%n;return[x>0?j-1:-1,x<n-1?j+1:-1,j-n,j+n].filter(m=>m>=0&&m<T.length&&T[m]>=0)};
+  const grow=(s,size,id,same)=>{const ok=m=>owner[m]<0&&(!same||T[m]===T[s]);const b=[s];owner[s]=id;const front=new Set(nb(s).filter(ok));
+    while(b.length<size&&front.size){let best=-1,bs=-1e9;for(const m of front){if(!ok(m))continue;let k=0,f=0;for(const q of nb(m)){if(owner[q]===id)k++;else if(ok(q))f++}const sc=k*2-f*.5+R()*.6;if(sc>bs){bs=sc;best=m}}
+      if(best<0)break;front.delete(best);owner[best]=id;b.push(best);for(const q of nb(best))if(ok(q))front.add(q)}
+    return b};
+  const freeSame=j=>nb(j).filter(m=>T[m]===T[j]&&owner[m]<0).length,freeAny=j=>nb(j).filter(m=>owner[m]<0).length;
+  let order=[];T.forEach((c,i)=>{if(c>=0)order.push(i)});order.sort((a,b)=>freeSame(a)-freeSame(b)||R()-.5);
+  // 1) single-colour patches of 16
+  for(const s of order){if(owner[s]>=0)continue;const id=patches.length,b=grow(s,GROUP,id,true);if(b.length<GROUP){b.forEach(j=>owner[j]=-1);continue}patches.push({cells:b,t:T[s]})}
+  // 2) the scraps become compact mixed patches
+  order=order.filter(i=>owner[i]<0).sort((a,b)=>freeAny(a)-freeAny(b)||R()-.5);
+  for(const s of order){if(owner[s]>=0)continue;const id=patches.length,b=grow(s,GROUP,id,false);patches.push({cells:b,mixed:true})}
+  // 3) hand out colours, most plentiful colour first: each fills whole patches that don't contain it,
+  //    so a patch is one colour (only one patch per colour gets split) and nothing lands on its own colour
+  const supply=new Map();T.forEach(c=>{if(c>=0)supply.set(c,(supply.get(c)||0)+1)});
+  patches.forEach(p=>{p.forbid=new Set(p.cells.map(j=>T[j]));p.left=p.cells.slice().sort((a,b)=>a-b)});
+  const cells=[];patches.forEach(p=>{if(p.mixed)cells.push(...p.cells)});
+  for(const c of [...supply.keys()].sort((a,b)=>supply.get(b)-supply.get(a))){let need=supply.get(c);
+    const cand=patches.filter(p=>p.left.length&&!p.forbid.has(c)).sort((a,b)=>(b.left.length===b.cells.length)-(a.left.length===a.cells.length)||b.left.length-a.left.length||R()-.5);
+    for(const p of cand){if(!need)break;const k=Math.min(need,p.left.length);p.left.splice(0,k).forEach(j=>cur[j]=c);need-=k}
+    // still short: use the squares of other colours inside mixed patches (the patch splits into two groups)
+    if(need){const rest=patches.filter(p=>p.left.some(j=>T[j]!==c)).sort((a,b)=>b.left.filter(j=>T[j]!==c).length-a.left.filter(j=>T[j]!==c).length);
+      for(const p of rest){if(!need)break;const ok=p.left.filter(j=>T[j]!==c).slice(0,need);ok.forEach(j=>cur[j]=c);need-=ok.length;p.left=p.left.filter(j=>!ok.includes(j))}}
+    if(need){for(const p of patches){if(!need)break;const k=Math.min(need,p.left.length);p.left.splice(0,k).forEach(j=>cur[j]=c);need-=k}}}
+  // any gem still on its own colour trades places with a gem elsewhere so both end up wrong (scraps first)
+  const all=[];T.forEach((c,i)=>{if(c>=0)all.push(i)});
+  for(const a of all){if(cur[a]!==T[a])continue;
+    for(let k=0;k<600;k++){const pool=k<300&&cells.length?cells:all,b=pool[(R()*pool.length)|0];if(cur[b]!==cur[a]&&cur[b]!==T[a]&&cur[a]!==T[b]){[cur[a],cur[b]]=[cur[b],cur[a]];break}}}
+  const gs=allGroups();
+  return{wrong:cur.filter((c,i)=>c>=0&&c!==T[i]).length,groups:gs.length,max:Math.max(0,...gs.map(g=>g.length))}
+}
+// quick self-check: can the hint policy finish this deal with the tray we give?
+function greedySolve(){let a=cur.slice(),tr=[];for(let step=0;step<3000;step++){if(!allGroups(a).length)return!tr.length;const m=pickMove(a,tr);if(!m)return false;a=m.r.a;tr=m.r.t}return false}
+
+/* ---------------- moves ---------------- */
+function traySlotPos(k){const T=L.tray,r=(k/COLS)|0,c=k%COLS;return{x:T.x0+c*(T.ts+2)+T.ts/2,y:T.y+r*(T.ts+3)+T.ts/2}}
+function cellCenter(i){const n=lv.n,s=cs();return{x:view.tx+(i%n+.5)*s,y:view.ty+(((i/n)|0)+.5)*s}}
+function fly(c,from,to,t0,dur){const f={c,fx:from?from.x:0,fy:from?from.y:0,to,t0,dur:dur||520};flights.push(f);return f}
+// picking up: a tap selects the misplaced gem and its same-colour neighbours; they stay put until you say where
+let bsel=null; // {c, cells:[...], at:index tapped}
+function selectAt(i){
+  if(phase!=='play'||i<0||!isWrong(i)){sfx.nope();return false}
+  if(bsel&&bsel.cells.includes(i)){bsel=null;dirty=true;return true}
+  const g=groupAt(i),o=cellCenter(i);g.sort((a,b)=>{const A=cellCenter(a),B=cellCenter(b);return Math.hypot(A.x-o.x,A.y-o.y)-Math.hypot(B.x-o.x,B.y-o.y)});
+  bsel={c:cur[i],cells:g,at:i};sel=-1;hint=null;sfx.pick();dirty=true;return true}
+function pushUndo(){undoStack.push({cur:cur.slice(),tray:trayLive().map(t=>t.c)});if(undoStack.length>30)undoStack.shift()}
+function keepSel(left){bsel=left.length?{c:bsel.c,cells:left,at:left[0]}:null}
+function toTray(){
+  if(phase!=='play'||!bsel)return false;
+  const free=trayFree();if(!free)return no('Tray is full');
+  const g=bsel.cells.slice(0,free),c=bsel.c;pushUndo();hint=null;moves++;const now=performance.now();
+  g.forEach((j,k)=>{const item={c,arrive:now+k*22+560,gone:false,leave:0,id:++trayId};tray.push(item);fly(c,cellCenter(j),{item},now+k*22,560);cur[j]=-1});
+  sfx.lift(g.length);busyUntil=now+g.length*22+2500;
+  keepSel(bsel.cells.slice(g.length));if(bsel)toast('Tray is full',bsel.cells.length+' left behind',1200);
+  checkEnd();dirty=true;return true}
+function toBoard(i){
+  if(phase!=='play'||!bsel)return false;const c=bsel.c;
+  if(i<0||cur[i]>=0||lv.cells[i]!==c)return no('That square wants another colour');
+  const n=lv.n,ix=i%n,iy=(i/n)|0,open=[];for(let j=0;j<cur.length;j++)if(cur[j]<0&&lv.cells[j]===c)open.push(j);
+  open.sort((a,b)=>((a%n-ix)**2+((a/n|0)-iy)**2)-((b%n-ix)**2+((b/n|0)-iy)**2));
+  const k=Math.min(open.length,bsel.cells.length),dst=open.slice(0,k),src=bsel.cells.slice(0,k);
+  pushUndo();hint=null;moves++;const now=performance.now();
+  src.forEach((j,q)=>{const from=cellCenter(j);cur[j]=-1;cur[dst[q]]=c;fly(c,from,{cell:dst[q]},now+q*28,520)});
+  sfx.place();busyUntil=now+k*28+1400;keepSel(bsel.cells.slice(k));
+  checkEnd();dirty=true;return true}
+function tapCell(i){if(!selectAt(i))return false;return toTray()} // kept for the test hooks
+// placing: pick a colour in the tray, then tap a square of that colour; the gems fill the open squares joined to it
+let sel=-1;
+function no(msg){shake=performance.now();sfx.nope();if(msg)toast(msg,'',1100);dirty=true;return false}
+function placeAt(i){
+  if(phase!=='play')return false;
+  if(sel<0)return no('Pick a colour from the tray');
+  if(i<0||cur[i]>=0||lv.cells[i]!==sel)return no();
+  const items=tray.filter(x=>!x.gone&&x.c===sel);if(!items.length){sel=-1;return no()}
+  pushUndo();
+  // the gems fill the open squares of this colour: the tapped one first, then the nearest others
+  const n=lv.n,ix=i%n,iy=(i/n)|0,open=[];for(let j=0;j<cur.length;j++)if(cur[j]<0&&lv.cells[j]===sel)open.push(j);
+  open.sort((a,b)=>((a%n-ix)**2+((a/n|0)-iy)**2)-((b%n-ix)**2+((b/n|0)-iy)**2));const region=open.slice(0,items.length);
+  const now=performance.now();hint=null;moves++;
+  region.forEach((j,k)=>{const item=items[k];item.gone=true;item.leave=Math.max(item.arrive+60,now)+k*28;cur[j]=sel;fly(sel,null,{cell:j},item.leave,520).fromItem=item});
+  sfx.place();busyUntil=now+region.length*28+1400;
+  if(items.length<=region.length)sel=-1;
+  checkEnd();dirty=true;return true
+}
+function canPlaceAny(){const have=new Set(trayLive().map(t=>t.c));if(!have.size)return false;for(let i=0;i<cur.length;i++)if(cur[i]<0&&have.has(lv.cells[i]))return true;return false}
+function canDirect(){const open=new Set();for(let i=0;i<cur.length;i++)if(cur[i]<0&&lv.cells[i]>=0)open.add(lv.cells[i]);if(!open.size)return false;for(let i=0;i<cur.length;i++)if(isWrong(i)&&open.has(cur[i]))return true;return false}
+function checkEnd(){
+  const left=lv.cells.some((t,i)=>t>=0&&cur[i]!==t);
+  if(!left&&!trayLive().length){phase='winning';return}
+  if(canPlaceAny()||canDirect())return;
+  if(trayFree()>0&&allGroups().length)return;
+  phase='lost';setTimeout(showLose,1300);
+}
+// what-if copy of a move, used by the hint
+function simMove(a,tr,g){const fr=trayCap-tr.length;if(!fr)return null;g=g.slice(0,fr);const c=a[g[0]],na=a.slice(),t2=tr.slice();g.forEach(j=>{na[j]=-1;t2.push(c)});let placed=0;
+  for(let i=0;i<na.length;i++){if(na[i]>=0||lv.cells[i]<0)continue;const k=t2.indexOf(lv.cells[i]);if(k<0)continue;na[i]=lv.cells[i];t2.splice(k,1);placed++}
+  return{a:na,t:t2,placed}}
+function score(r){if(!r)return-1e9;const gs=allGroups(r.a);if(!gs.length&&!r.t.length)return 1e6;const free=trayCap-r.t.length;return r.placed*2-r.t.length+(gs.some(g=>g.length<=free)?0:-1e5)}
+// the hint and the deal check share one simple policy: lift the patch that lets the most gems land, keeping the tray light
+function pickMove(a,tr){let best=null,bs=-1e9;for(const g of allGroups(a)){const r=simMove(a,tr,g);if(!r)continue;const sc=r.placed*2-r.t.length*1.2+g.length*.1;if(sc>bs){bs=sc;best={g,r}}}return best}
+function bestMove(){const m=pickMove(cur,trayLive().map(t=>t.c));return m?m.g:null}
+function paintCoins(){$('coinsEl').textContent=coins;$('hintBtn').disabled=coins<10||phase!=='play';$('slotBtn').disabled=coins<30||phase!=='play'||rowsBought>=1;$('undoBtn').disabled=coins<15||phase!=='play'||!undoStack.length||flights.length>0}
+let toastT=0;function toast(a,b,ms){const el=$('toast');el.innerHTML='';el.append(a);if(b){const s=document.createElement('small');s.textContent=b;el.append(s)}el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),ms||1200)}
+
+/* ---------------- boosters ---------------- */
+function spend(n){if(coins<n){sfx.nope();return false}coins-=n;boostersUsed++;save();paintCoins();sfx.boost();return true}
+function addRow(){trayCap+=COLS;rowsBought++;layout();dirty=true}
+$('hintBtn').addEventListener('click',()=>{if(phase!=='play')return;
+  // first: a tray colour that has somewhere to go
+  const have=new Set(trayLive().map(t=>t.c));for(let i=0;i<cur.length;i++)if(cur[i]<0&&have.has(lv.cells[i])){if(!spend(10))return;const c=lv.cells[i];sel=c;hint={g:[i],c,t:performance.now()};toast('Tap the glowing square','',1300);
+    if(view.z>1){const p=cellCenter(i);view.tx+=L.vp.w/2-p.x;view.ty+=L.vp.h/2-p.y;clampView()}dirty=true;return}
+  const g=bestMove();if(!g){toast('No moves left','Add a tray row',1200);return}if(!spend(10))return;hint={g,t:performance.now()};toast('Tap the glowing gems','',1300);
+  // bring the hinted group into view
+  if(view.z>1){const c=cellCenter(g[0]);view.tx+=L.vp.w/2-c.x;view.ty+=L.vp.h/2-c.y;clampView()}dirty=true});
+$('slotBtn').addEventListener('click',()=>{if(phase!=='play'||rowsBought>=1)return;if(!spend(30))return;addRow();toast('+16 tray spots','',1000)});
+$('undoBtn').addEventListener('click',()=>{if(phase!=='play'||!undoStack.length||flights.length)return;if(!spend(15))return;const u=undoStack.pop();cur=u.cur;tray=u.tray.map(c=>({c,arrive:0,gone:false}));hint=null;sel=-1;bsel=null;toast('Undone','',800);paintCoins();dirty=true});
+$('zin').addEventListener('click',()=>{zoomAt(1.6,L.vp.x+L.vp.w/2,L.vp.y+L.vp.h/2)});
+$('zout').addEventListener('click',()=>{zoomAt(1/1.6,L.vp.x+L.vp.w/2,L.vp.y+L.vp.h/2)});
+$('zfit').addEventListener('click',()=>{resetView()});
+
+/* ---------------- input: tap, drag to pan, pinch or wheel to zoom ---------------- */
+function cellAt(x,y){const n=lv.n,s=cs(),cx=Math.floor((x-view.tx)/s),cy=Math.floor((y-view.ty)/s);
+  let best=-1,bd=1e9;const r=Math.max(1,Math.ceil(14/s)); // small gems: snap to the nearest gem you can move
+  for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){const gx=cx+dx,gy=cy+dy;if(gx<0||gy<0||gx>=n||gy>=n)continue;const i=gy*n+gx;if(!isWrong(i))continue;
+    const p=cellCenter(i),dd=(p.x-x)**2+(p.y-y)**2;if(dd<bd){bd=dd;best=i}}
+  return bd<=(Math.max(s*.75,15))**2?best:-1}
+function cellExact(x,y){const n=lv.n,s=cs(),cx=Math.floor((x-view.tx)/s),cy=Math.floor((y-view.ty)/s);if(cx<0||cy<0||cx>=n||cy>=n)return-1;const i=cy*n+cx;return lv.cells[i]>=0?i:-1}
+function nearestEmpty(x,y,c){const n=lv.n,s=cs(),cx=Math.floor((x-view.tx)/s),cy=Math.floor((y-view.ty)/s),r=Math.max(1,Math.ceil(14/s));let best=-1,bd=1e9;
+  for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){const gx=cx+dx,gy=cy+dy;if(gx<0||gy<0||gx>=n||gy>=n)continue;const i=gy*n+gx;if(cur[i]>=0||lv.cells[i]!==c)continue;const p=cellCenter(i),dd=(p.x-x)**2+(p.y-y)**2;if(dd<bd){bd=dd;best=i}}
+  return bd<=(Math.max(s*.75,15))**2?best:-1}
+function boardTap(x,y){
+  const i=cellExact(x,y);
+  if(i>=0&&isWrong(i))return selectAt(i);                       // a misplaced gem: pick it and its neighbours up
+  if(bsel){                                                       // gems in hand: drop them on a matching open square
+    if(i>=0&&cur[i]<0)return lv.cells[i]===bsel.c?toBoard(i):no('That square wants another colour');
+    const j=nearestEmpty(x,y,bsel.c);if(j>=0)return toBoard(j);
+    const k=cellAt(x,y);if(k>=0)return selectAt(k);
+    if(i<0){bsel=null;dirty=true;return false}
+    return no();
+  }
+  if(i>=0&&cur[i]<0)return sel>=0&&lv.cells[i]===sel?placeAt(i):no(sel<0?'Pick up gems or a tray colour first':''); // an open square
+  if(sel>=0){const j=nearestEmpty(x,y,sel);if(j>=0)return placeAt(j)} // tiny squares: snap to the nearest fitting one
+  const j=cellAt(x,y);if(j>=0)return selectAt(j);
+  if(i>=0)return no();
+}
+function trayTap(p){if(phase!=='play')return;if(bsel){toTray();return}const T=L.tray;let hit=null,bd=1e9;
+  for(const t of tray){if(t.gone||t.x==null)continue;const d=Math.hypot(t.x-p.x,t.y-p.y);if(d<bd){bd=d;hit=t}}
+  if(hit&&bd<T.ts*.75){sel=sel===hit.c?-1:hit.c;bsel=null;sfx.pick();}else sel=-1;dirty=true}
+const ptrs=new Map();let gesture=null;
+function local(e){const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+cv.addEventListener('pointerdown',e=>{if(!L||!lv)return;const p=local(e);if(p.y>L.vp.y+L.vp.h){trayTap(p);return}try{cv.setPointerCapture(e.pointerId)}catch(_){}
+  ptrs.set(e.pointerId,p);
+  if(ptrs.size===1)gesture={kind:'tap',sx:p.x,sy:p.y,lx:p.x,ly:p.y};
+  else if(ptrs.size===2){const[a,b]=[...ptrs.values()];gesture={kind:'pinch',d:Math.hypot(a.x-b.x,a.y-b.y),mx:(a.x+b.x)/2,my:(a.y+b.y)/2}}});
+cv.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId)||!gesture)return;const p=local(e);ptrs.set(e.pointerId,p);
+  if(gesture.kind==='pinch'&&ptrs.size>=2){const[a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y),mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+    view.tx+=mx-gesture.mx;view.ty+=my-gesture.my;zoomAt(d/Math.max(10,gesture.d),mx,my);gesture.d=d;gesture.mx=mx;gesture.my=my;return}
+  if(gesture.kind==='tap'&&Math.hypot(p.x-gesture.sx,p.y-gesture.sy)>8)gesture.kind='pan';
+  if(gesture.kind==='pan'){view.tx+=p.x-gesture.lx;view.ty+=p.y-gesture.ly;clampView()}
+  gesture.lx=p.x;gesture.ly=p.y});
+function endPtr(e){if(!ptrs.has(e.pointerId))return;ptrs.delete(e.pointerId);
+  if(gesture&&gesture.kind==='tap'&&ptrs.size===0&&e.type==='pointerup'&&phase==='play'){const p=local(e);boardTap(p.x,p.y)}
+  if(ptrs.size===0)gesture=null;else if(gesture&&gesture.kind==='pinch')gesture={kind:'pan-after',lx:0,ly:0}}
+cv.addEventListener('pointerup',endPtr);cv.addEventListener('pointercancel',endPtr);
+cv.addEventListener('wheel',e=>{if(!L)return;e.preventDefault();const p=local(e);zoomAt(Math.exp(-e.deltaY*.0018),p.x,p.y)},{passive:false});
+cv.addEventListener('dblclick',e=>{const p=local(e);if(view.z>1.05)resetView();else zoomAt(2.5,p.x,p.y)});
+
+/* ---------------- drawing ---------------- */
+function rr(g,x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+function star(x,y,s){ctx.beginPath();ctx.moveTo(x,y-s);ctx.quadraticCurveTo(x,y,x+s,y);ctx.quadraticCurveTo(x,y,x,y+s);ctx.quadraticCurveTo(x,y,x-s,y);ctx.quadraticCurveTo(x,y,x,y-s);ctx.fill()}
+const tileCache=new Map();
+function tileCol(c,k){const key=c+'|'+k;let v=tileCache.get(key);if(!v){v=mix(lv.colors[c],PAPER,.3+k);tileCache.set(key,v)}return v}
+function drawBoard(now){
+  const n=lv.n,s=cs(),vp=L.vp;let ox=0;if(shake&&now-shake<300)ox=Math.sin((now-shake)/22)*4*(1-(now-shake)/300);
+  ctx.save();ctx.beginPath();ctx.rect(vp.x,vp.y,vp.w,vp.h);ctx.clip();ctx.translate(ox,0);
+  const x0=Math.max(0,Math.floor((vp.x-view.tx)/s)),x1=Math.min(n-1,Math.floor((vp.x+vp.w-view.tx)/s)),y0=Math.max(0,Math.floor((vp.y-view.ty)/s)),y1=Math.min(n-1,Math.floor((vp.y+vp.h-view.ty)/s));
+  // soft plate behind the picture
+  ctx.fillStyle='#e9e6db';const e=Math.max(2,s*.5);
+  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*n+x;if(lv.cells[i]<0)continue;const X=view.tx+x*s,Y=view.ty+y*s;
+    const top=y>0&&lv.cells[i-n]>=0,lef=x>0&&lv.cells[i-1]>=0;ctx.fillRect(X-(lef?0:e),Y-(top?0:e),s+(lef?0:e)+(x<n-1&&lv.cells[i+1]>=0?0:e),s+(top?0:e)+(y<n-1&&lv.cells[i+n]>=0?0:e))}
+  const incoming=new Set();for(const f of flights)if(f.to.cell!=null&&now<f.t0+f.dur)incoming.add(f.to.cell);
+  const hintSet=hint&&now-hint.t<6000?new Set(hint.g):null,gs=s*.97,pad=s>8?Math.max(.5,s*.05):0,want=sel>=0?sel:bsel?bsel.c:-1,held=bsel?new Set(bsel.cells):null;
+  // squares show the colour each spot wants; round gems sit on top
+  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*n+x,t=lv.cells[i];if(t<0)continue;const X=view.tx+x*s,Y=view.ty+y*s,c=cur[i];
+    if(c<0||incoming.has(i)){if(t===want&&c<0){ctx.fillStyle=tileCol(t,.15+.25*(.5+.5*Math.sin(now/180)));ctx.fillRect(X+pad,Y+pad,s-2*pad,s-2*pad);continue}ctx.fillStyle=tileCol(t,.38);ctx.fillRect(X+pad,Y+pad,s-2*pad,s-2*pad);if(s>9){ctx.fillStyle=tileCol(t,.3);ctx.beginPath();ctx.arc(X+s/2,Y+s/2,s*.2,0,7);ctx.fill()}continue}
+    ctx.fillStyle=tileCol(t,c===t?.45:.38);ctx.fillRect(X+pad,Y+pad,s-2*pad,s-2*pad);
+    let g=c===t?gs:s*.8;const p=pops.get(i);if(p&&now-p<260)g*=1+.35*Math.sin((now-p)/260*Math.PI);
+    if(hintSet&&hintSet.has(i))g*=1+.16*(.5+.5*Math.sin(now/120));
+    let lift=0;if(held&&held.has(i)){g=s*.96;lift=s*(.08+.04*Math.sin(now/170));ctx.fillStyle='#f3e6b0';ctx.strokeStyle=INK;ctx.lineWidth=Math.max(1,s*.06);ctx.beginPath();ctx.arc(X+s/2,Y+s/2,s*.56,0,7);ctx.fill();ctx.stroke()}
+    ctx.drawImage(gemSprite(lv.colors[c],g),X+s/2-g/2,Y+s/2-g/2-lift,g,g)}
+  if(hintSet){ctx.strokeStyle='rgba(46,46,51,'+(.6+.4*Math.sin(now/150))+')';ctx.lineWidth=Math.max(1.5,s*.1);for(const i of hintSet){const p=cellCenter(i);ctx.beginPath();ctx.arc(p.x,p.y,s*.5,0,7);ctx.stroke()}}
+  if(shine&&now-shine<1400){const k=(now-shine)/1400,bw=n*s;ctx.beginPath();ctx.rect(view.tx,view.ty,bw,bw);ctx.clip();const gx=view.tx-bw*.6+k*bw*2.2,lg=ctx.createLinearGradient(gx-bw*.25,view.ty,gx+bw*.25,view.ty+bw);lg.addColorStop(0,'rgba(246,243,234,0)');lg.addColorStop(.5,'rgba(246,243,234,.35)');lg.addColorStop(1,'rgba(246,243,234,0)');ctx.fillStyle=lg;ctx.fillRect(view.tx,view.ty,bw,bw)}
+  ctx.restore();
+}
+let trayMoving=false,busyUntil=0,trayId=0;
+function trayIndex(now){ // where each tray gem sits right now (gems close up the gaps as others leave)
+  trayMoving=false;const vis=tray.filter(t=>!(t.gone&&now>=t.leave)).sort((a,b)=>a.c-b.c||((a.id||0)-(b.id||0)));vis.forEach((t,k)=>{const p=traySlotPos(k);if(t.x==null){t.x=p.x;t.y=p.y}else{t.x+=(p.x-t.x)*.25;t.y+=(p.y-t.y)*.25;if(Math.abs(p.x-t.x)+Math.abs(p.y-t.y)>.4)trayMoving=true}});return vis}
+function drawTray(now){
+  const T=L.tray;ctx.fillStyle=PAPER;rr(ctx,T.x0-8,T.y-7,T.w+16,T.rows*(T.ts+3)+11,14);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.stroke();
+  const used=trayLive().length,full=used/trayCap;
+  for(let k=0;k<trayCap;k++){const p=traySlotPos(k);ctx.fillStyle=full>=.8?'rgba(240,201,168,.8)':'rgba(46,46,51,.07)';ctx.strokeStyle=full>=.8?'rgba(217,102,26,.5)':'rgba(46,46,51,.22)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p.x,p.y,T.ts*.42,0,7);ctx.fill();ctx.stroke()}
+  const vis=trayIndex(now);
+  const hc=hint&&hint.c!=null&&now-hint.t<6000?hint.c:-1;
+  for(const t of vis){if(now<t.arrive)continue;const on=t.c===sel&&!t.gone,g=T.ts*(on?1:.9),y=t.y-(on?4:0);
+    if(on||t.c===hc){ctx.fillStyle=on?'#f3e6b0':'rgba(90,154,106,'+(.35+.3*Math.sin(now/150))+')';ctx.strokeStyle=on?INK:'#5a9a6a';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(t.x,y,T.ts*.62,0,7);ctx.fill();ctx.stroke()}
+    ctx.drawImage(gemSprite(lv.colors[t.c],g),t.x-g/2,y-g/2,g,g)}
+  if(bsel){ctx.strokeStyle='rgba(90,154,106,'+(.55+.4*Math.sin(now/160))+')';ctx.lineWidth=3;ctx.setLineDash([7,5]);rr(ctx,T.x0-8,T.y-7,T.w+16,T.rows*(T.ts+3)+11,14);ctx.stroke();ctx.setLineDash([])}
+  if(sel>=0||bsel){ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='left';ctx.fillStyle=INK;ctx.fillText(bsel?(bsel.cells.length+' picked up: tap the tray or a matching square'):'Now tap where it goes',T.x0-4,T.y-11)}
+  ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='right';ctx.fillStyle=full>=.8?'#d9661a':'#7a7a80';ctx.fillText(used+' / '+trayCap,T.x0+T.w+4,T.y-11);
+}
+let lastDrop=0;
+function frame(now){
+  requestAnimationFrame(frame);
+  if(!L||!lv)return;
+  const busy=sel>=0||bsel||flights.length||parts.length||(hint&&now-hint.t<6000)||(shine&&now-shine<1500)||(shake&&now-shake<320)||trayMoving||now<busyUntil||[...pops.values()].some(p=>now-p<300);
+  if(!busy&&!dirty)return;dirty=false;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,SW,SH);
+  drawBoard(now);drawTray(now);
+  for(let k=flights.length-1;k>=0;k--){const f=flights[k];const t=(now-f.t0)/f.dur;
+    if(t<0)continue;
+    if(f.fromItem&&!f.started){f.started=1;f.fx=f.fromItem.x;f.fy=f.fromItem.y}
+    const to=f.to.cell!=null?cellCenter(f.to.cell):{x:f.to.item.x,y:f.to.item.y};
+    if(t>=1){flights.splice(k,1);if(f.to.cell!=null){pops.set(f.to.cell,now);sfx.tink();if(!RM&&parts.length<60)parts.push({x:to.x,y:to.y,vx:(Math.random()-.5)*3,vy:-Math.random()*3,life:0,max:18,c:'#c99a1a'})}else if(now-lastDrop>60){sfx.drop();lastDrop=now}continue}
+    const e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,mx=(f.fx+to.x)/2+(f.to.cell!=null?-40:40),my=Math.min(f.fy,to.y)-70,x=(1-e)*(1-e)*f.fx+2*(1-e)*e*mx+e*e*to.x,y=(1-e)*(1-e)*f.fy+2*(1-e)*e*my+e*e*to.y;
+    const a=f.to.cell!=null?L.tray.ts*.9:Math.min(cs()*.88,30),b=f.to.cell!=null?cs()*.88:L.tray.ts*.9,s=Math.max(4,a+(b-a)*e)*(1+.25*Math.sin(t*Math.PI));
+    if(!RM){ctx.globalAlpha=.22;ctx.drawImage(gemSprite(lv.colors[f.c],s*.8),x-(to.x-f.fx)*.03-s*.4,y-(to.y-f.fy)*.03-s*.4,s*.8,s*.8);ctx.globalAlpha=1}
+    ctx.drawImage(gemSprite(lv.colors[f.c],s),x-s/2,y-s/2,s,s)}
+  tray=tray.filter(t=>!(t.gone&&now>=t.leave+20));
+  parts=parts.filter(p=>p.life<p.max);for(const p of parts){p.life++;p.x+=p.vx;p.y+=p.vy;p.vy+=.15;ctx.globalAlpha=1-p.life/p.max;ctx.fillStyle=p.c;star(p.x,p.y,3)}ctx.globalAlpha=1;
+  if(phase==='winning'&&!flights.length){resetView();win()}
+  const idle=!flights.length;if(phase==='play'&&idle!==paintCoins.last){paintCoins.last=idle;paintCoins()}
+}
+
+/* ---------------- win / lose / menus ---------------- */
+function drawPicTo(cnv,pic,filled){const g=cnv.getContext('2d'),n=pic.n,cs=cnv.width/n;g.clearRect(0,0,cnv.width,cnv.height);
+  pic.cells.forEach((c,i)=>{if(c<0)return;const x=(i%n)*cs,y=((i/n)|0)*cs;g.fillStyle=filled?pic.colors[c]:mix(pic.colors[c],PAPER,.68);g.fillRect(x,y,cs+.4,cs+.4)})}
+function win(){
+  phase='won';shine=performance.now();sfx.win();
+  const reward=10+(boostersUsed?0:5);coins+=reward;done.add((levelNo-1)%LEVELS.length);
+  track('gem_cove_level_complete',{level:levelNo,seconds:Math.round((performance.now()-levelStart)/1000)});
+  levelNo++;save();paintCoins();
+  setTimeout(()=>{$('winText').textContent=lv.name;drawPicTo($('winPic'),lv,true);$('winCoins').textContent='+'+reward+' coins'+(boostersUsed?'':' (includes a no-booster bonus)');$('winCard').hidden=false;window.BDA&&BDA.shareScore({lead:'I completed',score:'Level '+(levelNo-1),line:lv.name,into:'#winCard .card',after:'#winCoins'});$('nextBtn').focus()},1200);
+}
+function showLose(){sfx.lose();$('saveBtn').hidden=coins<30;$('loseCard').hidden=false;track('gem_cove_level_failed',{level:levelNo});paintCoins()}
+$('saveBtn').addEventListener('click',()=>{if(coins<30)return;coins-=30;boostersUsed++;save();addRow();$('loseCard').hidden=true;phase='play';paintCoins();checkEnd()});
+$('retryBtn').addEventListener('click',()=>{$('loseCard').hidden=true;setupLevel();paintCoins()});
+$('nextBtn').addEventListener('click',()=>{$('winCard').hidden=true;setupLevel();paintCoins()});
+$('playBtn').addEventListener('click',()=>{audio();$('startCard').hidden=true;setupLevel();paintCoins();track('gem_cove_start',{level:levelNo})});
+$('galBtn').addEventListener('click',()=>{const g=$('galGrid');g.innerHTML='';LEVELS.forEach((p,i)=>{const f=document.createElement('figure'),c=document.createElement('canvas');c.width=c.height=Math.round(64*Math.min(2,dpr));f.appendChild(c);const cap=document.createElement('figcaption');cap.textContent=done.has(i)?p.name:'?';f.appendChild(cap);g.appendChild(f);drawPicTo(c,p,done.has(i))});
+  $('galNote').textContent=done.size+' of '+LEVELS.length+' pictures finished.';$('startCard').hidden=true;$('galCard').hidden=false});
+$('galClose').addEventListener('click',()=>{$('galCard').hidden=true;$('startCard').hidden=false});
+function paintStart(){$('playBtn').textContent='Play level '+levelNo;$('galBtn').textContent='My pictures ('+done.size+')';drawPicTo($('startPic'),LEVELS[(levelNo-1)%LEVELS.length],false);
+  $('lvlNo').textContent='Level '+levelNo;$('picName').textContent=LEVELS[(levelNo-1)%LEVELS.length].name;paintCoins()}
+
+/* test hooks for automated checks */
+window.__gemcove={get s(){return{phase,levelNo,tray:trayLive().length,trayCap,wrong:cur?cur.filter((c,i)=>c>=0&&c!==lv.cells[i]).length:-1,left:lv?lv.cells.filter((t,i)=>t>=0&&cur[i]!==t).length:-1,groups:cur?allGroups().map(g=>g.length):[],flights:flights.length,coins,moves,z:view.z}},
+  tapCell,selectAt,toTray,toBoard,get bsel(){return bsel},bestMove,groups:()=>allGroups().map(g=>({i:g[0],c:cur[g[0]],n:g.length,ok:g.length<=trayFree()})),LEVELS,setLevel(n){levelNo=n;setupLevel()},finishFlights(){flights=[];tray=trayLive();tray.forEach(t=>t.arrive=0)},place(c,i){sel=c;return placeAt(i)},debugPlan2(){const have=new Set(trayLive().map(t=>t.c));for(let i=0;i<cur.length;i++)if(cur[i]<0&&have.has(lv.cells[i]))return true;return false},debugPlan(){const have=trayLive();const ok=new Set();for(let i=0;i<cur.length;i++)if(cur[i]<0)ok.add(lv.cells[i]);const it=have.find(t=>ok.has(t.c))||have[0];if(!it)return null;const c=it.c;let right=-1,wrong=-1;for(let i=0;i<cur.length;i++){if(cur[i]<0&&lv.cells[i]===c&&right<0)right=i;if(cur[i]<0&&lv.cells[i]!==c&&lv.cells[i]>=0&&wrong<0)wrong=i}return{tray:{x:it.x,y:it.y},right:right>=0?cellCenter(right):null,wrong:wrong>=0?cellCenter(wrong):null,c}},_old(){const have=trayLive();if(!have.length)return null;const it=have[0],c=it.c;let right=-1,wrong=-1;for(let i=0;i<cur.length;i++){if(cur[i]<0&&lv.cells[i]===c&&right<0)right=i;if(cur[i]<0&&lv.cells[i]!==c&&lv.cells[i]>=0&&wrong<0)wrong=i}return{tray:{x:it.x,y:it.y},right:right>=0?cellCenter(right):null,wrong:wrong>=0?cellCenter(wrong):null,c}},autoPlace(){let k=0;for(let guard=0;guard<5000;guard++){const have=new Set(trayLive().map(t=>t.c));let i=-1;for(let j=0;j<cur.length;j++)if(cur[j]<0&&have.has(lv.cells[j])){i=j;break}if(i<0)break;sel=lv.cells[i];placeAt(i);k++}return k},addRow,cellXY:cellCenter,zoomAt,setGroup(n){GROUP=n},setCap(n){trayCap=n;layout()},openColors(){const s=new Set();for(let i=0;i<cur.length;i++)if(cur[i]<0&&lv.cells[i]>=0)s.add(lv.cells[i]);return[...s]}};
+
+renderSound();fit();paintStart();requestAnimationFrame(frame);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{gemCache.clear()});
+})();
+</script>
+<script>window.BDA_GAME={"slug": "gem-sketch", "name": "Gem Sketch", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/gem-sketch", "short": "sketchpadarcade.com/gem-sketch"};</script>
+<script>(()=>{const s="gem-sketch";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
+<script>
+(()=>{
+  let sheet,toastEl,tt;
+  const enc=encodeURIComponent;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='bda-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2200)}
+  async function copy(url){try{await navigator.clipboard.writeText(url);toast('Link copied')}catch(e){
+    const ta=document.createElement('textarea');ta.value=url;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Link copied':'Copy this link: '+url)}}
+  function openSheet(d){
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sheet';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet)sheet.hidden=true});document.body.appendChild(sheet)}
+    const msg=d.text+' '+d.url;
+    sheet.innerHTML='<div class="bda-card"><h2></h2><p class="u"></p><div class="bda-opts">'+
+      '<button type="button" data-a="copy"><i style="background:#0fa3b8">&#128279;</i>Copy link</button>'+
+      '<a href="https://www.facebook.com/sharer/sharer.php?u='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#1877f2">f</i>Facebook</a>'+
+      '<a href="https://twitter.com/intent/tweet?text='+enc(d.text)+'&url='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#111">X</i>X</a>'+
+      '<a href="https://wa.me/?text='+enc(msg)+'" target="_blank" rel="noopener"><i style="background:#25d366">W</i>WhatsApp</a>'+
+      '<a href="mailto:?subject='+enc(d.title)+'&body='+enc(msg)+'"><i style="background:#ff6f59">@</i>Email</a>'+
+      '</div><button type="button" class="bda-x">Close</button></div>';
+    sheet.querySelector('h2').textContent='Share '+d.title;sheet.querySelector('.u').textContent=d.url;
+    sheet.querySelector('[data-a=copy]').onclick=()=>{copy(d.url);sheet.hidden=true};
+    sheet.querySelector('.bda-x').onclick=()=>sheet.hidden=true;
+    sheet.hidden=false;sheet.querySelector('[data-a=copy]').focus();
+  }
+  async function share(el){
+    const d={url:el.dataset.shareUrl,title:el.dataset.shareTitle,text:el.dataset.shareText};
+    try{if(window.va)window.va('event',{name:'Share',data:{page:d.title}})}catch(e){}
+    const touch=matchMedia('(pointer:coarse)').matches;
+    if(navigator.share&&touch){try{await navigator.share({title:d.title,text:d.text,url:d.url});return}catch(e){if(e&&e.name==='AbortError')return}}
+    openSheet(d);
+  }
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-share-url]');if(el){e.preventDefault();share(el)}});
+})();
+</script>
+<style>
+.bda-scorebtn{appearance:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:9px 18px 9px 14px;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;font:400 1.15rem/1 "Patrick Hand","Comic Sans MS",cursive;
+  background:#f3e6b0;color:#2e2e33;box-shadow:3px 3px 0 #55555c;position:relative;transition:transform .12s}
+.bda-scorebtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #55555c}
+.bda-scorebtn svg{width:18px;height:18px;flex:none}
+.bda-scorebtn:focus-visible{outline:3px solid #2e2e33;outline-offset:3px}
+.bda-scorebtn.float{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9000;margin:0}
+.bda-scorebtn.float:active{transform:translate(-50%,2px)}
+.bda-sc{position:fixed;inset:0;z-index:10001;display:grid;place-items:center;padding:16px;background:rgba(46,46,51,.5);font-family:"Patrick Hand","Comic Sans MS",cursive;overflow:auto}
+.bda-sc[hidden]{display:none!important}
+.bda-sc .in{width:100%;max-width:400px;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:14px;box-shadow:4px 4px 0 #55555c;text-align:center}
+.bda-sc img{display:block;width:100%;height:auto;border:2px solid #2e2e33;border-radius:12px;background:#f6f3ea;aspect-ratio:1}
+.bda-sc .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.bda-sc .row button,.bda-sc .row a{appearance:none;border:2px solid #2e2e33;cursor:pointer;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;padding:9px 6px;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;display:flex;align-items:center;justify-content:center;color:#2e2e33;background:#f6f3ea}
+.bda-sc .go{background:#f3e6b0;box-shadow:2px 2px 0 #55555c}
+.bda-sc .alt{background:#f6f3ea}
+.bda-sc .x{appearance:none;border:0;margin-top:10px;width:100%;padding:9px;background:none;color:#7a7a80;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-sc button:focus-visible,.bda-sc a:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
+<script>
+/* Share-my-score card. A game calls BDA.shareScore({score, line, into, after, lead}) when a game ends:
+   score = the number to brag about, line = optional extra like "Level 5" or "Advanced",
+   into = the game-over card (element or selector) to put the button in, after = where in it; without into the button floats.
+   lead replaces "I scored" (e.g. "I reached" with score "Level 12"). */
+(()=>{
+  const G=window.BDA_GAME||{},nf=n=>typeof n==='number'?n.toLocaleString('en-US'):String(n);
+  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg>';
+  let floatBtn=null,sheet=null,cur=null;
+  const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+  function fitText(c,t,max,size,weight,fam){let s=size;do{c.font=weight+' '+s+'px '+fam;s-=2}while(c.measureText(t).width>max&&s>18);return c.font}
+  async function makeCard(d){
+    const F='"Gloria Hallelujah","Comic Sans MS",cursive',F2='"Patrick Hand","Comic Sans MS",cursive',INK='#2e2e33',PAPER='#f6f3ea';
+    try{await Promise.all([document.fonts.load('120px "Gloria Hallelujah"'),document.fonts.load('40px "Patrick Hand"')])}catch(e){}
+    const cover=await load('../img/'+G.slug+'.jpg');
+    const S=1080,cv=document.createElement('canvas');cv.width=cv.height=S;const c=cv.getContext('2d');
+    c.fillStyle=PAPER;c.fillRect(0,0,S,S);
+    // faint pencil grain and a doodled frame
+    c.fillStyle='rgba(46,46,51,.035)';for(let i=0;i<1400;i++){const x=(i*197)%S,y=(i*331+i*i)%S;c.fillRect(x,y,2,2)}
+    c.strokeStyle=INK;c.lineWidth=5;c.lineJoin='round';c.beginPath();for(let i=0;i<=80;i++){const t=i/80,p=t*4,k=Math.floor(p),f=p-k,w=12*Math.sin(i*1.7);
+      const pts=[[40,40],[S-40,40],[S-40,S-40],[40,S-40],[40,40]];const a=pts[k],b=pts[k+1]||pts[4];c.lineTo(a[0]+(b[0]-a[0])*f+(k%2?w:0),a[1]+(b[1]-a[1])*f+(k%2?0:w))}c.stroke();
+    // site name, hand lettered
+    c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=INK;c.font='62px '+F;c.fillText((G.site||'Sketchpad Arcade').toUpperCase(),S/2,120);
+    // cover art in a pencil frame
+    const cs=470,cx=(S-cs)/2,cy=162;
+    c.save();rr(c,cx,cy,cs,cs,26);c.clip();if(cover)c.drawImage(cover,cx,cy,cs,cs);c.restore();
+    c.lineWidth=6;c.strokeStyle=INK;rr(c,cx,cy,cs,cs,26);c.stroke();
+    // "I scored" + the big number
+    c.font='54px '+F2;c.fillStyle='#55555c';c.fillText(d.lead||'I scored',S/2,712);
+    const big=nf(d.score);fitText(c,big,S-120,150,400,F);
+    c.fillStyle=INK;c.fillText(big,S/2,852);
+    c.lineWidth=4;c.strokeStyle='#c99a1a';c.beginPath();c.moveTo(S/2-c.measureText(big).width/2-10,872);c.quadraticCurveTo(S/2,886,S/2+c.measureText(big).width/2+10,870);c.stroke();
+    const line=(d.line?d.line+' · ':'')+'in '+(G.name||'');
+    fitText(c,line,S-140,46,400,F2);c.fillStyle=INK;c.fillText(line,S/2,930);
+    // challenge + link, in a wobbly box
+    const pill='Can you beat me? '+(G.short||'sketchpadarcade.com');fitText(c,pill,S-200,38,400,F2);
+    const pw=c.measureText(pill).width+72,ph=72,px=(S-pw)/2,py=962;
+    c.fillStyle='#f3e6b0';rr(c,px,py,pw,ph,30);c.fill();c.lineWidth=4;c.strokeStyle=INK;c.stroke();
+    c.fillStyle=INK;c.fillText(pill,S/2,py+49);
+    return new Promise(r=>cv.toBlob(b=>r(b),'image/png'));
+  }
+  function message(d){return (d.lead||'I scored')+' '+nf(d.score)+(d.line?' ('+d.line+')':'')+' in '+G.name+' on '+(G.site||'Sketchpad Arcade')+'! Can you beat me?'}
+  async function open(d){
+    try{if(window.va)window.va('event',{name:'Share score',data:{game:G.slug}})}catch(e){}
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sc';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share your score');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet&&!sheet.hidden)close()});document.body.appendChild(sheet)}
+    sheet.innerHTML='<div class="in"><img alt="Your score card"><div class="row"><button type="button" class="go" data-a="share">Share</button><a class="alt" data-a="save" download>Save image</a><button type="button" class="alt" data-a="copy">Copy link</button></div><button type="button" class="x">Close</button></div>';
+    sheet.hidden=false;
+    const blob=await makeCard(d);const url=URL.createObjectURL(blob);
+    const img=sheet.querySelector('img');img.src=url;img.alt='Score card: '+message(d);
+    const file=new File([blob],(G.slug||'score')+'-score.png',{type:'image/png'});
+    const save=sheet.querySelector('[data-a=save]');save.href=url;save.download=file.name;
+    const text=message(d);
+    sheet.querySelector('[data-a=share]').onclick=async()=>{
+      try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:G.name,text:text+' '+G.url});return}
+        if(navigator.share){await navigator.share({title:G.name,text,url:G.url});return}}catch(e){if(e&&e.name==='AbortError')return}
+      copyText(text+' '+G.url,'Message and link copied')};
+    sheet.querySelector('[data-a=copy]').onclick=()=>copyText(G.url,'Link copied');
+    sheet.querySelector('.x').onclick=close;
+    sheet.querySelector('[data-a=share]').focus();
+  }
+  function close(){if(sheet)sheet.hidden=true}
+  async function copyText(t,msg){let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove()}
+    const b=sheet&&sheet.querySelector('[data-a=copy]');if(b){const o=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=o,1500)}}
+  function button(d){const b=document.createElement('button');b.type='button';b.className='bda-scorebtn';b.innerHTML=ICON+'<span>Share my score</span>';
+    b.addEventListener('click',e=>{e.stopPropagation();open(d)});return b}
+  window.BDA=window.BDA||{};
+  window.BDA.shareScore=function(d){
+    let host=d&&d.into;if(typeof host==='string')host=document.querySelector(host);
+    if(host)host.querySelectorAll('.bda-scorebtn').forEach(x=>x.remove());
+    if(!d||d.score==null||d.score===''||(typeof d.score==='number'&&!(d.score>0)))return;
+    cur=d;
+    if(host){const b=button(d);
+      const after=d.after&&host.querySelector(d.after);if(after)after.insertAdjacentElement('afterend',b);else host.appendChild(b);return b}
+    // no card given: a floating button that goes away on the next tap anywhere else
+    if(floatBtn)floatBtn.remove();floatBtn=button(d);floatBtn.classList.add('float');document.body.appendChild(floatBtn);
+    const fb=floatBtn;setTimeout(()=>document.addEventListener('pointerdown',function h(e){if(!fb.contains(e.target)&&!(sheet&&sheet.contains(e.target))){fb.remove();document.removeEventListener('pointerdown',h,true)}},true),400);
+    return fb};
+  window.BDA.hideScore=function(){if(floatBtn){floatBtn.remove();floatBtn=null}};
+})();
+</script>
+<script>
+(()=>{const h=document.querySelector('.sa-head h1');if(!h)return;let base=0;
+function fit(){h.style.fontSize='';base=parseFloat(getComputedStyle(h).fontSize);let fs=base;
+  while(h.scrollWidth>h.clientWidth+1&&fs>14){fs-=1;h.style.fontSize=fs+'px'}}
+fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>

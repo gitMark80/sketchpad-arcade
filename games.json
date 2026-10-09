@@ -755,6 +755,266 @@
         "Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.",
         "Your level is saved, so you can come back later and carry on."
       ]
+    },
+    {
+      "slug": "pencil-pairs",
+      "name": "Pencil Pairs",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Link matching beach tiles before the timer runs out.",
+      "meta": "Play Pencil Pairs free online. Connect matching beach tiles with a path of up to two turns and clear the board before time runs out. Works on phone and computer.",
+      "lead": "A cheerful tile-matching puzzle set on the shore. Find two identical tiles, like a pair of crabs or two beach balls, and connect them with a path of no more than two turns. Clear the whole beach before the timer runs out.",
+      "facts": [
+        "Puzzle",
+        "Tap or click",
+        "Phone, tablet and computer",
+        "Saves your level"
+      ],
+      "how": [
+        "Tap a tile to select it.",
+        "Tap a matching tile. If a path with no more than two turns joins them, both tiles clear.",
+        "Paths can run around the outside edge of the board, but not through other tiles or sand rocks.",
+        "Clear every tile before the timer empties to finish the level. Each match adds a second back."
+      ],
+      "controls": [
+        "Tap or click a tile to select it, and tap it again to deselect.",
+        "Hint (or the H key) highlights a pair you can match. You get 3 per level.",
+        "Shuffle (or the S key) mixes the board. You get 2 per level.",
+        "The Sound button mutes all sound effects."
+      ],
+      "tips": [
+        "Linking tiles that are far apart earns more stars.",
+        "Matching quickly builds a combo multiplier up to x5.",
+        "From level 4, tiles slide after each match, so think one move ahead.",
+        "Save your hints for the bigger boards with sand rocks."
+      ]
+    },
+    {
+      "slug": "graph-blocks",
+      "name": "Graph Blocks",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Drag shapes onto the board and clear rows and columns.",
+      "meta": "Play Graph Blocks free online. Drag glossy gem shapes onto an 8x8 board, fill rows and columns to clear them, and chain combos for big scores.",
+      "lead": "A relaxing block puzzle with glossy gem pieces. Place shapes on an 8x8 board, fill a row or column to clear it and chain clears together for big combos. Pearl blocks are worth bonus points.",
+      "facts": [
+        "Puzzle",
+        "Drag and drop",
+        "No timer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Drag a piece from the tray onto the board.",
+        "Fill a whole row or column to clear it. Lines that are about to clear light up before you drop.",
+        "Place all three pieces to get three new ones.",
+        "The game ends when none of your pieces fit anywhere. Pieces that can't fit turn gray."
+      ],
+      "controls": [
+        "Drag and drop pieces with a mouse or finger.",
+        "Undo takes back your last move. You get 3 per game.",
+        "New game starts over at any time."
+      ],
+      "tips": [
+        "Keep the middle of the board open for the big square pieces.",
+        "Avoid leaving single empty cells that only a 1x1 piece can fill.",
+        "Clearing several lines at once, or on back-to-back moves, multiplies your score."
+      ]
+    },
+    {
+      "slug": "scribble-swap",
+      "name": "Scribble Swap",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Swap beach treasures, match three and wash the sand away.",
+      "meta": "Play Scribble Swap free online. Swap shells, starfish, pearls and more to match three in a row, build power-ups and beat 30 beach levels. Works on phone and computer.",
+      "lead": "A sunny match-3 puzzle with 30 levels. Swap neighboring tiles to line up three or more scallops, starfish, pearls, palm trees, lifesavers or treasure chests. Each level has its own goal and a limited number of moves.",
+      "facts": [
+        "Puzzle",
+        "30 levels",
+        "Phone, tablet and computer",
+        "Saves your progress"
+      ],
+      "how": [
+        "Swap two neighboring tiles to line up three or more of the same kind.",
+        "Finish the level's goals before you run out of moves. Some levels ask you to collect certain tiles, and others ask you to wash away every patch of sand.",
+        "Sand clears when you make a match on top of it. Darker sand takes two matches.",
+        "Moves you have left at the end turn into bonus points and can earn you up to 3 stars."
+      ],
+      "controls": [
+        "Drag a tile toward its neighbor to swap them, or tap one tile and then the tile next to it.",
+        "Levels lets you replay any level you have unlocked.",
+        "Restart level starts the current level over.",
+        "The Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Match 4 in a line to make a striped tile that clears a whole row or column.",
+        "Make an L or T shape to build a bomb that clears the tiles around it.",
+        "Match 5 in a line to make a sun. Swap it with any tile to clear every tile of that kind.",
+        "Wait a few seconds and two tiles will pulse to show you a move."
+      ]
+    },
+    {
+      "slug": "pencil-path",
+      "name": "Pencil Path",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Tap baby sea turtles to send them to the sea, one clear path at a time.",
+      "meta": "Play Pencil Path free online. Tap baby sea turtles to guide them off the sand and into the sea, but only when their path is clear. 60 levels of relaxing logic puzzles.",
+      "lead": "A calm logic puzzle on a sugar-white sand island in the emerald Gulf. Each baby sea turtle crawls straight the way it is facing, so tap the ones with a clear path to the water first and open the way for the rest. Bump into another turtle and you lose a heart.",
+      "facts": [
+        "Puzzle",
+        "Tap or click",
+        "60 levels",
+        "Saves your progress"
+      ],
+      "how": [
+        "Tap a turtle to send it crawling straight ahead toward the sea.",
+        "It only makes it if nothing is in its way. If it bumps another turtle, you lose one of your 3 hearts.",
+        "Every turtle that leaves opens a path for others. Clear the whole island to finish the level.",
+        "Rocks appear in later levels. They never move, but every turtle can still reach the water."
+      ],
+      "controls": [
+        "Tap or click a turtle to send it to the sea.",
+        "Hint glows on a turtle that can leave safely. You get 3 per level.",
+        "Restart level starts the island over, and Levels lets you replay any level you've unlocked."
+      ],
+      "tips": [
+        "Start with turtles on the edges facing out. They always have a clear path.",
+        "Before tapping, trace the turtle's line all the way to the water.",
+        "Finish without any bumps to earn all 3 stars."
+      ]
+    },
+    {
+      "slug": "paper-sub",
+      "name": "Paper Sub",
+      "genre": "Arcade",
+      "added": "2026-10-09",
+      "tagline": "Steer a little yellow submarine and fire rapid streams of bubbles at the sea creatures swooping in.",
+      "meta": "Play Paper Sub free online. Steer a yellow submarine and fire rapid bubbles at schools of seahorses, dolphins, jellyfish, pufferfish and octopuses in this underwater arcade shooter, with every level harder than the last. Works on phone and computer.",
+      "lead": "A retro arcade shooter under the sea. Schools of seahorses, dolphins, jellyfish, pufferfish and octopuses swim in, line up in formation and swoop down at your little yellow submarine. Fire rapid streams of bubbles to float them up and away, dodge their ink, and see how many levels you can clear.",
+      "facts": [
+        "Arcade",
+        "Hold and drag",
+        "Endless levels",
+        "Saves your best score"
+      ],
+      "how": [
+        "Hold and drag to steer your submarine along the sea floor. It fires a rapid stream of bubbles while you hold.",
+        "Each bubble hit wraps a sea creature in a bubble and it floats away. Octopuses take two hits.",
+        "Creatures swoop down at you and squirt ink. Get bumped or inked and you lose a sub. You start with 3.",
+        "Clear every creature to finish the level. Each level the creatures swoop faster, dive more often and squirt more ink. Every third level is a bonus parade where nobody attacks."
+      ],
+      "controls": [
+        "Hold and drag on the screen to steer and fire. With a mouse, move to steer and hold the button down to fire.",
+        "On a keyboard, use the arrow keys or A and D to move, Space to fire bubbles and P to pause.",
+        "Pause stops the action, and the Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Creatures are worth double while they're diving, so stay brave.",
+        "Your bubbles fire a little faster every level and come out in two streams from level 5.",
+        "Boop the golden star for 12 seconds of an extra bubble stream.",
+        "Watch for ink and slide out of the way. Ink falls toward where you were.",
+        "You earn an extra sub at 20,000 points and again at 70,000."
+      ]
+    },
+    {
+      "slug": "color-by-pencil",
+      "name": "Color by Pencil",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Fill beach pictures with sparkly sea glass, one numbered color at a time.",
+      "meta": "Play Color by Pencil free online. A relaxing color-by-number puzzle: pick a color, tap or drag across the matching numbers and fill pixel pictures of starfish, crabs, sea turtles and sandcastles with glossy sea glass gems. Works on phone and computer.",
+      "lead": "A relaxing color-by-number puzzle on the beach. Each level is a pixel picture of something from the shore, like a starfish, a crab, a sea turtle or a sandcastle. Pick a numbered color, then tap or drag across the matching squares to fill them with sparkly sea glass until the whole picture shines.",
+      "facts": [
+        "Puzzle",
+        "Tap or drag",
+        "12 beach pictures",
+        "Saves your progress"
+      ],
+      "how": [
+        "Pick a color from the tray at the bottom. Every square with its number lights up on the picture.",
+        "Tap a lit square to drop in a piece of sea glass, or hold and drag across several at once.",
+        "When a color is finished it gets a check mark and the next color is picked for you.",
+        "Fill every square to finish the picture and move on to the next level."
+      ],
+      "controls": [
+        "Tap or click a square to fill it. Hold and drag to fill a whole row in one go.",
+        "Tap a color in the tray to switch, or press 1 to 9 on a keyboard.",
+        "The magnifier points out a square you missed, and the Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Dragging is the fastest way to fill big areas. Squares of other colors are skipped, so you can sweep right over them.",
+        "The small number on each color shows how many squares are left.",
+        "Tap a square with a different number and the game shows you which color it needs.",
+        "Finished pictures are saved in the Pictures collection on the start screen."
+      ]
+    },
+    {
+      "slug": "gem-sketch",
+      "name": "Gem Sketch",
+      "genre": "Puzzle",
+      "added": "2026-10-09",
+      "tagline": "Pick up scrambled gems and put each colour back to rebuild beach pictures.",
+      "meta": "Play Gem Sketch free online. A relaxing gem sorting puzzle: tap misplaced gems to pick them up with their matching neighbours, then stash them in the tray or drop them straight onto their spot to finish 20 cute beach pictures. Works on phone and computer.",
+      "lead": "A calm, colourful sorting puzzle. Every cute beach picture starts scrambled, with jewels sitting on squares of the wrong colour. Tap a gem to pick it up along with its matching neighbours, then stash them in the tray or drop them straight onto their spot, until the seagull, sea turtle, penguin and friends sparkle again.",
+      "facts": [
+        "Puzzle",
+        "20 pictures",
+        "Zoom in for detail",
+        "Saves your progress"
+      ],
+      "how": [
+        "Each square shows the colour it wants. Every gem starts on a square of the wrong colour.",
+        "Tap a misplaced gem to pick it up along with every touching gem of the same colour. Tap it again to put it back down.",
+        "Tap the tray to stash the gems you're holding, or tap an open square of their colour to drop them straight into the picture. If there isn't room for all of them, the rest stay in your hand.",
+        "You can also tap a colour in the tray, then tap an open square of that colour to place those gems.",
+        "Finish the picture with an empty tray to win. If the tray is full and nothing can be placed, the level is over."
+      ],
+      "controls": [
+        "Tap or click gems, the tray, tray colours and squares.",
+        "Pinch, scroll the mouse wheel or use the + and − buttons to zoom. Drag to move around, and double-tap to zoom in or out.",
+        "Hint (10 coins) shows a good move, +1 Row (30 coins) adds 16 tray spots, and Undo (15 coins) takes back your last move."
+      ],
+      "tips": [
+        "Before stashing gems in the tray, check whether there's already an open square of their colour you can drop them on.",
+        "Zoom in on busy spots so it's easier to tap exactly the square you want.",
+        "Finish a picture without boosters for 5 bonus coins.",
+        "Finished pictures are saved in My pictures on the start screen."
+      ]
+    },
+    {
+      "slug": "word-scribble",
+      "name": "Word Scribble",
+      "genre": "Word",
+      "added": "2026-10-09",
+      "tagline": "Drop letter bubbles, merge matching letters and swipe to spell words.",
+      "meta": "Play Word Scribble free online. Drop letter bubbles into a fish tank, merge matching letters into bigger ones, and swipe across nearby bubbles to spell words before the tank fills up.",
+      "lead": "A merge game and a word game in one fish tank. Letters drop in color-coded sets that each spell a hidden word, and when two of the same letter touch they merge into a bigger letter worth more points. Swipe across nearby bubbles to spell words, which pops them and makes room for more. Spell enough words to clear the level before the tank fills up.",
+      "facts": [
+        "Word + merge",
+        "Levels",
+        "Bonus words",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap or drag above the bubbles, then let go to drop a letter into the tank. Every letter of a hidden word drops in the same color, so matching colors can be unscrambled into a word.",
+        "When two of the same letter touch, in any color, they merge into a bigger silver letter worth double, then a gold one worth triple. Silver and gold letters fit any word, and two gold letters make a wild starfish that can stand for any letter.",
+        "Swipe across bubbles in order to spell one of the hidden words. They don't have to touch, just be close together. A hidden word pops, frees up room and counts toward the level, and spelled in a single color it scores double.",
+        "Any other real word of three or more letters is a Bonus Word: it earns bonus points and the letters stay in the tank. Each bonus word counts once per level.",
+        "Spell the number of hidden words shown at the top to clear the level. The wave word counts double and pays a big bonus.",
+        "The game ends if the bubbles stay above the dotted line."
+      ],
+      "controls": [
+        "Start a swipe on a bubble to spell. Slide back to the previous bubble to undo a letter.",
+        "Start anywhere else to aim, then let go to drop. On a keyboard, use the arrow keys and Space.",
+        "Pop removes one bubble you choose. You get another Pop each level."
+      ],
+      "tips": [
+        "Drop each color's letters close together so you can swipe its hidden word in one go for double points.",
+        "Keep vowels spread around the tank so every group of letters has something to spell with.",
+        "Longer words score much more than short ones, so build up before you cash in.",
+        "Save your wild starfish for the wave word or a long word."
+      ]
     }
   ]
 }

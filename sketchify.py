@@ -49,6 +49,14 @@ RENAMED = {
     "bottle-words": "note-quest",
     "octo-swing": "scribble-swing",
     "treasure-trio": "margin-match",
+    "beach-link": "pencil-pairs",
+    "pearl-blocks": "graph-blocks",
+    "shell-swap": "scribble-swap",
+    "turtle-dash": "pencil-path",
+    "sonar-sub": "paper-sub",
+    "sea-glass": "color-by-pencil",
+    "gem-cove": "gem-sketch",
+    "word-plop": "word-scribble",
 }
 SLUG = RENAMED.get(SRC_SLUG, SRC_SLUG)
 SRC = BDA / "src/assets" / SRC_SLUG

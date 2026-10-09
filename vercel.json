@@ -201,6 +201,86 @@
       "source": "/play/treasure-trio",
       "destination": "/play/margin-match",
       "permanent": true
+    },
+    {
+      "source": "/beach-link",
+      "destination": "/pencil-pairs",
+      "permanent": true
+    },
+    {
+      "source": "/play/beach-link",
+      "destination": "/play/pencil-pairs",
+      "permanent": true
+    },
+    {
+      "source": "/pearl-blocks",
+      "destination": "/graph-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/play/pearl-blocks",
+      "destination": "/play/graph-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/shell-swap",
+      "destination": "/scribble-swap",
+      "permanent": true
+    },
+    {
+      "source": "/play/shell-swap",
+      "destination": "/play/scribble-swap",
+      "permanent": true
+    },
+    {
+      "source": "/turtle-dash",
+      "destination": "/pencil-path",
+      "permanent": true
+    },
+    {
+      "source": "/play/turtle-dash",
+      "destination": "/play/pencil-path",
+      "permanent": true
+    },
+    {
+      "source": "/sonar-sub",
+      "destination": "/paper-sub",
+      "permanent": true
+    },
+    {
+      "source": "/play/sonar-sub",
+      "destination": "/play/paper-sub",
+      "permanent": true
+    },
+    {
+      "source": "/sea-glass",
+      "destination": "/color-by-pencil",
+      "permanent": true
+    },
+    {
+      "source": "/play/sea-glass",
+      "destination": "/play/color-by-pencil",
+      "permanent": true
+    },
+    {
+      "source": "/gem-cove",
+      "destination": "/gem-sketch",
+      "permanent": true
+    },
+    {
+      "source": "/play/gem-cove",
+      "destination": "/play/gem-sketch",
+      "permanent": true
+    },
+    {
+      "source": "/word-plop",
+      "destination": "/word-scribble",
+      "permanent": true
+    },
+    {
+      "source": "/play/word-plop",
+      "destination": "/play/word-scribble",
+      "permanent": true
     }
   ]
 }
