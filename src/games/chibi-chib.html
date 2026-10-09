@@ -26,6 +26,9 @@ html,body{height:100%}
 body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;
   background-color:var(--paper);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+body:not(.noart){background:var(--paper) url("../assets/chibi-chib/bg.jpg") center/cover no-repeat}
+body:not(.noart) .brand{text-shadow:0 0 3px var(--paper),0 0 6px var(--paper),0 0 10px var(--paper),0 0 14px var(--paper)}
+body:not(.noart) .boost:disabled{opacity:1;background:#ebe8df}body:not(.noart) .boost:disabled>*{opacity:.45}
 button{font-family:inherit;color:inherit;cursor:pointer}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .app{height:100%;max-width:520px;margin:0 auto;padding-inline:14px;padding-block:10px 10px;display:flex;flex-direction:column;gap:8px;box-sizing:border-box}
@@ -228,8 +231,15 @@ const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 function pencilHex(h){const c=rgb(h),m=(c[0]+c[1]+c[2])/3,P=[246,243,234];
   return '#'+c.map((v,i)=>{let x=v+(m-v)*.2;x=x+(P[i]-x)*.08;return Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')}).join('')}
 const gemCache=new Map();
+/* Mark's hand-drawn gems: one image per colour, keyed by both the original palette hex and its vivid twin; the code-drawn gem stands in until each loads */
+const GEM_NAMES={red:['#e0453a','#f2362b'],orange:['#f08a24','#ff8a12'],yellow:['#f2c230','#ffcf1a'],lime:['#8bc34a','#86d12b'],green:['#4caf50','#22b04b'],teal:['#2fa7a0','#10b3a6'],sky:['#4fb3e8','#2fb5ff'],blue:['#3a7bd5','#2d6bf0'],purple:['#8e5bc9','#9b4dff'],pink:['#e86aa6','#ff4fa3'],brown:['#9b6a3c','#a5571f'],grey:['#9aa0a6','#9aa4b0'],black:['#2b2b2f','#1f1f24'],white:['#fbfaf6','#ffffff'],peach:['#f2c9a5','#ffc493']};
+const gemImg={};
+for(const[name,hexes]of Object.entries(GEM_NAMES)){const im=new Image();im.decoding='async';
+  im.onload=()=>{hexes.forEach(h=>gemImg[h]=im);gemCache.clear();dirty=true};im.src='../assets/chibi-chib/gem-'+name+'.png'}
 function gemSprite(hex,s){const key=hex+'|'+Math.round(s*dpr);if(gemCache.has(key))return gemCache.get(key);
   const px=Math.max(4,Math.round(s*dpr)),c=document.createElement('canvas');c.width=c.height=px;const g=c.getContext('2d');
+  const im=gemImg[String(hex).toLowerCase()];
+  if(im){const k=px/Math.max(im.naturalWidth,im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;g.imageSmoothingQuality='high';g.drawImage(im,(px-w)/2,(px-h)/2,w,h);gemCache.set(key,c);return c}
   // a pencil-drawn octagon gem: coloured-pencil fill, darker-lead hatching, the table and facet lines drawn in, outlined in a dark lead
   const oct=(m,k)=>{const a=m,b=px-m,q=(px-2*m)*k;return[[a+q,a],[b-q,a],[b,a+q],[b,b-q],[b-q,b],[a+q,b],[a,b-q],[a,a+q]]};
   const path=pts=>{g.beginPath();pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath()};
@@ -503,8 +513,10 @@ function drawBoard(now){
 }
 /* the chibi scene around the board: notebook paper, a sun, clouds, a meadow with flowers and little chibi doodles in the margins */
 let bgCv=null;
+/* Mark's meadow painting is the page background (CSS on body); these code doodles only draw if that image fails to load */
+let bgArt=true;{const im=new Image();im.onerror=()=>{bgArt=false;document.body.classList.add('noart');bgCv=null;dirty=true};im.src='../assets/chibi-chib/bg.jpg'}
 function buildBg(key){
-  const c=document.createElement('canvas');c.width=Math.round(SW*dpr);c.height=Math.round(SH*dpr);c.key=key;bgCv=c;
+  const c=document.createElement('canvas');c.width=Math.round(SW*dpr);c.height=Math.round(SH*dpr);c.key=key;bgCv=c;if(bgArt)return;
   const g=c.getContext('2d');g.scale(dpr,dpr);const vp=L.vp,W=vp.w,H=vp.h;
   const R=rng(7);const wob=(a)=>(R()-.5)*a;
   const ol=(w)=>{g.strokeStyle=INK;g.lineWidth=w||2;g.lineJoin=g.lineCap='round';g.stroke()};
@@ -555,8 +567,9 @@ function drawTray(now){
     if(on||t.c===hc){ctx.fillStyle=on?'#f3e6b0':'rgba(90,154,106,'+(.35+.3*Math.sin(now/150))+')';ctx.strokeStyle=on?INK:'#5a9a6a';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(t.x,y,T.ts*.62,0,7);ctx.fill();ctx.stroke()}
     ctx.drawImage(gemSprite(lv.colors[t.c],g),t.x-g/2,y-g/2,g,g)}
   if(bsel){ctx.strokeStyle='rgba(90,154,106,'+(.55+.4*Math.sin(now/160))+')';ctx.lineWidth=3;ctx.setLineDash([7,5]);rr(ctx,T.x0-8,T.y-7,T.w+16,T.rows*(T.ts+3)+11,14);ctx.stroke();ctx.setLineDash([])}
-  if(sel>=0||bsel){ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='left';ctx.fillStyle=INK;ctx.fillText(bsel?(bsel.cells.length+' picked up: tap the tray or a matching square'):'Now tap where it goes',T.x0-4,T.y-11)}
-  ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='right';ctx.fillStyle=full>=.8?'#d9661a':'#7a7a80';ctx.fillText(used+' / '+trayCap,T.x0+T.w+4,T.y-11);
+  ctx.save();ctx.lineJoin='round';ctx.strokeStyle='rgba(246,243,234,.92)';ctx.lineWidth=4;const lab=(t,x,y)=>{ctx.strokeText(t,x,y);ctx.fillText(t,x,y)};
+  if(sel>=0||bsel){ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='left';ctx.fillStyle=INK;lab(bsel?(bsel.cells.length+' picked up: tap the tray or a matching square'):'Now tap where it goes',T.x0-4,T.y-11)}
+  ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='right';ctx.fillStyle=full>=.8?'#d9661a':'#7a7a80';lab(used+' / '+trayCap,T.x0+T.w+4,T.y-11);ctx.restore();
 }
 let lastDrop=0;
 function frame(now){

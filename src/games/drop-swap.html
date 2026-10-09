@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Drop Swap: a classroom match-3 on sketchbook paper. The six pieces are classroom icons in vivid cross-hatched coloured pencil with
-   dark outlines (red apple, yellow pencil, blue book, green backpack, purple crayon, orange star sticker); specials are a ruler (clears
+   dark outlines (red apple, yellow pencil, blue book, purple backpack, red crayon, gold star sticker); specials are a ruler (clears
    a line), scissors (snip around + 3 more) and a paint palette (clears a colour). Scribbled cells must be erased, spilled ink creeps up
-   from the bottom, and stars decorate "My Classroom". Art: ../assets/drop-swap/, drawn by tools/classroom-icons-art.py.
+   from the bottom, and stars decorate "My Classroom". Art: ../assets/drop-swap/, hand-drawn by Mark in coloured pencil.
    Layout: one portrait column — HUD on top, framed board, small dock below. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -140,8 +140,8 @@ canvas{display:block;width:100%;aspect-ratio:1/1;max-width:100%;touch-action:non
 (()=>{
 const N=8, NT=6;
 const NAMES=['Apple','Pencil','Book','Backpack','Crayon','Star sticker'];
-// vivid coloured pencil, one hue per piece: red apple, yellow pencil, blue book, green backpack, purple crayon, orange star sticker
-const COLORS=['#e0453a','#f2c230','#3a7bd5','#4caf50','#8e5bc9','#f08a24'];
+// coloured pencil, one hue per piece (used for sparkles and the palette's colour dots)
+const COLORS=['#e0453a','#f2c230','#3a7bd5','#8e5bc9','#c62f3a','#f0b820']; // matches Mark's drawings: red apple, yellow pencil, blue book, purple backpack, red crayon, gold star
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
 const $=id=>document.getElementById(id);
@@ -156,7 +156,7 @@ let muted=store.get('muted',false);
 /* ---------- custom tile art (drop in your own images) ---------- */
 const DEFAULT_ART=['apple','pencil','book','backpack','crayon','star'].map(n=>'../assets/drop-swap/'+n+'.webp');
 const SCRIBBLE='../assets/drop-swap/scribble.webp';
-const SPEC={};for(const n of['scissors','palette']){const im=new Image();im.src='../assets/drop-swap/'+n+'.webp';SPEC[n]=im;}
+const SPEC={};for(const n of['scissors','palette','ruler','scribble','ink']){const im=new Image();im.src='../assets/drop-swap/'+n+'.webp';SPEC[n]=im;}
 let artURLs=store.get('art',[]); const artImgs=[];
 const tinted=[],tintURLs=[];
 /* the built-in art is already in coloured pencil, and your own images are drawn as they are */
@@ -474,7 +474,7 @@ const DECOR=[ // ids are the old save ids, kept so progress.owned still matches
   {id:'umbrella',name:'Globe',cost:4,note:'Spin it and pick a place'},
   {id:'castle',name:'Bookshelf',cost:6,note:'Full of favorite books'},
   {id:'palm',name:'Potted plant',cost:8,note:'Watered every Friday'},
-  {id:'hut',name:"Teacher's desk",cost:10,note:'With an apple on top'},
+  {id:'hut',name:"Teacher's desk",cost:10,note:'With a notebook on top'},
   {id:'hammock',name:'Bean bag',cost:13,note:'The comfiest seat in class'},
   {id:'pier',name:'Chalkboard',cost:16,note:"Today's lesson, in chalk"},
   {id:'lighthouse',name:'Wall clock',cost:20,note:'It tells the real time'},
@@ -495,15 +495,15 @@ function bReady(k){const im=BIMG[k];return im&&im.complete&&im.naturalWidth>0;}
    z = drawing order (rug first, bean bag last); sh = shadow size; the trophy stands on the teacher's desk */
 const B_HZ=.375,B_K=.2157;
 const BITEMS={
-  towel:{x:.5,y:.97,w:.62,z:0},
-  pier:{x:.52,y:.48,w:.5,z:1},
-  lighthouse:{x:.87,y:.30,w:.15,z:1,clock:1},
-  castle:{x:.15,y:.70,w:.26,z:2,sh:.42},
-  palm:{x:.9,y:.72,w:.17,z:2,sh:.34,sway:1},
-  umbrella:{x:.38,y:.74,w:.16,z:3,sh:.36},
-  hut:{x:.68,y:.84,w:.44,z:4,sh:.5},
-  chest:{x:.765,y:.692,w:.105,z:5},
-  hammock:{x:.2,y:.93,w:.28,z:6,sh:.44},
+  towel:{x:.5,y:.975,w:.64,z:0},
+  pier:{x:.585,y:.645,w:.42,z:1,sh:.4},
+  lighthouse:{x:.875,y:.40,w:.17,z:1,clock:1},
+  castle:{x:.17,y:.655,w:.31,z:2,sh:.42},
+  palm:{x:.9,y:.735,w:.2,z:2,sh:.34,sway:1},
+  umbrella:{x:.4,y:.765,w:.15,z:3,sh:.36},
+  hut:{x:.69,y:.86,w:.44,z:4,sh:.5},
+  chest:{x:.565,y:.69,w:.095,z:5},
+  hammock:{x:.2,y:.95,w:.3,z:6,sh:.44},
 };
 for(const k in BITEMS){const it=BITEMS[k];if(it.m)it.w=B_K*(it.y-B_HZ)*it.m;}
 const BEACH_ASPECT=900/1205;
@@ -518,7 +518,7 @@ function bSprite(g,id,W,H,t,pop){
   if(pop<1){const k=1-Math.pow(1-pop,3),s=.4+.6*k+Math.sin(pop*Math.PI)*.12;g.scale(s,s);g.globalAlpha=Math.min(1,pop*2);}
   if(it.flip)g.scale(-1,1);
   g.drawImage(im,-ax*w,-h,w,h);g.restore();
-  if(it.clock&&pop>=1){const d=new Date(),cx=px,cy=py-h/2,R=w*.36,m=d.getMinutes()+d.getSeconds()/60,hr=d.getHours()%12+m/60,sec=d.getSeconds()+d.getMilliseconds()/1000;
+  if(it.clock&&pop>=1){const d=new Date(),cx=px,cy=py-h/2,R=w*.3,m=d.getMinutes()+d.getSeconds()/60,hr=d.getHours()%12+m/60,sec=d.getSeconds()+d.getMilliseconds()/1000;
     const hand=(f,len,lw,col)=>{g.strokeStyle=col;g.lineWidth=lw;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+Math.sin(f*Math.PI*2)*R*len,cy-Math.cos(f*Math.PI*2)*R*len);g.stroke()};
     g.save();g.lineCap='round';hand(hr/12,.55,Math.max(2,w*.05),INK);hand(m/60,.85,Math.max(1.5,w*.035),INK);hand(sec/60,.9,Math.max(1,w*.014),'#e0453a');
     g.fillStyle=INK;g.beginPath();g.arc(cx,cy,Math.max(2,w*.04),0,7);g.fill();g.restore();}
@@ -583,10 +583,8 @@ function drawTile(t,px,py,scale){
   else ctx.drawImage(sprites[t.t],px-s/2,py-s/2,s,s);
   if(t.s==='h'||t.s==='v'){ // ruler piece: a little wooden ruler laid across the tile (along the line it will clear)
     ctx.save();ctx.translate(px,py);if(t.s==='v')ctx.rotate(Math.PI/2);ctx.translate(0,Math.sin(performance.now()/260)*s*.025);
-    const L=s*.96,h=s*.22;ctx.beginPath();ctx.roundRect(-L/2,-h/2,L,h,h*.2);ctx.fillStyle='#ecdcc6';ctx.fill();
-    ctx.save();ctx.clip();ctx.strokeStyle='#9b6a3c';ctx.lineWidth=Math.max(1,s*.022);ctx.beginPath();for(let x=-L;x<L;x+=s*.07){ctx.moveTo(x,h/2);ctx.lineTo(x+h,-h/2)}ctx.stroke();ctx.restore();
-    ctx.strokeStyle='#1f1f22';ctx.lineWidth=Math.max(1.6,s*.045);ctx.beginPath();ctx.roundRect(-L/2,-h/2,L,h,h*.2);ctx.stroke();
-    ctx.lineWidth=Math.max(1,s*.022);ctx.beginPath();for(let i=1;i<12;i++){const x=-L/2+i*L/12;ctx.moveTo(x,-h/2);ctx.lineTo(x,-h/2+h*(i%3?.32:.58))}ctx.stroke();
+    const rim=SPEC.ruler;if(rim.complete&&rim.naturalWidth){const L=s*.98,h=L*rim.naturalHeight/rim.naturalWidth;ctx.drawImage(rim,-L/2,-h/2,L,h);}
+    else{const L=s*.96,h=s*.22;ctx.beginPath();ctx.roundRect(-L/2,-h/2,L,h,h*.2);ctx.fillStyle='#f2c230';ctx.fill();ctx.strokeStyle='#1f1f22';ctx.lineWidth=Math.max(1.6,s*.045);ctx.stroke();}
     ctx.restore();}
   else if(t.s==='crab'){drawScissors(px+s*.2,py+s*.2,s*.56);}
 }
@@ -611,9 +609,12 @@ function frame(now){
     ctx.fillStyle=(r+c)%2?'#f0ece1':PAPER;ctx.beginPath();ctx.roundRect(c*cell+2,r*cell+2,cell-4,cell-4,cell*.18);ctx.fill();ctx.strokeStyle='rgba(46,46,51,.18)';ctx.lineWidth=1;ctx.stroke();
     const sd=sand[r]?.[c];if(sd>0){const x0=c*cell,y0=r*cell; // scribbled cell: one or two layers of graphite scribble to erase
       ctx.fillStyle=sd>1?'#e2e0d7':'#eae8df';ctx.beginPath();ctx.roundRect(x0+3,y0+3,cell-6,cell-6,cell*.2);ctx.fill();
-      ctx.save();ctx.clip();ctx.lineCap='round';ctx.lineJoin='round';
+      const sim=SPEC.scribble;
+      if(sim.complete&&sim.naturalWidth){ctx.save();ctx.clip();for(let k=0;k<sd;k++){ctx.save();ctx.translate(x0+cell/2,y0+cell/2);ctx.rotate(k?Math.PI/2+.3:((r*7+c*13)%5-2)*.12);ctx.globalAlpha=k?.75:.9;
+        ctx.drawImage(sim,-cell*.42,-cell*.42,cell*.84,cell*.84);ctx.restore();}}
+      else{ctx.save();ctx.clip();ctx.lineCap='round';ctx.lineJoin='round';
       for(let k=0;k<sd;k++){ctx.strokeStyle=k?'rgba(46,46,51,.6)':'rgba(85,85,92,.45)';ctx.lineWidth=k?1.8:1.4;ctx.beginPath();const sdd=r*7+c*13+k*5;
-        for(let i=0;i<=30;i++){const u=i/30,a=u*Math.PI*(8+k*2)+sdd;const xx=x0+cell*(.12+u*.76)+Math.cos(a)*cell*.11,yy=y0+cell*.5+Math.sin(a)*cell*(.28-k*.05)+Math.sin(sdd+u*3)*cell*.08;i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy)}ctx.stroke()}
+        for(let i=0;i<=30;i++){const u=i/30,a=u*Math.PI*(8+k*2)+sdd;const xx=x0+cell*(.12+u*.76)+Math.cos(a)*cell*.11,yy=y0+cell*.5+Math.sin(a)*cell*(.28-k*.05)+Math.sin(sdd+u*3)*cell*.08;i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy)}ctx.stroke()}}
       ctx.restore();ctx.beginPath();ctx.roundRect(x0+3,y0+3,cell-6,cell-6,cell*.2);ctx.strokeStyle=sd>1?INK:PENCIL;ctx.lineWidth=sd>1?1.8:1.2;ctx.stroke();}
   }
   // hint
@@ -636,7 +637,9 @@ function frame(now){
     ctx.beginPath();ctx.moveTo(0,W);for(let x=0;x<=W;x+=6)ctx.lineTo(x,edge(x));ctx.lineTo(W,W);ctx.closePath();ctx.fillStyle='rgba(58,90,190,.3)';ctx.fill();
     ctx.save();ctx.clip();ctx.strokeStyle='rgba(36,64,143,.45)';ctx.lineWidth=1.3;for(let h=-W;h<W;h+=7){ctx.beginPath();ctx.moveTo(h,W);ctx.lineTo(h+W*.35,W-W*.35);ctx.stroke();}ctx.restore();
     ctx.beginPath();for(let x=0;x<=W;x+=6){x?ctx.lineTo(x,edge(x)):ctx.moveTo(x,edge(x));}ctx.strokeStyle='#24408f';ctx.lineWidth=2.6;ctx.stroke();
-    ctx.fillStyle='rgba(36,64,143,.6)';for(let i=0;i<7;i++){const bx=(i*131+37)%W,dr=(Math.sin(now/800+i)*.5+.5)*cell*.25;ctx.beginPath();ctx.ellipse(bx,edge(bx)+2,3+i%3,4+dr,0,0,7);ctx.fill();}}
+    const iim=SPEC.ink;if(iim.complete&&iim.naturalWidth){for(let i=0;i<4;i++){const bx=(i*.27+.11)*W,sz=cell*(.62+.12*(i%2))*(1+Math.sin(now/900+i*1.7)*.04);
+        ctx.save();ctx.translate(bx,edge(bx)+sz*.12);ctx.rotate(i*1.3);ctx.globalAlpha=.85;ctx.drawImage(iim,-sz/2,-sz/2,sz,sz);ctx.restore();}}
+    else{ctx.fillStyle='rgba(36,64,143,.6)';for(let i=0;i<7;i++){const bx=(i*131+37)%W,dr=(Math.sin(now/800+i)*.5+.5)*cell*.25;ctx.beginPath();ctx.ellipse(bx,edge(bx)+2,3+i%3,4+dr,0,0,7);ctx.fill();}}}
   beams=beams.filter(b=>{b.life-=dt*3;if(b.life<=0)return false;ctx.fillStyle=`rgba(242,194,48,${b.life*.45})`;const w=cell*(b.w||1)*.6*b.life;
     if(b.dir==='h')ctx.fillRect(0,(b.i+.5)*cell-w/2,W,w);else ctx.fillRect((b.i+.5)*cell-w/2,0,w,W);return true;});
   parts=parts.filter(p=>{p.life-=dt*1.8;if(p.life<=0)return false;p.vy+=dt*9;p.x+=p.vx*dt;p.y+=p.vy*dt;

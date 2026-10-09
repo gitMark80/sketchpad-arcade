@@ -326,7 +326,7 @@ function update(dt){
     f.vx=f.x-px;if(Math.abs(f.vx)>.2)f.face=f.vx>0?1:-1;else if(f.st==='form')f.face=f.slot&&f.slot.c<4?1:-1;
     f.tilt=f.st==='dive'?Math.max(-.6,Math.min(.6,(f.y-py)*.02*f.face)):0;
     // crashing into the rocket
-    if(sub.alive&&f.st==='dive'&&Math.abs(f.x-sub.x)<f.s*.4+24&&Math.abs(f.y-PY)<f.s*.4+12){hitFoe(f);if(!f.dead)f.dead=true;loseSub()}
+    if(sub.alive&&f.st==='dive'&&Math.abs(f.x-sub.x)<f.s*.4+20&&Math.abs(f.y-PY)<f.s*.4+12){hitFoe(f);if(!f.dead)f.dead=true;loseSub()}
   }
   foes=foes.filter(f=>!f.dead);
   // dives
@@ -341,7 +341,7 @@ function update(dt){
   foes=foes.filter(f=>!f.dead);
   // alien goo
   for(let i=inks.length-1;i>=0;i--){const k=inks[i];k.x+=k.vx*dt;k.y+=k.vy*dt;if(k.y>H+10){inks.splice(i,1);continue}
-    if(sub.alive&&Math.abs(k.x-sub.x)<24&&Math.abs(k.y-PY)<13){inks.splice(i,1);loseSub();break}}
+    if(sub.alive&&Math.abs(k.x-sub.x)<20&&Math.abs(k.y-PY)<13){inks.splice(i,1);loseSub();break}}
   // stage end
   if(state==='play'&&groupsLeft.length===0&&foes.filter(f=>!f.golden).length===0&&!banner){
     if(bonus){const perfect=bonusHits===bonusTotal;const b=bonusHits*100+(perfect?5000:0);if(b)award(b,W/2,330,'#c99a1a');
@@ -374,7 +374,7 @@ function drawComet(){const per=40,u=((T+12)%per)/per,x=-80+u*(W+200),y=40+u*230;
   ctx.strokeStyle='#1f1f22';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,0,7.5,0,7);ctx.stroke();ctx.restore()}
 /* The player's rocket, with a flickering coloured-pencil flame under it. */
 function drawSub(x,y,tilt=0,alpha=1){const im=IMG.sub;if(!im||!im.complete||!im.naturalWidth)return;
-  const h=62,w=h*im.naturalWidth/im.naturalHeight;ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y+Math.sin(T*2.2)*1.5);ctx.rotate(tilt*.35);
+  const h=68,w=h*im.naturalWidth/im.naturalHeight;ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y+Math.sin(T*2.2)*1.5);ctx.rotate(tilt*.35);
   const fl=9+Math.sin(T*31)*2.5+Math.sin(T*17)*1.5,fy=h/2-6;
   ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(-7,fy);ctx.quadraticCurveTo(-6,fy+fl*.7,0,fy+fl+4);ctx.quadraticCurveTo(6,fy+fl*.7,7,fy);ctx.closePath();
   ctx.fillStyle='#f08a24';ctx.fill();ctx.strokeStyle='#1f1f22';ctx.lineWidth=2;ctx.stroke();
@@ -396,7 +396,7 @@ function draw(){
   // zapped UFOs spin away inside a ring of sparkles
   for(const b of floaters){const sp=SPR[b.k],bu=IMG.bubble;const a=Math.max(0,1-b.t/1.4);ctx.save();ctx.globalAlpha=a;ctx.translate(b.x,b.y);ctx.rotate(b.t*5*(b.face||1));
     const r=b.s*.78*(1+Math.min(1,b.t*6)*.08);if(sp){const k=.72*(1-b.t*.3);ctx.drawImage(sp.c,-sp.w*k/2,-sp.h*k/2,sp.w*k,sp.h*k)}
-    if(bu&&bu.complete){ctx.drawImage(bu,-r,-r,r*2,r*2)}ctx.restore()}
+    if(bu&&bu.complete&&bu.naturalWidth){const q=bu.naturalWidth/bu.naturalHeight,bw=q>1?r*2:r*2*q,bh=q>1?r*2/q:r*2;ctx.drawImage(bu,-bw/2,-bh/2,bw,bh)}ctx.restore()}
   ctx.globalAlpha=1;
   // pink laser bolts: ink capsule, bright pink pencil, a pale core
   ctx.lineCap='round';

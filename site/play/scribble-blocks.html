@@ -206,8 +206,15 @@ function hatchCell(bx,by,w,color,s,alpha){
   for(let k=-w+st*.5;k<w+st;k+=st*1.35){ctx.moveTo(bx+k,by);ctx.lineTo(bx+k+w,by+w)}ctx.stroke();
   ctx.restore();
 }
+/* Mark's hand-drawn blocks (assets/scribble-blocks/), one per palette hue; bonus cells use the gold-star block.
+   Until a picture has loaded (or if it fails) the code-drawn block below is used instead. */
+const BLOCK_ART=["red","orange","yellow","green","blue","purple","pink"],BIMG={};
+[...BLOCK_ART,"gold-star"].forEach(n=>{const im=new Image();im.src=`../assets/scribble-blocks/${n}.png`;BIMG[n]=im});
+function blockImg(color,star){const i=COLORS.indexOf(color);if(i<0)return null;const im=BIMG[star?"gold-star":BLOCK_ART[i]];return im&&im.complete&&im.naturalWidth?im:null}
 function block(x,y,s,color,star,alpha=1,shine=true){
   if(s<=1)return;
+  const im=blockImg(color,star);
+  if(im){const g=s*.03;ctx.save();ctx.globalAlpha=alpha;ctx.drawImage(im,x+g,y+g,s-g*2,s-g*2);ctx.restore();return}
   ctx.save();ctx.globalAlpha=alpha;const r=s*.12,g=s*.06,w=s-g*2;
   const bx=x+g,by=y+g;
   ctx.fillStyle=wash(color,.62);rr(bx,by,w,w,r);ctx.fill();
@@ -267,7 +274,8 @@ function draw(){
   }
   if(tgt)tray[drag.i].cells.forEach(c=>{const gx=BX+(tgt[0]+c.x)*CELL,gy=BY+(tgt[1]+c.y)*CELL,g=CELL*.06,w=CELL-g*2,col=tray[drag.i].color;
     // ghost: a light pencil wash with hatching and a dashed ink outline
-    ctx.save();ctx.fillStyle=wash(col,.3);rr(gx+g,gy+g,w,w,CELL*.12);ctx.fill();hatchCell(gx+g,gy+g,w,col,CELL,.45);
+    const im=blockImg(col,c.star);
+    ctx.save();if(im){ctx.globalAlpha=.42;ctx.drawImage(im,gx+g,gy+g,w,w);ctx.globalAlpha=1}else{ctx.fillStyle=wash(col,.3);rr(gx+g,gy+g,w,w,CELL*.12);ctx.fill();hatchCell(gx+g,gy+g,w,col,CELL,.45)}
     ctx.setLineDash([6,4]);ctx.strokeStyle=OUTLINE;ctx.lineWidth=2.2;rr(gx+g,gy+g,w,w,CELL*.12);ctx.stroke();ctx.restore()});
   flashes.forEach(f=>{const s=CELL*(1+(1-f.t)*.6),x=BX+f.x*CELL+(CELL-s)/2,y=BY+f.y*CELL+(CELL-s)/2;ctx.save();ctx.globalAlpha=f.t;
     ctx.fillStyle=wash(f.color,.45);rr(x,y,s,s,6);ctx.fill();ctx.strokeStyle=f.color;ctx.lineWidth=2.5;ctx.stroke();

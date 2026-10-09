@@ -7,13 +7,14 @@ eraser, ruler, crayon, paintbrush, notebook, star). Each icon also has a plain g
 colour turned to pencil grey, a lighter and thinner outline, softer hatching.
 
 Writes
-  src/assets/no-2-pencil/icons-color.webp     6x4 sheet of the 24 icons in colour (order = NAMES below)
-  src/assets/no-2-pencil/icons-graphite.webp  the same sheet in plain graphite
+  src/assets/no-2-pencil/icons-color.webp     6x4 sheet of the 24 icons in colour (order = NAMES below) -- only with --icons;
+  src/assets/no-2-pencil/icons-graphite.webp  the same sheet in plain graphite                        No. 2 Pencil now uses
+                                              Mark's hand-drawn icons, packed by tools/no2-pencil-sheets.py
   src/assets/no-2-pencil/notebook.webp        page background: ruled notebook paper with faint graphite doodles
   src/assets/drop-swap/<piece>.webp           the six match-3 pieces, the scissors and palette specials, the scribble goal chip
   src/assets/drop-swap/room-*.webp            "My Classroom" background and the nine decorations
 Drawn with <canvas> in headless Chromium (Playwright), saved with Pillow; numpy trims sprite margins.
-Usage: python3 tools/classroom-icons-art.py [--sheet out.png] [--scene out.png]
+Usage: python3 tools/classroom-icons-art.py [--icons] [--sheet out.png] [--scene out.png]
 """
 import base64, io, os, sys
 import numpy as np
@@ -431,8 +432,9 @@ def main():
         rooms = {k: png(pg.evaluate(f'room("{k}")')) for k in ROOM_FILES}
         prev = png(pg.evaluate('preview()')) if sheet else None
         b.close()
-    color.save(os.path.join(OUT_N2, 'icons-color.webp'), quality=90, method=6)
-    graph.save(os.path.join(OUT_N2, 'icons-graphite.webp'), quality=90, method=6)
+    if '--icons' in sys.argv:  # off by default so Mark's hand-drawn sheets are not overwritten
+        color.save(os.path.join(OUT_N2, 'icons-color.webp'), quality=90, method=6)
+        graph.save(os.path.join(OUT_N2, 'icons-graphite.webp'), quality=90, method=6)
     page.save(os.path.join(OUT_N2, 'notebook.webp'), quality=86, method=6)
     for name, im in pieces.items():
         im.save(os.path.join(OUT_DS, name + '.webp'), quality=90, method=6)

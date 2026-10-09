@@ -11,7 +11,7 @@
 <style>
 /* No. 2 Pencil: an Onet-style link game on a school notebook page. Tiles are paper cards with classroom icons drawn in plain
    graphite; a tile you touch gets coloured in (vivid cross-hatched coloured pencil, dark outline), and cleared pairs pop in colour
-   along the link line. Icons and the page come from tools/classroom-icons-art.py (../assets/no-2-pencil/).
+   along the link line. Icons are Mark's drawings packed by tools/no2-pencil-sheets.py; the page comes from tools/classroom-icons-art.py (../assets/no-2-pencil/).
    Layout: header, timer, board canvas, tool row. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -137,11 +137,11 @@ const $=id=>document.getElementById(id);
 const W=400;let H=560;
 // 6x4 sprite sheets of the 24 classroom icons (order: pencil, apple, book, backpack, crayon, star sticker, scissors, paperclip,
 // eraser, ruler, paintbrush, notebook, globe, chalkboard, calculator, school bus, alarm clock, lunchbox, paint palette, pencil cup,
-// sticky note, magnifying glass, ABC block, trophy), drawn by tools/classroom-icons-art.py
+// sticky note, magnifying glass, ABC block, trophy), Mark's hand-drawn icons packed by tools/no2-pencil-sheets.py
 const SHEET={g:new Image(),c:new Image()},CELL=192;SHEET.g.src="../assets/no-2-pencil/icons-graphite.webp";SHEET.c.src="../assets/no-2-pencil/icons-color.webp";
 // each icon's main pencil colour: the link line and sparkles of a cleared pair
-const MAIN=["#f2c230","#e0453a","#3a7bd5","#4caf50","#8e5bc9","#f08a24","#3a7bd5","#9aa0a6","#e86aa6","#9b6a3c","#2fa7a0","#8bc34a",
-  "#4fb3e8","#4caf50","#2fa7a0","#f2c230","#e0453a","#f08a24","#9b6a3c","#8e5bc9","#e86aa6","#4fb3e8","#8bc34a","#f2c230"];
+const MAIN=["#f2c230","#e0453a","#3a7bd5","#8e5bc9","#e0453a","#f2c230","#2fa7a0","#3a7bd5","#e86aa6","#f2c230","#9b6a3c","#4caf50",
+  "#4fb3e8","#4caf50","#9aa0a6","#f2c230","#e0453a","#f08a24","#9b6a3c","#2fa7a0","#f2c230","#8e5bc9","#e0453a","#d99a12"];
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const ICONS=MAIN.map((_,i)=>i);
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
