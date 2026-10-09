@@ -37,7 +37,8 @@ OUT = ROOT / "site"
 E = html.escape
 
 ADSENSE = ""  # no AdSense on this site until it is approved
-ANALYTICS = '<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>\n<script defer src="/_vercel/insights/script.js"></script>\n'
+# Vercel Web Analytics - official script from https://vercel.com/docs/analytics/quickstart
+ANALYTICS = '<script>\n  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n</script>\n<script defer src="/_vercel/insights/script.js"></script>\n'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">'
 
 CSS = """
