@@ -52,7 +52,8 @@ def paper_css(kind=None):
 PAPER_STYLE = "<style>" + paper_css() + "</style>"
 E = html.escape
 
-ADSENSE = ""  # no AdSense on this site until it is approved
+ADSENSE_CLIENT = "ca-pub-6837573645630599"
+ADSENSE = f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n'
 ANALYTICS = '<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>\n<script defer src="/_vercel/insights/script.js"></script>\n'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">'
 
@@ -553,6 +554,7 @@ def build():
         if not g.get("play_url"):  # games hosted on their own domain link out instead
             (OUT / "play" / f'{g["slug"]}.html').write_text(play_page(g))
         shutil.copy(ROOT / "src" / "img" / f'{g["slug"]}.jpg', OUT / "img" / f'{g["slug"]}.jpg')
+    (OUT / "ads.txt").write_text(f"google.com, {ADSENSE_CLIENT.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n")
     (OUT / "vercel.json").write_text(json.dumps({"cleanUrls": True}, indent=2) + "\n")
     url = SITE.get("url", "").rstrip("/")
     if url:
