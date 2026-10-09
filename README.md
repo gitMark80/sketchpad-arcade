@@ -41,6 +41,7 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 - `src/games/<slug>.html` holds each game, `src/img/<slug>.jpg` its square pencil cover, and `src/assets/<slug>/` its pencil art (served at `/assets/<slug>/`).
 - `games.json` lists the site settings and every game's text (copied from the matching Beach Day Arcade entry).
 - `build.py` rebuilds `site/` from those: `python3 build.py`.
+- `src/reel.html` is Reel Studio (`/reel`, unlisted): it frames a live game on a sketchbook page for one-take phone screen recordings. Hooks live in `src/reel-hooks.json` and the post title/caption/comment text in `src/reel-copy.json`.
 - `api/` counts plays and ranks favorites through an Upstash Redis database connected in Vercel; without it the site still works.
 
 ## Adding a game

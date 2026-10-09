@@ -1,0 +1,155 @@
+{
+  "_note": "Hooks for the Reel Studio page (/reel). Wrap a word in *stars* to highlight it. Games not listed here get the generic hooks.",
+  "_generic": [
+    "Free sketchbook game, *no download* ✏️",
+    "A whole game drawn in *pencil*",
+    "Play it right in your *browser*",
+    "How far can *you* get?"
+  ],
+  "margin-merge": [
+    "Can you make a *dolphin*? 🐬",
+    "Weirdly *satisfying* ✏️",
+    "Drop. Merge. *Repeat.*",
+    "Two dolphins = *+100* 👀"
+  ],
+  "2048-drop": [
+    "2048, but with *physics* ✏️",
+    "So close to *2048*…",
+    "Drop it. Merge it. *Don't* overflow it."
+  ],
+  "scribble-swing": [
+    "Hold. Swing. *Let go.* 🎈",
+    "How far can a caped kid *swing*?",
+    "One button. *Endless* swinging."
+  ],
+  "note-quest": [
+    "Guess the *secret word* in 6 tries",
+    "What's your go-to *first word*? ✏️",
+    "Green, yellow, grey… *got it!*"
+  ],
+  "eraser-gulp": [
+    "Gulp *everything* smaller than you 🌀",
+    "Start tiny. End *huge*.",
+    "Weirdly *satisfying* to watch"
+  ],
+  "sidewalk-hop": [
+    "Can Milo cross the *street*? 🚲",
+    "Hop fast, the *rain* is coming ☔",
+    "One more hop… *one more*…"
+  ],
+  "paper-gates": [
+    "Slide every block out the *right gate*",
+    "The *whoosh* when it clears 😌",
+    "Can you clear it before the *timer*?"
+  ],
+  "doodle-stacks": [
+    "Get *10* of a colour and they pop",
+    "Wait for the *chain* pop 👀",
+    "Where would *you* drop the next stack?"
+  ],
+  "scribble-slice": [
+    "Swipe to slice the *fruit* 🍉",
+    "Go for the *combo*",
+    "Whatever you do, don't slice the *urchin*"
+  ],
+  "sketch-search": [
+    "Can you find *every* word? 🔎",
+    "Word search, but *hand-drawn*",
+    "The last word is always the *hardest*"
+  ],
+  "pencil-putt": [
+    "Hole in one, *or not*? ⛳",
+    "Mini golf in a *sketchbook*",
+    "Pull back, aim and *putt*"
+  ],
+  "letter-links": [
+    "Turn all *12 letters* gold ✨",
+    "Can you solve it under *par*?",
+    "Word nerds, this one's for *you*"
+  ],
+  "sketch-sprint": [
+    "Swipe to *turn*. Don't miss the corner!",
+    "An endless runner drawn in *pencil* ✏️",
+    "It just keeps getting *faster* 😅"
+  ],
+  "doodle-drop": [
+    "Spin the pencil. *Drop* the ball.",
+    "Don't touch the *pink scribbles* 👀",
+    "Three rings in a row = *smash* mode"
+  ],
+  "pencil-plunk": [
+    "Pull the *thumbtacks*, sort the cups 📌",
+    "The most *satisfying* plunk",
+    "Which tack would *you* pull first?"
+  ],
+  "draw-brawl": [
+    "Grab the *gold stars* ⭐",
+    "Bank your stars before you get *splatted*",
+    "A backyard *brawl*, drawn in pencil"
+  ],
+  "doodle-darts": [
+    "Tap at the *perfect* moment 🎯",
+    "How many bullseyes can *you* hit?",
+    "Never hit the *pufferfish* 🐡"
+  ],
+  "word-workshop": [
+    "How many words can *you* find?",
+    "Swipe to spell. Fill the *crossword* ✏️",
+    "Beginner, Intermediate or *Advanced*?"
+  ],
+  "bubble-doodle": [
+    "Wait for that *bank shot* 👀",
+    "Pop the whole *board*",
+    "Bubble shooter, but make it *pencil*"
+  ],
+  "four-in-a-frame": [
+    "Find the *four groups* of four",
+    "Did you spot the *pink* group? 👀",
+    "Some words fit *two* groups…"
+  ],
+  "margin-match": [
+    "Match *three* of a kind ✏️",
+    "Don't let the tray *fill up* 😬",
+    "Which tile would *you* tap next?"
+  ],
+  "pencil-pairs": [
+    "Link the *pairs* before time runs out",
+    "No more than *two turns* 👀",
+    "Can you clear the *whole* board?"
+  ],
+  "graph-blocks": [
+    "Clear the *rows* and *columns*",
+    "Block puzzle on *graph paper* ✏️",
+    "Will the last piece *fit*? 😬"
+  ],
+  "scribble-swap": [
+    "Swap, match *three*, repeat",
+    "Wash away *all* the sand",
+    "That *combo* though 👀"
+  ],
+  "pencil-path": [
+    "Tap the turtles to the *sea* 🐢",
+    "Which one goes *first*?",
+    "One clear path at a *time*"
+  ],
+  "paper-sub": [
+    "Bubble *blast* everything 🫧",
+    "A paper submarine vs the *whole sea*",
+    "Watch out for the *ink*!"
+  ],
+  "color-by-pencil": [
+    "The most *relaxing* game here 🎨",
+    "Colour by number, but *sketched*",
+    "Watch it *fill in* ✏️"
+  ],
+  "gem-sketch": [
+    "Put every gem *back* where it goes 💎",
+    "Watch the picture *rebuild* itself",
+    "Weirdly *satisfying* ✨"
+  ],
+  "word-scribble": [
+    "Drop letters. Spell the *hidden word*.",
+    "A merge game *and* a word game",
+    "Word nerds, this one's for *you* 🔤"
+  ]
+}

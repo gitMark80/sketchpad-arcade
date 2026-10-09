@@ -539,6 +539,22 @@ def play_page(g):
     s = s.replace("<title>", f'<meta name="robots" content="noindex">\n<title>', 1)
     return s
 
+def reel_page():
+    """Reel Studio (/reel): frames a live game on a sketchbook page for phone screen recordings. Unlisted and noindex.
+    Hooks live in src/reel-hooks.json and post text in src/reel-copy.json; games without their own get the generic ones."""
+    hooks = json.loads((ROOT / "src" / "reel-hooks.json").read_text())
+    hooks = {k: v for k, v in hooks.items() if k != "_note"}
+    games = [{"slug": g["slug"], "name": g["name"], "tagline": g["tagline"], "genre": g["genre"]} for g in GAMES if not g.get("play_url")]
+    copy = json.loads((ROOT / "src" / "reel-copy.json").read_text())
+    copy.pop("_note", None)
+    data = json.dumps({"games": games, "hooks": hooks, "copy": copy}, ensure_ascii=False).replace("</", "<\\/")
+    s = (ROOT / "src" / "reel.html").read_text()
+    return s.replace("/*REEL_DATA*/null", data, 1)
+
+REEL_MANIFEST = {"name": "Sketchpad Arcade Reel Studio", "short_name": "Reel Studio", "start_url": "/reel", "scope": "/",
+    "display": "standalone", "background_color": "#f6f3ea", "theme_color": "#f6f3ea",
+    "icons": [{"src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png"}]}
+
 def build():
     if OUT.exists(): shutil.rmtree(OUT)
     (OUT / "play").mkdir(parents=True); (OUT / "img").mkdir()
@@ -549,6 +565,8 @@ def build():
     (OUT / "index.html").write_text(home())
     (OUT / "about.html").write_text(about())
     (OUT / "privacy.html").write_text(privacy())
+    (OUT / "reel.html").write_text(reel_page())
+    (OUT / "reel.webmanifest").write_text(json.dumps(REEL_MANIFEST, indent=2) + "\n")
     for g in GAMES:
         (OUT / f'{g["slug"]}.html').write_text(detail(g))
         if not g.get("play_url"):  # games hosted on their own domain link out instead

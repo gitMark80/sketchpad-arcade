@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="robots" content="noindex,nofollow">
+<title>Reel Studio | Sketchpad Arcade</title>
+<meta name="theme-color" content="#f6f3ea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Reel Studio">
+<link rel="manifest" href="/reel.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png?v=2">
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Reel Studio: a 9:16 sketchbook page that frames a live game with a hook, a brand tag, a title card and an end card,
+   so a phone screen recording is ready to post with no editing. The stage is centered and letterboxed so
+   Instagram/TikTok's 9:16 crop of a taller phone recording lands exactly on it. */
+:root{--paper:#f6f3ea;--paper-2:#efeadd;--ink:#2e2e33;--pencil:#55555c;--muted:#7a7a80;--faint:#c9c6bc;
+--yellow:#c99a1a;--yellow-wash:#f3e6b0;--orange:#d9661a;--blue:#2f6fb5;--blue-wash:#d6e4f2;--green:#5a9a6a;--green-wash:#dcebdd;--pink:#c45a8a;
+--display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;--body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+--wob:255px 15px 225px 15px/15px 225px 15px 255px;--wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+--noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+--grid:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.09) 1px,transparent 1px);
+--W:390px;--H:693px;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#d9d6cc;color:var(--ink);font-family:var(--body);-webkit-text-size-adjust:100%;overscroll-behavior:none}
+body{overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button{font:inherit;color:inherit;cursor:pointer}
+img{display:block}
+mark{background:none;color:inherit}
+
+/* ---------- letterbox + stage ---------- */
+#bg{position:fixed;inset:-60px;background:#d9d6cc center/cover no-repeat;filter:blur(28px) grayscale(.35) brightness(.9);opacity:.75;z-index:0}
+#stage{position:fixed;left:50%;top:50%;width:var(--W);height:var(--H);transform:translate(-50%,-50%);overflow:hidden;z-index:1;touch-action:none;contain:layout paint;
+  background-color:var(--paper);background-image:var(--grid),var(--noise);
+  background-size:calc(var(--W)*.25) calc(var(--W)*.25),calc(var(--W)*.25) calc(var(--W)*.25),calc(var(--W)*.05) calc(var(--W)*.05),calc(var(--W)*.05) calc(var(--W)*.05),160px 160px;background-position:-1px -1px}
+#stage .sun{position:absolute;width:calc(var(--W)*.34);height:calc(var(--W)*.34);right:calc(var(--W)*-.06);top:calc(var(--W)*-.07);opacity:.9;animation:turn 30s linear infinite}
+@keyframes turn{to{transform:rotate(1turn)}}
+.doodles svg{position:absolute;fill:none;stroke-linecap:round;stroke-linejoin:round;animation:wig 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes wig{0%,100%{transform:rotate(var(--r,0deg)) translateY(0)}50%{transform:rotate(calc(var(--r,0deg) + 8deg)) translateY(calc(var(--W)*-.012))}}
+.hill{position:absolute;left:0;right:0;bottom:0;height:calc(var(--H)*.09);pointer-events:none}
+.hill svg{width:100%;height:100%;display:block}
+
+/* hook */
+.hook{position:absolute;left:5%;right:5%;top:calc(var(--H)*.045);height:calc(var(--H)*.105);display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+.hook span{display:inline-block;max-width:100%;background:var(--paper);color:var(--ink);font:400 calc(var(--W)*.062)/1.18 var(--display);text-align:center;
+  padding:.28em .7em .34em;border:calc(var(--W)*.006) solid var(--ink);border-radius:var(--wob);box-shadow:calc(var(--W)*.011) calc(var(--W)*.011) 0 var(--pencil);text-wrap:balance;
+  transform:scale(0) rotate(-4deg);opacity:0}
+.hook mark,.card h2 mark,.hooks mark{background:linear-gradient(176deg,transparent 48%,rgba(232,200,70,.75) 49%,rgba(232,200,70,.75) 88%,transparent 89%);padding:0 .08em;border-radius:.2em}
+.on .hook span{animation:pop .55s cubic-bezier(.2,1.6,.4,1) forwards,boil .36s steps(1) .6s infinite}
+@keyframes pop{0%{transform:scale(.2) rotate(-6deg);opacity:0}100%{transform:scale(1) rotate(-1.5deg);opacity:1}}
+@keyframes boil{0%{transform:rotate(-1.5deg)}33%{transform:rotate(-1.2deg) translate(.5px,-.5px)}66%{transform:rotate(-1.7deg) translate(-.5px,.3px)}}
+.full.on .hook span{animation:pop .55s cubic-bezier(.2,1.6,.4,1) forwards,hookout .5s ease-in 4.2s forwards}
+@keyframes hookout{to{transform:translateY(-60%) scale(.6) rotate(-1.5deg);opacity:0}}
+
+/* game frame, taped onto the page */
+.frame{position:absolute;z-index:3;border-radius:var(--wob2);overflow:hidden;background:var(--paper);
+  box-shadow:0 0 0 calc(var(--W)*.007) var(--ink),calc(var(--W)*.016) calc(var(--W)*.016) 0 calc(var(--W)*.004) var(--pencil)}
+.frame iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:var(--paper)}
+.full .frame{border-radius:0;box-shadow:none}
+.tape{position:absolute;z-index:4;width:calc(var(--W)*.2);height:calc(var(--W)*.058);background:rgba(243,230,176,.72);border-left:1px dashed rgba(46,46,51,.18);border-right:1px dashed rgba(46,46,51,.18);
+  box-shadow:0 1px 2px rgba(46,46,51,.15);pointer-events:none}
+.full .tape{display:none}
+
+/* brand tag (also the "end now" button) */
+.bug{position:absolute;left:50%;transform:translateX(-50%) rotate(-1.5deg);top:calc(var(--H)*.89);z-index:6;display:flex;align-items:center;gap:calc(var(--W)*.022);
+  background:var(--paper);border:calc(var(--W)*.006) solid var(--ink);border-radius:var(--wob);padding:calc(var(--W)*.012) calc(var(--W)*.04) calc(var(--W)*.014) calc(var(--W)*.022);
+  box-shadow:calc(var(--W)*.01) calc(var(--W)*.01) 0 var(--pencil);white-space:nowrap}
+.bug svg{height:calc(var(--W)*.085);width:auto;flex:none}
+.bug b{display:block;font:400 calc(var(--W)*.04)/1.1 var(--display);color:var(--orange);text-transform:uppercase;letter-spacing:.03em;text-align:left}
+.bug small{display:block;font:400 calc(var(--W)*.043)/1.05 var(--body);color:var(--ink);text-align:left}
+.full .hook{top:calc(var(--H)*.11)}
+.full .bug{top:calc(var(--H)*.012);left:calc(var(--W)*.025);transform:rotate(-1.5deg);padding:calc(var(--W)*.008) calc(var(--W)*.025) calc(var(--W)*.01) calc(var(--W)*.014);opacity:.94}
+.full .bug svg{height:calc(var(--W)*.06)}
+.full .bug b{font-size:calc(var(--W)*.028)}.full .bug small{font-size:calc(var(--W)*.031)}
+
+/* intro + outro cards */
+.card{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 8%;
+  background-color:var(--paper);background-image:var(--grid),var(--noise);
+  background-size:calc(var(--W)*.25) calc(var(--W)*.25),calc(var(--W)*.25) calc(var(--W)*.25),calc(var(--W)*.05) calc(var(--W)*.05),calc(var(--W)*.05) calc(var(--W)*.05),160px 160px;background-position:-1px -1px}
+.card[hidden]{display:none}
+.card .logo{position:absolute;top:calc(var(--H)*.065);display:flex;align-items:center;gap:calc(var(--W)*.025);font:400 calc(var(--W)*.068)/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);transform:rotate(-2deg);white-space:nowrap}
+.card .logo svg{height:calc(var(--W)*.11);width:auto}
+.card .pic{position:relative;width:calc(var(--W)*.62);transform:rotate(-2.5deg)}
+.card .cover{width:100%;aspect-ratio:1;border-radius:var(--wob2);object-fit:cover;background:var(--paper);
+  border:calc(var(--W)*.008) solid var(--ink);box-shadow:calc(var(--W)*.018) calc(var(--W)*.018) 0 var(--pencil)}
+.card .pic .tape{top:calc(var(--W)*-.025);left:50%;margin-left:calc(var(--W)*-.1);transform:rotate(3deg)}
+.card h2{margin:calc(var(--H)*.045) 0 0;font:400 calc(var(--W)*.078)/1.2 var(--display);color:var(--ink);text-wrap:balance;transform:rotate(-1deg)}
+.card .url{margin-top:calc(var(--H)*.022);display:inline-block;background:var(--yellow-wash);color:var(--ink);font:400 calc(var(--W)*.058)/1 var(--body);padding:.45em .9em .5em;
+  border:calc(var(--W)*.006) solid var(--ink);border-radius:var(--wob);box-shadow:calc(var(--W)*.011) calc(var(--W)*.011) 0 var(--pencil)}
+.card .fine{margin-top:calc(var(--H)*.022);font:400 calc(var(--W)*.045)/1.3 var(--body);color:var(--pencil)}
+#intro .pic{animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(calc(var(--W)*-.015)) rotate(-1deg)}}
+#intro.ghost{background:none}#intro.ghost>*{display:none}
+#intro.leave{animation:leave .5s cubic-bezier(.5,0,.75,0) forwards}
+@keyframes leave{to{opacity:0;transform:scale(1.12) rotate(2deg)}}
+#outro .pic{width:calc(var(--W)*.5)}
+#outro:not([hidden]) .pic{animation:drop .7s cubic-bezier(.2,1.5,.4,1) both}
+#outro:not([hidden]) h2{animation:drop .7s .12s cubic-bezier(.2,1.5,.4,1) both}
+#outro:not([hidden]) .url{animation:drop .7s .24s cubic-bezier(.2,1.5,.4,1) both,pulse 1.6s 1.2s ease-in-out infinite}
+#outro:not([hidden]) .fine{animation:drop .7s .34s cubic-bezier(.2,1.5,.4,1) both}
+#outro:not([hidden]) .logo{animation:drop .7s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes drop{from{opacity:0;transform:translateY(-30%) scale(.7)}}
+@keyframes pulse{50%{transform:scale(1.06) rotate(-1deg)}}
+.card .rays{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,rgba(46,46,51,.045) 0 6deg,rgba(46,46,51,0) 6deg 18deg);animation:spin 50s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(1turn)}}
+.card>*:not(.rays){position:relative}
+.card .logo{position:absolute}
+
+/* ---------- staging toolbar (never part of a recording) ---------- */
+#bar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 10px);z-index:50;display:flex;gap:8px;align-items:center;
+  background:var(--ink);padding:6px;border-radius:999px;box-shadow:3px 3px 0 rgba(46,46,51,.35);max-width:calc(100vw - 20px)}
+#bar[hidden]{display:none}
+#bar button{border:0;border-radius:999px;padding:9px 14px;font:400 16px/1 var(--body);background:rgba(246,243,234,.14);color:var(--paper);white-space:nowrap}
+#bar .go{background:var(--yellow-wash);color:var(--ink);padding:9px 18px;font-family:var(--display);font-size:15px;text-transform:uppercase}
+#bar .go::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--orange);margin-right:7px;vertical-align:1px}
+#tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 12px);z-index:50;width:min(92vw,420px);
+  background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:var(--wob);padding:12px 42px 12px 16px;font:400 17px/1.35 var(--body);box-shadow:4px 4px 0 var(--pencil)}
+#tip[hidden]{display:none}
+#tip b{font-weight:400;color:var(--orange)}
+#tip .x{position:absolute;top:8px;right:8px;width:28px;height:28px;border:2px solid var(--ink);border-radius:var(--wob2);background:var(--paper);color:var(--ink);font:400 18px/1 var(--body)}
+#menu{position:absolute;inset:auto 0 calc(var(--H)*.06);z-index:30;display:flex;justify-content:center;gap:8px;padding:0 8px}
+#menu[hidden]{display:none}
+#menu button{border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 13px;font:400 17px/1 var(--body);background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--pencil)}
+#menu .again{background:var(--yellow-wash);border-radius:var(--wob)}
+
+/* ---------- post text sheet ---------- */
+#post{position:fixed;inset:0;z-index:200;background:rgba(46,46,51,.45);display:flex;align-items:flex-end;justify-content:center;-webkit-user-select:text;user-select:text}
+#post[hidden]{display:none}
+#post .in{width:100%;max-width:560px;max-height:92dvh;overflow-y:auto;background-color:var(--paper);background-image:var(--noise);border:2px solid var(--ink);border-bottom:0;border-radius:22px 22px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);box-shadow:0 -6px 0 rgba(46,46,51,.15)}
+#post h2{font:400 24px/1.2 var(--display);margin:0 0 4px;transform:rotate(-1deg);transform-origin:left}
+#post .sub{margin:0 0 14px;font-size:16px;color:var(--muted);line-height:1.35}
+.pbox{background:#fbf9f3;border:2px solid var(--ink);border-radius:var(--wob);padding:12px 14px;margin-bottom:14px;box-shadow:3px 3px 0 var(--pencil)}
+.pbox:nth-child(even){border-radius:var(--wob2)}
+.pbox header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.pbox header b{font:400 14px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.pbox textarea{width:100%;border:0;resize:none;font:400 17px/1.4 var(--body);color:var(--ink);background:transparent;padding:0;outline:none;field-sizing:content;min-height:1.5em}
+.pbox .copy{border:2px solid var(--ink);border-radius:var(--wob2);padding:6px 14px;font:400 16px/1 var(--body);background:var(--yellow-wash);color:var(--ink);box-shadow:2px 2px 0 var(--pencil)}
+.pbox .copy.done{background:var(--green-wash)}
+#post .acts{display:flex;gap:10px;margin-top:4px}
+#post .acts button{flex:1;border:2px solid var(--ink);border-radius:var(--wob2);padding:12px;font:400 18px/1 var(--body);background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--pencil)}
+#post .acts .all{background:var(--yellow-wash);border-radius:var(--wob);font-family:var(--display);text-transform:uppercase;font-size:17px}
+.postlink{display:block;width:100%;margin-top:12px;border:2px dashed var(--faint);border-radius:var(--wob2);padding:11px;background:transparent;font:400 18px var(--body);color:var(--blue)}
+
+/* ---------- setup panel ---------- */
+#setup{position:fixed;inset:0;z-index:100;overflow-y:auto;-webkit-overflow-scrolling:touch;-webkit-user-select:text;user-select:text;overscroll-behavior:contain;
+  background-color:var(--paper);background-image:var(--grid),var(--noise);background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px;background-position:-1px -1px;background-attachment:local}
+#setup[hidden]{display:none}
+.sp{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 110px)}
+.sp header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.sp .mark{display:flex;align-items:center;gap:8px;font:400 19px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);text-decoration:none;transform:rotate(-1.5deg);white-space:nowrap}
+.sp .mark svg{width:30px;height:30px;flex:none}
+.sp header span{font:400 15px/1 var(--body);color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);padding:5px 10px;border-radius:var(--wob2);transform:rotate(2deg)}
+.sp h1{font:400 30px/1.15 var(--display);margin:16px 0 6px;color:var(--ink);transform:rotate(-1deg);transform-origin:left}
+.sp .lede{margin:0 0 18px;color:var(--pencil);font-size:18px;line-height:1.4}
+.sp h2{font:400 21px/1.2 var(--display);margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+.sp h2 i{font-style:normal;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 17px/1 var(--display)}
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (min-width:480px){.games{grid-template-columns:repeat(4,1fr)}}
+.games button{border:2px dashed var(--faint);background:var(--paper);border-radius:var(--wob);padding:5px 5px 7px;text-align:center;transition:transform .12s}
+.games button:nth-child(3n+2){border-radius:var(--wob2)}
+.games button img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--paper-2);border:1.5px solid var(--ink)}
+.games button span{display:block;margin-top:5px;font:400 15px/1.1 var(--body);color:var(--ink)}
+.games button[aria-pressed=true]{background:var(--yellow-wash);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--pencil);transform:rotate(-1.5deg) translateY(-2px)}
+.hooks{display:grid;gap:10px}
+.hooks label{display:flex;gap:10px;align-items:center;background:var(--paper);border:2px dashed var(--faint);border-radius:var(--wob2);padding:11px 12px;font:400 18px/1.3 var(--body);cursor:pointer}
+.hooks label:nth-child(even){border-radius:var(--wob)}
+.hooks label:has(input:checked){border:2px solid var(--ink);background:var(--yellow-wash);box-shadow:3px 3px 0 var(--pencil)}
+.hooks input[type=radio]{accent-color:var(--ink);width:18px;height:18px;flex:none;margin:0}
+.hooks input[type=text]{flex:1;min-width:0;border:0;border-bottom:2px solid var(--faint);font:400 18px var(--body);padding:4px 0;background:transparent;color:var(--ink);outline:none}
+.hooks input[type=text]:focus{border-color:var(--ink)}
+.hint{font-size:16px;color:var(--muted);margin:8px 2px 0}
+.seg{display:flex;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--wob);padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:var(--wob2);padding:9px 6px;font:400 17px/1 var(--body);color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--yellow-wash);color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.row{display:grid;gap:8px;margin-top:14px}
+.row>span{font:400 16px var(--body);color:var(--muted)}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:11px 12px;font:400 18px var(--body);margin-top:14px;box-shadow:2px 2px 0 var(--pencil)}
+.tog input{width:48px;height:28px;appearance:none;-webkit-appearance:none;background:var(--paper-2);border:2px solid var(--ink);border-radius:999px;position:relative;transition:background .2s;flex:none;margin:0}
+.tog input::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);transition:transform .2s}
+.tog input:checked{background:repeating-linear-gradient(135deg,var(--yellow) 0 2px,var(--yellow-wash) 2px 6px)}.tog input:checked::after{transform:translateX(20px)}
+details{margin-top:26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:2px 16px;box-shadow:3px 3px 0 var(--pencil)}
+summary{font:400 19px/1.2 var(--display);padding:12px 0;cursor:pointer}
+details ol{margin:0 0 14px;padding-left:22px;font-size:17px;line-height:1.45;color:var(--ink)}
+details li{margin-bottom:6px}
+details b,.homescreen b{font-weight:400;color:var(--orange)}
+.homescreen{margin:0 0 4px;background:var(--yellow-wash);border:2px dashed var(--yellow);border-radius:var(--wob2);padding:11px 14px;font-size:17px;line-height:1.4}
+.homescreen[hidden]{display:none}
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:101;padding:12px 16px calc(env(safe-area-inset-bottom) + 14px);background:linear-gradient(180deg,rgba(246,243,234,0),var(--paper) 40%)}
+.cta[hidden]{display:none}
+.cta button{display:block;width:100%;max-width:528px;margin:0 auto;border:2px solid var(--ink);border-radius:var(--wob2);padding:14px;background:var(--yellow-wash);color:var(--ink);
+  font:400 24px/1 var(--display);text-transform:uppercase;letter-spacing:.05em;box-shadow:4px 4px 0 var(--pencil)}
+.cta button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+
+<div id="stage" class="framed" aria-label="Reel preview">
+  <svg class="sun" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke-linecap="round"><circle cx="50" cy="50" r="20" stroke="#c99a1a" stroke-width="2.4" fill="rgba(243,230,176,.7)"/><path d="M41 44l18 12M40 51l15 9M46 40l14 10" stroke="#c99a1a" stroke-width="1.2" opacity=".6"/><g stroke="#c99a1a" stroke-width="2.4"><path d="M50 21V8"/><path d="M50 92V79"/><path d="M21 50H8"/><path d="M92 50H79"/><path d="M29.5 29.5l-9-9"/><path d="M79.5 79.5l-9-9"/><path d="M70.5 29.5l9-9"/><path d="M20.5 79.5l9-9"/><path d="M39 23l-4-11"/><path d="M61 77l4 11"/><path d="M77 39l11-4"/><path d="M23 61l-11 4"/></g></svg>
+  <div class="doodles" id="doodles"></div>
+  <div class="hill"><svg viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M-4 30 C40 16 80 18 120 28 S200 44 250 30 S340 12 404 26" stroke="#2e2e33" stroke-width="1.6" opacity=".55"/><path d="M-4 33 C40 20 82 22 120 31 S200 47 250 33" stroke="#55555c" stroke-width="1" opacity=".35"/><g stroke="#55555c" stroke-width="1" opacity=".3"><path d="M20 36l-8 14M34 33l-8 14M48 31l-8 14M62 30l-8 14M276 30l-8 14M290 27l-8 14M304 24l-8 14M318 22l-8 14M332 21l-8 14"/></g><g stroke="#5a9a6a" stroke-width="1.6"><path d="M150 36l-3-8M154 36l1-9M158 36l4-7"/><path d="M360 23l-3-8M364 23l1-9M368 23l4-7"/></g></svg></div>
+  <div class="hook" id="hook"><span></span></div>
+  <div class="frame" id="frame"><iframe id="game" name="bda-reel" title="Game" allow="autoplay; fullscreen"></iframe></div>
+  <i class="tape" id="tape1"></i><i class="tape" id="tape2"></i>
+  <button class="bug" id="bug" type="button" aria-label="End the reel"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z" fill="#f3e6b0"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/></svg><span><b>Play free</b><small>sketchpadarcade.com</small></span></button>
+
+  <div class="card" id="intro" hidden>
+    <div class="rays"></div>
+    <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z" fill="#f3e6b0"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/></svg>Sketchpad Arcade</div>
+    <div class="pic"><img class="cover" alt=""><i class="tape"></i></div>
+    <h2></h2>
+  </div>
+  <div class="card" id="outro" hidden>
+    <div class="rays"></div>
+    <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z" fill="#f3e6b0"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/></svg>Sketchpad Arcade</div>
+    <div class="pic"><img class="cover" alt=""><i class="tape"></i></div>
+    <h2></h2>
+    <div class="url">sketchpadarcade.com</div>
+    <div class="fine">Free · No download · No sign-up</div>
+  </div>
+  <div id="menu" hidden><button type="button" class="again" id="again">Record again</button><button type="button" id="postbtn">Post text</button><button type="button" id="change">Settings</button></div>
+</div>
+
+<div id="bar" hidden><button type="button" id="back">‹ Settings</button><button type="button" id="reload">Restart game</button><button type="button" class="go" id="ready">Ready</button></div>
+<div id="tip" hidden><button class="x" type="button" aria-label="Hide tip">×</button><span></span></div>
+
+<div id="post" hidden><div class="in" role="dialog" aria-modal="true" aria-labelledby="posth">
+  <h2 id="posth">Post text</h2>
+  <p class="sub">Paste these when you post. Tap any text to edit it first. On Instagram, links in captions aren't clickable, so the caption also says "link in bio".</p>
+  <div class="pbox"><header><b>Title</b><button type="button" class="copy" data-k="title">Copy</button></header><textarea id="p-title" rows="1"></textarea></div>
+  <div class="pbox"><header><b>Caption / description</b><button type="button" class="copy" data-k="desc">Copy</button></header><textarea id="p-desc" rows="7"></textarea></div>
+  <div class="pbox"><header><b>First comment</b><button type="button" class="copy" data-k="comment">Copy</button></header><textarea id="p-comment" rows="2"></textarea></div>
+  <div class="acts"><button type="button" id="p-new">New version</button><button type="button" id="p-close" class="all">Done</button></div>
+</div></div>
+
+<div id="setup">
+  <div class="sp">
+    <header><a class="mark" href="/"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z" fill="#f3e6b0"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/></svg>Sketchpad Arcade</a><span>Reel Studio</span></header>
+    <h1>Make a reel in one take</h1>
+    <p class="lede">Pick a game and a hook. The game opens on a sketchbook page with your hook, branding, a title card and an end card. Screen record it, then post. No editing.</p>
+    <p class="homescreen" id="homescreen" hidden><b>One-time setup for clean recordings:</b> tap the Share button, then <b>Add to Home Screen</b>, and open Reel Studio from that icon. It opens full screen, so Safari's address bar won't end up in your video.</p>
+
+    <h2><i>1</i>Pick a game</h2>
+    <div class="games" id="games"></div>
+
+    <h2><i>2</i>Pick a hook</h2>
+    <div class="hooks" id="hooks"></div>
+    <p class="hint">Wrap a word in *stars* to highlight it.</p>
+    <button type="button" class="postlink" id="postprev">See the title, caption and first comment ›</button>
+
+    <h2><i>3</i>Style</h2>
+    <div class="row"><span>Layout</span><div class="seg" id="layout"><button type="button" data-v="framed">Taped on the page</button><button type="button" data-v="full">Full screen</button></div></div>
+    <div class="row"><span>Length</span><div class="seg" id="len"><button type="button" data-v="15">15s</button><button type="button" data-v="20">20s</button><button type="button" data-v="30">30s</button><button type="button" data-v="0">No limit</button></div></div>
+    <label class="tog">Title card at the start<input type="checkbox" id="optIntro" checked></label>
+    <label class="tog">End card with your link<input type="checkbox" id="optOutro" checked></label>
+
+    <details id="how">
+      <summary>How to record a reel</summary>
+      <ol>
+        <li>Tap <b>Load game</b>. Play past the how-to screen so the game is ready to go.</li>
+        <li>Tap <b>Ready</b>. The title card appears and everything else hides.</li>
+        <li>Start your phone's screen recording from Control Center, then swipe back.</li>
+        <li>Tap the title card. The game starts and your hook pops in. Play!</li>
+        <li>The end card appears when time is up (or tap the <b>Play free</b> tag to end early). Stop recording.</li>
+        <li>Post the video as a Reel. If Control Center shows in the first second, trim it in the Reels editor.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+<div class="cta" id="cta"><button type="button" id="load">Load game</button></div>
+
+<script>window.REEL={"games": [{"slug": "margin-merge", "name": "Margin Merge", "tagline": "Drop sea friends in the tank and merge matching pairs, all the way up to a dolphin.", "genre": "Puzzle"}, {"slug": "2048-drop", "name": "2048 DROP", "tagline": "Drop numbers, merge matching balls and work your way to 2048.", "genre": "Puzzle"}, {"slug": "scribble-swing", "name": "Scribble Swing", "tagline": "Grab push-pins and swing a caped kid over the city.", "genre": "Arcade"}, {"slug": "note-quest", "name": "Note Quest", "tagline": "Guess the secret word in the bottle in six tries, with colour clues after every guess.", "genre": "Word"}, {"slug": "eraser-gulp", "name": "Eraser Gulp", "tagline": "Steer a hungry little whirlpool and gulp up the beach to grow.", "genre": "Arcade"}, {"slug": "sidewalk-hop", "name": "Sidewalk Hop", "tagline": "Hop a kid across busy streets and a creek before the rain catches up.", "genre": "Arcade"}, {"slug": "paper-gates", "name": "Paper Gates", "tagline": "Slide patterned blocks out through the gates that match their colour.", "genre": "Puzzle"}, {"slug": "doodle-stacks", "name": "Doodle Stacks", "tagline": "Stack shiny sea-glass shells by colour and pop them in tens.", "genre": "Puzzle"}, {"slug": "scribble-slice", "name": "Scribble Slice", "tagline": "Swipe to slice the tropical fruit that splashes up out of the waves.", "genre": "Arcade"}, {"slug": "sketch-search", "name": "Sketch Search", "tagline": "Find the hidden beach words in a board of sandy letter tiles.", "genre": "Word"}, {"slug": "pencil-putt", "name": "Pencil Putt", "tagline": "Pull back, aim and putt your way round a sunny tiki beach mini golf course.", "genre": "Arcade"}, {"slug": "letter-links", "name": "Letter Links", "tagline": "Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties.", "genre": "Word"}, {"slug": "sketch-sprint", "name": "Sketch Sprint", "tagline": "Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide.", "genre": "Arcade"}, {"slug": "doodle-drop", "name": "Doodle Drop", "tagline": "Spin a giant pencil and drop a bouncy striped ball down to the pencil cup.", "genre": "Arcade"}, {"slug": "pencil-plunk", "name": "Pencil Plunk", "tagline": "Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups.", "genre": "Puzzle"}, {"slug": "draw-brawl", "name": "Draw Brawl", "tagline": "Grab gold stars, fill your fort and dodge the sprinklers against three computer rivals in a backyard brawl.", "genre": "Arcade"}, {"slug": "doodle-darts", "name": "Doodle Darts", "tagline": "Tap at just the right moment to blast the target and nail the gold sand dollar.", "genre": "Arcade"}, {"slug": "word-workshop", "name": "Word Workshop", "tagline": "Drag across the letters to spell words and fill a beach crossword.", "genre": "Word"}, {"slug": "bubble-doodle", "name": "Bubble Doodle", "tagline": "Aim, bounce and pop bubbles before the tide rolls in.", "genre": "Arcade"}, {"slug": "four-in-a-frame", "name": "Four in a Frame", "tagline": "Sort sixteen beach words into four secret groups of four.", "genre": "Word"}, {"slug": "margin-match", "name": "Margin Match", "tagline": "Tap doodle tiles off the pile and collect three of a kind in your tray.", "genre": "Puzzle"}, {"slug": "pencil-pairs", "name": "Pencil Pairs", "tagline": "Link matching beach tiles before the timer runs out.", "genre": "Puzzle"}, {"slug": "graph-blocks", "name": "Graph Blocks", "tagline": "Drag shapes onto the board and clear rows and columns.", "genre": "Puzzle"}, {"slug": "scribble-swap", "name": "Scribble Swap", "tagline": "Swap beach treasures, match three and wash the sand away.", "genre": "Puzzle"}, {"slug": "pencil-path", "name": "Pencil Path", "tagline": "Tap baby sea turtles to send them to the sea, one clear path at a time.", "genre": "Puzzle"}, {"slug": "paper-sub", "name": "Paper Sub", "tagline": "Steer a little yellow submarine and fire rapid streams of bubbles at the sea creatures swooping in.", "genre": "Arcade"}, {"slug": "color-by-pencil", "name": "Color by Pencil", "tagline": "Fill beach pictures with sparkly sea glass, one numbered color at a time.", "genre": "Puzzle"}, {"slug": "gem-sketch", "name": "Gem Sketch", "tagline": "Pick up scrambled gems and put each colour back to rebuild beach pictures.", "genre": "Puzzle"}, {"slug": "word-scribble", "name": "Word Scribble", "tagline": "Drop letter bubbles, merge matching letters and swipe to spell words.", "genre": "Word"}], "hooks": {"_generic": ["Free sketchbook game, *no download* ✏️", "A whole game drawn in *pencil*", "Play it right in your *browser*", "How far can *you* get?"], "margin-merge": ["Can you make a *dolphin*? 🐬", "Weirdly *satisfying* ✏️", "Drop. Merge. *Repeat.*", "Two dolphins = *+100* 👀"], "2048-drop": ["2048, but with *physics* ✏️", "So close to *2048*…", "Drop it. Merge it. *Don't* overflow it."], "scribble-swing": ["Hold. Swing. *Let go.* 🎈", "How far can a caped kid *swing*?", "One button. *Endless* swinging."], "note-quest": ["Guess the *secret word* in 6 tries", "What's your go-to *first word*? ✏️", "Green, yellow, grey… *got it!*"], "eraser-gulp": ["Gulp *everything* smaller than you 🌀", "Start tiny. End *huge*.", "Weirdly *satisfying* to watch"], "sidewalk-hop": ["Can Milo cross the *street*? 🚲", "Hop fast, the *rain* is coming ☔", "One more hop… *one more*…"], "paper-gates": ["Slide every block out the *right gate*", "The *whoosh* when it clears 😌", "Can you clear it before the *timer*?"], "doodle-stacks": ["Get *10* of a colour and they pop", "Wait for the *chain* pop 👀", "Where would *you* drop the next stack?"], "scribble-slice": ["Swipe to slice the *fruit* 🍉", "Go for the *combo*", "Whatever you do, don't slice the *urchin*"], "sketch-search": ["Can you find *every* word? 🔎", "Word search, but *hand-drawn*", "The last word is always the *hardest*"], "pencil-putt": ["Hole in one, *or not*? ⛳", "Mini golf in a *sketchbook*", "Pull back, aim and *putt*"], "letter-links": ["Turn all *12 letters* gold ✨", "Can you solve it under *par*?", "Word nerds, this one's for *you*"], "sketch-sprint": ["Swipe to *turn*. Don't miss the corner!", "An endless runner drawn in *pencil* ✏️", "It just keeps getting *faster* 😅"], "doodle-drop": ["Spin the pencil. *Drop* the ball.", "Don't touch the *pink scribbles* 👀", "Three rings in a row = *smash* mode"], "pencil-plunk": ["Pull the *thumbtacks*, sort the cups 📌", "The most *satisfying* plunk", "Which tack would *you* pull first?"], "draw-brawl": ["Grab the *gold stars* ⭐", "Bank your stars before you get *splatted*", "A backyard *brawl*, drawn in pencil"], "doodle-darts": ["Tap at the *perfect* moment 🎯", "How many bullseyes can *you* hit?", "Never hit the *pufferfish* 🐡"], "word-workshop": ["How many words can *you* find?", "Swipe to spell. Fill the *crossword* ✏️", "Beginner, Intermediate or *Advanced*?"], "bubble-doodle": ["Wait for that *bank shot* 👀", "Pop the whole *board*", "Bubble shooter, but make it *pencil*"], "four-in-a-frame": ["Find the *four groups* of four", "Did you spot the *pink* group? 👀", "Some words fit *two* groups…"], "margin-match": ["Match *three* of a kind ✏️", "Don't let the tray *fill up* 😬", "Which tile would *you* tap next?"], "pencil-pairs": ["Link the *pairs* before time runs out", "No more than *two turns* 👀", "Can you clear the *whole* board?"], "graph-blocks": ["Clear the *rows* and *columns*", "Block puzzle on *graph paper* ✏️", "Will the last piece *fit*? 😬"], "scribble-swap": ["Swap, match *three*, repeat", "Wash away *all* the sand", "That *combo* though 👀"], "pencil-path": ["Tap the turtles to the *sea* 🐢", "Which one goes *first*?", "One clear path at a *time*"], "paper-sub": ["Bubble *blast* everything 🫧", "A paper submarine vs the *whole sea*", "Watch out for the *ink*!"], "color-by-pencil": ["The most *relaxing* game here 🎨", "Colour by number, but *sketched*", "Watch it *fill in* ✏️"], "gem-sketch": ["Put every gem *back* where it goes 💎", "Watch the picture *rebuild* itself", "Weirdly *satisfying* ✨"], "word-scribble": ["Drop letters. Spell the *hidden word*.", "A merge game *and* a word game", "Word nerds, this one's for *you* 🔤"]}, "copy": {"_titles": ["{hook} | {name}", "{name}: {hook}", "{hook} ✏️ {name}", "{name} 📓 {hook}", "{hook} ({name}, free in your browser)", "Playing {name} ✏️ {hook}"], "_ctas": ["🎮 Play free, no download: {url} (link in bio)", "👉 Try it free at {url} (link in bio)", "✏️ Free to play, no sign-up: {url} (link in bio)", "📱 Plays right in your phone's browser: {url} (link in bio)", "📓 Free, family friendly, no app needed: {url} (link in bio)", "🔗 Play it free at {url} (link in bio)", "✨ No download, no sign-up, just play: {url} (link in bio)", "✏️ Free on Sketchpad Arcade: {url} (link in bio)"], "_comments": ["What's your best score? Drop it below 👇 Play free: {url}", "Bet you can beat mine 👀 Try it here: {url}", "Which sketchbook game should I play next? ✏️ All free at sketchpadarcade.com", "Tag someone who'd be hooked on {name} 😅 {url}", "Would you keep playing or quit here? 😂 {url}", "Rate this run from 1 to 10 👇 Play it yourself: {url}", "Free, no download, no sign-up. Go beat my score 👉 {url}", "Should I post my next run? 👀 {url}", "Who else plays one more round before bed? 🙋 {url}", "Comment your score and I'll try to beat it 🏆 {url}", "Every game looks like it was drawn in a kid's sketchbook ✏️ {url}", "Easy to learn, hard to put down 😅 {url}"], "_tags": {"core": ["#SketchpadArcade"], "Puzzle": ["#PuzzleGame", "#PuzzleGames", "#BrainGames", "#LogicPuzzle", "#BrainTeaser", "#RelaxingGames", "#PuzzleTime"], "Word": ["#WordGame", "#WordGames", "#WordPuzzle", "#WordNerd", "#Vocabulary", "#BrainGames", "#DailyPuzzle"], "Arcade": ["#ArcadeGame", "#ArcadeGames", "#OneMoreTry", "#HighScore", "#CasualGaming", "#ArcadeFun"], "general": ["#FreeGames", "#BrowserGames", "#MobileGames", "#FamilyFriendly", "#CasualGames", "#Satisfying", "#PencilDrawing", "#Sketchbook", "#HandDrawn", "#Doodle", "#NoDownload", "#HTML5Games", "#PlayFree", "#KidFriendly"]}, "margin-merge": {"lines": ["Drop sea friends in the tank. Two of the same touch and they merge into the next one up.", "Sand dollar → moon snail → scallop → starfish → crab… all the way up to a dolphin 🐬", "Two dolphins swim off together for a 100 point bonus.", "The only rule: don't let the stack stay above the dotted line.", "It starts calm. Then the tank fills up 😅", "A relaxing merge puzzle drawn in pencil."], "comments": ["Has anyone made two dolphins yet? 🐬🐬 {url}", "Which sea friend is your favourite? {url}", "The tank was SO close to overflowing 😬 {url}"]}, "2048-drop": {"lines": ["Drop numbered balls in the jar. Two of the same touch and they merge into double.", "Gravity does the rest, and merges can set off chain reactions.", "Keep the pile below the dashed danger line.", "Bigger merges are worth way more points."], "comments": ["Has anyone actually reached 2048? 👀 {url}", "That chain reaction though {url}", "What's the biggest ball you've made? {url}"]}, "scribble-swing": {"lines": ["Hold to grab a push-pin with your rope, let go to fling forward.", "A caped kid swinging over a pencil city 🦸", "Grab stars for bonus points on the way.", "Balloons bob up and down, and soap bubbles pop soon after you grab them.", "The farther you go, the farther apart the pins get."], "comments": ["How far can you swing? {url}", "That last pin was SO far 😅 {url}", "Rate that swing 1–10 👇 {url}"]}, "note-quest": {"lines": ["Guess the secret word in six tries ✏️", "Green means right spot, yellow means wrong spot, grey means not in the word.", "Solve words in a row for a streak bonus.", "Beginner, Intermediate or Advanced."], "comments": ["Did you guess it before I did? 👀 {url}", "What's your go-to first word? 👇 {url}", "How many tries did it take you? {url}"]}, "eraser-gulp": {"lines": ["Steer a hungry little whirlpool and gulp anything smaller than you 🌀", "Every gulp makes you a little bigger.", "Fill the size meter before the timer runs out.", "Too big? Come back when you've grown."], "comments": ["What's the biggest thing you've gulped? 🌀 {url}", "Satisfying or chaotic? 👇 {url}", "What level are you on? {url}"]}, "sidewalk-hop": {"lines": ["Hop Milo across busy streets full of cars, bikes, scooters and skateboards.", "Cross the creek on surfboards, rafts and tubes.", "Keep moving, a rainstorm is creeping up behind you ☔", "Wait for a gap… then hop!"], "comments": ["How far did you get? {url}", "That skateboard came out of nowhere 😂 {url}", "Rate Milo's run 1–10 👇 {url}"]}, "paper-gates": {"lines": ["Slide each block out through the gate that matches its colour.", "Blocks can't overlap, so plan your moves.", "A block only fits a gate that's at least as wide as it is.", "Clear the board before the timer runs out."], "comments": ["Which block would you move first? 👇 {url}", "So satisfying when it slides out 😌 {url}", "What level are you on? {url}"]}, "doodle-stacks": {"lines": ["Drop a stack and same-colour neighbours hop together.", "Get 10 of one colour on top and they pop.", "One pop can set off another for combo points.", "Don't let the board fill up."], "comments": ["That chain pop though 👀 {url}", "Where would you drop the next stack? 👇 {url}", "What level are you on? {url}"]}, "scribble-slice": {"lines": ["Swipe to slice the fruit as it splashes up 🍉", "Slice two or more in one swipe for a combo bonus.", "Steer clear of the spiky sea urchins.", "Every 500 points wins a lost life back."], "comments": ["What's your best combo? 🍉 {url}", "Those urchins are sneaky 😤 {url}", "How long can you last? {url}"]}, "sketch-search": {"lines": ["Find the hidden words in a hand-drawn letter board 🔎", "Every level has a theme and its own word list.", "Later words hide on a slant and even backwards.", "Beginner, Intermediate or Advanced."], "comments": ["Can you find the last word before I do? 👀 {url}", "Word search fans, how did I do? {url}", "Which word took you the longest? 👇 {url}"]}, "pencil-putt": {"lines": ["Pull back like a slingshot, aim and putt ⛳", "Watch out for sand, slopes, the tide and water.", "A hole in one is worth 1000 points.", "Mini golf, drawn in a sketchbook."], "comments": ["Hole in one or not? 👀 {url}", "Which hole is the hardest? 👇 {url}", "What's your best round? {url}"]}, "letter-links": {"lines": ["Link words around the path and turn all twelve letters gold ✨", "Each next letter has to come from a different side.", "Your next word starts with the last letter of the one before.", "Try to solve it in the par number of words.", "Beginner, Intermediate or Advanced."], "comments": ["How many words did it take you? 👇 {url}", "Did you beat par? 👀 {url}", "What was your first word? {url}"]}, "sketch-sprint": {"lines": ["Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods.", "Swipe to turn at every corner, jump over logs and slide under branches.", "Your runner gets faster the longer you last 😅", "An endless runner drawn entirely in pencil ✏️"], "comments": ["How far did you get? {url}", "That corner came out of nowhere 😂 {url}", "Downtown, park or woods: which is your favourite? 👇 {url}"]}, "doodle-drop": {"lines": ["Spin a giant pencil and drop a bouncy striped ball through the rings.", "Don't land on the pink scribbles or the sliding ink blots.", "Fall through three rings without bouncing to smash the next one.", "Land in the pencil cup to clear the level."], "comments": ["What level are you on? {url}", "That smash though 👀 {url}", "Those ink blots are sneaky 😤 {url}"]}, "pencil-plunk": {"lines": ["Pull thumbtacks out of popsicle sticks and sort them into paper cups 📌", "Three tacks of the same colour fill a cup.", "Pull a stick's last tack and it plunks onto the desk.", "Don't let the pencil case fill up."], "comments": ["Which tack would you pull first? 👇 {url}", "That plunk is so satisfying 😌 {url}", "What level are you on? {url}"]}, "draw-brawl": {"lines": ["Grab gold stars and race them back to your fort ⭐", "Only banked stars count, so don't get splatted on the way.", "Pick Max, Ruby or Leo and brawl against three computer rivals.", "Dodge the sprinklers!"], "comments": ["Team Max, Ruby or Leo? 👇 {url}", "How many stars did you bank? {url}", "That splat was rough 😂 {url}"]}, "doodle-darts": {"lines": ["Tap at just the right moment to hit the target 🎯", "Bullseyes in a row build a combo worth more and more.", "You get three darts. Never hit the pufferfish.", "Smash the bonus sand dollars when they pop up."], "comments": ["How many bullseyes in a row can you get? 🎯 {url}", "One tap. No second chances. {url}", "What's your best combo? 👇 {url}"]}, "word-workshop": {"lines": ["Drag across the letter wheel to spell words and fill the crossword ✏️", "Extra real words count as bonus words.", "Find words fast to build a combo up to 5X.", "Beginner, Intermediate or Advanced."], "comments": ["How many words can you find? 👇 {url}", "Did you spot the long one? 👀 {url}", "What level are you on? {url}"]}, "bubble-doodle": {"lines": ["Drag to aim. The line shows exactly where your shot will bounce.", "Pop a group and everything hanging below falls off for bonus points.", "Bank shots off the wall are the best part 👀", "Clear the board before the bubbles cross the line."], "comments": ["Did you see that bank shot? 👀 {url}", "What level are you on? {url}", "How many bubbles did that one shot drop? 👇 {url}"]}, "four-in-a-frame": {"lines": ["Sixteen words. Find the four secret groups of four.", "Groups start easy, then get sneaky.", "Some words seem to fit two groups at once 👀", "Yellow is the easiest group. Pink is the trickiest."], "comments": ["Did you spot the pink group? 👀 {url}", "Which word tricked you? 👇 {url}", "How many tries did it take you? {url}"]}, "margin-match": {"lines": ["Tap doodle tiles off the pile and collect three of a kind ✏️", "Don't let your 7-spot tray fill up.", "Clear the tiles on top to free the ones underneath.", "Each level stacks the pile higher."], "comments": ["Which tile would you tap next? 👇 {url}", "That tray got scary full 😬 {url}", "What level are you on? {url}"]}, "pencil-pairs": {"lines": ["Link matching tiles with a path of no more than two turns.", "Paths can run around the outside edge of the board.", "Every match adds a second back to the clock.", "Clear the whole board before time runs out."], "comments": ["Can you spot the next pair? 👀 {url}", "What level are you on? {url}", "How fast did you clear it? 👇 {url}"]}, "graph-blocks": {"lines": ["Drag shapes onto the graph paper and clear rows and columns.", "Place all three pieces to get three new ones.", "Lines about to clear light up before you drop.", "The game ends when nothing fits."], "comments": ["Where would you put the next piece? 👇 {url}", "That was SO close 😬 {url}", "What's your best score? {url}"]}, "scribble-swap": {"lines": ["Swap two tiles to line up three or more of the same kind.", "Make matches on top of the sand to wash it away.", "Leftover moves turn into bonus points and stars.", "Every level has new goals."], "comments": ["That combo though 👀 {url}", "How many stars did you get? ⭐ {url}", "What level are you on? {url}"]}, "pencil-path": {"lines": ["Tap a turtle to send it crawling straight to the sea 🐢", "It only makes it if nothing is in its way.", "Every turtle that leaves opens a path for the others.", "Clear the whole island to finish the level."], "comments": ["Which turtle would you tap first? 👇 {url}", "What level are you on? {url}", "So satisfying when the last one goes 😌 {url}"]}, "paper-sub": {"lines": ["Steer a little submarine and fire streams of bubbles 🫧", "Bubbled creatures float away. Octopuses take two hits.", "Dodge the swooping creatures and their ink.", "Every third level is a bonus parade."], "comments": ["What level are you on? {url}", "That ink came out of nowhere 😤 {url}", "How many subs did you have left? 👇 {url}"]}, "color-by-pencil": {"lines": ["Pick a colour and fill every numbered square 🎨", "Hold and drag to fill a bunch at once.", "Watch the picture come to life one colour at a time.", "The calmest game on Sketchpad Arcade."], "comments": ["Which picture should I do next? 👇 {url}", "So relaxing 😌 {url}", "Who else finds this weirdly calming? {url}"]}, "gem-sketch": {"lines": ["Every gem starts in the wrong spot. Put them all back 💎", "Pick up touching gems of the same colour all at once.", "Stash gems in the tray until you find their spot.", "Watch the picture rebuild itself."], "comments": ["What level are you on? {url}", "That last gem though 😌 {url}", "Satisfying or tricky? 👇 {url}"]}, "word-scribble": {"lines": ["Drop letter bubbles. Matching colours unscramble into a hidden word.", "Two of the same letter merge into silver, then gold.", "Swipe across bubbles to spell the hidden words.", "A merge game and a word game in one."], "comments": ["Did you spot the word before I did? 👀 {url}", "What level are you on? {url}", "Word nerds, how did I do? 👇 {url}"]}}};</script>
+<script>
+(()=>{
+const D=window.REEL||{games:[],hooks:{}};
+const $=s=>document.querySelector(s);
+const stage=$('#stage'),frame=$('#frame'),game=$('#game'),hookEl=$('#hook span'),intro=$('#intro'),outro=$('#outro'),bar=$('#bar'),tip=$('#tip'),menu=$('#menu'),setup=$('#setup'),cta=$('#cta');
+const VW=390; // games are laid out at a normal phone width, then scaled into the frame
+let S={slug:(D.games[0]||{}).slug,hook:0,custom:'',layout:'framed',len:'20',intro:true,outro:true};
+try{Object.assign(S,JSON.parse(localStorage.getItem('spa-reel')||'{}'))}catch(e){}
+if(!D.games.some(g=>g.slug===S.slug))S.slug=(D.games[0]||{}).slug;
+const save=()=>{try{localStorage.setItem('spa-reel',JSON.stringify(S))}catch(e){}};
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=t=>esc(t).replace(/\*([^*]+)\*/g,'<mark>$1</mark>');
+const G=()=>D.games.find(g=>g.slug===S.slug)||D.games[0];
+const hooksFor=s=>(D.hooks[s]&&D.hooks[s].length?D.hooks[s]:D.hooks._generic||[]).map(h=>h.replace(/\{name\}/g,(D.games.find(g=>g.slug===s)||{}).name||''));
+const hookText=()=>S.hook==='custom'?(S.custom.trim()||G().name):(hooksFor(S.slug)[S.hook]||hooksFor(S.slug)[0]||G().name);
+
+/* ---- setup panel ---- */
+const gamesEl=$('#games');
+D.games.forEach(g=>{const b=document.createElement('button');b.type='button';b.dataset.slug=g.slug;
+  b.innerHTML=`<img src="/img/${g.slug}.jpg" alt="" loading="lazy"><span>${esc(g.name)}</span>`;
+  b.onclick=()=>{S.slug=g.slug;S.hook=0;save();paint()};gamesEl.appendChild(b)});
+function paintHooks(){
+  const box=$('#hooks');box.innerHTML='';
+  hooksFor(S.slug).forEach((h,i)=>{const l=document.createElement('label');
+    l.innerHTML=`<input type="radio" name="hook" ${S.hook===i?'checked':''}><span>${fmt(h)}</span>`;
+    l.querySelector('input').onchange=()=>{S.hook=i;save()};box.appendChild(l)});
+  const l=document.createElement('label');
+  l.innerHTML=`<input type="radio" name="hook" ${S.hook==='custom'?'checked':''}><input type="text" placeholder="Write your own hook…" maxlength="70">`;
+  const [r,t]=l.querySelectorAll('input');t.value=S.custom;
+  r.onchange=()=>{S.hook='custom';save();t.focus()};
+  t.oninput=()=>{S.custom=t.value;S.hook='custom';r.checked=true;save()};
+  t.onfocus=()=>{S.hook='custom';r.checked=true;save()};
+  box.appendChild(l);
+}
+function seg(id,key){const el=$('#'+id);el.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.v===String(S[key])));
+  b.onclick=()=>{S[key]=b.dataset.v;save();seg(id,key)}})}
+function paint(){
+  gamesEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.slug===S.slug)));
+  paintHooks();seg('layout','layout');seg('len','len');
+  $('#optIntro').checked=S.intro;$('#optOutro').checked=S.outro;
+}
+$('#optIntro').onchange=e=>{S.intro=e.target.checked;save()};
+$('#optOutro').onchange=e=>{S.outro=e.target.checked;save()};
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const ios=/iP(hone|od|ad)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(ios&&!standalone)$('#homescreen').hidden=false;
+paint();
+
+/* ---- stage sizing: biggest 9:16 box that fits the screen ---- */
+function fit(){
+  const w=innerWidth,h=innerHeight;let W=w,H=w*16/9;if(H>h){H=h;W=h*9/16}
+  stage.style.setProperty('--W',W+'px');stage.style.setProperty('--H',H+'px');
+  document.documentElement.style.setProperty('--W',W+'px');document.documentElement.style.setProperty('--H',H+'px');
+  layoutFrame(W,H);
+}
+function layoutFrame(W,H){
+  let vh,box;
+  if(stage.classList.contains('full')){vh=Math.round(VW*H/W);box={l:0,t:0,w:W,h:H}}
+  else{vh=640;const ah=H*.705,aw=W*.92;let fh=ah,fw=fh*VW/vh;if(fw>aw){fw=aw;fh=fw*vh/VW}
+    box={l:(W-fw)/2,t:H*.16+(ah-fh)/2,w:fw,h:fh}}
+  Object.assign(frame.style,{left:box.l+'px',top:box.t+'px',width:box.w+'px',height:box.h+'px'});
+  Object.assign(game.style,{width:VW+'px',height:vh+'px',transform:`scale(${box.w/VW})`});
+  const tw=W*.2,th=W*.058;
+  Object.assign($('#tape1').style,{left:(box.l-tw*.32)+'px',top:(box.t-th*.25)+'px',transform:'rotate(-38deg)'});
+  Object.assign($('#tape2').style,{left:(box.l+box.w-tw*.68)+'px',top:(box.t-th*.25)+'px',transform:'rotate(36deg)'});
+}
+addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,300));
+
+/* pencil doodles in the margins: stars, hearts, spirals, squiggles and little clouds, gently wiggling */
+const DOOD=[
+  ['M12 2l2.9 6.4 7 .7-5.3 4.7 1.6 6.9L12 17.2 5.8 20.7l1.6-6.9L2.1 9.1l7-.7z','#c99a1a','rgba(243,230,176,.8)'],
+  ['M12 20s-7.5-4.6-9-9.3C1.9 7 4.2 4 7.2 4c2 0 3.6 1.3 4.8 3 1.2-1.7 2.8-3 4.8-3 3 0 5.3 3 4.2 6.7-1.5 4.7-9 9.3-9 9.3z','#c45a8a','rgba(240,213,226,.75)'],
+  ['M12 12.5c0-.8.9-1.2 1.5-.7.8.7.4 2.1-.6 2.5-1.5.5-3-.6-3.1-2.2-.1-2.2 2-3.8 4.1-3.4 2.8.5 4.3 3.5 3.5 6.1-1 3.2-4.7 4.8-7.8 3.7-3.8-1.3-5.6-5.8-4.2-9.4','#2f6fb5','none'],
+  ['M2 14c2-4 4-4 6 0s4 4 6 0 4-4 6 0','#5a9a6a','none'],
+  ['M6 17h11a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6-1A4.5 4.5 0 0 0 6 17z','#2e2e33','rgba(255,255,255,.55)'],
+  ['M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4','#d9661a','none']];
+const dd=$('#doodles');
+[[4,9,0],[86,24,1],[3,47,2],[90,58,3],[6,79,4],[84,83,5],[46,92,0],[60,4,4]].forEach(([x,y,k],i)=>{
+  const [d,stroke,fill]=DOOD[k];const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 24 24');s.innerHTML=`<path d="${d}" stroke="${stroke}" fill="${fill}" stroke-width="1.6"/>`;
+  const z=(k===4?.11:k===5?.06:.075)+(i%3)*.01;
+  Object.assign(s.style,{left:x+'%',top:y+'%',width:`calc(var(--W)*${z})`,height:`calc(var(--W)*${z})`,animationDelay:(-i*.45)+'s',animationDuration:(2.6+i%4*.5)+'s'});
+  s.style.setProperty('--r',((i*37)%40-20)+'deg');dd.appendChild(s)});
+
+/* ---- the game ---- */
+function cleanGame(){ // hide the play page's back and share buttons inside the frame
+  try{const d=game.contentDocument;if(!d||d.getElementById('bda-reel-css'))return;const st=d.createElement('style');st.id='bda-reel-css';
+    st.textContent='.sa-back,.sa-share{display:none!important}';d.head.appendChild(st)}catch(e){}
+}
+game.addEventListener('load',cleanGame);
+function loadGame(){const g=G();game.src='/play/'+g.slug+(location.hostname==='localhost'?'.html':'');}
+
+/* ---- states ---- */
+let state='setup',timer=null,wake=null;
+async function keepAwake(){try{if('wakeLock' in navigator&&!wake){wake=await navigator.wakeLock.request('screen');wake.addEventListener('release',()=>wake=null)}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&state!=='setup')keepAwake()});
+function showTip(html){tip.querySelector('span').innerHTML=html;tip.hidden=false}
+tip.querySelector('.x').onclick=()=>{tip.hidden=true;try{localStorage.setItem('spa-reel-tip','1')}catch(e){}};
+function dressCards(){
+  const g=G();$('#bg').style.backgroundImage=`url(/img/${g.slug}.jpg)`;
+  intro.querySelector('.cover').src=outro.querySelector('.cover').src=`/img/${g.slug}.jpg`;
+  intro.querySelector('h2').innerHTML=fmt(hookText());
+  outro.querySelector('h2').innerHTML=`Play <mark>${esc(g.name)}</mark> free`;
+  hookEl.innerHTML=fmt(hookText());
+}
+function toStage(reload){
+  state='staging';clearTimeout(timer);setup.hidden=true;cta.hidden=true;
+  stage.className=S.layout==='full'?'full':'framed';fit();dressCards();
+  intro.hidden=true;intro.classList.remove('leave');outro.hidden=true;menu.hidden=true;bar.hidden=false;
+  if(reload||!game.src)loadGame();
+  let seen=false;try{seen=localStorage.getItem('spa-reel-tip')==='1'}catch(e){}
+  if(!seen)showTip('Play past the how-to screen so the game is ready, then tap <b>Ready</b>.');
+  keepAwake();
+}
+function arm(){
+  state='armed';bar.hidden=true;tip.hidden=true;menu.hidden=true;outro.hidden=true;stage.classList.remove('on');
+  intro.hidden=false;intro.classList.remove('leave');intro.classList.toggle('ghost',!S.intro);
+  if(!S.intro){showTip('Start your screen recording, then tap the game to begin.');setTimeout(()=>{if(state==='armed')tip.hidden=true},2500)}
+}
+function play(){
+  state='playing';tip.hidden=true;
+  if(!intro.hidden){intro.classList.add('leave');setTimeout(()=>{intro.hidden=true},500)}
+  void stage.offsetWidth;stage.classList.add('on');
+  const n=+S.len;if(n>0)timer=setTimeout(end,n*1000+(S.intro?500:0));
+  if(!S.intro)intro.hidden=true;
+}
+function end(){
+  clearTimeout(timer);if(state!=='playing')return;state='ended';
+  if(S.outro)outro.hidden=false;else{menu.hidden=false}
+}
+// taps on the stage
+intro.addEventListener('click',()=>{if(state==='armed')play()});
+$('#bug').onclick=e=>{e.stopPropagation();if(state==='playing')end()};
+outro.addEventListener('click',()=>{if(state==='ended')menu.hidden=false});
+$('#again').onclick=e=>{e.stopPropagation();outro.hidden=true;menu.hidden=true;stage.classList.remove('on');toStage(true)};
+$('#change').onclick=e=>{e.stopPropagation();toSetup()};
+$('#ready').onclick=arm;
+$('#reload').onclick=()=>{game.src='about:blank';setTimeout(loadGame,30)};
+$('#back').onclick=toSetup;
+function toSetup(){state='setup';clearTimeout(timer);bar.hidden=true;tip.hidden=true;menu.hidden=true;intro.hidden=true;outro.hidden=true;stage.classList.remove('on');
+  setup.hidden=false;cta.hidden=false;paint()}
+$('#load').onclick=()=>{const changed=!game.src||!game.src.includes('/play/'+S.slug);toStage(changed)};
+
+/* ---- post text: title, caption and first comment, written from the game, the hook and src/reel-copy.json.
+   Each piece is picked at random from what this game hasn't used yet; a piece counts as used once you copy it. ---- */
+const C=D.copy||{};
+const plain=t=>t.replace(/\*/g,'').trim();
+const tagify=t=>'#'+t.replace(/[^A-Za-z0-9 ]/g,'').split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join('');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let USED={};try{USED=JSON.parse(localStorage.getItem('spa-reel-used')||'{}')}catch(e){}
+const saveUsed=()=>{try{localStorage.setItem('spa-reel-used',JSON.stringify(USED))}catch(e){}};
+function pools(g){
+  const gc=C[g.slug]||{};
+  return {t:C._titles||['{hook} | {name}'],l:(gc.lines&&gc.lines.length?gc.lines:[g.tagline]),a:C._ctas||['🎮 Play free: {url} (link in bio)'],
+    c:[...(gc.comments||[]),...(C._comments||[])]};
+}
+function pickFresh(slug,k,list,avoid){ // random index this game hasn't used, never the one on screen
+  const used=((USED[slug]||{})[k])||[];
+  let free=list.map((_,i)=>i).filter(i=>!used.includes(i)&&i!==avoid);
+  if(!free.length)free=list.map((_,i)=>i).filter(i=>i!==avoid);
+  if(!free.length)free=[0];
+  return free[Math.floor(Math.random()*free.length)];
+}
+let cur=null;
+function buildPost(){
+  const g=G(),P=pools(g),prev=cur&&cur.slug===g.slug?cur:{};
+  const pick={t:pickFresh(g.slug,'t',P.t,prev.t),l:pickFresh(g.slug,'l',P.l,prev.l),a:pickFresh(g.slug,'a',P.a,prev.a),c:pickFresh(g.slug,'c',P.c,prev.c)};
+  const T=C._tags||{};
+  const tags=[...new Set([tagify(g.name),...(T.core||['#SketchpadArcade']),...shuffle(T[g.genre]||[]).slice(0,4),...shuffle(T.general||[]).slice(0,5)])];
+  cur={slug:g.slug,...pick,tags};
+}
+function postText(){
+  const g=G(),P=pools(g),h=plain(hookText()),url='sketchpadarcade.com/'+g.slug;
+  const fill=t=>t.replace(/\{hook\}/g,h).replace(/\{name\}/g,g.name).replace(/\{url\}/g,url);
+  return {title:fill(P.t[cur.t]),desc:`${h}\n\n${fill(P.l[cur.l])}\n${fill(P.a[cur.a])}\n\n${cur.tags.join(' ')}`,comment:fill(P.c[cur.c])};
+}
+function markUsed(){
+  if(!cur)return;const u=USED[cur.slug]=USED[cur.slug]||{};const P=pools(G());
+  for(const k of ['t','l','a','c']){u[k]=u[k]||[];if(!u[k].includes(cur[k]))u[k].push(cur[k]);if(u[k].length>=P[k].length)u[k]=[cur[k]]}
+  saveUsed();
+}
+const pf={title:$('#p-title'),desc:$('#p-desc'),comment:$('#p-comment')};
+function fillPost(fresh){if(fresh||!cur||cur.slug!==G().slug)buildPost();const t=postText();for(const k in pf)pf[k].value=t[k];
+  document.querySelectorAll('#post .copy').forEach(b=>{b.textContent='Copy';b.classList.remove('done')})}
+function openPost(){fillPost(!cur||cur.slug!==G().slug||cur.hook!==hookText());cur.hook=hookText();$('#post').hidden=false}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();return ok}}
+document.querySelectorAll('#post .copy').forEach(b=>b.onclick=async()=>{const ok=await copyText(pf[b.dataset.k].value);if(ok)markUsed();b.textContent=ok?'Copied!':'Select & copy';b.classList.toggle('done',ok)});
+$('#p-new').onclick=()=>{const h=cur&&cur.hook;fillPost(true);cur.hook=h};
+$('#p-close').onclick=()=>{$('#post').hidden=true};
+$('#post').addEventListener('click',e=>{if(e.target.id==='post')$('#post').hidden=true});
+$('#postbtn').onclick=e=>{e.stopPropagation();openPost()};
+$('#postprev').onclick=openPost;
+fit();
+})();
+</script>
+</body>
+</html>
