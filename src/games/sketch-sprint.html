@@ -540,20 +540,15 @@ const IMGSPR={
   'wall-brick':['w',1.75],'wall-beach':['w',1.75],'wall-pond':['w',1.75],'wall-river':['w',1.75],'wall-marsh':['w',1.75],'wall-woods':['w',1.75],
   'board-rocket':['w',1.1],'board-wave':['w',1.1],'board-sunset':['w',1.1],'board-shark':['w',1.1],'board-pineapple':['w',1.1],'board-lightning':['w',1.1]
 };
-const BOARDS=['rocket','wave','sunset','shark','pineapple','lightning'];let board='rocket';
+const BOARDS=['rocket','wave','sunset','shark','pineapple','lightning']; // skateboard pickup designs
 /* Mark's pencil runners (and the four animal buddies): every pose of one character shares one scale, ['px', meters per pixel],
    so the run cycle never changes size. The run frames share one canvas with the feet on the bottom edge.
    Their SURF pose has its own skateboard drawn in, and DOWN is a crouch rather than lying flat. */
-const PXH={therese:307,joan:287,catherine:304,john:307,joseph:297,coral:124,gully:123,pip:134,shelly:114};
-const PENCILKID=new Set(['therese','joan','catherine','john','joseph']),PETS=new Set(['coral','gully','pip','shelly']);
-const OWNBOARD=id=>PXH[id]&&hasImg(id+'-surf'),CROUCH=id=>!!PXH[id];
+const PXH={francis:287,clare:291,george:297,therese:307,joan:287,catherine:304,john:307,joseph:297,coral:124,gully:123,pip:134,shelly:114};
+const PENCILKID=new Set(['francis','clare','george','therese','joan','catherine','john','joseph']),PETS=new Set(['coral','gully','pip','shelly']);
 Object.keys(PXH).forEach(id=>{const mpp=(PETS.has(id)?.9:1.35)/PXH[id];
   for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=['px',mpp];['jump','slide','down','surf'].forEach(p=>IMGSPR[id+'-'+p]=['px',mpp]);
   if(PENCILKID.has(id))IMGSPR[id+'-face']=['h',1]});
-// Francis, Clare and George still use the earlier sprites
-['francis','clare','george'].forEach(id=>{for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=['h',1.35];
-  IMGSPR[id+'-slide']=['h',.9];IMGSPR[id+'-down']=['h',1.3];IMGSPR[id+'-jump']=['h',1.15];IMGSPR[id+'-surf']=['h',1.2]});
-
 const IMGFILE={pipBubble:'shield',pine2:'pine'};
 const IMG={},BGIMG={};let imgsReady=0,pickTO=0;
 function loadArt(){
@@ -1024,7 +1019,7 @@ function gotPower(k,p){
     let l=P.lane;const end=dist+speed*(KITE_T*C.kite-.6);for(let z=dist+speed*1.1,i=0;z<end;z+=2.4,i++){if(i>0&&i%8===0){l=Math.max(0,Math.min(2,l+(Math.random()<.5?-1:1)))}
       shellArr.push({lane:l,x:laneX(l),y:KITE_Y+.55,z,k:'shellB',got:false,mag:false})}}
   else if(k==='magnet'){P.magnetT=MAGNET_T*C.magnet;sfx.magnet();sfx.yay();banner('Magnet!<small>Stars come to you</small>',1300)}
-  else if(k==='boost'||k==='pad'){P.boostT=BOOST_T*(C.boost||1);board=BOARDS[Math.floor(Math.random()*BOARDS.length)];P.slideT=0;sfx.boost();sfx.yay();banner((k==='pad'?'Turbo!':'Skateboard!')+'<small>Zoom through anything</small>',1300);shake=RM?0:.15}
+  else if(k==='boost'||k==='pad'){P.boostT=BOOST_T*(C.boost||1);P.slideT=0;sfx.boost();sfx.yay();banner((k==='pad'?'Turbo!':'Skateboard!')+'<small>Zoom through anything</small>',1300);shake=RM?0:.15}
   else {P.shieldT=SHIELD_T*C.shield;sfx.bubble();sfx.yay();banner('Bubble!<small>Saves you from one bump</small>',1300)}
   floatTxt(sx,sy-24,k==='kite'?'Whee!':k==='magnet'?'Zoom!':k==='boost'||k==='pad'?'Turbo!':'Boing!','#9a9a9f',20);
 }
@@ -1316,17 +1311,13 @@ function drawRunner(){
     const kp=proj(rx+.3,P.y+2.6+Math.sin(T*2)*.15,1.2),S=SPR.kite,w=S.w*kp[2]*1.6,h=S.h*kp[2]*1.6;
     ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(fp[0],fp[1]-1.2*p);ctx.lineTo(kp[0],kp[1]-h*.4);ctx.stroke();
     ctx.save();ctx.translate(kp[0],kp[1]-h*.6);ctx.rotate(Math.sin(T*2.4)*.12);ctx.drawImage(S.c,-w/2,-h/2,w,h);ctx.restore()}
-  if(P.boostT>0){// rocket surfboard under the feet
-    const B=SPR['board-'+board],bp=proj(rx,P.y-.02,0);let h;
-    if(OWNBOARD(C.id)&&!P.air)h=.25*p;
-    else if(B&&B.img){const w=B.w*p*1.35;h=B.h*p*1.35*.55;const wob=boardRock();ctx.save();ctx.translate(bp[0],bp[1]);ctx.rotate(wob);ctx.drawImage(B.c,-w/2,-h*.72,w,h);ctx.restore()}
-    else{const S=SPR.boost,w=S.w*p*1.5;h=S.h*p*1.5;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-h*.55,w,h)}
-    // orange pencil speed dashes trailing off the wheels
+  if(P.boostT>0){// every runner's SURF pose has its own skateboard; just add orange pencil speed dashes trailing off the wheels
+    const bp=proj(rx,P.y-.02,0),h=.25*p;
     ctx.strokeStyle='#d9661a';ctx.lineCap='round';ctx.lineWidth=Math.max(1.2,p*.05);for(let i=0;i<4;i++){const u=((T*5+i*.25)%1),dx=(i-1.5)*p*.22;ctx.globalAlpha=1-u;ctx.beginPath();ctx.moveTo(bp[0]+dx,bp[1]+h*.15+u*p*.5);ctx.lineTo(bp[0]+dx*1.15,bp[1]+h*.15+u*p*.5+p*.22);ctx.stroke()}ctx.globalAlpha=1;ctx.lineCap='butt'}
   const blink=P.invT>0&&state==='play'&&Math.floor(T*16)%2===0&&P.shieldT<=0&&P.boostT<=0;
   const downS=SPR[C.id+'-down'],hasDown=downS&&downS.img,dying=state==='dying'||state==='over',lying=dying&&hasDown&&deadT>.18;
-  if(lying&&CROUCH(C.id)){const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1+.06*(1-k),.9+.1*k);ctx.drawImage(downS.c,-w/2,-h,w,h);ctx.restore()}
-  else if(lying){const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,.6+.4*k);ctx.drawImage(downS.c,-w/2,-h*.78,w,h);ctx.restore()}
+  if(lying){// crouched, dazed, feet on the ground
+    const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1+.06*(1-k),.9+.1*k);ctx.drawImage(downS.c,-w/2,-h,w,h);ctx.restore()}
   else if(dying&&hasDown){// the first beat of a crash: standing, tipping back
     const k=Math.min(1,deadT/.18);ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,1-.35*k);ctx.translate(-fp[0],-fp[1]);
     drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:0,sq:0,slide:0,air:false,tumble:0,dir:1,wob:0});ctx.restore()}
@@ -1334,7 +1325,7 @@ function drawRunner(){
   if(P.shieldT>0){const S=SPR.pipBubble,bp=proj(rx,P.y+(P.slideT>0?.35:.68),0),w=S.w*p*(1+.03*Math.sin(T*6)),a=P.shieldT<2.5?(.5+.5*Math.sin(T*18)):1;
     ctx.globalAlpha=a;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-w/2,w,w);ctx.globalAlpha=1}
   if(P.magnetT>0){ctx.strokeStyle='rgba(201,154,26,.6)';ctx.lineWidth=2;const r=(T*1.5%1);ctx.globalAlpha=1-r;ctx.beginPath();ctx.ellipse(fp[0],fp[1]-.6*p,(.6+r*.8)*p,(.6+r*.8)*p*.6,0,0,7);ctx.stroke();ctx.globalAlpha=1}
-  if((state==='dying'||state==='over')&&(!lying||CROUCH(C.id))){// dizzy stars
+  if(state==='dying'||state==='over'){// dizzy stars
     const hp=proj(rx,P.y+(lying?downS.h*.95:1.3),0);for(let i=0;i<3;i++){const a=T*4+i*2.1;drawStar(hp[0]+Math.cos(a)*.42*p,hp[1]+Math.sin(a)*.12*p-.15*p,.1*p,'#c99a1a')}}
   if(P.stumbleT>0&&state==='play'){const hp=proj(rx,P.y+1.5,0);ctx.fillStyle='#2f6fb5';ctx.globalAlpha=Math.min(1,P.stumbleT)*.9;
     ctx.beginPath();const dx=hp[0]+.32*p,dy=hp[1]+Math.sin(T*6)*2;ctx.moveTo(dx,dy-.12*p);ctx.quadraticCurveTo(dx+.07*p,dy,dx,dy+.04*p);ctx.quadraticCurveTo(dx-.07*p,dy,dx,dy-.12*p);ctx.fill();ctx.globalAlpha=1}
