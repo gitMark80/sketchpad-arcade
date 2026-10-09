@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Lighthouse Sketch: Doodle Drop redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly hand-drawn
-   borders, and coloured-pencil accents for the urchins (purple), jellyfish (pink) and splash pool (blue). */
+/* Doodle Drop: a giant pencil with paper ramp rings, drawn like a 10-year-old's sketchbook. Paper, graphite lines, wobbly
+   hand-drawn borders, and coloured-pencil accents only for the hazards: pink spiky scribbles and purple ink blots. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --purple:#6f4a9a; --pink:#c45a8a;
@@ -73,6 +73,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
 .rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);color:var(--ink);font:400 .85rem var(--display);line-height:1}
 .rules em{font-style:normal;color:var(--purple);text-decoration:underline wavy var(--purple)}
+.rules em.pk{color:var(--pink);text-decoration-color:var(--pink)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 0}
 .stats div{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:6px 4px}
 .stats b{display:block;font:400 1.3rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
@@ -115,7 +116,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back" href="../doodle-drop.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Doodle Drop</h1><button class="sa-share" type="button" aria-label="Share Doodle Drop" data-share-url="https://www.sketchpadarcade.com/doodle-drop" data-share-title="Doodle Drop" data-share-text="Play Doodle Drop free on Sketchpad Arcade! Spin a striped lighthouse and drop a bouncy beach ball down to the pool."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back" href="../doodle-drop.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Doodle Drop</h1><button class="sa-share" type="button" aria-label="Share Doodle Drop" data-share-url="https://www.sketchpadarcade.com/doodle-drop" data-share-title="Doodle Drop" data-share-text="Play Doodle Drop free on Sketchpad Arcade! Spin a giant pencil and drop a bouncy striped ball down to the pencil cup."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button" aria-label="How to play">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2e2e33"/><path d="M9.2 9.3a2.9 2.9 0 1 1 4.2 2.6c-.9.5-1.4 1-1.4 2v.6" stroke="#f6f3ea" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="#f6f3ea"/></svg>
     </button>
@@ -131,20 +132,20 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   </div>
 
   <div class="field" id="field">
-    <canvas id="cv" aria-label="Lighthouse tower. Drag left or right, or hold the arrow keys, to spin the tower so the beach ball drops through the gaps."></canvas>
+    <canvas id="cv" aria-label="Giant pencil tower. Drag left or right, or hold the arrow keys, to spin the pencil so the striped ball drops through the gaps in the paper rings."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
-    <div class="hint gone" id="hint">Drag to spin the lighthouse</div>
+    <div class="hint gone" id="hint">Drag to spin the pencil</div>
 
     <div class="cover" id="start">
       <div class="card">
         <canvas id="mini" aria-hidden="true"></canvas>
         <h2>Drop to the bottom!</h2>
         <ul class="rules">
-          <li><b>1</b><span>Drag left and right (or hold the arrow keys) to spin the lighthouse.</span></li>
-          <li><b>2</b><span>Line up the gaps so the bouncy ball drops down, disc by disc.</span></li>
-          <li><b>3</b><span>Don't land on the <em>purple sea urchins</em> or the <em>pink jellyfish</em>!</span></li>
-          <li><b>4</b><span>Drop through 3 discs in a row to glow, then smash right through the next one.</span></li>
-          <li><b>5</b><span>Splash into the pool at the bottom to clear the level.</span></li>
+          <li><b>1</b><span>Drag left and right (or hold the arrow keys) to spin the giant pencil.</span></li>
+          <li><b>2</b><span>Line up the gaps so the bouncy ball drops down, ring by ring.</span></li>
+          <li><b>3</b><span>Don't land on the <em class="pk">pink scribbles</em> or the <em>purple ink blots</em>!</span></li>
+          <li><b>4</b><span>Drop through 3 rings in a row to glow, then smash right through the next one.</span></li>
+          <li><b>5</b><span>Bounce into the pencil cup at the bottom to clear the level.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <button class="btn3" id="contBtn" type="button" hidden>Start at level 2</button>
@@ -156,11 +157,11 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
         <h2 id="helpTitle">How to play</h2>
         <ul class="rules">
-          <li><b>1</b><span>The beach ball bounces by itself. Drag the lighthouse left or right to spin it. Arrow keys or A and D work too.</span></li>
-          <li><b>2</b><span>Turn a gap under the ball to drop through. Every disc you pass scores points, and more in a row score more.</span></li>
-          <li><b>3</b><span>Sandy discs are safe to bounce on. <em>Purple sea urchins</em> and <em>sliding pink jellyfish</em> pop your ball.</span></li>
-          <li><b>4</b><span>Fall through 3 discs without bouncing and your ball glows with a rainbow. The next disc it hits shatters, urchins and all!</span></li>
-          <li><b>5</b><span>Land in the splash pool at the bottom to clear the level. Each new lighthouse is taller and trickier.</span></li>
+          <li><b>1</b><span>The striped ball bounces by itself. Drag the pencil left or right to spin it. Arrow keys or A and D work too.</span></li>
+          <li><b>2</b><span>Turn a gap under the ball to drop through. Every ring you pass scores points, and more in a row score more.</span></li>
+          <li><b>3</b><span>Plain paper rings are safe to bounce on. <em class="pk">Spiky pink scribbles</em> and <em>sliding purple ink blots</em> pop your ball.</span></li>
+          <li><b>4</b><span>Fall through 3 rings without bouncing and your ball glows with a rainbow. The next ring it hits shatters, scribbles and all!</span></li>
+          <li><b>5</b><span>Land in the pencil cup at the bottom to clear the level. Each new pencil is taller and trickier.</span></li>
         </ul>
         <button class="big" id="helpClose" type="button">Got it</button>
       </div>
@@ -178,9 +179,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <div class="card" id="overCard" role="dialog" aria-modal="true" aria-labelledby="overTitle">
         <span class="newbest" id="newBest" hidden>New best score!</span>
         <h2 id="overTitle">Pop!</h2>
-        <p id="overText">Your ball bumped a sea urchin.</p>
+        <p id="overText">Your ball bumped a scribble.</p>
         <div class="bigscore" id="overScore">0</div>
-        <div class="stats"><div><b id="stLevel">1</b><span>level</span></div><div><b id="stDiscs">0</b><span>discs dropped</span></div><div><b id="stBest">0</b><span>best</span></div></div>
+        <div class="stats"><div><b id="stLevel">1</b><span>level</span></div><div><b id="stDiscs">0</b><span>rings dropped</span></div><div><b id="stBest">0</b><span>best</span></div></div>
         <button class="big" id="retryBtn" type="button">Retry level 1</button>
         <button class="btn3" id="restartBtn" type="button">Start over from level 1</button>
       </div>
@@ -202,7 +203,7 @@ let best=+store.get('best',0)||0, topLevel=+store.get('level',1)||1, muted=!!sto
 /* ---------- world constants (world units; 400 across the reference field) ---------- */
 const SEGS=12, SEGW=TAU/SEGS;
 const D=150;          // vertical gap between discs
-const RC=40;          // lighthouse column radius
+const RC=40;          // pencil (column) radius
 const RO=150;         // disc outer radius
 const RB=95;          // ring radius the ball travels on
 const BR=17;          // ball radius
@@ -214,16 +215,15 @@ const KEYSPD=3.6;     // radians/s when holding a key
 
 /* ---------- palettes (one per level, cycling) ---------- */
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
-const PALS=[{top:'#f0ece1',top2:'#d9d5c9',side:'#e6e2d6',side2:'#9a9a9f',rim:'#2e2e33',stripe:'#8f8d86',sky:['#f6f3ea','#f6f3ea','#f6f3ea'],sea:['#dedcd4','#c9c6bc'],sun:'#f6f3ea'}];
+const PALS=[{top:'#f0ece1',top2:'#d9d5c9',side:'#e6e2d6',side2:'#cfccc2',rim:'#2e2e33',stripe:'#8f8d86',sky:['#f6f3ea','#f6f3ea','#f6f3ea'],sea:['#dedcd4','#c9c6bc'],sun:'#f6f3ea'}];
 let pal=PALS[0];
 
 /* ---------- painted art (falls back to the drawn versions until loaded) ---------- */
 const ART={};
 for(const k of ['bg','ball','urchin','jelly','pool','splat','island','lantern','disc','porthole']){const im=new Image();im.decoding='async';
-  im.onload=()=>{if(k==='bg')buildBg();else if(k==='urchin'||k==='jelly'||k==='disc')buildSprites()};
+  im.onload=()=>{if(k==='bg')buildBg();else if(k==='urchin'||k==='jelly'||k==='disc')buildSprites();if(state==='menu'&&typeof drawMini==='function')try{drawMini()}catch(e){}};
   im.src='../assets/doodle-drop/'+k+(k==='bg'?'.jpg':'.webp');ART[k]=im}
 const ok=im=>im&&im.complete&&im.naturalWidth>0;
-let seaTop=.64,seaBot=1; // sea band (fraction of H) for the sparkles
 
 /* ---------- canvas + layout ---------- */
 const cv=$('cv'),ctx=cv.getContext('2d'),field=$('field');
@@ -246,11 +246,11 @@ function buildGradients(){
   const top=ctx.createRadialGradient(cx-ro*.35,-ry*.55,ro*.05,cx,0,ro*1.15);
   top.addColorStop(0,shade(pal.top,.55));top.addColorStop(.38,pal.top);top.addColorStop(1,pal.top2);
   const side=ctx.createLinearGradient(cx-ro,0,cx+ro,0);
-  side.addColorStop(0,pal.side2);side.addColorStop(.3,shade(pal.side,.12));side.addColorStop(.62,pal.side);side.addColorStop(1,pal.side2);
+  side.addColorStop(0,pal.side2);side.addColorStop(.3,'#f0ece1');side.addColorStop(.62,pal.side);side.addColorStop(1,pal.side2);
   const haz=ctx.createRadialGradient(cx-ro*.35,-ry*.55,ro*.05,cx,0,ro*1.15);
-  haz.addColorStop(0,'#e6dcef');haz.addColorStop(.5,'#cdbbdf');haz.addColorStop(1,'#a98dc4');
+  haz.addColorStop(0,'#f6e6ee');haz.addColorStop(.5,'#f0d5e2');haz.addColorStop(1,'#e9c3d6');
   const hazSide=ctx.createLinearGradient(cx-ro,0,cx+ro,0);
-  hazSide.addColorStop(0,'#6f4a9a');hazSide.addColorStop(.35,'#9f85bb');hazSide.addColorStop(.65,'#8f72ae');hazSide.addColorStop(1,'#6f4a9a');
+  hazSide.addColorStop(0,'#c45a8a');hazSide.addColorStop(.35,'#e3a9c4');hazSide.addColorStop(.65,'#d892b3');hazSide.addColorStop(1,'#c45a8a');
   const pool=ctx.createRadialGradient(cx-ro*.25,-ry*.4,ro*.05,cx,0,ro);
   pool.addColorStop(0,'#e4eef5');pool.addColorStop(.45,'#bcd3e4');pool.addColorStop(1,'#8fb2cc');
   const poolSide=ctx.createLinearGradient(cx-ro,0,cx+ro,0);
@@ -263,10 +263,10 @@ function buildGradients(){
 function artSprite(im,size){const c=document.createElement('canvas'),s=Math.ceil(size*U*dpr);c.width=c.height=s;const g=c.getContext('2d');
   const k=Math.min(s/im.naturalWidth,s/im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;g.imageSmoothingQuality='high';g.drawImage(im,(s-w)/2,(s-h)/2,w,h);return c}
 function buildSprites(){
-  // painted driftwood platform, pre-scaled to the disc size
+  // drawn paper ring, pre-scaled to the ring size
   if(ok(ART.disc)){const d=Math.ceil(RO*2*U*dpr);discSpr=document.createElement('canvas');discSpr.width=discSpr.height=d;const g=discSpr.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(ART.disc,0,0,d,d)}
   if(ok(ART.urchin)&&ok(ART.jelly)){urchinSpr=artSprite(ART.urchin,36);jellySpr=artSprite(ART.jelly,50);return}
-  // Cute sea urchin and jellyfish, pre-drawn once per resize.
+  // Fallback scribble and ink blot (until the drawn art loads), pre-drawn once per resize.
   const s=Math.ceil(30*U*dpr);urchinSpr=document.createElement('canvas');urchinSpr.width=urchinSpr.height=s;
   let g=urchinSpr.getContext('2d');g.scale(s/30,s/30);g.translate(15,16);
   g.strokeStyle='#6f4a9a';g.lineCap='round';g.lineWidth=1.6;
@@ -288,39 +288,19 @@ function buildSprites(){
   g.strokeStyle='#5a1240';g.lineWidth=1.2;g.beginPath();g.arc(0,-1.5,2,.3,Math.PI-.3);g.stroke();
 }
 
-/* ---------- background (sky, sea, islands) pre-drawn per resize/level ---------- */
+/* ---------- background (sketchbook page) pre-drawn per resize/level ---------- */
 function buildBg(){
   bgCv.width=Math.round(W*dpr);bgCv.height=Math.round(H*dpr);const g=bgCv.getContext('2d');g.scale(dpr,dpr);
-  if(ok(ART.bg)){ // painted beach, cover-fit and anchored to the top so the sky and horizon stay in view
-    const im=ART.bg,k=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k,x=(W-w)/2,y=Math.min(0,(H-h)*.35);
+  if(ok(ART.bg)){ // drawn sketchbook page (pencil clouds and stars round the edges), cover-fit
+    const im=ART.bg,k=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k,x=(W-w)/2,y=(H-h)/2;
     g.imageSmoothingQuality='high';g.drawImage(im,x,y,w,h);
-    seaTop=(y+h*.46)/H;seaBot=Math.min(1,(y+h*.72)/H);
     if(pal.sky[0]!==PALS[0].sky[0]){ // a soft per-level tint so each tower still feels new
       const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,rgba(pal.sky[0].length===7?pal.sky[0]:'#ffffff',.28));gr.addColorStop(.6,rgba(pal.sky[2],.08));gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,W,H)}
     return}
-  seaTop=.64;seaBot=1;
-  const hz=H*.64;
-  let gr=g.createLinearGradient(0,0,0,hz);gr.addColorStop(0,pal.sky[0]);gr.addColorStop(.7,pal.sky[1]);gr.addColorStop(1,pal.sky[2]);g.fillStyle=gr;g.fillRect(0,0,W,hz+1);
-  // sun
-  const sx=W*.82,sy=H*.12,sr=Math.max(20,W*.07);
-  gr=g.createRadialGradient(sx,sy,0,sx,sy,sr*3.4);gr.addColorStop(0,'rgba(255,250,210,.95)');gr.addColorStop(.3,'rgba(255,240,170,.45)');gr.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gr;g.fillRect(0,0,W,hz);
-  g.fillStyle=pal.sun;g.beginPath();g.arc(sx,sy,sr,0,TAU);g.fill();
-  // clouds
-  const cloud=(x,y,s)=>{g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.ellipse(x,y,s*1.6,s*.55,0,0,TAU);g.ellipse(x-s*.6,y-s*.25,s*.65,s*.5,0,0,TAU);g.ellipse(x+s*.35,y-s*.4,s*.8,s*.62,0,0,TAU);g.fill();
-    g.fillStyle='rgba(180,220,235,.35)';g.beginPath();g.ellipse(x,y+s*.25,s*1.4,s*.22,0,0,TAU);g.fill()};
-  cloud(W*.16,H*.1,W*.06);cloud(W*.62,H*.22,W*.045);cloud(W*.1,H*.36,W*.035);
-  // sea
-  gr=g.createLinearGradient(0,hz,0,H);gr.addColorStop(0,pal.sea[0]);gr.addColorStop(1,pal.sea[1]);g.fillStyle=gr;g.fillRect(0,hz,W,H-hz);
-  g.fillStyle='rgba(255,255,255,.6)';g.fillRect(0,hz,W,1.5);
-  // distant islands with palms
-  const island=(x,w,h,palm)=>{g.fillStyle='rgba(60,140,120,.55)';g.beginPath();g.ellipse(x,hz,w,h,0,Math.PI,TAU);g.fill();
-    g.fillStyle='rgba(246,227,184,.8)';g.beginPath();g.ellipse(x,hz,w*1.05,h*.25,0,Math.PI,TAU);g.fill();
-    if(palm){g.strokeStyle='rgba(90,70,50,.6)';g.lineWidth=Math.max(1.2,w*.05);g.beginPath();g.moveTo(x+w*.2,hz-h*.6);g.quadraticCurveTo(x+w*.25,hz-h*1.6,x+w*.4,hz-h*2.3);g.stroke();
-      g.fillStyle='rgba(40,120,80,.75)';for(let k=0;k<5;k++){const a=-Math.PI*.95+k*Math.PI*.22;g.beginPath();g.ellipse(x+w*.4+Math.cos(a)*w*.28,hz-h*2.3+Math.sin(a)*w*.12+w*.06,w*.3,w*.06,a,0,TAU);g.fill()}}};
-  island(W*.12,W*.13,H*.03,true);island(W*.9,W*.09,H*.022,true);island(W*.72,W*.05,H*.012,false);
-  // soft sea bands
-  g.strokeStyle='rgba(255,255,255,.18)';g.lineWidth=1.5;
-  for(let k=1;k<9;k++){const y=hz+(H-hz)*Math.pow(k/9,1.4);g.beginPath();for(let x=0;x<=W;x+=10)g.lineTo(x,y+Math.sin(x*.05+k)*1.5);g.stroke()}
+  // fallback until the drawn page loads: plain paper with a couple of outlined pencil clouds
+  g.fillStyle=PAPER;g.fillRect(0,0,W,H);g.strokeStyle=PENCIL;g.lineWidth=1.6;g.fillStyle=PAPER;
+  const cloud=(x,y,s)=>{g.beginPath();g.ellipse(x,y,s*1.6,s*.55,0,0,TAU);g.moveTo(x-s*.6+s*.65,y-s*.25);g.ellipse(x-s*.6,y-s*.25,s*.65,s*.5,0,0,TAU);g.moveTo(x+s*.35+s*.8,y-s*.4);g.ellipse(x+s*.35,y-s*.4,s*.8,s*.62,0,0,TAU);g.fill();g.stroke()};
+  cloud(W*.16,H*.08,W*.05);cloud(W*.84,H*.2,W*.04);
 }
 
 /* ---------- sound (synthesized after the first tap) ---------- */
@@ -394,7 +374,7 @@ function buildLevel(L){
       for(let k=0;k<hn;k++){const j=Math.random()*cand.length|0;seg[cand[j]]=2;cand.splice(j,1)}
     }
     const d={i,y:i*D,seg,runs:null,mov:null,passed:false,passT:0,broken:false,goal:false,decals:[]};
-    // sliding jellyfish from level 4 on
+    // sliding ink blots ("jelly") from level 4 on
     if(L>=4&&i>1&&Math.random()<Math.min(.55,.15+(L-4)*.1)){
       let bestRun=null;for(let s=0;s<SEGS;s++){if(seg[s]===0||prevGap.has(s))continue;if(seg[(s+SEGS-1)%SEGS]!==0&&!prevGap.has((s+SEGS-1)%SEGS))continue;
         let n=0;while(n<SEGS&&seg[(s+n)%SEGS]!==0&&!prevGap.has((s+n)%SEGS))n++;if(!bestRun||n>bestRun.n)bestRun={s,n}}
@@ -463,7 +443,7 @@ function passDisc(d){
   d.passed=true;d.passT=0;ball.next++;ball.streak++;dropped++;
   const pts=5*Math.min(ball.streak,10);addScore(pts,ball.streak>1?`+${pts}  x${ball.streak}`:'+'+pts,ball.streak>=3?'#ffe27a':'#fff');
   sfx.whoosh(ball.streak);
-  if(ball.streak===3){sfx.glow();banner('Rainbow splash!<small>The next disc will shatter</small>',1100)}
+  if(ball.streak===3){sfx.glow();banner('Rainbow streak!<small>The next ring will shatter</small>',1100)}
 }
 function bounce(d,quiet){
   ball.y=d.y;ball.vy=-V0;ball.sqv=-9;ball.sq=.32;
@@ -476,7 +456,7 @@ function bounce(d,quiet){
 function splash(d,water){
   const y=d.y+RB*K;
   for(let k=0;k<(water?18:10);k++){const a=rnd(-Math.PI,0),v=rnd(80,260);
-    parts.push({x:rnd(-6,6),y,vx:Math.cos(a)*v,vy:Math.sin(a)*v*1.2-60,g:900,life:rnd(.35,.6),max:.6,r:rnd(1.6,3.6),col:water||Math.random()<.4?'#9fbcd6':pal.top2})}
+    parts.push({x:rnd(-6,6),y,vx:Math.cos(a)*v,vy:Math.sin(a)*v*1.2-60,g:900,life:rnd(.35,.6),max:.6,r:rnd(1.6,3.6),col:water?(Math.random()<.5?'#c99a1a':GRAPH):(Math.random()<.5?GRAPH:'#b9b6ad')})}
 }
 function smash(d){
   d.broken=true;ball.next++;dropped++;
@@ -485,7 +465,7 @@ function smash(d){
   for(const r of d.runs)for(let k=0;k<r.n;k++){const a=(r.s+k+.5)*SEGW+theta;
     for(const rr of [RC+30,RO-28]){const sp=rnd(220,420);
       pieces.push({x:Math.sin(a)*rr,y:d.y+Math.cos(a)*rr*K,vx:Math.sin(a)*sp+rnd(-40,40),vy:-rnd(180,420)+Math.cos(a)*60,rot:rnd(0,TAU),vr:rnd(-9,9),
-        w:rnd(22,32),h:rnd(10,15),c:r.t===2?'#cdbbdf':pal.top,c2:r.t===2?'#6f4a9a':pal.side,life:1.1})}}
+        w:rnd(22,32),h:rnd(10,15),c:r.t===2?'#f0d5e2':pal.top,c2:r.t===2?'#c45a8a':pal.side2,life:1.1})}}
   for(let k=0;k<26;k++){const a=rnd(0,TAU),v=rnd(120,380);parts.push({x:0,y:d.y+RB*K,vx:Math.cos(a)*v,vy:Math.sin(a)*v*.6-120,g:700,life:rnd(.4,.8),max:.8,r:rnd(2,4.5),col:['#d9661a','#c99a1a','#5a9a6a','#2f6fb5','#6f4a9a'][k%5]})}
   sfx.crunch();shake=RM?0:9;
   ball.y=d.y;ball.vy=-V0*.85;ball.sq=.3;ball.sqv=-8;ball.streak=0;
@@ -496,8 +476,8 @@ function goal(d){
   state='clear';stateT=0;ball.streak=0;ball.next=N;
   const bonus=25*level;addScore(bonus,`Level clear! +${bonus}`,'#ffe27a');
   splash(d,true);sfx.splash();sfx.fanfare();
-  for(let k=0;k<70;k++){const a=rnd(0,TAU),v=rnd(150,520);parts.push({x:rnd(-40,40),y:d.y,vx:Math.cos(a)*v,vy:-Math.abs(Math.sin(a))*v-200,g:600,life:rnd(.9,1.6),max:1.6,r:rnd(2.5,5),col:['#ff6b5e','#ffc93c','#6fe0a8','#5ab9ea','#ffffff','#ff9bd2'][k%6],conf:true,rot:rnd(0,TAU)})}
-  banner(`Level ${level} clear!<small>Next lighthouse coming up</small>`,1700);
+  for(let k=0;k<70;k++){const a=rnd(0,TAU),v=rnd(150,520);parts.push({x:rnd(-40,40),y:d.y,vx:Math.cos(a)*v,vy:-Math.abs(Math.sin(a))*v-200,g:600,life:rnd(.9,1.6),max:1.6,r:rnd(2.5,5),col:['#d9661a','#c99a1a','#5a9a6a','#2f6fb5','#6f4a9a','#c45a8a'][k%6],conf:true,rot:rnd(0,TAU)})}
+  banner(`Level ${level} clear!<small>Next pencil coming up</small>`,1700);
   if(level+1>topLevel){topLevel=level+1;store.set('level',topLevel)}
   saveBest();hud();
 }
@@ -528,7 +508,7 @@ function gameOver(){
   $('newBest').hidden=!isBest;
   const d=discs[ball.next];const jelly=d&&d.mov&&segUnder(d)===4;
   $('overTitle').textContent=jelly?'Squish!':'Pop!';
-  $('overText').textContent=jelly?'Your ball bumped a jellyfish.':'Your ball bumped a sea urchin.';
+  $('overText').textContent=jelly?'Your ball bumped an ink blot.':'Your ball bumped a scribble.';
   $('overScore').textContent=score;$('stLevel').textContent=level;$('stDiscs').textContent=dropped;$('stBest').textContent=best;
   $('retryBtn').textContent='Retry level '+level;$('restartBtn').hidden=level===1;
   show('over',true);
@@ -543,9 +523,9 @@ $('retryBtn').onclick=()=>{sfx.click();try{window.BDA&&BDA.hideScore&&BDA.hideSc
 $('restartBtn').onclick=()=>{sfx.click();try{window.BDA&&BDA.hideScore&&BDA.hideScore()}catch(e){};newGame(1)};
 let helpFrom=null;
 $('helpBtn').onclick=()=>{sfx.click();if(state==='play'){state='paused';helpFrom='play'}else helpFrom=state;
-  ['start','pause'].forEach(id=>show(id,false));show('help',true)};
+  ['start','pause','over'].forEach(id=>show(id,false));show('help',true)};
 $('helpClose').onclick=()=>{sfx.click();show('help',false);
-  if(helpFrom==='play'||helpFrom==='paused'){if(state==='paused')state='play'}else if(helpFrom==='menu')showStart()};
+  if(helpFrom==='play'||helpFrom==='paused'){if(state==='paused')state='play'}else if(helpFrom==='menu')showStart();else if(helpFrom==='over')show('over',true)};
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseGame();else if(ac&&ac.state!=='running')ac.resume()});
 function showStart(){state='menu';$('bestLine').textContent=`Best score: ${best}`+(topLevel>1?`  ·  Top level: ${topLevel}`:'');
   $('contBtn').hidden=topLevel<=1;$('contBtn').textContent='Start at level '+topLevel;show('start',true);drawMini()}
@@ -625,18 +605,22 @@ function drawPiece(pc,thick){
   if(pc.front){ // outer side band
     ctx.beginPath();ctx.ellipse(cx,0,RO*U,RO*U*K,0,HALF-pc.a,HALF-pc.b,true);ctx.ellipse(cx,thk,RO*U,RO*U*K,0,HALF-pc.b,HALF-pc.a,false);ctx.closePath();
     ctx.fillStyle=haz?grad.hazSide:pool?grad.poolSide:grad.side;ctx.fill();
+    ctx.strokeStyle=haz?'#c45a8a':INK;ctx.lineWidth=Math.max(1,1.3*U);ctx.beginPath();ctx.ellipse(cx,thk,RO*U,RO*U*K,0,HALF-pc.a,HALF-pc.b,true);ctx.stroke();
   }
   sectorPath(RC,RO,pc.a,pc.b);
   if(discSpr&&!haz&&!pool){ // painted planks that turn with the tower, plus a soft per-level tint
     const ro=RO*U;ctx.save();ctx.clip();ctx.save();ctx.translate(cx,0);ctx.scale(1,K);ctx.rotate(-theta);ctx.drawImage(discSpr,-ro,-ro,ro*2,ro*2);ctx.restore();
     if(pal!==PALS[0]){ctx.globalCompositeOperation='multiply';ctx.globalAlpha=.45;ctx.fillStyle=pal.top;ctx.fillRect(cx-ro,-ro,ro*2,ro*2)}
     ctx.restore();
-  }else{ctx.fillStyle=haz?grad.haz:pool?grad.pool:grad.top;ctx.fill()}
+  }else{ctx.fillStyle=haz?grad.haz:pool?grad.pool:grad.top;ctx.fill();
+    if(haz){ // pink coloured-pencil scribble hatching
+      ctx.save();ctx.clip();ctx.strokeStyle='rgba(196,90,138,.45)';ctx.lineWidth=Math.max(1,U*1.1);ctx.beginPath();
+      const ro=RO*U;for(let x=-ro;x<ro;x+=7*U){ctx.moveTo(cx+x,-ro*K);ctx.lineTo(cx+x+ro*K*1.4,ro*K)}ctx.stroke();ctx.restore()}}
   // seams between wedges inside a run
-  ctx.strokeStyle=haz?'rgba(111,74,154,.5)':'rgba(46,46,51,.25)';ctx.lineWidth=Math.max(1,U*1.2);
+  ctx.strokeStyle=haz?'rgba(196,90,138,.55)':'rgba(46,46,51,.25)';ctx.lineWidth=Math.max(1,U*1.2);
   if(!discSpr||haz){ctx.beginPath();for(let k=1;k<pc.rn;k++){const a=pc.rp0+k*SEGW;if(a>pc.a&&a<pc.b){ctx.moveTo(cx+Math.sin(a)*RC*U,Math.cos(a)*RC*U*K);ctx.lineTo(cx+Math.sin(a)*RO*U,Math.cos(a)*RO*U*K)}}ctx.stroke()}
-  // glossy rim
-  ctx.strokeStyle=haz?'#6f4a9a':pool?'#2f6fb5':INK;ctx.lineWidth=Math.max(1.2,1.6*U);
+  // pencil rim
+  ctx.strokeStyle=haz?'#c45a8a':pool?'#2f6fb5':INK;ctx.lineWidth=Math.max(1.2,1.6*U);
   ctx.beginPath();ctx.ellipse(cx,0,(RO-1.5)*U,(RO-1.5)*U*K,0,HALF-pc.a,HALF-pc.b,true);ctx.stroke();
   if(pool){ // life-ring stripes on the rim + ripples
     ctx.save();ctx.lineWidth=7*U;ctx.setLineDash([12*U,12*U]);ctx.strokeStyle=PAPER;ctx.beginPath();ctx.ellipse(cx,0,(RO-6)*U,(RO-6)*U*K,0,HALF-pc.a,HALF-pc.b,true);ctx.stroke();ctx.restore();
@@ -644,9 +628,9 @@ function drawPiece(pc,thick){
 }
 function endFace(a,thk,haz){
   const xi=cx+Math.sin(a)*RC*U,yi=Math.cos(a)*RC*U*K,xo=cx+Math.sin(a)*RO*U,yo=Math.cos(a)*RO*U*K;
-  ctx.beginPath();ctx.moveTo(xi,yi);ctx.lineTo(xo,yo);ctx.lineTo(xo,yo+thk);ctx.lineTo(xi,yi+thk);ctx.closePath();ctx.fillStyle=haz?'#6f4a9a':pal.side2;ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1;ctx.stroke()}
+  ctx.beginPath();ctx.moveTo(xi,yi);ctx.lineTo(xo,yo);ctx.lineTo(xo,yo+thk);ctx.lineTo(xi,yi+thk);ctx.closePath();ctx.fillStyle=haz?'#e3a9c4':pal.side2;ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1;ctx.stroke()}
 function drawHazardDeco(pc){
-  // little cute urchins sitting on hazard wedges
+  // angry pink scribbles sitting on hazard wedges
   const sw=urchinSpr.width/dpr;
   for(let k=0;k<pc.rn;k++){const base=pc.rp0+k*SEGW;
     for(const [f,rr] of [[.3,RB-28],[.7,RB+8],[.45,RB+38]]){const a=base+f*SEGW;if(a<pc.a||a>pc.b)continue;
@@ -663,7 +647,7 @@ function drawDecals(d,front){
 }
 function drawJelly(d,front){
   if(!d.mov)return;const a=jellyAngle(d)+theta;if((Math.cos(a)>0)!==front)return;
-  ctx.save();ctx.globalAlpha=.55;sectorPath(RC+4,RO-4,a-SEGW*.5,a+SEGW*.5);ctx.fillStyle='#e9c3d6';ctx.fill();ctx.restore();
+  ctx.save();ctx.globalAlpha=.55;sectorPath(RC+4,RO-4,a-SEGW*.5,a+SEGW*.5);ctx.fillStyle='#e6dcef';ctx.fill();ctx.globalAlpha=.8;ctx.strokeStyle='#6f4a9a';ctx.lineWidth=Math.max(1,U*1.2);ctx.setLineDash([4*U,3*U]);ctx.stroke();ctx.restore();
   const x=cx+Math.sin(a)*RB*U,y=Math.cos(a)*RB*U*K,sw=jellySpr.width/dpr,bob=Math.sin(T*4+d.i)*2*U;
   ctx.drawImage(jellySpr,x-sw/2,y-sw*.8+bob,sw,sw);
 }
@@ -673,10 +657,11 @@ function drawDisc(d,front){
   const cy=sy(d.y);ctx.save();ctx.translate(0,cy);
   if(d.passed){const k=d.passT;ctx.globalAlpha=1-k;const s=1+k*.35;ctx.translate(cx,-k*20*U);ctx.scale(s,s);ctx.translate(-cx,0)}
   if(d.goal&&ok(ART.pool)){
-    // back pass: whole pool; front pass: its near half again, so the column sinks into the water
-    const im=ART.pool,w=RO*U*2.2,h=w*im.naturalHeight/im.naturalWidth,y0=-RO*U*K*1.18;
-    if(!front)ctx.drawImage(im,cx-w/2,y0,w,h);
-    else{ctx.save();ctx.beginPath();ctx.rect(cx-w/2,RC*U*K*.2,w,h);ctx.clip();ctx.drawImage(im,cx-w/2,y0,w,h);ctx.restore()}
+    // back pass: the whole pencil cup; front pass: everything below the near lip of its opening again, so the pencil stands inside it
+    const c=cupBox();
+    if(!front)ctx.drawImage(ART.pool,c.x,c.y,c.w,c.h);
+    else{ctx.save();ctx.beginPath();ctx.moveTo(c.x-2,c.ry);ctx.lineTo(cx-c.iw,c.ry);ctx.ellipse(cx,c.ry,c.iw,c.ih,0,Math.PI,0,true);ctx.lineTo(c.x+c.w+2,c.ry);ctx.lineTo(c.x+c.w+2,c.y+c.h+2);ctx.lineTo(c.x-2,c.y+c.h+2);ctx.closePath();ctx.clip();
+      ctx.drawImage(ART.pool,c.x,c.y,c.w,c.h);ctx.restore()}
     drawDecals(d,front);ctx.restore();return}
   const ps=piecesOf(d).filter(p=>p.front===front).sort((a,b)=>a.depth-b.depth);
   for(const p of ps){drawPiece(p,TH);if(p.t===2)drawHazardDeco(p)}
@@ -686,67 +671,54 @@ function drawDisc(d,front){
   drawDecals(d,front);drawJelly(d,front);
   ctx.restore();
 }
-function stripePoly(phiA,phiB,Y0,Y1){
-  // spiral stripe on the column between world heights Y0..Y1, clamped to the visible half
-  const n=6,pts=[];const clamp=p=>Math.max(-HALF,Math.min(HALF,p));
-  for(let i=0;i<=n;i++){const Y=Y0+(Y1-Y0)*i/n,tw=Y*.0045;const p=clamp(phiA+tw);pts.push([cx+Math.sin(p)*RC*U,sy(Y)+Math.cos(p)*RC*U*K])}
-  for(let i=n;i>=0;i--){const Y=Y0+(Y1-Y0)*i/n,tw=Y*.0045;const p=clamp(phiB+tw);pts.push([cx+Math.sin(p)*RC*U,sy(Y)+Math.cos(p)*RC*U*K])}
-  ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill();
-}
-function drawColumn(Yt,Yb,topShadow){
-  const rc=RC*U,yt=sy(Yt),yb=sy(Yb);if(yb<-60||yt>H+60)return;
-  ctx.save();ctx.beginPath();ctx.moveTo(cx-rc,yt);ctx.ellipse(cx,yt,rc,rc*K,0,Math.PI,0,true);ctx.lineTo(cx+rc,yb+1);ctx.ellipse(cx,yb+1,rc,rc*K,0,0,Math.PI,false);ctx.closePath();
-  ctx.fillStyle=PAPER;ctx.fill();ctx.clip();
-  ctx.fillStyle=pal.stripe;
-  const Ym=(Yt+Yb)/2,tw=Ym*.0045;
-  for(let s=0;s<3;s++){let pa=theta+s*TAU/3;let mid=normA(pa+Math.PI/6+tw+Math.PI)-Math.PI;pa=mid-Math.PI/6-tw;stripePoly(pa,pa+Math.PI/3,Yt-RC,Yb+RC)}
-  // little round windows that turn with the tower
-  for(let s=0;s<2;s++){const a=theta+s*Math.PI+Yt*.004+.9;const ca=Math.cos(a);if(ca<.4)continue;const x=cx+Math.sin(a)*rc*.92,y=sy((Yt+Yb)/2)+ca*rc*K;
-    if(ok(ART.porthole)){const w=28*U;ctx.drawImage(ART.porthole,x-w*ca/2,y-w/2,w*ca,w);continue}
-    ctx.fillStyle='#1d4f6e';ctx.beginPath();ctx.ellipse(x,y,7*U*ca,9*U,0,0,TAU);ctx.fill();ctx.fillStyle='rgba(255,240,170,.85)';ctx.beginPath();ctx.ellipse(x,y,5*U*ca,7*U,0,0,TAU);ctx.fill()}
-  ctx.translate(0,0);ctx.fillStyle=grad.col;ctx.fillRect(cx-rc,yt-rc,rc*2,yb-yt+rc*2);
-  ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(cx-rc+.8,yt-rc);ctx.lineTo(cx-rc+.8,yb+rc);ctx.moveTo(cx+rc-.8,yt-rc);ctx.lineTo(cx+rc-.8,yb+rc);ctx.stroke();
-  if(topShadow){const g=ctx.createLinearGradient(0,yt,0,yt+24*U);g.addColorStop(0,'rgba(46,46,51,.3)');g.addColorStop(1,'rgba(46,46,51,0)');ctx.fillStyle=g;ctx.fillRect(cx-rc,yt-rc,rc*2,24*U+rc)}
+/* the pencil cup (finish): pool.webp is 272x311, its rim ellipse is centred at (136,50) with outer half-width 130;
+   the opening is about 112 x 29 and the cup's bottom ellipse is centred at y=259 */
+const CUP_RW=120,CUP_DY=14; // rim half-width and how far the rim centre sits below the finish line (world units)
+function cupBox(){const k=CUP_RW*U/130;return{k,x:cx-136*k,y:CUP_DY*U-50*k,w:272*k,h:311*k,ry:CUP_DY*U+k,iw:112*k,ih:29*k,by:CUP_DY*U+209*k,ow:130*k}}
+function hexFaces(){const out=[];for(let k=0;k<6;k++){const e0=theta+k*TAU/6,e1=e0+TAU/6,m=e0+TAU/12,dep=Math.cos(m);if(dep>1e-3)out.push({e0,e1,m,dep})}return out}
+function drawColumn(Yt,Yb,topShadow,stamp){
+  // a hexagonal pencil shaft that turns with the tower: paper faces, graphite hatching on the shaded side, ink edges
+  const rc=RC*U,yk=rc*K,yt=sy(Yt),yb=sy(Yb);if(yb<-60||yt>H+60)return;
+  const F=hexFaces(),X=e=>cx+Math.sin(e)*rc,C=e=>Math.cos(e)*yk;
+  const face=f=>{ctx.moveTo(X(f.e0),yt+C(f.e0));ctx.lineTo(X(f.e1),yt+C(f.e1));ctx.lineTo(X(f.e1),yb+C(f.e1));ctx.lineTo(X(f.e0),yb+C(f.e0));ctx.closePath()};
+  ctx.save();
+  for(const f of F){
+    const sh=(1+Math.sin(f.m))/2; // 0 = lit from the left, 1 = in shade on the right
+    ctx.beginPath();face(f);ctx.fillStyle=sh>.75?'#e4e2d8':sh>.4?'#eeebe1':PAPER;ctx.fill();
+    if(sh>.3){ctx.save();ctx.clip();ctx.strokeStyle=`rgba(85,85,92,${(.18+sh*.4).toFixed(2)})`;ctx.lineWidth=1;ctx.beginPath();
+      const sp=sh>.75?4.5:7,x0=Math.min(X(f.e0),X(f.e1)),x1=Math.max(X(f.e0),X(f.e1)),ph=((Yt*U)%sp+sp)%sp;
+      for(let y=yt-yk-ph;y<yb+yk+(x1-x0);y+=sp){ctx.moveTo(x0,y);ctx.lineTo(x1,y-(x1-x0)*.7)}ctx.stroke();ctx.restore()}
+  }
+  if(stamp){ // "HB" printed on the face nearest the front, like a real pencil
+    let f=F[0];for(const q of F)if(q.dep>f.dep)f=q;
+    ctx.save();ctx.beginPath();face(f);ctx.clip();ctx.translate((X(f.e0)+X(f.e1))/2,(yt+yb)/2+Math.cos(f.m)*yk);ctx.scale(f.dep,1);ctx.rotate(-HALF);
+    ctx.font=`${Math.round(12*U)}px "Patrick Hand","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=GRAPH;ctx.fillText('SKETCHPAD  No.2  HB',0,0);ctx.restore()}
+  if(topShadow){ctx.save();ctx.beginPath();for(const f of F)face(f);ctx.clip();const g=ctx.createLinearGradient(0,yt,0,yt+24*U);g.addColorStop(0,'rgba(46,46,51,.3)');g.addColorStop(1,'rgba(46,46,51,0)');ctx.fillStyle=g;ctx.fillRect(cx-rc,yt-yk,rc*2,24*U+yk*2);ctx.restore()}
+  // edges: faint pencil between faces, ink on the outline
+  let xl=1e9,xr=-1e9,el=0,er=0;
+  ctx.strokeStyle=PENCIL;ctx.lineWidth=1;ctx.beginPath();
+  for(const f of F)for(const e of [f.e0,f.e1]){const x=X(e);if(x<xl){xl=x;el=e}if(x>xr){xr=x;er=e}ctx.moveTo(x,yt+C(e));ctx.lineTo(x,yb+C(e))}ctx.stroke();
+  ctx.strokeStyle=INK;ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(xl,yt+C(el));ctx.lineTo(xl,yb+C(el));ctx.moveTo(xr,yt+C(er));ctx.lineTo(xr,yb+C(er));ctx.stroke();
   ctx.restore();
 }
 function drawLantern(Y){
-  // lighthouse top above the first disc: gallery, glass lantern, red dome
-  const y0=sy(Y),rc=RC*U;if(y0<-200*U||y0>H+40)return;
-  // light beams that sweep with the tower
-  const LS=ok(ART.lantern),lw=RC*2*U*425/358,lh=lw*ART.lantern.naturalHeight/Math.max(1,ART.lantern.naturalWidth),lb=y0-152*U+26*U;
-  ctx.save();ctx.globalCompositeOperation='multiply';
-  const ly=LS?lb-lh*.56:y0-176*U;for(let s=0;s<2;s++){const a=theta*1+s*Math.PI;const dir=Math.sin(a),dep=Math.cos(a);if(dep<-.2)continue;
-    const len=W*.9,g=ctx.createLinearGradient(cx,ly,cx+dir*len,ly);g.addColorStop(0,'rgba(243,230,176,.9)');g.addColorStop(1,'rgba(243,230,176,0)');ctx.fillStyle=g;
-    ctx.beginPath();ctx.moveTo(cx,ly);ctx.lineTo(cx+dir*len,ly-40*U*(.3+dep));ctx.lineTo(cx+dir*len,ly+40*U*(.3+dep));ctx.closePath();ctx.fill()}
-  ctx.restore();
-  drawColumn(Y-152,Y,false);
-  if(LS){ctx.drawImage(ART.lantern,cx-lw/2,lb-lh,lw,lh);return}
-  const gy=y0-152*U;
-  // gallery deck
-  ctx.fillStyle='#1d4f6e';ctx.beginPath();ctx.ellipse(cx,gy+5*U,rc*1.45,rc*1.45*K,0,0,TAU);ctx.fill();
-  ctx.fillStyle='#2f6f93';ctx.beginPath();ctx.ellipse(cx,gy,rc*1.45,rc*1.45*K,0,0,TAU);ctx.fill();
-  // railing
-  ctx.strokeStyle='#1d4f6e';ctx.lineWidth=1.6*U;for(let k=0;k<12;k++){const a=theta+k*TAU/12;if(Math.cos(a)<0)continue;const x=cx+Math.sin(a)*rc*1.38,y=gy+Math.cos(a)*rc*1.38*K;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-12*U);ctx.stroke()}
-  ctx.beginPath();ctx.ellipse(cx,gy-12*U,rc*1.38,rc*1.38*K,0,0,Math.PI);ctx.stroke();
-  // glass room
-  const lr=rc*.82,lt=gy-46*U;
-  const lg=ctx.createLinearGradient(cx-lr,0,cx+lr,0);lg.addColorStop(0,'#f2c94c');lg.addColorStop(.35,'#fff6c4');lg.addColorStop(.7,'#ffe27a');lg.addColorStop(1,'#d9a520');
-  ctx.fillStyle=lg;ctx.fillRect(cx-lr,lt,lr*2,gy-lt);ctx.beginPath();ctx.ellipse(cx,gy,lr,lr*K,0,0,Math.PI);ctx.fill();
-  ctx.strokeStyle='#1d4f6e';ctx.lineWidth=2*U;for(let k=0;k<6;k++){const a=theta+k*TAU/6;if(Math.cos(a)<0)continue;const x=cx+Math.sin(a)*lr;ctx.beginPath();ctx.moveTo(x,lt);ctx.lineTo(x,gy+Math.cos(a)*lr*K);ctx.stroke()}
-  const glow=ctx.createRadialGradient(cx,lt+20*U,0,cx,lt+20*U,lr*2.2);glow.addColorStop(0,'rgba(255,250,200,.7)');glow.addColorStop(1,'rgba(255,250,200,0)');ctx.fillStyle=glow;ctx.fillRect(cx-lr*2.2,lt-lr*1.2,lr*4.4,lr*4.4);
-  // dome
-  const dg=ctx.createLinearGradient(cx-lr,0,cx+lr,0);dg.addColorStop(0,'#b8341f');dg.addColorStop(.35,'#ff7a66');dg.addColorStop(1,'#a52c20');
-  ctx.fillStyle=dg;ctx.beginPath();ctx.ellipse(cx,lt,lr*1.18,lr*1.18*K,0,0,Math.PI);ctx.bezierCurveTo(cx-lr*1.1,lt-lr*.9,cx-lr*.3,lt-lr*1.25,cx,lt-lr*1.3);ctx.bezierCurveTo(cx+lr*.3,lt-lr*1.25,cx+lr*1.1,lt-lr*.9,cx+lr*1.18,lt);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,.45)';ctx.beginPath();ctx.ellipse(cx-lr*.4,lt-lr*.7,lr*.25,lr*.12,-.6,0,TAU);ctx.fill();
-  ctx.fillStyle='#ffc93c';ctx.beginPath();ctx.arc(cx,lt-lr*1.4,4*U,0,TAU);ctx.fill();
+  // the top of the giant pencil above the first ring: the sharpened tip (lantern.webp) sitting on the shaft
+  const y0=sy(Y),rc=RC*U;if(y0<-260*U||y0>H+40)return;
+  drawColumn(Y-152,Y,false,true);
+  const yt=sy(Y-152);
+  let hw=0;for(let k=0;k<6;k++)hw=Math.max(hw,Math.abs(Math.sin(theta+k*TAU/6)));hw*=rc; // shaft half-width right now
+  if(ok(ART.lantern)){const im=ART.lantern,k=rc/92,h=275*k,w=196*k*hw/rc;ctx.drawImage(im,cx-w/2,yt+rc*K+1.5*U-h,w,h);return}
+  // fallback: a drawn wood cone and graphite point
+  const th=rc*2.6;ctx.lineJoin='round';ctx.lineWidth=1.8;ctx.strokeStyle=INK;
+  ctx.fillStyle='#efe2c8';ctx.beginPath();ctx.moveTo(cx-hw,yt);ctx.lineTo(cx,yt-th);ctx.lineTo(cx+hw,yt);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.fillStyle=GRAPH;ctx.beginPath();ctx.moveTo(cx-hw*.3,yt-th*.7);ctx.lineTo(cx,yt-th);ctx.lineTo(cx+hw*.3,yt-th*.7);ctx.closePath();ctx.fill();ctx.stroke();
 }
 function drawBase(Y){
-  // rocky island + foam under the splash pool
-  const y=sy(Y+D*1.3);if(y-80*U>H)return;
-  if(ok(ART.island)){const im=ART.island,w=RO*U*3,h=w*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,cx-w/2,y-h*.36,w,h);return}
-  ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.ellipse(cx,y+8*U,RO*1.25*U,RO*1.25*U*K,0,0,TAU);ctx.fill();
-  const rocks=[[-90,0,60,30,'#8c7b6a'],[80,4,70,32,'#7d6c5c'],[-20,14,90,36,'#9a8877'],[40,-6,55,26,'#a89683'],[-60,-10,40,20,'#b3a18d']];
-  for(const [dx,dy,rw,rh,c] of rocks){ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(cx+dx*U,y+dy*U,rw*U,rh*U,0,0,TAU);ctx.fill();ctx.fillStyle='rgba(255,255,255,.18)';ctx.beginPath();ctx.ellipse(cx+dx*U-rw*U*.2,y+dy*U-rh*U*.4,rw*U*.5,rh*U*.25,0,0,TAU);ctx.fill()}
+  // the eraser stand the pencil cup sits on (its cone hides inside the cup)
+  if(!ok(ART.island)||!ok(ART.pool))return;
+  const c=cupBox(),cy=sy(Y)+c.by;if(cy-60*U>H)return;
+  const im=ART.island,w=c.ow*2*1.42,k=w/im.naturalWidth,h=im.naturalHeight*k;
+  ctx.drawImage(im,cx-w/2,cy-142*k,w,h);
 }
 function drawBall(){
   const d=discs[ball.next];
@@ -791,15 +763,9 @@ function drawShadow(d){
 const easeBack=t=>{const c=1.9;t=Math.min(1,t);return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
 function drawBgAnim(){
   ctx.drawImage(bgCv,0,0,W,H);
-  const hz=H*seaTop,hb=H*seaBot;
-  // sparkles on the sea
-  for(let i=0;i<14;i++){const x=(i*97+T*(8+i%3*4))%(W+40)-20,y=hz+6+((i*53)%Math.max(10,hb-hz-10)),a=(Math.sin(T*2.3+i*1.7)+1)/2;
-    if(a<.55)continue;const s=(2+(i%3))*a;ctx.fillStyle=`rgba(85,85,92,${a*.45})`;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x+s*.35,y);ctx.lineTo(x,y+s);ctx.lineTo(x-s*.35,y);ctx.closePath();ctx.fill();ctx.fillRect(x-s*1.2,y-.5,s*2.4,1)}
-  // seagulls drifting across
-  for(let i=ok(ART.bg)?1:0;i<3;i++){const sp=14+i*6,x=((T*sp+i*W*.45)%(W+120))-60,y=H*(.12+i*.1)+Math.sin(T*.8+i*2)*8,flap=Math.sin(T*(6+i)+i)*.5,s=(9-i*1.6)*Math.max(.7,U);
-    ctx.save();ctx.translate(x,y);ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.lineCap='round';
-    ctx.beginPath();ctx.moveTo(-s*1.6,-flap*s);ctx.quadraticCurveTo(-s*.8,-s*.9-flap*s*.6,0,0);ctx.quadraticCurveTo(s*.8,-s*.9-flap*s*.6,s*1.6,-flap*s);ctx.stroke();
-    ctx.beginPath();ctx.ellipse(0,s*.12,s*.45,s*.28,0,0,TAU);ctx.fill();ctx.restore()}
+  // a few pencil sparkles twinkling near the page edges
+  for(let i=0;i<8;i++){const x=i%2?W*(.95-(i*.013)%.06):W*(.04+(i*.017)%.06),y=H*(.1+((i*.271)%1)*.8),a=(Math.sin(T*1.7+i*2.3)+1)/2;
+    if(a<.55)continue;const s=(3+(i%3))*a;ctx.fillStyle=`rgba(85,85,92,${(a*.5).toFixed(2)})`;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x+s*.3,y);ctx.lineTo(x,y+s);ctx.lineTo(x-s*.3,y);ctx.closePath();ctx.fill();ctx.fillRect(x-s,y-.5,s*2,1)}
 }
 function text(s,x,y,size,fill,stroke){ctx.save();ctx.font=`${size}px "Gloria Hallelujah","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.lineJoin='round';ctx.lineWidth=size*.25;ctx.strokeStyle=PAPER;ctx.strokeText(s,x,y);ctx.fillStyle=fill==='#ffe27a'?'#c99a1a':fill==='#ff9bd2'?'#c45a8a':INK;ctx.fillText(s,x,y);ctx.restore()}
@@ -809,13 +775,13 @@ function draw(){
   ctx.save();if(shake)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
   const top=(cam-anchorY/U),bot=cam+(H-anchorY)/U;
   const iMin=Math.max(0,Math.floor((top-RO*K)/D)),iMax=Math.min(N,Math.ceil((bot+RO*K+TH)/D));
-  // column below the lowest visible disc (into the rocks under the splash pool)
-  if(iMax===N)drawBase(discs[N].y); // island first, so the lighthouse stands on it
-  drawColumn(discs[iMax].y,iMax===N?discs[N].y+D*1.3:discs[iMax].y+D,!discs[iMax].broken&&!(discs[iMax].passed&&discs[iMax].passT>=1));
+  // pencil below the lowest visible ring; at the bottom the eraser stand comes first so the cup sits on it
+  if(iMax===N)drawBase(discs[N].y);
+  else drawColumn(discs[iMax].y,discs[iMax].y+D,!discs[iMax].broken&&!(discs[iMax].passed&&discs[iMax].passT>=1));
   let ballDrawn=false;
   for(let i=iMax;i>=iMin;i--){const d=discs[i];
     drawDisc(d,false);
-    if(i>0)drawColumn(discs[i-1].y,d.y,!discs[i-1].broken&&!(discs[i-1].passed&&discs[i-1].passT>=1));
+    if(i>0)drawColumn(discs[i-1].y,d.goal&&ok(ART.pool)?d.y+CUP_DY+40:d.y,!discs[i-1].broken&&!(discs[i-1].passed&&discs[i-1].passT>=1)); // into the cup at the bottom
     else drawLantern(d.y);
     drawDisc(d,true);
     if(i===Math.min(ball.next,N)){drawShadow(d);drawBall();ballDrawn=true}
@@ -826,7 +792,7 @@ function draw(){
   for(const p of pieces){const x=cx+p.x*U,y=sy(p.y);ctx.save();ctx.globalAlpha=Math.min(1,p.life*2);ctx.translate(x,y);ctx.rotate(p.rot);
     ctx.fillStyle=p.c2;ctx.fillRect(-p.w*U/2,0,p.w*U,p.h*U*.9);ctx.fillStyle=p.c;ctx.fillRect(-p.w*U/2,-p.h*U*.4,p.w*U,p.h*U*.6);ctx.restore()}
   for(const p of parts){const a=Math.max(0,p.life/p.max),x=cx+p.x*U,y=sy(p.y);
-    if(p.bub){ctx.strokeStyle=`rgba(46,46,51,${a*.8})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(x,y,p.r*U,0,TAU);ctx.stroke();ctx.fillStyle=`rgba(47,111,181,${a*.2})`;ctx.fill()}
+    if(p.bub){ctx.strokeStyle=`rgba(85,85,92,${a*.65})`;ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(x,y,p.r*U,0,TAU);ctx.stroke();ctx.fillStyle=`rgba(196,90,138,${a*.15})`;ctx.fill()}
     else if(p.conf){ctx.save();ctx.globalAlpha=Math.min(1,a*1.5);ctx.translate(x,y);ctx.rotate(p.rot);ctx.fillStyle=p.col;ctx.fillRect(-p.r*U,-p.r*U*.45,p.r*2*U,p.r*.9*U);ctx.restore()}
     else{ctx.globalAlpha=a;ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.r*U,0,TAU);ctx.fill();ctx.globalAlpha=1}}
   ctx.globalAlpha=1;
@@ -837,28 +803,28 @@ function draw(){
 
 /* ---------- start-card illustration ---------- */
 function drawMini(){
+  // the round porthole frame with a tiny doodle of the game inside: pencil, two paper rings, the ball and the cup
   const m=$('mini'),r=m.getBoundingClientRect(),sz=Math.max(60,r.width||110),pr=Math.min(window.devicePixelRatio||1,2.5);
-  m.width=Math.round(sz*pr);m.height=Math.round(sz*pr);const g=m.getContext('2d');g.scale(pr*sz/110,pr*sz/110);
+  m.width=Math.round(sz*pr);m.height=Math.round(sz*pr);const g=m.getContext('2d');g.scale(pr*sz/110,pr*sz/110);g.imageSmoothingQuality='high';
   g.lineCap='round';g.lineJoin='round';g.strokeStyle=INK;g.fillStyle=PAPER;
-  // a wobbly circle frame, like a doodle in the corner of a page
-  g.lineWidth=1.8;g.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=52+1.5*Math.sin(i*2.1);g.lineTo(55+Math.cos(a)*r,55+Math.sin(a)*r)}g.closePath();g.fill();g.stroke();g.save();g.clip();
-  // sea
-  g.strokeStyle=GRAPH;g.lineWidth=1;for(let y=84;y<110;y+=6){g.beginPath();for(let x=0;x<=110;x+=8)g.lineTo(x,y+Math.sin(x*.3+y)*1.5);g.stroke()}
-  // tower with hatched stripes
-  g.fillStyle=PAPER;g.fillRect(45,18,20,90);g.strokeStyle=INK;g.lineWidth=1.6;g.strokeRect(45,18,20,90);
-  g.strokeStyle=GRAPH;g.lineWidth=1;for(let k=0;k<5;k++){for(let j=0;j<10;j+=3){g.beginPath();g.moveTo(45+j,30+k*20-j*.4);g.lineTo(45+j+10,26+k*20-(j+10)*.4+8);g.stroke()}}
-  const disc=(y,gap,haz)=>{g.fillStyle=haz?'#cdbbdf':'#f0ece1';g.strokeStyle=haz?'#6f4a9a':INK;g.lineWidth=1.4;g.beginPath();g.ellipse(55,y,38,12,0,0,TAU);g.fill();g.stroke();
-    g.fillStyle=PAPER;g.beginPath();g.moveTo(55,y);g.ellipse(55,y,39,13,0,gap,gap+.9);g.closePath();g.fill();
-    g.strokeStyle=INK;g.beginPath();g.moveTo(55,y);g.lineTo(55+Math.cos(gap)*39,y+Math.sin(gap)*13);g.moveTo(55,y);g.lineTo(55+Math.cos(gap+.9)*39,y+Math.sin(gap+.9)*13);g.stroke();
-    g.fillStyle=PAPER;g.fillRect(45,y-1,20,7);g.strokeStyle=INK;g.beginPath();g.moveTo(45,y-1);g.lineTo(45,y+6);g.moveTo(65,y-1);g.lineTo(65,y+6);g.stroke()};
-  disc(88,.25,true);disc(66,2.4,false);disc(44,.9,false);
-  // lantern top
-  g.fillStyle='#f3e6b0';g.strokeStyle=INK;g.lineWidth=1.4;g.beginPath();g.moveTo(42,18);g.lineTo(68,18);g.lineTo(64,8);g.lineTo(46,8);g.closePath();g.fill();g.stroke();
-  g.beginPath();g.arc(55,6,3,0,TAU);g.stroke();
-  // the beach ball
-  const bx=74,by=38,br=10;g.fillStyle=PAPER;g.beginPath();g.arc(bx,by,br,0,TAU);g.fill();g.strokeStyle=INK;g.lineWidth=1.4;g.stroke();
-  g.lineWidth=1;g.beginPath();g.moveTo(bx,by-br);g.quadraticCurveTo(bx-6,by,bx,by+br);g.moveTo(bx,by-br);g.quadraticCurveTo(bx+6,by,bx,by+br);g.stroke();
-  g.strokeStyle=GRAPH;for(let j=-8;j<8;j+=3){g.beginPath();g.moveTo(bx+j,by+8);g.lineTo(bx+j+3,by+4);g.stroke()}
+  const allOk=['porthole','lantern','disc','ball','pool'].every(k=>ok(ART[k]));
+  if(ok(ART.porthole))g.drawImage(ART.porthole,1,2,108,108*ART.porthole.naturalHeight/ART.porthole.naturalWidth);
+  else{g.lineWidth=1.8;g.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=52+1.5*Math.sin(i*2.1);g.lineTo(55+Math.cos(a)*r,55+Math.sin(a)*r)}g.closePath();g.fill();g.stroke()}
+  g.save();g.beginPath();g.arc(55,55,31,0,TAU);g.clip();
+  if(allOk){
+    const ring=(y,haz)=>{g.save();g.translate(55,y);g.scale(1,.36);g.drawImage(ART.disc,-24,-24,48,48);g.restore();
+      if(haz){g.save();g.globalAlpha=.55;g.fillStyle='#e9c3d6';g.beginPath();g.ellipse(55,y,24,8.6,0,.2,1.5);g.ellipse(55,y,7,2.5,0,1.5,.2,true);g.closePath();g.fill();g.restore()}};
+    g.drawImage(ART.pool,39,74,32,32*311/272); // cup at the bottom
+    ring(66,true);
+    const shaft=(y0,y1)=>{g.fillStyle=PAPER;g.fillRect(49,y0,12,y1-y0);g.fillStyle='#e4e2d8';g.fillRect(57,y0,4,y1-y0);g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.moveTo(49,y0);g.lineTo(49,y1);g.moveTo(61,y0);g.lineTo(61,y1);g.stroke();
+      g.strokeStyle=PENCIL;g.lineWidth=.7;g.beginPath();g.moveTo(53,y0);g.lineTo(53,y1);g.moveTo(57,y0);g.lineTo(57,y1);g.stroke()};
+    shaft(46,80);ring(46,false);shaft(28,46);
+    g.drawImage(ART.lantern,48.5,28+2-13*275/196,13,13*275/196);
+    g.drawImage(ART.ball,64,28,14,14);
+  }else{
+    g.fillStyle=PAPER;g.fillRect(49,20,12,80);g.strokeRect(49,20,12,80);
+    g.beginPath();g.ellipse(55,50,24,8,0,0,TAU);g.fill();g.stroke();g.beginPath();g.ellipse(55,70,24,8,0,0,TAU);g.fill();g.stroke();
+  }
   g.restore();
 }
 

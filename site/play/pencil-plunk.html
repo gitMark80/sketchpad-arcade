@@ -10,8 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Pencil Plunk, sketchbook edition: the same portrait column (title row, HUD card, beach playfield, button dock) drawn in pencil on
-   cream paper. Coloured pencil only on the shell pins and their pails, which the player has to match by colour. */
+/* Pencil Plunk, sketchbook edition: the same portrait column (title row, HUD card, corkboard playfield, button dock) drawn in pencil on
+   cream paper. Popsicle sticks are pinned to a corkboard with coloured thumbtacks; coloured pencil only on the tacks and their paper cups,
+   which the player has to match by colour. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -67,6 +68,7 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 .card h2{font:400 1.8rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
 .card p{margin:6px 0 0;color:var(--pencil);line-height:1.35;font-size:1.05rem}
 #mini{width:180px;height:96px;display:block;margin:0 auto 2px}
+.buddy{display:block;margin:2px auto 0;width:72px;height:auto;transform:rotate(-4deg)}
 .rules{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;color:var(--ink);line-height:1.25}
 .rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
 .rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem/1 var(--display)}
@@ -113,22 +115,22 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 <body>
 <div class="app" id="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back" href="../pencil-plunk.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Pencil Plunk</h1><button class="sa-share" type="button" aria-label="Share Pencil Plunk" data-share-url="https://www.sketchpadarcade.com/pencil-plunk" data-share-title="Pencil Plunk" data-share-text="Play Pencil Plunk free on Sketchpad Arcade! Pull shell pins out of driftwood planks and sort them into sand pails."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back" href="../pencil-plunk.html" aria-label="Back to Sketchpad Arcade">&#8249;</a><h1 class="brand">Pencil Plunk</h1><button class="sa-share" type="button" aria-label="Share Pencil Plunk" data-share-url="https://www.sketchpadarcade.com/pencil-plunk" data-share-title="Pencil Plunk" data-share-text="Play Pencil Plunk free on Sketchpad Arcade! Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button">How to play</button>
   </div>
   <div class="hud" id="hud">
     <div class="stat"><small>Level</small><b id="lvlEl">1</b></div>
     <div class="stat mid"><small>Score</small><b id="scoreEl">0</b></div>
     <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
-    <div class="prog" aria-hidden="true"><i id="barFill"></i><span id="pinsLeft">0 pins left</span></div>
+    <div class="prog" aria-hidden="true"><i id="barFill"></i><span id="pinsLeft">0 tacks left</span></div>
   </div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="Beach board with driftwood planks held by colored shell pins. Tap a pin that no plank lies on to pull it."></canvas>
+    <canvas id="cv" aria-label="Corkboard with popsicle sticks held by colored thumbtacks. Tap a tack that no stick lies on to pull it."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="toast" id="toast" hidden></div>
   </div>
   <div class="dock" id="dock">
-    <button class="iconbtn" id="slotBtn" type="button" aria-label="Add one slot to the tide pool, once per level">+1 slot <span class="count" id="slotCount">1</span></button>
+    <button class="iconbtn" id="slotBtn" type="button" aria-label="Add one slot to the pencil case, once per level">+1 slot <span class="count" id="slotCount">1</span></button>
     <button class="iconbtn" id="restartBtn" type="button">Restart level</button>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
@@ -151,7 +153,7 @@ const W=400,H=660;
 const BOARD={x0:24,x1:376,y0:216,y1:626};
 const SEA_Y=644, TH=38, PR=13, INSET=21, MIN_PIN=32;
 const PAIL_X=[112,288], PAIL_Y=74;
-const TRAY_Y=170, SLOT_DX=54, MAXSLOT=6, BASECAP=5;
+const TRAY_Y=170, SLOT_DX=54, MAXSLOT=6, BASECAP=5, TRAY_PY=TRAY_Y+13; // a waiting tack's point sits a bit below the slot centre
 const slotX=i=>W/2+(i-2.5)*SLOT_DX;
 const COVER=TH/2+PR-4;              // a plank covers a pin when they overlap by more than 4px
 const COLORS=[
@@ -400,8 +402,8 @@ function startLevel(){
   const r=rngOf(LV.seed+5);deco=[];for(let k=0;k<9;k++)deco.push({x:BOARD.x0+10+r()*(BOARD.x1-BOARD.x0-20),y:BOARD.y0+10+r()*(BOARD.y1-BOARD.y0-20),k:Math.floor(r()*3),a:r()*6.28,s:.7+r()*.5});
   const ev=[];resolve(LV,S,ev);handleEvents(ev,true);
   recomputeAcc();buildPlankSprites();state='play';hideOverlay();hud();
-  const tips={1:'Tap a pin that no plank lies on',2:'No pail for a color? The pin waits in the tide pool',3:'A plank with one pin left swings down'};
-  banner('Level '+level,tips[level]||(level%5===0?'Big beach clean-up!':''));
+  const tips={1:'Tap a tack that no stick lies on',2:'No cup for a color? The tack waits in the pencil case',3:'A stick with one tack left swings down'};
+  banner('Level '+level,tips[level]||(level%5===0?'Big corkboard clean-up!':''));
   sfx.start();
 }
 function recomputeAcc(){acc=LV.pins.map((_,i)=>access(LV,S,i));if(kbSel>=0&&!acc[kbSel])kbSel=-1}
@@ -417,12 +419,12 @@ function pailPos(o){
   return{x,y,s,a,sx,sy};
 }
 function pinTarget(v){
-  if(v.tgt.type==='tray')return{x:slotX(v.tgt.slot),y:TRAY_Y};
+  if(v.tgt.type==='tray')return{x:slotX(v.tgt.slot),y:TRAY_PY};
   const p=pailPos(v.tgt.obj)||{x:PAIL_X[v.tgt.obj.k],y:PAIL_Y,s:1};if(IMG['pail-'+PINN[v.tgt.obj.c]]){const q=sockXY(v.tgt.idx);return{x:p.x+q.x*p.s,y:p.y+q.y*p.s}}return{x:p.x+(v.tgt.idx-1)*26*p.s,y:p.y+8*p.s};
 }
 function launch(id,tgt,fs){const v=PV[id];
   if(v.st==='fly'&&v.fe>fs-.05)fs=v.fe+.08;        // still on its way to the tide pool: land first
-  if(v.st!=='board'){const tp=v.tgt&&v.tgt.type==='tray'?{x:slotX(v.tgt.slot),y:TRAY_Y}:{x:v.x,y:v.y};v.ox=tp.x;v.oy=tp.y;v.fromBoard=false}
+  if(v.st!=='board'){const tp=v.tgt&&v.tgt.type==='tray'?{x:slotX(v.tgt.slot),y:TRAY_PY}:{x:v.x,y:v.y};v.ox=tp.x;v.oy=tp.y;v.fromBoard=false}
   else{v.ox=v.x;v.oy=v.y;v.fromBoard=true;v.pulledAt=T}
   v.tgt=tgt;v.st='fly';v.fs=fs;const t=pinTarget(v),d=Math.hypot(t.x-v.ox,t.y-v.oy);v.fe=fs+.32+d/1600;
 }
@@ -463,14 +465,14 @@ function anyLegal(){for(let i=0;i<LV.N;i++)if(S.rem[i]&&legal(LV,S,i))return tru
 function tryPull(i){
   if(state!=='play'||!S.rem[i])return false;
   const c=LV.pins[i].c;
-  if(!acc[i]){PV[i].wigT=T;for(const q of coverers(LV,S,i))QV[q].flashT=T;sfx.blocked();toastOnce('blocked','That pin is under a plank. Free the plank on top first.');return false}
-  if(pailFor(S,c)<0&&S.tray.length>=S.cap){PV[i].wigT=T;trayShakeT=T;sfx.blocked();toast('The tide pool is full. Pick a pin that matches a pail!');return false}
+  if(!acc[i]){PV[i].wigT=T;for(const q of coverers(LV,S,i))QV[q].flashT=T;sfx.blocked();toastOnce('blocked','That tack is under a stick. Free the stick on top first.');return false}
+  if(pailFor(S,c)<0&&S.tray.length>=S.cap){PV[i].wigT=T;trayShakeT=T;sfx.blocked();toast('The pencil case is full. Pick a tack that matches a cup!');return false}
   const ev=[];apply(LV,S,i,ev);score+=10;lvl.pins++;run.pins++;
   floaters.push({s:'+10',x:LV.pins[i].x,y:LV.pins[i].y-20,life:1,size:20});
   for(let k=0;k<8;k++){const a=Math.random()*6.28,sp=60+Math.random()*90;parts.push({x:LV.pins[i].x,y:LV.pins[i].y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.45,max:.45,r:1.5+Math.random()*2,col:k%2?GRAPH:COLORS[c].c,g:0,spark:true})}
   sfx.pull();handleEvents(ev,false);recomputeAcc();
   if(score>best){best=score;store.set('best',best)}
-  if(S.onBoard>0&&S.tray.length>=S.cap-1&&S.tray.length<S.cap&&!warnedFull){warnedFull=true;setTimeout(()=>{if(state==='play'){sfx.warn();toast('Only one spot left in the tide pool!')}},350)}
+  if(S.onBoard>0&&S.tray.length>=S.cap-1&&S.tray.length<S.cap&&!warnedFull){warnedFull=true;setTimeout(()=>{if(state==='play'){sfx.warn();toast('Only one spot left in the pencil case!')}},350)}
   if(S.tray.length<S.cap-1)warnedFull=false;
   checkEnd();hud(true);return true;
 }
@@ -491,18 +493,18 @@ function useHelper(fromFail){
 function finishLevel(){
   const bonus=50+25*level;score+=bonus;run.levels++;if(score>best){best=score;store.set('best',best)}
   if(level+1>highest){highest=level+1;store.set('level',highest)}
-  sfx.win();hud();state='clear';
+  sfx.win();hud();state='clear';buddyT=T;
   for(let k=0;k<50;k++){const a=-Math.PI/2+(Math.random()-.5)*2.2,sp=200+Math.random()*260;parts.push({x:W/2,y:H*.55,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1.4,max:1.4,r:3+Math.random()*3,col:COLORS[k%7].c,g:420,conf:true,rot:Math.random()*6})}
-  showCard(`<h2>Level ${level} clear!</h2><p>Every plank went plunk. Nice clean beach!</p>
-    <div class="stats"><div><b>${lvl.pins}</b><span>pins pulled</span></div><div><b>+${bonus}</b><span>clear bonus</span></div><div><b>${score}</b><span>score</span></div></div>
+  showCard(`<h2>Level ${level} clear!</h2><img class="buddy" src="../assets/pencil-plunk/shell.webp" alt="" width="72" height="63"><p>Every stick went plunk. Nice tidy corkboard!</p>
+    <div class="stats"><div><b>${lvl.pins}</b><span>tacks pulled</span></div><div><b>+${bonus}</b><span>clear bonus</span></div><div><b>${score}</b><span>score</span></div></div>
     <button class="gold" id="nextBtn" type="button">Next level</button>`);
   $('nextBtn').onclick=()=>{sfx.click();level++;startLevel()};
 }
 function gameOver(){
   state='over';sfx.over();const isBest=score>runBest&&score>0;
-  showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Tide pool's full!</h2><p>No pin can find a spot. You reached level ${level}.</p>
+  showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Pencil case is full!</h2><p>No tack can find a spot. You reached level ${level}.</p>
     <div class="big">${score}</div>
-    <div class="stats"><div><b>${level}</b><span>level</span></div><div><b>${run.pins}</b><span>pins pulled</span></div><div><b>${run.pails}</b><span>pails filled</span></div></div>
+    <div class="stats"><div><b>${level}</b><span>level</span></div><div><b>${run.pins}</b><span>tacks pulled</span></div><div><b>${run.pails}</b><span>cups filled</span></div></div>
     ${helper>0?'<button class="gold keep" id="keepBtn" type="button">+1 slot, keep going</button>':''}
     <button class="gold sm" id="againBtn" type="button">Try level ${level} again</button>
     ${level>1?'<button class="alt" id="homeBtn" type="button">Start over at level 1</button>':''}
@@ -537,13 +539,7 @@ function drawPinRaw(g,x,y,r,ci,rot=0){
 }
 function capsule(g,cx,cy,len,th){const r=th/2,h=len/2-r;g.beginPath();g.moveTo(cx-h,cy-r);g.lineTo(cx+h,cy-r);g.arc(cx+h,cy,r,-Math.PI/2,Math.PI/2);g.lineTo(cx-h,cy+r);g.arc(cx-h,cy,r,Math.PI/2,Math.PI*1.5);g.closePath()}
 function paintPlank(g,cx,cy,len,base,seed,us){
-  const pm=IMG['plank-medium'];
-  if(pm){const iw=pm.naturalWidth,ih=pm.naturalHeight,y0=ih*.05,yh=ih*.6,k=(TH+4)/yh,capL=.14*iw,capR=.22*iw,m0=.30*iw,mw=.11*iw,L=cx-len/2-2,R=cx+len/2+2,top=cy-(TH+4)/2,hh=TH+4;
-    g.drawImage(pm,0,y0,capL,yh,L,top,capL*k,hh);g.drawImage(pm,iw-capR,y0,capR,yh,R-capR*k,top,capR*k,hh);
-    const span=(R-capR*k)-(L+capL*k);if(span>0)g.drawImage(pm,m0,y0,mw,yh,L+capL*k-.5,top,span+1,hh);
-    for(const u of us){const x=cx+u,hg=g.createRadialGradient(x,cy-1,1,x,cy,PR*.62);hg.addColorStop(0,'#55555c');hg.addColorStop(.75,'#7a7a80');hg.addColorStop(1,'#a3a29b');
-      g.fillStyle=hg;g.beginPath();g.arc(x,cy,PR*.62,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.arc(x,cy,PR*.62+.8,0,7);g.stroke()}
-    return}
+  if(paintPlankArt(g,cx,cy,len,us))return;
   capsule(g,cx,cy,len,TH);
   g.fillStyle=base;g.fill();
   g.save();capsule(g,cx,cy,len,TH);g.clip();const r=rngOf(seed);
@@ -559,28 +555,49 @@ function paintPlank(g,cx,cy,len,base,seed,us){
   for(const u of us){const x=cx+u,hg=g.createRadialGradient(x,cy-1,1,x,cy,PR*.62);hg.addColorStop(0,'#55555c');hg.addColorStop(.75,'#7a7a80');hg.addColorStop(1,'#a3a29b');
     g.fillStyle=hg;g.beginPath();g.arc(x,cy,PR*.62,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.arc(x,cy,PR*.62+.8,0,7);g.stroke()}
 }
-/* ---------- Mark's painted art (the drawn art above is the fallback while it loads) ---------- */
+/* ---------- Mark's pencil art (the drawn art above is the fallback while it loads) ---------- */
 const ASSET='../assets/pencil-plunk/';
 const PINN=['red','blue','yellow','green','purple','pink','orange'];
-const IMG={},IMGLIST=['plank-medium','pail-next','splash','sparkle','shell','starfish','tidepool','bg'].concat(PINN.map(n=>'pin-'+n),PINN.map(n=>'pail-'+n));
+const IMG={},IMGLIST=['plank-short','plank-medium','plank-long','pail-next','pails','splash','sparkle','shell','starfish','sign','tidepool','bg'].concat(PINN.map(n=>'pin-'+n),PINN.map(n=>'pail-'+n));
 let artReady=0;
-function loadArt(){IMGLIST.forEach(n=>{const im=new Image();im.onload=()=>{IMG[n]=im;artReady++;buildSprites()};im.onerror=()=>{};im.src=ASSET+n+(n==='bg'?'.jpg':'.webp')})}
-// pail sockets in the painting, as fractions of the pail image (top, lower-left, lower-right)
-const SOCK=[[.47,.27],[.30,.42],[.64,.42]];
-const PAIL_W=100,PAIL_H=118,PAIL_B=44;           // the painted pail in pail-local units: this wide, this tall, bottom at this y
+function loadArt(){IMGLIST.forEach(n=>{const im=new Image();im.onload=()=>{IMG[n]=im;artReady++;buildSprites();if(state==='menu'&&!$('overlay').hidden)drawMini()};im.onerror=()=>{};im.src=ASSET+n+(n==='bg'?'.jpg':'.webp')})}
+// paper cup: the three slot circles on its rim, as fractions of the cup image (left, middle, right)
+const SOCK=[[.24,.175],[.504,.162],[.775,.173]],CUP_PIN=.78;  // tacks in a cup are drawn a bit smaller so three fit on the rim
+const PAIL_W=100,PAIL_H=96,PAIL_B=48;           // the drawn cup in cup-local units: this wide, this tall, bottom at this y
 function sockXY(idx){const [fx,fy]=SOCK[idx]||SOCK[2];return{x:-PAIL_W/2+fx*PAIL_W,y:PAIL_B-PAIL_H+fy*PAIL_H}}
-const PIN_W=PR*2.3;                              // painted pin width; it stands up from the hole
+// thumbtack: drawn this wide; its point is at (TIP_X,TIP_Y) of the image and the head's centre sits HEAD_UP above the point
+const PIN_W=30, TIP_X=.5, TIP_Y=.995, HEAD_Y=.345;
 function pinImgH(im){return PIN_W*im.naturalHeight/im.naturalWidth}
+const HEAD_UP=PIN_W*161/120*(TIP_Y-HEAD_Y);       // ~26
 let splashes=[],pinImgs=[];
-// a standing painted pin whose foot is at (x,y); falls back to the drawn disc
+// a thumbtack standing with its point at (x,y) (in a stick hole, a cup slot or the pencil case); spins around its head; falls back to the drawn disc
 function drawPinStanding(g,ci,x,y,sc,locked,rot){const pi=pinImgs[ci];if(!pi){drawPinSprite(ci,x,y,sc);return}
-  const w=pi.w*sc,h=pi.h*sc;g.save();g.translate(x,y+PR*.55*sc);if(rot)g.rotate(rot);g.drawImage(locked?pi.d:pi.c,-w/2,-h,w,h);g.restore()}
+  const w=pi.w*sc,h=pi.h*sc,hu=h*(TIP_Y-HEAD_Y);g.save();g.translate(x,y+sc-hu);if(rot)g.rotate(rot);g.drawImage(locked?pi.d:pi.c,-w*TIP_X,hu-h*TIP_Y,w,h);g.restore()}
 function buildPinSprites(){const sc=vs*dpr;pinSprites=COLORS.map((_,ci)=>{const c=document.createElement('canvas'),s=PR*2+4;c.width=c.height=Math.ceil(s*sc);
   const g=c.getContext('2d');g.scale(sc,sc);drawPinRaw(g,s/2,s/2,PR,ci);return c});
   pinImgs=COLORS.map((_,ci)=>{const im=IMG['pin-'+PINN[ci]];if(!im)return null;const w=PIN_W,h=pinImgH(im),c=document.createElement('canvas');c.width=Math.ceil(w*sc);c.height=Math.ceil(h*sc);
     const g=c.getContext('2d');g.scale(sc,sc);g.drawImage(im,0,0,w,h);const d=document.createElement('canvas');d.width=c.width;d.height=c.height;const g2=d.getContext('2d');g2.drawImage(c,0,0);
-    g2.globalCompositeOperation='source-atop';g2.fillStyle='rgba(30,18,8,.5)';g2.fillRect(0,0,d.width,d.height);return{c,d,w,h}})}
-function buildPlankSprites(){if(!LV)return;const sc=vs*dpr;plankSprites=LV.planks.map(pl=>{const pad=6,w=pl.len+pad*2,h=TH+pad*2,c=document.createElement('canvas');
+    g2.globalCompositeOperation='source-atop';g2.fillStyle='rgba(46,46,51,.42)';g2.fillRect(0,0,d.width,d.height);return{c,d,w,h}})}
+/* Popsicle sticks: each drawing has its holes in fixed spots, so a stick of any length is cut and re-joined: the rounded end, a hole
+   (centred on the game's pin spot), a plain stretch of stick, a hole, and so on. Numbers are pixels in the image files. */
+const STICK={'plank-short':{w:275,y0:2,y1:96,holes:[69,206.5]},'plank-medium':{w:369,y0:5,y1:98,holes:[80,187,290.5]},'plank-long':{w:467,y0:5,y1:98,holes:[73.5,178,284,391.5]}};
+function paintPlankArt(g,cx,cy,len,us){
+  const name=us.length===3?'plank-medium':len<=135?'plank-short':len<=175?'plank-medium':'plank-long',im=IMG[name];if(!im)return false;
+  const A=STICK[name],f=im.naturalWidth/A.w,k=(TH+4)/(A.y1-A.y0),top=cy-(TH+4)/2-A.y0*k,hh=im.naturalHeight/f*k,HW=14,L=cx-len/2-1,R=cx+len/2+1;
+  const piece=(sx0,sx1,dx0,dx1)=>{if(sx1-sx0<.5||dx1-dx0<.2)return;g.drawImage(im,sx0*f,0,(sx1-sx0)*f,im.naturalHeight,dx0-.3,top,dx1-dx0+.6,hh)};
+  const hs=A.holes,gaps=[];for(let i=0;i+1<hs.length;i++)gaps.push([hs[i]+HW,hs[i+1]-HW]);
+  const fill=(d0,d1)=>{const gl=(gaps[0][1]-gaps[0][0])*k,m=Math.max(1,Math.min(gaps.length,Math.round((d1-d0)/(gl*1.3)))),dw=(d1-d0)/m;
+    for(let j=0;j<m;j++){const gp=gaps[j%gaps.length];piece(gp[0],gp[1],d0+j*dw,d0+(j+1)*dw)}};
+  const C=(INSET+1-HW*k)/k;                 // source width of the rounded end so the first hole lands on the pin spot
+  const xs=us.map(u=>cx+u).sort((a,b)=>a-b),hw=HW*k;
+  piece(0,C,L,L+C*k);
+  for(let i=0;i<xs.length;i++){
+    const src=i===0?hs[0]:i===xs.length-1?hs[hs.length-1]:hs[Math.floor(hs.length/2)];
+    piece(src-HW,src+HW,xs[i]-hw,xs[i]+hw);
+    if(i+1<xs.length)fill(xs[i]+hw,xs[i+1]-hw)}
+  piece(A.w-C,A.w,R-C*k,R);
+  return true}
+function buildPlankSprites(){if(!LV)return;const sc=vs*dpr;plankSprites=LV.planks.map(pl=>{const pad=8,w=pl.len+pad*2,h=TH+pad*2,c=document.createElement('canvas');
   c.width=Math.ceil(w*sc);c.height=Math.ceil(h*sc);const g=c.getContext('2d');g.scale(sc,sc);
   paintPlank(g,w/2,h/2,pl.len,mix(WOOD[(pl.id*3+LV.L)%WOOD.length],Math.min(.12,pl.layer*.012)).replace(/rgb\((\d+),(\d+),(\d+)\)/,(m,r,gg,b)=>'#'+[r,gg,b].map(v=>(+v).toString(16).padStart(2,'0')).join('')),LV.seed+pl.id*31,pl.us);
   return{c,w,h}})}
@@ -590,55 +607,33 @@ function buildSprites(){buildPinSprites();buildPlankSprites()}
 function textOut(s,x,y,size,fill=INK,stroke=PAPER){ctx.save();ctx.font=`${size}px "Gloria Hallelujah","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.lineJoin='round';ctx.lineWidth=size*.25;ctx.strokeStyle=stroke;ctx.strokeText(s,x,y);ctx.fillStyle=fill;ctx.fillText(s,x,y);ctx.restore()}
 function rrect(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+// the corkboard picture: scaled to cover the field, with its big paper sheet centred behind the sticks
+function bgRect(){const xl=-ox/vs-2,xr=W+ox/vs+2,yt=-oy/vs-2,yb=H+oy/vs+2,sc=Math.max(.487,(xr-xl+4)/941,(yb-yt+30)/1672);
+  return{x:W/2-507.5*sc,y:Math.min(30-120*sc,yt),w:941*sc,h:1672*sc,sc,xl,xr,yt,yb}}
 function drawBG(){
-  const xl=-ox/vs-2,xr=W+ox/vs+2,yt=-oy/vs-2,yb=H+oy/vs+2;
-  if(IMG.bg){const im=IMG.bg,hs=757,ws=hs*im.naturalWidth/im.naturalHeight,y0=65;
-    ctx.fillStyle=PAPER;ctx.fillRect(xl,yt,xr-xl,y0+6-yt);
-    ctx.drawImage(im,W/2-ws/2,y0,ws,hs);
-    if(yb>y0+hs){ctx.fillStyle='#e4e2d8';ctx.fillRect(xl,y0+hs-1,xr-xl,yb-y0-hs+2)}
-    for(const d of deco)drawDeco(d);return}
-  ctx.fillStyle=PAPER;ctx.fillRect(xl,yt,xr-xl,yb-yt);
-  ctx.strokeStyle=INK;ctx.lineCap='round';ctx.lineJoin='round';
-  // sun: a wobbly circle with rays
-  ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=40;i++){const a=i/40*Math.PI*2,r=14*(1+.05*Math.sin(i*2.3));ctx.lineTo(350+Math.cos(a)*r,22+Math.sin(a)*r)}ctx.closePath();ctx.stroke();
-  for(let i=0;i<12;i++){const a=i/12*Math.PI*2+.2,r0=19,r1=26+4*(i%2);ctx.beginPath();ctx.moveTo(350+Math.cos(a)*r0,22+Math.sin(a)*r0);ctx.lineTo(350+Math.cos(a)*r1,22+Math.sin(a)*r1);ctx.stroke()}
-  // clouds, outlined
-  ctx.lineWidth=1.6;for(const [cx0,cy,s] of [[60,24,1],[210,16,.7]]){const cx=((cx0+T*4)%(W+120))-60,w=48*s;ctx.beginPath();ctx.moveTo(cx-w/2,cy);ctx.arc(cx-w*.3,cy-w*.1,w*.16,Math.PI,0);ctx.arc(cx,cy-w*.18,w*.22,Math.PI,0);ctx.arc(cx+w*.3,cy-w*.08,w*.15,Math.PI,0);ctx.lineTo(cx+w/2,cy);ctx.stroke()}
-  // far sea: a horizon line and a few ripples
-  ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(xl,52);ctx.lineTo(xr,52);ctx.stroke();
-  ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let i=0;i<7;i++){const x=((i*71+T*10)%(xr-xl+40))+xl-20,y=60+(i*13)%34;ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+9+(i%3)*3,y-2,x+18+(i%3)*6,y);ctx.stroke()}
-  // beach
-  const shore=x=>100+Math.sin(x*.035+T*.9)*3+Math.sin(x*.09)*1.5;
-  ctx.fillStyle='#f0ece1';ctx.beginPath();ctx.moveTo(xl,yb);for(let x=xl;x<=xr+8;x+=8)ctx.lineTo(x,shore(x));ctx.lineTo(xr,yb);ctx.closePath();ctx.fill();
-  ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.beginPath();for(let x=xl;x<=xr+8;x+=8)ctx.lineTo(x,shore(x)-1);ctx.stroke();
-  ctx.strokeStyle=PENCIL;ctx.lineWidth=1;ctx.beginPath();for(let x=xl;x<=xr+8;x+=8)ctx.lineTo(x,shore(x)+5+Math.sin(x*.06-T*1.3)*1.5);ctx.stroke();
-  // board: a patch of smooth wet sand
-  const bx=BOARD.x0-12,by=BOARD.y0-12,bw=BOARD.x1-BOARD.x0+24,bh=BOARD.y1-BOARD.y0+40;
-  ctx.save();rrect(ctx,bx,by,bw,bh,24);ctx.fillStyle='#e9e6db';ctx.fill();ctx.clip();
-  ctx.strokeStyle='rgba(46,46,51,.18)';ctx.lineWidth=1;for(let k=0;k<10;k++){const y=by+20+k*44;ctx.beginPath();for(let x=bx;x<=bx+bw;x+=10)ctx.lineTo(x,y+Math.sin(x*.03+k*1.7)*6);ctx.stroke()}
+  const b=bgRect();
+  if(IMG.bg){ctx.fillStyle='#cec9c1';ctx.fillRect(b.xl,b.yt,b.xr-b.xl,b.yb-b.yt);ctx.drawImage(IMG.bg,b.x,b.y,b.w,b.h);for(const d of deco)drawDeco(d);return}
+  // while the picture loads: cork, a paper sheet and a pencil frame
+  ctx.fillStyle='#c9c1b5';ctx.fillRect(b.xl,b.yt,b.xr-b.xl,b.yb-b.yt);
+  const sx=b.x+105*b.sc,sy=b.y+120*b.sc,sw=805*b.sc,sh=1300*b.sc;
+  ctx.fillStyle='rgba(46,46,51,.15)';ctx.fillRect(sx+4,sy+5,sw,sh);
+  ctx.fillStyle=PAPER;ctx.fillRect(sx,sy,sw,sh);ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.strokeRect(sx,sy,sw,sh);
   for(const d of deco)drawDeco(d);
-  ctx.strokeStyle=INK;ctx.lineWidth=2;rrect(ctx,bx,by,bw,bh,24);ctx.stroke();
-  ctx.restore();
-  // sea at the bottom (planks plunk in here)
-  const sea=x=>SEA_Y+Math.sin(x*.045+T*1.7)*3.5+Math.sin(x*.11-T)*1.5;
-  ctx.fillStyle='#dedcd4';ctx.beginPath();ctx.moveTo(xl,yb+2);for(let x=xl;x<=xr+8;x+=8)ctx.lineTo(x,sea(x));ctx.lineTo(xr,yb+2);ctx.closePath();ctx.fill();
-  ctx.strokeStyle=INK;ctx.lineWidth=1.8;ctx.beginPath();for(let x=xl;x<=xr+8;x+=8)ctx.lineTo(x,sea(x));ctx.stroke();
-  ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let i=0;i<6;i++){const x=((i*83+T*16)%(xr-xl+40))+xl-20,y=SEA_Y+12+(i*7)%16;ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+8,y-2,x+16,y);ctx.stroke()}
 }
-function drawDeco(d){ctx.save();ctx.translate(d.x,d.y);ctx.rotate(d.a);ctx.scale(d.s,d.s);ctx.globalAlpha=.55;
-  if(d.k<2&&IMG[d.k?'shell':'starfish']){const im=IMG[d.k?'shell':'starfish'],w=26,h=w*im.naturalHeight/im.naturalWidth;ctx.globalAlpha=.9;ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return}
-  if(d.k===0){ctx.fillStyle='#f0ece1';ctx.strokeStyle=INK;ctx.lineWidth=1.2;ctx.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,r=k%2?4:10;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke()}
-  else if(d.k===1){ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,7);for(let k=0;k<=6;k++){const a=Math.PI*(1.12+k*.127);ctx.lineTo(Math.cos(a)*9,Math.sin(a)*9)}ctx.closePath();ctx.fill();ctx.stroke();
-    ctx.strokeStyle=PENCIL;ctx.lineWidth=1;for(let k=1;k<6;k++){const a=Math.PI*(1.12+k*.127);ctx.beginPath();ctx.moveTo(0,6);ctx.lineTo(Math.cos(a)*8,Math.sin(a)*8);ctx.stroke()}}
-  else{ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let k=0;k<3;k++){ctx.beginPath();ctx.arc(k*6-6,(k%2)*3,1.6,0,7);ctx.stroke()}}
+function drawDeco(d){ctx.save();ctx.translate(d.x,d.y);ctx.rotate(d.a*.15);ctx.scale(d.s,d.s);ctx.globalAlpha=.45;
+  if(d.k===0&&IMG.starfish){const im=IMG.starfish,w=22,h=w*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return}
+  ctx.strokeStyle=GRAPH;ctx.lineWidth=1.2;ctx.lineCap='round';ctx.lineJoin='round';
+  if(d.k===0){ctx.beginPath();for(let k=0;k<=10;k++){const a=-Math.PI/2+k*Math.PI/5,r=k%2?4:10;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.stroke()}
+  else if(d.k===1){ctx.beginPath();ctx.moveTo(0,6);ctx.bezierCurveTo(-9,-1,-4,-8,0,-3);ctx.bezierCurveTo(4,-8,9,-1,0,6);ctx.stroke()}  // a little heart doodle
+  else{for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(k*7-9,2);ctx.lineTo(k*7-5,-3);ctx.stroke()}}                                // three pencil ticks
   ctx.restore()}
 function drawPail(o){
   const p=pailPos(o);if(!p)return;const col=COLORS[o.c].c;
   ctx.save();ctx.globalAlpha=p.a;ctx.translate(p.x,p.y+36*p.s);ctx.scale(p.s*p.sx,p.s*p.sy);ctx.translate(0,-36);
   const pim=IMG['pail-'+PINN[o.c]];
   if(pim){ctx.drawImage(pim,-PAIL_W/2,PAIL_B-PAIL_H,PAIL_W,PAIL_H);
-    for(let k=o.ids.length;k<3;k++){const q=sockXY(k);ctx.save();ctx.translate(q.x,q.y);ctx.globalAlpha*=.35;motif(ctx,COLORS[o.c].m,PR*.42);ctx.restore()}
-    for(const id of o.ids){const v=PV[id];if(v.st!=='rest')continue;const q=sockXY(v.tgt.idx);drawPinStanding(ctx,o.c,q.x,q.y,.9,false,0)}
+    cupBadge(ctx,o.c,0,8,12);
+    for(const id of o.ids){const v=PV[id];if(v.st!=='rest')continue;const q=sockXY(v.tgt.idx);drawPinStanding(ctx,o.c,q.x,q.y,CUP_PIN,false,0)}
     ctx.restore();return}
   ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,40,46,8,0,0,7);ctx.fill();
   // handle
@@ -659,6 +654,10 @@ function drawPail(o){
   for(const id of o.ids){const v=PV[id];if(v.st!=='rest')continue;const idx=v.tgt.idx;drawPinSprite(o.c,(idx-1)*26,8,1)}
   ctx.restore();
 }
+// the tack's symbol on the front of its cup, so cups and tacks also match without telling colours apart
+function cupBadge(g,c,x,y,r){const o=1.3*vs*dpr;g.save();g.translate(x,y);g.shadowColor=INK;g.shadowBlur=0;  // paper symbol with an ink outline (four offset shadows)
+  for(const [dx,dy] of [[o,0],[-o,0],[0,o],[0,-o]]){g.shadowOffsetX=dx;g.shadowOffsetY=dy;motif(g,COLORS[c].m,r)}
+  g.shadowColor='transparent';motif(g,COLORS[c].m,r);g.restore()}
 function miniPail(g,x,y,sc,c){const col=COLORS[c].c;g.save();g.translate(x,y);g.scale(sc,sc);
   const pim=IMG['pail-'+PINN[c]];if(pim){g.drawImage(pim,-PAIL_W/2,PAIL_B-PAIL_H+10,PAIL_W,PAIL_H);g.restore();return}
   g.strokeStyle=INK;g.lineWidth=5;g.beginPath();g.moveTo(-43,-26);g.bezierCurveTo(-46,-74,46,-74,43,-26);g.stroke();
@@ -667,27 +666,31 @@ function miniPail(g,x,y,sc,c){const col=COLORS[c].c;g.save();g.translate(x,y);g.
   rrect(g,-50,-36,100,14,7);g.fillStyle=rgba(col,.45);g.fill();g.stroke();
   g.translate(0,4);motif(g,COLORS[c].m,22);g.restore()}
 function drawPinSprite(ci,x,y,sc){const sp=pinSprites[ci];if(!sp)return;const s=(PR*2+4)*sc;ctx.drawImage(sp,x-s/2,y-s/2,s,s)}
+/* The pencil case (Mark's "tidepool" drawing) is wider than its picture, so only plain pencil-and-tray columns are stretched;
+   the ends, the strap, the eraser, the sharpener and the zip keep their shape. Numbers are pixels in tidepool.webp. */
+const CASE_COLS=[[0,100,0],[100,152,1],[152,212,0],[212,250,1],[250,492,0]],CASE_X0=22,CASE_X1=378,CASE_H=86;
+function drawCase(g,x0,y0,w,h){const im=IMG.tidepool,f=im.naturalWidth/492,k=h/im.naturalHeight*f;let fix=0,str=0;
+  for(const [a,b,s] of CASE_COLS)if(s)str+=b-a;else fix+=b-a;const st=(w-fix*k)/(str*k);let x=x0;
+  for(const [a,b,s] of CASE_COLS){const dw=(b-a)*k*(s?st:1);g.drawImage(im,a*f,0,(b-a)*f,im.naturalHeight,x-.3,y0,dw+.6,h);x+=dw}}
 function drawTray(){
-  const x0=slotX(0)-31,x1=slotX(5)+31,y0=TRAY_Y-28,h=56,full=S&&S.tray.length>=S.cap-1&&state!=='menu';
+  const x0=CASE_X0,x1=CASE_X1,y0=TRAY_Y-CASE_H/2,h=CASE_H,full=S&&S.tray.length>=S.cap-1&&state!=='menu';
   let sx=0;const st=T-trayShakeT;if(st>=0&&st<.45&&!RM)sx=Math.sin(st*50)*5*(1-st/.45);
   ctx.save();ctx.translate(sx,0);
-  ctx.fillStyle='rgba(46,46,51,.2)';rrect(ctx,x0-4,y0-4,x1-x0+14,h+14,30);ctx.fill();
-  rrect(ctx,x0-7,y0-7,x1-x0+14,h+14,30);ctx.fillStyle='#e9e6db';ctx.fill();
-  ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.stroke();
-  for(let k=0;k<9;k++){ctx.strokeStyle=PENCIL;ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(x0+12+k*38,y0-3+(k%2)*2,10,3,0,0,7);ctx.stroke()}
-  rrect(ctx,x0,y0,x1-x0,h,25);ctx.fillStyle='#d6e4f2';ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke();
-  ctx.save();ctx.clip();ctx.strokeStyle='rgba(47,111,181,.5)';ctx.lineWidth=1.2;
-  for(let k=0;k<8;k++){const x=x0+((k*53+T*12)%(x1-x0+40))-20,y=y0+10+(k*17)%(h-16);ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+8,y-3,x+16,y);ctx.stroke()}ctx.restore();
-  if(full){const a=.45+.4*Math.sin(T*9);ctx.strokeStyle=`rgba(196,90,138,${a})`;ctx.lineWidth=3;rrect(ctx,x0-9,y0-9,x1-x0+18,h+18,32);ctx.stroke()}
+  ctx.fillStyle='rgba(46,46,51,.2)';rrect(ctx,x0+3,y0+5,x1-x0-10,h-2,24);ctx.fill();
+  if(IMG.tidepool)drawCase(ctx,x0,y0,x1-x0-6,h);
+  else{rrect(ctx,x0,y0,x1-x0-8,h,24);ctx.fillStyle='#e4e2d8';ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.stroke();
+    rrect(ctx,x0+8,y0+8,x1-x0-24,h-16,16);ctx.fillStyle='#dedcd4';ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke()}
+  if(full){const a=.45+.4*Math.sin(T*9);ctx.strokeStyle=`rgba(196,90,138,${a})`;ctx.lineWidth=3;rrect(ctx,x0-4,y0-4,x1-x0+2,h+8,28);ctx.stroke()}
   for(let i=0;i<MAXSLOT;i++){const x=slotX(i);
     if(S&&i>=S.cap){ // locked bonus slot
       const pulse=full&&helper>0?1+.08*Math.sin(T*8):1;ctx.save();ctx.translate(x,TRAY_Y);ctx.scale(pulse,pulse);
       ctx.fillStyle=helper>0?'#f3e6b0':'#dedcd4';ctx.beginPath();ctx.arc(0,0,18,0,7);ctx.fill();ctx.strokeStyle=helper>0?'#c99a1a':PENCIL;ctx.lineWidth=2;ctx.setLineDash(helper>0?[]:[4,3]);ctx.stroke();ctx.setLineDash([]);
       ctx.restore();textOut(helper>0?'+1':'',x,TRAY_Y+1,17,'#c99a1a',PAPER);continue}
-    const pk=T-slotPopT,sc=pk<.4&&i===5?1+Math.sin(pk/.4*Math.PI)*.35:1;
-    ctx.fillStyle='rgba(46,46,51,.12)';ctx.beginPath();ctx.arc(x,TRAY_Y,18*sc,0,7);ctx.fill();
-    ctx.strokeStyle=PENCIL;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,TRAY_Y,18*sc,0,7);ctx.stroke()}
-  if(S)for(let i=0;i<MAXSLOT;i++){const id=traySlots[i];if(id==null)continue;const v=PV[id];if(v.st==='rest'&&v.tgt.type==='tray'){const lt=T-v.landT,sq=lt<.2?1+Math.sin(lt/.2*Math.PI)*.15:1;if(pinImgs[LV.pins[id].c])drawPinStanding(ctx,LV.pins[id].c,slotX(i),TRAY_Y-2,sq*.9,false,0);else drawPinSprite(LV.pins[id].c,slotX(i),TRAY_Y,sq)}}
+    const pk=T-slotPopT,sc=pk<.4&&i===5?1+Math.sin(pk/.4*Math.PI)*.35:1;  // an empty spot: a paper circle with a pin hole near the bottom
+    ctx.fillStyle='rgba(246,243,234,.88)';ctx.beginPath();ctx.arc(x,TRAY_Y+1,18*sc,0,7);ctx.fill();
+    ctx.strokeStyle=GRAPH;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,TRAY_Y+1,18*sc,0,7);ctx.stroke();
+    ctx.fillStyle=GRAPH;ctx.beginPath();ctx.arc(x,TRAY_PY,2.2*sc,0,7);ctx.fill()}
+  if(S)for(let i=0;i<MAXSLOT;i++){const id=traySlots[i];if(id==null)continue;const v=PV[id];if(v.st==='rest'&&v.tgt.type==='tray'){const lt=T-v.landT,sq=lt<.2?1+Math.sin(lt/.2*Math.PI)*.15:1;if(pinImgs[LV.pins[id].c])drawPinStanding(ctx,LV.pins[id].c,slotX(i),TRAY_PY,sq*.9,false,0);else drawPinSprite(LV.pins[id].c,slotX(i),TRAY_Y,sq)}}
   ctx.restore();
 }
 function drawPlank(q,tr){
@@ -702,11 +705,14 @@ function drawPlank(q,tr){
 }
 function drawBoardPin(i){
   const v=PV[i],p=LV.pins[i];let x=p.x;const wt=T-v.wigT;if(wt>=0&&wt<.4)x+=Math.sin(wt*48)*3.2*(1-wt/.4);
-  ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(x+2,p.y+3,PR,PR*.85,0,0,7);ctx.fill();
-  if(pinImgs[p.c])drawPinStanding(ctx,p.c,x,p.y,1,!acc[i]);
+  const art=!!pinImgs[p.c],hy=art?p.y-HEAD_UP:p.y;   // where the tack's head is (the part you tap)
+  ctx.fillStyle='rgba(46,46,51,.2)';
+  if(art){ctx.beginPath();ctx.ellipse(x+1.5,p.y+1,4,2,0,0,7);ctx.fill();ctx.fillStyle='rgba(46,46,51,.14)';ctx.beginPath();ctx.ellipse(x+5,hy+9,13,10,0,0,7);ctx.fill()}
+  else{ctx.beginPath();ctx.ellipse(x+2,p.y+3,PR,PR*.85,0,0,7);ctx.fill()}
+  if(art)drawPinStanding(ctx,p.c,x,p.y,1,!acc[i]);
   else{drawPinSprite(p.c,x,p.y,1);if(!acc[i]){ctx.fillStyle='rgba(46,46,51,.38)';ctx.beginPath();ctx.arc(x,p.y,PR+.5,0,7);ctx.fill()}}
-  if(acc[i]&&level<=2&&state==='play'){const k=(T*1.4+i*.17)%1;ctx.strokeStyle=`rgba(46,46,51,${.6*(1-k)})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,p.y,PR+3+k*9,0,7);ctx.stroke()}
-  if(kbOn&&kbSel===i){ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.setLineDash([5,4]);ctx.lineDashOffset=-T*20;ctx.beginPath();ctx.arc(x,p.y,PR+6,0,7);ctx.stroke();ctx.setLineDash([])}
+  if(acc[i]&&level<=2&&state==='play'){const k=(T*1.4+i*.17)%1;ctx.strokeStyle=`rgba(46,46,51,${.6*(1-k)})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,hy,PR+3+k*9,0,7);ctx.stroke()}
+  if(kbOn&&kbSel===i){ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.setLineDash([5,4]);ctx.lineDashOffset=-T*20;ctx.beginPath();ctx.arc(x,hy,PR+6,0,7);ctx.stroke();ctx.setLineDash([])}
 }
 function flyPos(v){
   if(T<v.fs){if(v.fromBoard){const k=easeOut(clamp((T-v.pulledAt)/.18,0,1));return{x:v.ox,y:v.oy-10*k+(T-v.pulledAt>.2?Math.sin(T*8)*1.5:0),s:1+.3*k,r:k*Math.PI*2}}return{x:v.ox,y:v.oy,s:1,r:0}}
@@ -715,6 +721,21 @@ function flyPos(v){
   const x=(1-u)*(1-u)*v.ox+2*(1-u)*u*cx+u*u*t.x,y=(1-u)*(1-u)*sy+2*(1-u)*u*cy+u*u*t.y;
   return{x,y,s:(v.fromBoard?1.3:1.1)-(v.fromBoard?.3:.1)*u+Math.sin(u*Math.PI)*.15,r:Math.PI*2+u*Math.PI*2};
 }
+// the sticky note between the cups: which cups come next (a "?" cup on the first levels, where the next cup is picked as you play)
+function drawNext(){
+  const nx=LV.queue?LV.queue.slice(S.qi,S.qi+2):null,im=IMG.sign;
+  if(im){const w=66,h=w*im.naturalHeight/im.naturalWidth;ctx.save();ctx.translate(200,26+h/2);ctx.rotate(-.03);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
+  else{ctx.fillStyle='rgba(246,243,234,.9)';rrect(ctx,170,30,60,64,4);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke()}
+  ctx.save();ctx.font='12px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='center';ctx.fillStyle=INK;ctx.fillText(nx&&!nx.length?'LAST ONES':'NEXT',199,55);ctx.restore();
+  if(!nx){if(IMG['pail-next']){const w=26,h=w*PAIL_H/PAIL_W;ctx.drawImage(IMG['pail-next'],199-w/2,79-h/2,w,h)}}
+  else nx.forEach((c,k)=>miniPail(ctx,nx.length===1?199:187+k*24,77,.2,c));
+}
+// Mark's ink-drop buddy watches from the corner of the desk and hops when a cup fills or a level is cleared
+let buddyT=-9;const BUDDY_X=366,BUDDY_Y=640;
+function drawBuddy(){const im=IMG.shell;if(!im)return;const w=50,h=w*im.naturalHeight/im.naturalWidth;
+  let t=T-buddyT;if(state==='clear')t=(T-buddyT)%.7;const hop=t>=0&&t<.5&&!RM?Math.sin(t/.5*Math.PI):0,sway=RM?0:Math.sin(T*1.8)*.04;
+  ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(BUDDY_X,BUDDY_Y+2,18*(1-hop*.3),4,0,0,7);ctx.fill();
+  ctx.save();ctx.translate(BUDDY_X,BUDDY_Y-hop*16);ctx.rotate(sway);ctx.scale(1-hop*.06,1+hop*.08);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}
 function draw(){
   ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
   let sx=0,sy=0;if(shake>0&&!RM){sx=(Math.random()-.5)*shake;sy=(Math.random()-.5)*shake}
@@ -722,13 +743,11 @@ function draw(){
   drawBG();
   if(!LV){return}
   // pail spots
-  for(let k=0;k<2;k++){ctx.fillStyle='rgba(46,46,51,.12)';ctx.beginPath();ctx.ellipse(PAIL_X[k],PAIL_Y+40,48,9,0,0,7);ctx.fill()}
-  if(LV.queue){const nx=LV.queue.slice(S.qi,S.qi+2);
-    ctx.fillStyle='rgba(246,243,234,.85)';rrect(ctx,170,30,60,64,14);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke();
-    ctx.save();ctx.font='11px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='center';ctx.fillStyle=INK;ctx.fillText(nx.length?'NEXT':'LAST ONES',200,43);ctx.restore();
-    nx.forEach((c,k)=>miniPail(ctx,186+k*28,70,.25,c));}
+  for(let k=0;k<2;k++){ctx.fillStyle='rgba(46,46,51,.14)';ctx.beginPath();ctx.ellipse(PAIL_X[k]+3,PAIL_Y+47,42,7,0,0,7);ctx.fill()}
+  drawNext();
   for(const o of allPails)drawPail(o);
   drawTray();
+  drawBuddy();
   // planks in layer order, each with its own pins
   const order=LV.planks.map(p=>p.id);
   for(const q of order){const qv=QV[q];if(qv.mode==='fall')continue;drawPlank(q,plankTransform(q));
@@ -739,7 +758,7 @@ function draw(){
   // pins in the air
   for(let i=0;i<PV.length;i++){const v=PV[i];if(v.st!=='fly')continue;const p=flyPos(v);
     ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(p.x+4,p.y+8,PR*p.s*.9,PR*p.s*.5,0,0,7);ctx.fill();
-    if(pinImgs[LV.pins[i].c])drawPinStanding(ctx,LV.pins[i].c,p.x,p.y,p.s,false,p.r*.35);else drawPinRaw(ctx,p.x,p.y,PR*p.s,LV.pins[i].c,p.r)}
+    if(pinImgs[LV.pins[i].c])drawPinStanding(ctx,LV.pins[i].c,p.x,p.y,p.s,false,p.r*.5);else drawPinRaw(ctx,p.x,p.y,PR*p.s,LV.pins[i].c,p.r)}
   for(const p of parts){const a=clamp(p.life/p.max,0,1);ctx.globalAlpha=a;ctx.fillStyle=p.col;
     if(p.conf){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillRect(-p.r,-p.r*.5,p.r*2,p.r);ctx.restore()}
     else if(p.spark){ctx.save();ctx.translate(p.x,p.y);const s=p.r*1.6;ctx.beginPath();ctx.moveTo(0,-s);ctx.quadraticCurveTo(0,0,s,0);ctx.quadraticCurveTo(0,0,0,s);ctx.quadraticCurveTo(0,0,-s,0);ctx.quadraticCurveTo(0,0,0,-s);ctx.fill();ctx.restore()}
@@ -756,7 +775,7 @@ function update(dt){
     for(let i=0;i<PV.length;i++){const v=PV[i];if(v.st==='fly'&&T>=v.fe){v.st='rest';v.landT=T;const c=LV.pins[i].c;const t=pinTarget(v);
       if(v.tgt.type==='pail'){v.tgt.obj.bumpT=T;sfx.land(c)}else sfx.tray();
       for(let k=0;k<6;k++){const a=Math.random()*6.28,sp=40+Math.random()*70;parts.push({x:t.x,y:t.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.35,max:.35,r:1.5+Math.random()*1.5,col:GRAPH,g:0,spark:true})}}}
-    for(const o of allPails){if(isFinite(o.leaveAt)&&!o.hopped&&T>=o.leaveAt){o.hopped=true;sfx.full();const col=COLORS[o.c].c;splashes.push({x:PAIL_X[o.k],y:PAIL_Y-10,t:0,max:.8,k:'sparkle',w:120});
+    for(const o of allPails){if(isFinite(o.leaveAt)&&!o.hopped&&T>=o.leaveAt){o.hopped=true;buddyT=T;sfx.full();const col=COLORS[o.c].c;splashes.push({x:PAIL_X[o.k],y:PAIL_Y-10,t:0,max:.8,k:'sparkle',w:120});
       floaters.push({s:'+30',x:PAIL_X[o.k],y:PAIL_Y-50,life:1.1,size:26,gold:true});
       for(let k=0;k<26;k++){const a=-Math.PI/2+(Math.random()-.5)*2.6,sp=120+Math.random()*180;parts.push({x:PAIL_X[o.k],y:PAIL_Y-20,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.9,max:.9,r:2.5+Math.random()*2.5,col:k%3?col:GRAPH,g:380,conf:k%2===0,spark:k%2===1,rot:Math.random()*6})}}}
     allPails=allPails.filter(o=>!(isFinite(o.leaveAt)&&T>o.leaveAt+.8));
@@ -764,7 +783,7 @@ function update(dt){
     for(let q=0;q<QV.length;q++){const qv=QV[q];if(qv.mode!=='fall')continue;const f=qv.fa;if(f.y>bottom+300)continue;
       f.vy+=1300*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.ang+=f.va*dt;
       if(!f.splashed&&f.y>SEA_Y+6){f.splashed=true;f.vy*=.35;f.vx*=.5;sfx.splash();if(!RM)shake=Math.max(shake,3);ripples.push({x:f.x,y:SEA_Y+8,t:0,max:.9});splashes.push({x:f.x,y:SEA_Y+10,t:0,max:.7,k:'splash',w:110});
-        for(let k=0;k<26;k++){const a=-Math.PI/2+(Math.random()-.5)*1.9,sp=140+Math.random()*240;parts.push({x:f.x+(Math.random()-.5)*60,y:SEA_Y+4,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.8,max:.8,r:2+Math.random()*3.5,col:k%3?GRAPH:'#2f6fb5',g:900})}}}
+        for(let k=0;k<26;k++){const a=-Math.PI/2+(Math.random()-.5)*1.9,sp=140+Math.random()*240;parts.push({x:f.x+(Math.random()-.5)*60,y:SEA_Y+4,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.8,max:.8,r:2+Math.random()*3.5,col:k%3?GRAPH:'#c45a8a',g:900})}}}
     if(state==='ending'&&endInfo&&T>=endInfo.at){const t=endInfo.type;endInfo=null;if(t==='win')finishLevel();else gameOver()}
   }
   for(let i=splashes.length-1;i>=0;i--){splashes[i].t+=dt;if(splashes[i].t>=splashes[i].max)splashes.splice(i,1)}
@@ -779,7 +798,7 @@ let shownScore=-1;
 function hud(bump){
   $('lvlEl').textContent=level;$('scoreEl').textContent=score;$('bestEl').textContent=best;
   if(bump&&shownScore!==score){const el=$('scoreEl');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}shownScore=score;
-  if(LV){const left=S.onBoard;$('barFill').style.width=(100*(1-left/LV.N)).toFixed(1)+'%';$('pinsLeft').textContent=left===0?'All pins pulled!':left===1?'1 pin left':left+' pins left'}
+  if(LV){const left=S.onBoard;$('barFill').style.width=(100*(1-left/LV.N)).toFixed(1)+'%';$('pinsLeft').textContent=left===0?'All tacks pulled!':left===1?'1 tack left':left+' tacks left'}
   $('slotCount').textContent=helper;$('slotBtn').disabled=!(state==='play'&&helper>0);
   $('slotBtn').classList.toggle('hot',state==='play'&&helper>0&&S&&S.tray.length>=S.cap-1);
 }
@@ -789,11 +808,11 @@ let banT=null;function banner(t,sub){const el=$('banner');el.innerHTML=t+(sub?`<
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const b=$('card').querySelector('.gold');if(b)setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},40);hud()}
 function hideOverlay(){$('overlay').hidden=true}
 const RULES=`<ul class="rules">
-  <li><b>1</b><span>Tap a shell pin that no plank lies on. It twists out and flies to the pail of its color.</span></li>
-  <li><b>2</b><span>No pail for that color? The pin waits in the tide pool. It holds 5 pins.</span></li>
-  <li><b>3</b><span>Three pins fill a pail. The next pail drops in and scoops up its color from the tide pool.</span></li>
-  <li><b>4</b><span>A plank with one pin left swings down and may cover new pins. Pull its last pin and it plunks into the sea.</span></li>
-  <li><b>5</b><span>Clear every plank to win the level. If the tide pool fills up with no move left, the game is over. The gold +1 slot helps once per level.</span></li></ul>`;
+  <li><b>1</b><span>Tap a thumbtack that no popsicle stick lies on. It pops out and flies to the paper cup of its color.</span></li>
+  <li><b>2</b><span>No cup for that color? The tack waits in the pencil case. It holds 5 tacks.</span></li>
+  <li><b>3</b><span>Three tacks fill a cup. The next cup drops in and scoops up its color from the pencil case.</span></li>
+  <li><b>4</b><span>A stick with one tack left swings down and may cover new tacks. Pull its last tack and it plunks onto the desk.</span></li>
+  <li><b>5</b><span>Clear every stick to win the level. If the pencil case fills up with no move left, the game is over. The gold +1 slot helps once per level.</span></li></ul>`;
 function startCard(){
   state='menu';
   showCard(`<canvas id="mini" aria-hidden="true"></canvas><h2>Pencil Plunk</h2>${RULES}
@@ -809,7 +828,7 @@ function helpCard(){
   if(state==='menu'){startCard();return}
   if(state!=='play')return;
   pausedFrom=state;state='paused';
-  showCard(`<h2>How to play</h2>${RULES}<p style="font-size:.82rem">Keyboard: arrow keys pick a free pin, Enter or Space pulls it, + adds a slot.</p>
+  showCard(`<h2>How to play</h2>${RULES}<p style="font-size:.82rem">Keyboard: arrow keys pick a free tack, Enter or Space pulls it, + adds a slot.</p>
     <button class="gold sm" id="resumeBtn" type="button">Keep playing</button>`);
   $('resumeBtn').onclick=()=>{sfx.click();state='play';hideOverlay();hud()};
 }
@@ -817,7 +836,16 @@ function drawMini(){
   const c=$('mini');if(!c)return;const r=c.getBoundingClientRect(),d=Math.min(2.5,devicePixelRatio||1);c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);
   const g=c.getContext('2d'),k=r.width/180;g.scale(d*k,d*k);
   g.lineCap='round';g.lineJoin='round';
-  // a bit of sand: a wobbly ground line with a few dots
+  if(IMG['plank-medium']&&IMG['plank-short']&&IMG.pails&&[0,1,2,3,5].every(c=>pinImgs[c])){ // Mark's art: two pinned sticks, a flying tack and a stack of cups
+    const stick=(x,y,a,len,us,cols)=>{g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba(46,46,51,.16)';capsule(g,3,5,len,TH);g.fill();paintPlankArt(g,0,0,len,us);g.restore();
+      us.forEach((u,j)=>{const px=x+u*Math.cos(a),py=y+u*Math.sin(a),pi=pinImgs[cols[j]];g.save();g.translate(px,py+1);g.drawImage(pi.c,-pi.w*TIP_X,-pi.h*TIP_Y,pi.w,pi.h);g.restore()})};
+    g.save();g.translate(8,10);g.scale(.84,.84);
+    stick(72,82,-.14,128,[-43,43],[1,0]);stick(92,52,.24,110,[-34,34],[2,3]);
+    const pi=pinImgs[5];g.save();g.translate(150,30);g.rotate(.5);g.drawImage(pi.c,-pi.w/2,-pi.h/2,pi.w,pi.h);g.restore();
+    g.restore();
+    const ps=IMG.pails,pw=34,ph=pw*ps.naturalHeight/ps.naturalWidth;g.drawImage(ps,176-pw,94-ph,pw,ph);
+    return}
+  // a bit of desk: a wobbly line with a few dots
   g.strokeStyle=GRAPH;g.lineWidth=1;g.beginPath();for(let x=8;x<=172;x+=6)g.lineTo(x,88+Math.sin(x*.2)*1.5);g.stroke();
   for(let k=0;k<6;k++){g.beginPath();g.arc(20+k*28,92,1,0,7);g.stroke()}
   const doodlePlank=(len,us)=>{capsule(g,0,0,len,TH);g.fillStyle=PAPER;g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
@@ -835,7 +863,7 @@ function drawMini(){
 
 /* ---------- input ---------- */
 function toLocal(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left-ox)/vs,y:(e.clientY-r.top-oy)/vs}}
-function pinAt(p){let bi=-1,bd=1e9;for(let i=0;i<LV.N;i++){if(!S.rem[i])continue;const d=Math.hypot(LV.pins[i].x-p.x,LV.pins[i].y-p.y);if(d>25)continue;const sc=d-(acc[i]?7:0);if(sc<bd){bd=sc;bi=i}}return bi}
+function pinAt(p){let bi=-1,bd=1e9;for(let i=0;i<LV.N;i++){if(!S.rem[i])continue;const hu=pinImgs[LV.pins[i].c]?HEAD_UP:0,d=Math.min(Math.hypot(LV.pins[i].x-p.x,LV.pins[i].y-p.y),Math.hypot(LV.pins[i].x-p.x,LV.pins[i].y-hu-p.y));if(d>25)continue;const sc=d-(acc[i]?7:0);if(sc<bd){bd=sc;bi=i}}return bi}
 cv.addEventListener('pointerdown',e=>{
   if(e.cancelable)e.preventDefault();if(state!=='play')return;const p=toLocal(e);
   if(S.cap<MAXSLOT&&Math.hypot(p.x-slotX(5),p.y-TRAY_Y)<26){useHelper();return}

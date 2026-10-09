@@ -410,9 +410,9 @@
       "name": "Letter Links",
       "genre": "Word",
       "added": "2026-10-08",
-      "tagline": "Link words across a sunny lagoon and turn all twelve letters gold. Three difficulties.",
-      "meta": "Play Letter Links free online. Tap letters around a sunny lagoon to make linked words, use all twelve letters in as few words as you can, and beat par. Beginner, Intermediate and Advanced. Works on phone and computer.",
-      "lead": "Twelve letters bob on buoys around a turquoise lagoon, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 lagoons, from breezy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest lagoons with 4-letter-minimum words and double points.",
+      "tagline": "Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties.",
+      "meta": "Play Letter Links free online. Tap chalk letters around a path in the park to make linked words, use all twelve letters in as few words as you can, and beat par. Beginner, Intermediate and Advanced. Works on phone and computer.",
+      "lead": "Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.",
       "facts": [
         "Word",
         "72 puzzles",
@@ -421,25 +421,25 @@
         "Saves your best score and progress"
       ],
       "how": [
-        "Tap letters around the lagoon to spell a word. Each next letter must come from a different side.",
+        "Tap letters around the path to spell a word. Each next letter must come from a different side.",
         "Press Enter to play the word. Your next word starts with its last letter.",
         "Letters can be used again. Used letters turn gold.",
-        "Turn all 12 letters gold to solve the lagoon. Try to do it in the par number of words.",
-        "Beginner: easy letters, 7 words per lagoon and 4 hints. Intermediate: all 72 lagoons, 6 words, points ×1.5. Advanced: tricky letters, 4+ letter words only, 5 words, points ×2.",
-        "You have 3 shell lives. Running out of words or skipping costs a shell.",
+        "Turn all 12 letters gold to solve the puzzle. Try to do it in the par number of words.",
+        "Beginner: easy letters, 7 words per puzzle and 4 hints. Intermediate: all 72 puzzles, 6 words, points ×1.5. Advanced: tricky letters, 4+ letter words only, 5 words, points ×2.",
+        "You have 3 heart lives. Running out of words or skipping costs a heart.",
         "Each difficulty saves its own progress and best score. Change it from the start screen, the ? card or the game-over card."
       ],
       "controls": [
         "Computer: click or drag across letters, or type them on the keyboard. Enter plays the word and Backspace deletes a letter.",
         "Phone or tablet: tap letters or slide your finger from letter to letter, then tap Enter.",
-        "Hint shows the next letter of a good solution. Restart clears your words for this lagoon.",
-        "The sound button turns the sound effects and waves on or off."
+        "Hint shows the next letter of a good solution. Restart clears your words for this puzzle.",
+        "The sound button turns the sound effects on or off."
       ],
       "tips": [
         "Long words that use letters from all four sides get you there fastest.",
         "Think about the last letter: a word ending in a common letter like S, E or T gives you more choices next.",
         "Deleting the first letter of a word takes back your previous word, so you can try another path.",
-        "Save hints for the hard lagoons. You earn a new hint shell every three puzzles you solve.",
+        "Save hints for the hard puzzles. You earn a new hint bulb every three puzzles you solve.",
         "Under par pays the most: each word you save is worth 150 bonus points."
       ]
     },
@@ -448,9 +448,9 @@
       "name": "Sketch Sprint",
       "genre": "Arcade",
       "added": "2026-10-08",
-      "tagline": "Race a twisting boardwalk over ponds, rivers, marsh and woods. Swipe to turn, jump and slide.",
-      "meta": "Play Sketch Sprint free online, a fast endless runner. Pick Francis, Clare, George, Joan or one of four more kids and race a boardwalk that turns sharp corners over ponds, rivers, marshes and through the woods. Swipe to turn, jump gaps, slide under branches and grab gold rings. Works on phone and computer.",
-      "lead": "A fast endless runner with sharp corners. Pick your runner from eight beach kids, then race a boardwalk that twists left and right through five places: the beach, a lily-pad pond, a river, a reedy marsh and the woods. Swipe the way the arrow points to take each corner, jump missing planks and logs, slide under branches and nets, and grab gold rings for points. Catch a hang glider to fly, a magnet to pull rings in, a bubble that saves you once, or a rocket board to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Rings you collect add up between runs and unlock new runners.",
+      "tagline": "Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide.",
+      "meta": "Play Sketch Sprint free online, a fast endless runner drawn in pencil. Pick Francis, Clare, George, Joan or one of four more kids and race a path that turns sharp corners through downtown, a backyard, the park, a creek and the woods. Swipe to turn, jump gaps, slide under nets and grab gold stars. Works on phone and computer.",
+      "lead": "A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.",
       "facts": [
         "Arcade",
         "Endless running with corners",
@@ -459,13 +459,13 @@
         "Saves your best score"
       ],
       "how": [
-        "Your runner races down the boardwalk on their own and gets faster the longer you last.",
-        "The boardwalk turns 90 degrees left and right. An arrow sign and a rail mark each corner: swipe that way just before you reach it. Miss it and you run into the rail.",
-        "Change lanes to get around towers, crab traps, carts and fallen trees.",
-        "Jump over low things like logs, sandcastles and ducks, and over gaps where planks are missing. Slide under branches, towel lines and nets.",
-        "Grab gold rings for 10 points each. You also score for every meter you run and a bonus for every corner.",
+        "Your runner races down the path on their own and gets faster the longer you last.",
+        "The path turns 90 degrees left and right. An arrow sign and a rail mark each corner: swipe that way just before you reach it. Miss it and you run into the rail.",
+        "Change lanes to get around walls, hot dog carts, lookout towers and fallen trees. Tall walls block a whole lane, so go around them.",
+        "Jump over low things like logs, sandbox castles and ducks, and over gaps in the path. Slide under branches, picnic blankets and nets.",
+        "Grab gold stars for 10 points each. You also score for every meter you run and a bonus for every corner.",
         "Bump into something head on and the run is over. Bump the side of something and you stumble, but a second stumble soon after ends the run.",
-        "Every 500 meters is a new wave: faster, with a bigger score multiplier. Shells add up between runs: Clare unlocks at 150, George at 400, Joan at 800, then John, Catherine, Joseph and Thérèse."
+        "Every 500 meters is a new wave: faster, with a bigger score multiplier. Stars add up between runs: Clare unlocks at 150, George at 400, Joan at 800, then John, Catherine, Joseph and Thérèse."
       ],
       "controls": [
         "Computer: use the arrow keys or A and D to change lanes and turn corners, Up, W or Space to jump, and Down or S to slide. You can also drag with the mouse.",
@@ -474,11 +474,11 @@
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Look ahead, not at Pip. Big things in the distance give you lots of time to pick a lane.",
-        "Swipe down while you're in the air to drop fast, then slide straight under the next towel line.",
-        "Wait until you're past something before you switch lanes, or Pip will bump its side.",
-        "A kite lets you fly over everything and grab a line of shells in the sky.",
-        "Magnet starfish pull shells to you, and a bubble saves you from one bump."
+        "Look ahead, not at your runner. Big things in the distance give you lots of time to pick a lane.",
+        "Swipe down while you're in the air to drop fast, then slide straight under the next net.",
+        "Wait until you're past something before you switch lanes, or you'll bump its side.",
+        "A paper plane lets you fly over everything and grab a line of stars in the sky.",
+        "A magnet pulls stars to you, and a bubble saves you from one bump."
       ]
     },
     {
@@ -486,9 +486,9 @@
       "name": "Doodle Drop",
       "genre": "Arcade",
       "added": "2026-10-08",
-      "tagline": "Spin a striped lighthouse and drop a bouncy beach ball down to the pool.",
-      "meta": "Play Doodle Drop free online. Spin the lighthouse to line up gaps, bounce a beach ball down disc by disc, dodge sea urchins and splash into the pool. Works on phone and computer.",
-      "lead": "A bouncy beach ball sits on top of a tall red and white lighthouse, and the only way down is through the gaps in the discs around it. Drag to spin the tower, drop through disc after disc, and steer clear of the prickly sea urchins and sliding jellyfish. Fall through three in a row and your ball glows with a rainbow that smashes right through the next disc.",
+      "tagline": "Spin a giant pencil and drop a bouncy striped ball down to the pencil cup.",
+      "meta": "Play Doodle Drop free online. Spin a giant pencil to line up gaps, bounce a striped ball down ring by ring, dodge pink scribbles and ink blots, and land in the pencil cup. Works on phone and computer.",
+      "lead": "A bouncy striped ball sits at the top of a giant pencil, and the only way down is through the gaps in the paper rings around it. Drag to spin the pencil, drop through ring after ring, and steer clear of the spiky pink scribbles and sliding ink blots. Fall through three in a row and your ball glows with a rainbow that smashes right through the next ring.",
       "facts": [
         "Arcade",
         "Endless levels",
@@ -496,23 +496,23 @@
         "Saves your best score"
       ],
       "how": [
-        "The beach ball bounces up and down on its own.",
-        "Drag left or right to spin the lighthouse and turn a gap under the ball.",
-        "Drop through each disc to score. More discs in a row score more.",
-        "Don't land on the purple sea urchins or the sliding pink jellyfish.",
-        "Fall through three discs without bouncing to glow, then smash the next disc to bits.",
-        "Splash into the pool at the bottom to clear the level and climb a taller lighthouse."
+        "The striped ball bounces up and down on its own.",
+        "Drag left or right to spin the pencil and turn a gap under the ball.",
+        "Drop through each ring to score. More rings in a row score more.",
+        "Don't land on the pink scribbles or the sliding purple ink blots.",
+        "Fall through three rings without bouncing to glow, then smash the next ring to bits.",
+        "Land in the pencil cup at the bottom to clear the level and climb a taller pencil."
       ],
       "controls": [
-        "Computer: drag with the mouse, or hold the arrow keys or A and D to spin the lighthouse. Press Esc to pause.",
-        "Phone or tablet: drag left and right anywhere on the lighthouse.",
-        "The sound button turns the boings, splashes and waves on or off."
+        "Computer: drag with the mouse, or hold the arrow keys or A and D to spin the pencil. Press Esc to pause.",
+        "Phone or tablet: drag left and right anywhere on the pencil.",
+        "The sound button turns the sound effects on or off."
       ],
       "tips": [
         "Start turning while the ball is still in the air so the gap is ready when it lands.",
-        "Little nudges work better than big swipes. The tower keeps spinning a bit after you let go.",
-        "Chain drops together for big points and a rainbow smash that even breaks urchins.",
-        "Watch the jellyfish slide before you land near them.",
+        "Little nudges work better than big swipes. The pencil keeps spinning a bit after you let go.",
+        "Chain drops together for big points and a rainbow smash that even breaks scribbles.",
+        "Watch the ink blots slide before you land near them.",
         "If you pop, Retry starts the same level again with the score you had when it began."
       ]
     },
@@ -521,9 +521,9 @@
       "name": "Pencil Plunk",
       "genre": "Puzzle",
       "added": "2026-10-08",
-      "tagline": "Pull shell pins out of driftwood planks and sort them into sand pails.",
-      "meta": "Play Pencil Plunk free online. Tap colorful shell pins out of stacked driftwood planks, fill sand pails by color and plunk every plank into the sea. Works on phone and computer.",
-      "lead": "A sunny pin-pulling puzzle on the beach. Driftwood planks are stacked on the sand and held down by bright shell pins. Tap a pin that no plank is lying on and it twists out and flies into the pail of its color. Pins with no pail wait in the little tide pool, so plan ahead before it fills up. Pull the last pin from a plank and it tumbles into the sea with a splash.",
+      "tagline": "Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups.",
+      "meta": "Play Pencil Plunk free online. Pull colorful thumbtacks out of popsicle sticks pinned to a corkboard, fill paper cups by color and plunk every stick onto the desk. Works on phone and computer.",
+      "lead": "A pin-pulling puzzle on a corkboard. Popsicle sticks are pinned to the board with bright thumbtacks. Tap a tack that no stick is lying on and it pops out and flies into the paper cup of its color. Tacks with no cup wait in the pencil case, so plan ahead before it fills up. Pull the last tack from a stick and it plunks onto the desk, while a little ink-drop buddy cheers you on.",
       "facts": [
         "Puzzle",
         "Endless levels",
@@ -531,23 +531,24 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap a shell pin that no plank is lying on. Pins under a plank look darker and can't be pulled yet.",
-        "The pin flies into a sand pail of the same color. Three pins fill a pail, and the next pail drops in.",
-        "If no pail wants that color, the pin waits in the tide pool. A new pail scoops up its color from there.",
-        "A plank with one pin left swings down, and it can cover other pins. Pull its last pin and it plunks into the sea.",
-        "Clear every plank to finish the level. If the tide pool is full and no pin fits a pail, the game is over."
+        "Tap a thumbtack that no popsicle stick is lying on. Tacks under a stick look darker and can't be pulled yet.",
+        "The tack flies into the paper cup of the same color. Three tacks fill a cup, and the next cup drops in.",
+        "If no cup wants that color, the tack waits in the pencil case. A new cup scoops up its color from there.",
+        "A stick with one tack left swings down, and it can cover other tacks. Pull its last tack and it plunks onto the desk.",
+        "Clear every stick to finish the level. If the pencil case is full and no tack fits a cup, the game is over."
       ],
       "controls": [
-        "Phone or tablet: tap a pin to pull it.",
-        "Computer: click a pin. On a keyboard, the arrow keys pick a free pin, Enter or Space pulls it, and + adds a slot.",
-        "The +1 slot button adds a sixth spot to the tide pool, once per level. Restart level tries the level again.",
+        "Phone or tablet: tap a tack to pull it.",
+        "Computer: click a tack. On a keyboard, the arrow keys pick a free tack, Enter or Space pulls it, and + adds a slot.",
+        "The +1 slot button adds a sixth spot to the pencil case, once per level. Restart level tries the level again.",
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Pull pins that match a waiting pail first. They don't use up tide pool space.",
-        "Check the Next sign at the top to see which pail colors are coming.",
-        "Look before you pull a plank's second-to-last pin. It will swing down and may cover pins below it.",
-        "Save +1 slot for when the tide pool is almost full."
+        "Pull tacks that match a waiting cup first. They don't use up pencil case space.",
+        "Check the Next note at the top to see which cup colors are coming.",
+        "Look before you pull a stick's second-to-last tack. It will swing down and may cover tacks below it.",
+        "Every cup shows its tack's symbol, so you can match by shape as well as color.",
+        "Save +1 slot for when the pencil case is almost full."
       ]
     },
     {
@@ -555,9 +556,9 @@
       "name": "Draw Brawl",
       "genre": "Arcade",
       "added": "2026-10-08",
-      "tagline": "Grab pearls, bank treasure and beat the tide against three computer rivals.",
-      "meta": "Play Draw Brawl free online. Pick Coral the crab, Inky the octopus or Shelly the turtle, grab glowing pearls, bank them at your sandcastle and splash three computer rivals before the tide rolls in. 2-minute rounds, works on phone and computer.",
-      "lead": "A bright beach arena where everyone wants the same pearls. Choose Coral the crab, Inky the octopus or Shelly the turtle, scoop up glowing pearls and carry them home to your own sandcastle before a rival splashes you. Every 25 seconds the tide floods the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.",
+      "tagline": "Grab pearls, bank treasure and dodge the sprinklers against three computer rivals in a backyard brawl.",
+      "meta": "Play Draw Brawl free online. Pick Coral, Inky or Shelly, grab glowing pearls, bank them at your castle and splat three computer rivals before the sprinklers come on. 2-minute rounds, works on phone and computer.",
+      "lead": "A backyard arena full of cardboard boxes, crates and paint splats where everyone wants the same pearls. Choose Coral, Inky or Shelly, scoop up glowing pearls and carry them home to your own castle before a rival splats you. Every 25 seconds the sprinklers soak the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.",
       "facts": [
         "Arcade",
         "2-minute rounds",
@@ -566,12 +567,12 @@
         "Saves your personal best"
       ],
       "how": [
-        "Pick a creature. Coral is a sturdy close-range brawler, Inky is fast with rapid ink shots, and Shelly is a tank with a water shot and a shield.",
-        "Collect the glowing pearls scattered around the beach. There are plenty in the middle. You can carry up to 15.",
-        "Carry them back to your own sandcastle and stand inside its ring for a moment to bank them. Only banked pearls count, and other players' castles won't take yours.",
-        "Bop rivals to splash them: they drop everything they were carrying and splash back in a few seconds later.",
-        "Get really close to a rival and a Showdown ring locks you both in for a few seconds. Splash them before the timer runs out to win bonus pearls.",
-        "Watch for the Tide Coming warning: shallow water floods the marked outer lanes and slows anyone wading through it. Castles stay dry.",
+        "Pick a character. Coral is a sturdy close-range brawler, Inky is fast with rapid ink shots, and Shelly is a tank with a water shot and a shield.",
+        "Collect the glowing pearls scattered around the yard. There are plenty in the middle. You can carry up to 15.",
+        "Carry them back to your own castle and stand inside its ring for a moment to bank them. Only banked pearls count, and other players' castles won't take yours.",
+        "Bop rivals to splat them: they drop everything they were carrying and jump back in a few seconds later.",
+        "Get really close to a rival and a Showdown ring locks you both in for a few seconds. Splat them before the timer runs out to win bonus pearls.",
+        "Watch for the sprinkler warning: water soaks the marked outer lanes and slows anyone running through it. Castles stay dry.",
         "Highest banked score when the 2-minute timer ends wins. Ties are shared."
       ],
       "controls": [
@@ -580,9 +581,9 @@
         "The pause button freezes the match. The speaker button turns sound effects on; they start muted."
       ],
       "tips": [
-        "Bank often. Pearls you're carrying are worth nothing until they're home, and a splash spills them all.",
-        "Fight rivals who are carrying a lot and let the ones with empty claws go.",
-        "Head for your castle when the tide warning appears so you're not wading when the water comes in.",
+        "Bank often. Pearls you're carrying are worth nothing until they're home, and a splat spills them all.",
+        "Fight rivals who are carrying a lot and let the ones with empty hands go.",
+        "Head for your castle when the sprinkler warning appears so you're not stuck in the spray.",
         "Shelly's shield blocks every hit for a moment: pop it when two rivals close in.",
         "Showdown wins pay 3 bonus pearls, so pick fights when your health is high."
       ]

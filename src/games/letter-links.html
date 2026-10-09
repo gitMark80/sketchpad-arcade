@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Letter Links</title>
-<meta name="description" content="Letter Links: tap letters around a sunny lagoon to make linked words, turn all twelve letters gold, and try to solve each puzzle in par.">
+<meta name="description" content="Letter Links: tap letters in chalk circles around a park path to make linked words, turn all twelve letters gold, and try to solve each puzzle in par.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Lagoon Sketch: Letter Links redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly hand-drawn borders,
-   coloured pencil only for the gold (used) letters, the orange ring on the word you're spelling and the pink shell lives. */
+/* Park Sketch: Letter Links as a 10-year-old's pencil sketchbook. Kids in a city park link letters drawn in chalk circles
+   around a path on the grass. Coloured pencil only for the gold (used) letters, the blue circles of the word you're spelling
+   and the pink heart lives. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -50,7 +51,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 @keyframes pop{45%{transform:scale(1.22)}}
 .lives{display:flex;gap:3px;height:22px;align-items:center}
 .lives img{width:22px;height:22px;object-fit:contain;transition:transform .3s,opacity .3s,filter .3s}
-.lives img.gone{opacity:.35;filter:grayscale(1);transform:scale(.85)}
+.lives img.gone{opacity:.8;transform:scale(.85)}
 .lives img.lose{animation:lose .6s}
 @keyframes lose{30%{transform:scale(1.5) rotate(-15deg)}100%{transform:scale(.8)}}
 
@@ -112,7 +113,11 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 @keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
 .card h2{font:400 1.75rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
 .card p{margin:6px 0 0;color:var(--pencil);line-height:1.35;font-size:1.05rem}
-#mini{width:120px;height:120px;display:block;margin:0 auto 6px;border-radius:var(--wob2);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--pencil);object-fit:cover;background:var(--paper)}
+#mini{position:relative;width:150px;aspect-ratio:235/195;display:block;margin:0 auto 6px;container-type:inline-size}
+#mini img{display:block;width:100%;height:100%}
+#mini span{position:absolute;width:11.4cqw;height:11.4cqw;margin:-5.7cqw 0 0 -5.7cqw;border-radius:50%;display:grid;place-items:center;font:400 8.6cqw/1 var(--display);color:var(--ink);padding-top:1.5cqw}
+#mini span.g{background:var(--yellow-wash);color:#8a6a10}
+#mini span.b{background:#cfe9f7}
 .rules{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;color:var(--ink);line-height:1.25}
 .rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
 .rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem/1 var(--display)}
@@ -129,7 +134,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}
 .mode{appearance:none;border:2px dashed var(--faint);border-radius:var(--wob2);padding:9px 4px 8px;background:var(--paper);color:var(--ink);display:grid;gap:3px;text-align:center;min-height:62px;transition:transform .1s}
 .mode b{font:400 1rem/1 var(--display);letter-spacing:.02em}
-.mode img{display:block;width:100%;height:30px;object-fit:contain;margin:0 auto 1px;transition:filter .2s,opacity .2s}
+.mode img{display:block;width:100%;height:42px;object-fit:contain;margin:0 auto 1px;transition:filter .2s,opacity .2s}
 .mode:not(.on) img{opacity:.6}
 .mode:not(.on) b{color:var(--muted)}
 .mode small{font-size:.8rem;color:var(--muted);line-height:1.15}
@@ -141,7 +146,10 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .modetag.int{background:var(--blue-wash)}
 .modetag.adv{background:var(--pink-wash)}
 .cardtag{margin-bottom:6px}
-img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
+img.cardtag{display:block;height:46px;width:auto;margin:0 auto 2px}
+.tagname{display:block;font:400 .85rem/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.stars .confetti{width:34px;height:34px;opacity:.9;align-self:center}
+.stars .confetti.r{transform:scaleX(-1)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 0}
 .stats div{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:6px 4px}
 .stats b{display:block;font:400 1.3rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
@@ -163,7 +171,7 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
 .stars img.on{animation:starpop .5s cubic-bezier(.2,1.6,.4,1) both}
 @keyframes starpop{from{transform:scale(0) rotate(-40deg)}}
 @media (prefers-reduced-motion:reduce){.card,.chip,.stars img.on{animation:none}#word.bad{animation:none}.toast{transition:none}}
-@media (max-height:700px){.app{gap:5px;padding-block:8px 10px}.brand{font-size:1.35rem}.hud{padding:5px 12px}.stat b{font-size:1.15rem}.banner{height:46px}#word{font-size:1.8rem}.btn{min-height:44px}.btn.enter{font-size:1.35rem}#mini{width:80px;height:80px}.rules{font-size:.92rem;gap:4px}.card h2{font-size:1.45rem}}
+@media (max-height:700px){.app{gap:5px;padding-block:8px 10px}.brand{font-size:1.35rem}.hud{padding:5px 12px}.stat b{font-size:1.15rem}.banner{height:46px}#word{font-size:1.8rem}.btn{min-height:44px}.btn.enter{font-size:1.35rem}#mini{width:104px}.rules{font-size:.92rem;gap:4px}.card h2{font-size:1.45rem}}
 @media (max-height:600px){.goalrow .pips span{display:none}.chips{min-height:24px}.chip{font-size:.8rem;padding:4px 6px 3px}}
 @media (max-width:370px){.brand{font-size:1.35rem}.hud{gap:6px;padding-inline:10px}.lives img{width:19px;height:19px}.pips{font-size:.75rem}.par{font-size:.9rem}.mode b{font-size:.9rem}.mode small{font-size:.72rem}}
 </style>
@@ -179,7 +187,7 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
     <div class="stat"><small>Puzzle</small><b id="lvlEl">1</b></div>
     <div class="stat mid"><small>Score</small><b id="scoreEl">0</b></div>
     <div class="stat mid"><small>Best</small><b id="bestEl">0</b></div>
-    <div class="stat end"><small>Shells</small><div class="lives" id="livesEl" aria-label="Lives"></div></div>
+    <div class="stat end"><small>Hearts</small><div class="lives" id="livesEl" aria-label="Lives"></div></div>
   </div>
   <div class="goalrow">
     <div class="par" id="parEl">Solve in <b>4</b> words</div>
@@ -190,7 +198,7 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
     <div class="msg" id="msg" role="status" aria-live="polite"></div>
   </div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="The lagoon. Twelve letters sit around it, three on each side. Tap or drag across letters, or type them, to spell a word."></canvas>
+    <canvas id="cv" aria-label="The park. Twelve letters sit in chalk circles around the path, three on each side. Tap or drag across letters, or type them, to spell a word."></canvas>
     <div class="toast" id="toast"></div>
   </div>
   <div class="chips" id="chips" aria-label="Your words"></div>
@@ -206,23 +214,23 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
 
   <div class="cover" id="startCover">
     <div class="card">
-      <img id="mini" src="../assets/letter-links/lagoon.png" alt="" aria-hidden="true">
+      <div id="mini" aria-hidden="true"><img src="../assets/letter-links/lagoon.png" alt=""><span class="g" style="left:49%;top:12.7%">L</span><span class="g" style="left:79.1%;top:33.9%">I</span><span class="b" style="left:78.5%;top:68.6%">N</span><span class="b" style="left:49.2%;top:85.1%">K</span><span style="left:20%;top:68.8%">E</span><span style="left:19.5%;top:34.7%">D</span></div>
       <h2 id="startTitle">Letter Links</h2>
       <ul class="rules">
-        <li><b>1</b><span>Tap letters around the lagoon to spell a word. Each next letter must come from a <em>different side</em>.</span></li>
+        <li><b>1</b><span>Tap the chalk letters around the path to spell a word. Each next letter must come from a <em>different side</em>.</span></li>
         <li><b>2</b><span>Press Enter. Your next word starts with the last letter of the one before.</span></li>
         <li><b>3</b><span>Letters can be used again. Used letters turn gold.</span></li>
         <li><b>4</b><span>Turn all 12 letters gold to solve it. Beat par for big bonus points!</span></li>
-        <li><b>5</b><span id="rule5">You get 6 words per lagoon and 3 shell lives. Running out of words or skipping costs a shell.</span></li>
+        <li><b>5</b><span id="rule5">You get 6 words per puzzle and 3 heart lives. Running out of words or skipping costs a heart.</span></li>
       </ul>
       <div class="modes" id="modes" role="radiogroup" aria-label="Difficulty">
-        <button class="mode beg" type="button" data-mode="beg" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-beg.png" alt="Beginner"><small>Easy letters<br>7 words, 4 hints</small></button>
-        <button class="mode int" type="button" data-mode="int" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-int.png" alt="Intermediate"><small>All 72 lagoons<br>6 words · ×1.5</small></button>
-        <button class="mode adv" type="button" data-mode="adv" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-adv.png" alt="Advanced"><small>Tricky letters<br>4+ letter words · ×2</small></button>
+        <button class="mode beg" type="button" data-mode="beg" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-beg.png" alt=""><b>Beginner</b><small>Easy letters<br>7 words, 4 hints</small></button>
+        <button class="mode int" type="button" data-mode="int" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-int.png" alt=""><b>Intermediate</b><small>All 72 puzzles<br>6 words · ×1.5</small></button>
+        <button class="mode adv" type="button" data-mode="adv" role="radio" aria-checked="false"><img src="../assets/letter-links/badge-adv.png" alt=""><b>Advanced</b><small>Tricky letters<br>4+ letter words · ×2</small></button>
       </div>
       <button class="big alt" id="contBtn" type="button" hidden>Continue</button>
       <button class="big" id="playBtn" type="button">Play</button>
-      <button class="subbtn" id="resumeBtn" type="button" hidden>Back to the lagoon</button>
+      <button class="subbtn" id="resumeBtn" type="button" hidden>Back to the park</button>
       <button class="subbtn" id="changeBtn" type="button" hidden>Change difficulty</button>
       <div class="best" id="bestLine">Best score: 0</div>
     </div>
@@ -230,8 +238,8 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
 
   <div class="cover" id="winCover" hidden>
     <div class="card" role="dialog" aria-modal="true" aria-labelledby="winTitle">
-      <img class="cardtag" id="winTag" src="../assets/letter-links/badge-int.png" alt="Intermediate">
-      <h2 id="winTitle">Lagoon solved!</h2>
+      <img class="cardtag" id="winTag" src="../assets/letter-links/badge-int.png" alt=""><span class="tagname" id="winTagName">Intermediate</span>
+      <h2 id="winTitle">Puzzle solved!</h2>
       <div class="stars" id="winStars"></div>
       <div class="sol"><small>Your words</small><div class="chips" id="winWords"></div></div>
       <div class="sol"><small id="sampleLbl">A par solution</small><div class="chips" id="winSample"></div></div>
@@ -243,7 +251,7 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
   <div class="cover" id="lossCover" hidden>
     <div class="card" role="dialog" aria-modal="true" aria-labelledby="lossTitle">
       <h2 id="lossTitle">Out of words!</h2>
-      <p id="lossText">That one cost a shell. Here is one way to do it:</p>
+      <p id="lossText">That one cost a heart. Here is one way to do it:</p>
       <div class="sol"><small id="lossLbl">A solution</small><div class="chips" id="lossSample"></div></div>
       <button class="big" id="lossNext" type="button">Next puzzle</button>
     </div>
@@ -251,8 +259,8 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
 
   <div class="cover" id="skipCover" hidden>
     <div class="card" role="dialog" aria-modal="true" aria-labelledby="skipTitle">
-      <h2 id="skipTitle">Skip this lagoon?</h2>
-      <p>Skipping costs one shell life. You will see a solution, then move on.</p>
+      <h2 id="skipTitle">Skip this puzzle?</h2>
+      <p>Skipping costs one heart. You will see a solution, then move on.</p>
       <button class="big alt" id="skipNo" type="button">Keep trying</button>
       <button class="big" id="skipYes" type="button">Skip it</button>
     </div>
@@ -260,8 +268,8 @@ img.cardtag{display:block;height:34px;width:auto;margin:0 auto 4px}
 
   <div class="cover" id="overCover" hidden>
     <div class="card" id="overCard" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-      <img class="cardtag" id="overTag" src="../assets/letter-links/badge-int.png" alt="Intermediate">
-      <h2 id="overTitle">Out of shells!</h2>
+      <img class="cardtag" id="overTag" src="../assets/letter-links/badge-int.png" alt=""><span class="tagname" id="overTagName">Intermediate</span>
+      <h2 id="overTitle">Out of hearts!</h2>
       <div class="newbest" id="newBest" hidden>New best score!</div>
       <div class="bigscore" id="overScore">0</div>
       <div class="stats"><div><b id="stSolved">0</b><span>solved</span></div><div><b id="stPuzzle">1</b><span>reached</span></div><div><b id="stBest">0</b><span>best</span></div></div>
@@ -291,9 +299,9 @@ const MAXHINTS=5;
 const HALF=PUZZLES.length>>1;
 const range=(a,n)=>Array.from({length:n},(_,i)=>a+i);
 const MODES={
-  beg:{key:'beg',label:'Beginner',suffix:'_beg',order:range(0,HALF),maxW:7,minLen:3,parAdd:1,hints:4,mult:1,rule:'You get 7 words per lagoon and 3 shell lives. Running out of words or skipping costs a shell.'},
-  int:{key:'int',label:'Intermediate',suffix:'',order:range(0,PUZZLES.length),maxW:6,minLen:3,parAdd:0,hints:3,mult:1.5,rule:'You get 6 words per lagoon and 3 shell lives. Running out of words or skipping costs a shell. Points ×1.5!'},
-  adv:{key:'adv',label:'Advanced',suffix:'_adv',order:range(HALF,PUZZLES.length-HALF).concat(range(0,HALF)),maxW:5,minLen:4,parAdd:0,hints:2,mult:2,rule:'Words need 4 or more letters. You get only 5 words per lagoon and 3 shell lives. Points ×2!'}
+  beg:{key:'beg',label:'Beginner',suffix:'_beg',order:range(0,HALF),maxW:7,minLen:3,parAdd:1,hints:4,mult:1,rule:'You get 7 words per puzzle and 3 heart lives. Running out of words or skipping costs a heart.'},
+  int:{key:'int',label:'Intermediate',suffix:'',order:range(0,PUZZLES.length),maxW:6,minLen:3,parAdd:0,hints:3,mult:1.5,rule:'You get 6 words per puzzle and 3 heart lives. Running out of words or skipping costs a heart. Points ×1.5!'},
+  adv:{key:'adv',label:'Advanced',suffix:'_adv',order:range(HALF,PUZZLES.length-HALF).concat(range(0,HALF)),maxW:5,minLen:4,parAdd:0,hints:2,mult:2,rule:'Words need 4 or more letters. You get only 5 words per puzzle and 3 heart lives. Points ×2!'}
 };
 
 /* ---------- storage ---------- */
@@ -397,13 +405,18 @@ function findPath(startMask,startLetter,prefix,maxDepth){
   return b&&(!a||b.length<a.length)?b:a;
 }
 
-/* ---------- art (Mark's sprite sheet, sliced into src/assets/letter-links) ---------- */
+/* ---------- art (Mark's park sketches, cut out into src/assets/letter-links) ---------- */
 const ART='../assets/letter-links/';
 const IMG={};
-['buoy-white','buoy-gold','buoy-sel','buoy-hint','boat','starfish','seaweed','coral','shell-pink'].forEach(k=>{const i=new Image();i.onload=()=>{IMG[k]=i;if(k==='starfish'||k==='seaweed'||k==='coral'||k==='shell-pink')buildBg()};i.src=ART+k+'.png'});
-// ring centre and outer ring radius in each buoy sprite, so the ring lands exactly on R
-// (ring centres are measured on the original 247/274/303/289px art; the sketched copies may be upscaled, so scale by width)
-const BUOY={'buoy-white':{cx:123,cy:122,ro:113,w:247},'buoy-gold':{cx:136,cy:136,ro:117,w:274},'buoy-sel':{cx:151.5,cy:149,ro:132.5,w:303},'buoy-hint':{cx:143.5,cy:142,ro:120.5,w:289}};
+// names are the old lagoon ones: buoy-* = the chalk letter circles, boat = paper airplane, coral = bush, seaweed = grass tuft,
+// starfish = smiling star, rope = the link drawn for finished words, bg = the park picture behind the path
+const DECOR=['starfish','seaweed','coral','sun','bg'];
+['buoy-white','buoy-gold','buoy-sel','buoy-hint','boat','rope','starfish','seaweed','coral','sun','bg'].forEach(k=>{const i=new Image();i.onload=()=>{IMG[k]=i;if(DECOR.includes(k))buildBg()};i.src=ART+k+(k==='bg'?'.jpg':'.png')});
+// circle centre and outer radius in each letter-circle sprite (measured on the art), so the circle lands exactly on R;
+// buoy-hint is the circle with rays, so its circle is smaller than the picture
+const BUOY={'buoy-white':{cx:92.8,cy:94.5,ro:93,w:186},'buoy-gold':{cx:93.5,cy:96.5,ro:94,w:188},'buoy-sel':{cx:94,cy:93,ro:92.5,w:191},'buoy-hint':{cx:112.5,cy:122.1,ro:69.3,w:226}};
+// a seamless stretch of the twisted rope (the frayed ends cut off), tiled along finished words
+const ROPE={x:83,y:18,w:116,h:54};
 function drawSprite(g,k,x,y,r,a){const im=IMG[k],m=BUOY[k];if(!im)return false;const k2=r/(m.ro*im.width/m.w);if(a!==undefined)g.globalAlpha=a;g.drawImage(im,x-m.cx*k2,y-m.cy*k2,im.width*k2,im.height*k2);g.globalAlpha=1;return true}
 function drawPic(g,k,x,y,w,rot){const im=IMG[k];if(!im)return false;const h=w*im.height/im.width;g.save();g.translate(x,y);if(rot)g.rotate(rot);g.drawImage(im,-w/2,-h/2,w,h);g.restore();return true}
 
@@ -429,33 +442,36 @@ function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);
 function seeded(n){let s=n;return()=>{s=(s*16807)%2147483647;return s/2147483647}}
 function buildBg(){
   bg=document.createElement('canvas');bg.width=cv.width;bg.height=cv.height;const g=bg.getContext('2d');g.scale(dpr,dpr);
-  // sand
-  let gr=g.createRadialGradient(SW*.5,SH*.45,S*.2,SW*.5,SH*.5,Math.max(SW,SH)*.75);gr.addColorStop(0,'#f6f3ea');gr.addColorStop(1,'#ece8dc');
-  g.fillStyle=gr;rr(g,0,0,SW,SH,26);g.fill();
+  g.save();rr(g,0,0,SW,SH,26);g.clip();
+  g.fillStyle=PAPER;g.fillRect(0,0,SW,SH);
   const rnd=seeded(7);
-  for(let i=0;i<S*1.9;i++){const x=rnd()*SW,y=rnd()*SH;g.fillStyle='rgba(46,46,51,.18)';g.beginPath();g.arc(x,y,rnd()*.9+.3,0,7);g.fill()}
-  // ripple marks in the sand
-  g.strokeStyle='rgba(46,46,51,.28)';g.lineWidth=1.2;
-  for(let i=0;i<16;i++){const x=rnd()*SW,y=rnd()*SH,w=10+rnd()*18;g.beginPath();g.moveTo(x-w,y);g.quadraticCurveTo(x,y-5,x+w,y);g.stroke()}
-  // wet sand ring
-  const wr=R*.9;
-  g.fillStyle='#e4e2d8';rr(g,M-wr,M-wr,LX+wr*2,LY+wr*2,R*1.4);g.fill();g.strokeStyle=PENCIL;g.lineWidth=1.2;g.stroke();
-  // water
-  const wx=M-R*.35,wy=M-R*.35,ww=LX+R*.7,wh=LY+R*.7;
-  gr=g.createRadialGradient(SW*.42,SH*.4,S*.05,SW*.5,SH*.5,Math.max(ww,wh)*.75);gr.addColorStop(0,'#dedcd4');gr.addColorStop(.45,'#d9d7cf');gr.addColorStop(1,'#cfcdc5');
-  g.fillStyle=gr;rr(g,wx,wy,ww,wh,R*1.1);g.fill();g.strokeStyle=INK;g.lineWidth=2;g.stroke();
-  // pencil ripples in the water
-  g.save();rr(g,wx,wy,ww,wh,R*1.1);g.clip();g.strokeStyle='rgba(46,46,51,.35)';g.lineWidth=1.2;
-  for(let i=0;i<14;i++){const x=wx+rnd()*ww,y=wy+rnd()*wh,w=8+rnd()*16;g.beginPath();g.moveTo(x-w,y);g.quadraticCurveTo(x,y-3,x+w,y);g.stroke()}
-  g.strokeStyle='rgba(46,46,51,.22)';for(let i=0;i<9;i++){const yy=wy+wh*(i+.5)/9;g.beginPath();for(let x=wx;x<=wx+ww;x+=6){const y=yy+Math.sin(x*.05+i*1.7)*3;x===wx?g.moveTo(x,y):g.lineTo(x,y)}g.stroke()}g.restore();
-  // deeper middle
-  gr=g.createRadialGradient(SW*.5,SH*.52,0,SW*.5,SH*.52,Math.max(ww,wh)*.42);gr.addColorStop(0,'rgba(46,46,51,.08)');gr.addColorStop(1,'rgba(46,46,51,0)');g.fillStyle=gr;g.fillRect(wx,wy,ww,wh);
-  // sandy shallows inside the rim
-  g.save();rr(g,wx,wy,ww,wh,R*1.1);g.clip();g.strokeStyle='rgba(246,243,234,.5)';g.lineWidth=R*.5;rr(g,wx,wy,ww,wh,R*1.1);g.stroke();g.restore();
-  // little corner decorations: starfish, shell, pebbles, a palm frond
-  if(IMG.starfish&&IMG.seaweed&&IMG.coral&&IMG['shell-pink']){
-    drawPic(g,'seaweed',M*.42,M*.5,M*.7);drawPic(g,'starfish',M*.5,SH-M*.48,M*.75,-.25);
-    drawPic(g,'coral',SW-M*.5,SH-M*.52,M*.65);drawPic(g,'shell-pink',SW-M*.5,M*.48,M*.62,.35);
+  if(IMG.bg){
+    // Mark's park: cover the field, keeping the open lawn in the middle (crop a bit more sky than path)
+    const im=IMG.bg,sc=Math.max(SW/im.width,SH/im.height),w=im.width*sc,h=im.height*sc;
+    g.drawImage(im,(SW-w)/2,(SH-h)*.6,w,h);
+    g.fillStyle='rgba(246,243,234,.3)';g.fillRect(0,0,SW,SH);
+  }else{
+    g.strokeStyle=PENCIL;g.lineWidth=1.1;
+    for(let i=0;i<26;i++){const x=rnd()*SW,y=rnd()*SH;g.beginPath();for(let j=-2;j<=2;j++){g.moveTo(x+j*2,y);g.lineTo(x+j*3.2,y-5-rnd()*4)}g.stroke()}
+  }
+  // the chalk path the letter circles sit on
+  const pw=R*1.2,pr=R*.95;
+  g.lineJoin='round';
+  g.strokeStyle='rgba(240,236,225,.92)';g.lineWidth=pw;rr(g,M,M,LX,LY,pr);g.stroke();
+  // chalk grain
+  g.fillStyle='rgba(85,85,92,.16)';
+  for(let i=0;i<S*1.4;i++){const side=rnd()*4|0,f=rnd(),o=(rnd()-.5)*pw*.9;let x,y;
+    if(side===0){x=M+LX*f;y=M+o}else if(side===1){x=M+LX+o;y=M+LY*f}else if(side===2){x=M+LX*f;y=M+LY+o}else{x=M+o;y=M+LY*f}
+    g.fillRect(x,y,rnd()*1.6+.4,rnd()*1.2+.3)}
+  g.strokeStyle=PENCIL;g.lineWidth=1.3;g.setLineDash([10,5]);
+  rr(g,M-pw/2,M-pw/2,LX+pw,LY+pw,pr+pw/2);g.stroke();
+  rr(g,M+pw/2,M+pw/2,LX-pw,LY-pw,Math.max(2,pr-pw/2));g.stroke();g.setLineDash([]);
+  // little corner doodles: a grass tuft, the sun, a smiling star and a bush
+  if(DECOR.every(k=>IMG[k])){
+    // they sit on the empty rounded corners of the path, where no letter circle is
+    const d=R*1.55;
+    drawPic(g,'seaweed',M*.95,M*.9,d*.85);drawPic(g,'sun',SW-M*.95,M*.95,d,.15);
+    drawPic(g,'starfish',M*.95,SH-M*.95,d*.8,-.25);drawPic(g,'coral',SW-M*.95,SH-M*.92,d);
   }else{
     starfish(g,M*.48,SH-M*.5,M*.26,-.3,INK);
     shell(g,SW-M*.5,M*.5,M*.24,.5);
@@ -463,6 +479,7 @@ function buildBg(){
     g.beginPath();g.ellipse(SW-M*.42,SH-M*.68,M*.06,M*.045,0,0,7);g.fill();g.stroke();
     frond(g,M*.3,M*.25,M*.85);
   }
+  g.restore();
 }
 function starfish(g,x,y,r,a,c){g.save();g.translate(x,y);g.rotate(a);g.beginPath();for(let i=0;i<10;i++){const rr2=i%2?r*.42:r,an=-Math.PI/2+i*Math.PI/5;g.lineTo(Math.cos(an)*rr2,Math.sin(an)*rr2)}g.closePath();
   g.fillStyle='#f0ece1';g.lineJoin='round';g.strokeStyle=c;g.lineWidth=r*.12;g.fill();g.stroke();
@@ -491,7 +508,18 @@ function drawRope(g,pts,w,col,dash,alpha){if(pts.length<2)return;g.save();g.glob
   g.strokeStyle='rgba(46,46,51,.18)';g.lineWidth=w+3;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y+2):g.moveTo(p.x,p.y+2));g.stroke();
   g.strokeStyle=col;g.lineWidth=w;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke();
   g.strokeStyle=dash;g.lineWidth=w*.55;g.setLineDash([w*.9,w*1.1]);g.lineDashOffset=-T*.02;g.stroke();g.restore()}
-function drawBoat(g,x,y,dir,s,a){if(IMG.boat){g.save();g.globalAlpha=a;g.translate(x,y);g.scale(dir,1);const w=R*1.7*s,h=w*IMG.boat.height/IMG.boat.width;g.drawImage(IMG.boat,-w/2,-h*.62,w,h);g.restore();return}
+// the paper airplane flies from the last letter to the new one; the art's nose points up-right (about -0.4 rad)
+function drawLink(g,pts,h,alpha){if(pts.length<2)return;const im=IMG.rope;
+  if(!im){drawRope(g,pts,Math.max(3,R*.15),'#8f8d86','#e4e2d8',alpha);return}
+  const tw=ROPE.w*h/ROPE.h;g.save();g.globalAlpha=alpha;
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);
+    g.save();g.translate(a.x,a.y);g.rotate(Math.atan2(dy,dx));
+    g.fillStyle='rgba(46,46,51,.12)';g.fillRect(0,-h*.32+3,len,h*.7);
+    for(let x=0;x<len;x+=tw){const w=Math.min(tw,len-x);g.drawImage(im,ROPE.x,ROPE.y,ROPE.w*w/tw,ROPE.h,x,-h/2,w,h)}
+    g.restore()}
+  g.restore()}
+function drawBoat(g,x,y,dx,dy,s,a){const dir=dx<0?-1:1;
+  if(IMG.boat){const im=IMG.boat,w=R*1.9*s,h=w*im.height/im.width;g.save();g.globalAlpha=a;g.translate(x,y);g.scale(dir,1);g.rotate(Math.atan2(dy,Math.abs(dx))+.4);g.drawImage(im,-w/2,-h/2,w,h);g.restore();return}
   g.save();g.globalAlpha=a;g.translate(x,y);g.scale(dir*s,s);
   g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.ellipse(0,5,13,3,0,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=1.4;g.lineJoin='round';
   g.fillStyle='#e9e6db';g.beginPath();g.moveTo(-12,0);g.lineTo(12,0);g.lineTo(8,6);g.lineTo(-9,6);g.closePath();g.fill();g.stroke();
@@ -504,18 +532,18 @@ function drawToken(g,c){
   const sc=1+t.pop*.25,r=R*sc;
   // shadow
   g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.ellipse(x+r*.08,y+r*.82,r*.9,r*.3,0,0,7);g.fill();
-  if(last&&state==='play'){g.strokeStyle='rgba(217,102,26,'+(.35+.25*Math.sin(T*.008))+')';g.lineWidth=4;g.beginPath();g.arc(x,y,r+5+Math.sin(T*.008)*2,0,7);g.stroke()}
+  if(last&&state==='play'){g.strokeStyle='rgba(47,111,181,'+(.35+.25*Math.sin(T*.008))+')';g.lineWidth=4;g.beginPath();g.arc(x,y,r+5+Math.sin(T*.008)*2,0,7);g.stroke()}
   if(t.glow>0){g.fillStyle='rgba(201,154,26,'+t.glow*.35+')';g.beginPath();g.arc(x,y,r*(1.2+.6*(1-t.glow)),0,7);g.fill()}
-  // body: buoy sprite (coral ring = in the current word, gold = used, sparkly = hint), vector fallback until the art loads
+  // body: letter-circle sprite (blue = in the current word, yellow = used, rays = hint), vector fallback until the art loads
   let c1,c2,ring,txt;
   const gm=Math.max(t.gold,0);
-  if(inCur){c1='#f0c9a8';c2='#e6b58c';ring='#d9661a';txt='#d9661a'}
+  if(inCur){c1='#d6e4f2';c2='#c3d6ea';ring='#2f6fb5';txt=INK}
   else if(used){c1='#f3e6b0';c2='#e8d79a';ring='#c99a1a';txt='#8a6a10'}
   else{c1=PAPER;c2='#e9e6db';ring=INK;txt=INK}
-  const key=inCur?'buoy-sel':(t.glow>0&&!used)?'buoy-hint':used?'buoy-gold':'buoy-white';
+  // a hinted letter flashes as the circle with rays for a moment, then turns blue like the rest of the word
+  const key=t.hglow>0?'buoy-hint':inCur?'buoy-sel':(t.glow>0&&!used)?'buoy-hint':used?'buoy-gold':'buoy-white';
   if(drawSprite(g,key,x,y,r)){
     if(used&&gm<1&&IMG['buoy-white'])drawSprite(g,'buoy-white',x,y,r,1-gm);
-    if(inCur)txt='#d9661a';
   }else{
     const gr=g.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);gr.addColorStop(0,c1);gr.addColorStop(1,c2);
     g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill();
@@ -533,34 +561,29 @@ function draw(){
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,SW,SH);
   if(bg)ctx.drawImage(bg,0,0,SW,SH);
   if(!P)return;
-  // moving light on the water
-  const wx=M-R*.35,wy=wx,ww=LX+R*.7,wh=LY+R*.7;
-  ctx.save();rr(ctx,wx,wy,ww,wh,R*1.1);ctx.clip();
-  ctx.strokeStyle='rgba(46,46,51,.1)';ctx.lineWidth=1.2;
-  for(let i=0;i<11;i++){const yy=wy+wh*(i+.5)/11;ctx.beginPath();for(let x=wx;x<=wx+ww;x+=8){const y=yy+Math.sin(x*.045+T*.0013+i*1.7)*4+Math.sin(x*.02-T*.0007+i)*3;x===wx?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke()}
-  // foam rim
-  ctx.strokeStyle='rgba(46,46,51,'+(.3+.1*Math.sin(T*.002))+')';ctx.lineWidth=1.2;ctx.setLineDash([6,5]);rr(ctx,wx+4,wy+4,ww-8,wh-8,R*1.0);ctx.stroke();ctx.setLineDash([]);
-  // glints
-  const nG=celebrateT>0?26:6;while(glints.length<nG)glints.push({x:wx+Math.random()*ww,y:wy+Math.random()*wh,t:0,d:.008+Math.random()*.012});
+  // twinkles on the grass inside the path (lots when a puzzle is solved)
+  const wx=M+R*.75,wy=M+R*.75,ww=LX-R*1.5,wh=LY-R*1.5;
+  ctx.save();rr(ctx,wx,wy,ww,wh,R*.5);ctx.clip();
+  const nG=celebrateT>0?26:5;while(glints.length<nG)glints.push({x:wx+Math.random()*ww,y:wy+Math.random()*wh,t:0,d:.008+Math.random()*.012});
   glints=glints.filter(gl=>{gl.t+=gl.d*(celebrateT>0?2:1);if(gl.t>=1)return false;const a=Math.sin(gl.t*Math.PI),s=(celebrateT>0?7:4.5)*a;
-    ctx.fillStyle='rgba(85,85,92,'+a*.5+')';ctx.beginPath();ctx.moveTo(gl.x,gl.y-s);ctx.lineTo(gl.x+s*.25,gl.y);ctx.lineTo(gl.x,gl.y+s);ctx.lineTo(gl.x-s*.25,gl.y);ctx.closePath();ctx.fill();
+    ctx.fillStyle=celebrateT>0?'rgba(201,154,26,'+a*.8+')':'rgba(85,85,92,'+a*.45+')';ctx.beginPath();ctx.moveTo(gl.x,gl.y-s);ctx.lineTo(gl.x+s*.25,gl.y);ctx.lineTo(gl.x,gl.y+s);ctx.lineTo(gl.x-s*.25,gl.y);ctx.closePath();ctx.fill();
     ctx.beginPath();ctx.moveTo(gl.x-s,gl.y);ctx.lineTo(gl.x,gl.y+s*.25);ctx.lineTo(gl.x+s,gl.y);ctx.lineTo(gl.x,gl.y-s*.25);ctx.closePath();ctx.fill();return true});
-  if(celebrateT>0){ctx.fillStyle='rgba(243,230,176,'+Math.min(.5,celebrateT*.5)+')';ctx.fillRect(wx,wy,ww,wh)}
+  if(celebrateT>0){ctx.fillStyle='rgba(243,230,176,'+Math.min(.45,celebrateT*.45)+')';ctx.fillRect(wx,wy,ww,wh)}
   ctx.restore();
-  // ropes for played words
-  words.forEach((w,i)=>{const pts=[...w].map(c=>tok[c]);drawRope(ctx,pts,Math.max(3,R*.15),'#8f8d86','#e4e2d8',.55+.3*(i===words.length-1))});
+  // twisted rope links for played words
+  words.forEach((w,i)=>{const pts=[...w].map(c=>tok[c]);drawLink(ctx,pts,Math.max(9,R*.4),.6+.4*(i===words.length-1))});
   // current word
   const cp=cur.map(c=>tok[c]);
-  if(dragPt&&cp.length){drawRope(ctx,[cp[cp.length-1],dragPt],Math.max(3,R*.14),'rgba(217,102,26,.45)','rgba(246,243,234,.6)',1)}
-  drawRope(ctx,cp,Math.max(4,R*.2),'#d9661a','#f0c9a8',1);
-  // foam particles under tokens
+  if(dragPt&&cp.length){drawRope(ctx,[cp[cp.length-1],dragPt],Math.max(3,R*.14),'rgba(47,111,181,.45)','rgba(246,243,234,.6)',1)}
+  drawRope(ctx,cp,Math.max(4,R*.2),'#2f6fb5','#d6e4f2',1);
+  // pencil puffs left behind the paper airplane
   for(const p of parts)if(p.kind==='foam'){ctx.strokeStyle='rgba(46,46,51,'+p.life*.5+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1.4-p.life*.4),0,7);ctx.stroke()}
   if(boat){const e=1-Math.pow(1-Math.min(1,boat.t),3),x=boat.x0+(boat.x1-boat.x0)*e,y=boat.y0+(boat.y1-boat.y0)*e;
-    drawBoat(ctx,x,y-4,boat.x1>=boat.x0?1:-1,Math.max(.8,R/26),boat.t<1?1:Math.max(0,1-(boat.t-1)*3))}
+    drawBoat(ctx,x,y-4,boat.x1-boat.x0,boat.y1-boat.y0,Math.max(.8,R/26),boat.t<1?1:Math.max(0,1-(boat.t-1)*3))}
   for(const c of P.letters)drawToken(ctx,c);
   for(const p of parts){if(p.kind==='foam')continue;ctx.globalAlpha=Math.min(1,p.life*1.5);
     if(p.kind==='confetti'){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.fillRect(-p.r,-p.r*.5,p.r*2,p.r);ctx.restore()}
-    else if(p.kind==='bubble'){ctx.strokeStyle='rgba(47,111,181,.8)';ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.stroke();ctx.fillStyle='rgba(47,111,181,.15)';ctx.fill()}
+    else if(p.kind==='bubble'){ctx.strokeStyle=p.c;ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.stroke();ctx.globalAlpha*=.2;ctx.fillStyle=p.c;ctx.fill()}
     else{ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill()}}
   ctx.globalAlpha=1;
 }
@@ -568,7 +591,7 @@ let lastT=0;
 function frame(now){
   const dt=Math.min(50,now-(lastT||now));lastT=now;T=now;
   if(!document.hidden){
-    for(const c in tok){const t=tok[c];t.pop=Math.max(0,t.pop-dt*.006);t.shake=Math.max(0,t.shake-dt*.0025);t.glow=Math.max(0,t.glow-dt*.0018);if(t.gold>0&&t.gold<1)t.gold=Math.min(1,t.gold+dt*.0025)}
+    for(const c in tok){const t=tok[c];t.pop=Math.max(0,t.pop-dt*.006);t.shake=Math.max(0,t.shake-dt*.0025);t.glow=Math.max(0,t.glow-dt*.0018);if(t.hglow)t.hglow=Math.max(0,t.hglow-dt*.0009);if(t.gold>0&&t.gold<1)t.gold=Math.min(1,t.gold+dt*.0025)}
     if(boat){boat.t+=dt/260;if(boat.t<1&&Math.random()<.8)parts.push({x:boat.x0+(boat.x1-boat.x0)*boat.t,y:boat.y0+(boat.y1-boat.y0)*boat.t,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,life:1,dec:.03,kind:'foam',r:2+Math.random()*2});if(boat.t>1.4)boat=null}
     for(const p of parts){p.x+=p.vx*dt*.06;p.y+=p.vy*dt*.06;if(p.kind==='confetti'){p.vy+=.06*dt*.06;p.vx*=.99;p.rot+=p.vr}else if(p.kind==='bubble'){p.vy-=.02*dt*.06;p.vx*=.98}else if(p.kind==='spark'){p.vy+=.02*dt*.06}p.life-=p.dec*dt*.06}
     parts=parts.filter(p=>p.life>0);
@@ -579,16 +602,16 @@ function frame(now){
 }
 
 /* ---------- HUD ---------- */
-const SHELL='<img src="'+ART+'shell-pink.png" alt="">';
+const SHELL='<img src="'+ART+'shell-pink.png" alt="">';   // shell-pink = pink heart, shell-grey = lost heart
 function hud(){
   $('lvlEl').textContent=lvl+1;$('scoreEl').textContent=score;$('bestEl').textContent=Math.max(best,score);
-  const le=$('livesEl');if(le.children.length!==3)le.innerHTML=SHELL+SHELL+SHELL;[...le.children].forEach((s,i)=>s.classList.toggle('gone',i>=lives));
+  const le=$('livesEl');if(le.children.length!==3)le.innerHTML=SHELL+SHELL+SHELL;[...le.children].forEach((s,i)=>{const g=i>=lives,k=g?'shell-grey':'shell-pink';s.classList.toggle('gone',g);if(s.dataset.k!==k){s.dataset.k=k;s.src=ART+k+'.png'}});
   $('hintCount').textContent=hints;$('hintBtn').disabled=hints<=0;
   $('parEl').innerHTML='Solve in <b>'+P.par+'</b> word'+(P.par>1?'s':'');
   const pe=$('pipsEl');let h='<span id="modeLbl">'+mode.label+'</span>';for(let i=0;i<mode.maxW;i++)h+='<i class="'+(i<words.length?(i<P.par?'on':'over'):'')+'"></i>';pe.innerHTML=h;pe.setAttribute('aria-label',mode.label+': words used '+words.length+' of '+mode.maxW);
   // chips
   const ch=$('chips');
-  if(!words.length)ch.innerHTML='<span class="none">Your words will float here</span>';
+  if(!words.length)ch.innerHTML='<span class="none">Your words will line up here</span>';
   else ch.innerHTML=words.map((w,i)=>'<span class="chip'+(i===words.length-1?' new':'')+'">'+w+'</span>').join('<span class="arrow">&rarr;</span>');
   paintWord();
 }
@@ -664,7 +687,7 @@ function solve(){
   P.letters.forEach((c,i)=>setTimeout(()=>{tok[c].pop=1;burst(tok[c].x,tok[c].y,10,'confetti')},i*55));
   setTimeout(()=>burst(SW/2,SH/2,60,'confetti'),300);
   const nw=words.length;
-  toast(nw<P.par?'Under par!<small>'+nw+' words</small>':nw===P.par?'Par!<small>Lagoon solved</small>':'Solved!<small>'+nw+' words</small>',1600);
+  toast(nw<P.par?'Under par!<small>'+nw+' words</small>':nw===P.par?'Par!<small>Puzzle solved</small>':'Solved!<small>'+nw+' words</small>',1600);
   floatText('+'+sc.total,SW/2,SH*.74);bump('scoreEl');
   let earned=false;if(solved%3===0&&hints<MAXHINTS){hints++;earned=true}
   if(score>best){}
@@ -678,46 +701,46 @@ function altPath(){const mine=words.join(' ');if(P.sol.join(' ')!==mine&&P.sol.l
   const ex=new Set(words);let a=null;try{a=search(P.legalF,0,null,'',P.par,ex)}catch(e){}return a||P.sol}
 function showWin(sc,earned){
   const nw=words.length,stars=nw<P.par?3:nw===P.par?(hintsUsed?2:3):nw<=P.par+1?2:1;
-  $('winTitle').textContent=nw<P.par?'Under par!':nw===P.par?'Right on par!':'Lagoon solved!';
-  $('winStars').innerHTML=[0,1,2].map(i=>starSvg(i<stars,i)).join('');
+  $('winTitle').textContent=nw<P.par?'Under par!':nw===P.par?'Right on par!':'Puzzle solved!';
+  $('winStars').innerHTML='<img class="confetti" src="'+ART+'confetti.png" alt="">'+[0,1,2].map(i=>starSvg(i<stars,i)).join('')+'<img class="confetti r" src="'+ART+'confetti.png" alt="">';
   $('winWords').innerHTML=chipsHtml(words);
   const alt=altPath();$('winSample').innerHTML=chipsHtml(alt,'gold');
   $('sampleLbl').textContent=(alt.join(' ')===words.join(' ')?'Same as our ':'Another ')+alt.length+'-word solution';
-  let r='<span>Lagoon solved</span><b>+'+sc.base+'</b>';
+  let r='<span>Puzzle solved</span><b>+'+sc.base+'</b>';
   r+='<span>'+(sc.parB?'Par bonus ('+P.par+' words)':'Par was '+P.par+' words')+'</span><b>+'+sc.parB+'</b>';
   if(sc.under)r+='<span>Under par</span><b>+'+sc.under+'</b>';
   if(sc.pen)r+='<span>Hints used ('+hintsUsed+')</span><b>&minus;'+sc.pen+'</b>';
   if(sc.bonus)r+='<span>'+mode.label+' bonus (&times;'+mode.mult+')</span><b>+'+sc.bonus+'</b>';
   r+='<span class="tot">Total</span><b class="tot">+'+sc.total+'</b>';
-  $('winTag').src=ART+'badge-'+mode.key+'.png';$('winTag').alt=mode.label;
-  if(earned)r+='<span style="grid-column:1/-1;color:#c99a1a;text-align:center">You earned a hint shell!</span>';
+  $('winTag').src=ART+'badge-'+mode.key+'.png';$('winTagName').textContent=mode.label;
+  if(earned)r+='<span style="grid-column:1/-1;color:#c99a1a;text-align:center">You earned an extra hint bulb!</span>';
   $('winRes').innerHTML=r;
   state='card';$('winCover').hidden=false;setTimeout(()=>$('nextBtn').focus(),50);
 }
 function loseLife(){lives--;const le=$('livesEl');hud();const s=le.children[lives];if(s){s.classList.remove('lose');void s.offsetWidth;s.classList.add('lose')}sfx.lose()}
 function outOfWords(){state='anim';
   setTimeout(()=>{loseLife();$('lossTitle').textContent='Out of words!';
-    $('lossText').textContent=lives>0?'That one cost a shell. Here is one way to do it:':'That was your last shell. Here is one way to do it:';
+    $('lossText').textContent=lives>0?'That one cost a heart. Here is one way to do it:':'That was your last heart. Here is one way to do it:';
     $('lossSample').innerHTML=chipsHtml(samplePath(),'gold');$('lossLbl').textContent='A '+samplePath().length+'-word solution';$('lossNext').textContent=lives>0?'Next puzzle':'See score';
     store.set(K('run'),{lvl:lvl+1,score,lives,hints,solved,words:[],hintsUsed:0});if(lives<=0)store.del(K('run'));
     state='card';$('lossCover').hidden=false},700);
 }
 function doSkip(){$('skipCover').hidden=true;loseLife();
-  $('lossTitle').textContent='Skipped';$('lossText').textContent=lives>0?'Here is one way to solve it:':'That was your last shell. Here is one way to solve it:';
+  $('lossTitle').textContent='Skipped';$('lossText').textContent=lives>0?'Here is one way to solve it:':'That was your last heart. Here is one way to solve it:';
   $('lossSample').innerHTML=chipsHtml(samplePath(),'gold');$('lossLbl').textContent='A '+samplePath().length+'-word solution';$('lossNext').textContent=lives>0?'Next puzzle':'See score';
   store.set(K('run'),{lvl:lvl+1,score,lives,hints,solved,words:[],hintsUsed:0});if(lives<=0)store.del(K('run'));
   state='card';$('lossCover').hidden=false}
 function gameOver(){
   state='over';store.del(K('run'));
   const nb=score>startBest&&score>0;if(score>best){best=score;store.set(K('best'),best)}
-  $('overTag').src=ART+'badge-'+mode.key+'.png';$('overTag').alt=mode.label;
+  $('overTag').src=ART+'badge-'+mode.key+'.png';$('overTagName').textContent=mode.label;
   $('newBest').hidden=!nb;$('overScore').textContent=score;$('stSolved').textContent=solved;$('stPuzzle').textContent=lvl+1;$('stBest').textContent=best;
-  $('overTitle').textContent=solved?'Great lagoon run!':'Out of shells!';
+  $('overTitle').textContent=solved?'Great park run!':'Out of hearts!';
   $('overCover').hidden=false;sfx.over();hud();
   window.BDA&&BDA.shareScore({score,line:mode.label+' · Puzzle '+(lvl+1),into:'#overCard',after:'.bigscore'});
 }
 function useHint(){
-  if(state!=='play')return;if(hints<=0){msg('No hint shells left');return}
+  if(state!=='play')return;if(hints<=0){msg('No hint bulbs left');return}
   const startLetter=words.length?words[words.length-1].slice(-1):null;
   const budget=mode.maxW-words.length;
   let prefix=cur.join('');
@@ -729,7 +752,7 @@ function useHint(){
   hintWord=path[0];
   if(hintWord===prefix){msg('Press Enter!',true);return}
   hints--;hintsUsed++;const c=hintWord[prefix.length];
-  addLetter(c,true);tok[c].glow=1;sfx.hint();msg('Hint: '+hintWord.slice(0,cur.length)+'…',true);hud();paintWord();save();
+  addLetter(c,true);tok[c].glow=1;tok[c].hglow=1;sfx.hint();msg('Hint: '+hintWord.slice(0,cur.length)+'…',true);hud();paintWord();save();
 }
 
 /* ---------- input ---------- */
@@ -747,8 +770,8 @@ cv.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
 $('enterBtn').addEventListener('click',enter);
 $('delBtn').addEventListener('click',delLetter);
 $('hintBtn').addEventListener('click',useHint);
-$('restartBtn').addEventListener('click',()=>{if(state!=='play')return;if(!words.length&&!cur.length){msg('Fresh lagoon already');return}
-  words=[];cur=[];usedMask=0;hintWord=null;for(const c of P.letters){tok[c].gold=0;tok[c].pop=.6}sfx.del();burst(SW/2,SH/2,20,'bubble');msg('Lagoon cleared',true);hud();save()});
+$('restartBtn').addEventListener('click',()=>{if(state!=='play')return;if(!words.length&&!cur.length){msg('Fresh puzzle already');return}
+  words=[];cur=[];usedMask=0;hintWord=null;for(const c of P.letters){tok[c].gold=0;tok[c].pop=.6}sfx.del();burst(SW/2,SH/2,20,'bubble');msg('Path cleared',true);hud();save()});
 $('skipBtn').addEventListener('click',()=>{if(state!=='play')return;state='card';$('skipCover').hidden=false;sfx.click()});
 $('skipNo').addEventListener('click',()=>{$('skipCover').hidden=true;state='play'});
 $('skipYes').addEventListener('click',doSkip);
@@ -776,7 +799,7 @@ addEventListener('keydown',e=>{
   const k=e.key;
   if(k==='Enter'){e.preventDefault();if(document.activeElement&&document.activeElement.tagName==='BUTTON'&&document.activeElement!==$('enterBtn'))document.activeElement.blur();enter()}
   else if(k==='Backspace'||k==='Delete'){e.preventDefault();delLetter()}
-  else if(/^[a-zA-Z]$/.test(k)){const c=k.toUpperCase();if(c in tok)addLetter(c);else{msg(c+' is not on this lagoon');sfx.nope()}}
+  else if(/^[a-zA-Z]$/.test(k)){const c=k.toUpperCase();if(c in tok)addLetter(c);else{msg(c+' is not in this puzzle');sfx.nope()}}
 });
 addEventListener('resize',()=>{fit()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});

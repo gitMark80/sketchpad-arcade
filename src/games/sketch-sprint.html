@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Seaside Sketch: Sketch Sprint redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly hand-drawn borders,
-   and a few coloured-pencil accents (rings, turbo pads, bubbles) so the important bits still pop at speed. */
+   and a few coloured-pencil accents (gold stars, turbo pads, bubbles) so the important bits still pop at speed. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5;
@@ -113,13 +113,13 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 
   <div class="hud">
     <div class="stat"><small>Score</small><b><span id="scoreEl">0</span><span class="mult" id="multEl">x1</span></b></div>
-    <div class="stat mid"><small>Rings</small><b><svg class="shellico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="#c99a1a" stroke-width="2.4"/><circle cx="10" cy="10" r="6.5" fill="none" stroke="#2e2e33" stroke-width="1.2" stroke-dasharray="6 5"/></svg><span id="shellEl">0</span></b></div>
+    <div class="stat mid"><small>Stars</small><b><svg class="shellico" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.2l2.3 5 5.4.6-4 3.7 1.1 5.4L10 14.2l-4.8 2.7 1.1-5.4-4-3.7 5.4-.6z" fill="#f3e6b0" stroke="#c99a1a" stroke-width="1.6" stroke-linejoin="round"/></svg><span id="shellEl">0</span></b></div>
     <div class="stat mid"><small>Wave</small><b id="waveEl">1</b></div>
     <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
   </div>
 
   <div class="field" id="field">
-    <canvas id="cv" aria-label="The boardwalk. Swipe or use the arrow keys: left and right to change lane or turn a corner, up to jump, down to slide."></canvas>
+    <canvas id="cv" aria-label="The path. Swipe or use the arrow keys: left and right to change lane or turn a corner, up to jump, down to slide."></canvas>
     <button class="pausebtn" id="pauseBtn" type="button" aria-label="Pause" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4.5" height="14" rx="1.6" fill="#2e2e33"/><rect x="11.5" y="3" width="4.5" height="14" rx="1.6" fill="#2e2e33"/></svg></button>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
 
@@ -132,7 +132,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <ul class="rules">
           <li><b>1</b><span>Swipe left or right to change lanes. At a corner, swipe the way the arrow points.</span></li>
           <li><b>2</b><span>Swipe up to jump over things and gaps. Swipe down to slide under.</span></li>
-          <li><b>3</b><span>Grab gold rings. Every 500 m is a new wave: faster, with a bigger multiplier.</span></li>
+          <li><b>3</b><span>Grab gold stars. Every 500 m is a new wave: faster, with a bigger multiplier.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <div class="best" id="bestLine">Best score: 0</div>
@@ -151,10 +151,10 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
         <h2 id="overTitle">Bonk!</h2>
-        <p id="overText">Francis bumped into a sandcastle.</p>
+        <p id="overText">Francis bumped into a sandbox castle.</p>
         <div class="newbest" id="newBest" hidden>New best score!</div>
         <div class="bigscore" id="overScore">0</div>
-        <div class="stats"><div><b id="stDist">0 m</b><span>distance</span></div><div><b id="stShells">0</b><span>rings</span></div><div><b id="stWave">1</b><span>wave</span></div></div>
+        <div class="stats"><div><b id="stDist">0 m</b><span>distance</span></div><div><b id="stShells">0</b><span>stars</span></div><div><b id="stWave">1</b><span>wave</span></div></div>
         <button class="big" id="againBtn" type="button">Play again</button>
         <button class="subbtn" id="changeBtn" type="button">Change runner</button>
         <div class="best" id="overBest">Best: 0 &middot; Farthest: 0 m</div>
@@ -165,11 +165,11 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <h2 id="helpTitle">How to play</h2>
         <ul class="rules">
           <li><b>1</b><span>Swipe left or right (or use the arrow keys) to change lanes.</span></li>
-          <li><b>2</b><span>The boardwalk turns! When you see the arrow sign and the rail, swipe that way to take the corner. Miss it and you run into the rail.</span></li>
-          <li><b>3</b><span>Swipe up, or press Up or Space, to jump over low things and missing planks. Swipe down, or press Down, to slide under branches, towels and nets.</span></li>
+          <li><b>2</b><span>The path turns! When you see the arrow sign and the rail, swipe that way to take the corner. Miss it and you run into the rail.</span></li>
+          <li><b>3</b><span>Swipe up, or press Up or Space, to jump over low things and gaps in the path. Swipe down, or press Down, to slide under branches, blankets and nets.</span></li>
           <li><b>4</b><span>Tall walls block a whole lane: you can't jump them or slide under, so go around. Bump the side of something and you stumble; two stumbles in a row ends the run.</span></li>
-          <li><b>5</b><span>Hang glider: fly over everything. Magnet starfish: pulls rings in. Bubble: saves you once. Run over an orange turbo pad (or grab a rocket board) and you zoom through anything for a while.</span></li>
-          <li><b>6</b><span>Collect rings across runs to unlock new runners. Each one has a little perk.</span></li>
+          <li><b>5</b><span>Paper plane: fly over everything. Magnet: pulls stars in. Bubble: saves you once. Run over an orange turbo pad (or grab a skateboard) and you zoom through anything for a while.</span></li>
+          <li><b>6</b><span>Collect stars across runs to unlock new runners. Each one has a little perk.</span></li>
         </ul>
         <p class="keys">Press P or Esc to pause.</p>
         <button class="big" id="helpClose" type="button">Got it</button>
@@ -528,64 +528,33 @@ function buildSprites(){
    Each entry: [fit mode, meters]. 'w' sets the width (height follows the picture), 'h' sets the height. */
 const ASSET='../assets/sketch-sprint/';
 const IMGSPR={
-  'pip-run':['h',1.35],'pip-jump':['h',1.35],'pip-slide':['w',1.5],'shelly-run':['h',1.3],'shelly-jump':['h',1.3],'shelly-slide':['w',1.5],
-  'coral-run':['w',1.3],'coral-jump':['w',1.3],'coral-slide':['w',1.5],'gully-run':['h',1.35],'gully-jump':['w',1.7],'gully-slide':['w',1.5],
-  shellA:['h',.5],shellB:['h',.5],kite:['w',.95],magnet:['w',.8],bubble:['w',.85],boost:['w',1.1],pipBubble:['w',1.9],
-  sandcastle:['w',1.2],cooler:['w',1.0],seal:['w',1.35],log:['w',1.3],ducks:['w',1.3],
-  towels:['w',2.0],net:['w',2.0],branch:['w',2.0],
-  tower:['h',2.3],chairs:['w',1.4],cart:['w',1.5],crates:['w',1.4],fallen:['w',1.8],
+  shellA:['h',.5],shellB:['h',.5],kite:['w',.95],magnet:['w',.8],bubble:['w',.85],boost:['h',1.1],pipBubble:['w',1.9],
+  sandcastle:['w',1.0],cooler:['w',.9],seal:['w',.85],log:['w',1.3],ducks:['w',1.3],
+  towels:['w',1.9],net:['w',2.0],branch:['w',2.0],
+  tower:['h',2.3],chairs:['w',1.5],cart:['w',1.5],crates:['w',1.45],fallen:['w',1.8],
   signR:['h',2.2],signL:['h',2.2],signT:['h',2.2],rail:['w',2*ROAD+.3],
-  palm:['h',6],hut:['h',3.4],umb:['h',2.3],lamp:['h',2.7],pine:['h',7.5],pine2:['h',5.6],oak:['h',5.5],bush:['w',2],reeds:['h',2.4],
-  lily:['w',1.4],frog:['w',.6],heron:['h',2.6],rock:['w',1.6],buoy:['h',.9],boat:['h',3.2],pad:['w',1.7],
+  palm:['h',1.6],hut:['h',3],umb:['h',2.3],lamp:['h',2.9],pine:['h',5.5],pine2:['h',4.2],oak:['h',5],bush:['w',2],reeds:['h',2],
+  lily:['w',1.4],frog:['w',.6],heron:['h',2.4],rock:['w',1.6],buoy:['h',.8],boat:['w',3.2],pad:['w',1.7],
   'ring-1':['h',.6],'ring-2':['h',.6],'ring-3':['h',.6],'ring-4':['h',.6],'ring-5':['h',.6],'ring-6':['h',.6],'ring-7':['h',.6],'ring-8':['h',.6],'ring-sparkle':['w',.9],
   'glider-pickup':['w',1.1],'glider-flight':['w',2.6],'glider-left':['w',2.6],'glider-right':['w',2.6],
-  'wall-brick':['h',4.6],'wall-beach':['h',4.6],'wall-pond':['h',4.6],'wall-river':['h',4.6],'wall-marsh':['h',4.6],'wall-woods':['h',4.6],
+  'wall-brick':['w',1.75],'wall-beach':['w',1.75],'wall-pond':['w',1.75],'wall-river':['w',1.75],'wall-marsh':['w',1.75],'wall-woods':['w',1.75],
   'board-rocket':['w',1.1],'board-wave':['w',1.1],'board-sunset':['w',1.1],'board-shark':['w',1.1],'board-pineapple':['w',1.1],'board-lightning':['w',1.1]
 };
 const BOARDS=['rocket','wave','sunset','shark','pineapple','lightning'];let board='rocket';
-['pip','shelly','coral','gully'].forEach(id=>{for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=IMGSPR[id+'-run']});
-for(let f=1;f<=8;f++)IMGSPR['francis-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['clare-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['george-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['joan-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['john-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['catherine-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['joseph-run-'+f]=['h',1.35];
-for(let f=1;f<=8;f++)IMGSPR['therese-run-'+f]=['h',1.35];
-IMGSPR['francis-slide']=['h',.9];
-IMGSPR['clare-slide']=['h',.9];
-IMGSPR['george-slide']=['h',.9];
-IMGSPR['joan-slide']=['h',.9];
-IMGSPR['john-slide']=['h',.9];
-IMGSPR['catherine-slide']=['h',.9];
-IMGSPR['joseph-slide']=['h',.9];
-IMGSPR['therese-slide']=['h',.9];
-IMGSPR['francis-down']=['h',1.3];
-IMGSPR['clare-down']=['h',1.3];
-IMGSPR['george-down']=['h',1.3];
-IMGSPR['joan-down']=['h',1.3];
-IMGSPR['john-down']=['h',1.3];
-IMGSPR['catherine-down']=['h',1.3];
-IMGSPR['joseph-down']=['h',1.3];
-IMGSPR['therese-down']=['h',1.3];
-IMGSPR['francis-jump']=['h',1.15];
-IMGSPR['clare-jump']=['h',1.15];
-IMGSPR['george-jump']=['h',1.15];
-IMGSPR['joan-jump']=['h',1.15];
-IMGSPR['john-jump']=['h',1.15];
-IMGSPR['catherine-jump']=['h',1.15];
-IMGSPR['joseph-jump']=['h',1.15];
-IMGSPR['therese-jump']=['h',1.15];
-IMGSPR['francis-surf']=['h',1.2];
-IMGSPR['clare-surf']=['h',1.2];
-IMGSPR['george-surf']=['h',1.2];
-IMGSPR['joan-surf']=['h',1.2];
-IMGSPR['john-surf']=['h',1.2];
-IMGSPR['catherine-surf']=['h',1.2];
-IMGSPR['joseph-surf']=['h',1.2];
-IMGSPR['therese-surf']=['h',1.2];
+/* Mark's pencil runners (and the four animal buddies): every pose of one character shares one scale, ['px', meters per pixel],
+   so the run cycle never changes size. The run frames share one canvas with the feet on the bottom edge.
+   Their SURF pose has its own skateboard drawn in, and DOWN is a crouch rather than lying flat. */
+const PXH={therese:307,joan:287,catherine:304,john:307,joseph:297,coral:124,gully:123,pip:134,shelly:114};
+const PENCILKID=new Set(['therese','joan','catherine','john','joseph']),PETS=new Set(['coral','gully','pip','shelly']);
+const OWNBOARD=id=>PXH[id]&&hasImg(id+'-surf'),CROUCH=id=>!!PXH[id];
+Object.keys(PXH).forEach(id=>{const mpp=(PETS.has(id)?.9:1.35)/PXH[id];
+  for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=['px',mpp];['jump','slide','down','surf'].forEach(p=>IMGSPR[id+'-'+p]=['px',mpp]);
+  if(PENCILKID.has(id))IMGSPR[id+'-face']=['h',1]});
+// Francis, Clare and George still use the earlier sprites
+['francis','clare','george'].forEach(id=>{for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=['h',1.35];
+  IMGSPR[id+'-slide']=['h',.9];IMGSPR[id+'-down']=['h',1.3];IMGSPR[id+'-jump']=['h',1.15];IMGSPR[id+'-surf']=['h',1.2]});
 
-const IMGFILE={pipBubble:'bubble',pine2:'pine'};
+const IMGFILE={pipBubble:'shield',pine2:'pine'};
 const IMG={},BGIMG={};let imgsReady=0,pickTO=0;
 function loadArt(){
   Object.keys(IMGSPR).forEach(n=>{const im=new Image();im.onload=()=>{IMG[n]=im;imgsReady++;applyImages()};im.onerror=()=>{};im.src=ASSET+(IMGFILE[n]||n)+'.webp'});
@@ -593,7 +562,7 @@ function loadArt(){
 }
 function applyImages(){
   if(!$('start').hidden){clearTimeout(pickTO);pickTO=setTimeout(()=>buildPicker(),150)}
-  Object.keys(IMG).forEach(n=>{const im=IMG[n],[m,s]=IMGSPR[n];let w,h;if(m==='w'){w=s;h=s*im.naturalHeight/im.naturalWidth}else{h=s;w=s*im.naturalWidth/im.naturalHeight}
+  Object.keys(IMG).forEach(n=>{const im=IMG[n],[m,s]=IMGSPR[n];let w,h;if(m==='px'){w=s*im.naturalWidth;h=s*im.naturalHeight}else if(m==='w'){w=s;h=s*im.naturalHeight/im.naturalWidth}else{h=s;w=s*im.naturalWidth/im.naturalHeight}
     SPR[n]={c:im,w,h,img:true};
     if(KIND[n]&&KIND[n].box)KIND[n].box[1]=Math.max(1.2,h*.88)});
   // the hut and umbrella variants all use the one painting
@@ -602,33 +571,33 @@ function applyImages(){
 const hasImg=n=>!!(SPR[n]&&SPR[n].img);
 /* obstacle kinds: type low = jump it, high = slide under, block = change lane, gap = missing planks (jump) */
 const KIND={
-  sandcastle:{type:'low',h:.82,depth:.9,hw:.55,name:'a sandcastle'},
-  cooler:{type:'low',h:.78,depth:.7,hw:.5,name:'a beach cooler'},
-  seal:{type:'low',h:.66,depth:1.1,hw:.6,name:'a snoozing seal'},
+  sandcastle:{type:'low',h:.82,depth:.9,hw:.55,name:'a sandbox castle'},
+  cooler:{type:'low',h:.78,depth:.7,hw:.5,name:'a lunchbox cooler'},
+  seal:{type:'low',h:.66,depth:1.1,hw:.6,name:'a friendly dog'},
   log:{type:'low',h:.6,depth:.6,hw:.6,name:'a mossy log'},
   ducks:{type:'low',h:.62,depth:.8,hw:.6,name:'a family of ducks'},
-  towels:{type:'high',y0:1.02,h:2.35,depth:.3,hw:.7,name:'a towel line'},
-  net:{type:'high',y0:1.05,h:2.3,depth:.3,hw:.7,name:'a volleyball net'},
+  towels:{type:'high',y0:1.02,h:2.35,depth:.3,hw:.7,name:'a picnic blanket'},
+  net:{type:'high',y0:1.05,h:2.3,depth:.3,hw:.7,name:'a badminton net'},
   branch:{type:'high',y0:1.0,h:2.3,depth:.4,hw:.75,name:'a low branch'},
-  tower:{type:'block',h:2.8,depth:1.5,hw:.62,box:[1.4,2.24,'#c8463c','#ffe0d8'],name:'a lifeguard tower'},
-  chairs:{type:'block',h:2.3,depth:1.0,hw:.56,box:[.1,2.2,'#9a6630','#c88a4e'],name:'a stack of beach chairs'},
-  cart:{type:'block',h:2.5,depth:2.6,hw:.6,box:[1.25,2.15,'#c9d6dc','#f6f9fa'],name:'an ice cream cart'},
-  crates:{type:'block',h:2.3,depth:1.1,hw:.58,box:[.05,2.2,'#8a5a2b','#d9a066'],name:'a stack of crab traps'},
-  fallen:{type:'block',h:1.8,depth:1.2,hw:.72,box:[.3,1.6,'#5e3820','#a8703a'],name:'a fallen tree'},
-  'wall-brick':{type:'block',h:4.6,depth:.9,hw:.62,name:'a brick wall'},'wall-beach':{type:'block',h:4.6,depth:.9,hw:.62,name:'a sandstone wall'},'wall-pond':{type:'block',h:4.6,depth:.9,hw:.62,name:'a stone wall'},
-  'wall-river':{type:'block',h:4.6,depth:.9,hw:.62,name:'a log dam'},'wall-marsh':{type:'block',h:4.6,depth:.9,hw:.62,name:'a reed fence'},'wall-woods':{type:'block',h:4.6,depth:.9,hw:.62,name:'a log palisade'},
-  gap:{type:'gap',h:0,depth:2.4,hw:ROAD,name:'a gap in the boardwalk'}
+  tower:{type:'block',h:2.8,depth:1.5,hw:.62,box:[1.4,2.24,'#e4e2d8','#efeadd'],name:'a park lookout'},
+  chairs:{type:'block',h:2.3,depth:1.0,hw:.56,box:[.1,1.0,'#e4e2d8','#efeadd'],name:'a pair of folding chairs'},
+  cart:{type:'block',h:2.5,depth:2.6,hw:.6,box:[1.25,2.15,'#e4e2d8','#efeadd'],name:'a hot dog cart'},
+  crates:{type:'block',h:2.3,depth:1.1,hw:.58,box:[.05,1.1,'#e4e2d8','#efeadd'],name:'a stack of boxes'},
+  fallen:{type:'block',h:1.8,depth:1.2,hw:.72,box:[.3,1.3,'#e4e2d8','#efeadd'],name:'a fallen tree'},
+  'wall-brick':{type:'block',h:4.6,depth:.9,hw:.62,name:'a brick wall'},'wall-beach':{type:'block',h:4.6,depth:.9,hw:.62,name:'a brick planter'},'wall-pond':{type:'block',h:4.6,depth:.9,hw:.62,name:'a stone wall'},
+  'wall-river':{type:'block',h:4.6,depth:.9,hw:.62,name:'a log pile'},'wall-marsh':{type:'block',h:4.6,depth:.9,hw:.62,name:'a picket fence'},'wall-woods':{type:'block',h:4.6,depth:.9,hw:.62,name:'a hedge'},
+  gap:{type:'gap',h:0,depth:2.4,hw:ROAD,name:'a gap in the path'}
 };
 /* places the boardwalk runs through. bands: lateral ground strips [x0,x1,color,water?]; gy: ground height under the deck */
 const BIOME={
-  beach:{gy:-.3,base:'#f1ede2',bands:[[-30,-7.5,'#d9d7cf',1],[-7.5,-6.4,'#e4e0d4'],[-6.4,30,'#f1ede2']],scen:['palm','hut','grass','umb','lamp'],low:['sandcastle','cooler','seal'],high:['towels','net'],block:['wall-beach','wall-beach','wall-brick','cart'],gap:0,
-    label:'Beach',crashWater:'the surf'},
+  beach:{gy:-.3,base:'#f1ede2',bands:[[-30,-7.5,'#dedcd4'],[-7.5,-6.4,'#e4e0d4'],[-6.4,30,'#f1ede2']],scen:['palm','hut','grass','umb','lamp'],low:['sandcastle','cooler','seal'],high:['towels','net'],block:['wall-beach','wall-beach','wall-brick','cart'],gap:0,
+    label:'Downtown',crashWater:'a big puddle'},
   pond:{gy:-.9,base:'#dedcd4',bands:[[-30,30,'#dedcd4',1]],scen:['lily','reeds','frog','heron','lamp'],low:['ducks','log','cooler'],high:['branch','net'],block:['wall-pond','wall-pond','wall-brick'],gap:.26,
-    label:'Pond',crashWater:'the pond'},
+    label:'Park',crashWater:'the pond'},
   river:{gy:-1,base:'#ebe7dc',bands:[[-30,-9,'#ebe7dc'],[-9,-8,'#dcd8cc'],[-8,8,'#d9d7cf',1],[8,9,'#dcd8cc'],[9,30,'#ebe7dc']],scen:['rock','bush','heron','oak','reeds'],low:['log','ducks','seal'],high:['branch','towels'],block:['wall-river','wall-river','wall-brick'],gap:.3,
-    label:'River',crashWater:'the river'},
+    label:'Creek',crashWater:'the creek'},
   marsh:{gy:-.7,base:'#e4e2d8',bands:[[-30,30,'#e4e2d8',1]],scen:['reeds','reeds','lily','frog','heron','bush'],low:['ducks','log','seal'],high:['branch','net'],block:['wall-marsh','wall-marsh','wall-brick'],gap:.22,
-    label:'Marsh',crashWater:'the marsh'},
+    label:'Backyard',crashWater:'the mud'},
   woods:{gy:-.3,base:'#e9e6db',bands:[[-30,-4,'#e9e6db'],[-4,4,'#dcd8cc'],[4,30,'#e9e6db']],scen:['pine','oak','pine2','bush','rock'],low:['log','cooler','seal'],high:['branch','branch','towels'],block:['wall-woods','wall-woods','wall-brick'],gap:0,
     label:'Woods',crashWater:'the ferns'}
 };
@@ -727,13 +696,13 @@ function setSound(){const b=$('soundBtn');b.classList.toggle('off',muted);b.setA
 
 /* ---------- runners ---------- */
 const CHARS=[
-  {id:'francis',name:'Francis',sub:'Surfer kid',cost:0,perk:'A steady, all-round runner.',kite:1,magnet:1,shield:1,jump:1},
-  {id:'clare',name:'Clare',sub:'Boardwalk skater',cost:150,perk:'Bubble shields last twice as long.',kite:1,magnet:1,shield:2,jump:1},
-  {id:'george',name:'George',sub:'Beach explorer',cost:400,perk:'Magnet starfish pull rings for twice as long.',kite:1,magnet:2,shield:1,jump:1},
-  {id:'joan',name:'Joan',sub:'Junior lifeguard',cost:800,perk:'Floaty jumps, and gliders carry farther.',kite:1.4,magnet:1,shield:1,jump:1.15},
-  {id:'john',name:'John',sub:'Snorkeler',cost:1200,perk:'Rocket boards and turbo pads last longer.',kite:1,magnet:1,shield:1,jump:1,boost:1.4},
-  {id:'catherine',name:'Catherine',sub:'Sunshine kid',cost:1700,perk:'Every ring is worth a little more.',kite:1,magnet:1,shield:1,jump:1,ring:1.5},
-  {id:'joseph',name:'Joseph',sub:'Boardwalk builder',cost:2300,perk:'Shrugs off a stumble more often.',kite:1,magnet:1,shield:1,jump:1,tough:1},
+  {id:'francis',name:'Francis',sub:'Sketchbook kid',cost:0,perk:'A steady, all-round runner.',kite:1,magnet:1,shield:1,jump:1},
+  {id:'clare',name:'Clare',sub:'Sidewalk skater',cost:150,perk:'Bubble shields last twice as long.',kite:1,magnet:1,shield:2,jump:1},
+  {id:'george',name:'George',sub:'Backyard explorer',cost:400,perk:'Magnets pull stars in for twice as long.',kite:1,magnet:2,shield:1,jump:1},
+  {id:'joan',name:'Joan',sub:'Team captain',cost:800,perk:'Floaty jumps, and paper planes carry farther.',kite:1.4,magnet:1,shield:1,jump:1.15},
+  {id:'john',name:'John',sub:'Skateboarder',cost:1200,perk:'Skateboards and turbo pads last longer.',kite:1,magnet:1,shield:1,jump:1,boost:1.4},
+  {id:'catherine',name:'Catherine',sub:'Sunshine kid',cost:1700,perk:'Every star is worth a little more.',kite:1,magnet:1,shield:1,jump:1,ring:1.5},
+  {id:'joseph',name:'Joseph',sub:'Treehouse builder',cost:2300,perk:'Shrugs off a stumble more often.',kite:1,magnet:1,shield:1,jump:1,tough:1},
   {id:'therese',name:'Thérèse',sub:'Little flower',cost:3000,perk:'A little bit of everything.',kite:1.2,magnet:1.3,shield:1.3,jump:1.08}
 ];
 let charId=store.get('char','francis');if(!CHARS.some(c=>c.id===charId))charId='francis';
@@ -822,7 +791,7 @@ function genRow(){
   nextRow+=gap+rowDepth;
 }
 // half widths of the scenery sprites, in meters (matched to IMGSPR / makeSpr sizes)
-const SCENW={palm:2.2,hut:1.5,umb:1.1,lamp:.3,grass:.8,pine:2,pine2:1.6,oak:2.5,bush:1,reeds:.9,lily:.7,frog:.3,heron:.7,rock:.8,buoy:.3,boat:1.3};
+const SCENW={palm:.8,hut:1.65,umb:1.1,lamp:.35,grass:.8,pine:2.2,pine2:1.7,oak:2.6,bush:1,reeds:1.1,lily:.7,frog:.3,heron:1,rock:.8,buoy:.4,boat:1.6};
 // does a point in this segment's path coordinates land on the deck of the segment before or after it?
 function onOtherDeck(s,D,x){const [wx,wz]=p2w(D,x,s);const i=SEGS.indexOf(s);
   for(const j of [i-1,i+1]){const o=SEGS[j];if(!o)continue;const f=FWD[o.dir],rt=FWD[(o.dir+1)%4];const dx=wx-o.ox,dz=wz-o.oz;const a=dx*f[0]+dz*f[1],b=dx*rt[0]+dz*rt[1];
@@ -845,8 +814,8 @@ function genScenery(s){ // scenery for one segment, in its path coordinates
     if(r(4)<.8)place(n1,side,r(5)*5,6);if(r(9)<.55)place(n2,-side,r(10)*5,11);
     if(s.biome==='woods'&&r(14)<.6)place(r(15)<.5?'pine':'oak',side,r(16)*6,17);
     if(s.biome==='marsh'&&r(18)<.6)place('reeds',-side,r(19)*6,20);
-    if(s.biome==='beach'&&r(21)<.12)scen.push({s:'buoy',x:-10-r(22)*5,z:z+r(23)*6,bob:1,seg:s});
-    if(s.biome==='beach'&&r(24)<.06)scen.push({s:'boat',x:-18-r(25)*10,z:z+r(26)*6,bob:1,seg:s});
+    if(s.biome==='beach'&&r(21)<.12)scen.push({s:'buoy',x:-8.5-r(22)*5,z:z+r(23)*6,seg:s});
+    if(s.biome==='pond'&&r(24)<.1)scen.push({s:'boat',x:(r(27)<.5?-1:1)*(12+r(25)*8),z:z+r(26)*6,bob:1,seg:s});
   }
   // the corner: rail, arrow sign and a lamp on each far corner
   const sign=s.turn==='T'?'signT':(s.turn==='L'?'signL':'signR');
@@ -881,8 +850,8 @@ function doTurn(){
   curSeg++;P.turnQ=0;tilt=d;sfx.turn();sfx.yay();
   const bonus=25*mult();score+=bonus;turnBonus++;
   const [sx,sy]=proj(P.x-camXl,P.y+1.4,0);floatTxt(sx,sy-10,turnBonus%3===0?'Sharp turn!':'Nice turn!','#c99a1a',20);
-  burst(sx,sy+20,10,['#9a9a9f','#ffe27a'],200,.5,3,300,'spark');
-  const nb=SEGS[curSeg].biome,ob=s.biome;if(nb!==ob){banner(BIOME[nb].label+'!<small>'+({beach:'Sun and sand',pond:'Mind the gaps',river:'Over the water',marsh:'Reeds and frogs',woods:'Through the trees'})[nb]+'</small>',1300)}
+  burst(sx,sy+20,10,['#9a9a9f','#c99a1a'],200,.5,3,300,'spark');
+  const nb=SEGS[curSeg].biome,ob=s.biome;if(nb!==ob){banner(BIOME[nb].label+'!<small>'+({beach:'Shops and streetlights',pond:'Mind the gaps',river:'Over the creek',marsh:'Fences and flowerbeds',woods:'Through the trees'})[nb]+'</small>',1300)}
 }
 function jump(){if(!canAct()||P.kiteT>0||P.kiteFall)return;if(!P.air){P.air=true;P.vy=JUMP_V*CHR().jump;P.slideT=0;P.slideQ=false;P.fastDrop=false;sfx.jump();const [sx,sy]=proj(P.x-camXl,0,0);burst(sx,sy,8,['#b5b2a8','#9a9a9f'],120,.45,3,400)}}
 function slide(){if(!canAct()||P.kiteT>0||P.kiteFall)return;if(P.air){P.fastDrop=true;P.vy=Math.min(P.vy,-6);P.slideQ=true;return}
@@ -939,7 +908,7 @@ function crash(o,why,water){
   state='dying';deadT=0;P.tumble=.001;P.slideT=0;P.kiteT=0;P.boostT=0;P.knock=water?.4:1.4;speed=0;const hasDown=SPR[CHR().id+'-down']&&SPR[CHR().id+'-down'].img;if(!P.air&&!hasDown){P.vy=3.5;P.air=true}else if(hasDown){P.y=0;P.vy=0;P.air=false}
   deathMsg=why;if(water)sfx.splash();else sfx.bonk();shake=RM?0:.45;
   const [sx,sy]=proj(P.x-camXl,P.y+1.1,0);
-  if(water)burst(sx,sy+20,26,['#7fa7d0','#8a8a90','#5ab9ea'],300,.9,4,400);else burst(sx,sy,14,['#ffe27a','#9a9a9f','#ffc93c'],260,.8,4,300,'star');
+  if(water)burst(sx,sy+20,26,['#7fa7d0','#8a8a90','#2f6fb5'],300,.9,4,400);else burst(sx,sy,14,['#c99a1a','#9a9a9f','#d9661a'],260,.8,4,300,'star');
   $('pauseBtn').hidden=true;
 }
 function popShield(o){
@@ -949,7 +918,7 @@ function popShield(o){
 function bop(o){o.bop=.001;o.bvx=(o.x>=P.x?1:-1)*rnd(4,7);o.bvy=7;const pts=15*mult();score+=pts}
 function stumble(o){
   P.lane=P.from;P.tx=laneX(P.from);P.wobT=.55;P.invT=.4;sfx.stumble();shake=RM?0:.2;
-  const [sx,sy]=proj((P.x+o.x)/2-camXl,1,0);burst(sx,sy,8,['#ffe27a','#9a9a9f'],160,.5,3,300,'star');
+  const [sx,sy]=proj((P.x+o.x)/2-camXl,1,0);burst(sx,sy,8,['#c99a1a','#9a9a9f'],160,.5,3,300,'star');
   if(P.stumbleT>0){if(P.shieldT>0){popShield(null);P.stumbleT=4;return}if(CHR().tough&&Math.random()<.5){P.stumbleT=4;banner('Shook it off!<small>Careful now</small>',1000);return}crash(o,CHR().name+' tripped over '+KIND[o.kind].name+' twice in a row.');return}
   P.stumbleT=4;banner('Whoops!<small>Careful now</small>',1000);
 }
@@ -957,10 +926,10 @@ function gameOver(){
   state='over';const newBest=Math.floor(score)>best,d=Math.floor(dist);
   if(newBest){best=Math.floor(score);store.set('best',best)}if(d>bestDist){bestDist=d;store.set('bestDist',bestDist)}
   const before=CHARS.filter(unlocked).length;bank+=shells;store.set('bank',bank);const after=CHARS.filter(unlocked).length;
-  $('overTitle').textContent=deathMsg.includes('into the')&&/surf|pond|river|marsh|ferns/.test(deathMsg)?'Splash!':['Bonk!','Oopsie!','Ouch-a-roo!'][Math.floor(Math.random()*3)];
+  $('overTitle').textContent=deathMsg.includes('into the')&&/puddle|pond|creek|mud|ferns/.test(deathMsg)?'Splash!':['Bonk!','Oopsie!','Ouch-a-roo!'][Math.floor(Math.random()*3)];
   let txt=deathMsg;const next=CHARS.find(c=>!unlocked(c));
   if(after>before){const nc=CHARS.filter(unlocked)[after-1];txt+=' You unlocked '+nc.name+', the '+nc.sub.toLowerCase()+'!';sfx.unlock()}
-  else if(next)txt+=' '+(next.cost-bank)+' more rings to unlock '+next.name+'.';
+  else if(next)txt+=' '+(next.cost-bank)+' more stars to unlock '+next.name+'.';
   $('overText').textContent=txt;$('newBest').hidden=!newBest;$('overScore').textContent=Math.floor(score).toLocaleString('en-US');
   $('stDist').textContent=d+' m';$('stShells').textContent=shells;$('stWave').textContent=wave;
   $('overBest').textContent='Best: '+best.toLocaleString('en-US')+' · Farthest: '+bestDist+' m';
@@ -987,7 +956,7 @@ function update(dt){
   const target=speedFor(dist)*(P.boostT>0?1.7:1);speed+=(target-speed)*Math.min(1,dt*(P.boostT>0?4:1.5));
   const dz=speed*dt;dist+=dz;score+=dz*mult();
   const nw=Math.floor(dist/WAVE_LEN)+1;if(nw>wave){wave=nw;hudDirty=true;sfx.wave();sfx.yay();banner('Wave '+wave+'!<small>Score x'+wave+'</small>',1700);
-    burst(W/2,H*.24,30,['#ff6b5e','#ffc93c','#2fbf8f','#5ab9ea','#9a9a9f'],320,1.1,4,420)}
+    burst(W/2,H*.24,30,['#d9661a','#c99a1a','#5a9a6a','#2f6fb5','#9a9a9f'],320,1.1,4,420)}
   // corners
   const seg=SEGS[curSeg];
   if(dist>=seg.d1){
@@ -1008,7 +977,7 @@ function update(dt){
       if(P.slideQ){P.slideQ=false;P.slideT=SLIDE_T;sfx.slide()}}}
   P.sq=Math.max(0,P.sq-dt*5);
   if(P.slideT>0){P.slideT-=dt;if(Math.random()<.5){const [sx,sy]=proj(P.x-camXl+rnd(-.3,.3),0,.2);parts.push({x:sx,y:sy,vx:rnd(-80,80),vy:rnd(-140,-60),life:.4,max:.4,col:'#f3d79a',r:rnd(2,4),g:500,kind:'dot'})}}
-  if(P.boostT>0){P.boostT-=dt;if(!RM&&Math.random()<.9){const [sx,sy]=proj(P.x-camXl+rnd(-.35,.35),P.y+.3,.3);parts.push({x:sx,y:sy,vx:rnd(-40,40),vy:rnd(60,160),life:.35,max:.35,col:pick(['#ffe27a','#ff9f43','#9a9a9f']),r:rnd(3,6),g:0,kind:'dot'})}
+  if(P.boostT>0){P.boostT-=dt;if(!RM&&Math.random()<.9){const [sx,sy]=proj(P.x-camXl+rnd(-.35,.35),P.y+.3,.3);parts.push({x:sx,y:sy,vx:rnd(-40,40),vy:rnd(60,160),life:.35,max:.35,col:pick(['#c99a1a','#d9661a','#9a9a9f']),r:rnd(3,6),g:0,kind:'dot'})}
     if(P.boostT<=0){P.boostT=0;P.invT=Math.max(P.invT,.6)}}
   P.ph+=dt*(5+speed*.42);
   if(!P.air&&P.slideT<=0&&P.boostT<=0){const st=Math.floor(P.ph/(Math.PI*2.5));if(st!==lastStepPh){lastStepPh=st;sfx.step()}}
@@ -1035,7 +1004,7 @@ function collide(){
     const xo=Math.abs(P.x-o.x)<PHW+o.hw,zo=rz<.32&&rz+o.depth>-.32,yo=P.y<o.h&&P.y+ph>o.y0;
     const side=o.pz&&!o.px;o.px=xo;o.pz=zo;
     if(!(xo&&zo&&yo)||flying||P.invT>0)continue;
-    if(P.boostT>0){bop(o);sfx.smash();const [sx,sy]=proj(o.x-camXl,.8,rz);burst(sx,sy,14,['#ffe27a','#9a9a9f','#ff9f43'],260,.6,4,300,'star');floatTxt(sx,sy-20,'+'+(15*mult()),'#c99a1a',16);continue}
+    if(P.boostT>0){bop(o);sfx.smash();const [sx,sy]=proj(o.x-camXl,.8,rz);burst(sx,sy,14,['#c99a1a','#9a9a9f','#d9661a'],260,.6,4,300,'star');floatTxt(sx,sy-20,'+'+(15*mult()),'#c99a1a',16);continue}
     if(side&&P.from!==o.lane){stumble(o);return}
     crash(o,C.name+' bumped into '+KIND[o.kind].name+'.');o.px=true;return}
 }
@@ -1045,17 +1014,17 @@ function collect(dt){
     if((P.magnetT>0||P.boostT>0)&&rz<14&&Math.abs(s.x-P.x)<5&&Math.abs(s.y-py)<6){s.mag=true}
     if(s.mag){const k=Math.min(1,dt*9);s.x+=(P.x-s.x)*k;s.y+=(py-s.y)*k;s.z+=(dist-s.z)*k}
     if(Math.abs(s.x-P.x)<.75&&Math.abs(rz)<1.3&&Math.abs(s.y-py)<1.05){s.got=true;shells++;streak++;streakT=1.1;const pts=Math.round(10*mult()*(CHR().ring||1));score+=pts;hudDirty=true;
-      sfx.shell(Math.min(streak-1,10));const [sx,sy]=proj(s.x-camXl,s.y,Math.max(0,rz));burst(sx,sy,6,['#8a8a90','#c99a1a','#ffe27a'],110,.4,2.5,0,'spark');if(hasImg('ring-sparkle'))floats.push({x:sx,y:sy,txt:'',col:'',size:0,t:0,img:'ring-sparkle'});
+      sfx.shell(Math.min(streak-1,10));const [sx,sy]=proj(s.x-camXl,s.y,Math.max(0,rz));burst(sx,sy,6,['#8a8a90','#c99a1a','#d9661a'],110,.4,2.5,0,'spark');if(hasImg('ring-sparkle'))floats.push({x:sx,y:sy,txt:'',col:'',size:0,t:0,img:'ring-sparkle'});
       if(streak%5===0)floatTxt(sx,sy-20,streak+' in a row!','#c99a1a',18);}}
   for(const p of pows){if(p.got)continue;const rz=p.z-dist;if(Math.abs(rz)<(p.kind==='pad'?2.2:1.4)&&Math.abs(p.x-P.x)<.8&&Math.abs(p.y-py)<1.2){p.got=true;gotPower(p.kind,p)}}
 }
 function gotPower(k,p){
-  const C=CHR(),[sx,sy]=proj(p.x-camXl,p.y,0);burst(sx,sy,20,['#ffe27a','#9a9a9f','#ff9fb3','#9fbcd6'],240,.7,3.5,150,'spark');
-  if(k==='kite'){P.kiteT=KITE_T*C.kite;P.kiteFall=false;P.slideT=0;P.air=true;P.vy=0;P.boostT=0;sfx.kite();banner('Glider!<small>Fly over everything</small>',1300);
+  const C=CHR(),[sx,sy]=proj(p.x-camXl,p.y,0);burst(sx,sy,20,['#c99a1a','#9a9a9f','#c45a8a','#2f6fb5'],240,.7,3.5,150,'spark');
+  if(k==='kite'){P.kiteT=KITE_T*C.kite;P.kiteFall=false;P.slideT=0;P.air=true;P.vy=0;P.boostT=0;sfx.kite();banner('Paper plane!<small>Fly over everything</small>',1300);
     let l=P.lane;const end=dist+speed*(KITE_T*C.kite-.6);for(let z=dist+speed*1.1,i=0;z<end;z+=2.4,i++){if(i>0&&i%8===0){l=Math.max(0,Math.min(2,l+(Math.random()<.5?-1:1)))}
       shellArr.push({lane:l,x:laneX(l),y:KITE_Y+.55,z,k:'shellB',got:false,mag:false})}}
-  else if(k==='magnet'){P.magnetT=MAGNET_T*C.magnet;sfx.magnet();sfx.yay();banner('Magnet!<small>Rings come to you</small>',1300)}
-  else if(k==='boost'||k==='pad'){P.boostT=BOOST_T*(C.boost||1);board=BOARDS[Math.floor(Math.random()*BOARDS.length)];P.slideT=0;sfx.boost();sfx.yay();banner((k==='pad'?'Turbo!':'Rocket board!')+'<small>Zoom through anything</small>',1300);shake=RM?0:.15}
+  else if(k==='magnet'){P.magnetT=MAGNET_T*C.magnet;sfx.magnet();sfx.yay();banner('Magnet!<small>Stars come to you</small>',1300)}
+  else if(k==='boost'||k==='pad'){P.boostT=BOOST_T*(C.boost||1);board=BOARDS[Math.floor(Math.random()*BOARDS.length)];P.slideT=0;sfx.boost();sfx.yay();banner((k==='pad'?'Turbo!':'Skateboard!')+'<small>Zoom through anything</small>',1300);shake=RM?0:.15}
   else {P.shieldT=SHIELD_T*C.shield;sfx.bubble();sfx.yay();banner('Bubble!<small>Saves you from one bump</small>',1300)}
   floatTxt(sx,sy-24,k==='kite'?'Whee!':k==='magnet'?'Zoom!':k==='boost'||k==='pad'?'Turbo!':'Boing!','#9a9a9f',20);
 }
@@ -1156,16 +1125,16 @@ function drawOb(o){
   const z=o.z-dist,k=KIND[o.kind],seg=segAt(o.z);ctx.globalAlpha=fade(z);
   if(o.bop){ctx.globalAlpha*=Math.max(0,1-o.bop/2.4);const q=pc(o.z,o.x+o.bx,seg);spr(o.kind,q[0],q[1],o.by,1,o.br);ctx.globalAlpha=1;return}
   const sq=pc(o.z+o.depth*.5,o.x,seg);shadow(sq[0],sq[1],o.hw*1.15,0,.22);
-  if(k.box){const [y0,y1,side,top]=k.box,x0=o.x-o.hw,x1=o.x+o.hw,zf=o.z+o.depth;
+  if(k.box&&!hasImg(o.kind)){const [y0,y1,side,top]=k.box,x0=o.x-o.hw,x1=o.x+o.hw,zf=o.z+o.depth;
     const c=[pc(o.z,x0,seg),pc(o.z,x1,seg),pc(zf,x1,seg),pc(zf,x0,seg)];
     for(let i=0;i<4;i++){const a=c[i],b=c[(i+1)%4];const nx=b[1]-a[1],nz2=-(b[0]-a[0]);const mx=(a[0]+b[0])/2,mz=(a[1]+b[1])/2+CB;if(nx*mx+nz2*mz>=0)continue;
       ctx.fillStyle=side;ctx.beginPath();[proj(a[0],y0,a[1]),proj(a[0],y1,a[1]),proj(b[0],y1,b[1]),proj(b[0],y0,b[1])].forEach((p,j)=>j?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fill()}
     ctx.fillStyle=top;ctx.beginPath();c.forEach((p,j)=>{const q=proj(p[0],y1,p[1]);j?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])});ctx.closePath();ctx.fill()}
   const q=pc(o.z,o.x,seg);
-  if(o.type==='high'&&hasImg(o.kind)){if(o.kind!=='branch'){const S=SPR[o.kind];[-1,1].forEach(sd=>{const a=proj(q[0]+sd*S.w*.44,0,q[1]),b=proj(q[0]+sd*S.w*.44,o.y0+.1,q[1]);ctx.strokeStyle='#8a5a2b';ctx.lineWidth=Math.max(1.5,a[2]*.09);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()})}
+  if(o.type==='high'&&hasImg(o.kind)){if(o.kind!=='branch'){const S=SPR[o.kind];[-1,1].forEach(sd=>{const a=proj(q[0]+sd*S.w*.44,0,q[1]),b=proj(q[0]+sd*S.w*.44,o.y0+.1,q[1]);ctx.strokeStyle=INK;ctx.lineWidth=Math.max(1.5,a[2]*.09);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()})}
     spr(o.kind,q[0],q[1],o.y0)}
   else spr(o.kind,q[0],q[1]);
-  if(o.kind==='seal'&&z<45){const p=proj(q[0]+.45,.9,q[1]);ctx.fillStyle='#9a9a9f';ctx.font=`800 ${Math.max(8,p[2]*.3)|0}px ${'"Baloo 2",sans-serif'}`;
+  if(false){const p=proj(q[0]+.45,.9,q[1]);ctx.fillStyle='#9a9a9f';ctx.font=`800 ${Math.max(8,p[2]*.3)|0}px ${'"Baloo 2",sans-serif'}`;
     for(let i=0;i<2;i++){const u=(T*.7+i*.5)%1;ctx.globalAlpha=fade(z)*Math.sin(u*Math.PI);ctx.fillText('z',p[0]+u*p[2]*.25,p[1]-u*p[2]*.45)}}
   ctx.globalAlpha=1;
 }
@@ -1174,7 +1143,7 @@ function drawShell(s){const z=s.z-dist;ctx.globalAlpha=fade(z);const b=.08*Math.
   const rf=1+Math.floor(((T*9+s.z*.9)%8+8)%8);if(hasImg('ring-'+rf)){const S=SPR['ring-'+rf],p=proj(q[0],s.y+b,q[1]);if(s.y<.8)shadow(q[0],q[1],.22,s.y,.18);const w=S.w*p[2],h=S.h*p[2];ctx.drawImage(S.c,p[0]-w/2,p[1]-h/2,w,h);ctx.globalAlpha=1;return}
   const spin=Math.abs(Math.cos(T*4+s.z*.6))*.6+.4;const S=SPR[s.k],p=proj(q[0],s.y+b,q[1]);if(s.y<.8)shadow(q[0],q[1],.22,s.y,.18);const w=S.w*p[2]*spin,h=S.h*p[2];ctx.drawImage(S.c,p[0]-w/2,p[1]-h/2,w,h);ctx.globalAlpha=1}
 function drawPow(pw){const z=pw.z-dist;ctx.globalAlpha=fade(z);const b=.12*Math.sin(T*3);const q=pc(pw.z,pw.x);shadow(q[0],q[1],.35,pw.y,.2);
-  const p=proj(q[0],pw.y+b+.4,q[1]),r=.55*p[2];ctx.fillStyle=rg(ctx,p[0],p[1],r*.2,r*1.4,[[0,'rgba(255,250,200,.7)'],[1,'rgba(255,250,200,0)']]);ctx.beginPath();ctx.arc(p[0],p[1],r*1.4,0,7);ctx.fill();
+  const p=proj(q[0],pw.y+b+.4,q[1]),r=.55*p[2];ctx.fillStyle='rgba(243,230,176,.45)';ctx.beginPath();ctx.arc(p[0],p[1],r*1.15,0,7);ctx.fill();
   if(pw.kind==='kite'&&hasImg('glider-pickup')){const pp=proj(q[0],pw.y+b+.3,q[1]),S=SPR['glider-pickup'],w=S.w*pp[2],h=S.h*pp[2];ctx.save();ctx.translate(pp[0],pp[1]);ctx.rotate(Math.sin(T*2.2)*.12);ctx.drawImage(S.c,-w/2,-h/2,w,h);ctx.restore()}
   else if(pw.kind==='boost'&&hasImg('board-rocket')){const B=SPR['board-'+BOARDS[Math.floor(pw.z)%BOARDS.length]],pp=proj(q[0],pw.y+b+.2,q[1]),w=B.w*pp[2]*.9,h=B.h*pp[2]*.9*.6;ctx.save();ctx.translate(pp[0],pp[1]);ctx.rotate(Math.sin(T*3)*.15);ctx.drawImage(B.c,-w/2,-h/2,w,h);ctx.restore()}
   else spr(pw.kind,q[0],q[1],pw.y+b,1,pw.kind==='magnet'?T*2:0);ctx.globalAlpha=1}
@@ -1318,7 +1287,7 @@ function drawImgChar(id,c,fx,fy,p,o){
   let S2=null,mix=0;const kid=(!S||pose==='slide'||pose==='jump'||pose==='surf')&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img;
   if(kid&&pose==='jump')S=SPR[id+'-run-3'];if(kid&&pose==='slide')S=SPR[id+'-run-5'];
   const painted=(pose==='slide'||pose==='jump'||pose==='surf')&&SPR[id+'-'+pose]&&SPR[id+'-'+pose].img;if(painted)S=SPR[id+'-'+pose];
-  if(pose==='run'&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img){const ord=RUNORD[id],ph=((o.t/(Math.PI*5))%1+1)%1*8,i=Math.floor(ph);mix=ph-i;S=SPR[id+'-run-'+ord[i]];S2=SPR[id+'-run-'+ord[(i+1)%8]]}
+  if(pose==='run'&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img){const ord=RUNORD[id],ph=((o.t/(Math.PI*5))%1+1)%1*8,i=Math.floor(ph);mix=PXH[id]?0:ph-i;S=SPR[id+'-run-'+ord[i]];S2=SPR[id+'-run-'+ord[(i+1)%8]]}
   if(!S)return DRAW[id](c,fx,fy,p,o);
   c.save();c.translate(fx,fy);c.scale(p,p);
   if(o.tumble){c.translate(0,-.6);c.rotate(Math.min(1.5,o.tumble)*(o.dir||1));c.translate(0,.6)}
@@ -1341,38 +1310,41 @@ function drawRunner(){
   const fp=proj(rx,P.y+(P.hopT>0&&!P.air&&P.boostT<=0?Math.sin((P.hopT/.22)*Math.PI)*.12:0),0);
   if((P.kiteT>0||P.kiteFall)&&hasImg('glider-flight')){// hang glider overhead, banking as you change lanes
     const bank=P.lean>.12?'right':P.lean<-.12?'left':'flight',S=SPR['glider-'+bank],kp=proj(rx,P.y+2.15+Math.sin(T*2)*.1,.5),w=S.w*kp[2],h=S.h*kp[2];
-    ctx.strokeStyle='rgba(18,58,68,.5)';ctx.lineWidth=1.2;[-.22,.22].forEach(dx=>{ctx.beginPath();ctx.moveTo(fp[0]+dx*p,fp[1]-1.1*p);ctx.lineTo(kp[0]+dx*p*.6,kp[1]-h*.25);ctx.stroke()});
+    ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;[-.22,.22].forEach(dx=>{ctx.beginPath();ctx.moveTo(fp[0]+dx*p,fp[1]-1.1*p);ctx.lineTo(kp[0]+dx*p*.6,kp[1]-h*.25);ctx.stroke()});
     ctx.drawImage(S.c,kp[0]-w/2,kp[1]-h*.75,w,h)}
   else if(P.kiteT>0||P.kiteFall){// kite above and ahead
     const kp=proj(rx+.3,P.y+2.6+Math.sin(T*2)*.15,1.2),S=SPR.kite,w=S.w*kp[2]*1.6,h=S.h*kp[2]*1.6;
-    ctx.strokeStyle='rgba(18,58,68,.6)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(fp[0],fp[1]-1.2*p);ctx.lineTo(kp[0],kp[1]-h*.4);ctx.stroke();
+    ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(fp[0],fp[1]-1.2*p);ctx.lineTo(kp[0],kp[1]-h*.4);ctx.stroke();
     ctx.save();ctx.translate(kp[0],kp[1]-h*.6);ctx.rotate(Math.sin(T*2.4)*.12);ctx.drawImage(S.c,-w/2,-h/2,w,h);ctx.restore()}
   if(P.boostT>0){// rocket surfboard under the feet
     const B=SPR['board-'+board],bp=proj(rx,P.y-.02,0);let h;
-    if(B&&B.img){const w=B.w*p*1.35;h=B.h*p*1.35*.55;const wob=boardRock();ctx.save();ctx.translate(bp[0],bp[1]);ctx.rotate(wob);ctx.drawImage(B.c,-w/2,-h*.72,w,h);ctx.restore()}
+    if(OWNBOARD(C.id)&&!P.air)h=.25*p;
+    else if(B&&B.img){const w=B.w*p*1.35;h=B.h*p*1.35*.55;const wob=boardRock();ctx.save();ctx.translate(bp[0],bp[1]);ctx.rotate(wob);ctx.drawImage(B.c,-w/2,-h*.72,w,h);ctx.restore()}
     else{const S=SPR.boost,w=S.w*p*1.5;h=S.h*p*1.5;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-h*.55,w,h)}
-    ctx.fillStyle=rg(ctx,bp[0],bp[1]+h*.2,2,p*.9,[[0,'rgba(255,230,120,.8)'],[1,'rgba(255,160,60,0)']]);ctx.beginPath();ctx.arc(bp[0],bp[1]+h*.2,p*.9,0,7);ctx.fill()}
+    // orange pencil speed dashes trailing off the wheels
+    ctx.strokeStyle='#d9661a';ctx.lineCap='round';ctx.lineWidth=Math.max(1.2,p*.05);for(let i=0;i<4;i++){const u=((T*5+i*.25)%1),dx=(i-1.5)*p*.22;ctx.globalAlpha=1-u;ctx.beginPath();ctx.moveTo(bp[0]+dx,bp[1]+h*.15+u*p*.5);ctx.lineTo(bp[0]+dx*1.15,bp[1]+h*.15+u*p*.5+p*.22);ctx.stroke()}ctx.globalAlpha=1;ctx.lineCap='butt'}
   const blink=P.invT>0&&state==='play'&&Math.floor(T*16)%2===0&&P.shieldT<=0&&P.boostT<=0;
   const downS=SPR[C.id+'-down'],hasDown=downS&&downS.img,dying=state==='dying'||state==='over',lying=dying&&hasDown&&deadT>.18;
-  if(lying){const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,.6+.4*k);ctx.drawImage(downS.c,-w/2,-h*.78,w,h);ctx.restore()}
+  if(lying&&CROUCH(C.id)){const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1+.06*(1-k),.9+.1*k);ctx.drawImage(downS.c,-w/2,-h,w,h);ctx.restore()}
+  else if(lying){const k=Math.min(1,(deadT-.18)/.22),w=downS.w*p,h=downS.h*p;ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,.6+.4*k);ctx.drawImage(downS.c,-w/2,-h*.78,w,h);ctx.restore()}
   else if(dying&&hasDown){// the first beat of a crash: standing, tipping back
     const k=Math.min(1,deadT/.18);ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,1-.35*k);ctx.translate(-fp[0],-fp[1]);
     drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:0,sq:0,slide:0,air:false,tumble:0,dir:1,wob:0});ctx.restore()}
   else if(!blink)drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:P.lean,slide:P.slideT>0&&!P.air?1:0,air:P.air,vy:P.vy,surf:P.boostT>0,tumble:P.tumble,dir:P.x>0?-1:1,wob:P.boostT>0?0:P.wobT,sq:P.boostT>0?0:P.sq});
   if(P.shieldT>0){const S=SPR.pipBubble,bp=proj(rx,P.y+(P.slideT>0?.35:.68),0),w=S.w*p*(1+.03*Math.sin(T*6)),a=P.shieldT<2.5?(.5+.5*Math.sin(T*18)):1;
     ctx.globalAlpha=a;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-w/2,w,w);ctx.globalAlpha=1}
-  if(P.magnetT>0){ctx.strokeStyle='rgba(255,201,60,.55)';ctx.lineWidth=2;const r=(T*1.5%1);ctx.globalAlpha=1-r;ctx.beginPath();ctx.ellipse(fp[0],fp[1]-.6*p,(.6+r*.8)*p,(.6+r*.8)*p*.6,0,0,7);ctx.stroke();ctx.globalAlpha=1}
-  if((state==='dying'||state==='over')&&!lying){// dizzy stars
-    const hp=proj(rx,P.y+1.3,0);for(let i=0;i<3;i++){const a=T*4+i*2.1;drawStar(hp[0]+Math.cos(a)*.42*p,hp[1]+Math.sin(a)*.12*p-.15*p,.1*p,'#ffe27a')}}
-  if(P.stumbleT>0&&state==='play'){const hp=proj(rx,P.y+1.5,0);ctx.fillStyle='#5ab9ea';ctx.globalAlpha=Math.min(1,P.stumbleT)*.9;
+  if(P.magnetT>0){ctx.strokeStyle='rgba(201,154,26,.6)';ctx.lineWidth=2;const r=(T*1.5%1);ctx.globalAlpha=1-r;ctx.beginPath();ctx.ellipse(fp[0],fp[1]-.6*p,(.6+r*.8)*p,(.6+r*.8)*p*.6,0,0,7);ctx.stroke();ctx.globalAlpha=1}
+  if((state==='dying'||state==='over')&&(!lying||CROUCH(C.id))){// dizzy stars
+    const hp=proj(rx,P.y+(lying?downS.h*.95:1.3),0);for(let i=0;i<3;i++){const a=T*4+i*2.1;drawStar(hp[0]+Math.cos(a)*.42*p,hp[1]+Math.sin(a)*.12*p-.15*p,.1*p,'#c99a1a')}}
+  if(P.stumbleT>0&&state==='play'){const hp=proj(rx,P.y+1.5,0);ctx.fillStyle='#2f6fb5';ctx.globalAlpha=Math.min(1,P.stumbleT)*.9;
     ctx.beginPath();const dx=hp[0]+.32*p,dy=hp[1]+Math.sin(T*6)*2;ctx.moveTo(dx,dy-.12*p);ctx.quadraticCurveTo(dx+.07*p,dy,dx,dy+.04*p);ctx.quadraticCurveTo(dx-.07*p,dy,dx,dy-.12*p);ctx.fill();ctx.globalAlpha=1}
 }
 function drawStar(x,y,r,col){ctx.fillStyle=col;ctx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr2=i%2?r*.45:r;ctx.lineTo(x+Math.cos(a)*rr2,y+Math.sin(a)*rr2)}ctx.closePath();ctx.fill()}
 function drawHudRings(){
   const C=CHR(),list=[];if(P.kiteT>0)list.push(['kite',P.kiteT/(KITE_T*C.kite)]);if(P.magnetT>0)list.push(['magnet',P.magnetT/(MAGNET_T*C.magnet)]);if(P.shieldT>0)list.push(['bubble',P.shieldT/(SHIELD_T*C.shield)]);if(P.boostT>0)list.push(['boost',P.boostT/BOOST_T]);
-  list.forEach(([k,f],i)=>{const x=W-32-i*50,y=32,r=20;ctx.fillStyle='rgba(255,250,240,.92)';ctx.beginPath();ctx.arc(x,y,r+3,0,7);ctx.fill();
-    ctx.strokeStyle='rgba(11,74,99,.15)';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y,r-1,0,7);ctx.stroke();
-    ctx.strokeStyle=f<.25?'#ff6b5e':'#ffb21e';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.arc(x,y,r-1,-Math.PI/2,-Math.PI/2+f*Math.PI*2);ctx.stroke();ctx.lineCap='butt';
+  list.forEach(([k,f],i)=>{const x=W-32-i*50,y=32,r=20;ctx.fillStyle=PAPER;ctx.beginPath();ctx.arc(x,y,r+3,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.strokeStyle='rgba(46,46,51,.15)';ctx.lineWidth=4;ctx.beginPath();ctx.arc(x,y,r-1,0,7);ctx.stroke();
+    ctx.strokeStyle=f<.25?'#d9661a':'#c99a1a';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.arc(x,y,r-1,-Math.PI/2,-Math.PI/2+f*Math.PI*2);ctx.stroke();ctx.lineCap='butt';
     const S=SPR[k==='kite'&&hasImg('glider-pickup')?'glider-pickup':k],s=26/Math.max(S.w,S.h);ctx.drawImage(S.c,x-S.w*s/2,y-S.h*s/2,S.w*s,S.h*s)});
   // distance pill
   if(state!=='menu'){const txt=Math.floor(dist)+' m';ctx.font='17px "Patrick Hand","Comic Sans MS",cursive';const tw=ctx.measureText(txt).width+22;
@@ -1381,16 +1353,16 @@ function drawHudRings(){
     ctx.textAlign='start';ctx.textBaseline='alphabetic'}
   // turn prompt: a big arrow when a corner is close
   if(state==='play'){const s=SEGS[curSeg],d=s.d1-dist;if(d<speed*1.1+4&&d>-1&&!P.turnQ){const a=Math.min(1,(speed*1.1+4-d)/8),dir=s.turn==='T'?0:(s.turn==='L'?-1:1);
-    ctx.globalAlpha=a*(.7+.3*Math.sin(T*10));ctx.fillStyle='#9a9a9f';ctx.strokeStyle='rgba(11,74,99,.9)';ctx.lineWidth=4;ctx.lineJoin='round';
+    ctx.globalAlpha=a*(.7+.3*Math.sin(T*10));ctx.fillStyle='#f3e6b0';ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.lineJoin='round';
     const ar=(dd)=>{const x=W/2+dd*44,y=H*.3;ctx.beginPath();ctx.moveTo(x+dd*34,y);ctx.lineTo(x+dd*8,y-22);ctx.lineTo(x+dd*8,y-10);ctx.lineTo(x-dd*(dir?30:0),y-10);ctx.lineTo(x-dd*(dir?30:0),y+10);ctx.lineTo(x+dd*8,y+10);ctx.lineTo(x+dd*8,y+22);ctx.closePath();ctx.stroke();ctx.fill()};
     if(dir)ar(dir);else{ar(-1);ar(1)}ctx.globalAlpha=1}}
 }
 function speedLines(){
-  const k=Math.max(0,(speed-22)/14)+(P.boostT>0?.8:0);if(k<=0||RM)return;ctx.strokeStyle='rgba(255,255,255,'+(.12*Math.min(1,k))+')';ctx.lineWidth=2;
+  const k=Math.max(0,(speed-22)/14)+(P.boostT>0?.8:0);if(k<=0||RM)return;ctx.strokeStyle='rgba(46,46,51,'+(.1*Math.min(1,k))+')';ctx.lineWidth=2;
   for(let i=0;i<14;i++){const a=(i/14)*Math.PI*2+T*.3;const r0=Math.min(W,H)*.42,r1=r0+40+60*Math.min(1,k)*hash(i*3+Math.floor(T*12));ctx.beginPath();ctx.moveTo(W/2+Math.cos(a)*r0,H*.55+Math.sin(a)*r0);ctx.lineTo(W/2+Math.cos(a)*r1,H*.55+Math.sin(a)*r1);ctx.stroke()}
 }
 /* the painted backdrop for the place we are in; the horizon in each painting sits on the game's horizon, and a new place fades in */
-const BGHZ={beach:.33,pond:.33,river:.38,marsh:.36,woods:.44};
+const BGHZ={beach:.445,pond:.55,river:.5,marsh:.41,woods:.58};
 let bgCur='beach',bgPrev='',bgFade=1;
 function drawBackdrop(){
   const b=SEGS[curSeg].biome;if(b!==bgCur){bgPrev=bgCur;bgCur=b;bgFade=0}
@@ -1441,11 +1413,12 @@ function hud(){
 function buildPicker(){
   const box=$('pick');box.innerHTML='';
   CHARS.forEach(c=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','radio');const ok=unlocked(c);
-    b.className=(c.id===charId?'sel ':'')+(ok?'':'lock');b.setAttribute('aria-checked',String(c.id===charId));b.setAttribute('aria-label',c.name+(ok?'':', locked, needs '+c.cost+' rings'));
+    b.className=(c.id===charId?'sel ':'')+(ok?'':'lock');b.setAttribute('aria-checked',String(c.id===charId));b.setAttribute('aria-label',c.name+(ok?'':', locked, needs '+c.cost+' stars'));
     const cv2=document.createElement('canvas');cv2.width=108;cv2.height=108;const x=cv2.getContext('2d');x.lineJoin='round';x.lineCap='round';
-    x.fillStyle='rgba(70,40,10,.18)';x.beginPath();x.ellipse(54,96,26,6,0,0,7);x.fill();drawChar(c.id,x,54,100,hasImg(c.id+'-run-1')?70:(hasImg(c.id+'-run')?62:60),{t:1.2,lean:0,sq:0,slide:0,air:false,tumble:0});
-    b.appendChild(cv2);const n=document.createElement('span');n.textContent=c.name;b.appendChild(n);const s=document.createElement('small');s.textContent=ok?c.sub:c.cost+' rings';b.appendChild(s);
-    b.onclick=()=>{sfx.click();if(!ok){$('perk').textContent='Collect '+c.cost+' rings in total to unlock '+c.name+', the '+c.sub.toLowerCase()+'. You have '+bank+'.';return}
+    if(hasImg(c.id+'-face')){const F=SPR[c.id+'-face'].c,k=Math.min(96/F.naturalWidth,94/F.naturalHeight);x.drawImage(F,54-F.naturalWidth*k/2,102-F.naturalHeight*k,F.naturalWidth*k,F.naturalHeight*k)}
+    else{x.fillStyle='rgba(46,46,51,.18)';x.beginPath();x.ellipse(54,96,26,6,0,0,7);x.fill();drawChar(c.id,x,54,100,hasImg(c.id+'-run-1')?70:(hasImg(c.id+'-run')?62:60),{t:1.2,lean:0,sq:0,slide:0,air:false,tumble:0})}
+    b.appendChild(cv2);const n=document.createElement('span');n.textContent=c.name;b.appendChild(n);const s=document.createElement('small');s.textContent=ok?c.sub:c.cost+' stars';b.appendChild(s);
+    b.onclick=()=>{sfx.click();if(!ok){$('perk').textContent='Collect '+c.cost+' stars in total to unlock '+c.name+', the '+c.sub.toLowerCase()+'. You have '+bank+'.';return}
       charId=c.id;store.set('char',charId);buildPicker()};
     box.appendChild(b)});
   const C=CHR();$('perk').textContent=C.name+', '+C.sub.toLowerCase()+': '+C.perk;
