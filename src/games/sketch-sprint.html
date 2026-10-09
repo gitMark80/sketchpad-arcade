@@ -189,7 +189,7 @@ let best=+store.get('best',0)||0, bestDist=+store.get('bestDist',0)||0, muted=!!
 
 /* ---------- world constants (meters, seconds) ---------- */
 const LW=1.5;            // lane width
-const ROAD=2.35;         // boardwalk half width
+const ROAD=2.35;         // path half width
 const CH=6.5, CB=13;     // camera height and distance behind the runner
 const VIEW=95;           // how far ahead we draw and spawn
 const WAVE_LEN=500;
@@ -583,18 +583,18 @@ const KIND={
   'wall-river':{type:'block',h:4.6,depth:.9,hw:.62,name:'a log pile'},'wall-marsh':{type:'block',h:4.6,depth:.9,hw:.62,name:'a picket fence'},'wall-woods':{type:'block',h:4.6,depth:.9,hw:.62,name:'a hedge'},
   gap:{type:'gap',h:0,depth:2.4,hw:ROAD,name:'a gap in the path'}
 };
-/* places the boardwalk runs through. bands: lateral ground strips [x0,x1,color,water?]; gy: ground height under the deck */
+/* places the path runs through. bands: lateral ground strips [x0,x1,color,water?]; gy: ground height beside the path (just below it) */
 const BIOME={
-  beach:{gy:-.3,base:'#f1ede2',bands:[[-30,-7.5,'#dedcd4'],[-7.5,-6.4,'#e4e0d4'],[-6.4,30,'#f1ede2']],scen:['palm','hut','grass','umb','lamp'],low:['sandcastle','cooler','seal'],high:['towels','net'],block:['wall-beach','wall-beach','wall-brick','cart'],gap:0,
-    label:'Downtown',crashWater:'a big puddle'},
-  pond:{gy:-.9,base:'#dedcd4',bands:[[-30,30,'#dedcd4',1]],scen:['lily','reeds','frog','heron','lamp'],low:['ducks','log','cooler'],high:['branch','net'],block:['wall-pond','wall-pond','wall-brick'],gap:.26,
+  beach:{gy:-.12,base:'#f1ede2',bands:[[-30,-7.5,'#dedcd4'],[-7.5,-6.4,'#e4e0d4'],[-6.4,30,'#f1ede2']],scen:['palm','hut','grass','umb','lamp'],low:['sandcastle','cooler','seal'],high:['towels','net'],block:['wall-beach','wall-beach','wall-brick','cart'],gap:0,
+    label:'Downtown',crashWater:'the pothole'},
+  pond:{gy:-.25,base:'#dedcd4',bands:[[-30,30,'#dedcd4',1]],scen:['lily','reeds','frog','heron','lamp'],low:['ducks','log','cooler'],high:['branch','net'],block:['wall-pond','wall-pond','wall-brick'],gap:.26,
     label:'Park',crashWater:'the pond'},
-  river:{gy:-1,base:'#ebe7dc',bands:[[-30,-9,'#ebe7dc'],[-9,-8,'#dcd8cc'],[-8,8,'#d9d7cf',1],[8,9,'#dcd8cc'],[9,30,'#ebe7dc']],scen:['rock','bush','heron','oak','reeds'],low:['log','ducks','seal'],high:['branch','towels'],block:['wall-river','wall-river','wall-brick'],gap:.3,
+  river:{gy:-.08,base:'#ebe7dc',bands:[[-30,-13,'#ebe7dc'],[-13,-12,'#dcd8cc'],[-12,-5,'#d9d7cf',1],[-5,-4,'#dcd8cc'],[-4,30,'#ebe7dc']],scen:['rock','bush','heron','oak','reeds'],low:['log','ducks','seal'],high:['branch','towels'],block:['wall-river','wall-river','wall-brick'],gap:.3,
     label:'Creek',crashWater:'the creek'},
-  marsh:{gy:-.7,base:'#e4e2d8',bands:[[-30,30,'#e4e2d8',1]],scen:['reeds','reeds','lily','frog','heron','bush'],low:['ducks','log','seal'],high:['branch','net'],block:['wall-marsh','wall-marsh','wall-brick'],gap:.22,
-    label:'Backyard',crashWater:'the mud'},
-  woods:{gy:-.3,base:'#e9e6db',bands:[[-30,-4,'#e9e6db'],[-4,4,'#dcd8cc'],[4,30,'#e9e6db']],scen:['pine','oak','pine2','bush','rock'],low:['log','cooler','seal'],high:['branch','branch','towels'],block:['wall-woods','wall-woods','wall-brick'],gap:0,
-    label:'Woods',crashWater:'the ferns'}
+  marsh:{gy:-.05,base:'#e4e2d8',bands:[[-30,30,'#e9e6db']],scen:['bush','bush','reeds','frog','oak','rock'],low:['ducks','log','seal'],high:['branch','net'],block:['wall-marsh','wall-marsh','wall-brick'],gap:.22,
+    label:'Backyard',crashWater:'the muddy ditch'},
+  woods:{gy:-.05,base:'#e9e6db',bands:[[-30,-4,'#e9e6db'],[-4,4,'#dcd8cc'],[4,30,'#e9e6db']],scen:['pine','oak','pine2','bush','rock'],low:['log','cooler','seal'],high:['branch','branch','towels'],block:['wall-woods','wall-woods','wall-brick'],gap:0,
+    label:'Woods',crashWater:'the ferny ditch'}
 };
 
 /* ---------- static backdrop (sky, sun, far haze) ---------- */
@@ -921,7 +921,7 @@ function gameOver(){
   state='over';const newBest=Math.floor(score)>best,d=Math.floor(dist);
   if(newBest){best=Math.floor(score);store.set('best',best)}if(d>bestDist){bestDist=d;store.set('bestDist',bestDist)}
   const before=CHARS.filter(unlocked).length;bank+=shells;store.set('bank',bank);const after=CHARS.filter(unlocked).length;
-  $('overTitle').textContent=deathMsg.includes('into the')&&/puddle|pond|creek|mud|ferns/.test(deathMsg)?'Splash!':['Bonk!','Oopsie!','Ouch-a-roo!'][Math.floor(Math.random()*3)];
+  $('overTitle').textContent=/into the (pond|creek|muddy ditch)/.test(deathMsg)?'Splash!':['Bonk!','Oopsie!','Ouch-a-roo!'][Math.floor(Math.random()*3)];
   let txt=deathMsg;const next=CHARS.find(c=>!unlocked(c));
   if(after>before){const nc=CHARS.filter(unlocked)[after-1];txt+=' You unlocked '+nc.name+', the '+nc.sub.toLowerCase()+'!';sfx.unlock()}
   else if(next)txt+=' '+(next.cost-bank)+' more stars to unlock '+next.name+'.';
@@ -995,7 +995,7 @@ function trimWorld(){
 function collide(){
   const ph=P.slideT>0?PH_SLIDE:PH,flying=P.kiteT>0||P.kiteFall&&P.y>2.9,C=CHR();
   for(const o of obs){if(o.bop)continue;const rz=o.z-dist;if(rz>4||rz+o.depth<-4)continue;
-    if(o.type==='gap'){if(rz<-.1&&rz+o.depth>.1&&P.y<=.02&&!flying&&P.boostT<=0&&P.invT<=0){const B=BIOME[segAt(o.z).biome];crash(o,C.name+' fell through the missing planks into '+B.crashWater+'.',true);return}continue}
+    if(o.type==='gap'){if(rz<-.1&&rz+o.depth>.1&&P.y<=.02&&!flying&&P.boostT<=0&&P.invT<=0){const B=BIOME[segAt(o.z).biome];crash(o,C.name+' fell through a hole in the path into '+B.crashWater+'.',true);return}continue}
     const xo=Math.abs(P.x-o.x)<PHW+o.hw,zo=rz<.32&&rz+o.depth>-.32,yo=P.y<o.h&&P.y+ph>o.y0;
     const side=o.pz&&!o.px;o.px=xo;o.pz=zo;
     if(!(xo&&zo&&yo)||flying||P.invT>0)continue;
@@ -1047,6 +1047,72 @@ function pquad(D0,x0,D1,x1,y,seg,nz){ // axis-aligned rectangle in path coords a
   return cpoly([[a[0],y,a[1]],[b[0],y,b[1]],[c[0],y,c[1]],[d[0],y,d[1]]],nz);
 }
 const SPARK=Array.from({length:60},(_,i)=>({x:(hash(i*7+1)-.5)*48,dz:hash(i*7+2)*110,ph:hash(i*7+3)*6}));
+/* ---------- path surfaces: one pencil texture per place, drawn once into a canvas (top-down, 64 px per meter, 16 m long, seamless),
+   then laid onto the road in thin perspective slices each frame. A quarter-size copy is used far away so it doesn't shimmer. ---------- */
+const PXM=64,PLEN=16,PATHTEX={};
+function pathTex(b){if(PATHTEX[b])return PATHTEX[b];
+  const w=Math.round(2*ROAD*PXM),h=PLEN*PXM,c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  let seed=({beach:11,marsh:23,pond:37,river:41,woods:53})[b]||7;const rnd=()=>hash(seed++);
+  x.lineCap='round';x.lineJoin='round';
+  // draw something three times so it wraps seamlessly along the path
+  const wrap=f=>{for(const dy of [-h,0,h]){x.save();x.translate(0,dy);f();x.restore()}};
+  const wob=(x0,y0,x1,y1,j=1.5)=>{x.beginPath();x.moveTo(x0,y0);const n=4;for(let i=1;i<=n;i++){const t=i/n;x.lineTo(x0+(x1-x0)*t+(i<n?(rnd()-.5)*j*2:0),y0+(y1-y0)*t+(i<n?(rnd()-.5)*j*2:0))}x.stroke()};
+  const speck=(n,a,r0,r1,col=INK,x0=0,x1=w)=>{x.fillStyle=col;for(let i=0;i<n;i++){x.globalAlpha=a*(.5+rnd()*.5);const r=r0+rnd()*(r1-r0);x.beginPath();x.arc(x0+rnd()*(x1-x0),rnd()*h,r,0,7);x.fill()}x.globalAlpha=1};
+  // a ragged-edged trail: edge offset (in px) varies smoothly along the length and loops
+  const ragged=(m0,m1,base)=>{const pts=[],K=48,ph=[rnd()*6,rnd()*6,rnd()*6,rnd()*6];
+    const off=(t,s)=>m0*PXM+(m1-m0)*PXM*(.5+.3*Math.sin(t*6.283*3+ph[s])+.2*Math.sin(t*6.283*7+ph[s+1]));
+    x.fillStyle=base;x.beginPath();for(let i=0;i<=K;i++){const t=i/K;x.lineTo(off(t,0),t*h)}for(let i=K;i>=0;i--){const t=i/K;x.lineTo(w-off(t,2),t*h)}x.closePath();x.fill();return off};
+  let base='#efece3',inset=0,lanes='rgba(46,46,51,.2)',edges=[];
+  if(b==='beach'){// downtown: concrete sidewalk slabs in three columns (joints on the lane lines), a curb strip on each side
+    x.fillStyle=base;x.fillRect(0,0,w,h);const cb=.24*PXM,j1=(ROAD-LW/2)*PXM,j2=(ROAD+LW/2)*PXM;
+    x.fillStyle='#e2dfd5';x.fillRect(0,0,cb,h);x.fillRect(w-cb,0,cb,h);
+    x.strokeStyle=GRAPH;x.globalAlpha=.35;x.lineWidth=1;for(let y=-8;y<h+8;y+=7){x.beginPath();x.moveTo(0,y);x.lineTo(cb,y+cb*.6);x.moveTo(w-cb,y);x.lineTo(w,y+cb*.6);x.stroke()}x.globalAlpha=1;
+    speck(2600,.22,.5,1.2);
+    // a few slabs shaded with light hatching, and a couple of cracks
+    const cols=[[cb,j1],[j1,j2],[j2,w-cb]],sl=1.6*PXM;
+    for(let r=0;r<PLEN/1.6;r++)cols.forEach(([a,bb])=>{if(rnd()<.22){x.save();x.beginPath();x.rect(a,r*sl,bb-a,sl);x.clip();x.strokeStyle=GRAPH;x.globalAlpha=.13;x.lineWidth=1.2;for(let k=-sl;k<bb-a+sl;k+=6){x.beginPath();x.moveTo(a+k,r*sl);x.lineTo(a+k-sl,r*sl+sl);x.stroke()}x.restore()}
+      if(rnd()<.12){x.strokeStyle=INK;x.globalAlpha=.45;x.lineWidth=1.3;let px=a+rnd()*(bb-a),py=r*sl+rnd()*sl*.3;x.beginPath();x.moveTo(px,py);for(let k=0;k<5;k++){px+=(rnd()-.5)*22;py+=8+rnd()*12;x.lineTo(px,py)}x.stroke();x.globalAlpha=1}});
+    x.strokeStyle=INK;x.globalAlpha=.6;x.lineWidth=2.2;wrap(()=>{for(let y=0;y<h;y+=sl){wob(cb,y,w-cb,y,1)}});
+    x.lineWidth=2;[j1,j2].forEach(px=>wob(px,-4,px,h+4,1));x.globalAlpha=1;lanes='';edges=[[.24,.035,'rgba(46,46,51,.85)'],[0,.03,'rgba(46,46,51,.6)']];
+  }else if(b==='marsh'){// backyard: a worn dirt path through the lawn, grass tufts creeping in at the edges
+    base='#ebe6d8';inset=.12;const off=ragged(.05,.32,base);speck(1400,.25,.6,1.5,'#7a7468');
+    x.strokeStyle=INK;x.lineWidth=1.3;
+    wrap(()=>{for(let y=0;y<h;y+=9){const t=y/h;[[off(t,0),1],[w-off(t,2),-1]].forEach(([ex,sd])=>{x.globalAlpha=.45+rnd()*.25;const bx=ex+sd*(rnd()*6-2);for(let k=0;k<3;k++){const a=(-.6+k*.6+(rnd()-.5)*.4)*sd;x.beginPath();x.moveTo(bx,y);x.lineTo(bx-sd*Math.cos(a)*(5+rnd()*7),y-Math.sin(a)*8-4);x.stroke()}})}
+      // a few tufts right in the path, and some small stones
+      for(let i=0;i<26;i++){const px=.6*PXM+rnd()*(w-1.2*PXM),py=rnd()*h;x.globalAlpha=.4;for(let k=0;k<3;k++){x.beginPath();x.moveTo(px,py);x.lineTo(px+(k-1)*5,py-6-rnd()*4);x.stroke()}}
+      x.globalAlpha=.55;x.lineWidth=1.1;for(let i=0;i<40;i++){const px=.5*PXM+rnd()*(w-PXM),py=rnd()*h,r=2+rnd()*3;x.fillStyle='#f4f1e8';x.beginPath();x.ellipse(px,py,r*1.3,r,rnd()*3,0,7);x.fill();x.stroke()}x.globalAlpha=1});
+  }else if(b==='pond'){// park: a smooth paved path, light speckle, a double edge line and a faint seam every few meters
+    base='#f0ede5';x.fillStyle=base;x.fillRect(0,0,w,h);speck(3200,.18,.4,1);speck(300,.3,1,1.8,GRAPH);
+    edges=[[.1,.04,'rgba(46,46,51,.8)'],[.24,.022,'rgba(46,46,51,.4)']];
+    x.globalAlpha=.25;x.lineWidth=1.4;wrap(()=>{for(let y=0;y<h;y+=4*PXM)wob(.24*PXM,y,w-.24*PXM,y,1)});x.globalAlpha=1;
+  }else if(b==='river'){// creek: packed dirt with pebbles
+    base='#e9e3d4';inset=.1;ragged(.04,.28,base);speck(1800,.28,.6,1.6,'#6e685c');
+    x.strokeStyle=INK;x.lineWidth=1.2;wrap(()=>{for(let i=0;i<150;i++){const edge=rnd()<.45,px=edge?(rnd()<.5?.25:2*ROAD-.6)*PXM+rnd()*.35*PXM:.5*PXM+rnd()*(w-PXM),py=rnd()*h,r=2+rnd()*(edge?6:3.5);
+      x.fillStyle=rnd()<.3?'#e0dbcf':'#f5f2ea';x.globalAlpha=.75;x.beginPath();x.ellipse(px,py,r*1.25,r,rnd()*3,0,7);x.fill();x.stroke();if(r>4){x.globalAlpha=.35;x.beginPath();x.moveTo(px-r*.5,py+r*.3);x.lineTo(px+r*.2,py+r*.6);x.stroke()}}x.globalAlpha=1});
+  }else{// woods: a dirt forest trail, roots crossing from the edges and fallen leaves
+    base='#e5dfcf';inset=.12;ragged(.06,.36,base);speck(1600,.28,.6,1.6,'#6e685c');
+    wrap(()=>{x.strokeStyle=GRAPH;for(let i=0;i<9;i++){const fromL=rnd()<.5,y0=rnd()*h,len=(.6+rnd()*1.1)*PXM;let px=fromL?.15*PXM:w-.15*PXM,py=y0,dy=(rnd()-.5)*30;x.lineWidth=4+rnd()*3;x.globalAlpha=.5;x.beginPath();x.moveTo(px,py);
+        for(let k=0;k<6;k++){px+=(fromL?1:-1)*len/6;py+=dy*(k<3?1:-.6)+(rnd()-.5)*8;x.quadraticCurveTo(px-(fromL?1:-1)*len/12,py+(rnd()-.5)*14,px,py)}x.lineWidth*=.7-0;x.stroke();x.lineWidth=1;x.globalAlpha=.4;x.strokeStyle=INK;x.stroke();x.strokeStyle=GRAPH}
+      x.strokeStyle=INK;x.lineWidth=1.1;for(let i=0;i<110;i++){const px=rnd()*w,py=rnd()*h,r=4+rnd()*4,a=rnd()*6.283;x.save();x.translate(px,py);x.rotate(a);x.globalAlpha=.6;x.fillStyle=rnd()<.4?'#e3decf':'#f2eee3';x.beginPath();x.ellipse(0,0,r,r*.45,0,0,7);x.fill();x.stroke();x.globalAlpha=.4;x.beginPath();x.moveTo(-r,0);x.lineTo(r,0);x.stroke();x.restore()}x.globalAlpha=1});
+  }
+  const lo=document.createElement('canvas');lo.width=Math.round(w/4);lo.height=h/4;const lx=lo.getContext('2d');lx.imageSmoothingQuality='high';lx.drawImage(c,0,0,lo.width,lo.height);
+  return PATHTEX[b]={hi:c,lo,base,inset,lanes,edges};
+}
+// lay the texture over the path from D0 to D1 in slices that get longer with distance; each slice is an affine-mapped drawImage
+function texStrip(s,PT,D0,D1,nz){
+  let D=D0;
+  while(D<D1-.001){const q0=pc(D,0,s),rz=q0[1];let dz=Math.min(3,Math.max(.12,.018*(rz+CB)));const m=((D%PLEN)+PLEN)%PLEN;dz=Math.min(dz,PLEN-m,D1-D);
+    // two columns per slice up close (one far away), each a thin trapezoid drawn with the affine map that splits the error evenly between its edges
+    const NC=rz>20?1:2,xs=NC>1?[-ROAD,0,ROAD]:[-ROAD,ROAD],P0=xs.map(x=>pc(D,x,s)),P1=xs.map(x=>pc(D+dz,x,s));
+    if(P0.every(p=>p[1]>=nz)&&P1.every(p=>p[1]>=nz)){const Tx=rz>26?PT.lo:PT.hi,k=Tx.height/PLEN,tw=Tx.width/NC,v0=m*k,vh=dz*k,sh=Math.min(vh*1.06+1,Tx.height-v0);
+      const Q0=P0.map(p=>proj(p[0],0,p[1])),Q1=P1.map(p=>proj(p[0],0,p[1]));
+      for(let cI=0;cI<NC;cI++){const A=Q0[cI],B=Q0[cI+1],C=Q1[cI],Dd=Q1[cI+1];
+        const ux=(B[0]-A[0]+Dd[0]-C[0])/2/tw,uy=(B[1]-A[1]+Dd[1]-C[1])/2/tw,vx=((C[0]+Dd[0])-(A[0]+B[0]))/2/vh,vy=((C[1]+Dd[1])-(A[1]+B[1]))/2/vh;
+        const ox=(A[0]+B[0])/2-ux*tw/2,oy=(A[1]+B[1])/2-uy*tw/2,ov=cI?.5:0;
+        ctx.save();ctx.transform(ux,uy,vx,vy,ox,oy);ctx.drawImage(Tx,cI*tw-ov,v0,tw+.5,sh,-ov,0,tw+.5,sh);ctx.restore()}}
+    D+=dz}
+}
+let HATCH=null;function hatchPat(){if(!HATCH){const c=document.createElement('canvas');c.width=c.height=8;const x=c.getContext('2d');x.strokeStyle=GRAPH;x.lineWidth=1.1;x.beginPath();x.moveTo(-2,10);x.lineTo(10,-2);x.moveTo(-2,2);x.lineTo(2,-2);x.moveTo(6,10);x.lineTo(10,6);x.stroke();HATCH=ctx.createPattern(c,'repeat')}return HATCH}
 function drawGround(){
   const nz=nearZ(),i0=Math.max(0,curSeg-1),i1=Math.min(SEGS.length-1,curSeg+3);
   // 1) the places: ground bands per segment, far to near
@@ -1062,43 +1128,41 @@ function drawGround(){
     const band=B.bands.find(bd=>bd[3]&&x>=bd[0]&&x<bd[1]);if(!band)continue;if(D>dEnd(seg,x)||D<dStart(seg,x))continue;
     const q=pc(D,x,seg);if(q[1]<nz+1||q[1]>VIEW)continue;const a=.5+.5*Math.sin(T*3+sp.ph+D*.2);if(a<.35)continue;const p=proj(q[0],B.gy,q[1]),r=Math.max(1,p[2]*.07)*a;
     ctx.globalAlpha=a*.5;ctx.fillRect(p[0]-r*2.5,p[1]-r*.2,r*5,r*.4)}ctx.globalAlpha=1;
-  // 2) the boardwalk itself, far to near: deck, corner squares, side stubs at T-junctions
-  for(let i=i1;i>=i0;i--){const s=SEGS[i];if(s.d0-dist>VIEW+30)continue;const B=BIOME[s.biome];
-    const first=i===0&&SEGS.length&&s.d0<-50;const D0=first?s.d0:s.d0+ROAD,D1=s.d1-ROAD;
-    // pilings under the deck edges
-    const pl0=Math.max(D0,dist+nz),pl1=Math.min(D1,dist+70);ctx.strokeStyle=INK;
-    for(let D=Math.ceil(pl0/4)*4;D<pl1;D+=4){[-ROAD+.1,ROAD-.1].forEach(x=>{const q=pc(D,x,s);if(q[1]<nz)return;const a=proj(q[0],0,q[1]),b=proj(q[0],B.gy,q[1]);ctx.lineWidth=Math.max(1,a[2]*.16);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()})}
-    ctx.fillStyle='rgba(46,46,51,.18)';if(pquad(D0,-ROAD-.3,D1,ROAD+.3,B.gy+.02,s,nz))ctx.fill();
-    ctx.fillStyle='#f0ece1';
-    if(pquad(D0,-ROAD,D1,ROAD,0,s,nz))ctx.fill();
-    // corner square at the end, plus the other arm of a T-junction
-    if(pquad(s.d1-ROAD,-ROAD,s.d1+ROAD,ROAD,0,s,nz))ctx.fill();
-    if(s.turn==='T'){const other=(s.chosen||s.lean)==='L'?1:-1;if(pquad(s.d1-ROAD,other*ROAD,s.d1+ROAD,other*(ROAD+16),0,s,nz))ctx.fill()}
-    // planks (near the runner only), lane seams, edge rails
-    if(s.d1-dist>nz&&s.d0-dist<60){const pl=.9,k0=Math.floor(Math.max(D0,dist+nz)/pl),k1=Math.floor(Math.min(s.d1+ROAD,dist+60)/pl);
-      ctx.fillStyle='rgba(46,46,51,.045)';ctx.beginPath();let any=false;
-      for(let k=k0;k<=k1;k++){if(k%2)continue;const a=pc(k*pl,-ROAD,s),b=pc(k*pl,ROAD,s),c=pc(k*pl+pl,ROAD,s),d=pc(k*pl+pl,-ROAD,s);if(a[1]<nz||b[1]<nz||c[1]<nz||d[1]<nz)continue;
-        const A=proj(a[0],0,a[1]),Bq=proj(b[0],0,b[1]),Cq=proj(c[0],0,c[1]),Dq=proj(d[0],0,d[1]);ctx.moveTo(A[0],A[1]);ctx.lineTo(Bq[0],Bq[1]);ctx.lineTo(Cq[0],Cq[1]);ctx.lineTo(Dq[0],Dq[1]);ctx.closePath();any=true}if(any)ctx.fill();
-      ctx.fillStyle=PENCIL;ctx.beginPath();any=false;
-      for(let k=k0;k<=k1;k++){const a=pc(k*pl,-ROAD,s),b=pc(k*pl,ROAD,s),c=pc(k*pl+.07,ROAD,s),d=pc(k*pl+.07,-ROAD,s);if(a[1]<nz||b[1]<nz||c[1]<nz||d[1]<nz)continue;
-        const A=proj(a[0],0,a[1]),Bq=proj(b[0],0,b[1]),Cq=proj(c[0],0,c[1]),Dq=proj(d[0],0,d[1]);ctx.moveTo(A[0],A[1]);ctx.lineTo(Bq[0],Bq[1]);ctx.lineTo(Cq[0],Cq[1]);ctx.lineTo(Dq[0],Dq[1]);ctx.closePath();any=true}if(any)ctx.fill();
-      ctx.fillStyle='rgba(46,46,51,.22)';[-LW/2,LW/2].forEach(x=>{if(pquad(D0,x-.04,D1,x+.04,.005,s,nz))ctx.fill()});
-    }
-    ctx.fillStyle=INK;[-ROAD,ROAD-.14].forEach(x=>{if(pquad(D0,x,D1,x+.14,.01,s,nz))ctx.fill()});
-    // the rail across the end of the boardwalk (drawn by hand unless the painted rail has loaded)
+  // 2) the path itself, far to near: a cached pencil texture per place, laid down in thin slices; corner squares; side stubs at T-junctions
+  for(let i=i1;i>=i0;i--){const s=SEGS[i];if(s.d0-dist>VIEW+30)continue;const B=BIOME[s.biome],PT=pathTex(s.biome);
+    const first=i===0&&SEGS.length&&s.d0<-50;const D0=first?s.d0:s.d0+ROAD,D1=s.d1+ROAD;
+    ctx.fillStyle='rgba(46,46,51,.12)';if(pquad(D0,-ROAD-.25,s.d1-ROAD,ROAD+.25,B.gy+.02,s,nz))ctx.fill();
+    // plain under-fill (shows only where a slice is clipped at the near plane during a turn)
+    ctx.fillStyle=PT.base;if(pquad(D0,-ROAD+PT.inset,D1,ROAD-PT.inset,0,s,nz))ctx.fill();
+    if(s.turn==='T'){const o=(s.chosen||s.lean)==='L'?1:-1;if(pquad(s.d1-ROAD+PT.inset,o*ROAD,s.d1+ROAD-PT.inset,o*(ROAD+16),0,s,nz))ctx.fill()}
+    texStrip(s,PT,Math.max(D0,dist+nz+.05),Math.min(D1,dist+VIEW+20),nz);
+    // crisp edge lines (curb, path border) as vectors so they stay straight
+    if(PT.edges.length){const e0=Math.max(D0,dist+nz),e1=Math.min(D1,dist+VIEW+20);if(e1>e0)PT.edges.forEach(([o,wd,col])=>{ctx.fillStyle=col;[-1,1].forEach(sd=>{const xa=sd*(ROAD-o),xb=xa-sd*wd;if(pquad(e0,Math.min(xa,xb),e1,Math.max(xa,xb),.004,s,nz))ctx.fill()})})}
+    // subtle lane lines (the sidewalk slab joints already sit on them downtown)
+    if(PT.lanes&&s.d0-dist<70){ctx.fillStyle=PT.lanes;const e0=Math.max(D0,dist+nz),e1=Math.min(s.d1-ROAD,dist+70);if(e1>e0)[-LW/2,LW/2].forEach(x=>{if(pquad(e0,x-.035,e1,x+.035,.005,s,nz))ctx.fill()})}
+    // the rail across the end of the path (drawn by hand unless the painted rail has loaded)
     if(hasImg('rail'))continue;
     const rx0=-ROAD-.2,rx1=ROAD+.2,RD=s.d1+ROAD;
     ctx.strokeStyle=INK;
     for(let x=rx0;x<=rx1+.01;x+=1.15){const q=pc(RD,x,s);if(q[1]<nz)continue;const a=proj(q[0],0,q[1]),b=proj(q[0],1.1,q[1]);ctx.lineWidth=Math.max(1.2,a[2]*.12);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
     [.55,1.05].forEach(y=>{const a=pc(RD,rx0,s),b=pc(RD,rx1,s);if(a[1]<nz||b[1]<nz)return;const A=proj(a[0],y,a[1]),Bq=proj(b[0],y,b[1]);ctx.lineWidth=Math.max(1.2,A[2]*.1);ctx.strokeStyle=INK;ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(Bq[0],Bq[1]);ctx.stroke()});
   }
-  // 3) gaps: water showing through missing planks
-  for(const o of obs){if(o.type!=='gap')continue;const z=o.z-dist;if(z>VIEW||z+o.depth<nz)continue;const seg=segAt(o.z),B=BIOME[seg.biome];
-    ctx.fillStyle='rgba(46,46,51,.45)';if(pquad(o.z-.12,-ROAD+.14,o.z+o.depth+.12,ROAD-.14,.012,seg,nz))ctx.fill();
-    ctx.fillStyle=B.bands[Math.floor(B.bands.length/2)][2];if(pquad(o.z,-ROAD+.14,o.z+o.depth,ROAD-.14,.015,seg,nz))ctx.fill();
-    ctx.fillStyle='rgba(46,46,51,.12)';if(pquad(o.z+.3,-ROAD+.5,o.z+.5,ROAD-.5,.02,seg,nz))ctx.fill();
-    // a couple of broken plank ends
-    ctx.fillStyle=GRAPH;if(pquad(o.z-.05,-.9,o.z+.55,-.5,.03,seg,nz))ctx.fill();if(pquad(o.z+o.depth-.6,.4,o.z+o.depth+.05,.8,.03,seg,nz))ctx.fill();
+  // 3) holes in the path: a jagged broken patch, water under it at the park pond and the creek, a dark hatched pit elsewhere
+  for(const o of obs){if(o.type!=='gap')continue;const z=o.z-dist;if(z>VIEW||z+o.depth<nz)continue;const seg=segAt(o.z),B=BIOME[seg.biome],wet=seg.biome==='pond'||seg.biome==='river';
+    const near=[],farE=[],n=9,h0=Math.round(o.z*13);
+    for(let k=0;k<=n;k++){const x=-ROAD+.25+(2*ROAD-.5)*k/n;near.push([x,o.z+(hash(h0+k)-.5)*.35]);farE.push([x,o.z+o.depth+(hash(h0+50+k)-.5)*.35])}
+    const ring=near.concat(farE.slice().reverse());
+    const poly=(pts,y)=>{const c=pts.map(([x,D])=>{const q=pc(D,x,seg);return [q[0],y,q[1]]});return cpoly(c,nz)};
+    ctx.fillStyle='rgba(46,46,51,.25)';if(poly(ring.map(([x,D])=>[x*1.04,D+(D>o.z+o.depth*.5?.08:-.08)]),.01))ctx.fill();
+    ctx.fillStyle=wet?'#d6d4cc':'#c9c6bc';if(poly(ring,.012))ctx.fill();
+    // the far wall of the hole faces us: a darker band
+    ctx.fillStyle=wet?'rgba(46,46,51,.22)':'rgba(46,46,51,.4)';
+    {const pts=[];farE.forEach(([x,D])=>{const q=pc(D,x,seg);pts.push([q[0],.012,q[1]])});farE.slice().reverse().forEach(([x,D])=>{const q=pc(D-.45,x,seg);pts.push([q[0],.012,q[1]])});if(cpoly(pts,nz))ctx.fill()}
+    if(wet){ctx.strokeStyle=GRAPH;ctx.globalAlpha=.6;ctx.lineCap='round';for(let k=0;k<5;k++){const D=o.z+.5+k*(o.depth-.8)/4+Math.sin(T*2+k)*.08,x=-1.6+hash(h0+90+k)*2.4;const a=pc(D,x,seg),b=pc(D,x+.7,seg);if(a[1]<nz||b[1]<nz)continue;const A=proj(a[0],.015,a[1]),Bq=proj(b[0],.015,b[1]);ctx.lineWidth=Math.max(1,A[2]*.03);ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(Bq[0],Bq[1]);ctx.stroke()}ctx.globalAlpha=1;ctx.lineCap='butt'}
+    else{ctx.save();if(poly(ring,.012)){ctx.clip();ctx.fillStyle=hatchPat();ctx.globalAlpha=.55;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1}ctx.restore()}
+    // jagged ink rim
+    ctx.strokeStyle=INK;ctx.lineJoin='round';{const q=pc(o.z,0,seg);ctx.lineWidth=q[1]+CB>.5?Math.max(1,F/(q[1]+CB)*.04):1}
+    if(poly(near,.014)){ctx.stroke()}if(poly(farE,.014)){ctx.stroke()}
   }
   // turbo pads: orange strips with chevrons racing up them
   for(const pw of pows){if(pw.kind!=='pad'||pw.got)continue;const z=pw.z-dist;if(z>VIEW||z+3.2<nz)continue;const seg=segAt(pw.z),x0=pw.x-.62,x1=pw.x+.62;

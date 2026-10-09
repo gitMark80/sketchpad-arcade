@@ -8,6 +8,7 @@
     "description": "Free, family-friendly browser games drawn in a hand-sketched pencil style. Play on a phone, tablet or computer with no downloads and no sign-ups.",
     "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
     "policy_date": "October 8, 2026",
+    "paper": "grid",
     "picks": [
       "margin-merge",
       "sketch-sprint",

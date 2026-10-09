@@ -34,6 +34,22 @@ def stamp_added_dates():
         (ROOT / "games.json").write_text(json.dumps(CFG, indent=2, ensure_ascii=False) + "\n")
 stamp_added_dates()
 OUT = ROOT / "site"
+
+# Notebook paper behind every page and game: "grid" (graph-paper journal) or "lined" (ruled notebook with a margin).
+# Set "paper" in games.json site settings. Laid over the existing cream paper grain.
+NOISE = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E\")"
+PAPERS = {
+    "grid": ("linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),"
+             "linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px)," + NOISE,
+             "120px 120px,120px 120px,24px 24px,24px 24px,160px 160px", "-1px -1px"),
+    "lined": ("linear-gradient(90deg,transparent 46px,rgba(196,74,74,.38) 46px,rgba(196,74,74,.38) 48px,transparent 48px),"
+              "linear-gradient(transparent 29px,rgba(47,111,181,.22) 29px,rgba(47,111,181,.22) 30px)," + NOISE,
+              "100% 100%,100% 30px,160px 160px", "0 0"),
+}
+def paper_css(kind=None):
+    img, size, pos = PAPERS[kind or os.environ.get("PAPER") or SITE.get("paper", "grid")]
+    return f"html body{{background-color:#f6f3ea!important;background-image:{img}!important;background-size:{size}!important;background-position:{pos}!important;background-attachment:local!important}}"
+PAPER_STYLE = "<style>" + paper_css() + "</style>"
 E = html.escape
 
 ADSENSE = ""  # no AdSense on this site until it is approved
@@ -148,7 +164,7 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
     if "og:image" not in extra_head:
         extra_head = f'<meta property="og:image" content="{base}/brand/share-2.jpg">\n' + extra_head
     extra_head = '<meta name="twitter:card" content="summary_large_image">\n' + extra_head
-    head = f'<title>{t}</title>\n{canon}{icons}{ADSENSE}{ANALYTICS}{SHARE_CSS}\n<meta name="description" content="{E(desc)}">\n<meta property="og:title" content="{t}">\n<meta property="og:description" content="{E(desc)}">\n{FONTS}\n{extra_head}<style>{CSS}</style>\n'
+    head = f'<title>{t}</title>\n{canon}{icons}{ADSENSE}{ANALYTICS}{SHARE_CSS}\n<meta name="description" content="{E(desc)}">\n<meta property="og:title" content="{t}">\n<meta property="og:description" content="{E(desc)}">\n{FONTS}\n{extra_head}<style>{CSS}</style>\n{PAPER_STYLE}\n'
     nav = f'''<div class="top"><nav class="wrap nav" aria-label="Main">
 <a class="logo" href="index.html">{LOGO_SVG}<span>{E(SITE["name"])}</span></a>
 <div class="navr"><a class="sharebtn homebtn" href="index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
@@ -503,7 +519,7 @@ def desktop_css(g):
 
 def play_page(g):
     s = (ROOT / "src" / "games" / f'{g["slug"]}.html').read_text()
-    s = s.replace("</head>", BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
+    s = s.replace("</head>", PAPER_STYLE + "\n" + BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
     s = re.sub(r"<h1([^>]*)>(.*?)</h1>", lambda m: f'<div class="sa-head"><a class="sa-back" href="../{g["slug"]}.html" aria-label="Back to {E(SITE["name"])}">&#8249;</a><h1{m.group(1)}>{m.group(2)}</h1><button class="sa-share" type="button" aria-label="Share {E(g["name"])}" {game_share(g)}>{SHARE_ICON}</button></div>', s, count=1)
     base = SITE.get("url", "https://www.sketchpadarcade.com").rstrip("/")
     host = re.sub(r"^https?://(www\.)?", "", base)
