@@ -334,7 +334,7 @@ function unlock(e){if(e&&(e.type==='touchstart'||(e.type==='pointerdown'&&e.poin
 document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden){try{ac.suspend()}catch(e){}}else if(ac.state!=='running'){try{ac.resume()}catch(e){}}});
 function noiseBuf(){if(!nbuf){nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const x=nbuf.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}return nbuf}
 let amb=null;
-function startAmbience(){if(amb||!ac||ac.state!=='running')return;try{ // soft waves washing on the shore
+function startAmbience(){return;/*no background sea sounds*/if(amb||!ac||ac.state!=='running')return;try{ // soft waves washing on the shore
   const src=ac.createBufferSource();src.buffer=noiseBuf();src.loop=true;
   const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=520;
   const g=ac.createGain();g.gain.value=.03;const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.11;lg.gain.value=.022;lfo.connect(lg).connect(g.gain);

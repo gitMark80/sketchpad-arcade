@@ -125,7 +125,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
           <li><b>2</b><span>Line up the gaps so the bouncy ball drops down, ring by ring.</span></li>
           <li><b>3</b><span>Don't land on the <em class="pk">pink scribbles</em> or the <em>purple ink blots</em>!</span></li>
           <li><b>4</b><span>Drop through 3 rings in a row to glow, then smash right through the next one.</span></li>
-          <li><b>5</b><span>Bounce into the pencil cup at the bottom to clear the level.</span></li>
+          <li><b>5</b><span>Bounce onto the chequered finish platform at the bottom to clear the level.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <button class="btn3" id="contBtn" type="button" hidden>Start at level 2</button>
@@ -141,7 +141,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
           <li><b>2</b><span>Turn a gap under the ball to drop through. Every ring you pass scores points, and more in a row score more.</span></li>
           <li><b>3</b><span>Plain paper rings are safe to bounce on. <em class="pk">Spiky pink scribbles</em> and <em>sliding purple ink blots</em> pop your ball.</span></li>
           <li><b>4</b><span>Fall through 3 rings without bouncing and your ball glows with a rainbow. The next ring it hits shatters, scribbles and all!</span></li>
-          <li><b>5</b><span>Land in the pencil cup at the bottom to clear the level. Each new pencil is taller and trickier.</span></li>
+          <li><b>5</b><span>Land on the chequered finish platform at the bottom to clear the level. Each new pencil is taller and trickier.</span></li>
         </ul>
         <button class="big" id="helpClose" type="button">Got it</button>
       </div>
@@ -200,7 +200,7 @@ let pal=PALS[0];
 
 /* ---------- painted art (falls back to the drawn versions until loaded) ---------- */
 const ART={};
-for(const k of ['bg','ball','urchin','jelly','pool','splat','island','lantern','disc','porthole']){const im=new Image();im.decoding='async';
+for(const k of ['bg','ball','urchin','jelly','splat','lantern','disc','porthole']){const im=new Image();im.decoding='async';
   im.onload=()=>{if(k==='bg')buildBg();else if(k==='urchin'||k==='jelly'||k==='disc')buildSprites();if(state==='menu'&&typeof drawMini==='function')try{drawMini()}catch(e){}};
   im.src='../assets/doodle-drop/'+k+(k==='bg'?'.jpg':'.webp');ART[k]=im}
 const ok=im=>im&&im.complete&&im.naturalWidth>0;
@@ -300,7 +300,7 @@ function noise(d=.2,f=1000,type='lowpass',v=.08,sweep=0,delay=0){if(muted||!ac||
   if(sweep)fl.frequency.exponentialRampToValueAtTime(Math.max(40,f+sweep),t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
   s.connect(fl).connect(g).connect(master);s.start(t,Math.random()*.5);s.stop(t+d+.03)}catch(e){}}
 let amb=null;
-function startAmbience(){if(amb||!ac||ac.state!=='running')return;try{
+function startAmbience(){return;/*no background sea sounds*/if(amb||!ac||ac.state!=='running')return;try{
   // gentle waves: filtered noise whose loudness and brightness swell slowly
   const src=ac.createBufferSource();src.buffer=noiseBuf();src.loop=true;
   const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=520;lp.Q.value=.4;
@@ -451,8 +451,11 @@ function smash(d){
   ball.y=d.y;ball.vy=-V0*.85;ball.sq=.3;ball.sqv=-8;ball.streak=0;
 }
 function goal(d){
-  ball.y=d.y;ball.vy=-V0*.75;ball.sq=.35;ball.sqv=-9;
-  if(state==='clear'){splash(d,true);sfx.boing(1.2);return}
+  const vin=ball.vy;ball.y=d.y;
+  if(state==='clear'){ // each bounce on the finish platform is lower until the ball rests on it
+    const v=vin*.5;if(v<170){ball.vy=0;return}
+    ball.vy=-v;ball.sq=.25;ball.sqv=-6;splash(d,true);sfx.boing(1.2);return}
+  ball.vy=-V0*.75;ball.sq=.35;ball.sqv=-9;
   state='clear';stateT=0;ball.streak=0;ball.next=N;
   const bonus=25*level;addScore(bonus,`Level clear! +${bonus}`,'#ffe27a');
   splash(d,true);sfx.splash();sfx.fanfare();
@@ -636,25 +639,67 @@ function drawDisc(d,front){
   if(d.passed&&d.passT>=1)return;
   const cy=sy(d.y);ctx.save();ctx.translate(0,cy);
   if(d.passed){const k=d.passT;ctx.globalAlpha=1-k;const s=1+k*.35;ctx.translate(cx,-k*20*U);ctx.scale(s,s);ctx.translate(-cx,0)}
-  if(d.goal&&ok(ART.pool)){
-    // back pass: the whole pencil cup; front pass: everything below the near lip of its opening again, so the pencil stands inside it
-    const c=cupBox();
-    if(!front)ctx.drawImage(ART.pool,c.x,c.y,c.w,c.h);
-    else{ctx.save();ctx.beginPath();ctx.moveTo(c.x-2,c.ry);ctx.lineTo(cx-c.iw,c.ry);ctx.ellipse(cx,c.ry,c.iw,c.ih,0,Math.PI,0,true);ctx.lineTo(c.x+c.w+2,c.ry);ctx.lineTo(c.x+c.w+2,c.y+c.h+2);ctx.lineTo(c.x-2,c.y+c.h+2);ctx.closePath();ctx.clip();
-      ctx.drawImage(ART.pool,c.x,c.y,c.w,c.h);ctx.restore()}
-    drawDecals(d,front);ctx.restore();return}
+  if(d.goal){drawFinish(front);drawDecals(d,front);ctx.restore();return}
   const ps=piecesOf(d).filter(p=>p.front===front).sort((a,b)=>a.depth-b.depth);
   for(const p of ps){drawPiece(p,TH);if(p.t===2)drawHazardDeco(p)}
-  if(d.goal&&front){ // ripples in the pool
-    ctx.save();sectorPath(RC,RO-10,-Math.PI,Math.PI);ctx.clip();ctx.strokeStyle='rgba(47,111,181,.5)';ctx.lineWidth=1.5*U;
-    for(let k=0;k<3;k++){const r=RC+((T*30+k*40)%110);ctx.globalAlpha=1-(r-RC)/110;ctx.beginPath();ctx.ellipse(cx,0,r*U,r*U*K,0,0,TAU);ctx.stroke()}ctx.restore()}
   drawDecals(d,front);drawJelly(d,front);
   ctx.restore();
 }
-/* the pencil cup (finish): pool.webp is 272x311, its rim ellipse is centred at (136,50) with outer half-width 130;
-   the opening is about 112 x 29 and the cup's bottom ellipse is centred at y=259 */
-const CUP_RW=120,CUP_DY=14; // rim half-width and how far the rim centre sits below the finish line (world units)
-function cupBox(){const k=CUP_RW*U/130;return{k,x:cx-136*k,y:CUP_DY*U-50*k,w:272*k,h:311*k,ry:CUP_DY*U+k,iw:112*k,ih:29*k,by:CUP_DY*U+209*k,ow:130*k}}
+/* the finish platform at the bottom of the pencil: a solid, thick paper slab the ball lands on.
+   Drawn around y=0 (the disc's top surface); the back pass draws the far half of the top, the front pass the near half
+   plus the thick side edge, so nothing behind it ever shows through. The pencil shaft stands in its centre hole. */
+const FTH=34; // finish slab thickness (world units)
+const FIN={ink:'#1f1f22',wash:'#fbf0c8',yel:'#f2c230',org:'#f08a24',side:'#f3e6b0'};
+function finTopPath(){ctx.beginPath();ctx.ellipse(cx,0,RO*U,RO*U*K,0,0,TAU);ctx.ellipse(cx,0,RC*U,RC*U*K,0,0,TAU,true)}
+function drawFinish(front){
+  const ro=RO*U,ry=ro*K,thk=FTH*U,lw=Math.max(1.6,2.2*U);
+  ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
+  if(front){
+    // thick side edge (only the near half is ever visible)
+    ctx.beginPath();ctx.ellipse(cx,0,ro,ry,0,0,Math.PI,false);ctx.ellipse(cx,thk,ro,ry,0,Math.PI,0,true);ctx.closePath();
+    ctx.fillStyle=FIN.side;ctx.fill();
+    ctx.save();ctx.clip();
+    // chequered band round the side
+    const n=28,bh=thk*.42,by=thk*.3;
+    for(let k=0;k<n;k++){const a0=theta+k*TAU/n,a1=a0+TAU/n;if(k%2)continue;
+      const m=(a0+a1)/2;if(Math.cos(m)<-.2)continue;
+      const x0=cx+Math.sin(a0)*ro,x1=cx+Math.sin(a1)*ro,y0=Math.cos(a0)*ry,y1=Math.cos(a1)*ry;
+      ctx.beginPath();ctx.moveTo(x0,y0+by);ctx.lineTo(x1,y1+by);ctx.lineTo(x1,y1+by+bh);ctx.lineTo(x0,y0+by+bh);ctx.closePath();ctx.fillStyle='rgba(31,31,34,.82)';ctx.fill()}
+    // orange coloured-pencil hatching + graphite shade on the right
+    ctx.strokeStyle='rgba(240,138,36,.55)';ctx.lineWidth=Math.max(1,1.1*U);ctx.beginPath();
+    for(let x=-ro-thk;x<ro+thk;x+=6*U){ctx.moveTo(cx+x,ry+thk+2);ctx.lineTo(cx+x+thk*1.2,-2)}ctx.stroke();
+    ctx.strokeStyle='rgba(85,85,92,.45)';ctx.lineWidth=1;ctx.beginPath();
+    for(let x=ro*.35;x<ro+thk;x+=3.5*U){ctx.moveTo(cx+x,ry+thk+2);ctx.lineTo(cx+x+thk*.9,-2)}ctx.stroke();
+    ctx.restore();
+    ctx.strokeStyle=FIN.ink;ctx.lineWidth=lw*1.15;ctx.beginPath();
+    ctx.moveTo(cx-ro,0);ctx.lineTo(cx-ro,thk);ctx.ellipse(cx,thk,ro,ry,0,Math.PI,0,true);ctx.lineTo(cx+ro,0);ctx.stroke();
+  }
+  // top surface: clip to the near or far half so the two passes meet behind the pencil
+  ctx.save();ctx.beginPath();if(front)ctx.rect(cx-ro-4,0,ro*2+8,ry+4);else ctx.rect(cx-ro-4,-ry-4,ro*2+8,ry+4);ctx.clip();
+  finTopPath();ctx.fillStyle=FIN.wash;ctx.fill('evenodd');
+  ctx.save();finTopPath();ctx.clip('evenodd');
+  // yellow coloured-pencil hatching in the middle, a second lighter set across it
+  ctx.strokeStyle='rgba(242,194,48,.75)';ctx.lineWidth=Math.max(1,1.2*U);ctx.beginPath();
+  for(let x=-ro*1.5;x<ro;x+=6*U){ctx.moveTo(cx+x,-ry);ctx.lineTo(cx+x+ry*2.2,ry)}ctx.stroke();
+  ctx.strokeStyle='rgba(240,138,36,.35)';ctx.beginPath();
+  for(let x=-ro;x<ro*1.5;x+=9*U){ctx.moveTo(cx+x,-ry);ctx.lineTo(cx+x-ry*2.2,ry)}ctx.stroke();
+  // chequered finish band round the rim (two staggered rows), turning with the tower
+  const rows=[[RO-36,RO-21],[RO-21,RO-6]],n=24;
+  for(let r=0;r<2;r++)for(let k=0;k<n;k++){if((k+r)%2)continue;const a0=k*TAU/n+theta;sectorPath(rows[r][0],rows[r][1],a0,a0+TAU/n);ctx.fillStyle='rgba(31,31,34,.85)';ctx.fill()}
+  // white squares get a little graphite texture
+  ctx.restore();
+  ctx.strokeStyle=FIN.ink;ctx.lineWidth=Math.max(1,1.2*U);
+  for(const r of [RO-36,RO-21]){ctx.beginPath();ctx.ellipse(cx,0,r*U,r*U*K,0,0,TAU);ctx.stroke()}
+  // a few doodled stars on the yellow, turning with the tower
+  for(let k=0;k<5;k++){const a=theta+k*TAU/5+.3,rr=RC+33;const x=cx+Math.sin(a)*rr*U,y=Math.cos(a)*rr*U*K;
+    if((y>=0)!==front)continue;const s=7*U;ctx.beginPath();
+    for(let j=0;j<10;j++){const b=-Math.PI/2+j*Math.PI/5,q=j%2?s*.45:s;ctx.lineTo(x+Math.cos(b)*q,y+Math.sin(b)*q*.7)}ctx.closePath();
+    ctx.fillStyle=FIN.yel;ctx.fill();ctx.strokeStyle=FIN.ink;ctx.lineWidth=Math.max(1,1.3*U);ctx.stroke()}
+  // bold ink rim + inner edge round the pencil
+  ctx.strokeStyle=FIN.ink;ctx.lineWidth=lw;ctx.beginPath();ctx.ellipse(cx,0,ro,ry,0,0,TAU);ctx.stroke();
+  ctx.lineWidth=Math.max(1.2,1.6*U);ctx.beginPath();ctx.ellipse(cx,0,RC*U,RC*U*K,0,0,TAU);ctx.stroke();
+  ctx.restore();ctx.restore();
+}
 function hexFaces(){const out=[];for(let k=0;k<6;k++){const e0=theta+k*TAU/6,e1=e0+TAU/6,m=e0+TAU/12,dep=Math.cos(m);if(dep>1e-3)out.push({e0,e1,m,dep})}return out}
 function drawColumn(Yt,Yb,topShadow,stamp){
   // a hexagonal pencil shaft that turns with the tower: paper faces, graphite hatching on the shaded side, ink edges
@@ -694,11 +739,11 @@ function drawLantern(Y){
   ctx.fillStyle=GRAPH;ctx.beginPath();ctx.moveTo(cx-hw*.3,yt-th*.7);ctx.lineTo(cx,yt-th);ctx.lineTo(cx+hw*.3,yt-th*.7);ctx.closePath();ctx.fill();ctx.stroke();
 }
 function drawBase(Y){
-  // the eraser stand the pencil cup sits on (its cone hides inside the cup)
-  if(!ok(ART.island)||!ok(ART.pool))return;
-  const c=cupBox(),cy=sy(Y)+c.by;if(cy-60*U>H)return;
-  const im=ART.island,w=c.ow*2*1.42,k=w/im.naturalWidth,h=im.naturalHeight*k;
-  ctx.drawImage(im,cx-w/2,cy-142*k,w,h);
+  // a soft pencil shadow on the page under the finish platform, so it sits on something
+  const y=sy(Y)+(FTH+16)*U;if(y-60*U>H)return;
+  ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(cx+8*U,y,RO*U*1.04,RO*U*K*.9,0,0,TAU);ctx.fill();
+  ctx.strokeStyle='rgba(85,85,92,.35)';ctx.lineWidth=1;ctx.beginPath();
+  for(let x=-RO*.9;x<RO;x+=7){ctx.moveTo(cx+(x+8)*U,y+RO*U*K*.45);ctx.lineTo(cx+(x+22)*U,y+RO*U*K*.75)}ctx.stroke();
 }
 function drawBall(){
   const d=discs[ball.next];
@@ -755,13 +800,13 @@ function draw(){
   ctx.save();if(shake)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
   const top=(cam-anchorY/U),bot=cam+(H-anchorY)/U;
   const iMin=Math.max(0,Math.floor((top-RO*K)/D)),iMax=Math.min(N,Math.ceil((bot+RO*K+TH)/D));
-  // pencil below the lowest visible ring; at the bottom the eraser stand comes first so the cup sits on it
+  // pencil below the lowest visible ring; at the bottom the finish platform's shadow comes first
   if(iMax===N)drawBase(discs[N].y);
   else drawColumn(discs[iMax].y,discs[iMax].y+D,!discs[iMax].broken&&!(discs[iMax].passed&&discs[iMax].passT>=1));
   let ballDrawn=false;
   for(let i=iMax;i>=iMin;i--){const d=discs[i];
     drawDisc(d,false);
-    if(i>0)drawColumn(discs[i-1].y,d.goal&&ok(ART.pool)?d.y+CUP_DY+40:d.y,!discs[i-1].broken&&!(discs[i-1].passed&&discs[i-1].passT>=1)); // into the cup at the bottom
+    if(i>0)drawColumn(discs[i-1].y,d.y,!discs[i-1].broken&&!(discs[i-1].passed&&discs[i-1].passT>=1)); // down onto the finish platform at the bottom
     else drawLantern(d.y);
     drawDisc(d,true);
     if(i===Math.min(ball.next,N)){drawShadow(d);drawBall();ballDrawn=true}
@@ -783,18 +828,24 @@ function draw(){
 
 /* ---------- start-card illustration ---------- */
 function drawMini(){
-  // the round porthole frame with a tiny doodle of the game inside: pencil, two paper rings, the ball and the cup
+  // the round porthole frame with a tiny doodle of the game inside: pencil, two paper rings, the ball and the finish platform
   const m=$('mini'),r=m.getBoundingClientRect(),sz=Math.max(60,r.width||110),pr=Math.min(window.devicePixelRatio||1,2.5);
   m.width=Math.round(sz*pr);m.height=Math.round(sz*pr);const g=m.getContext('2d');g.scale(pr*sz/110,pr*sz/110);g.imageSmoothingQuality='high';
   g.lineCap='round';g.lineJoin='round';g.strokeStyle=INK;g.fillStyle=PAPER;
-  const allOk=['porthole','lantern','disc','ball','pool'].every(k=>ok(ART[k]));
+  const allOk=['porthole','lantern','disc','ball'].every(k=>ok(ART[k]));
   if(ok(ART.porthole))g.drawImage(ART.porthole,1,2,108,108*ART.porthole.naturalHeight/ART.porthole.naturalWidth);
   else{g.lineWidth=1.8;g.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=52+1.5*Math.sin(i*2.1);g.lineTo(55+Math.cos(a)*r,55+Math.sin(a)*r)}g.closePath();g.fill();g.stroke()}
   g.save();g.beginPath();g.arc(55,55,31,0,TAU);g.clip();
   if(allOk){
     const ring=(y,haz)=>{g.save();g.translate(55,y);g.scale(1,.36);g.drawImage(ART.disc,-24,-24,48,48);g.restore();
       if(haz){g.save();g.globalAlpha=.55;g.fillStyle='#e9c3d6';g.beginPath();g.ellipse(55,y,24,8.6,0,.2,1.5);g.ellipse(55,y,7,2.5,0,1.5,.2,true);g.closePath();g.fill();g.restore()}};
-    g.drawImage(ART.pool,39,74,32,32*311/272); // cup at the bottom
+    { // the finish platform at the bottom: thick slab, chequered rim, ink outline
+      const fy=80,fr=22,fk=.36,ft=6;g.fillStyle='#f3e6b0';g.beginPath();g.ellipse(55,fy,fr,fr*fk,0,0,Math.PI);g.ellipse(55,fy+ft,fr,fr*fk,0,Math.PI,0,true);g.closePath();g.fill();
+      g.fillStyle='rgba(31,31,34,.8)';for(let k=0;k<8;k+=2){const x0=33+k*5.5;g.fillRect(x0,fy+2+Math.sin((x0-33)/44*Math.PI)*fr*fk,5.5,3)}
+      g.strokeStyle='#1f1f22';g.lineWidth=1.4;g.beginPath();g.moveTo(33,fy);g.lineTo(33,fy+ft);g.ellipse(55,fy+ft,fr,fr*fk,0,Math.PI,0,true);g.lineTo(77,fy);g.stroke();
+      g.fillStyle='#fbf0c8';g.beginPath();g.ellipse(55,fy,fr,fr*fk,0,0,TAU);g.fill();g.strokeStyle='rgba(242,194,48,.8)';g.lineWidth=.8;g.save();g.clip();g.beginPath();for(let x=30;x<80;x+=3){g.moveTo(x,fy-9);g.lineTo(x+8,fy+9)}g.stroke();g.restore();
+      g.strokeStyle='#1f1f22';g.lineWidth=1.4;g.beginPath();g.ellipse(55,fy,fr,fr*fk,0,0,TAU);g.stroke();
+    }
     ring(66,true);
     const shaft=(y0,y1)=>{g.fillStyle=PAPER;g.fillRect(49,y0,12,y1-y0);g.fillStyle='#e4e2d8';g.fillRect(57,y0,4,y1-y0);g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.moveTo(49,y0);g.lineTo(49,y1);g.moveTo(61,y0);g.lineTo(61,y1);g.stroke();
       g.strokeStyle=PENCIL;g.lineWidth=.7;g.beginPath();g.moveTo(53,y0);g.lineTo(53,y1);g.moveTo(57,y0);g.lineTo(57,y1);g.stroke()};

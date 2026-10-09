@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Gate Sketch: Paper Gates redrawn as a 10-year-old's pencil sketchbook. Paper, graphite boardwalk and sand, wobbly borders;
-   each jelly colour keeps one coloured-pencil hue (blocks must match their gate), everything else is pencil. */
+/* Paper Gates: a sliding-block puzzle on a sketchbook page. Graph-paper board in a pencil-shaded frame, wobbly borders;
+   each block colour has its own bright coloured-pencil hue AND pattern (blocks must match their gate), everything else is pencil. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -81,7 +81,6 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .tbar i.low{background:repeating-linear-gradient(135deg,var(--orange) 0 2px,#f0c9a8 2px 6px)}
 .tbar span{position:absolute;inset:0;display:grid;place-items:center;font:400 .85rem/1 var(--body);color:var(--ink);font-variant-numeric:tabular-nums}
 .left{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:5px 10px;box-shadow:2px 2px 0 var(--pencil);white-space:nowrap}
-.field{background:linear-gradient(rgba(246,243,234,.6),rgba(246,243,234,.6)),url(../assets/paper-gates/water.jpg) center/cover no-repeat var(--paper)}
 #cv{cursor:grab}
 #cv.dragging{cursor:grabbing}
 #mini{width:150px;height:120px;display:block;margin:0 auto 2px}
@@ -114,27 +113,27 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Gates</h1><button class="sa-share" type="button" aria-label="Share Paper Gates" data-share-url="https://www.sketchpadarcade.com/paper-gates" data-share-title="Paper Gates" data-share-text="Play Paper Gates free on Sketchpad Arcade! Slide jelly blocks out through the gates that match their colour."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Gates</h1><button class="sa-share" type="button" aria-label="Share Paper Gates" data-share-url="https://www.sketchpadarcade.com/paper-gates" data-share-title="Paper Gates" data-share-text="Play Paper Gates free on Sketchpad Arcade! Slide patterned blocks out through the gates that match their colour."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <div class="lives" id="lives" aria-label="Shells left"></div>
+    <div class="lives" id="lives" aria-label="Hearts left"></div>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
   </div>
   <div class="strip"><span class="lv" id="lvEl">Level 1</span><div class="tbar" aria-label="Time left"><i id="tFill"></i><span id="tText">0:00</span></div><span class="left" id="leftEl">0 left</span></div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A boardwalk board with jelly blocks. Drag each block out through the gate of the same colour."></canvas>
+    <canvas id="cv" aria-label="A paper board with smiling blocks. Drag each block out through the gate with the same colour and pattern."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
         <canvas id="mini" width="300" height="240" aria-hidden="true"></canvas>
         <h2>Paper Gates</h2>
         <ul class="rules">
-          <li><b>1</b><span><strong>Drag</strong> the jelly blocks around the board. They slide around each other but can't overlap.</span></li>
-          <li><b>2</b><span>Slide a block into a <strong>gate of the same colour</strong> on the edge and it whooshes out to sea.</span></li>
+          <li><b>1</b><span><strong>Drag</strong> the blocks around the board. They slide around each other but can't overlap.</span></li>
+          <li><b>2</b><span>Slide a block into the <strong>gate with the same colour and pattern</strong> on the edge and it zooms off the page.</span></li>
           <li><b>3</b><span>A block only fits if it's no wider than its gate. Clear every block before time runs out!</span></li>
-          <li><b>4</b><span>Run out of time and you lose a shell. Lose all 3 and the game is over. Levels get bigger as you go.</span></li>
+          <li><b>4</b><span>Run out of time and you lose a heart. Lose all 3 and the game is over. Levels get bigger as you go.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <div class="best" id="bestLine">Best score: 0</div>
@@ -150,7 +149,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     </div>
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-        <h2 id="overTitle">Tide's out!</h2>
+        <h2 id="overTitle">Pencils down!</h2>
         <p id="overText"></p>
         <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stLevel">1</b><span>level</span></div><div><b id="stBlocks">0</b><span>blocks out</span></div></div>
         <div class="newbest" id="newBest" hidden>New best score!</div>
@@ -186,7 +185,7 @@ function noise(d,v,freq){if(!save.sound)return;const a=audio();if(!a)return;cons
 /* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
    Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
 let amb=null;
-function ambStart(){
+function ambStart(){return;/*no background sea sounds*/
   if(amb||!save.sound)return;const a=audio();if(!a)return;
   const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
   for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
@@ -232,14 +231,14 @@ const sfx={
 };
 
 /* ---------- colours & shapes ---------- */
-/* coloured pencil: a = pale wash, b = line colour, d = darker hatch */
+/* bright coloured pencil: one colour and one pattern per kind, shared by the blocks and their gate */
 const COL=[
-  {n:'coral', a:'#e6cfcf',b:'#8a3b3b',d:'#6e2f2f'},
-  {n:'sky',   a:'#d6e4f2',b:'#2f6fb5',d:'#25588f'},
-  {n:'sun',   a:'#f3e6b0',b:'#c99a1a',d:'#a07a14'},
-  {n:'kelp',  a:'#dcebdd',b:'#5a9a6a',d:'#467a53'},
-  {n:'urchin',a:'#e6dcef',b:'#6f4a9a',d:'#563a78'},
-  {n:'bubble',a:'#f0d5e2',b:'#c45a8a',d:'#9c466e'}
+  {n:'red',   col:'#e0453a',pat:'dots'},
+  {n:'blue',  col:'#3a7bd5',pat:'stripes'},
+  {n:'yellow',col:'#f2c230',pat:'grid'},
+  {n:'green', col:'#4caf50',pat:'waves'},
+  {n:'purple',col:'#8e5bc9',pat:'zigzag'},
+  {n:'orange',col:'#f08a24',pat:'stars'}
 ];
 const BASE=[
   [[0,0]],
@@ -376,7 +375,7 @@ function leave(b,gate){
   exiting.push({b,dir,t:0});blocksOut++;
   const pts=b.cells.length*10;score+=pts;sfx.out(blocksOut%8);
   const cx=OX+(b.x+.5)*CS,cy=OY+(b.y+.5)*CS;
-  for(let i=0;i<14;i++){const a=rnd(0,TAU),s=rnd(80,240);parts.push({x:cx,y:cy,vx:Math.cos(a)*s+dir[0]*150,vy:Math.sin(a)*s+dir[1]*150,life:rnd(.4,.8),c:COL[b.c].a,r:rnd(3,6)})}
+  for(let i=0;i<14;i++){const a=rnd(0,TAU),s=rnd(80,240);parts.push({x:cx,y:cy,vx:Math.cos(a)*s+dir[0]*150,vy:Math.sin(a)*s+dir[1]*150,life:rnd(.4,.8),c:COL[b.c].col,r:rnd(3,6)})}
   pop('+'+pts,cx,cy);hud();
   if(!blocks.length)setTimeout(levelWon,500);
 }
@@ -399,142 +398,129 @@ function timeUp(){
     $('newBest').hidden=!isBest||score===0;$('bestLine2').textContent='Best score: '+save.best+' · Best level: '+save.bestLevel;
     setTimeout(()=>{$('over').hidden=false;window.BDA&&BDA.shareScore({score,line:'Level '+level,into:'#over .card',after:'.stats'});$('againBtn').focus({preventScroll:true})},500);return;
   }
-  $('midTitle').textContent='Out of time!';$('midText').textContent='You lost a shell. Here is a fresh board for level '+level+'.';
+  $('midTitle').textContent='Out of time!';$('midText').textContent='You lost a heart. Here is a fresh board for level '+level+'.';
   $('mBonus').textContent='0';$('mScore').textContent=score;$('mLevel').textContent=level;
   $('nextBtn').textContent='Try again';$('mid').hidden=false;
 }
 function hud(){
   $('scoreEl').textContent=score;$('bestEl').textContent=save.best;$('lvEl').textContent='Level '+level;
   $('leftEl').textContent=(blocks?blocks.length:0)+' left';
-  const l=$('lives');l.innerHTML='';for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<svg viewBox="0 0 48 48" class="'+(i>=shells?'lost':'')+'" aria-hidden="true"><path d="M24 6C14 6 6 15 6 25c0 5 2 9 5 12l13 6 13-6c3-3 5-7 5-12C42 15 34 6 24 6Z" fill="#f0d5e2" stroke="#c45a8a" stroke-width="2.5"/><path d="M24 9v32M17 11l3 29M31 11l-3 29M11 17l7 22M37 17l-7 22" stroke="#c45a8a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
-  l.setAttribute('aria-label',shells+' shells left');
+  const l=$('lives');l.innerHTML='';for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<svg viewBox="0 0 48 48" class="'+(i>=shells?'lost':'')+'" aria-hidden="true"><defs><clipPath id="hc'+i+'"><path d="M24 42C10 32 4 25 5 16 6 8 17 4 24 13 31 4 42 8 43 16 44 25 38 32 24 42Z"/></clipPath></defs><path d="M24 42C10 32 4 25 5 16 6 8 17 4 24 13 31 4 42 8 43 16 44 25 38 32 24 42Z" fill="#f6c9c3"/><g clip-path="url(#hc'+i+')" stroke-linecap="round"><path d="M0 30 30 0M0 38 38 0M0 46 46 0M4 50 50 4M12 50 50 12M20 50 50 20M0 22 22 0" stroke="#e0453a" stroke-width="1.8"/><path d="M2 2 48 48M10 2 48 40M2 10 40 48M18 2 48 32M2 18 32 48" stroke="#b5352b" stroke-width="1.5"/></g><path d="M24 42C10 32 4 25 5 16 6 8 17 4 24 13 31 4 42 8 43 16 44 25 38 32 24 42Z" fill="none" stroke="#1f1f22" stroke-width="3" stroke-linejoin="round"/></svg>');
+  l.setAttribute('aria-label',shells+' hearts left');
   timerHud();
 }
 function timerHud(){const p=Math.max(0,timeLeft/timeMax);const f=$('tFill');f.style.width=(p*100)+'%';f.className=p<.2?'low':p<.45?'mid':'';const s=Math.max(0,Math.ceil(timeLeft));$('tText').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
 let bannerT=0;
 function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
 
-/* ---------- drawing ---------- */
+/* ---------- drawing: coloured pencil on paper ----------
+   Every block colour has its own pattern too (dots, stripes, grid, waves, zigzags, stars), and its gate wears the same
+   colour and pattern, so a block and its gate match by colour and by pattern. Black ink outlines, pale wash, bright cross-hatching. */
+const OUT='#1f1f22';
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-/* ---------- Mark's art ---------- one jelly cube per colour, a sand square, the boardwalk frame and the gate.
-   Anything not loaded yet is drawn the old way. */
-const ART={};
-function loadArt(n,ext){const i=new Image();i.decoding='async';i.src='../assets/paper-gates/'+n+'.'+ext;ART[n]=i}
-COL.forEach(c=>loadArt(c.n,'webp'));['frame','gate'].forEach(n=>loadArt(n,'webp'));loadArt('cell','jpg');
-function ok(i){return !!(i&&i.complete&&i.naturalWidth)}
-// draw the frame picture as a 9-slice so its corners and plank thickness stay the same on any board size
-function nine(im,x,y,w,h,src,dst){const W=im.naturalWidth,H=im.naturalHeight,s=src,d=dst;
-  const sx=[0,s,W-s,W],sy=[0,s,H-s,H],dx=[x,x+d,x+w-d,x+w],dy=[y,y+d,y+h-d,y+h];
-  for(let i=0;i<3;i++)for(let j=0;j<3;j++){if(i===1&&j===1)continue;ctx.drawImage(im,sx[i],sy[j],sx[i+1]-sx[i],sy[j+1]-sy[j],dx[i],dy[j],dx[i+1]-dx[i],dy[j+1]-dy[j])}}
-function drawBoard(t){
-  if(ok(ART.cell)&&ok(ART.frame))return drawBoardArt(t);
-  const bw=BW*CS,bh=BH*CS;
-  // boardwalk frame
-  ctx.fillStyle='rgba(46,46,51,.18)';rr(OX-12,OY-12,bw+32,bh+32,22);ctx.fill();
-  ctx.fillStyle='#e4e2d8';rr(OX-16,OY-16,bw+32,bh+32,22);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.stroke();
-  ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;for(let i=1;i<6;i++){ctx.beginPath();ctx.moveTo(OX-16,OY-16+i*(bh+32)/6);ctx.lineTo(OX-6,OY-16+i*(bh+32)/6);ctx.moveTo(OX+bw+6,OY-16+i*(bh+32)/6);ctx.lineTo(OX+bw+16,OY-16+i*(bh+32)/6);ctx.stroke()}
-  // sand floor
-  ctx.fillStyle='#efeadd';rr(OX-4,OY-4,bw+8,bh+8,12);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.stroke();
-  for(let y=0;y<BH;y++)for(let x=0;x<BW;x++){ctx.fillStyle=(x+y)%2?'#e9e6db':'#f0ece1';rr(OX+x*CS+2,OY+y*CS+2,CS-4,CS-4,8);ctx.fill();ctx.strokeStyle=PENCIL;ctx.lineWidth=1;ctx.stroke()}
-  // gates
-  for(const g of gates){const c=COL[g.c];let x,y,w,h,ax,ay;
-    if(g.side==='top'){x=OX+g.s*CS;y=OY-16;w=g.len*CS;h=14;ax=0;ay=-1}
-    else if(g.side==='bottom'){x=OX+g.s*CS;y=OY+bh+2;w=g.len*CS;h=14;ax=0;ay=1}
-    else if(g.side==='left'){x=OX-16;y=OY+g.s*CS;w=14;h=g.len*CS;ax=-1;ay=0}
-    else{x=OX+bw+2;y=OY+g.s*CS;w=14;h=g.len*CS;ax=1;ay=0}
-    ctx.fillStyle=c.a;rr(x,y,w,h,7);ctx.fill();ctx.strokeStyle=c.b;ctx.lineWidth=2;ctx.stroke();
-    // chevrons pointing out, gently pulsing
-    const n=g.len;ctx.globalAlpha=.65+Math.sin(t*4)*.25;
-    for(let i=0;i<n;i++){const cx=ax?x+w/2:x+(i+.5)*CS,cy=ay?y+h/2:y+(i+.5)*CS;ctx.beginPath();
-      if(ay){ctx.moveTo(cx-6,cy-ay*-3);ctx.lineTo(cx,cy+ay*3);ctx.lineTo(cx+6,cy-ay*-3)}else{ctx.moveTo(cx-ax*-3,cy-6);ctx.lineTo(cx+ax*3,cy);ctx.lineTo(cx-ax*-3,cy+6)}
-      ctx.lineWidth=2.5;ctx.strokeStyle=c.b;ctx.stroke()}
-    ctx.globalAlpha=1;
-    // posts at each end
-    ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1.5;
-    if(ax){ctx.beginPath();ctx.arc(x+w/2,y,5,0,TAU);ctx.arc(x+w/2,y+h,5,0,TAU);ctx.fill();ctx.stroke()}else{ctx.beginPath();ctx.arc(x,y+h/2,5,0,TAU);ctx.arc(x+w,y+h/2,5,0,TAU);ctx.fill();ctx.stroke()}
-  }
+function rrP(x,y,w,h,r){ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function hx(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function mix(h,k){const a=hx(h),b=[250,248,241];return'rgb('+a.map((v,i)=>Math.round(b[i]+(v-b[i])*k)).join(',')+')'}
+function dark(h,k){return'rgb('+hx(h).map(v=>Math.round(v*(1-(k==null?.25:k)))).join(',')+')'}
+// bright coloured-pencil cross-hatching over a box (call inside a clip): one set in the colour, a second set a shade darker
+function hatch(col,x,y,w,h,sp,lw){
+  ctx.lineCap='round';ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.beginPath();for(let s=-h;s<w;s+=sp){ctx.moveTo(x+s,y+h);ctx.lineTo(x+s+h,y)}ctx.stroke();
+  ctx.strokeStyle=dark(col,.22);ctx.beginPath();for(let s=sp*.5;s<w+h;s+=sp*1.35){ctx.moveTo(x+s,y+h);ctx.lineTo(x+s-h,y)}ctx.stroke();
 }
-function drawBoardArt(t){
+function starP(x,y,r){for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;ctx.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q)}ctx.closePath()}
+// the colour's pattern, anchored at (ax,ay) so it travels with the block; u = size of one board cell
+function pattern(kind,col,ax,ay,x,y,w,h,u){
+  const pc=dark(col,.42);ctx.strokeStyle=pc;ctx.fillStyle=pc;ctx.lineCap='round';ctx.lineJoin='round';
+  const x0=x-((x-ax)%u+u)%u-u,y0=y-((y-ay)%u+u)%u-u,x1=x+w+u,y1=y+h+u;
+  if(kind==='dots'){const s=u/3;ctx.beginPath();for(let yy=y0,r=0;yy<y1;yy+=s,r++)for(let xx=x0+(r%2?s/2:0);xx<x1;xx+=s){ctx.moveTo(xx+s*.5+u*.075,yy+s*.5);ctx.arc(xx+s*.5,yy+s*.5,u*.075,0,TAU)}ctx.fill()}
+  else if(kind==='stripes'){const s=u/3;ctx.lineWidth=u*.085;ctx.beginPath();for(let xx=x0-(y1-y0);xx<x1;xx+=s){ctx.moveTo(xx,y1);ctx.lineTo(xx+(y1-y0),y0)}ctx.stroke()}
+  else if(kind==='grid'){const s=u/3.4;ctx.lineWidth=u*.045;ctx.beginPath();for(let xx=x0;xx<x1;xx+=s){ctx.moveTo(xx,y0);ctx.lineTo(xx,y1)}for(let yy=y0;yy<y1;yy+=s){ctx.moveTo(x0,yy);ctx.lineTo(x1,yy)}ctx.stroke()}
+  else if(kind==='waves'){const s=u/3.2;ctx.lineWidth=u*.055;ctx.beginPath();for(let yy=y0;yy<y1;yy+=s){for(let xx=x0;xx<=x1;xx+=u/16){const v=yy+Math.sin((xx-ax)/u*TAU*2)*u*.06;xx===x0?ctx.moveTo(xx,v):ctx.lineTo(xx,v)}}ctx.stroke()}
+  else if(kind==='zigzag'){const s=u/3.2,q=u/6;ctx.lineWidth=u*.055;ctx.beginPath();for(let yy=y0;yy<y1;yy+=s){ctx.moveTo(x0,yy);for(let xx=x0,i=0;xx<=x1;xx+=q,i++)ctx.lineTo(xx,yy+(i%2?-1:1)*u*.055)}ctx.stroke()}
+  else if(kind==='stars'){const s=u/2;for(let yy=y0,r=0;yy<y1;yy+=s,r++)for(let xx=x0+(r%2?s/2:0);xx<x1;xx+=s){ctx.beginPath();starP(xx+s*.25,yy+s*.25,u*.13);ctx.fill()}}
+}
+// fill the current path (already built by mk) in colour + pattern, then ink the outline; bx.. = bounding box, (ax,ay) pattern anchor
+function paint(mk,c,bx,by,bw,bh,ax,ay,u,ol){
+  ctx.save();ctx.beginPath();mk();ctx.fillStyle=mix(c.col,.3);ctx.fill();ctx.clip();
+  ctx.globalAlpha*=.85;hatch(c.col,bx,by,bw,bh,Math.max(3,u*.075),Math.max(1,u*.024));ctx.globalAlpha/=.85;
+  pattern(c.pat,c.col,ax,ay,bx,by,bw,bh,u);
+  ctx.restore();
+  if(ol){ctx.beginPath();mk();ctx.strokeStyle=OUT;ctx.lineWidth=ol;ctx.lineJoin='round';ctx.stroke()}
+}
+function graphBg(){
+  // faint blue graph paper behind the board
+  ctx.strokeStyle='rgba(58,123,213,.13)';ctx.lineWidth=1;ctx.beginPath();
+  for(let x=(OX%16)-16;x<W;x+=16){ctx.moveTo(x,0);ctx.lineTo(x,H)}for(let y=(OY%16)-16;y<H;y+=16){ctx.moveTo(0,y);ctx.lineTo(W,y)}ctx.stroke();
+}
+function drawBoard(t){
   const bw=BW*CS,bh=BH*CS,m=Math.max(14,CS*.34);
-  ctx.fillStyle='rgba(46,46,51,.2)';rr(OX-m+4,OY-m+6,bw+m*2,bh+m*2,m);ctx.fill();
-  for(let y=0;y<BH;y++)for(let x=0;x<BW;x++){ctx.drawImage(ART.cell,OX+x*CS,OY+y*CS,CS,CS);if((x+y)%2){ctx.fillStyle='rgba(46,46,51,.05)';ctx.fillRect(OX+x*CS,OY+y*CS,CS,CS)}}
-  nine(ART.frame,OX-m,OY-m,bw+m*2,bh+m*2,92,m*1.05);
-  // gates: a coloured glowing opening cut into the frame, with Mark's gate standing on it
+  // shadow, then a pencil-shaded paper frame
+  ctx.fillStyle='rgba(46,46,51,.18)';rr(OX-m+5,OY-m+7,bw+m*2,bh+m*2,m*.7);ctx.fill();
+  ctx.save();rr(OX-m,OY-m,bw+m*2,bh+m*2,m*.7);ctx.fillStyle='#ece7d9';ctx.fill();ctx.clip();
+  ctx.strokeStyle='rgba(60,60,66,.32)';ctx.lineWidth=1.2;ctx.beginPath();for(let s=-bh-2*m;s<bw+2*m;s+=6){ctx.moveTo(OX-m+s,OY+bh+m);ctx.lineTo(OX-m+s+bh+2*m,OY-m)}ctx.stroke();ctx.restore();
+  rr(OX-m,OY-m,bw+m*2,bh+m*2,m*.7);ctx.strokeStyle=OUT;ctx.lineWidth=3;ctx.stroke();
+  // the paper floor with a pencil grid
+  ctx.fillStyle='#fbf9f3';ctx.fillRect(OX,OY,bw,bh);
+  ctx.strokeStyle='rgba(60,60,66,.3)';ctx.lineWidth=1.3;ctx.beginPath();
+  for(let x=1;x<BW;x++){ctx.moveTo(OX+x*CS,OY);ctx.lineTo(OX+x*CS,OY+bh)}for(let y=1;y<BH;y++){ctx.moveTo(OX,OY+y*CS);ctx.lineTo(OX+bw,OY+y*CS)}ctx.stroke();
+  ctx.strokeStyle=OUT;ctx.lineWidth=2.5;ctx.strokeRect(OX,OY,bw,bh);
+  // gates: a doorway cut through the frame, filled with the colour and pattern of the blocks that leave through it
   for(const g of gates){const c=COL[g.c];
     ctx.save();
     const cx=g.side==='left'?OX-m/2:g.side==='right'?OX+bw+m/2:OX+(g.s+g.len/2)*CS;
     const cy=g.side==='top'?OY-m/2:g.side==='bottom'?OY+bh+m/2:OY+(g.s+g.len/2)*CS;
     ctx.translate(cx,cy);ctx.rotate({top:0,bottom:Math.PI,left:-Math.PI/2,right:Math.PI/2}[g.side]);
-    const L=g.len*CS;
-    ctx.fillStyle=c.a;rr(-L/2,-m/2,L,m,m*.4);ctx.fill();ctx.strokeStyle=c.b;ctx.lineWidth=2;ctx.stroke();
-    ctx.save();ctx.clip();ctx.strokeStyle=c.b;ctx.globalAlpha=.45;ctx.lineWidth=1;for(let hx=-L/2;hx<L/2+m;hx+=5){ctx.beginPath();ctx.moveTo(hx,m/2);ctx.lineTo(hx+m,-m/2);ctx.stroke()}ctx.restore();
-    if(ok(ART.gate)){const gw=L+m*1.5,gh=gw*ART.gate.naturalHeight/ART.gate.naturalWidth,hh=Math.min(gh,m*1.7),ww=hh*ART.gate.naturalWidth/ART.gate.naturalHeight;
-      ctx.drawImage(ART.gate,-Math.max(ww,gw)/2,-m/2-hh*.62,Math.max(ww,gw),hh)}
-    // chevrons pointing out, gently pulsing
-    ctx.globalAlpha=.7+Math.sin(t*4)*.25;ctx.strokeStyle=c.d;ctx.lineWidth=2.5;ctx.lineCap='round';
-    for(let i=0;i<g.len;i++){const x=-L/2+(i+.5)*CS;ctx.beginPath();ctx.moveTo(x-6,m*.12);ctx.lineTo(x,-m*.18);ctx.lineTo(x+6,m*.12);ctx.stroke()}
+    const L=g.len*CS,gh=m+6;
+    ctx.fillStyle='#fbf9f3';ctx.fillRect(-L/2+2,-m/2-1,L-4,m+4);
+    paint(()=>rrP(-L/2+3,-gh/2-2,L-6,gh,Math.min(8,gh*.35)),c,-L/2,-gh/2-3,L,gh+2,-L/2,0,CS,2.5);
+    // posts either side of the doorway
+    for(const sx of[-1,1]){ctx.beginPath();rrP(sx*L/2-5,-m/2-8,10,m+10,4);ctx.fillStyle='#f6f3ea';ctx.fill();ctx.strokeStyle=OUT;ctx.lineWidth=2.5;ctx.stroke()}
+    // arrows pointing out, gently pulsing
+    ctx.globalAlpha=.75+Math.sin(t*4)*.25;ctx.lineCap='round';ctx.lineJoin='round';
+    for(let i=0;i<g.len;i++){const x=-L/2+(i+.5)*CS;ctx.beginPath();ctx.moveTo(x-7,gh*.16);ctx.lineTo(x,-gh*.2);ctx.lineTo(x+7,gh*.16);ctx.strokeStyle='#fbf9f3';ctx.lineWidth=6.5;ctx.stroke();ctx.strokeStyle=OUT;ctx.lineWidth=3;ctx.stroke()}
     ctx.restore();
   }
 }
 function drawBlock(b,px,py,s,alpha,t,lift){
-  if(ok(ART[COL[b.c].n]))return drawBlockArt(b,px,py,s,alpha,t,lift);
-  const c=COL[b.c],set=new Set(b.cells.map(p=>p[0]+','+p[1])),in_=s*CS*.08,r=s*CS*.22;
+  const c=COL[b.c],set=new Set(b.cells.map(p=>p[0]+','+p[1])),C=CS*s,in_=C*.07,r=C*.2,oy=-lift*4;
   ctx.save();ctx.globalAlpha=alpha;
-  // shadow
-  ctx.fillStyle='rgba(46,46,51,.2)';for(const[x,y]of b.cells){rr(px+x*CS*s+in_,py+y*CS*s+in_+(4+lift*5),CS*s-in_*2,CS*s-in_*2,r);ctx.fill()}
-  const oy=-lift*4;
-  // body: cells plus bridges between neighbours so the block reads as one piece, then one outline round the lot
-  ctx.fillStyle=c.a;
-  for(const[x,y]of b.cells){rr(px+x*CS*s+in_,py+y*CS*s+in_+oy,CS*s-in_*2,CS*s-in_*2,r);ctx.fill();
-    if(set.has((x+1)+','+y))ctx.fillRect(px+(x+.5)*CS*s,py+y*CS*s+in_+oy,CS*s,CS*s-in_*2);
-    if(set.has(x+','+(y+1)))ctx.fillRect(px+x*CS*s+in_,py+(y+.5)*CS*s+oy,CS*s-in_*2,CS*s);
-    if(set.has((x+1)+','+y)&&set.has(x+','+(y+1))&&set.has((x+1)+','+(y+1)))ctx.fillRect(px+(x+.5)*CS*s,py+(y+.5)*CS*s+oy,CS*s,CS*s)}
-  ctx.strokeStyle=c.b;ctx.lineWidth=2;
-  for(const[x,y]of b.cells){const X=px+x*CS*s+in_,Y=py+y*CS*s+in_+oy,Wc=CS*s-in_*2;
-    if(!set.has(x+','+(y-1))){ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X+Wc,Y);ctx.stroke()}
-    if(!set.has(x+','+(y+1))){ctx.beginPath();ctx.moveTo(X,Y+Wc);ctx.lineTo(X+Wc,Y+Wc);ctx.stroke()}
-    if(!set.has((x-1)+','+y)){ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X,Y+Wc);ctx.stroke()}
-    if(!set.has((x+1)+','+y)){ctx.beginPath();ctx.moveTo(X+Wc,Y);ctx.lineTo(X+Wc,Y+Wc);ctx.stroke()}
-    ctx.globalAlpha=alpha*.5;ctx.lineWidth=1;for(let k=0;k<4;k++){ctx.beginPath();ctx.moveTo(X+Wc*.55+k*Wc*.1,Y+Wc*.95);ctx.lineTo(X+Wc*.95,Y+Wc*.55+k*Wc*.1);ctx.stroke()}ctx.globalAlpha=alpha;ctx.lineWidth=2}
-  // cute face on the first cell
-  const [fx,fy]=b.cells.reduce((a,p)=>p[1]<a[1]||(p[1]===a[1]&&p[0]<a[0])?p:a);
-  const cx=px+(fx+.5)*CS*s,cy=py+(fy+.55)*CS*s+oy,e=CS*s*.12;
+  ctx.fillStyle='rgba(46,46,51,.2)';for(const[x,y]of b.cells){rr(px+x*C+in_+2,py+y*C+in_+(4+lift*5),C-in_*2,C-in_*2,r);ctx.fill()}
+  // the block's outline = its cells (rounded) plus bridges between neighbours, as one shape
+  const mk=()=>{for(const[x,y]of b.cells){const X=px+x*C,Y=py+y*C+oy;rrP(X+in_,Y+in_,C-in_*2,C-in_*2,r);
+    if(set.has((x+1)+','+y))ctx.rect(X+C*.5,Y+in_,C,C-in_*2);
+    if(set.has(x+','+(y+1)))ctx.rect(X+in_,Y+C*.5,C-in_*2,C);
+    if(set.has((x+1)+','+y)&&set.has(x+','+(y+1))&&set.has((x+1)+','+(y+1)))ctx.rect(X+C*.5,Y+C*.5,C,C)}};
+  const xs=b.cells.map(p=>p[0]),ys=b.cells.map(p=>p[1]),bx=px+Math.min(...xs)*C,by=py+Math.min(...ys)*C+oy,bw=(Math.max(...xs)+1)*C-Math.min(...xs)*C,bh=(Math.max(...ys)+1)*C-Math.min(...ys)*C;
+  // thick ink outline first (outer half stays visible), then the fill covers the inner seams
+  const ol=Math.max(2.6,C*.065);
+  ctx.beginPath();mk();ctx.strokeStyle=OUT;ctx.lineWidth=ol*2;ctx.lineJoin='round';ctx.stroke();
+  paint(mk,c,bx,by,bw,bh,px,py+oy,C,0);
+  // a little smiling face in the middle of the block, on a paper patch so it reads over the pattern
+  const mx=b.cells.reduce((a,p)=>a+p[0]+.5,0)/b.cells.length,my=b.cells.reduce((a,p)=>a+p[1]+.5,0)/b.cells.length;
+  let fx=mx,fy=my;if(!set.has(Math.floor(mx)+','+Math.floor(my))&&!(Math.abs(mx%1)<.01||Math.abs(my%1)<.01)){const n=b.cells.reduce((a,p)=>Math.hypot(p[0]+.5-mx,p[1]+.5-my)<Math.hypot(a[0]+.5-mx,a[1]+.5-my)?p:a);fx=n[0]+.5;fy=n[1]+.5}
+  const cx=px+fx*C,cy=py+fy*C+oy,e=C*.11;
+  ctx.fillStyle='rgba(251,249,243,.82)';ctx.beginPath();ctx.ellipse(cx,cy+e*.2,e*2.15,e*1.4,0,0,TAU);ctx.fill();
   const blink=Math.sin(t*1.3+b.face*3)>.97;
-  ctx.fillStyle=INK;
-  if(blink){ctx.fillRect(cx-e*1.6,cy-1,e*1.2,2.5);ctx.fillRect(cx+e*.4,cy-1,e*1.2,2.5)}
-  else{ctx.beginPath();ctx.arc(cx-e,cy,e*.55,0,TAU);ctx.arc(cx+e,cy,e*.55,0,TAU);ctx.fill()}
-  ctx.strokeStyle=INK;ctx.lineWidth=Math.max(1.5,e*.3);ctx.beginPath();ctx.arc(cx,cy+e*.5,e*.55,.25,Math.PI-.25);ctx.stroke();
-  ctx.fillStyle='rgba(196,90,138,.3)';ctx.beginPath();ctx.ellipse(cx-e*2,cy+e*.6,e*.45,e*.3,0,0,TAU);ctx.ellipse(cx+e*2,cy+e*.6,e*.45,e*.3,0,0,TAU);ctx.fill();
-  ctx.restore();
-}
-function drawBlockArt(b,px,py,s,alpha,t,lift){
-  const c=COL[b.c],im=ART[c.n],set=new Set(b.cells.map(p=>p[0]+','+p[1])),C=CS*s,in_=C*.04,oy=-lift*4;
-  ctx.save();ctx.globalAlpha=alpha;
-  ctx.fillStyle='rgba(46,46,51,.22)';for(const[x,y]of b.cells){rr(px+x*C+in_,py+y*C+in_+(5+lift*5),C-in_*2,C-in_*2,C*.22);ctx.fill()}
-  // jelly bridges between neighbouring cubes so the block reads as one piece
-  ctx.fillStyle=c.a;
-  for(const[x,y]of b.cells){
-    if(set.has((x+1)+','+y))ctx.fillRect(px+(x+.5)*C,py+y*C+C*.18+oy,C,C*.64);
-    if(set.has(x+','+(y+1)))ctx.fillRect(px+x*C+C*.18,py+(y+.5)*C+oy,C*.64,C)}
-  const wob=b.wob?1+Math.sin(t*20)*.03*b.wob:1;
-  for(const[x,y]of b.cells){const cx=px+(x+.5)*C,cy=py+(y+.5)*C+oy,z=C*(1-in_*2/C)*wob;ctx.drawImage(im,cx-z/2,cy-z/2,z,z)}
+  ctx.fillStyle=OUT;ctx.strokeStyle=OUT;
+  if(blink){ctx.lineWidth=Math.max(1.6,e*.28);ctx.beginPath();ctx.moveTo(cx-e*1.3,cy-e*.2);ctx.lineTo(cx-e*.5,cy-e*.2);ctx.moveTo(cx+e*.5,cy-e*.2);ctx.lineTo(cx+e*1.3,cy-e*.2);ctx.stroke()}
+  else{ctx.beginPath();ctx.arc(cx-e*.9,cy-e*.2,e*.32,0,TAU);ctx.arc(cx+e*.9,cy-e*.2,e*.32,0,TAU);ctx.fill()}
+  ctx.lineWidth=Math.max(1.6,e*.26);ctx.lineCap='round';ctx.beginPath();ctx.arc(cx,cy+e*.05,e*.6,.3,Math.PI-.3);ctx.stroke();
+  ctx.fillStyle='rgba(232,106,166,.4)';ctx.beginPath();ctx.ellipse(cx-e*1.65,cy+e*.45,e*.4,e*.26,0,0,TAU);ctx.ellipse(cx+e*1.65,cy+e*.45,e*.4,e*.26,0,0,TAU);ctx.fill();
   ctx.restore();
 }
 function draw(t){
   ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);
-  // water ripples behind the board
-  ctx.strokeStyle='rgba(46,46,51,.18)';ctx.lineWidth=1.2;
-  for(let y=20;y<H;y+=36){ctx.beginPath();for(let x=0;x<=W;x+=10){const yy=y+Math.sin(x/30+t*1.4+y)*4;if(x)ctx.lineTo(x,yy);else ctx.moveTo(x,yy)}ctx.stroke()}
+  graphBg();
   if(!blocks)return;
   drawBoard(t);
   for(const b of blocks){b.dx+=(b.x-b.dx)*.45;b.dy+=(b.y-b.dy)*.45;b.wob*=.9}
   const order=blocks.slice().sort((a,b)=>(drag&&a===drag.b)-(drag&&b===drag.b));
   for(const b of order){const lift=drag&&drag.b===b?1:0;drawBlock(b,OX+b.dx*CS,OY+b.dy*CS,1,1,t,lift)}
-  // blocks whooshing out through their gate
+  // blocks zooming out through their gate
   ctx.save();
   for(const e of exiting){const k=e.t*e.t*3;drawBlock(e.b,OX+(e.b.x+e.dir[0]*k)*CS,OY+(e.b.y+e.dir[1]*k)*CS,1,Math.max(0,1-e.t*1.6),t,1)}
   ctx.restore();
-  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2));ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill()}
+  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2));ctx.fillStyle=mix(p.c,.45);ctx.strokeStyle=p.c;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill();ctx.stroke()}
   ctx.globalAlpha=1;
   for(const p of pops){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*1.5));ctx.font='22px "Gloria Hallelujah","Comic Sans MS",cursive';ctx.textAlign='center';ctx.lineWidth=5;ctx.strokeStyle=PAPER;ctx.strokeText(p.t,p.x,p.y);ctx.fillStyle=INK;ctx.fillText(p.t,p.x,p.y)}
   ctx.globalAlpha=1;
@@ -565,18 +551,25 @@ $('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audi
 setSoundLabel();
 $('bestLine').textContent='Best score: '+save.best+(save.bestLevel>1?' · Best level: '+save.bestLevel:'');
 
-/* start-card art: a jelly block sliding out of its gate */
+/* start-card art: a smiling block sliding out of its matching gate */
 const mc=$('mini').getContext('2d');
 function mini(t){const sv=ctx,svCS=CS;ctx=mc;CS=56;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0,0,300,240);
-  mc.strokeStyle='rgba(46,46,51,.25)';mc.lineWidth=1.2;for(let y=20;y<240;y+=24){mc.beginPath();for(let x=0;x<=300;x+=10){const yy=y+Math.sin(x/22+y)*2.5;x?mc.lineTo(x,yy):mc.moveTo(x,yy)}mc.stroke()}
-  mc.fillStyle='#e4e2d8';rr(40,40,200,170,18);mc.fill();mc.strokeStyle=INK;mc.lineWidth=2;mc.stroke();
-  mc.strokeStyle=PENCIL;mc.lineWidth=1;for(let i=1;i<6;i++){mc.beginPath();mc.moveTo(40,40+i*170/6);mc.lineTo(52,40+i*170/6);mc.moveTo(228,40+i*170/6);mc.lineTo(240,40+i*170/6);mc.stroke()}
-  mc.fillStyle='#f0ece1';rr(52,52,176,146,10);mc.fill();mc.strokeStyle=INK;mc.lineWidth=1.5;mc.stroke();
-  mc.strokeStyle=PENCIL;mc.lineWidth=1;for(let i=1;i<3;i++){mc.beginPath();mc.moveTo(52+i*176/3,52);mc.lineTo(52+i*176/3,198);mc.stroke()}for(let i=1;i<3;i++){mc.beginPath();mc.moveTo(52,52+i*146/3);mc.lineTo(228,52+i*146/3);mc.stroke()}
-  mc.fillStyle=COL[0].a;rr(246,70,14,112,7);mc.fill();mc.strokeStyle=COL[0].b;mc.lineWidth=2;mc.stroke();
-  const k=(t*.6)%2,x=k<1?60+k*120:180+(k-1)*120;
-  drawBlock({c:1,cells:[[0,0],[1,0],[0,1]],face:1},70,80,1,1,t,0);
-  drawBlock({c:0,cells:[[0,0],[0,1]],face:2},Math.min(x,250),70,1,k<1?1:Math.max(0,1-(k-1)*2.5),t,0);
+  // frame, paper floor and grid
+  mc.fillStyle='rgba(46,46,51,.18)';rr(44,46,200,170,16);mc.fill();
+  mc.save();rr(40,40,200,170,16);mc.fillStyle='#ece7d9';mc.fill();mc.clip();mc.strokeStyle='rgba(60,60,66,.32)';mc.lineWidth=1.4;mc.beginPath();for(let s=-200;s<240;s+=8){mc.moveTo(40+s,210);mc.lineTo(40+s+170,40)}mc.stroke();mc.restore();
+  rr(40,40,200,170,16);mc.strokeStyle=OUT;mc.lineWidth=4;mc.stroke();
+  mc.fillStyle='#fbf9f3';mc.fillRect(56,56,168,138);
+  mc.strokeStyle='rgba(60,60,66,.3)';mc.lineWidth=1.4;mc.beginPath();for(let i=1;i<3;i++){mc.moveTo(56+i*56,56);mc.lineTo(56+i*56,194)}mc.moveTo(56,125);mc.lineTo(224,125);mc.stroke();
+  mc.strokeStyle=OUT;mc.lineWidth=3;mc.strokeRect(56,56,168,138);
+  // the red dotted gate on the right
+  mc.fillStyle='#fbf9f3';mc.fillRect(222,62,20,112);
+  paint(()=>rrP(222,64,22,108,8),COL[0],222,64,22,108,222,64,56,3);
+  for(const y of[60,170]){mc.beginPath();rrP(220,y-5,26,10,4);mc.fillStyle='#f6f3ea';mc.fill();mc.strokeStyle=OUT;mc.lineWidth=3;mc.stroke()}
+  const k=(t*.6)%2,x=k<1?168+Math.sin(k*Math.PI*4)*2:168+(k-1)*120;
+  mc.save();mc.beginPath();mc.rect(0,0,300,240);mc.clip();
+  drawBlock({c:1,cells:[[0,0],[1,0],[0,1]],face:1},56,64,1,1,t,0);
+  drawBlock({c:0,cells:[[0,0],[0,1]],face:2},Math.min(x,250),64,1,k<1?1:Math.max(0,1-(k-1)*2.5),t,0);
+  mc.restore();
   ctx=sv;CS=svCS}
 (function ml(n){if(!$('start').hidden)mini(n/1000);requestAnimationFrame(ml)})(0);
 

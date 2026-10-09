@@ -582,7 +582,7 @@ const Sound=(()=>{
     const fade=Math.floor(ctx.sampleRate*.05);for(let i=0;i<fade;i++){const k=i/fade;d[i]*=k;d[d.length-1-i]*=k}
     return b;
   }
-  function waves(){
+  function waves(){return;/*no background sea sounds*/
     // calm shore: a low steady bed, plus individual waves that roll in, break softly and wash back, panned around
     const amb=ctx.createGain();amb.gain.value=.5;amb.connect(master);
     const bedBuf=noise(8,true),washBuf=noise(6,false);

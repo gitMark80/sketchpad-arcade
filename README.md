@@ -26,6 +26,14 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 | Bottle Words (`bottle-words`) | Note Quest (`note-quest`) |
 | Octo Swing (`octo-swing`) | Scribble Swing (`scribble-swing`) |
 | Treasure Trio (`treasure-trio`) | Margin Match (`margin-match`) |
+| Beach Link (`beach-link`) | Pencil Pairs (`pencil-pairs`) |
+| Pearl Blocks (`pearl-blocks`) | Graph Blocks (`graph-blocks`) |
+| Shell Swap (`shell-swap`) | Scribble Swap (`scribble-swap`) |
+| Turtle Dash (`turtle-dash`) | Pencil Path (`pencil-path`) |
+| Sonar Sub (`sonar-sub`) | Paper Sub (`paper-sub`) |
+| Sea Glass (`sea-glass`) | Color by Pencil (`color-by-pencil`) |
+| Gem Cove (`gem-cove`) | Gem Sketch (`gem-sketch`) |
+| Word Plop (`word-plop`) | Word Scribble (`word-scribble`) |
 
 `sketchify.py` takes the Beach Day Arcade slug and writes to the Sketchpad slug.
 

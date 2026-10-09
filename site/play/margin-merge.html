@@ -183,7 +183,7 @@ function unlock(e){if(e&&(e.type==='touchstart'||(e.type==='pointerdown'&&e.poin
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ac&&ac.state!=='running')ac.resume()});
 /* Aquarium bubbler: a soft bed of moving water plus a stream of tiny bubble blips, like an air stone. */
 let amb=null;
-function startAmbience(){if(amb||!ac||ac.state!=='running')return;try{
+function startAmbience(){return;/*no background sea sounds*/if(amb||!ac||ac.state!=='running')return;try{
   if(!nbuf){nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const x=nbuf.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}
   const out=ac.createGain();out.gain.value=.6;out.connect(master);
   const src=ac.createBufferSource();src.buffer=nbuf;src.loop=true;

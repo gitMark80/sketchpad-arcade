@@ -199,7 +199,7 @@ const sfx={
 
 /* ---- Ambient fish-tank bubbler: soft water bed, faint pump hum, steady stream of tiny rising bubbles ---- */
 let ambOn=false,ambGain=null;
-function startAmbient(){
+function startAmbient(){return;/*no background sea sounds*/
   const a=S.ctx,out=S.out;if(!a||!out||ambOn)return;ambOn=true;
   ambGain=a.createGain();ambGain.gain.value=.0001;ambGain.connect(out);ambGain.gain.setTargetAtTime(1,a.currentTime,1.2);
   const len=a.sampleRate*4,buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);let last=0;

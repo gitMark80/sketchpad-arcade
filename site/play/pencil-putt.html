@@ -191,7 +191,7 @@ function noise(d,v,freq){if(!save.sound)return;const a=audio();if(!a)return;cons
 /* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
    Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
 let amb=null;
-function ambStart(){
+function ambStart(){return;/*no background sea sounds*/
   if(amb||!save.sound)return;const a=audio();if(!a)return;
   const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
   for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
@@ -245,7 +245,7 @@ const sfx={
 
 /* ---------- game art (../assets/pencil-putt/); everything falls back to drawn shapes until it loads ---------- */
 const ART={};
-['beach','turf','sandtrap','water','tide','slope','ball','cup','flag','tee','wall','cap','rock','bball','bsq','crabA','crabB','dizzy','umb','surf','tiki','star','shell','splash','puff','confetti']
+['beach','sandtrap','water','tide','slope','ball','cup','flag','tee','wall','cap','rock','bball','bsq','crabA','crabB','dizzy','umb','surf','tiki','star','shell','splash','puff','confetti']
   .forEach(n=>{const im=new Image();im.src='../assets/pencil-putt/'+n+'.webp';ART[n]=im});
 const ok=n=>ART[n]&&ART[n].complete&&ART[n].naturalWidth>0;
 const PAT={};
@@ -665,17 +665,27 @@ function drawDeco(d){
   else{ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,4);ctx.lineTo(-5,-2);ctx.quadraticCurveTo(0,-7,5,-2);ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle=PENCIL;ctx.lineWidth=.7;for(let k=-2;k<=2;k++){ctx.beginPath();ctx.moveTo(0,3.5);ctx.lineTo(k*2,-3.5);ctx.stroke()}}
   ctx.restore();
 }
+/* the putting green: a pale green wash with two sets of green coloured-pencil cross-hatching, clipped to the green */
+const GRN={wash:'#dff0d8',h1:'rgba(76,175,80,.62)',h2:'rgba(46,125,50,.42)'};
+function greenHatch(x0,y0,x1,y1,sp1,sp2,lw){
+  const w=x1-x0,h=y1-y0;ctx.lineCap='round';
+  ctx.strokeStyle=GRN.h1;ctx.lineWidth=lw;ctx.beginPath();
+  for(let k=x0-h;k<x1;k+=sp1){const j=Math.sin(k*1.7)*.6;ctx.moveTo(k+j,y1);ctx.lineTo(k+h+j,y0)}ctx.stroke();
+  ctx.strokeStyle=GRN.h2;ctx.lineWidth=lw*.9;ctx.beginPath();
+  for(let k=x0;k<x1+h;k+=sp2){const j=Math.cos(k*1.3)*.6;ctx.moveTo(k+j,y1);ctx.lineTo(k-h+j,y0)}ctx.stroke();
+}
 function drawTurf(h,t){
-  // drop shadow then turf with mowing stripes
+  // drop shadow then the cross-hatched green
   ctx.save();ctx.translate(2,4);polyPath(h.poly);ctx.fillStyle='rgba(46,46,51,.2)';ctx.fill();ctx.restore();
-  polyPath(h.poly);const tp=pat('turf',90);ctx.fillStyle=tp||'#e9e6db';ctx.fill();
+  polyPath(h.poly);ctx.fillStyle=GRN.wash;ctx.fill();
   ctx.save();polyPath(h.poly);ctx.clip();
-  if(!tp)ctx.fillStyle='rgba(46,46,51,.06)';else ctx.fillStyle='rgba(0,0,0,0)';for(let k=-WH;k<WW+WH;k+=36){ctx.beginPath();ctx.moveTo(k,0);ctx.lineTo(k+18,0);ctx.lineTo(k+18-WH*.5,WH);ctx.lineTo(k-WH*.5,WH);ctx.closePath();ctx.fill()}
+  greenHatch(0,0,WW,WH,5.5,7.5,.9);
   // zones
   for(const z of h.force){shapePath(z.s);
     const zk=z.kind==='tide'?'tide':'slope';
     if(ok(zk)){const s=z.s,ang=Math.atan2(z.fy,z.fx),cx=(s.x0+s.x1)/2,cy=(s.y0+s.y1)/2,sz=zk==='tide'?70:80,sp=zk==='tide'?40:14;
-      ctx.save();shapePath(s);ctx.clip();ctx.translate(cx,cy);ctx.rotate(zk==='tide'?ang:ang-Math.PI/2);ctx.translate(zk==='tide'?(t*sp)%sz:0,zk==='tide'?0:(-(t*sp)%sz));ctx.fillStyle=pat(zk,sz);ctx.fillRect(-400,-400,800,800);ctx.restore();
+      ctx.save();shapePath(s);ctx.clip();ctx.translate(cx,cy);ctx.rotate(zk==='tide'?ang:ang-Math.PI/2);ctx.translate(zk==='tide'?(t*sp)%sz:0,zk==='tide'?0:(-(t*sp)%sz));if(zk==='slope'){ctx.fillStyle=GRN.wash;ctx.fillRect(-400,-400,800,800);ctx.globalCompositeOperation='multiply'} // slopes are part of the green: pencil chevrons over the green wash
+      ctx.fillStyle=pat(zk,sz);ctx.fillRect(-400,-400,800,800);ctx.restore();
       ctx.strokeStyle=zk==='tide'?'#2f6fb5':INK;ctx.lineWidth=1.5;ctx.setLineDash([4,4]);shapePath(z.s);ctx.stroke();ctx.setLineDash([]);continue}
     if(z.kind==='tide'){ctx.fillStyle='rgba(47,111,181,.22)';ctx.fill();
       const s=z.s,ang=Math.atan2(z.fy,z.fx);ctx.save();shapePath(s);ctx.clip();ctx.strokeStyle='rgba(47,111,181,.8)';ctx.lineWidth=1.6;ctx.lineCap='round';
@@ -938,8 +948,8 @@ function mini(t){const sv=ctx;ctx=mc;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0
   mc.setTransform(2,0,0,2,0,0);
   const P=[[30,40],[140,40],[160,60],[160,100],[140,112],[30,112],[12,95],[12,58]];
   ctx.save();ctx.translate(2,4);polyPath(P);ctx.fillStyle='rgba(46,46,51,.15)';ctx.fill();ctx.restore();
-  polyPath(P);ctx.fillStyle='#e9e6db';ctx.fill();
-  ctx.save();polyPath(P);ctx.clip();ctx.strokeStyle='rgba(85,85,92,.4)';ctx.lineWidth=.8;for(let k=0;k<180;k+=7){ctx.beginPath();ctx.moveTo(k,112);ctx.lineTo(k+40,40);ctx.stroke()}ctx.restore();
+  polyPath(P);ctx.fillStyle=GRN.wash;ctx.fill();
+  ctx.save();polyPath(P);ctx.clip();greenHatch(0,30,180,120,5,7,.8);ctx.restore();
   ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.lineJoin='round';polyPath(P);ctx.stroke();ctx.lineWidth=4;ctx.strokeStyle='#e4e2d8';polyPath(P);ctx.stroke();
   const fake={cup:[128,78]};drawCup(fake,t);
   const k=(t*.45)%1.6,u=Math.min(1,k/1.1),e=1-(1-u)*(1-u),bx=38+(128-38)*e,by=86+(78-86)*e;

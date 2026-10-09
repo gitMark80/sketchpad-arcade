@@ -183,7 +183,7 @@ function noise(d,v,freq){if(!save.sound)return;const a=audio();if(!a)return;cons
 /* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
    Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
 let amb=null;
-function ambStart(){
+function ambStart(){return;/*no background sea sounds*/
   if(amb||!save.sound)return;const a=audio();if(!a)return;
   const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
   for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
