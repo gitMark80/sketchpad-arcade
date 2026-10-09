@@ -112,44 +112,44 @@
     "Don't let the tray *fill up* 😬",
     "Which tile would *you* tap next?"
   ],
-  "pencil-pairs": [
-    "Link the *pairs* before time runs out",
-    "No more than *two turns* 👀",
-    "Can you clear the *whole* board?"
-  ],
-  "graph-blocks": [
-    "Clear the *rows* and *columns*",
-    "Block puzzle on *graph paper* ✏️",
-    "Will the last piece *fit*? 😬"
-  ],
-  "scribble-swap": [
-    "Swap, match *three*, repeat",
-    "Wash away *all* the sand",
-    "That *combo* though 👀"
-  ],
   "pencil-path": [
-    "Tap the turtles to the *sea* 🐢",
+    "Slide the pencils *off the page* ✏️",
     "Which one goes *first*?",
     "One clear path at a *time*"
-  ],
-  "paper-sub": [
-    "Bubble *blast* everything 🫧",
-    "A paper submarine vs the *whole sea*",
-    "Watch out for the *ink*!"
-  ],
-  "color-by-pencil": [
-    "The most *relaxing* game here 🎨",
-    "Colour by number, but *sketched*",
-    "Watch it *fill in* ✏️"
-  ],
-  "gem-sketch": [
-    "Put every gem *back* where it goes 💎",
-    "Watch the picture *rebuild* itself",
-    "Weirdly *satisfying* ✨"
   ],
   "word-scribble": [
     "Drop letters. Spell the *hidden word*.",
     "A merge game *and* a word game",
     "Word nerds, this one's for *you* 🔤"
+  ],
+  "space-blaster": [
+    "Blast *every* UFO 🚀",
+    "A paper rocket vs the *whole galaxy*",
+    "Watch out for the *goo*!"
+  ],
+  "chibi-chib": [
+    "Put every gem *back* where it goes 💎",
+    "Zoom in on the *chibi* animals",
+    "Weirdly *satisfying* ✨"
+  ],
+  "space-glass": [
+    "The most *relaxing* game here 🎨",
+    "Colour by number, in *space* 🪐",
+    "Watch it *fill in* ✏️"
+  ],
+  "scribble-blocks": [
+    "Clear the *rows* and *columns*",
+    "Block puzzle on *graph paper* ✏️",
+    "Will the last piece *fit*? 😬"
+  ],
+  "no-2-pencil": [
+    "Link the *pairs* before time runs out",
+    "No more than *two turns* 👀",
+    "Can you clear the *whole* board?"
+  ],
+  "drop-swap": [
+    "Swap, match *three*, repeat",
+    "Erase *all* the scribbles",
+    "That *combo* though 👀"
   ]
 }

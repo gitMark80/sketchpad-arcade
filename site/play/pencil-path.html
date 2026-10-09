@@ -10,9 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Art: beach backdrop, island, rock and the three turtles live in ../assets/pencil-path/ (pencil-sketched by sketchify.py).
-   Layout: one portrait column. Title row, HUD (level, turtles left, hearts), progress bar, the square island board, then the button dock.
-   Look: Pencil Path, a 10-year-old's sketchbook page: cream paper, graphite island and sea, wobbly borders, coloured pencil only for hearts, stars and hints. */
+/* Art: everything on the board is drawn in code (see "artwork" in the script): a lined notepad page with spiral binding,
+   coloured pencils, ink blots and the eraser sweep. Each piece has its own draw function so it can be swapped for hand-drawn art.
+   Layout: one portrait column. Title row, HUD (level, pencils left, hearts), progress bar, the square notepad board, then the button dock.
+   Look: Pencil Path, a kid's sketchbook: cream paper, wobbly borders, vivid coloured pencils with dark ink outlines. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -25,7 +26,7 @@
 }
 html,body{height:100%}
 body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;
-  background:url(../assets/pencil-path/beach.webp) center bottom/cover no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") var(--paper);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") var(--paper);
   -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 button{font-family:inherit;color:inherit;cursor:pointer}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -102,7 +103,7 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 .big:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .big.alt{font:400 1.2rem/1 var(--body);text-transform:none;letter-spacing:0;padding:9px;margin-top:10px;color:var(--ink);background:var(--paper);border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil)}
 .big.alt:active{box-shadow:0 0 0 var(--pencil)}
-.big.coral{font:400 1.25rem/1.1 var(--body);text-transform:none;letter-spacing:0;padding:10px;color:var(--ink);background:var(--pink-wash);border-color:var(--ink)}
+.big.warn{font:400 1.25rem/1.1 var(--body);text-transform:none;letter-spacing:0;padding:10px;color:var(--ink);background:var(--pink-wash);border-color:var(--ink)}
 .lvls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 4px}
 .lvl{position:relative;appearance:none;border:2px dashed var(--faint);border-radius:var(--wob2);padding:5px 0 3px;font:400 1.15rem/1.1 var(--display);color:var(--ink);
   background:var(--paper)}
@@ -111,7 +112,6 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 .lvl.cur{background:var(--yellow-wash);border:2px solid var(--ink);color:var(--ink)}
 .lvl.cur small{color:var(--yellow)}
 .lvl:disabled{background:var(--paper-2);color:var(--faint);border-color:var(--faint);cursor:default}
-@media (min-aspect-ratio:4/5){body{background-position:center 66%,0 0}}
 @media (max-height:640px){.brand{font-size:1.3rem}.left b{font-size:1.6rem}}
 @media (prefers-reduced-motion:reduce){.brand,.left.pop,.hearts.hit span,.stars .on,.card{animation:none}}
 </style>
@@ -139,18 +139,18 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Pencil Path</h1><button class="sa-share" type="button" aria-label="Share Pencil Path" data-share-url="https://www.sketchpadarcade.com/pencil-path" data-share-title="Pencil Path" data-share-text="Play Pencil Path free on Sketchpad Arcade! Tap baby sea turtles to send them to the sea, one clear path at a time."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Pencil Path</h1><button class="sa-share" type="button" aria-label="Share Pencil Path" data-share-url="https://www.sketchpadarcade.com/pencil-path" data-share-title="Pencil Path" data-share-text="Play Pencil Path free on Sketchpad Arcade! Tap pencils to send them off the notepad, one clear path at a time."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
     <button class="iconbtn" id="menuBtn" type="button">Levels</button>
   </div>
   <div class="hud">
     <div class="pill"><small>Level</small><b id="lvlEl">1</b></div>
-    <div class="left" id="leftBox"><b id="leftEl" aria-live="polite">0</b><small>on the sand</small></div>
+    <div class="left" id="leftBox"><b id="leftEl" aria-live="polite">0</b><small>on the page</small></div>
     <div class="heartbox"><small>Hearts</small><div class="hearts" id="heartsEl"></div></div>
   </div>
   <div class="timerow"><div class="progress" aria-hidden="true"><i id="progEl"></i></div><div class="clock" id="clockEl" role="timer" aria-label="Time">⏱ 0:00</div></div>
   <div class="boardwrap" id="boardwrap">
-    <canvas id="cv" aria-label="Game board: tap a turtle to send it to the sea"></canvas>
+    <canvas id="cv" aria-label="Game board: tap a pencil to slide it off the notepad"></canvas>
     <div class="toast" id="toast" hidden></div>
     <div class="banner" id="banner" hidden></div>
   </div>
@@ -166,7 +166,7 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 (()=>{
 const $=id=>document.getElementById(id);
 const cv=$('cv'),ctx=cv.getContext('2d');
-const lay=document.createElement('canvas'),lx=lay.getContext('2d'); // sand effects + tide, clipped to the island
+const lay=document.createElement('canvas'),lx=lay.getContext('2d'); // scribble trails + eraser sweep, clipped to the notepad page
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const DIRS=[[-1,0],[0,1],[1,0],[0,-1]]; // up, right, down, left
 const LEVEL_COUNT=60, HEARTS=3, HINTS=3;
@@ -179,31 +179,31 @@ let prog=store.get('progress',{unlocked:1,stars:{}});if(!prog.best)prog.best={};
 let muted=store.get('muted',false);
 
 /* ---------- level generation ----------
-   Turtles are placed one at a time, each facing a direction whose path to the
-   sea is clear at that moment. Removing them in reverse order always works,
+   Pencils are placed one at a time, each pointing in a direction whose path off
+   the page is clear at that moment. Removing them in reverse order always works,
    so every level is solvable. Weighting toward long paths builds blocking chains. */
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 function spec(n){
   const size=Math.min(9,4+Math.floor(n/4));
   const fill=Math.min(.9,.6+.05*(n%4)+n*.004);
-  const rocks=n<7?0:Math.min(size-2,1+Math.floor((n-7)/4));
-  return{size,fill,rocks};
+  const blots=n<7?0:Math.min(size-2,1+Math.floor((n-7)/4));
+  return{size,fill,blots};
 }
 function pathLen(g,size,r,c,d){let len=0,rr=r+DIRS[d][0],cc=c+DIRS[d][1];
   while(rr>=0&&rr<size&&cc>=0&&cc<size){if(g[rr][cc])return -1;len++;rr+=DIRS[d][0];cc+=DIRS[d][1];}return len;}
-function solveDepth(g0,size){ // how many rounds of "remove every free turtle" it takes to clear the board
+function solveDepth(g0,size){ // how many rounds of "remove every free pencil" it takes to clear the board
   const g=g0.map(r=>r.slice());let depth=0;
-  for(;;){const free=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=g[r][c];if(t&&!t.rock&&pathLen(g,size,r,c,t.d)>=0)free.push([r,c]);}
+  for(;;){const free=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=g[r][c];if(t&&!t.blot&&pathLen(g,size,r,c,t.d)>=0)free.push([r,c]);}
     if(!free.length)return depth;free.forEach(([r,c])=>g[r][c]=null);depth++;}
 }
 function generate(n){
-  const {size,fill,rocks}=spec(n);let best=null;
+  const {size,fill,blots}=spec(n);let best=null;
   for(let a=0;a<30;a++){
     const R=rng(n*1009+a*7+1);
     const g=Array.from({length:size},()=>Array(size).fill(null));
     let rk=0,guard=0;
-    while(rk<rocks&&guard++<300){const r=1+Math.floor(R()*(size-2)),c=1+Math.floor(R()*(size-2));if(!g[r][c]){g[r][c]={rock:true,seed:R()};rk++;}}
-    const target=Math.round(size*size*fill)-rocks;let placed=0;
+    while(rk<blots&&guard++<300){const r=1+Math.floor(R()*(size-2)),c=1+Math.floor(R()*(size-2));if(!g[r][c]){g[r][c]={blot:true,seed:R()};rk++;}}
+    const target=Math.round(size*size*fill)-blots;let placed=0;
     for(let pass=0;pass<4&&placed<target;pass++){
       const cells=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(!g[r][c])cells.push([r,c]);
       for(let i=cells.length-1;i>0;i--){const j=Math.floor(R()*(i+1));[cells[i],cells[j]]=[cells[j],cells[i]];}
@@ -211,7 +211,7 @@ function generate(n){
         const opts=[];for(let d=0;d<4;d++){const L=pathLen(g,size,r,c,d);if(L>=0)opts.push({d,w:Math.pow(L+1,Math.min(3,1.4+n*.04))});}
         if(!opts.length)continue;
         let x=R()*opts.reduce((s,o)=>s+o.w,0),pick=opts[0];for(const o of opts){x-=o.w;if(x<=0){pick=o;break;}}
-        g[r][c]={d:pick.d,hue:Math.floor(R()*3),ph:R()*7};placed++;}
+        g[r][c]={d:pick.d,hue:Math.floor(R()*3),ph:R()*7};placed++;} // hue is unused now (pencil colours come from dressPencils) but stays so the generator draws the same numbers
     }
     const depth=solveDepth(g,size);const score=(placed>=target-1?1000:0)+depth*(n<2?-20:12)+placed;
     if(!best||score>best.score)best={g,placed,size,score};
@@ -222,21 +222,22 @@ function generate(n){
 
 /* ---------- state ---------- */
 let level=0,size=4,grid=[],hearts=HEARTS,hints=HINTS,state='idle',total=0,rescued=false,elapsed=0;
-let exits=[],fx=[],hint=null,shake=0,tracks=[],sparkles=[],wet=1;
-/* The tide: 'in' rolls up over the sand, 'covered' sits on it, 'out' pulls back to the sea. The game opens covered and washes out. */
-let tide={mode:'covered',p:1,dur:1,cb:null};
-const turtlesLeft=()=>{let n=0;for(const row of grid)for(const t of row)if(t&&!t.rock)n++;return n;};
+let exits=[],fx=[],hint=null,shake=0,tracks=[],smudge=1;
+/* The eraser sweep: 'in' rubs up the page and wipes it clean, 'covered' sits on it, 'out' pulls back to reveal the pencils.
+   The game opens covered and sweeps out. (Same timing and rules as before; only the picture changed.) */
+let sweep={mode:'covered',p:1,dur:1,cb:null};
+const pencilsLeft=()=>{let n=0;for(const row of grid)for(const t of row)if(t&&!t.blot)n++;return n;};
 function firstBlock(r,c,d){let k=0,rr=r,cc=c;for(;;){rr+=DIRS[d][0];cc+=DIRS[d][1];k++;
   if(rr<0||rr>=size||cc<0||cc>=size)return{free:true,len:k-1};if(grid[rr][cc])return{free:false,k,rr,cc};}}
-function freeTurtle(){const list=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=grid[r][c];if(t&&!t.rock&&firstBlock(r,c,t.d).free)list.push({r,c});}
+function freePencil(){const list=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=grid[r][c];if(t&&!t.blot&&firstBlock(r,c,t.d).free)list.push({r,c});}
   return list.length?list[Math.floor(Math.random()*list.length)]:null;}
-function runTide(mode,dur,cb){tide={mode,p:mode==='in'?0:1,dur:RM?Math.min(dur,.35):dur,cb};sfx(mode==='in'?'wave':'wash');}
+function runSweep(mode,dur,cb){sweep={mode,p:mode==='in'?0:1,dur:RM?Math.min(dur,.35):dur,cb};sfx(mode==='in'?'sweepIn':'sweepOut');}
 
 /* ---------- play ---------- */
 function tap(r,c){
-  if(state!=='play')return;const t=grid[r][c];if(!t||t.rock){return;}
+  if(state!=='play')return;const t=grid[r][c];if(!t||t.blot){return;}
   const b=firstBlock(r,c,t.d);hint=null;
-  if(b.free){grid[r][c]=null;exits.push({r,c,d:t.d,hue:t.hue,ph:t.ph,p:0,len:b.len,splashed:false,mk:.25,side:1});sfx('go');updateHUD();}
+  if(b.free){grid[r][c]=null;const tr={pts:[[c+.5,r+.5]],col:t.col,age:0};tracks.push(tr);exits.push({r,c,d:t.d,col:t.col,len:t.len,trail:t.trail,ph:t.ph,p:0,run:b.len,offEdge:false,mk:0,side:1,tr});sfx('go');updateHUD();}
   else{
     t.bump={p:0,amp:b.k-1+.32};const bl=grid[b.rr][b.cc];bl.wig=1;
     hearts--;shake=7;sfx('bonk');fx.push({type:'text',x:c+.5+DIRS[t.d][1]*(b.k-.5),y:r+.5+DIRS[t.d][0]*(b.k-.5),txt:'Bonk!',life:1});
@@ -244,7 +245,7 @@ function tap(r,c){
     if(hearts<=0){state='lost';setTimeout(showLose,750);}
   }
 }
-/* Score: 100 per hatchling, a speed bonus that shrinks the longer the level takes
+/* Score: 100 per pencil, a speed bonus that shrinks the longer the level takes
    (full bonus at 0s, nothing left at twice the par time), and 100 per heart left. Faster = higher. */
 function scoreFor(n,t,h){
   const par=n*2.5+3,speed=Math.round(n*150*Math.max(0,1-t/(par*2)));
@@ -253,21 +254,21 @@ function scoreFor(n,t,h){
 const fmtTime=t=>{const s=Math.floor(t);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
 const fmtNum=n=>n.toLocaleString('en-US');
 function checkWin(){
-  if(state==='play'&&!exits.length&&turtlesLeft()===0){
+  if(state==='play'&&!exits.length&&pencilsLeft()===0){
     state='won';const stars=Math.max(1,hearts);
     const res=scoreFor(total,elapsed,hearts),prev=prog.best[level]||0;res.best=Math.max(prev,res.score);res.newBest=res.score>prev&&prev>0;
     prog.best[level]=res.best;
     prog.stars[level]=Math.max(prog.stars[level]||0,stars);
     prog.unlocked=Math.max(prog.unlocked,Math.min(LEVEL_COUNT,level+2));store.set('progress',prog);
     sfx('win');
-    setTimeout(()=>runTide('in',1.5,()=>setTimeout(()=>showWin(stars,res),RM?0:250)),RM?150:450);
+    setTimeout(()=>runSweep('in',1.5,()=>setTimeout(()=>showWin(stars,res),RM?0:250)),RM?150:450);
   }
 }
 
 /* ---------- HUD ---------- */
 let lastLeft=-1;
 function updateHUD(hit){
-  const left=turtlesLeft();
+  const left=pencilsLeft();
   $('lvlEl').textContent=level+1;$('leftEl').textContent=left;
   if(lastLeft>=0&&left<lastLeft){const b=$('leftBox');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}
   lastLeft=left;
@@ -283,30 +284,30 @@ let toastT;function toast(s){const t=$('toast');t.textContent=s;t.hidden=false;c
 /* ---------- screens ---------- */
 function modal(html){$('card').innerHTML=html;$('overlay').hidden=false;}
 function closeModal(){$('overlay').hidden=true;}
-const TURTLE_IMG='<img class="hero" src="../assets/pencil-path/turtle-0.webp" alt="">';
+const HERO=()=>`<img class="hero" src="${heroImage()}" alt="">`;
 const TIPS={
-  0:'Tap a turtle to send it to the sea. It crawls straight ahead, so its way must be clear. If it bumps another turtle, you lose a heart.',
-  1:'Look for turtles with a clear run to the water first. Each one that leaves opens a path for another.',
-  7:'New: rocks. They never move, but every turtle on the island can still find a way to the sea.',
+  0:'Tap a pencil to slide it off the notepad. It moves straight the way its tip points, so its way must be clear. If it bumps another pencil, you lose a heart.',
+  1:'Look for pencils with a clear run to the edge of the page first. Each one that leaves opens a path for another.',
+  7:'New: ink blots. They never move, but every pencil on the page can still find a way off.',
 };
 function setupLevel(i){
-  level=i;const lv=generate(i);size=lv.size;grid=lv.g;total=turtlesLeft();
+  level=i;const lv=generate(i);size=lv.size;grid=lv.g;total=pencilsLeft();
   hearts=HEARTS;hints=HINTS;rescued=false;elapsed=0;exits=[];fx=[];hint=null;shake=0;tracks=[];lastLeft=-1;
-  sparkles=Array.from({length:8+size},()=>({x:Math.random()*size,y:Math.random()*size,ph:Math.random()*7,s:.6+Math.random()*.6}));
+  dressPencils(i);
   resize();updateHUD();$('clockEl').textContent='⏱ 0:00';
 }
-/* wash: roll the tide in first (level picks, retries, restarts). After a win the tide is already in. */
+/* wash: sweep the eraser in first (level picks, retries, restarts). After a win the page is already wiped. */
 /* intro: only the very first screen shows the Level/Play card. Every other start goes straight into play with a short banner. */
 function startLevel(i,o={}){
   closeModal();
   const begin=o.intro?showIntro:playNow;
-  const go=()=>{setupLevel(i);if(tide.mode==='covered'){state='tide';runTide('out',1.3,begin);}else begin();};
-  if(o.wash&&tide.mode!=='covered'){state='tide';runTide('in',.8,go);}else go();
+  const go=()=>{setupLevel(i);if(sweep.mode==='covered'){state='erase';runSweep('out',1.3,begin);}else begin();};
+  if(o.wash&&sweep.mode!=='covered'){state='erase';runSweep('in',.8,go);}else go();
 }
 let bannerT;
 function playNow(){
   state='play';const b=$('banner'),tip=TIPS[level];
-  b.innerHTML=`<b>Level ${level+1}</b><span>${tip||`Guide all ${total} hatchlings to the sea.`}</span>`;
+  b.innerHTML=`<b>Level ${level+1}</b><span>${tip||`Slide all ${total} pencils off the page.`}</span>`;
   b.classList.remove('out');b.hidden=false;clearTimeout(bannerT);
   bannerT=setTimeout(()=>{b.classList.add('out');bannerT=setTimeout(()=>b.hidden=true,400);},tip?4200:1600);
 }
@@ -314,16 +315,16 @@ function hideBanner(){const b=$('banner');if(b.hidden)return;clearTimeout(banner
 function showIntro(){
   state='intro';const i=level;
   const tip=TIPS[i]?`<p class="tip">${TIPS[i]}</p>`:'';
-  modal(`${TURTLE_IMG}<h2>Level ${i+1}</h2><p>Guide all ${total} hatchlings to the sea.</p>${tip}
+  modal(`${HERO()}<h2>Level ${i+1}</h2><p>Slide all ${total} pencils off the page.</p>${tip}
     <button class="big" id="goBtn" type="button">Play</button>`);
   $('goBtn').onclick=()=>{closeModal();state='play';unlockAudio();startAmbient();};
 }
 function showHelp(){
   const was=state;if(state==='play')state='paused';
-  modal(`${TURTLE_IMG}<h2>Pencil Path</h2><ol class="rules">
-    <li><b>1</b><span>Tap a baby turtle. It crawls straight the way it is facing.</span></li>
-    <li><b>2</b><span>If its path to the water is clear, it swims away. If it bumps another turtle, you lose a heart.</span></li>
-    <li><b>3</b><span>Get every hatchling into the sea to win. Rocks never move.</span></li>
+  modal(`${HERO()}<h2>Pencil Path</h2><ol class="rules">
+    <li><b>1</b><span>Tap a pencil. It slides straight the way its tip points.</span></li>
+    <li><b>2</b><span>If its path to the edge of the page is clear, it zooms off the notepad. If it bumps another pencil, you lose a heart.</span></li>
+    <li><b>3</b><span>Clear every pencil off the page to win. Ink blots never move.</span></li>
     <li><b>4</b><span>Be quick! The faster you finish, the higher your score. Keep all 3 hearts for 3 stars.</span></li></ol>
     <button class="big" id="okBtn" type="button">Got it</button>`);
   $('okBtn').onclick=()=>{closeModal();resume(was);};
@@ -336,11 +337,11 @@ function starRow(n){return `<div class="stars" aria-label="${n} of 3 stars">${[1
 function showWin(stars,res){
   const last=level>=LEVEL_COUNT-1;
   res=res||{score:prog.best[level]||0,time:elapsed,best:prog.best[level]||0};
-  const msg=stars===3?'Every hatchling made it, with no bumps.':stars===2?'All safe! One bump along the way.':'All safe! Try again for fewer bumps.';
-  modal(`<h2>All safe at sea!</h2>${starRow(stars)}
+  const msg=stars===3?'Every pencil got away, with no bumps.':stars===2?'All clear! One bump along the way.':'All clear! Try again for fewer bumps.';
+  modal(`<h2>Page cleared!</h2>${starRow(stars)}
   <div class="stats"><div><b>${fmtTime(res.time)}</b><span>Time</span></div><div class="main"><b>${fmtNum(res.score)}</b><span>Score</span></div><div><b>${fmtNum(res.best)}</b><span>Best</span></div></div>
   ${res.newBest?'<span class="newbest">New best!</span>':''}<p>${msg}</p>
-  ${last?'<p>You finished every level. The whole beach thanks you!</p>':'<button class="big" id="nextBtn" type="button">Next level</button>'}
+  ${last?'<p>You finished every level. Your notepad is spotless!</p>':'<button class="big" id="nextBtn" type="button">Next level</button>'}
   <button class="big alt" id="againBtn" type="button">Replay</button>`);
   window.BDA&&BDA.shareScore({lead:'I scored',score:res.score,line:'Level '+(level+1)+' in '+fmtTime(res.time),into:'#card',after:'p'});
   $('againBtn').onclick=()=>startLevel(level);if(!last)$('nextBtn').onclick=()=>startLevel(level+1);
@@ -349,14 +350,14 @@ function showWin(stars,res){
    (CrazyGames, GameDistribution, GameMonetize). Resolve true only if the ad finished. */
 function rewardedAd(){return Promise.resolve(true);}
 function showLose(){
-  const offer=!rescued?`<button class="big coral" id="rescueBtn" type="button">+1 heart (watch ad)</button>`:'';
-  modal(`<h2>Out of hearts</h2><p>${turtlesLeft()} hatchling${turtlesLeft()===1?' is':'s are'} still on the sand.</p>
+  const offer=!rescued?`<button class="big warn" id="rescueBtn" type="button">+1 heart (watch ad)</button>`:'';
+  modal(`<h2>Out of hearts</h2><p>${pencilsLeft()} pencil${pencilsLeft()===1?' is':'s are'} still on the page.</p>
   ${offer}<button class="big ${offer?'alt':''}" id="retryBtn" type="button">Retry</button><button class="big alt" id="lvBtn" type="button">Levels</button>`);
   $('retryBtn').onclick=()=>startLevel(level,{wash:true});$('lvBtn').onclick=showMenu;
   if(offer)$('rescueBtn').onclick=async()=>{if(!await rewardedAd())return;rescued=true;hearts=1;state='play';closeModal();updateHUD();toast('+1 heart!');};
 }
 function showMenu(){
-  if(state==='tide')return;
+  if(state==='erase')return;
   let h='<h2>Levels</h2><div class="lvls">';
   for(let i=0;i<LEVEL_COUNT;i++){const s=prog.stars[i]||0;
     h+=`<button class="lvl${i===level?' cur':''}" type="button" data-l="${i}" ${i<prog.unlocked?'':'disabled'}>${i+1}<small>${'★'.repeat(s)}</small></button>`;}
@@ -368,7 +369,7 @@ function showMenu(){
 async function useHint(){
   if(state!=='play')return;
   if(hints<=0){if(!await rewardedAd())return;hints++;}
-  const f=freeTurtle();if(!f)return;hints--;hint={...f,t:performance.now()};updateHUD();sfx('hint');
+  const f=freePencil();if(!f)return;hints--;hint={...f,t:performance.now()};updateHUD();sfx('hint');
 }
 
 /* ---------- audio ---------- */
@@ -377,24 +378,24 @@ function unlockAudio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAud
 function tone(f0,f1,dur,type,vol,delay=0){if(muted||!ac)return;try{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+delay;
   o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
   g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+dur+.02);}catch(e){}}
-function surf(dur,f0,f1,vol){if(muted||!ac)return;try{const n=Math.floor(ac.sampleRate*dur),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+function rub(dur,f0,f1,vol){ // filtered noise swell: the eraser rubbing across the page
+  if(muted||!ac)return;try{const n=Math.floor(ac.sampleRate*dur),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
   for(let i=0;i<n;i++)d[i]=Math.random()*2-1;const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter(),g=ac.createGain(),t=ac.currentTime;
   f.type='lowpass';f.frequency.setValueAtTime(f0,t);f.frequency.linearRampToValueAtTime(f1,t+dur*.55);f.frequency.linearRampToValueAtTime(f0,t+dur);
   g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+dur*.45);g.gain.exponentialRampToValueAtTime(.001,t+dur);
   s.connect(f).connect(g).connect(ac.destination);s.start(t);s.stop(t+dur);}catch(e){}}
 function sfx(k){
   if(k==='go')tone(380,760,.16,'sine',.13);
-  else if(k==='splash')tone(900,300,.12,'triangle',.05);
+  else if(k==='edge')tone(900,300,.12,'triangle',.05);
   else if(k==='bonk'){tone(180,90,.18,'triangle',.18);}
   else if(k==='hint')tone(660,990,.12,'sine',.08);
   else if(k==='win')[523,659,784,1046].forEach((f,i)=>tone(f,f*1.01,.18,'sine',.12,i*.09));
-  else if(k==='wave')surf(1.7,350,1700,.14);
-  else if(k==='wash')surf(1.3,1300,300,.08);
+  else if(k==='sweepIn')rub(1.7,350,1700,.14);
+  else if(k==='sweepOut')rub(1.3,1300,300,.08);
 }
-/* Relaxing surf in the background: soft filtered noise that swells and falls like waves on the shore.
-   Two slow, out-of-step swells keep it from sounding like a loop. */
+/* Optional background hum: soft filtered noise with two slow, out-of-step swells. Switched off. */
 let amb=null;
-function startAmbient(){return;/*no background sea sounds*/
+function startAmbient(){return;/*no background sound*/
   if(amb||!ac)return;
   try{
     const sr=ac.sampleRate,n=sr*4,buf=ac.createBuffer(2,n,sr);
@@ -417,143 +418,249 @@ document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidd
 function syncSound(){syncAmbient();$('soundTx').textContent=muted?'Sound off':'Sound';$('soundWave').toggleAttribute('hidden',muted);$('soundOff').toggleAttribute('hidden',!muted);
   $('soundBtn').setAttribute('aria-pressed',String(!muted));}
 
-/* ---------- artwork (turtles are drawn top-down, facing up) ---------- */
-const A='../assets/pencil-path/';
-const IMG={turtle:[0,1,2].map(i=>Object.assign(new Image(),{src:A+'turtle-'+i+'.webp'})),rock:Object.assign(new Image(),{src:A+'rock.webp'}),island:Object.assign(new Image(),{src:A+'island.webp'})};
-const ready=i=>i&&i.complete&&i.naturalWidth>0;
-/* ---------- drawing ---------- */
+/* ---------- artwork ----------
+   Pencils, the ink blot and the eraser use Mark's hand-drawn art (src/assets/pencil-path/), with the code drawing as fallback.
+   drawPencil (a coloured pencil, pointing up), drawDoodle (the faint pencil line behind it), drawBlot (ink-blot obstacle),
+   buildPage (desk + lined notepad page with spiral binding), drawEraser (the eraser block), drawSweep (the wiped page under it),
+   drawTracks (scribble trail), shaving / swoosh effects, heroImage (card illustration). */
+const OUTLINE='#1f1f22';
+const PENCILS=['#e0453a','#f08a24','#f2c230','#8bc34a','#4caf50','#2fa7a0','#4fb3e8','#3a7bd5','#8e5bc9','#e86aa6','#9b6a3c'];
+/* Mark's hand-drawn art: pencils (point up), the ink blot and the eraser (drawn vertical). Code drawing is the fallback until each loads. */
+const ART='../assets/pencil-path/';
+function artImg(n,cb){const i=new Image();i.decoding='async';i.onload=()=>{i.ok=true;cb&&cb();};i.src=ART+n+'.png';return i;}
+const ART_HUES={red:4,orange:25,yellow:52,green:105,teal:180,blue:211,purple:282,pink:333};
+let artLeft=0;const artDone=()=>{if(--artLeft)return;heroURL=null;document.querySelectorAll('img.hero').forEach(i=>{i.src=heroImage();});};
+const PENCIL_ART={};for(const n in ART_HUES){artLeft++;PENCIL_ART[n]=artImg(n,artDone);}
+const BLOT_ART=artImg('ink-blot'),ERASER_ART=artImg('eraser');
+function hueOf(hex){const n=parseInt(hex.slice(1),16),r=(n>>16)/255,g=((n>>8)&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),d=mx-Math.min(r,g,b);
+  if(!d)return 0;let h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;return(h*60+360)%360;}
+const pencilArtCache={};
+function pencilArt(col){let n=pencilArtCache[col];if(!n){const h=hueOf(col);let best=1e9;
+  for(const k in ART_HUES){const dd=Math.abs(h-ART_HUES[k]),dh=Math.min(dd,360-dd);if(dh<best){best=dh;n=k;}}pencilArtCache[col]=n;}
+  const im=PENCIL_ART[n];return im.ok?im:null;}
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;const t=amt>0?255:0,a=Math.abs(amt);
+  r=r+(t-r)*a|0;g=g+(t-g)*a|0;b=b+(t-b)*a|0;return `rgb(${r},${g},${b})`;}
+function hash(a,b,c){let h=Math.imul(a+1,374761393)^Math.imul(b+7,668265263)^Math.imul(c+13,1274126177);h=Math.imul(h^h>>>13,1274126177);return((h^h>>>16)>>>0)/4294967296;}
+/* cosmetic only: colour, length and doodle shape per pencil, picked from the level and cell (does not touch the level generator) */
+function dressPencils(lv){
+  for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=grid[r][c];if(!t||t.blot)continue;
+    t.col=PENCILS[Math.floor(hash(lv,r,c)*PENCILS.length)];t.len=.62+hash(c,lv,r)*.18;t.trail=Math.floor(hash(r,c,lv)*4);}
+}
+/* two sets of diagonal coloured-pencil hatching inside the current clip, second set a shade darker */
+function hatch(g,x,y,w,h,col,s,a=1){
+  const st=Math.max(2,s*.065),lw=Math.max(.8,s*.022);g.lineCap='round';
+  const ga=g.globalAlpha;
+  g.globalAlpha=ga*.9*a;g.strokeStyle=col;g.lineWidth=lw;g.beginPath();
+  for(let k=-h;k<w+h;k+=st){g.moveTo(x+k,y+h);g.lineTo(x+k+h,y);}g.stroke();
+  g.globalAlpha=ga*.7*a;g.strokeStyle=shade(col,-.3);g.lineWidth=lw*.9;g.beginPath();
+  for(let k=-h+st*.5;k<w+h;k+=st*1.4){g.moveTo(x+k,y);g.lineTo(x+k+h,y+h);}g.stroke();
+  g.globalAlpha=ga;
+}
+/* A coloured pencil seen from above, tip pointing up (-y), tip at y=-s*.44. len = share of the cell it covers. */
+function drawPencil(g,s,col,len){
+  const L=s*len,w=s*.3,tipY=-s*.44,cone=w*1.15,top=tipY+cone,end=tipY+L,lw=Math.min(3,Math.max(1.6,s*.06)),band=s*.07;
+  const art=pencilArt(col);
+  if(art){// hand-drawn pencil: tip at tipY, eraser end at tipY+L, centred on x=0 (a touch wider than the art so it reads at small sizes)
+    const dw=Math.min(w,L*art.naturalWidth/art.naturalHeight*1.45);
+    g.fillStyle='rgba(46,46,51,.18)';g.beginPath();g.roundRect(-dw*.4+s*.05,tipY+L*.12+s*.07,dw*.8,L*.86,dw*.3);g.fill();
+    g.drawImage(art,-dw/2,tipY,dw,L);return;}
+  g.lineJoin='round';g.lineCap='round';
+  g.fillStyle='rgba(46,46,51,.18)';g.beginPath();g.moveTo(s*.05,tipY+s*.07);g.lineTo(w/2+s*.05,top+s*.07);g.lineTo(w/2+s*.05,end+s*.07);g.lineTo(-w/2+s*.05,end+s*.07);g.lineTo(-w/2+s*.05,top+s*.07);g.closePath();g.fill();
+  // painted body
+  g.beginPath();g.rect(-w/2,top,w,end-top);g.fillStyle=shade(col,.5);g.fill();
+  g.save();g.clip();hatch(g,-w/2,top,w,end-top,col,s);
+  g.fillStyle=shade(col,-.28);g.fillRect(-w/2,end-band,w,band);
+  g.strokeStyle=shade(col,-.4);g.lineWidth=lw*.45;g.beginPath();g.moveTo(w*.14,top);g.lineTo(w*.14,end-band);g.moveTo(-w*.14,top);g.lineTo(-w*.14,end-band);g.stroke();
+  g.restore();
+  g.strokeStyle=OUTLINE;g.lineWidth=lw;g.beginPath();g.rect(-w/2,top,w,end-top);g.stroke();
+  g.lineWidth=lw*.6;g.beginPath();g.moveTo(-w/2,end-band);g.lineTo(w/2,end-band);g.stroke();
+  // sharpened wood cone with a scalloped edge
+  const conePath=()=>{g.beginPath();g.moveTo(-w/2,top);g.quadraticCurveTo(-w/3,top+w*.22,-w/6,top);g.quadraticCurveTo(0,top+w*.22,w/6,top);g.quadraticCurveTo(w/3,top+w*.22,w/2,top);
+  g.lineTo(0,tipY);g.closePath();};conePath();g.fillStyle='#f7dfb2';g.fill();
+  g.save();g.clip();g.strokeStyle='rgba(155,106,60,.55)';g.lineWidth=Math.max(.7,s*.016);g.beginPath();
+  for(let k=-w;k<w;k+=Math.max(2,s*.06)){g.moveTo(k,top+w*.2);g.lineTo(k+w*.5,tipY);}g.stroke();g.restore();
+  conePath();g.strokeStyle=OUTLINE;g.lineWidth=lw;g.stroke();
+  // coloured lead
+  const lt=tipY+cone*.4;g.beginPath();g.moveTo(-w*.2,lt);g.lineTo(w*.2,lt);g.lineTo(0,tipY);g.closePath();g.fillStyle=col;g.fill();g.lineWidth=lw*.75;g.stroke();
+}
+/* the faint pencil line a pencil has just drawn behind itself: straight, wave, zigzag or loop */
+function drawDoodle(g,s,col,len,kind){
+  const y0=-s*.44+s*len+s*.04,y1=s*.48;if(y1-y0<s*.1)return;
+  g.save();g.globalAlpha*=.6;g.strokeStyle=col;g.lineWidth=Math.max(1.2,s*.045);g.lineCap='round';g.lineJoin='round';g.beginPath();g.moveTo(0,y0);
+  const n=10;for(let i=1;i<=n;i++){const t=i/n,y=y0+(y1-y0)*t;let x=0;
+    if(kind===1)x=Math.sin(t*Math.PI*2)*s*.08;else if(kind===2)x=(i%2?1:-1)*s*.06*(i<n?1:0);else if(kind===3)x=Math.sin(t*Math.PI)*s*.1;g.lineTo(x,y);}
+  g.stroke();g.restore();
+}
+function drawPiece(x,y,s,t,d,ph,moving,alpha=1,doodle=true){
+  ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(d*Math.PI/2+(moving?Math.sin(ph)*.14:Math.sin(ph*.35)*.025));
+  if(doodle)drawDoodle(ctx,s,t.col,t.len,t.trail);drawPencil(ctx,s,t.col,t.len);ctx.restore();
+}
+/* ink blot obstacle */
+function drawBlot(x,y,s,seed){
+  ctx.save();ctx.translate(x,y);ctx.rotate(seed*6.28);
+  if(BLOT_ART.ok){const k=s*.96/Math.max(BLOT_ART.naturalWidth,BLOT_ART.naturalHeight),bw=BLOT_ART.naturalWidth*k,bh=BLOT_ART.naturalHeight*k;
+    ctx.drawImage(BLOT_ART,-bw/2,-bh/2,bw,bh);ctx.restore();return;}
+  const lobe=i=>s*(.27+.07*Math.sin(seed*40+i*2.3)+.04*Math.sin(seed*17+i*5.1));
+  ctx.beginPath();for(let i=0;i<=12;i++){const a=i/12*Math.PI*2,r=lobe(i%12),am=a-Math.PI/12,rm=(lobe(i%12)+lobe((i+11)%12))*.42;
+    if(!i)ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);else ctx.quadraticCurveTo(Math.cos(am)*rm,Math.sin(am)*rm,Math.cos(a)*r,Math.sin(a)*r);}
+  ctx.closePath();ctx.fillStyle='#2a2a31';ctx.fill();ctx.strokeStyle=OUTLINE;ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<3;i++){const a=seed*9+i*2.2,r=s*(.38+.05*i);ctx.beginPath();ctx.arc(Math.cos(a)*r,Math.sin(a)*r,s*(.05-.012*i),0,7);ctx.fill();}
+  ctx.strokeStyle='rgba(246,243,234,.75)';ctx.lineWidth=Math.max(1.2,s*.04);ctx.lineCap='round';ctx.beginPath();ctx.arc(-s*.04,-s*.04,s*.14,3.5,4.4);ctx.stroke();
+  ctx.restore();
+}
+/* ---------- the notepad page (static, rebuilt on resize) ---------- */
 let W=0,cell=0,ox=0,dpr=1;
+const bg=document.createElement('canvas'),bx=bg.getContext('2d');
+const DESK='#e6dfcf';
+function pageRect(){return{x:ox-cell*.42,y:ox-cell*.62,w:size*cell+cell*.84,h:size*cell+cell*1.04};}
+let noisePat=null;
+function noise(){if(noisePat)return noisePat;const n=document.createElement('canvas');n.width=n.height=96;const g=n.getContext('2d');
+  for(let i=0;i<900;i++){g.fillStyle=`rgba(70,70,80,${Math.random()*.07})`;g.fillRect(Math.random()*96,Math.random()*96,1+Math.random()*1.5,1);}
+  return noisePat=bx.createPattern(n,'repeat');}
+function buildPage(){
+  bg.width=bg.height=Math.round(W*dpr);const g=bx;g.setTransform(dpr,0,0,dpr,0,0);
+  // desk under the notepad
+  g.fillStyle=DESK;g.fillRect(0,0,W,W);g.strokeStyle='rgba(155,106,60,.16)';g.lineWidth=1;
+  for(let i=0;i<14;i++){g.beginPath();const y0=W*i/13;for(let x=0;x<=W;x+=10){const y=y0+Math.sin(x/40+i)*3;x?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();}
+  const P=pageRect();
+  g.fillStyle='rgba(46,46,51,.22)';g.beginPath();g.roundRect(P.x+4,P.y+5,P.w,P.h,5);g.fill();
+  g.fillStyle='#fdfbf4';g.beginPath();g.roundRect(P.x,P.y,P.w,P.h,5);g.fill();
+  g.save();g.clip();g.fillStyle=noise();g.fillRect(P.x,P.y,P.w,P.h);
+  // ruled blue lines, a darker header line, the red margin
+  g.strokeStyle='rgba(79,179,232,.55)';g.lineWidth=1;g.beginPath();
+  for(let y=ox+cell*.5;y<P.y+P.h-2;y+=cell*.5){g.moveTo(P.x,y);g.lineTo(P.x+P.w,y);}g.stroke();
+  g.strokeStyle='rgba(58,123,213,.7)';g.lineWidth=1.6;g.beginPath();g.moveTo(P.x,ox);g.lineTo(P.x+P.w,ox);g.stroke();
+  g.strokeStyle='rgba(224,69,58,.7)';g.lineWidth=1.4;g.beginPath();g.moveTo(ox-cell*.2,P.y);g.lineTo(ox-cell*.2,P.y+P.h);g.moveTo(ox-cell*.25,P.y);g.lineTo(ox-cell*.25,P.y+P.h);g.stroke();
+  // perforation under the binding
+  g.strokeStyle='rgba(85,85,92,.45)';g.setLineDash([2,4]);g.beginPath();g.moveTo(P.x,P.y+cell*.4);g.lineTo(P.x+P.w,P.y+cell*.4);g.stroke();g.setLineDash([]);
+  g.restore();
+  g.strokeStyle=OUTLINE;g.lineWidth=2;g.beginPath();g.roundRect(P.x,P.y,P.w,P.h,5);g.stroke();
+  // spiral binding: holes punched along the top, wire loops over the edge
+  const n=Math.max(5,size+2),hy=P.y+cell*.2,hr=Math.max(2.5,cell*.075);
+  for(let i=0;i<n;i++){const hx=P.x+P.w*(i+.5)/n;
+    g.fillStyle=DESK;g.strokeStyle=OUTLINE;g.lineWidth=1.6;g.beginPath();g.arc(hx,hy,hr,0,7);g.fill();g.stroke();
+    const loop=()=>{g.beginPath();g.moveTo(hx-hr*.3,hy);g.bezierCurveTo(hx-hr*1.6,hy-cell*.2,hx-hr*.4,P.y-cell*.24,hx+hr*.9,P.y-cell*.1);};
+    g.lineCap='round';g.strokeStyle=OUTLINE;g.lineWidth=Math.max(3,cell*.075)+2.4;loop();g.stroke();
+    g.strokeStyle='#9a9aa4';g.lineWidth=Math.max(3,cell*.075);loop();g.stroke();
+    g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=1;loop();g.stroke();}
+}
 function resize(){
   const bw=$('boardwrap');W=Math.max(220,Math.floor(Math.min(bw.clientWidth,bw.clientHeight)||360));
   cv.style.width=cv.style.height=W+'px';dpr=Math.min(window.devicePixelRatio||1,2);
-  cv.width=cv.height=lay.width=lay.height=Math.round(W*dpr);cell=W/(size+1.5);ox=cell*.75;
-}
-const SHELLS=[['#dcebdd','#5a9a6a','#dcebdd'],['#e9e6db','#55555c','#e9e6db'],['#f3e6b0','#c99a1a','#f3e6b0']];
-const SHADOW='rgba(46,46,51,.2)';
-function drawTurtle(x,y,s,d,hue,ph,moving,alpha=1){
-  const im=IMG.turtle[hue];
-  if(ready(im)){ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(d*Math.PI/2+(moving?Math.sin(ph)*.13:Math.sin(ph*.35)*.025));
-    ctx.fillStyle=SHADOW;ctx.beginPath();ctx.ellipse(s*.05,s*.11,s*.3,s*.36,0,0,7);ctx.fill();
-    const k=s*(moving?1+Math.abs(Math.sin(ph))*.04:1);ctx.drawImage(im,-k*.52,-k*.52,k*1.04,k*1.04);ctx.restore();return;}
-  const col=SHELLS[hue];ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(d*Math.PI/2);
-  const fl=moving?Math.sin(ph)*.55:Math.sin(ph*.35)*.08;const line=INK,skin='#f0ece1';
-  ctx.lineWidth=Math.max(1.2,s*.035);ctx.strokeStyle=line;
-  ctx.fillStyle=SHADOW;ctx.beginPath();ctx.ellipse(s*.03,s*.08,s*.3,s*.36,0,0,7);ctx.fill();
-  for(const side of[-1,1]){
-    ctx.save();ctx.translate(side*s*.24,-s*.12);ctx.rotate(side*(1.05+fl*side));ctx.fillStyle=skin;ctx.beginPath();ctx.ellipse(0,-s*.1,s*.075,s*.17,0,0,7);ctx.fill();ctx.stroke();ctx.restore();
-    ctx.save();ctx.translate(side*s*.19,s*.25);ctx.rotate(side*(2.35-fl*side*.7));ctx.fillStyle=skin;ctx.beginPath();ctx.ellipse(0,-s*.06,s*.06,s*.1,0,0,7);ctx.fill();ctx.stroke();ctx.restore();
-  }
-  const hb=moving?Math.sin(ph*2)*s*.015:0;
-  ctx.fillStyle=skin;ctx.beginPath();ctx.ellipse(0,-s*.35+hb,s*.115,s*.125,0,0,7);ctx.fill();ctx.stroke();
-  ctx.fillStyle=col[0];ctx.beginPath();ctx.ellipse(0,s*.03,s*.26,s*.31,0,0,7);ctx.fill();ctx.stroke();
-  ctx.restore();
-}
-function drawRock(x,y,s,seed){
-  if(ready(IMG.rock)){ctx.save();ctx.translate(x,y);ctx.rotate((seed-.5)*.8);ctx.fillStyle=SHADOW;ctx.beginPath();ctx.ellipse(s*.05,s*.12,s*.38,s*.24,0,0,7);ctx.fill();
-    ctx.drawImage(IMG.rock,-s*.46,-s*.46,s*.92,s*.92);ctx.restore();return;}
-  ctx.save();ctx.translate(x,y);ctx.fillStyle='#e4e2d8';ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,0,s*.36,s*.3,0,0,7);ctx.fill();ctx.stroke();ctx.restore();
+  cv.width=cv.height=lay.width=lay.height=Math.round(W*dpr);cell=W/(size+1.5);ox=cell*.75;buildPage();
 }
 const cx=c=>ox+(c+.5)*cell, cy=r=>ox+(r+.5)*cell;
-function islandRect(){const pad=cell*.2,e=cell*.32,ix=ox-pad-e;return{x:ix,w:size*cell+(pad+e)*2};}
-/* clip whatever is on the effects layer to the island's shape, then lay it on the board */
+/* clip whatever is on the effects layer to the notepad page, then lay it on the board */
 function blitLayer(sx,sy){
-  const I=islandRect();lx.setTransform(dpr,0,0,dpr,0,0);lx.globalCompositeOperation='destination-in';
-  if(ready(IMG.island))lx.drawImage(IMG.island,I.x,I.x,I.w,I.w);else{lx.fillStyle='#000';lx.beginPath();lx.roundRect(I.x+cell*.3,I.x+cell*.3,I.w-cell*.6,I.w-cell*.6,cell*.5);lx.fill();}
+  const P=pageRect();lx.setTransform(dpr,0,0,dpr,0,0);lx.globalCompositeOperation='destination-in';
+  lx.fillStyle='#000';lx.beginPath();lx.roundRect(P.x,P.y,P.w,P.h,5);lx.fill();
   lx.globalCompositeOperation='source-over';
   ctx.save();ctx.setTransform(1,0,0,1,sx,sy);ctx.drawImage(lay,0,0);ctx.restore();
 }
 function clearLayer(){lx.setTransform(1,0,0,1,0,0);lx.clearRect(0,0,lay.width,lay.height);lx.setTransform(dpr,0,0,dpr,0,0);}
-/* turtle crawl marks: little flipper scuffs alternating side to side */
+/* scribble trails left by departing pencils: coloured zigzags that fade */
 function drawTracks(){
-  if(!tracks.length)return;lx.strokeStyle='rgba(85,85,92,.42)';lx.lineCap='round';lx.lineWidth=Math.max(1,cell*.05);lx.beginPath();
-  for(const m of tracks){const dx=DIRS[m.d][1],dy=DIRS[m.d][0],px=-dy*m.s,py=dx*m.s;
-    const x=ox+(m.x+px*.21)*cell,y=ox+(m.y+py*.21)*cell;
-    lx.moveTo(x+(-dx*.05+px*.05)*cell,y+(-dy*.05+py*.05)*cell);lx.lineTo(x+(dx*.06-px*.05)*cell,y+(dy*.06-py*.05)*cell);}
-  lx.stroke();
+  lx.lineCap='round';lx.lineJoin='round';lx.lineWidth=Math.max(1.4,cell*.05);
+  for(const tr of tracks){const a=Math.max(0,Math.min(1,(2.2-tr.age)/1.2));if(a<=0||tr.pts.length<2)continue;
+    lx.globalAlpha=a*.85;lx.strokeStyle=tr.col;lx.beginPath();tr.pts.forEach((p,i)=>{const x=ox+p[0]*cell,y=ox+p[1]*cell;i?lx.lineTo(x,y):lx.moveTo(x,y);});lx.stroke();}
+  lx.globalAlpha=1;
+}
+/* eraser block: pink rubber end + blue paper sleeve, hatched, ink outline */
+function drawEraser(x,y,w,h,rot){
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+  if(ERASER_ART.ok){// the art is drawn standing up: turn it a quarter so its long side runs along w, keeping its proportions
+    const th=w*ERASER_ART.naturalWidth/ERASER_ART.naturalHeight;
+    ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.roundRect(-w/2+5,-th/2+6,w,th,th*.2);ctx.fill();
+    ctx.rotate(-Math.PI/2);ctx.drawImage(ERASER_ART,-th/2,-w/2,th,w);ctx.restore();return;}
+  ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.roundRect(-w/2+5,-h/2+6,w,h,h*.28);ctx.fill();
+  const rub=w*.42;
+  const rubber=()=>{ctx.beginPath();ctx.roundRect(-w/2,-h/2,rub+h*.3,h,[h*.32,0,0,h*.32]);},sleeve=()=>{ctx.beginPath();ctx.roundRect(-w/2+rub,-h/2-1,w-rub,h+2,[0,h*.18,h*.18,0]);};
+  rubber();ctx.fillStyle=shade('#e86aa6',.5);ctx.fill();
+  ctx.save();ctx.clip();hatch(ctx,-w/2,-h/2,rub+h*.3,h,'#e86aa6',h*.8);ctx.restore();
+  rubber();ctx.strokeStyle=OUTLINE;ctx.lineWidth=2.6;ctx.stroke();
+  sleeve();ctx.fillStyle=shade('#3a7bd5',.55);ctx.fill();
+  ctx.save();ctx.clip();hatch(ctx,-w/2+rub,-h/2,w-rub,h+2,'#3a7bd5',h*.8);ctx.restore();
+  sleeve();ctx.strokeStyle=OUTLINE;ctx.lineWidth=2.6;ctx.stroke();
+  ctx.fillStyle=PAPER;ctx.strokeStyle=OUTLINE;ctx.lineWidth=1.6;ctx.beginPath();ctx.roundRect(-w/2+rub+(w-rub)*.2,-h*.2,(w-rub)*.6,h*.4,3);ctx.fill();ctx.stroke();
+  ctx.restore();
 }
 const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
-function drawTide(now){
-  const I=islandRect(),k=ease(tide.p),top=I.x-cell*1.1,bot=I.x+I.w+cell*.9,base=bot+(top-bot)*k;
-  const wob=x=>Math.sin(x/cell*1.1+now/520)*cell*.13+Math.sin(x/cell*2.6-now/340)*cell*.05;
-  const x0=I.x-8,x1=I.x+I.w+8,pts=[];for(let x=x0;x<=x1+4;x+=5)pts.push([x,base+wob(x)]);
-  const front=()=>{lx.beginPath();pts.forEach((p,i)=>i?lx.lineTo(p[0],p[1]):lx.moveTo(p[0],p[1]));};
-  // water body: a darker paper wash with grey pencil ripples
-  lx.beginPath();lx.moveTo(x0,W+20);pts.forEach(p=>lx.lineTo(p[0],p[1]));lx.lineTo(x1,W+20);lx.closePath();
-  lx.fillStyle='rgba(222,220,212,.94)';lx.fill();
-  lx.save();lx.clip();lx.strokeStyle='rgba(85,85,92,.32)';lx.lineWidth=Math.max(1,cell*.03);
-  for(let y=base+cell*.55,i=0;y<W+cell;y+=cell*.5,i++){lx.beginPath();for(let x=x0;x<=x1;x+=8){const yy=y+Math.sin(x/cell*1.7+now/600+i*1.9)*cell*.09;x===x0?lx.moveTo(x,yy):lx.lineTo(x,yy);}lx.stroke();}
+/* the eraser sweep: below the front the page is wiped clean (pencils gone), with grey smudges and rubber crumbs at the front */
+function sweepFront(now){const P=pageRect(),k=ease(sweep.p),top=P.y-cell*1.1,bot=P.y+P.h+cell*.9;return{P,base:bot+(top-bot)*k};}
+function drawSweep(now){
+  const {P,base}=sweepFront(now);
+  const wob=x=>Math.sin(x/cell*1.3+now/300)*cell*.08;
+  const x0=P.x-8,x1=P.x+P.w+8,pts=[];for(let x=x0;x<=x1+4;x+=5)pts.push([x,base+wob(x)]);
+  lx.save();lx.beginPath();lx.moveTo(x0,W+20);pts.forEach(p=>lx.lineTo(p[0],p[1]));lx.lineTo(x1,W+20);lx.closePath();lx.clip();
+  lx.drawImage(bg,0,0,W,W);
+  // rubbed-out grey smudges just behind the front
+  lx.strokeStyle='rgba(120,120,130,.16)';lx.lineCap='round';lx.lineWidth=cell*.28;
+  for(let i=0;i<5;i++){lx.beginPath();for(let x=x0;x<=x1;x+=10){const y=base+cell*(.35+i*.32)+Math.sin(x/(cell*.35)+i*2)*cell*.12;x===x0?lx.moveTo(x,y):lx.lineTo(x,y);}lx.stroke();}
   lx.restore();
-  // dashed pencil foam lines trailing the front
-  lx.save();lx.translate(0,cell*.32);lx.setLineDash([cell*.22,cell*.12]);lx.lineDashOffset=-now/40;lx.strokeStyle='rgba(85,85,92,.5)';lx.lineWidth=Math.max(1,cell*.035);front();lx.stroke();lx.restore();
-  lx.save();lx.translate(0,cell*.6);lx.setLineDash([cell*.1,cell*.2]);lx.lineDashOffset=now/55;lx.strokeStyle='rgba(85,85,92,.32)';lx.lineWidth=Math.max(1,cell*.03);front();lx.stroke();lx.restore();
-  // foam crest: a paper band edged in ink
-  lx.lineJoin='round';lx.strokeStyle=INK;lx.lineWidth=cell*.15+3;front();lx.stroke();
-  lx.strokeStyle=PAPER;lx.lineWidth=cell*.15;front();lx.stroke();
-  // bubbles riding the crest: little pencil circles
-  lx.fillStyle=PAPER;lx.strokeStyle=GRAPH;lx.lineWidth=1;
-  for(let i=0;i<40;i++){const h=Math.sin(i*91.7)*43758.5,f=h-Math.floor(h),x=x0+(i+.5)/40*(x1-x0)+(f-.5)*cell*.3;
-    const y=base+wob(x)+(f*.9-.1)*cell*.3+Math.sin(now/260+i)*cell*.03;lx.beginPath();lx.arc(x,y,cell*(.025+.045*f),0,7);lx.fill();lx.stroke();}
+  // crumbs along the front
+  for(let i=0;i<34;i++){const h=Math.sin(i*91.7)*43758.5,f=h-Math.floor(h),x=x0+(i+.5)/34*(x1-x0)+(f-.5)*cell*.3,y=base+wob(x)+(f-.3)*cell*.5,r=cell*(.03+.04*f);
+    lx.fillStyle=i%3?'#f3b7d0':'#c9c6bc';lx.strokeStyle=OUTLINE;lx.lineWidth=1;lx.beginPath();lx.ellipse(x,y,r*1.3,r,f*3,0,7);lx.fill();lx.stroke();}
 }
 let lastT=performance.now();
 function frame(now){
   const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
   if(state==='play'){elapsed+=dt;const c=$('clockEl'),txt='⏱ '+fmtTime(elapsed);if(c.textContent!==txt)c.textContent=txt;}
-  if(tide.mode==='in'){tide.p+=dt/tide.dur;if(tide.p>=1){tide.p=1;tide.mode='covered';tracks=[];wet=1;const cb=tide.cb;tide.cb=null;cb&&cb();}}
-  else if(tide.mode==='out'){tide.p-=dt/tide.dur;if(tide.p<=0){tide.p=0;tide.mode='none';const cb=tide.cb;tide.cb=null;cb&&cb();}}
-  else if(tide.mode==='none')wet=Math.max(0,wet-dt*.4);
+  if(sweep.mode==='in'){sweep.p+=dt/sweep.dur;if(sweep.p>=1){sweep.p=1;sweep.mode='covered';tracks=[];smudge=1;const cb=sweep.cb;sweep.cb=null;cb&&cb();}}
+  else if(sweep.mode==='out'){sweep.p-=dt/sweep.dur;if(sweep.p<=0){sweep.p=0;sweep.mode='none';const cb=sweep.cb;sweep.cb=null;cb&&cb();}}
+  else if(sweep.mode==='none')smudge=Math.max(0,smudge-dt*.4);
   shake=Math.max(0,shake-dt*30);const sx=(Math.random()-.5)*shake*dpr,sy=(Math.random()-.5)*shake*dpr;
   ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.setTransform(dpr,0,0,dpr,sx,sy);
-  // the sea: a slightly darker paper tone with grey pencil ripples
-  ctx.fillStyle='#e4e2d8';ctx.fillRect(-10,-10,W+20,W+20);
-  ctx.strokeStyle='rgba(85,85,92,.28)';ctx.lineWidth=1.2;
-  for(let i=0;i<8;i++){ctx.beginPath();for(let x=0;x<=W+8;x+=8){const y=W*(i/7)+Math.sin(x/26+now/700+i*1.7)*4;x?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();}
-  // island of sugar-white sand, with a foamy ring where it meets the water
-  const I=islandRect();
-  if(ready(IMG.island)){const sw=Math.sin(now/800)*3;ctx.save();
-    ctx.shadowColor='rgba(46,46,51,.22)';ctx.shadowBlur=0;ctx.shadowOffsetX=4;ctx.shadowOffsetY=5+sw*.3;ctx.drawImage(IMG.island,I.x,I.x,I.w,I.w);ctx.restore();}
-  else{ctx.fillStyle='#f0ece1';ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(I.x+cell*.3,I.x+cell*.3,I.w-cell*.6,I.w-cell*.6,cell*.5);ctx.fill();ctx.stroke();}
-  // sand twinkles
-  for(const s of sparkles){const a=Math.pow(Math.max(0,Math.sin(now/650+s.ph)),6);if(a<.05)continue;
-    const x=ox+s.x*cell,y=ox+s.y*cell,r=cell*.09*s.s*a;ctx.fillStyle=`rgba(85,85,92,${a*.45})`;ctx.beginPath();
-    ctx.moveTo(x,y-r*2);ctx.quadraticCurveTo(x,y,x+r*2,y);ctx.quadraticCurveTo(x,y,x,y+r*2);ctx.quadraticCurveTo(x,y,x-r*2,y);ctx.quadraticCurveTo(x,y,x,y-r*2);ctx.fill();}
-  ctx.fillStyle='rgba(46,46,51,.16)';
-  for(let r=0;r<=size;r++)for(let c=0;c<=size;c++){ctx.beginPath();ctx.arc(ox+c*cell,ox+r*cell,Math.max(1.2,cell*.035),0,7);ctx.fill();}
-  // sand layer: crawl tracks and damp sand left behind by the tide
-  if(tracks.length||wet>0){clearLayer();drawTracks();
-    if(wet>0){lx.fillStyle=`rgba(170,168,160,${.3*wet})`;lx.fillRect(I.x,I.x,I.w,I.w);
-      lx.strokeStyle=`rgba(85,85,92,${.4*wet})`;lx.lineWidth=1;for(let i=0;i<5;i++){lx.beginPath();lx.ellipse(I.x+I.w*(.2+.15*i),I.x+I.w*(.25+.12*((i*3)%5)),cell*.5,cell*.06,-.3,3.6,5.6);lx.stroke();}}
-    blitLayer(sx,sy);}
+  // desk + notepad page
+  ctx.drawImage(bg,-0,0,W,W);
+  // page layer: scribble trails and the faint smudge the eraser leaves behind
+  tracks.forEach(t=>t.age+=dt);tracks=tracks.filter(t=>t.age<2.2);
+  if(tracks.length||smudge>0){clearLayer();
+    if(smudge>0){lx.strokeStyle=`rgba(120,120,130,${.08*smudge})`;lx.lineCap='round';lx.lineWidth=cell*.3;const P=pageRect();
+      for(let i=0;i<6;i++){lx.beginPath();for(let x=P.x;x<=P.x+P.w;x+=10){const y=P.y+P.h*(.15+i*.15)+Math.sin(x/(cell*.4)+i*2)*cell*.15;x===P.x?lx.moveTo(x,y):lx.lineTo(x,y);}lx.stroke();}}
+    drawTracks();blitLayer(sx,sy);}
   // hint glow
-  if(hint&&grid[hint.r]?.[hint.c]){const k=.5+.5*Math.sin((now-hint.t)/160);ctx.fillStyle=`rgba(201,154,26,${.22+.28*k})`;
-    ctx.beginPath();ctx.arc(cx(hint.c),cy(hint.r),cell*.5,0,7);ctx.fill();ctx.strokeStyle=`rgba(201,154,26,${.6+.4*k})`;ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);}
+  if(hint&&grid[hint.r]?.[hint.c]){const k=.5+.5*Math.sin((now-hint.t)/160);ctx.fillStyle=`rgba(242,194,48,${.25+.3*k})`;
+    ctx.beginPath();ctx.arc(cx(hint.c),cy(hint.r),cell*.5,0,7);ctx.fill();ctx.strokeStyle=OUTLINE;ctx.globalAlpha=.6+.4*k;ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;}
   // pieces
   for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=grid[r][c];if(!t)continue;
     let x=cx(c),y=cy(r);
-    if(t.rock){drawRock(x,y,cell,t.seed);continue;}
+    if(t.blot){drawBlot(x,y,cell,t.seed);continue;}
     t.ph+=dt*2;let moving=false;
     if(t.bump){t.bump.p+=dt*3.2;const o=Math.sin(Math.min(1,t.bump.p)*Math.PI)*t.bump.amp*cell;x+=DIRS[t.d][1]*o;y+=DIRS[t.d][0]*o;moving=true;t.ph+=dt*14;if(t.bump.p>=1)t.bump=null;}
     if(t.wig){t.wig=Math.max(0,t.wig-dt*2.5);x+=Math.sin(now/30)*t.wig*cell*.06;}
-    drawTurtle(x,y,cell*.96,t.d,t.hue,t.ph,moving);}
-  // turtles heading out to sea, leaving tracks in the sand
+    drawPiece(x,y,cell,t,t.d,t.ph,moving,1,!t.bump);}
+  // pencils sliding off the page, scribbling a trail as they go
   exits=exits.filter(e=>{e.p+=dt*(5+e.p*1.5);e.ph+=dt*16;
-    const edge=e.len+.55,dx=DIRS[e.d][1],dy=DIRS[e.d][0];
-    const lim=Math.min(e.p,e.len+.4);while(e.mk+.17<=lim){e.mk+=.17;e.side=-e.side;tracks.push({x:e.c+.5+dx*e.mk,y:e.r+.5+dy*e.mk,d:e.d,s:e.side});}
+    const edge=e.run+.55,dx=DIRS[e.d][1],dy=DIRS[e.d][0],px=-dy,py=dx;
+    const lim=Math.min(e.p,e.run+1);while(e.mk+.12<=lim){e.mk+=.12;e.side=-e.side;e.tr.pts.push([e.c+.5+dx*e.mk+px*e.side*.11,e.r+.5+dy*e.mk+py*e.side*.11]);e.tr.age=0;}
     const x=cx(e.c)+dx*e.p*cell,y=cy(e.r)+dy*e.p*cell;
-    if(!e.splashed&&e.p>=edge){e.splashed=true;sfx('splash');fx.push({type:'ring',x:(x-ox)/cell,y:(y-ox)/cell,life:1});
-      for(let i=0;i<8;i++){const a=Math.random()*7;fx.push({type:'drop',x:(x-ox)/cell,y:(y-ox)/cell,vx:Math.cos(a)*2.2,vy:Math.sin(a)*2.2-1.5,life:1});}}
+    if(!e.offEdge&&e.p>=edge){e.offEdge=true;sfx('edge');fx.push({type:'swoosh',x:(x-ox)/cell,y:(y-ox)/cell,d:e.d,life:1});
+      for(let i=0;i<6;i++){const a=Math.random()*7;fx.push({type:'shaving',x:(x-ox)/cell,y:(y-ox)/cell,vx:Math.cos(a)*2,vy:Math.sin(a)*2-1.2,rot:a,col:e.col,life:1});}}
     const fade=e.p<edge?1:Math.max(0,1-(e.p-edge)/1.3);
-    if(fade<=0)return false;drawTurtle(x,y,cell*.96,e.d,e.hue,e.ph,true,fade);return true;});
-  // the tide, over everything on the sand
-  if(tide.mode!=='none'){clearLayer();drawTide(now);blitLayer(sx,sy);}
+    if(fade<=0)return false;drawPiece(x,y,cell,e,e.d,e.ph*.3,false,fade,false);return true;});
+  // the eraser sweep, over everything on the page
+  if(sweep.mode!=='none'){clearLayer();drawSweep(now);blitLayer(sx,sy);
+    if(sweep.mode!=='covered'){const {P,base}=sweepFront(now);drawEraser(P.x+P.w/2+Math.sin(now/170)*P.w*.26,base,Math.min(P.w*.5,cell*2.6),Math.min(cell*1.15,P.w*.2),Math.sin(now/170)*.12);}}
   // effects
   fx=fx.filter(f=>{f.life-=dt*(f.type==='text'?1.1:1.6);if(f.life<=0)return false;const x=ox+f.x*cell,y=ox+f.y*cell;
-    if(f.type==='ring'){ctx.strokeStyle=`rgba(85,85,92,${f.life})`;ctx.lineWidth=1.8;ctx.beginPath();ctx.ellipse(x,y,cell*(.9-f.life*.6),cell*(.55-f.life*.35),0,0,7);ctx.stroke();}
-    else if(f.type==='drop'){f.vy+=dt*9;f.x+=f.vx*dt;f.y+=f.vy*dt;ctx.fillStyle=`rgba(246,243,234,${f.life})`;ctx.strokeStyle=`rgba(46,46,51,${f.life*.8})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,cell*.05*f.life+1,0,7);ctx.fill();ctx.stroke();}
-    else{const fs=cell*.42;ctx.font=`${fs}px "Gloria Hallelujah","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.lineJoin='round';ctx.lineWidth=fs*.25;ctx.strokeStyle=PAPER;ctx.fillStyle='#c45a8a';
-      ctx.globalAlpha=Math.min(1,f.life*1.5);const yy=y-(1-f.life)*cell*.6;ctx.strokeText(f.txt,x,yy);ctx.fillText(f.txt,x,yy);ctx.globalAlpha=1;}
+    if(f.type==='swoosh'){const dx=DIRS[f.d][1],dy=DIRS[f.d][0];ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(dy,dx));ctx.strokeStyle=`rgba(31,31,34,${f.life})`;ctx.lineWidth=2;ctx.lineCap='round';
+      for(let i=-1;i<=1;i++){const back=cell*(.4+(1-f.life)*.5);ctx.beginPath();ctx.moveTo(-back-cell*.35,i*cell*.18);ctx.lineTo(-back,i*cell*.18);ctx.stroke();}ctx.restore();}
+    else if(f.type==='shaving'){f.vy+=dt*9;f.x+=f.vx*dt;f.y+=f.vy*dt;f.rot+=dt*6;const r=cell*.07;ctx.save();ctx.globalAlpha=f.life;ctx.translate(x,y);ctx.rotate(f.rot);
+      ctx.fillStyle='#f7dfb2';ctx.strokeStyle=OUTLINE;ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*1.3);ctx.lineTo(0,0);ctx.closePath();ctx.fill();ctx.stroke();
+      ctx.strokeStyle=f.col;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*1.3);ctx.stroke();ctx.restore();}
+    else{const fs=cell*.42;ctx.font=`${fs}px "Gloria Hallelujah","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.lineJoin='round';ctx.lineWidth=fs*.25;ctx.strokeStyle=PAPER;ctx.fillStyle='#e0453a';
+      ctx.globalAlpha=Math.min(1,f.life*1.5);const yy=y-(1-f.life)*cell*.6;ctx.strokeText(f.txt,x,yy);ctx.lineWidth=1;ctx.strokeStyle=OUTLINE;ctx.fillText(f.txt,x,yy);ctx.strokeText(f.txt,x,yy);ctx.globalAlpha=1;}
     return true;});
   checkWin();
   requestAnimationFrame(frame);
+}
+/* card illustration: two pencils with their doodles, rendered once to an image */
+let heroURL=null;
+function heroImage(){
+  if(heroURL)return heroURL;const c=document.createElement('canvas');c.width=c.height=168;const g=c.getContext('2d');g.scale(2,2);
+  g.save();g.translate(30,32);g.rotate(Math.PI/4);drawDoodle(g,56,'#3a7bd5',.62,1);drawPencil(g,56,'#3a7bd5',.62);g.restore();
+  g.save();g.translate(52,52);g.rotate(Math.PI/4);drawDoodle(g,62,'#e0453a',.64,2);drawPencil(g,62,'#e0453a',.64);g.restore();
+  return heroURL=c.toDataURL();
 }
 
 /* ---------- input ---------- */
@@ -561,7 +668,7 @@ cv.addEventListener('pointerdown',e=>{unlockAudio();startAmbient();hideBanner();
   const x=(e.clientX-rc.left)/rc.width*W,y=(e.clientY-rc.top)/rc.height*W;
   const c=Math.floor((x-ox)/cell),r=Math.floor((y-ox)/cell);if(r>=0&&r<size&&c>=0&&c<size)tap(r,c);});
 $('menuBtn').onclick=()=>{unlockAudio();startAmbient();showMenu();};
-$('helpBtn').onclick=()=>{if(state!=='tide')showHelp();};
+$('helpBtn').onclick=()=>{if(state!=='erase')showHelp();};
 $('hintBtn').onclick=()=>{unlockAudio();useHint();};
 $('restartBtn').onclick=()=>{if(state==='play'||state==='intro')startLevel(level,{wash:true});};
 $('soundBtn').onclick=()=>{muted=!muted;store.set('muted',muted);unlockAudio();startAmbient();syncSound();};
