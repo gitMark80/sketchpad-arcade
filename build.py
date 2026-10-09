@@ -153,7 +153,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 .strip .card{scroll-snap-align:start}
 @media (max-width:720px){.strip{grid-auto-columns:40%;gap:12px}.row>h2.sec{font-size:1.35rem}}
 @media (max-width:360px){.strip{grid-auto-columns:62%}}
+.sisterbtn{text-decoration:none;background:linear-gradient(180deg,#bfeaff 0%,#5ab9ea 55%,#2f8fd0 100%);color:#06324f;border:2px solid #2e2e33;border-radius:999px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;font-size:.95rem}@media (max-width:680px){.navr .sharebtn:not(.homebtn):not(.sisterbtn) span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.navr .sharebtn:not(.homebtn):not(.sisterbtn){padding:8px}}
+@media (max-width:680px){.logo{gap:6px;font-size:1rem!important;letter-spacing:.02em}.logo svg{width:22px!important;height:22px!important}.navr .sisterbtn{font-size:.85rem;padding:6px 9px;white-space:nowrap}.navr .homebtn{padding:7px 9px}}@media (max-width:680px){.logo span{white-space:normal;line-height:1;max-width:5.5em}}
+@media (max-width:420px){.nav{gap:4px}.navr{gap:3px}.navr .sisterbtn{padding:5px 7px;gap:4px}.navr .homebtn{padding:6px 8px;gap:4px}.logo svg{width:18px!important;height:18px!important}}
 """
+
+def sister_btn(cls="sharebtn sisterbtn"):
+    x = SITE.get("sister")
+    if not x: return ""
+    return f'<a class="{cls}" href="{E(x["url"])}" title="Play the same games at {E(x["name"])}" aria-label="Visit {E(x["name"])}">{SISTER_ICON}<span>{E(x["short"])}</span></a>'
 
 def page(title, desc, body, active="", full=True, canonical=None, extra_head="", share=None):
     share = share or site_share()
@@ -168,7 +176,7 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
     nav = f'''<div class="top"><nav class="wrap nav" aria-label="Main">
 <a class="logo" href="index.html">{LOGO_SVG}<span>{E(SITE["name"])}</span></a>
 <div class="navr"><a class="sharebtn homebtn" href="index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
-<button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button></div>
+<button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button>{sister_btn()}</div>
 </nav></div>'''
     foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}.<br>Free games, no downloads.</span>
 <ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>'''
@@ -322,6 +330,7 @@ def privacy():
     return page(f'Privacy policy | {SITE["name"]}', f'How {SITE["name"]} handles your information.', body, canonical="privacy")
 
 LOGO_SVG = '<svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/><path d="M24 10l6 6" stroke-width="1.6"/></svg>'
+SISTER_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16.5" cy="7" r="3"/><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 19.5c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg>'
 HOME_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg>'
 SHARE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg>'
 SHARE_CSS = """<style>
@@ -503,7 +512,8 @@ def game_share(g):
     base = SITE.get("url", "").rstrip("/")
     return share_attrs(f'{base}/{g["slug"]}', g["name"], f'Play {g["name"]} free on {SITE["name"]}! {g["tagline"]}')
 
-BACK_CSS = '<style>.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>'
+END_HOME_JS = '<script>\n/* Home button on every end screen: added next to the game\'s own "Play again" style button, once per card. */\n(()=>{const RX=/(^|\\s)again\\b|^(retry|replay|try again|start over|new game|next level|next beach|back to start|keep going|play on)\\b/i;\nconst ICON='+json.dumps(HOME_ICON)+';\nfunction vis(b){const r=b.getBoundingClientRect();if(r.width<2||r.height<2)return false;const c=getComputedStyle(b);return c.visibility!==\'hidden\'&&c.display!==\'none\'&&+c.opacity!==0}\nfunction scan(){document.querySelectorAll(\'.sa-endhome\').forEach(h=>{const p=h.previousElementSibling;if(!p||!p.dataset.saHome){h.remove()}});document.querySelectorAll(\'[data-sa-home]\').forEach(b=>{if(!b.nextElementSibling||!b.nextElementSibling.classList.contains(\'sa-endhome\'))delete b.dataset.saHome});document.querySelectorAll(\'button,a\').forEach(b=>{if(b.dataset.saHome||b.closest(\'.sa-head,.sa-endhome,nav,header\'))return;\n  const t=(b.textContent||\'\').replace(/\\s+/g,\' \').trim();if(!t||t.length>24||!RX.test(t)||/^restart/i.test(t))return;if(!vis(b))return;\n  const box=b.parentElement;if(!box||box.querySelector(\':scope>.sa-endhome\'))return;b.dataset.saHome=\'1\';\n  const a=document.createElement(\'a\');a.className=\'sa-endhome\';a.href=\'../\';a.innerHTML=ICON+\'<span>Home</span>\';a.setAttribute(\'aria-label\',\'Home: all games\');\n  const fx=getComputedStyle(box).display;if(/flex|grid/.test(fx)&&getComputedStyle(box).flexDirection!==\'column\'&&fx.indexOf(\'grid\')<0){a.style.margin=\'0 0 0 8px\'}\n  b.insertAdjacentElement(\'afterend\',a)})}\nlet t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:[\'hidden\',\'class\',\'style\',\'open\']});\naddEventListener(\'load\',scan);setTimeout(scan,600)})();\n</script>'
+BACK_CSS = '<style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>'
 
 def desktop_css(g):
     """Desktop only (mouse + wide window): the game becomes a full-height 9:16 stage in the middle of the screen,
@@ -520,11 +530,11 @@ def desktop_css(g):
 def play_page(g):
     s = (ROOT / "src" / "games" / f'{g["slug"]}.html').read_text()
     s = s.replace("</head>", PAPER_STYLE + "\n" + BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
-    s = re.sub(r"<h1([^>]*)>(.*?)</h1>", lambda m: f'<div class="sa-head"><a class="sa-back" href="../{g["slug"]}.html" aria-label="Back to {E(SITE["name"])}">&#8249;</a><h1{m.group(1)}>{m.group(2)}</h1><button class="sa-share" type="button" aria-label="Share {E(g["name"])}" {game_share(g)}>{SHARE_ICON}</button></div>', s, count=1)
+    s = re.sub(r"<h1([^>]*)>(.*?)</h1>", lambda m: f'<div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all {E(SITE["name"])} games" title="Home">{HOME_ICON}</a><h1{m.group(1)}>{m.group(2)}</h1><button class="sa-share" type="button" aria-label="Share {E(g["name"])}" {game_share(g)}>{SHARE_ICON}</button></div>', s, count=1)
     base = SITE.get("url", "https://www.sketchpadarcade.com").rstrip("/")
     host = re.sub(r"^https?://(www\.)?", "", base)
     game = json.dumps({"slug": g["slug"], "name": g["name"], "site": SITE["name"], "url": f'{base}/{g["slug"]}', "short": f'{host}/{g["slug"]}'})
-    s = s.replace("</body>", f"<script>window.BDA_GAME={game};</script>\n" + count_js(g["slug"], True) + "\n" + SHARE_JS + "\n" + SCORE_SHARE + "\n" + FIT_TITLE_JS + "\n</body>", 1)
+    s = s.replace("</body>", END_HOME_JS + "\n" + f"<script>window.BDA_GAME={game};</script>\n" + count_js(g["slug"], True) + "\n" + SHARE_JS + "\n" + SCORE_SHARE + "\n" + FIT_TITLE_JS + "\n</body>", 1)
     s = s.replace("<title>", f'<meta name="robots" content="noindex">\n<title>', 1)
     return s
 

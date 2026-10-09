@@ -23,6 +23,11 @@
       "text": "Like these in full colour? The painted originals live at Beach Day Arcade.",
       "url": "https://www.beachdayarcade.com",
       "cta": "Beach Day Arcade"
+    },
+    "sister": {
+      "name": "Beach Day Arcade",
+      "short": "Beach Day",
+      "url": "https://www.beachdayarcade.com"
     }
   },
   "games": [
