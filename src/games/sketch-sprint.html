@@ -630,7 +630,7 @@ let amb=null;
 function surfBuf(){const sr=ac.sampleRate,n=sr*6,b=ac.createBuffer(1,n,sr),x=b.getChannelData(0);let lp=0;
   for(let i=0;i<n;i++){lp+=(Math.random()*2-1-lp)*.08;x[i]=lp*2.5}
   const f=Math.floor(sr*.6);for(let i=0;i<f;i++){const t=i/f;x[i]=x[i]*t+x[n-f+i]*(1-t)}return b}
-function startAmbience(){if(amb||!ac||ac.state!=='running')return;loadSfx();
+function startAmbience(){if(ac&&ac.state==='running')loadSfx();return;/*no background sea sounds; still loads the sound effects*/if(amb||!ac||ac.state!=='running')return;loadSfx();
   if(SMP.surf){try{const src=ac.createBufferSource();src.buffer=SMP.surf;src.loop=true;const g=ac.createGain();g.gain.value=0;g.gain.setTargetAtTime(.12,ac.currentTime,.6);src.connect(g).connect(master);src.start();amb=g;amb.synth=false}catch(e){}return}
   try{
   const src=ac.createBufferSource();src.buffer=surfBuf();src.loop=true;
@@ -655,7 +655,7 @@ const SFXLIST=['step-1','step-2','jump','land','slide','lane','turn','shell-1','
 const SFXGAIN={'step-1':.35,'step-2':.35,jump:.6,land:.5,slide:.55,lane:.4,turn:.6,power:.6,kite:.6,bubble:.6,pop:.6,magnet:.6,turbo:.7,smash:.65,stumble:.6,bonk:.7,splash:.7,rail:.6,wave:.65,count:.5,go:.6,click:.4,yay:.6,unlock:.65,over:.6};
 const SMP={};let smpLoading=false;
 function loadSfx(){if(smpLoading||!ac)return;smpLoading=true;SFXLIST.forEach(n=>{fetch(SFXDIR+n+'.webm').then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(b=>ac.decodeAudioData(b)).then(buf=>{SMP[n]=buf}).catch(()=>{})});
-  fetch(SFXDIR+'surf.webm').then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(b=>ac.decodeAudioData(b)).then(buf=>{SMP.surf=buf;if(amb&&amb.synth){try{amb.gain.setTargetAtTime(0,ac.currentTime,.4);const old=amb;setTimeout(()=>{try{old.disconnect()}catch(e){}},2500)}catch(e){}amb=null;startAmbience()}}).catch(()=>{})}
+  false&&fetch(SFXDIR+'surf.webm').then(r=>r.ok?r.arrayBuffer():Promise.reject()).then(b=>ac.decodeAudioData(b)).then(buf=>{SMP.surf=buf;if(amb&&amb.synth){try{amb.gain.setTargetAtTime(0,ac.currentTime,.4);const old=amb;setTimeout(()=>{try{old.disconnect()}catch(e){}},2500)}catch(e){}amb=null;startAmbience()}}).catch(()=>{})}
 function play(n,v=1,rate=1){if(muted||!ac||ac.state!=='running'||!SMP[n])return false;try{const s=ac.createBufferSource(),g=ac.createGain();s.buffer=SMP[n];s.playbackRate.value=rate;g.gain.value=(SFXGAIN[n]||.6)*v;s.connect(g).connect(master);s.start()}catch(e){return false}return true}
 const sfx={
   step(){stepFlip^=1;if(play(stepFlip?'step-1':'step-2',1,.95+Math.random()*.1))return;noise(.045,stepFlip?1900:1500,'bandpass',.016)},
@@ -1340,20 +1340,27 @@ function drawGull(c,fx,fy,p,o){
 }
 const DRAW={pip:drawOtter,shelly:drawTurtle,coral:drawCrab,gully:drawGull,francis:drawOtter,clare:drawTurtle,george:drawCrab,joan:drawGull,john:drawOtter,catherine:drawTurtle,joseph:drawCrab,therese:drawGull};
 const RUNORD=new Proxy({},{get:()=>[1,2,3,4,5,6,7,8]});
+/* run cycle: the 8 frames are one full stride (left foot up, down, contact, right foot up, down, contact), aligned by head
+   and ground line in the files. One stride per footstep-sound interval (2.5 pi of P.ph), so the legs keep pace with the
+   running speed; frame 3 (a contact) lands on the step sound. */
+const RUNCYC=Math.PI*2.5,SLIDE_SC=.88,SLIDE_SX=.9; // the slide pose is drawn a little smaller and narrower so it stays over the lane
 /* painted runners: three poses each (run, jump, slide), animated with a bob, a lean and a little squash */
 function drawImgChar(id,c,fx,fy,p,o){
   const pose=o.slide>0?'slide':(o.air?'jump':(o.surf&&SPR[id+'-surf']&&SPR[id+'-surf'].img?'surf':'run'));let S=SPR[id+'-'+pose];
   let S2=null,mix=0;const kid=(!S||pose==='slide'||pose==='jump'||pose==='surf')&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img;
   if(kid&&pose==='jump')S=SPR[id+'-run-3'];if(kid&&pose==='slide')S=SPR[id+'-run-5'];
   const painted=(pose==='slide'||pose==='jump'||pose==='surf')&&SPR[id+'-'+pose]&&SPR[id+'-'+pose].img;if(painted)S=SPR[id+'-'+pose];
-  if(pose==='run'&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img){const ord=RUNORD[id],ph=((o.t/(Math.PI*5))%1+1)%1*8,i=Math.floor(ph);mix=PXH[id]?0:ph-i;S=SPR[id+'-run-'+ord[i]];S2=SPR[id+'-run-'+ord[(i+1)%8]]}
+  let cyc=0;if(pose==='run'&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img){const ord=RUNORD[id];cyc=((o.t/RUNCYC)%1+1)%1;const i=(Math.floor(cyc*8)+2)%8;S=SPR[id+'-run-'+ord[i]]}
   if(!S)return DRAW[id](c,fx,fy,p,o);
   c.save();c.translate(fx,fy);c.scale(p,p);
   if(o.tumble){c.translate(0,-.6);c.rotate(Math.min(1.5,o.tumble)*(o.dir||1));c.translate(0,.6)}
   const run=pose==='run',st=Math.sin(o.t);
-  const frames=run&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img;if(painted&&pose==='surf')c.rotate(boardRock());else c.rotate(o.lean*.22+(o.wob?Math.sin(o.wob*40)*.12:0)+(run&&!frames?st*.05:0));
+  const frames=run&&SPR[id+'-run-1']&&SPR[id+'-run-1'].img;if(painted&&pose==='surf')c.rotate(boardRock());else if(pose==='slide')c.rotate(o.lean*.04);else c.rotate(o.lean*.22+(o.wob?Math.sin(o.wob*40)*.12:0)+(run&&!frames?st*.05:0));
   const sq=(o.sq||0)+(run&&!frames?Math.max(0,-Math.cos(o.t*2))*.05:0);c.scale(1+sq*.2,1-sq*.2);
-  const bob=run?Math.abs(st)*(frames?.03:.07):0;
+  const rise=run&&o.rise!=null&&o.rise<.14?o.rise/.14:1; // getting up out of a slide
+  const bob=run?(frames?Math.abs(Math.sin(cyc*Math.PI*2))*.035*rise:Math.abs(st)*.07):0; // highest mid-stride, lowest on each footfall
+  if(rise<1){const e=1-(1-rise)*(1-rise);c.scale(1+.06*(1-e),.8+.2*e)}
+  if(painted&&pose==='slide'){const k=o.slideIn!=null?Math.min(1,o.slideIn/.1):1,e=1-(1-k)*(1-k);c.scale(SLIDE_SC*SLIDE_SX*(.94+.06*e),SLIDE_SC*(1.14-.14*e))} // settles down into the slide
   if(kid&&pose==='jump'&&!painted){c.translate(0,-.08);c.scale(1.02,1.06)}
   if(painted&&pose==='jump'){const u=Math.max(-1,Math.min(1,(o.vy||0)/9));c.rotate(-u*.08)}
 
@@ -1363,6 +1370,7 @@ function drawImgChar(id,c,fx,fy,p,o){
 }
 function drawChar(id,c,fx,fy,p,o){if(hasImg(id+'-run')||hasImg(id+'-run-1'))drawImgChar(id,c,fx,fy,p,o);else DRAW[id](c,fx,fy,p,o)}
 function boardRock(){return Math.sin(T*2.2)*.025}
+let slideOn=false,slideT0=-9,slideT1=-9; // when the current slide began / the last one ended, for easing in and out
 function drawRunner(){
   const C=CHR(),rx=P.x-camXl,p0=proj(rx,0,0),p=p0[2];
   shadow(rx,0,.42,P.y,.3);
@@ -1378,6 +1386,7 @@ function drawRunner(){
   if(P.boostT>0){// every runner's SURF pose has its own skateboard; just add orange pencil speed dashes trailing off the wheels
     const bp=proj(rx,P.y-.02,0),h=.25*p;
     ctx.strokeStyle='#d9661a';ctx.lineCap='round';ctx.lineWidth=Math.max(1.2,p*.05);for(let i=0;i<4;i++){const u=((T*5+i*.25)%1),dx=(i-1.5)*p*.22;ctx.globalAlpha=1-u;ctx.beginPath();ctx.moveTo(bp[0]+dx,bp[1]+h*.15+u*p*.5);ctx.lineTo(bp[0]+dx*1.15,bp[1]+h*.15+u*p*.5+p*.22);ctx.stroke()}ctx.globalAlpha=1;ctx.lineCap='butt'}
+  const sl=P.slideT>0&&!P.air;if(sl&&!slideOn)slideT0=T;if(!sl&&slideOn)slideT1=T;slideOn=sl;
   const blink=P.invT>0&&state==='play'&&Math.floor(T*16)%2===0&&P.shieldT<=0&&P.boostT<=0;
   const downS=SPR[C.id+'-down'],hasDown=downS&&downS.img,dying=state==='dying'||state==='over',lying=dying&&hasDown&&deadT>.18;
   if(lying){// crouched, dazed, feet on the ground
@@ -1385,7 +1394,7 @@ function drawRunner(){
   else if(dying&&hasDown){// the first beat of a crash: standing, tipping back
     const k=Math.min(1,deadT/.18);ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,1-.35*k);ctx.translate(-fp[0],-fp[1]);
     drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:0,sq:0,slide:0,air:false,tumble:0,dir:1,wob:0});ctx.restore()}
-  else if(!blink)drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:P.lean,slide:P.slideT>0&&!P.air?1:0,air:P.air,vy:P.vy,surf:P.boostT>0,tumble:P.tumble,dir:P.x>0?-1:1,wob:P.boostT>0?0:P.wobT,sq:P.boostT>0?0:P.sq});
+  else if(!blink)drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:P.lean,slide:slideOn?1:0,slideIn:T-slideT0,rise:slideOn||P.air?null:T-slideT1,air:P.air,vy:P.vy,surf:P.boostT>0,tumble:P.tumble,dir:P.x>0?-1:1,wob:P.boostT>0?0:P.wobT,sq:P.boostT>0?0:P.sq});
   if(P.shieldT>0){const S=SPR.pipBubble,bp=proj(rx,P.y+(P.slideT>0?.35:.68),0),w=S.w*p*(1+.03*Math.sin(T*6)),a=P.shieldT<2.5?(.5+.5*Math.sin(T*18)):1;
     ctx.globalAlpha=a;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-w/2,w,w);ctx.globalAlpha=1}
   if(P.magnetT>0){ctx.strokeStyle='rgba(201,154,26,.6)';ctx.lineWidth=2;const r=(T*1.5%1);ctx.globalAlpha=1-r;ctx.beginPath();ctx.ellipse(fp[0],fp[1]-.6*p,(.6+r*.8)*p,(.6+r*.8)*p*.6,0,0,7);ctx.stroke();ctx.globalAlpha=1}

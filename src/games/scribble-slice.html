@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Scribble Slice, sketchbook edition: the same portrait column (title row, HUD, the beach playfield) drawn in pencil on cream paper.
-   Coloured pencil only on the sea urchins (purple), the golden starfruit (yellow), the beach ball (blue) and the juice splats. */
+   The fruit, splats, urchins, gold starfruit and beach ball are coloured-pencil sprites with bold ink outlines (tools/scribble-slice-colorize.py). */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -145,7 +145,7 @@ function noise(d,v,freq,type,when){if(!save.sound)return;const a=audio();if(!a)r
 /* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
    Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
 let amb=null;
-function ambStart(){
+function ambStart(){return;/*no background sea sounds*/
   if(amb||!save.sound)return;const a=audio();if(!a)return;
   const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
   for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
@@ -206,7 +206,7 @@ function starPath(c,r,ri,n){c.beginPath();for(let i=0;i<n*2;i++){const a=i/(n*2)
 const KIND={
   watermelon:{s:1.2,hit:1.05,juice:'#ff4d6d',fw:1.05},
   pineapple:{s:1.0,hit:1.0,juice:'#ffd84a',fw:.85},
-  coconut:{s:.95,hit:1.0,juice:'#f4fbff',fw:1},
+  coconut:{s:.95,hit:1.0,juice:'#a9cde0',fw:1}, // coconut water: pale blue so it shows on the paper
   mango:{s:.95,hit:1.0,juice:'#ffa62b',fw:.95},
   orange:{s:.9,hit:1.0,juice:'#ff9a1f',fw:1},
   kiwi:{s:.85,hit:1.05,juice:'#8fd14f',fw:1},

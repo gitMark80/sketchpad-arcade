@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Crab Sketch: Sidewalk Hop redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lanes and props, wobbly borders;
-   Crabby is orange pencil, the boardwalk traffic purple pencil, so the player can read them at speed. */
+/* Sidewalk Hop, Sketchpad Arcade twin: a 10-year-old's pencil sketchbook. Paper, wobbly borders, coloured-pencil doodles:
+   Milo (curly hair, red backpack) hops across sidewalks, busy streets and a creek; gold stars are the bonus pickups. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -70,7 +70,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .newbest{display:inline-block;background:var(--yellow-wash);color:var(--ink);font:400 1rem var(--body);border:2px solid var(--yellow);border-radius:var(--wob);padding:3px 10px 2px;margin-top:10px}
 .best{margin-top:12px;color:var(--muted);font-size:1rem}
 
-.shells{justify-self:start;display:flex;align-items:center;gap:6px;background:var(--pink-wash);border:2px solid var(--pink);color:var(--ink);font:400 1.15rem/1 var(--display);padding:4px 12px 4px 5px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);font-variant-numeric:tabular-nums}
+.shells{justify-self:start;display:flex;align-items:center;gap:6px;background:var(--yellow-wash);border:2px solid var(--ink);color:var(--ink);font:400 1.15rem/1 var(--display);padding:4px 12px 4px 5px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);font-variant-numeric:tabular-nums}
 .shells svg{width:24px;height:24px}
 .keys{display:flex;justify-content:center;gap:6px;margin-top:10px}
 .keys span{display:grid;place-items:center;min-width:34px;height:30px;padding:0 6px;border-radius:var(--wob2);background:var(--paper);border:1.5px solid var(--ink);box-shadow:1px 1px 0 var(--pencil);font:400 .9rem var(--body);color:var(--ink)}
@@ -95,22 +95,22 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <div class="shells" aria-label="Shells collected"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6C14 6 6 15 6 25c0 5 2 9 5 12l13 6 13-6c3-3 5-7 5-12C42 15 34 6 24 6Z" fill="#f0d5e2" stroke="#c45a8a" stroke-width="2"/><path d="M24 10v30M18 12l3 27M30 12l-3 27M12 18l7 20M36 18l-7 20" stroke="#c45a8a" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg><span id="shellEl">0</span></div>
+    <div class="shells" aria-label="Stars collected"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l5.9 12.6 13.6 1.7-10 9.4 2.6 13.5L24 34.5l-12.1 6.7 2.6-13.5-10-9.4 13.6-1.7Z" fill="#f7e3a0" stroke="#1f1f22" stroke-width="2.6" stroke-linejoin="round"/><path d="M17 26l12-12M20 31l13-13M14 22l9-9" stroke="#f2c230" stroke-width="1.6" stroke-linecap="round"/><circle cx="20" cy="23" r="1.8" fill="#1f1f22"/><circle cx="28" cy="23" r="1.8" fill="#1f1f22"/></svg><span id="shellEl">0</span></div>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
   </div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A beach seen from above. Use the arrow buttons, swipes or arrow keys to hop forward, left, right or back."></canvas>
+    <canvas id="cv" aria-label="A neighbourhood street seen from above. Use the arrow buttons, swipes or arrow keys to hop forward, left, right or back."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
         <canvas id="mini" width="240" height="240" aria-hidden="true"></canvas>
         <h2>Sidewalk Hop</h2>
         <ul class="rules">
-          <li><b>1</b><span>Use the <strong>arrow buttons</strong> to hop forward, left, right or back. You can also tap the beach to hop forward, or swipe any way.</span></li>
-          <li><b>2</b><span>Dodge the bikes and beach carts. Step sideways or back to get out of trouble!</span></li>
-          <li><b>3</b><span>Cross the water on surfboards, rafts and tubes. Don't hop in the water!</span></li>
-          <li><b>4</b><span>Keep moving! The tide is coming in behind you. Grab shells for bonus points.</span></li>
+          <li><b>1</b><span>Use the <strong>arrow buttons</strong> to hop forward, left, right or back. You can also tap the street to hop forward, or swipe any way.</span></li>
+          <li><b>2</b><span>Dodge the cars, bikes, scooters and skateboards. Step sideways or back to get out of trouble!</span></li>
+          <li><b>3</b><span>Cross the creek on floating logs, planks and crates. Don't hop in the water!</span></li>
+          <li><b>4</b><span>Keep moving! A rainstorm is chasing you up the street. Grab gold stars for bonus points.</span></li>
         </ul>
         <div class="keys" aria-label="Keyboard: arrow keys or W A S D"><span>&uarr;</span><span>&larr;</span><span>&darr;</span><span>&rarr;</span><span>WASD</span></div>
         <button class="big" id="playBtn" type="button">Play</button>
@@ -121,7 +121,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
         <h2 id="overTitle">Bonk!</h2>
         <p id="overText"></p>
-        <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stRows">0</b><span>hops forward</span></div><div><b id="stShells">0</b><span>shells</span></div></div>
+        <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stRows">0</b><span>hops forward</span></div><div><b id="stShells">0</b><span>stars</span></div></div>
         <div class="newbest" id="newBest" hidden>New best score!</div>
         <button class="big" id="againBtn" type="button">Hop again</button>
         <div class="best" id="bestLine2">Best score: 0</div>
@@ -143,7 +143,7 @@ const $=s=>document.getElementById(s);
 const TAU=Math.PI*2,COLS=9;
 
 /* ---------- saved data ---------- */
-const KEY='crab-hop-v1';
+const KEY='kid-hop-v1';
 let save={best:0,sound:true,bestRow:0};
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)save=Object.assign(save,s)}catch(e){}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
@@ -161,7 +161,7 @@ function noise(d,v,freq){if(!save.sound)return;const a=audio();if(!a)return;cons
 /* beach ambience: rolling waves (filtered brown noise that swells every few seconds), a soft foam hiss and the odd distant gull.
    Starts on the first tap, follows the Sound button, pauses while the tab is hidden. */
 let amb=null;
-function ambStart(){
+function ambStart(){return;/*no background sea sounds*/
   if(amb||!save.sound)return;const a=audio();if(!a)return;
   const len=a.sampleRate*6,buf=a.createBuffer(1,len,a.sampleRate),ch=buf.getChannelData(0);let b=0;
   for(let i=0;i<len;i++){b=(b+.02*(Math.random()*2-1))/1.02;ch[i]=b*3.5}
@@ -215,8 +215,9 @@ function resize(){const r=cv.getBoundingClientRect();DPR=Math.min(2,window.devic
 addEventListener('resize',()=>{resize()});
 
 /* ---------- world ----------
-   rows[i] is lane i (0 at the start, going up the screen). Types: sand (with blocking props), walk (boardwalk with bikes and carts), water (floats to ride). */
-let rows,crab,camY,tideY,running,deadT,shells,maxRow,parts,genRow,nextMile,time,deathKind,shake,queued;
+   rows[i] is lane i (0 at the start, going up the screen). Types: sand = sidewalk (with blocking props), walk = street (cars, bikes,
+   scooters, skateboards), water = creek (floating logs, planks and crates to ride). The type names are kept from the original. */
+let rows,kid,camY,tideY,running,deadT,shells,maxRow,parts,genRow,nextMile,time,deathKind,shake,queued;
 function rnd(a,b){return a+Math.random()*(b-a)}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function diff(i){return Math.min(1,i/220)}
@@ -241,7 +242,7 @@ function sandRow(i,props){
   const row={type:'sand',props:[],shell:-1,run:0,shade:i%2};
   const n=i===0?0:Math.floor(rnd(0,Math.min(3,props+1)));
   const cols=[...Array(COLS).keys()].sort(()=>Math.random()-.5);
-  for(let k=0;k<n;k++){const c=cols[k];if(i<3&&c===4)continue;row.props.push({c,kind:pick(['umbrella','castle','rock','palm','umbrella'])})}
+  for(let k=0;k<n;k++){const c=cols[k];if(i<3&&c===4)continue;row.props.push({c,kind:pick(['tree','bench','bush','hydrant','trashcan'])})}
   if(i>3&&Math.random()<.3){const free=cols.filter(c=>!row.props.some(p=>p.c===c));row.shell=pick(free)}
   return row;
 }
@@ -268,7 +269,7 @@ function waterRow(i){
 function ensureRows(upTo){while(rows.length<=upTo)rows.push(makeRow(rows.length))}
 function reset(){
   rows=[];rows.push(sandRow(0,0));ensureRows(40);
-  crab={x:4,row:0,fx:4,fy:0,hopT:1,face:0,from:{x:4,y:0},to:{x:4,y:0},squash:0,ride:null};
+  kid={x:4,row:0,fx:4,fy:0,hopT:1,face:0,from:{x:4,y:0},to:{x:4,y:0},squash:0,ride:null};
   camY=-2;tideY=-6;deadT=0;shells=0;maxRow=0;parts=[];nextMile=50;time=0;deathKind='';shake=0;queued=null;
 }
 
@@ -304,16 +305,16 @@ addEventListener('keydown',e=>{
 function blocked(c,r){const row=rows[r];if(!row)return false;if(row.type!=='sand')return false;return row.props.some(p=>p.c===Math.round(c))}
 function move(dx,dy){
   if(!running)return;
-  if(crab.hopT<1){queued=[dx,dy];return}
-  let nx=crab.x+dx,nr=crab.row+dy;
+  if(kid.hopT<1){queued=[dx,dy];return}
+  let nx=kid.x+dx,nr=kid.row+dy;
   if(nr<0||nr<Math.floor(tideY+.2))return;
   if(nx<-.3||nx>COLS-.7)return;
   ensureRows(nr+30);
   const target=rows[nr];
   if(target.type!=='water')nx=Math.round(nx);
-  if(target.type==='sand'&&blocked(nx,nr)){crab.squash=.6;crab.face=dx?(dx>0?1:-1)*Math.PI/2:(dy>0?0:Math.PI);sfx.land();return}
-  crab.from={x:crab.x,y:crab.row};crab.to={x:nx,y:nr};crab.hopT=0;crab.x=nx;crab.row=nr;crab.ride=null;
-  crab.face=dx?(dx>0?1:-1)*Math.PI/2:(dy>0?0:Math.PI);
+  if(target.type==='sand'&&blocked(nx,nr)){kid.squash=.6;kid.face=dx?(dx>0?1:-1)*Math.PI/2:(dy>0?0:Math.PI);sfx.land();return}
+  kid.from={x:kid.x,y:kid.row};kid.to={x:nx,y:nr};kid.hopT=0;kid.x=nx;kid.row=nr;kid.ride=null;
+  kid.face=dx?(dx>0?1:-1)*Math.PI/2:(dy>0?0:Math.PI);
   if(dy>0)sfx.hop();else sfx.side();
 }
 
@@ -327,50 +328,50 @@ function step(dt){
   time+=dt;
   for(let i=Math.max(0,Math.floor(camY)-2);i<Math.min(rows.length,Math.floor(camY)+40);i++){const r=rows[i];if(r.things)for(const t of r.things)t.x+=r.speed*dt}
   // hop progress
-  if(crab.hopT<1){crab.hopT=Math.min(1,crab.hopT+dt/0.13);if(crab.hopT>=1){landed()}}
-  const row=rows[crab.row];
+  if(kid.hopT<1){kid.hopT=Math.min(1,kid.hopT+dt/0.13);if(kid.hopT>=1){landed()}}
+  const row=rows[kid.row];
   // riding a float
-  if(crab.hopT>=1&&row.type==='water'&&running){
-    crab.x+=row.speed*dt;
-    if(crab.x<-.6||crab.x>COLS-.4){die('swept');return}
+  if(kid.hopT>=1&&row.type==='water'&&running){
+    kid.x+=row.speed*dt;
+    if(kid.x<-.6||kid.x>COLS-.4){die('swept');return}
   }
   // visual position
-  const u=crab.hopT,e=u<1?u*(2-u):1;
-  crab.fx=crab.from.x+(crab.to.x-crab.from.x)*e;crab.fy=crab.from.y+(crab.to.y-crab.from.y)*e;
-  if(crab.hopT>=1){crab.fx=crab.x;crab.fy=crab.row}
+  const u=kid.hopT,e=u<1?u*(2-u):1;
+  kid.fx=kid.from.x+(kid.to.x-kid.from.x)*e;kid.fy=kid.from.y+(kid.to.y-kid.from.y)*e;
+  if(kid.hopT>=1){kid.fx=kid.x;kid.fy=kid.row}
   // boardwalk traffic
-  if(row.type==='walk'&&running&&crab.hopT>.5){
-    for(const s of thingsAt(row,crab.fx)){if(crab.fx+.78>s.x0+.08&&crab.fx+.22<s.x1-.08){die('bonk');return}}
+  if(row.type==='walk'&&running&&kid.hopT>.5){
+    for(const s of thingsAt(row,kid.fx)){if(kid.fx+.78>s.x0+.08&&kid.fx+.22<s.x1-.08){die('bonk');return}}
   }
-  // tide
+  // the rainstorm (still called the tide in the code)
   const tideSpeed=.32+Math.min(.5,maxRow/300);
-  tideY+=tideSpeed*dt;if(tideY<crab.row-7)tideY=crab.row-7;
-  if(tideY>crab.fy-.15){die('tide');return}
+  tideY+=tideSpeed*dt;if(tideY<kid.row-7)tideY=kid.row-7;
+  if(tideY>kid.fy-.15){die('tide');return}
   if(Math.random()<dt*.5){const r=rows[Math.floor(camY+rnd(2,12))];if(r&&r.type==='walk')sfx.bell()}
 }
 function landed(){
-  crab.squash=1;const row=rows[crab.row];
+  kid.squash=1;const row=rows[kid.row];
   if(row.type==='water'){
-    const on=thingsAt(row,crab.x).find(s=>crab.x+.5>s.x0-.05&&crab.x+.5<s.x1+.05);
+    const on=thingsAt(row,kid.x).find(s=>kid.x+.5>s.x0-.05&&kid.x+.5<s.x1+.05);
     if(!on){die('splash');return}
     // settle onto the float so it feels solid
-    const cx=crab.x+.5;const cell=Math.floor(cx-on.x0);const want=on.x0+Math.min(on.t.len-1,Math.max(0,cell));crab.x+=(want-crab.x)*.6;
+    const cx=kid.x+.5;const cell=Math.floor(cx-on.x0);const want=on.x0+Math.min(on.t.len-1,Math.max(0,cell));kid.x+=(want-kid.x)*.6;
     sfx.land();
   }else sfx.land();
-  if(row.shell>=0&&Math.abs(row.shell-crab.x)<.5){row.shell=-1;shells++;sfx.shell();burst(crab.x+.5,crab.row+.5,'#c45a8a',10)}
-  if(crab.row>maxRow){maxRow=crab.row;if(maxRow>=nextMile){showBanner(nextMile+' hops!','Keep scuttling');sfx.mile();nextMile+=50}}
+  if(row.shell>=0&&Math.abs(row.shell-kid.x)<.5){row.shell=-1;shells++;sfx.shell();burst(kid.x+.5,kid.row+.5,'#f2c230',10)}
+  if(kid.row>maxRow){maxRow=kid.row;if(maxRow>=nextMile){showBanner(nextMile+' hops!','Keep hopping');sfx.mile();nextMile+=50}}
   hud();
   if(queued&&running){const q=queued;queued=null;move(q[0],q[1])}
 }
 function burst(x,y,c,n){for(let i=0;i<n;i++){const a=rnd(0,TAU),s=rnd(1.5,4);parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rnd(.4,.8),c,r:rnd(2,4)})}}
 function die(kind){
   if(!running)return;running=false;deathKind=kind;deadT=0;queued=null;
-  if(kind==='bonk'){sfx.bonk();shake=10;burst(crab.fx+.5,crab.fy+.5,'#c99a1a',12)}
-  else if(kind==='tide'){sfx.tide();for(let i=0;i<24;i++)parts.push({x:crab.fx+.5+rnd(-1,1),y:crab.fy+.3,vx:rnd(-2,2),vy:rnd(1,5),life:rnd(.5,1),c:'#2f6fb5',r:rnd(3,6)})}
-  else{sfx.splash();for(let i=0;i<22;i++){const a=rnd(0,TAU),s=rnd(1,4);parts.push({x:crab.fx+.5,y:crab.fy+.5,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rnd(.5,.9),c:'#2f6fb5',r:rnd(3,6)})}}
+  if(kind==='bonk'){sfx.bonk();shake=10;burst(kid.fx+.5,kid.fy+.5,'#c99a1a',12)}
+  else if(kind==='tide'){sfx.tide();for(let i=0;i<24;i++)parts.push({x:kid.fx+.5+rnd(-1,1),y:kid.fy+.3,vx:rnd(-2,2),vy:rnd(1,5),life:rnd(.5,1),c:'#2f6fb5',r:rnd(3,6)})}
+  else{sfx.splash();for(let i=0;i<22;i++){const a=rnd(0,TAU),s=rnd(1,4);parts.push({x:kid.fx+.5,y:kid.fy+.5,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rnd(.5,.9),c:'#2f6fb5',r:rnd(3,6)})}}
   const sc=score(),isBest=sc>save.best;if(isBest)save.best=sc;save.bestRow=Math.max(save.bestRow,maxRow);persist();
-  $('overTitle').textContent={bonk:'Bonk!',splash:'Splash!',swept:'Whoosh!',tide:'Tide\'s in!'}[kind];
-  $('overText').textContent={bonk:'Crabby got bopped by the boardwalk traffic. Wait for a gap!',splash:'Crabby hopped right into the water. Aim for a float!',swept:'Crabby rode the float right off the beach. Hop off sooner!',tide:'The tide caught up. Keep hopping forward!'}[kind];
+  $('overTitle').textContent={bonk:'Bonk!',splash:'Splash!',swept:'Whoosh!',tide:'Rained out!'}[kind];
+  $('overText').textContent={bonk:'Milo got bopped by the street traffic. Wait for a gap!',splash:'Milo hopped right into the creek. Aim for a log or a plank!',swept:'Milo rode the log right off the edge. Hop off sooner!',tide:'The rainstorm caught up. Keep hopping forward!'}[kind];
   $('stScore').textContent=sc;$('stRows').textContent=maxRow;$('stShells').textContent=shells;
   $('newBest').hidden=!isBest||sc===0;$('bestLine2').textContent='Best score: '+save.best+' · Farthest: '+save.bestRow+' hops';
   hud();setTimeout(()=>{$('over').hidden=false;window.BDA&&BDA.shareScore({score:sc,line:maxRow+' hops',into:'#over .card',after:'.stats'});$('againBtn').focus({preventScroll:true})},1000);
@@ -380,13 +381,14 @@ function hud(){$('scoreEl').textContent=score();$('shellEl').textContent=shells;
 let bannerT=0;
 function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
 
-/* ---------- Mark's art ----------
-   Lane tiles, props, traffic and floats. Anything not loaded yet is drawn the old way. */
+/* ---------- art ----------
+   Lane tiles, Milo, traffic, creek floats and sidewalk props (made by tools/sidewalk-hop-sprites.py).
+   Anything not loaded yet is drawn the simple way. */
 const ART={};
 function load(n,src){const i=new Image();i.decoding='async';i.src=src;ART[n]=i}
-['water','boardwalk','sand'].forEach(n=>load(n,'../assets/sidewalk-hop/'+n+'.jpg'));
-['raft','tube','cart','bike','palm','rock','dizzy','crab'].forEach(n=>load(n,'../assets/sidewalk-hop/'+n+'.webp'));
-['umbrella','castle','shell','surf'].forEach(n=>load(n,'../assets/eraser-gulp/'+n+'.webp'));
+['creek','road','sidewalk'].forEach(n=>load(n,'../assets/sidewalk-hop/'+n+'.jpg'));
+['kid_up','kid_up_hop','kid_down','kid_down_hop','kid_side','kid_side_hop','kid_dizzy','car_0','car_1','car_2','car_3','ride_0','ride_1','ride_2','ride_3',
+ 'log','plank','crate','tree','bench','bush','hydrant','trashcan','star'].forEach(n=>load(n,'../assets/sidewalk-hop/'+n+'.webp'));
 function ok(i){return !!(i&&i.complete&&i.naturalWidth)}
 const PATS={};
 function lanePat(n){if(!ok(ART[n]))return null;if(!PATS[n]||PATS[n].c!==ctx)PATS[n]={c:ctx,p:ctx.createPattern(ART[n],'repeat')};return PATS[n].p}
@@ -400,15 +402,15 @@ function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h
 function gloss(x,y,w,h,a){ctx.strokeStyle='rgba(85,85,92,'+(a||.45)+')';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(x,y,w,h,0,0,Math.PI);ctx.stroke()}
 function drawLane(i,row,t){
   const y=sy(i+1),h=CS+1;
-  const tn=row.type==='sand'?'sand':row.type==='walk'?'boardwalk':'water',pat=lanePat(tn);
+  const tn=row.type==='sand'?'sidewalk':row.type==='walk'?'road':'creek',pat=lanePat(tn);
   if(pat){
-    // the tile repeats sideways and lines up from lane to lane; water drifts the way its floats go
+    // the tile repeats sideways and lines up from lane to lane; the creek drifts the way its floats go
     const th=row.type==='walk'?CS*2:CS*3,k=th/ART[tn].naturalHeight;
     const ox=row.type==='water'?(t*row.speed*CS*.35):0,oy=sy(0)%th;
     try{pat.setTransform(new DOMMatrix().translate(ox,oy).scale(k))}catch(e){}
     ctx.fillStyle=pat;ctx.fillRect(0,y,W,h);
     if(row.type==='sand'&&row.shade){ctx.fillStyle='rgba(46,46,51,.04)';ctx.fillRect(0,y,W,h)}
-    if(row.type==='walk'){ctx.fillStyle='rgba(46,46,51,.5)';ctx.fillRect(0,y,W,1.5);ctx.fillRect(0,y+CS-1.5,W,1.5)}
+    if(row.type==='walk')roadMarks(i,y);
     return;
   }
   if(row.type==='sand'){
@@ -418,49 +420,53 @@ function drawLane(i,row,t){
     ctx.fillStyle='#e4e2d8';ctx.fillRect(0,y,W,h);
     ctx.strokeStyle='rgba(46,46,51,.4)';ctx.lineWidth=1.2;for(let k=1;k<4;k++){ctx.beginPath();ctx.moveTo(0,y+k*CS/4);ctx.lineTo(W,y+k*CS/4);ctx.stroke()}
     for(let k=0;k<COLS*2;k++){const px=(k+(i%2)*.5)*CS*.5*1.0+((k*7)%3)*3;ctx.beginPath();ctx.moveTo(px,y+((k%4))*CS/4);ctx.lineTo(px,y+((k%4)+1)*CS/4);ctx.stroke()}
-    ctx.fillStyle='rgba(46,46,51,.5)';ctx.fillRect(0,y,W,1.5);ctx.fillRect(0,y+CS-1.5,W,1.5);
+    roadMarks(i,y);
   }else{
     ctx.fillStyle='#d9d7cf';ctx.fillRect(0,y,W,h);
     ctx.strokeStyle='rgba(46,46,51,.35)';ctx.lineWidth=1.2;ctx.beginPath();
     for(let x=0;x<=W;x+=8){const yy=y+CS*.5+Math.sin(x/18+t*2*row.dir+i)*3;if(x===0)ctx.moveTo(x,yy);else ctx.lineTo(x,yy)}ctx.stroke();
   }
 }
+function roadMarks(i,y){
+  // a zebra crossing in the middle columns, dashed lines between street lanes, a kerb where the street ends
+  const up=rows[i+1],dn=rows[i-1];
+  ctx.fillStyle='rgba(246,243,234,.92)';ctx.strokeStyle='rgba(46,46,51,.45)';ctx.lineWidth=1;
+  for(const f of[.14,.58]){rr(3*CS+5,y+CS*f,3*CS-10,CS*.27,3);ctx.fill();ctx.stroke()}
+  if(up&&up.type==='walk'){ctx.fillStyle='rgba(246,243,234,.95)';for(let x=CS*.2;x<W;x+=CS*.9){if(x>3*CS-CS*.5&&x<6*CS)continue;rr(x,y-2,CS*.5,4,2);ctx.fill()}}
+  else{ctx.fillStyle=INK;ctx.fillRect(0,y,W,2)}
+  if(!dn||dn.type!=='walk'){ctx.fillStyle=INK;ctx.fillRect(0,y+CS-2,W,2)}
+}
 function edges(i,row,next){
-  // foam where water meets something else
-  if(row.type==='water'&&next&&next.type!=='water'){const y=sy(i+1);ctx.strokeStyle=INK;ctx.lineWidth=1.5;for(let x=0;x<W;x+=14){ctx.beginPath();ctx.arc(x+7,y,5,0,Math.PI);ctx.stroke()}}
-  if(row.type!=='water'&&next&&next.type==='water'){const y=sy(i+1);ctx.strokeStyle=INK;ctx.lineWidth=1.5;for(let x=0;x<W;x+=14){ctx.beginPath();ctx.arc(x+7,y,5,Math.PI,TAU);ctx.stroke()}}
+  // a line of pebbles where the creek meets the bank
+  if((row.type==='water')!==(!!next&&next.type==='water')&&next){const y=sy(i+1);ctx.strokeStyle=INK;ctx.lineWidth=1.3;for(let x=0;x<W;x+=13){const k=(x/13+i)%3;ctx.fillStyle=k?'#e9e6db':'#dedcd4';ctx.beginPath();ctx.ellipse(x+6.5,y+(k-1)*1.2,5.2-k*.6,3.6,0,0,TAU);ctx.fill();ctx.stroke()}}
 }
 function drawProp(p,i,t){
   const cx=(p.c+.5)*CS,cy=sy(i+1)+CS/2,r=CS*.42;
   ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(cx+r*.15,cy+r*.2,r,r*.85,0,0,TAU);ctx.fill();
-  const art=p.kind==='palm'?'palm':p.kind;
-  if(ok(ART[art])){const sz=p.kind==='palm'||p.kind==='umbrella'?r*2.5:r*2.2,[w,h]=fitIn(art,sz,sz);sprite(art,cx,cy,w,h,false,p.kind==='rock'?0:((p.c*7+i*3)%8)*.2-.7);return}
+  const art=p.kind;
+  if(ok(ART[art])){const sz=p.kind==='tree'?r*2.7:r*2.25,[w,h]=fitIn(art,sz,sz);sprite(art,cx,cy-(p.kind==='tree'?r*.25:r*.05),w,h,(p.c+i)%2===1,0);return}
   ctx.strokeStyle=INK;ctx.lineWidth=1.5;
-  if(p.kind==='umbrella'){for(let k=0;k<8;k++){ctx.fillStyle=k%2?PAPER:'#e4e2d8';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r*1.05,k/8*TAU,(k+1)/8*TAU);ctx.closePath();ctx.fill();ctx.stroke()}ctx.fillStyle=PAPER;ctx.beginPath();ctx.arc(cx,cy,r*.13,0,TAU);ctx.fill();ctx.stroke()}
-  else if(p.kind==='castle'){ctx.fillStyle='#e9e6db';rr(cx-r*.85,cy-r*.85,r*1.7,r*1.7,r*.15);ctx.fill();ctx.stroke();ctx.fillStyle='#f0ece1';rr(cx-r*.5,cy-r*.5,r,r,r*.1);ctx.fill();ctx.stroke();for(const[a,b]of[[-1,-1],[1,-1],[-1,1],[1,1]]){ctx.fillStyle='#dedcd4';ctx.beginPath();ctx.arc(cx+a*r*.78,cy+b*r*.78,r*.28,0,TAU);ctx.fill();ctx.stroke()}
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-r*.6);ctx.stroke();ctx.fillStyle='#f0c9a8';ctx.beginPath();ctx.moveTo(cx,cy-r*.6);ctx.lineTo(cx+r*.35,cy-r*.5);ctx.lineTo(cx,cy-r*.4);ctx.fill();ctx.stroke()}
-  else if(p.kind==='rock'){ctx.fillStyle='#dedcd4';ctx.beginPath();ctx.ellipse(cx,cy,r*.95,r*.8,.3,0,TAU);ctx.fill();ctx.stroke();ctx.strokeStyle=GRAPH;ctx.lineWidth=1;for(let k=-2;k<=2;k++){ctx.beginPath();ctx.moveTo(cx+k*r*.25-r*.1,cy+r*.5);ctx.lineTo(cx+k*r*.25+r*.2,cy+r*.1);ctx.stroke()}}
-  else{ctx.fillStyle='#e4e2d8';ctx.beginPath();ctx.arc(cx,cy,r*.18,0,TAU);ctx.fill();ctx.stroke();for(let k=0;k<6;k++){const a=k/6*TAU+i;ctx.fillStyle='#dcebdd';ctx.strokeStyle='#5a9a6a';ctx.beginPath();ctx.ellipse(cx+Math.cos(a)*r*.55,cy+Math.sin(a)*r*.55,r*.6,r*.2,a,0,TAU);ctx.fill();ctx.stroke()}}
+  if(p.kind==='tree'||p.kind==='bush'){ctx.fillStyle='#dcebdd';ctx.beginPath();ctx.arc(cx,cy,r*.95,0,TAU);ctx.fill();ctx.stroke()}
+  else{ctx.fillStyle='#e9e6db';rr(cx-r*.7,cy-r*.7,r*1.4,r*1.4,r*.2);ctx.fill();ctx.stroke()}
 }
-function drawShell(c,i,t){const cx=(c+.5)*CS,cy=sy(i+1)+CS/2+Math.sin(t*3+i)*2,r=CS*.24;
-  ctx.strokeStyle='rgba(196,90,138,.6)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(cx,cy,r*1.5+Math.sin(t*4)*1.5,0,TAU);ctx.stroke();
-  if(ok(ART.shell)){sprite('shell',cx,cy,r*2.6,r*2.6,false,Math.sin(t*2+i)*.2);return}
-  ctx.fillStyle='#f0d5e2';ctx.beginPath();ctx.moveTo(cx,cy+r);for(let k=0;k<=6;k++){const a=Math.PI+k/6*Math.PI;ctx.quadraticCurveTo(cx+Math.cos(a-.26)*r*1.25,cy+Math.sin(a-.26)*r*1.25,cx+Math.cos(a)*r,cy+Math.sin(a)*r*.95)}ctx.closePath();ctx.fill();ctx.strokeStyle='#c45a8a';ctx.lineWidth=1.5;ctx.stroke();
-  ctx.strokeStyle='#c45a8a';ctx.lineWidth=1;for(let k=1;k<6;k++){const a=Math.PI+k/6*Math.PI;ctx.beginPath();ctx.moveTo(cx,cy+r*.8);ctx.lineTo(cx+Math.cos(a)*r*.9,cy+Math.sin(a)*r*.85);ctx.stroke()}gloss(cx-r*.3,cy-r*.4,r*.3,r*.15,.7)}
+function drawPickup(c,i,t){const cx=(c+.5)*CS,cy=sy(i+1)+CS/2+Math.sin(t*3+i)*2,r=CS*.24;
+  ctx.strokeStyle='rgba(201,154,26,.7)';ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(cx,cy,r*1.5+Math.sin(t*4)*1.5,0,TAU);ctx.stroke();
+  if(ok(ART.star)){sprite('star',cx,cy,r*2.7,r*2.7,false,Math.sin(t*2+i)*.2);return}
+  drawStar(cx,cy,r*1.2)}
 function drawThing(row,s,i,t){
   const x=s.x0*CS,w=s.t.len*CS,y=sy(i+1),cy=y+CS/2,col=PAL[s.t.c];
   if(x>W+10||x+w<-10)return;
-  if(row.type==='walk'&&ok(ART[s.t.kind])){
-    const flip=row.dir<0,[w2,h2]=s.t.kind==='cart'?fitIn('cart',w*1.02,CS*1.05):fitIn('bike',w*1.25,CS*.95);
+  const vn=(s.t.kind==='cart'?'car_':'ride_')+s.t.c;
+  if(row.type==='walk'&&ok(ART[vn])){
+    const flip=row.dir<0,[w2,h2]=s.t.kind==='cart'?fitIn(vn,w*1.04,CS*1.05):fitIn(vn,w*1.25,CS*1.05);
     ctx.fillStyle='rgba(46,46,51,.16)';ctx.beginPath();ctx.ellipse(x+w/2+3,cy+CS*.22,w2*.45,CS*.16,0,0,TAU);ctx.fill();
-    sprite(s.t.kind,x+w/2,cy-(s.t.kind==='cart'?CS*.05:0),w2,h2,flip);return;
+    sprite(vn,x+w/2,cy-(s.t.kind==='cart'?CS*.08:CS*.12),w2,h2,flip);return;
   }
   if(row.type==='water'){
-    const fa=s.t.kind==='tube'?'tube':s.t.kind==='raft'?'raft':'surf';
+    const fa=s.t.kind==='tube'?'crate':s.t.kind==='raft'?'log':'plank';
     if(ok(ART[fa])){const bob=Math.sin(t*2.5+s.x0)*1.5;
       ctx.strokeStyle='rgba(46,46,51,.3)';ctx.lineWidth=1.2;rr(x+2,cy-CS*.34+bob+3,w-4,CS*.68,CS*.34);ctx.stroke();
-      if(fa==='surf'){const[bw,bh]=fitIn('surf',CS*.8,w-4);sprite('surf',x+w/2,cy+bob,bw,bh,false,Math.PI/2)}
-      else{const[fw,fh]=fitIn(fa,w-4,CS*.9);sprite(fa,x+w/2,cy+bob,fw,fh)}
+      const[fw,fh]=fitIn(fa,w-4,CS*.9);sprite(fa,x+w/2,cy+bob,fw,fh,row.dir<0)
       return}
   }
   if(row.type==='walk'){
@@ -480,45 +486,25 @@ function drawThing(row,s,i,t){
   }else{
     const bob=Math.sin(t*2.5+s.x0)*1.5;
     ctx.strokeStyle='rgba(46,46,51,.3)';ctx.lineWidth=1.2;rr(x+2,cy-CS*.36+bob+3,w-4,CS*.72,CS*.36);ctx.stroke();ctx.strokeStyle=INK;ctx.lineWidth=1.5;
-    if(s.t.kind==='tube'){ctx.fillStyle='#f0ece1';ctx.beginPath();ctx.arc(x+w/2,cy+bob,CS*.4,0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle='#e4e2d8';for(let k=0;k<4;k++){ctx.beginPath();ctx.moveTo(x+w/2,cy+bob);ctx.arc(x+w/2,cy+bob,CS*.4,k*TAU/4,k*TAU/4+.5);ctx.fill()}
-      ctx.fillStyle='#d9d7cf';ctx.beginPath();ctx.arc(x+w/2,cy+bob,CS*.17,0,TAU);ctx.fill();ctx.stroke()}
-    else if(s.t.kind==='board'){ctx.fillStyle='#f0ece1';ctx.beginPath();ctx.ellipse(x+w/2,cy+bob,w/2-3,CS*.3,0,0,TAU);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(x+6,cy+bob);ctx.lineTo(x+w-6,cy+bob);ctx.stroke()}
-    else{ctx.fillStyle='#e9e6db';rr(x+3,cy-CS*.36+bob,w-6,CS*.72,8);ctx.fill();ctx.stroke();ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;for(let k=1;k<4;k++){ctx.beginPath();ctx.moveTo(x+3,cy-CS*.36+bob+k*CS*.18);ctx.lineTo(x+w-3,cy-CS*.36+bob+k*CS*.18);ctx.stroke()}
-      ctx.fillStyle='#dedcd4';ctx.fillRect(x+w*.25,cy-CS*.38+bob,4,CS*.76);ctx.fillRect(x+w*.75-4,cy-CS*.38+bob,4,CS*.76)}
+    ctx.fillStyle='#e7d6c2';rr(x+3,cy-CS*.32+bob,w-6,CS*.64,CS*.2);ctx.fill();ctx.stroke();ctx.strokeStyle=PENCIL;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x+8,cy+bob);ctx.lineTo(x+w-8,cy+bob);ctx.stroke()
   }
 }
-function drawCrab(px,py,s,face,squash,t,dead){
-  if(!dead&&typeof ART!=='undefined'&&ok(ART.crab)){
-    // Mark's Crabby faces the camera, so he stays upright, leans toward his hop and faces left or right
-    const side=Math.sin(face),back=Math.cos(face)<-.5;
-    ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(px+s*.04,py+s*.3,s*.42,s*.14,0,0,TAU);ctx.fill();
-    ctx.save();ctx.translate(px,py);const sq=1+squash*.18;ctx.scale(sq*(side<-.5?-1:1),1/sq);ctx.rotate(Math.abs(side)>.5?.12:back?0:Math.sin(t*6)*.03);
-    const sz=s*1.08*(back?.95:1);ctx.drawImage(ART.crab,-sz/2,-sz*.55,sz,sz);ctx.restore();return}
-  ctx.save();ctx.translate(px,py);ctx.rotate(face);
-  const sq=1+squash*.18;ctx.scale(sq,1/sq);
-  if(dead==='bonk'){ctx.rotate(Math.sin(t*12)*.2)}
-  const r=s*.34;
-  // shadow
-  ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(r*.1,r*.25,r*1.15,r*.9,0,0,TAU);ctx.fill();
-  // legs
-  ctx.strokeStyle='#d9661a';ctx.lineWidth=r*.17;ctx.lineCap='round';
-  for(const sd of[-1,1])for(let k=0;k<3;k++){const a=(k-1)*.45,wig=Math.sin(t*14+k)*.08;ctx.beginPath();ctx.moveTo(sd*r*.6,a*r*.9);ctx.lineTo(sd*r*1.25,(a+wig)*r*1.2+r*.25);ctx.stroke()}
-  // claws
-  for(const sd of[-1,1]){ctx.strokeStyle='#d9661a';ctx.lineWidth=r*.2;ctx.beginPath();ctx.moveTo(sd*r*.5,-r*.4);ctx.lineTo(sd*r*.85,-r*.95);ctx.stroke();
-    ctx.fillStyle='#f0c9a8';ctx.lineWidth=r*.08;ctx.beginPath();ctx.ellipse(sd*r*.9,-r*1.15,r*.32,r*.26,sd*.4,0,TAU);ctx.fill();ctx.stroke();ctx.fillStyle=PAPER;ctx.beginPath();ctx.moveTo(sd*r*.9,-r*1.1);ctx.lineTo(sd*r*.78,-r*1.45);ctx.lineTo(sd*r*1.02,-r*1.42);ctx.fill();ctx.stroke()}
-  // body
-  ctx.fillStyle='#f0c9a8';ctx.strokeStyle='#d9661a';ctx.lineWidth=r*.1;ctx.beginPath();ctx.ellipse(0,0,r*.95,r*.75,0,0,TAU);ctx.fill();ctx.stroke();
-  ctx.strokeStyle='rgba(217,102,26,.6)';ctx.lineWidth=r*.05;for(let k=-2;k<=2;k++){ctx.beginPath();ctx.moveTo(k*r*.25-r*.15,r*.55);ctx.lineTo(k*r*.25+r*.15,r*.2);ctx.stroke()}
-  // eyes on stalks
-  for(const sd of[-1,1]){ctx.strokeStyle='#d9661a';ctx.lineWidth=r*.12;ctx.beginPath();ctx.moveTo(sd*r*.25,-r*.5);ctx.lineTo(sd*r*.32,-r*.85);ctx.stroke();
-    ctx.fillStyle=PAPER;ctx.beginPath();ctx.arc(sd*r*.32,-r*.92,r*.2,0,TAU);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=r*.06;ctx.stroke();ctx.fillStyle=INK;
-    if(dead==='bonk'){ctx.strokeStyle=INK;ctx.lineWidth=r*.07;ctx.beginPath();ctx.moveTo(sd*r*.32-r*.1,-r*1.02);ctx.lineTo(sd*r*.32+r*.1,-r*.82);ctx.moveTo(sd*r*.32+r*.1,-r*1.02);ctx.lineTo(sd*r*.32-r*.1,-r*.82);ctx.stroke()}
-    else{ctx.beginPath();ctx.arc(sd*r*.32,-r*.96,r*.1,0,TAU);ctx.fill()}}
-  // smile and cheeks
-  ctx.strokeStyle=INK;ctx.lineWidth=r*.08;ctx.beginPath();ctx.arc(0,-r*.05,r*.25,.2,Math.PI-.2);ctx.stroke();
-  ctx.fillStyle='rgba(196,90,138,.35)';ctx.beginPath();ctx.ellipse(-r*.55,0,r*.12,r*.08,0,0,TAU);ctx.ellipse(r*.55,0,r*.12,r*.08,0,0,TAU);ctx.fill();
+function drawKid(px,py,s,face,squash,t,dead,hop){
+  // Milo stays upright: his back (and backpack) when hopping up the street, his face when hopping back, side-on left or right
+  const side=Math.sin(face),back=Math.cos(face)<-.5,away=Math.cos(face)>.5;
+  const view=Math.abs(side)>.5?'kid_side':back?'kid_down':'kid_up',nm=dead==='bonk'?'kid_dizzy':view+(hop?'_hop':'');
+  ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(px+s*.04,py+s*.3,s*.36,s*.13,0,0,TAU);ctx.fill();
+  if(ok(ART[nm])){
+    ctx.save();ctx.translate(px,py);const sq=1+squash*.15;ctx.scale(sq*(side<-.5?-1:1),1/sq);
+    if(dead==='bonk')ctx.rotate(Math.sin(t*12)*.12);else if(!hop&&!away)ctx.rotate(Math.sin(t*6)*.03);
+    const h=s*1.22,w=h*ART[nm].naturalWidth/ART[nm].naturalHeight;ctx.drawImage(ART[nm],-w/2,-h*.7,w,h);ctx.restore();return}
+  // simple stand-in until the pictures load: round head, curls, orange shirt
+  const r=s*.34;ctx.save();ctx.translate(px,py);ctx.strokeStyle=INK;ctx.lineWidth=r*.1;
+  ctx.fillStyle='#f6d7bd';ctx.beginPath();rr(-r*.6,-r*.2,r*1.2,r*1.1,r*.3);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#d9b99a';ctx.beginPath();ctx.arc(0,-r*.75,r*.75,0,TAU);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#f2c9a5';ctx.beginPath();ctx.arc(0,-r*.6,r*.5,0,TAU);ctx.fill();
+  ctx.fillStyle=INK;ctx.beginPath();ctx.arc(-r*.2,-r*.65,r*.07,0,TAU);ctx.arc(r*.2,-r*.65,r*.07,0,TAU);ctx.fill();
   ctx.restore();
-  if(dead==='bonk'){for(let k=0;k<3;k++){const a=t*5+k*TAU/3;drawStar(px+Math.cos(a)*s*.45,py-s*.45+Math.sin(a)*s*.15,s*.1)}}
 }
 function drawStar(x,y,r){ctx.fillStyle='#f3e6b0';ctx.strokeStyle='#c99a1a';ctx.lineWidth=1.2;ctx.beginPath();for(let i=0;i<10;i++){const a=i/10*TAU-Math.PI/2,q=i%2?r*.45:r;ctx.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q)}ctx.closePath();ctx.fill();ctx.stroke()}
 function draw(t){
@@ -530,22 +516,26 @@ function draw(t){
   for(let i=r0;i<=r1;i++)drawLane(i,rows[i],t);
   for(let i=r0;i<=r1;i++)edges(i,rows[i],rows[i+1]);
   for(let i=r0;i<=r1;i++){const row=rows[i];if(row.type==='water')for(const s of thingsAt(row))drawThing(row,s,i,t)}
-  for(let i=r0;i<=r1;i++){const row=rows[i];if(row.type==='sand')row.props.forEach(p=>drawProp(p,i,t));if(row.shell>=0)drawShell(row.shell,i,t)}
-  // the crab, with a hop arc
-  const showCrab=!(deathKind==='splash'&&deadT>.15)&&!(deathKind==='tide'&&deadT>.4)&&!(!running&&deathKind==='bonk'&&ok(ART.dizzy));
-  if(showCrab){const arc=crab.hopT<1?Math.sin(crab.hopT*Math.PI)*CS*.25:0;crab.squash*=.85;
-    drawCrab((crab.fx+.5)*CS,sy(crab.fy)-CS/2-arc,CS*(1+arc/CS*.3),crab.face,crab.squash,t,running?'':deathKind)}
+  for(let i=r0;i<=r1;i++){const row=rows[i];if(row.type==='sand')row.props.forEach(p=>drawProp(p,i,t));if(row.shell>=0)drawPickup(row.shell,i,t)}
+  // Milo, with a hop arc
+  const showKid=!(deathKind==='splash'&&deadT>.15)&&!(deathKind==='tide'&&deadT>.4)&&!(!running&&deathKind==='bonk');
+  if(showKid){const arc=kid.hopT<1?Math.sin(kid.hopT*Math.PI)*CS*.25:0;kid.squash*=.85;
+    drawKid((kid.fx+.5)*CS,sy(kid.fy)-CS/2-arc,CS*(1+arc/CS*.3),kid.face,kid.squash,t,running?'':deathKind,kid.hopT<1)}
   for(let i=r0;i<=r1;i++){const row=rows[i];if(row.type==='walk')for(const s of thingsAt(row))drawThing(row,s,i,t)}
-  if(!running&&deathKind==='bonk'){if(ok(ART.dizzy)){const px=(crab.fx+.5)*CS,py=sy(crab.fy)-CS/2,sz=CS*1.25*(1+Math.max(0,.3-deadT)*.8);sprite('dizzy',px,py,sz,sz,false,Math.sin(t*8)*.15)}else drawCrab((crab.fx+.5)*CS,sy(crab.fy)-CS/2,CS,crab.face,0,t,'bonk')}
+  if(!running&&deathKind==='bonk'){const px=(kid.fx+.5)*CS,py=sy(kid.fy)-CS/2;drawKid(px,py,CS*(1+Math.max(0,.3-deadT)*.8),kid.face,0,t,'bonk');for(let k=0;k<3;k++){const a=t*5+k*TAU/3;drawStar(px+Math.cos(a)*CS*.45,py-CS*.75+Math.sin(a)*CS*.15,CS*.1)}}
   for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2));ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x*CS,sy(p.y),p.r,0,TAU);ctx.fill()}
   ctx.globalAlpha=1;
-  // incoming tide at the bottom
+  // the rainstorm chasing from below: a band of rain under a row of puffy grey clouds
   const ty=sy(tideY);
-  if(ty<H+40){ctx.fillStyle='rgba(214,228,242,.92)';
-    ctx.beginPath();ctx.moveTo(0,H+20);for(let x=0;x<=W;x+=10)ctx.lineTo(x,ty+Math.sin(x/25+t*3)*5);ctx.lineTo(W,H+20);ctx.fill();
-    ctx.strokeStyle='#2f6fb5';ctx.lineWidth=2;ctx.beginPath();for(let x=0;x<=W;x+=10){const yy=ty+Math.sin(x/25+t*3)*5;x?ctx.lineTo(x,yy):ctx.moveTo(x,yy)}ctx.stroke();
-    ctx.strokeStyle='rgba(47,111,181,.5)';ctx.lineWidth=1.2;for(let yy=ty+14;yy<H;yy+=12){ctx.beginPath();for(let x=0;x<=W;x+=10){const y2=yy+Math.sin(x/20+t*2+yy)*2;x?ctx.lineTo(x,y2):ctx.moveTo(x,y2)}ctx.stroke()}
-    ctx.strokeStyle='#2f6fb5';ctx.lineWidth=1.5;for(let x=0;x<=W;x+=16){ctx.beginPath();ctx.arc(x,ty+Math.sin(x/25+t*3)*5,5+Math.sin(x+t*5)*1.5,Math.PI,TAU);ctx.stroke()}}
+  if(ty<H+40){
+    ctx.fillStyle='rgba(214,228,242,.9)';ctx.fillRect(0,ty,W,H-ty+20);
+    ctx.strokeStyle='#3a7bd5';ctx.lineWidth=1.6;ctx.lineCap='round';
+    for(let k=0;k<70;k++){const x=((k*53.7)%W),y0=ty+14+(((k*37+t*260)%Math.max(30,H-ty+30)));if(y0>H+10)continue;ctx.beginPath();ctx.moveTo(x,y0);ctx.lineTo(x-4,y0+11);ctx.stroke()}
+    // puffy clouds: outline every puff first, then fill them all so only the outer edge keeps its ink line
+    ctx.lineCap='butt';const puffs=[];for(let x=-10;x<=W+30;x+=30)puffs.push([x,ty+Math.sin(x/40+t*2)*3+((x/30|0)%2)*5,17+((x/30|0)%3)*2]);
+    ctx.strokeStyle=INK;ctx.lineWidth=4.4;for(const[x,y,r]of puffs){ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.stroke()}
+    ctx.fillStyle='#dedfe4';for(const[x,y,r]of puffs){ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill()}
+    ctx.strokeStyle='rgba(85,85,92,.45)';ctx.lineWidth=1.2;for(const[x,y,r]of puffs){ctx.beginPath();ctx.moveTo(x-r*.5,y+r*.4);ctx.lineTo(x+r*.1,y-r*.2);ctx.moveTo(x-r*.1,y+r*.6);ctx.lineTo(x+r*.5,y);ctx.stroke()}}
   ctx.restore();
 }
 
@@ -554,8 +544,8 @@ let last=0,tt=0;
 function frame(now){
   const dt=Math.min(.05,(now-last)/1000||0);last=now;tt+=dt;
   if(running)step(dt);else{deadT+=dt;for(let i=Math.max(0,Math.floor(camY)-2);i<Math.min(rows.length,Math.floor(camY)+40);i++){const r=rows[i];if(r.things)for(const t of r.things)t.x+=r.speed*dt*(deathKind==='bonk'?0:1)}}
-  // camera keeps the crab in the lower third and never scrolls back
-  const want=crab.fy-Math.max(3,H/CS*.3);if(want>camY)camY+=(want-camY)*Math.min(1,dt*5);
+  // camera keeps the kid in the lower third and never scrolls back
+  const want=kid.fy-Math.max(3,H/CS*.3);if(want>camY)camY+=(want-camY)*Math.min(1,dt*5);
   for(const p of parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.95;p.vy*=.95;p.life-=dt}parts=parts.filter(p=>p.life>0);
   draw(tt);requestAnimationFrame(frame);
 }
@@ -567,17 +557,17 @@ $('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audi
 setSoundLabel();
 $('bestLine').textContent='Best score: '+save.best+(save.bestRow?' · Farthest: '+save.bestRow+' hops':'');
 
-/* start-card art: Crabby bouncing */
+/* start-card art: Milo bouncing on a crossing */
 const mc=$('mini').getContext('2d');
 function mini(t){const sv=ctx;ctx=mc;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0,0,240,240);
-  // a wobbly pencil circle behind Crabby
+  // a wobbly pencil circle behind Milo
   mc.strokeStyle=INK;mc.lineWidth=2;mc.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=100+2*Math.sin(i*2.3);mc.lineTo(120+Math.cos(a)*r,125+Math.sin(a)*r)}mc.closePath();mc.stroke();
-  mc.strokeStyle=GRAPH;mc.lineWidth=1;for(let y=190;y<225;y+=8){mc.beginPath();for(let x=30;x<=210;x+=10){const yy=y+Math.sin(x/15+y)*2;x===30?mc.moveTo(x,yy):mc.lineTo(x,yy)}mc.stroke()}
-  const hop=Math.abs(Math.sin(t*3));drawCrab(120,150-hop*40,190,Math.sin(t*1.5)*.2,hop<.15?.8:0,t,'');ctx=sv}
+  mc.fillStyle='#e9e6db';mc.strokeStyle=INK;mc.lineWidth=1.5;for(const x of[44,88,132,176]){mc.beginPath();mc.rect(x-16,200,32,14);mc.fill();mc.stroke()}
+  const hop=Math.abs(Math.sin(t*3));drawKid(120,150-hop*40,140,Math.PI,hop<.15?.8:0,t,'',hop>.2);ctx=sv}
 (function ml(n){if(!$('start').hidden)mini(n/1000);requestAnimationFrame(ml)})(0);
 
 resize();reset();requestAnimationFrame(frame);
-window.__ch={get state(){return{running,score:score(),row:crab.row,x:crab.x,maxRow,shells,deathKind,hopT:crab.hopT}},move,rows:()=>rows.slice(0,crab.row+6).map(r=>({type:r.type,props:r.props?r.props.map(p=>p.c):[],speed:r.speed||0,things:r.things?thingsAt(r).map(s=>[s.x0,s.x1]):[]}))};
+window.__ch={get state(){return{running,score:score(),row:kid.row,x:kid.x,maxRow,shells,deathKind,hopT:kid.hopT}},move,rows:()=>rows.slice(0,kid.row+6).map(r=>({type:r.type,props:r.props?r.props.map(p=>p.c):[],speed:r.speed||0,things:r.things?thingsAt(r).map(s=>[s.x0,s.x1]):[]}))};
 })();
 </script>
 </body>
