@@ -1,0 +1,423 @@
+{
+  "_note": "Post text for Reel Studio (/reel). {name} = game name, {url} = sketchpadarcade.com/<slug>, {hook} = the hook. Each post mixes one line, one CTA, one comment and a rotating hashtag set, and the page avoids repeats until a game's list runs out.",
+  "_titles": [
+    "{hook} | {name}",
+    "{name}: {hook}",
+    "{hook} ✏️ {name}",
+    "{name} 📓 {hook}",
+    "{hook} ({name}, free in your browser)",
+    "Playing {name} ✏️ {hook}"
+  ],
+  "_ctas": [
+    "🎮 Play free, no download: {url} (link in bio)",
+    "👉 Try it free at {url} (link in bio)",
+    "✏️ Free to play, no sign-up: {url} (link in bio)",
+    "📱 Plays right in your phone's browser: {url} (link in bio)",
+    "📓 Free, family friendly, no app needed: {url} (link in bio)",
+    "🔗 Play it free at {url} (link in bio)",
+    "✨ No download, no sign-up, just play: {url} (link in bio)",
+    "✏️ Free on Sketchpad Arcade: {url} (link in bio)"
+  ],
+  "_comments": [
+    "What's your best score? Drop it below 👇 Play free: {url}",
+    "Bet you can beat mine 👀 Try it here: {url}",
+    "Which sketchbook game should I play next? ✏️ All free at sketchpadarcade.com",
+    "Tag someone who'd be hooked on {name} 😅 {url}",
+    "Would you keep playing or quit here? 😂 {url}",
+    "Rate this run from 1 to 10 👇 Play it yourself: {url}",
+    "Free, no download, no sign-up. Go beat my score 👉 {url}",
+    "Should I post my next run? 👀 {url}",
+    "Who else plays one more round before bed? 🙋 {url}",
+    "Comment your score and I'll try to beat it 🏆 {url}",
+    "Every game looks like it was drawn in a kid's sketchbook ✏️ {url}",
+    "Easy to learn, hard to put down 😅 {url}"
+  ],
+  "_tags": {
+    "core": ["#SketchpadArcade"],
+    "Puzzle": ["#PuzzleGame", "#PuzzleGames", "#BrainGames", "#LogicPuzzle", "#BrainTeaser", "#RelaxingGames", "#PuzzleTime"],
+    "Word": ["#WordGame", "#WordGames", "#WordPuzzle", "#WordNerd", "#Vocabulary", "#BrainGames", "#DailyPuzzle"],
+    "Arcade": ["#ArcadeGame", "#ArcadeGames", "#OneMoreTry", "#HighScore", "#CasualGaming", "#ArcadeFun"],
+    "general": ["#FreeGames", "#BrowserGames", "#MobileGames", "#FamilyFriendly", "#CasualGames", "#Satisfying", "#PencilDrawing", "#Sketchbook", "#HandDrawn", "#Doodle", "#NoDownload", "#HTML5Games", "#PlayFree", "#KidFriendly"]
+  },
+  "margin-merge": {
+    "lines": [
+      "Drop sea friends in the tank. Two of the same touch and they merge into the next one up.",
+      "Sand dollar → moon snail → scallop → starfish → crab… all the way up to a dolphin 🐬",
+      "Two dolphins swim off together for a 100 point bonus.",
+      "The only rule: don't let the stack stay above the dotted line.",
+      "It starts calm. Then the tank fills up 😅",
+      "A relaxing merge puzzle drawn in pencil."
+    ],
+    "comments": [
+      "Has anyone made two dolphins yet? 🐬🐬 {url}",
+      "Which sea friend is your favourite? {url}",
+      "The tank was SO close to overflowing 😬 {url}"
+    ]
+  },
+  "2048-drop": {
+    "lines": [
+      "Drop numbered balls in the jar. Two of the same touch and they merge into double.",
+      "Gravity does the rest, and merges can set off chain reactions.",
+      "Keep the pile below the dashed danger line.",
+      "Bigger merges are worth way more points."
+    ],
+    "comments": [
+      "Has anyone actually reached 2048? 👀 {url}",
+      "That chain reaction though {url}",
+      "What's the biggest ball you've made? {url}"
+    ]
+  },
+  "scribble-swing": {
+    "lines": [
+      "Hold to grab a push-pin with your rope, let go to fling forward.",
+      "A caped kid swinging over a pencil city 🦸",
+      "Grab stars for bonus points on the way.",
+      "Balloons bob up and down, and soap bubbles pop soon after you grab them.",
+      "The farther you go, the farther apart the pins get."
+    ],
+    "comments": [
+      "How far can you swing? {url}",
+      "That last pin was SO far 😅 {url}",
+      "Rate that swing 1–10 👇 {url}"
+    ]
+  },
+  "note-quest": {
+    "lines": [
+      "Guess the secret word in six tries ✏️",
+      "Green means right spot, yellow means wrong spot, grey means not in the word.",
+      "Solve words in a row for a streak bonus.",
+      "Beginner, Intermediate or Advanced."
+    ],
+    "comments": [
+      "Did you guess it before I did? 👀 {url}",
+      "What's your go-to first word? 👇 {url}",
+      "How many tries did it take you? {url}"
+    ]
+  },
+  "eraser-gulp": {
+    "lines": [
+      "Steer a hungry little whirlpool and gulp anything smaller than you 🌀",
+      "Every gulp makes you a little bigger.",
+      "Fill the size meter before the timer runs out.",
+      "Too big? Come back when you've grown."
+    ],
+    "comments": [
+      "What's the biggest thing you've gulped? 🌀 {url}",
+      "Satisfying or chaotic? 👇 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "sidewalk-hop": {
+    "lines": [
+      "Hop Milo across busy streets full of cars, bikes, scooters and skateboards.",
+      "Cross the creek on surfboards, rafts and tubes.",
+      "Keep moving, a rainstorm is creeping up behind you ☔",
+      "Wait for a gap… then hop!"
+    ],
+    "comments": [
+      "How far did you get? {url}",
+      "That skateboard came out of nowhere 😂 {url}",
+      "Rate Milo's run 1–10 👇 {url}"
+    ]
+  },
+  "paper-gates": {
+    "lines": [
+      "Slide each block out through the gate that matches its colour.",
+      "Blocks can't overlap, so plan your moves.",
+      "A block only fits a gate that's at least as wide as it is.",
+      "Clear the board before the timer runs out."
+    ],
+    "comments": [
+      "Which block would you move first? 👇 {url}",
+      "So satisfying when it slides out 😌 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "doodle-stacks": {
+    "lines": [
+      "Drop a stack and same-colour neighbours hop together.",
+      "Get 10 of one colour on top and they pop.",
+      "One pop can set off another for combo points.",
+      "Don't let the board fill up."
+    ],
+    "comments": [
+      "That chain pop though 👀 {url}",
+      "Where would you drop the next stack? 👇 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "scribble-slice": {
+    "lines": [
+      "Swipe to slice the fruit as it splashes up 🍉",
+      "Slice two or more in one swipe for a combo bonus.",
+      "Steer clear of the spiky sea urchins.",
+      "Every 500 points wins a lost life back."
+    ],
+    "comments": [
+      "What's your best combo? 🍉 {url}",
+      "Those urchins are sneaky 😤 {url}",
+      "How long can you last? {url}"
+    ]
+  },
+  "sketch-search": {
+    "lines": [
+      "Find the hidden words in a hand-drawn letter board 🔎",
+      "Every level has a theme and its own word list.",
+      "Later words hide on a slant and even backwards.",
+      "Beginner, Intermediate or Advanced."
+    ],
+    "comments": [
+      "Can you find the last word before I do? 👀 {url}",
+      "Word search fans, how did I do? {url}",
+      "Which word took you the longest? 👇 {url}"
+    ]
+  },
+  "pencil-putt": {
+    "lines": [
+      "Pull back like a slingshot, aim and putt ⛳",
+      "Watch out for sand, slopes, the tide and water.",
+      "A hole in one is worth 1000 points.",
+      "Mini golf, drawn in a sketchbook."
+    ],
+    "comments": [
+      "Hole in one or not? 👀 {url}",
+      "Which hole is the hardest? 👇 {url}",
+      "What's your best round? {url}"
+    ]
+  },
+  "letter-links": {
+    "lines": [
+      "Link words around the path and turn all twelve letters gold ✨",
+      "Each next letter has to come from a different side.",
+      "Your next word starts with the last letter of the one before.",
+      "Try to solve it in the par number of words.",
+      "Beginner, Intermediate or Advanced."
+    ],
+    "comments": [
+      "How many words did it take you? 👇 {url}",
+      "Did you beat par? 👀 {url}",
+      "What was your first word? {url}"
+    ]
+  },
+  "sketch-sprint": {
+    "lines": [
+      "Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods.",
+      "Swipe to turn at every corner, jump over logs and slide under branches.",
+      "Your runner gets faster the longer you last 😅",
+      "An endless runner drawn entirely in pencil ✏️"
+    ],
+    "comments": [
+      "How far did you get? {url}",
+      "That corner came out of nowhere 😂 {url}",
+      "Downtown, park or woods: which is your favourite? 👇 {url}"
+    ]
+  },
+  "doodle-drop": {
+    "lines": [
+      "Spin a giant pencil and drop a bouncy striped ball through the rings.",
+      "Don't land on the pink scribbles or the sliding ink blots.",
+      "Fall through three rings without bouncing to smash the next one.",
+      "Land in the pencil cup to clear the level."
+    ],
+    "comments": [
+      "What level are you on? {url}",
+      "That smash though 👀 {url}",
+      "Those ink blots are sneaky 😤 {url}"
+    ]
+  },
+  "pencil-plunk": {
+    "lines": [
+      "Pull thumbtacks out of popsicle sticks and sort them into paper cups 📌",
+      "Three tacks of the same colour fill a cup.",
+      "Pull a stick's last tack and it plunks onto the desk.",
+      "Don't let the pencil case fill up."
+    ],
+    "comments": [
+      "Which tack would you pull first? 👇 {url}",
+      "That plunk is so satisfying 😌 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "draw-brawl": {
+    "lines": [
+      "Grab gold stars and race them back to your fort ⭐",
+      "Only banked stars count, so don't get splatted on the way.",
+      "Pick Max, Ruby or Leo and brawl against three computer rivals.",
+      "Dodge the sprinklers!"
+    ],
+    "comments": [
+      "Team Max, Ruby or Leo? 👇 {url}",
+      "How many stars did you bank? {url}",
+      "That splat was rough 😂 {url}"
+    ]
+  },
+  "doodle-darts": {
+    "lines": [
+      "Tap at just the right moment to hit the target 🎯",
+      "Bullseyes in a row build a combo worth more and more.",
+      "You get three darts. Never hit the pufferfish.",
+      "Smash the bonus sand dollars when they pop up."
+    ],
+    "comments": [
+      "How many bullseyes in a row can you get? 🎯 {url}",
+      "One tap. No second chances. {url}",
+      "What's your best combo? 👇 {url}"
+    ]
+  },
+  "word-workshop": {
+    "lines": [
+      "Drag across the letter wheel to spell words and fill the crossword ✏️",
+      "Extra real words count as bonus words.",
+      "Find words fast to build a combo up to 5X.",
+      "Beginner, Intermediate or Advanced."
+    ],
+    "comments": [
+      "How many words can you find? 👇 {url}",
+      "Did you spot the long one? 👀 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "bubble-doodle": {
+    "lines": [
+      "Drag to aim. The line shows exactly where your shot will bounce.",
+      "Pop a group and everything hanging below falls off for bonus points.",
+      "Bank shots off the wall are the best part 👀",
+      "Clear the board before the bubbles cross the line."
+    ],
+    "comments": [
+      "Did you see that bank shot? 👀 {url}",
+      "What level are you on? {url}",
+      "How many bubbles did that one shot drop? 👇 {url}"
+    ]
+  },
+  "four-in-a-frame": {
+    "lines": [
+      "Sixteen words. Find the four secret groups of four.",
+      "Groups start easy, then get sneaky.",
+      "Some words seem to fit two groups at once 👀",
+      "Yellow is the easiest group. Pink is the trickiest."
+    ],
+    "comments": [
+      "Did you spot the pink group? 👀 {url}",
+      "Which word tricked you? 👇 {url}",
+      "How many tries did it take you? {url}"
+    ]
+  },
+  "margin-match": {
+    "lines": [
+      "Tap doodle tiles off the pile and collect three of a kind ✏️",
+      "Don't let your 7-spot tray fill up.",
+      "Clear the tiles on top to free the ones underneath.",
+      "Each level stacks the pile higher."
+    ],
+    "comments": [
+      "Which tile would you tap next? 👇 {url}",
+      "That tray got scary full 😬 {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "pencil-pairs": {
+    "lines": [
+      "Link matching tiles with a path of no more than two turns.",
+      "Paths can run around the outside edge of the board.",
+      "Every match adds a second back to the clock.",
+      "Clear the whole board before time runs out."
+    ],
+    "comments": [
+      "Can you spot the next pair? 👀 {url}",
+      "What level are you on? {url}",
+      "How fast did you clear it? 👇 {url}"
+    ]
+  },
+  "graph-blocks": {
+    "lines": [
+      "Drag shapes onto the graph paper and clear rows and columns.",
+      "Place all three pieces to get three new ones.",
+      "Lines about to clear light up before you drop.",
+      "The game ends when nothing fits."
+    ],
+    "comments": [
+      "Where would you put the next piece? 👇 {url}",
+      "That was SO close 😬 {url}",
+      "What's your best score? {url}"
+    ]
+  },
+  "scribble-swap": {
+    "lines": [
+      "Swap two tiles to line up three or more of the same kind.",
+      "Make matches on top of the sand to wash it away.",
+      "Leftover moves turn into bonus points and stars.",
+      "Every level has new goals."
+    ],
+    "comments": [
+      "That combo though 👀 {url}",
+      "How many stars did you get? ⭐ {url}",
+      "What level are you on? {url}"
+    ]
+  },
+  "pencil-path": {
+    "lines": [
+      "Tap a turtle to send it crawling straight to the sea 🐢",
+      "It only makes it if nothing is in its way.",
+      "Every turtle that leaves opens a path for the others.",
+      "Clear the whole island to finish the level."
+    ],
+    "comments": [
+      "Which turtle would you tap first? 👇 {url}",
+      "What level are you on? {url}",
+      "So satisfying when the last one goes 😌 {url}"
+    ]
+  },
+  "paper-sub": {
+    "lines": [
+      "Steer a little submarine and fire streams of bubbles 🫧",
+      "Bubbled creatures float away. Octopuses take two hits.",
+      "Dodge the swooping creatures and their ink.",
+      "Every third level is a bonus parade."
+    ],
+    "comments": [
+      "What level are you on? {url}",
+      "That ink came out of nowhere 😤 {url}",
+      "How many subs did you have left? 👇 {url}"
+    ]
+  },
+  "color-by-pencil": {
+    "lines": [
+      "Pick a colour and fill every numbered square 🎨",
+      "Hold and drag to fill a bunch at once.",
+      "Watch the picture come to life one colour at a time.",
+      "The calmest game on Sketchpad Arcade."
+    ],
+    "comments": [
+      "Which picture should I do next? 👇 {url}",
+      "So relaxing 😌 {url}",
+      "Who else finds this weirdly calming? {url}"
+    ]
+  },
+  "gem-sketch": {
+    "lines": [
+      "Every gem starts in the wrong spot. Put them all back 💎",
+      "Pick up touching gems of the same colour all at once.",
+      "Stash gems in the tray until you find their spot.",
+      "Watch the picture rebuild itself."
+    ],
+    "comments": [
+      "What level are you on? {url}",
+      "That last gem though 😌 {url}",
+      "Satisfying or tricky? 👇 {url}"
+    ]
+  },
+  "word-scribble": {
+    "lines": [
+      "Drop letter bubbles. Matching colours unscramble into a hidden word.",
+      "Two of the same letter merge into silver, then gold.",
+      "Swipe across bubbles to spell the hidden words.",
+      "A merge game and a word game in one."
+    ],
+    "comments": [
+      "Did you spot the word before I did? 👀 {url}",
+      "What level are you on? {url}",
+      "Word nerds, how did I do? 👇 {url}"
+    ]
+  }
+}
