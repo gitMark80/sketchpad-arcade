@@ -9,14 +9,14 @@
     "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
     "policy_date": "October 8, 2026",
     "picks": [
-      "sea-merge",
-      "seaside-sprint",
-      "lighthouse-drop",
-      "tiki-putt",
-      "plank-plunk",
-      "letter-lagoon",
-      "crab-hop",
-      "splash-slice"
+      "margin-merge",
+      "sketch-sprint",
+      "doodle-drop",
+      "pencil-putt",
+      "pencil-plunk",
+      "letter-links",
+      "sidewalk-hop",
+      "scribble-slice"
     ],
     "also": {
       "text": "Like these in full colour? The painted originals live at Beach Day Arcade.",
@@ -26,12 +26,12 @@
   },
   "games": [
     {
-      "slug": "sea-merge",
-      "name": "Sea Merge",
+      "slug": "margin-merge",
+      "name": "Margin Merge",
       "genre": "Puzzle",
       "added": "2026-10-08",
       "tagline": "Drop sea friends in the tank and merge matching pairs, all the way up to a dolphin.",
-      "meta": "Play Sea Merge free online. Drop sand dollars, shells, crabs and more into a glass tank, merge matching pairs into bigger sea friends and try to make a dolphin. Works on phone and computer.",
+      "meta": "Play Margin Merge free online. Drop sand dollars, shells, crabs and more into a glass tank, merge matching pairs into bigger sea friends and try to make a dolphin. Works on phone and computer.",
       "lead": "A relaxing merge puzzle in a sunny glass tank. Drop sea friends from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny sand dollar all the way to a dolphin, but don't let the tank overflow.",
       "facts": [
         "Puzzle",
@@ -63,7 +63,7 @@
       "name": "2048 DROP",
       "genre": "Puzzle",
       "added": "2026-10-08",
-      "title": "2048 DROP – Free Number Merge Game | Beach Day Arcade",
+      "title": "2048 DROP – Free Number Merge Game | Sketchpad Arcade",
       "tagline": "Drop numbers, merge matching balls and work your way to 2048.",
       "meta": "Drop numbers, combine matching balls, and work your way toward 2048. How high can you merge before the container fills?",
       "lead": "A number-merging physics puzzle in a sea-glass jar. Drop numbered balls, watch them roll and settle, and merge matching numbers into bigger ones: 2 and 2 make 4, 4 and 4 make 8, all the way up to 2048 and beyond. Keep the pile below the danger line to stay in the game.",
@@ -95,17 +95,17 @@
         "A ball crossing the danger line for a moment is fine. Watch the countdown and clear the top before it runs out."
       ],
       "about": [
-        "2048 DROP is an original number-merging physics game made by Beach Day Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.",
+        "2048 DROP is an original number-merging physics game made by Sketchpad Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.",
         "Reaching 2048 is a big moment, but it isn't the end. Skilled players can keep merging to 4096 and beyond. Your personal best, today's best and lifetime stats are saved on your device. No account needed."
       ]
     },
     {
-      "slug": "octo-swing",
-      "name": "Octo Swing",
+      "slug": "scribble-swing",
+      "name": "Scribble Swing",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Grab pearls with a stretchy tentacle and swing a little octopus over the sea.",
-      "meta": "Play Octo Swing free online. Hold to grab glowing pearls with a stretchy tentacle, swing high and let go to fling a little octopus across the sea. Grab starfish, bounce on beach balls and see how far you can go. Works on phone and computer.",
+      "meta": "Play Scribble Swing free online. Hold to grab glowing pearls with a stretchy tentacle, swing high and let go to fling a little octopus across the sea. Grab starfish, bounce on beach balls and see how far you can go. Works on phone and computer.",
       "lead": "A one-button swinging game starring Ollie, a very bouncy octopus. Hold to grab the nearest pearl with a tentacle, swing down and up, then let go to fling forward. Catch the next pearl before you drop into the sea, collect starfish along the way and see how far you can swing.",
       "facts": [
         "Arcade",
@@ -133,12 +133,12 @@
       ]
     },
     {
-      "slug": "bottle-words",
-      "name": "Bottle Words",
+      "slug": "note-quest",
+      "name": "Note Quest",
       "genre": "Word",
       "added": "2026-10-08",
       "tagline": "Guess the secret word in the bottle in six tries, with colour clues after every guess.",
-      "meta": "Play Bottle Words free online. A secret word washes up in every bottle. Guess it using green and yellow letter clues, with Beginner, Intermediate and Advanced difficulty. Works on phone and computer.",
+      "meta": "Play Note Quest free online. A secret word washes up in every bottle. Guess it using green and yellow letter clues, with Beginner, Intermediate and Advanced difficulty. Works on phone and computer.",
       "lead": "A friendly word-guessing game on the beach. Every bottle that washes ashore hides a secret word. Type a guess and the letters light up to show which ones are right. Solve bottle after bottle as the words grow from 4 letters to 6, and see how many you can find before you run out of shells.",
       "facts": [
         "Word puzzle",
@@ -166,12 +166,12 @@
       ]
     },
     {
-      "slug": "whirlpool-gulp",
-      "name": "Whirlpool Gulp",
+      "slug": "eraser-gulp",
+      "name": "Eraser Gulp",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Steer a hungry little whirlpool and gulp up the beach to grow.",
-      "meta": "Play Whirlpool Gulp free online. Steer a cute magic whirlpool around a busy beach, gulp down shells, buckets, umbrellas and even boats, and grow big enough to reach the next beach before time runs out. Works on phone and computer.",
+      "meta": "Play Eraser Gulp free online. Steer a cute magic whirlpool around a busy beach, gulp down shells, buckets, umbrellas and even boats, and grow big enough to reach the next beach before time runs out. Works on phone and computer.",
       "lead": "A swirly arcade game starring a very hungry little whirlpool. Glide around a busy beach and gulp down anything smaller than you. Start with shells and starfish, grow big enough for buckets and beach balls, then umbrellas, sandcastles, boats and beach huts. Fill the size meter before the clock runs out to reach the next, bigger beach.",
       "facts": [
         "Arcade",
@@ -200,12 +200,12 @@
       ]
     },
     {
-      "slug": "crab-hop",
-      "name": "Crab Hop",
+      "slug": "sidewalk-hop",
+      "name": "Sidewalk Hop",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Hop a little crab across busy boardwalks and splashy water.",
-      "meta": "Play Crab Hop free online. Help Crabby hop up the beach, step sideways or back to dodge traffic, dodge bikes and beach carts on the boardwalk, ride surfboards, rafts and tubes across the water and stay ahead of the tide. Grab shells for bonus points. Works on phone and computer.",
+      "meta": "Play Sidewalk Hop free online. Help Crabby hop up the beach, step sideways or back to dodge traffic, dodge bikes and beach carts on the boardwalk, ride surfboards, rafts and tubes across the water and stay ahead of the tide. Grab shells for bonus points. Works on phone and computer.",
       "lead": "An endless hopping game starring Crabby, a small crab with big plans. Hop forward one step at a time, dodge the bikes and beach carts on the boardwalks, and ride surfboards, rafts and tubes across the water. Keep moving, because the tide is coming in behind you. Grab shells for bonus points and see how far you can go.",
       "facts": [
         "Arcade",
@@ -235,12 +235,12 @@
       ]
     },
     {
-      "slug": "tide-gates",
-      "name": "Tide Gates",
+      "slug": "paper-gates",
+      "name": "Paper Gates",
       "genre": "Puzzle",
       "added": "2026-10-08",
       "tagline": "Slide jelly blocks out through the gates that match their colour.",
-      "meta": "Play Tide Gates free online. Drag cute jelly blocks around a boardwalk board and slide each one out through the gate of the same colour. Clear every block before time runs out. New boards every level. Works on phone and computer.",
+      "meta": "Play Paper Gates free online. Drag cute jelly blocks around a boardwalk board and slide each one out through the gate of the same colour. Clear every block before time runs out. New boards every level. Works on phone and computer.",
       "lead": "A sliding block puzzle on a sunny boardwalk. The board is packed with cute jelly blocks, and the edges have coloured gates. Drag each block around the others and slide it into the gate that matches its colour to send it whooshing out to sea. Clear the whole board before time runs out. Every level is a brand new board, and they get bigger as you go.",
       "facts": [
         "Puzzle",
@@ -268,12 +268,12 @@
       ]
     },
     {
-      "slug": "shell-stacks",
-      "name": "Shell Stacks",
+      "slug": "doodle-stacks",
+      "name": "Doodle Stacks",
       "genre": "Puzzle",
       "added": "2026-10-08",
       "tagline": "Stack shiny sea-glass shells by colour and pop them in tens.",
-      "meta": "Play Shell Stacks free online. Drag stacks of shiny sea-glass shells onto a sunny hexagon sandbar. Stacks with the same top colour hop together, and 10 of a colour pop for points. Chain pops for combos. New colours every level. Works on phone and computer.",
+      "meta": "Play Doodle Stacks free online. Drag stacks of shiny sea-glass shells onto a sunny hexagon sandbar. Stacks with the same top colour hop together, and 10 of a colour pop for points. Chain pops for combos. New colours every level. Works on phone and computer.",
       "lead": "A colour sorting puzzle on a little hexagon sandbar. Three stacks of shiny sea-glass shells wait in the driftwood tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one shell at a time. Get 10 or more of one colour on top and they pop in a splash of points. Pop enough shells to finish the level, but don't let the sandbar fill up. Every level adds a new colour, and later ones have rocks in the way.",
       "facts": [
         "Puzzle",
@@ -303,12 +303,12 @@
       ]
     },
     {
-      "slug": "splash-slice",
-      "name": "Splash Slice",
+      "slug": "scribble-slice",
+      "name": "Scribble Slice",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Swipe to slice the tropical fruit that splashes up out of the waves.",
-      "meta": "Play Splash Slice free online. Juicy watermelons, pineapples, mangoes and more splash up out of the sea. Swipe to slice them, chain combos and dodge the spiky sea urchins. Works on phone and computer.",
+      "meta": "Play Scribble Slice free online. Juicy watermelons, pineapples, mangoes and more splash up out of the sea. Swipe to slice them, chain combos and dodge the spiky sea urchins. Works on phone and computer.",
       "lead": "A juicy slicing game on a sunny beach. Watermelons, pineapples, coconuts, mangoes, kiwis and more come splashing up out of the waves. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the spiky sea urchins. The fruit comes faster and in bigger bunches the longer you last.",
       "facts": [
         "Arcade",
@@ -337,12 +337,12 @@
       ]
     },
     {
-      "slug": "shore-search",
-      "name": "Shore Search",
+      "slug": "sketch-search",
+      "name": "Sketch Search",
       "genre": "Word",
       "added": "2026-10-08",
       "tagline": "Find the hidden beach words in a board of sandy letter tiles.",
-      "meta": "Play Shore Search free online. A beach word search with Beginner, Intermediate and Advanced levels and a new theme every round, from seashells and sandcastles to boardwalk snacks. Drag across the sandy letter tiles to find every hidden word before time runs out. Works on phone and computer.",
+      "meta": "Play Sketch Search free online. A beach word search with Beginner, Intermediate and Advanced levels and a new theme every round, from seashells and sandcastles to boardwalk snacks. Drag across the sandy letter tiles to find every hidden word before time runs out. Works on phone and computer.",
       "lead": "A sunny word search on the shore. Every level has a beach theme, like Seashells, Boats or Island Fruits, and a list of words hidden in a board of sandy letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.",
       "facts": [
         "Word",
@@ -372,12 +372,12 @@
       ]
     },
     {
-      "slug": "tiki-putt",
-      "name": "Tiki Putt",
+      "slug": "pencil-putt",
+      "name": "Pencil Putt",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Pull back, aim and putt your way round a sunny tiki beach mini golf course.",
-      "meta": "Play Tiki Putt free online. A beach mini golf game seen from above. Pull back to aim, let go to putt, and sink the ball past sand traps, water, the tide, bouncy beach balls, a scuttling crab and a spinning umbrella. 36 holes, then an endless Back Nine Tour. Works on phone and computer.",
+      "meta": "Play Pencil Putt free online. A beach mini golf game seen from above. Pull back to aim, let go to putt, and sink the ball past sand traps, water, the tide, bouncy beach balls, a scuttling crab and a spinning umbrella. 36 holes, then an endless Back Nine Tour. Works on phone and computer.",
       "lead": "A mini golf game on a tropical beach, seen from above. Each hole is a patch of green turf on the sand, with driftwood walls, rocks and tiki torches all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for sand traps, water, the tide, bouncy beach balls, a busy crab, a spinning beach umbrella and a sliding surfboard gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.",
       "facts": [
         "Arcade",
@@ -406,12 +406,12 @@
       ]
     },
     {
-      "slug": "letter-lagoon",
-      "name": "Letter Lagoon",
+      "slug": "letter-links",
+      "name": "Letter Links",
       "genre": "Word",
       "added": "2026-10-08",
       "tagline": "Link words across a sunny lagoon and turn all twelve letters gold. Three difficulties.",
-      "meta": "Play Letter Lagoon free online. Tap letters around a sunny lagoon to make linked words, use all twelve letters in as few words as you can, and beat par. Beginner, Intermediate and Advanced. Works on phone and computer.",
+      "meta": "Play Letter Links free online. Tap letters around a sunny lagoon to make linked words, use all twelve letters in as few words as you can, and beat par. Beginner, Intermediate and Advanced. Works on phone and computer.",
       "lead": "Twelve letters bob on buoys around a turquoise lagoon, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 lagoons, from breezy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest lagoons with 4-letter-minimum words and double points.",
       "facts": [
         "Word",
@@ -444,12 +444,12 @@
       ]
     },
     {
-      "slug": "seaside-sprint",
-      "name": "Seaside Sprint",
+      "slug": "sketch-sprint",
+      "name": "Sketch Sprint",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Race a twisting boardwalk over ponds, rivers, marsh and woods. Swipe to turn, jump and slide.",
-      "meta": "Play Seaside Sprint free online, a fast endless runner. Pick Francis, Clare, George, Joan or one of four more kids and race a boardwalk that turns sharp corners over ponds, rivers, marshes and through the woods. Swipe to turn, jump gaps, slide under branches and grab gold rings. Works on phone and computer.",
+      "meta": "Play Sketch Sprint free online, a fast endless runner. Pick Francis, Clare, George, Joan or one of four more kids and race a boardwalk that turns sharp corners over ponds, rivers, marshes and through the woods. Swipe to turn, jump gaps, slide under branches and grab gold rings. Works on phone and computer.",
       "lead": "A fast endless runner with sharp corners. Pick your runner from eight beach kids, then race a boardwalk that twists left and right through five places: the beach, a lily-pad pond, a river, a reedy marsh and the woods. Swipe the way the arrow points to take each corner, jump missing planks and logs, slide under branches and nets, and grab gold rings for points. Catch a hang glider to fly, a magnet to pull rings in, a bubble that saves you once, or a rocket board to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Rings you collect add up between runs and unlock new runners.",
       "facts": [
         "Arcade",
@@ -482,12 +482,12 @@
       ]
     },
     {
-      "slug": "lighthouse-drop",
-      "name": "Lighthouse Drop",
+      "slug": "doodle-drop",
+      "name": "Doodle Drop",
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Spin a striped lighthouse and drop a bouncy beach ball down to the pool.",
-      "meta": "Play Lighthouse Drop free online. Spin the lighthouse to line up gaps, bounce a beach ball down disc by disc, dodge sea urchins and splash into the pool. Works on phone and computer.",
+      "meta": "Play Doodle Drop free online. Spin the lighthouse to line up gaps, bounce a beach ball down disc by disc, dodge sea urchins and splash into the pool. Works on phone and computer.",
       "lead": "A bouncy beach ball sits on top of a tall red and white lighthouse, and the only way down is through the gaps in the discs around it. Drag to spin the tower, drop through disc after disc, and steer clear of the prickly sea urchins and sliding jellyfish. Fall through three in a row and your ball glows with a rainbow that smashes right through the next disc.",
       "facts": [
         "Arcade",
@@ -517,12 +517,12 @@
       ]
     },
     {
-      "slug": "plank-plunk",
-      "name": "Plank Plunk",
+      "slug": "pencil-plunk",
+      "name": "Pencil Plunk",
       "genre": "Puzzle",
       "added": "2026-10-08",
       "tagline": "Pull shell pins out of driftwood planks and sort them into sand pails.",
-      "meta": "Play Plank Plunk free online. Tap colorful shell pins out of stacked driftwood planks, fill sand pails by color and plunk every plank into the sea. Works on phone and computer.",
+      "meta": "Play Pencil Plunk free online. Tap colorful shell pins out of stacked driftwood planks, fill sand pails by color and plunk every plank into the sea. Works on phone and computer.",
       "lead": "A sunny pin-pulling puzzle on the beach. Driftwood planks are stacked on the sand and held down by bright shell pins. Tap a pin that no plank is lying on and it twists out and flies into the pail of its color. Pins with no pail wait in the little tide pool, so plan ahead before it fills up. Pull the last pin from a plank and it tumbles into the sea with a splash.",
       "facts": [
         "Puzzle",
@@ -548,6 +548,210 @@
         "Check the Next sign at the top to see which pail colors are coming.",
         "Look before you pull a plank's second-to-last pin. It will swing down and may cover pins below it.",
         "Save +1 slot for when the tide pool is almost full."
+      ]
+    },
+    {
+      "slug": "draw-brawl",
+      "name": "Draw Brawl",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Grab pearls, bank treasure and beat the tide against three computer rivals.",
+      "meta": "Play Draw Brawl free online. Pick Coral the crab, Inky the octopus or Shelly the turtle, grab glowing pearls, bank them at your sandcastle and splash three computer rivals before the tide rolls in. 2-minute rounds, works on phone and computer.",
+      "lead": "A bright beach arena where everyone wants the same pearls. Choose Coral the crab, Inky the octopus or Shelly the turtle, scoop up glowing pearls and carry them home to your own sandcastle before a rival splashes you. Every 25 seconds the tide floods the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.",
+      "facts": [
+        "Arcade",
+        "2-minute rounds",
+        "3 computer rivals",
+        "Phone, tablet and computer",
+        "Saves your personal best"
+      ],
+      "how": [
+        "Pick a creature. Coral is a sturdy close-range brawler, Inky is fast with rapid ink shots, and Shelly is a tank with a water shot and a shield.",
+        "Collect the glowing pearls scattered around the beach. There are plenty in the middle. You can carry up to 15.",
+        "Carry them back to your own sandcastle and stand inside its ring for a moment to bank them. Only banked pearls count, and other players' castles won't take yours.",
+        "Bop rivals to splash them: they drop everything they were carrying and splash back in a few seconds later.",
+        "Get really close to a rival and a Showdown ring locks you both in for a few seconds. Splash them before the timer runs out to win bonus pearls.",
+        "Watch for the Tide Coming warning: shallow water floods the marked outer lanes and slows anyone wading through it. Castles stay dry.",
+        "Highest banked score when the 2-minute timer ends wins. Ties are shared."
+      ],
+      "controls": [
+        "Computer: WASD or the arrow keys move. J attacks and auto-aims at the nearest rival; hold the mouse button to aim shots yourself. Space dashes, Q uses your special, Esc pauses.",
+        "Phone or tablet: drag the left side of the screen to move. ATTACK auto-aims, or drag the AIM pad to point your shots where you want them. SPECIAL and DASH are next to it.",
+        "The pause button freezes the match. The speaker button turns sound effects on; they start muted."
+      ],
+      "tips": [
+        "Bank often. Pearls you're carrying are worth nothing until they're home, and a splash spills them all.",
+        "Fight rivals who are carrying a lot and let the ones with empty claws go.",
+        "Head for your castle when the tide warning appears so you're not wading when the water comes in.",
+        "Shelly's shield blocks every hit for a moment: pop it when two rivals close in.",
+        "Showdown wins pay 3 bonus pearls, so pick fights when your health is high."
+      ]
+    },
+    {
+      "slug": "doodle-darts",
+      "name": "Doodle Darts",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Tap at just the right moment to blast the target and nail the gold sand dollar.",
+      "meta": "Play Doodle Darts free online. A one-tap timing darts game on the beach: wait for your aim to drift over the target, throw, and blow it apart. Chain sand dollar bullseyes, dodge pufferfish and unlock new beaches and darts. Works on phone and computer.",
+      "lead": "A fast one-tap darts game on a sunny beach. Your aim drifts left, right, up and down over a shiny target. Tap at the right moment and your dart smashes the target to pieces, then a new one pops up somewhere else. Hit the gold sand dollar for a bullseye, build combos, and see how many beach friends you can beat.",
+      "facts": [
+        "Arcade",
+        "One tap",
+        "Unlock beaches and darts",
+        "Saves your best score"
+      ],
+      "how": [
+        "Watch your aim drift over the target. Tap when it's on the target to throw. Every hit is worth a point.",
+        "Hit the gold sand dollar in the middle for a Bullseye. Bullseyes in a row build a combo worth more and more points.",
+        "Miss the target and you lose a dart. You have 3. Never hit a pufferfish, or your game is over.",
+        "Smash the small bonus sand dollars when they appear for extra points and coins."
+      ],
+      "controls": [
+        "Tap or click anywhere on the beach to throw. On a keyboard, press Space.",
+        "The turtle button slows your aim for 5 throws and the target button makes the target bigger for 5 throws. Each costs 25 coins.",
+        "Use the Shop on the start screen to spend coins on new beaches and new things to throw."
+      ],
+      "tips": [
+        "Your aim speeds up as your score climbs, so save the Slow Tide power-up for later in a run.",
+        "Coins come from every hit, with bullseyes and bonus sand dollars paying the most.",
+        "Out of darts? Keep playing for 50 coins gives you one more dart, once per game.",
+        "Beat Gull, Crab, Clownfish and the rest of the beach friends on the way to the Whale."
+      ]
+    },
+    {
+      "slug": "word-workshop",
+      "name": "Word Workshop",
+      "genre": "Word",
+      "added": "2026-10-08",
+      "tagline": "Drag across the letters to spell words and fill a beach crossword.",
+      "meta": "Play Word Workshop free online. Drag across a ring of letters to spell words, fill the crossword, find bonus words and build combos. Choose Beginner, Intermediate or Advanced across 88 beach levels. Works on phone and computer.",
+      "lead": "A relaxing word puzzle on a sunny beach. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words make a splash.",
+      "facts": [
+        "Word puzzle",
+        "Beginner, Intermediate and Advanced",
+        "88 beach levels",
+        "Saves your progress"
+      ],
+      "how": [
+        "Drag across the letters on the wheel to spell a word, then let go.",
+        "Words that fit the crossword drop into the board. Fill every square to finish the level.",
+        "Any other real word is a Bonus Word. It earns points and fills the Bonus meter under the board, and every 6 bonus words pays 30 sand dollars.",
+        "Find words within a few seconds of each other to build a combo, up to 5X points. Longer words score much more.",
+        "On Beginner, after five misses in a row the first two letters of an unsolved word light up as a clue (eight misses on Intermediate, no free clues on Advanced). Solve a level without hints for 3 stars.",
+        "Pick a difficulty. Beginner has 28 relaxed levels from Sand to Seashore. Intermediate has 30 levels with 6 and 7 letter wheels, bigger grids and 1.5X points. Advanced has 30 levels with 7 and 8 letter wheels, only counts words of 4 or more letters, and gives you 4 minutes plus 10 seconds per grid word, for 2X points."
+      ],
+      "controls": [
+        "Drag with your finger or mouse across the letters. Slide back to the previous letter to undo it.",
+        "Shuffle mixes up the letters. The lightbulb costs sand dollars per step (10 on Beginner, 15 on Intermediate, 25 on Advanced): first it lights up a starting shell, then the next shell, then shows the word's first letters in the grid.",
+        "The star shows your bonus words and personal bests, the bars button lets you switch difficulty or start over, and the speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Look for short three-letter words first. They often unlock the crossing letters for longer words.",
+        "Shuffle when you feel stuck. Seeing the letters in a new order often shows you a word right away.",
+        "Try every word you can see. Real words that don't fit the grid still earn bonus points and fill the Bonus meter.",
+        "The level's name is always one of the answers, and it uses every letter on the wheel."
+      ]
+    },
+    {
+      "slug": "bubble-doodle",
+      "name": "Bubble Doodle",
+      "genre": "Arcade",
+      "added": "2026-10-08",
+      "tagline": "Aim, bounce and pop bubbles before the tide rolls in.",
+      "meta": "Play Bubble Doodle free online. Aim with a glowing guide line, bank shots off the walls and pop matching bubbles before they reach the tide line.",
+      "lead": "A bubble shooter with a glowing aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the tide line.",
+      "facts": [
+        "Arcade",
+        "Drag to aim",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Drag to aim. The blue line shows exactly where your shot will go, including bounces off the walls.",
+        "Release to shoot. Hitting a bubble of the same color pops the whole connected group.",
+        "Bubbles left hanging with nothing above them fall off for bonus points.",
+        "Pop every bubble to clear the level. Each level only sends a few new rows, so the board can be beaten, and each level adds rows and colors. The game ends if bubbles cross the dashed tide line."
+      ],
+      "controls": [
+        "Drag and release with a mouse or finger to aim and shoot.",
+        "Tap the waiting bubble to swap it with your current one.",
+        "On a keyboard, use the arrow keys to aim and Space to shoot.",
+        "Every 6 pops charges a bomb that clears everything around where it lands."
+      ],
+      "tips": [
+        "Bank shots off the walls to reach gaps you can't hit directly.",
+        "Dropping a big hanging cluster is worth far more than popping.",
+        "Watch the new-row counter and clear the lowest rows first."
+      ]
+    },
+    {
+      "slug": "four-in-a-frame",
+      "name": "Four in a Frame",
+      "genre": "Word",
+      "added": "2026-10-08",
+      "tagline": "Sort sixteen beach words into four secret groups of four.",
+      "meta": "Play Four in a Frame free online. Sort sixteen beach words into four secret groups of four. Play a new Daily Puzzle every day, or pick Beginner, Intermediate or Advanced. Works on phone and computer.",
+      "lead": "A word-sorting puzzle for the whole family. Sixteen words wash up on the beach, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like sea animals and colours, and get sneakier as you go, with words that seem to fit two groups at once.",
+      "facts": [
+        "Word",
+        "New Daily Puzzle every day",
+        "Beginner, Intermediate and Advanced",
+        "73 puzzles",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap four words you think belong together, then tap Check.",
+        "Get it right and the group lifts to the top in its colour. Yellow groups are the easiest and pink groups are the trickiest.",
+        "If you're one word off, it tells you you're one away. Run out of tries and the groups are shown, and you lose a shell. Lose all 3 shells and the game ends.",
+        "Pick a level. Beginner has simple groups with 5 tries and 2 hints per puzzle. Intermediate adds wordplay like WATER___ with 4 tries, 1 hint and 1.5X points. Advanced is full of red herrings, with 3 tries, no hints and 2X points. Each level remembers where you got to.",
+        "Play the Daily Puzzle from the yellow Daily button. Everyone gets the same puzzle that day, the clock only runs while you're playing, and solving one each day builds your streak. Share your result to challenge friends.",
+        "Each group you find scores points, plus a bonus for every try you had left."
+      ],
+      "controls": [
+        "Tap or click a word to pick it, and tap it again to put it back.",
+        "Shuffle mixes up the words, Clear unpicks them, and Hint lights up two words that go together.",
+        "On a keyboard, press Enter to check and Escape to clear.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Find the easiest group first. Fewer words left makes the tricky groups easier to spot.",
+        "If a word fits two groups, save it for last and work out which group needs it.",
+        "Some groups are word puzzles, like words that go before FISH or words that sound like letters.",
+        "Use Shuffle when you feel stuck. Seeing the words in a new order often helps."
+      ]
+    },
+    {
+      "slug": "margin-match",
+      "name": "Margin Match",
+      "genre": "Puzzle",
+      "added": "2026-10-08",
+      "tagline": "Tap beach treasures off the pile and collect three of a kind in your tray.",
+      "meta": "Play Margin Match free online. Tap glossy beach treasure tiles off a stacked pile, collect three of a kind in your 7-spot tray and clear the whole pile to win each level. Works on phone and computer.",
+      "lead": "A cheerful tile-matching puzzle piled high with beach treasures. Tap a tile and it hops into your tray. Collect three of the same, like three crabs or three sunglasses, and they sparkle away. Clear the whole pile to win the level, but don't let your 7-spot tray fill up.",
+      "facts": [
+        "Puzzle",
+        "Tap to play",
+        "Endless levels",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap any bright tile on the pile to move it into your tray at the bottom.",
+        "Get three of the same treasure in the tray and they clear away for points. Clear trios quickly one after another for a combo.",
+        "Dark tiles are covered by tiles on top. Clear the tiles above them first.",
+        "Clear every tile from the pile to finish the level. If all 7 tray spots fill up without a trio, the level is over and you can try it again.",
+        "Each level has more tiles, more kinds of treasure and taller stacks."
+      ],
+      "controls": [
+        "Tap or click a tile to move it to the tray.",
+        "Undo puts your last tile back on the pile. Lift moves 3 tiles from your tray up to a holding spot, and you can tap them back in later. Shuffle mixes up the treasures on the pile. You get one of each every level.",
+        "The ? button shows the rules and lets you continue from your last level or start a new game."
+      ],
+      "tips": [
+        "Before you tap, look at what's already in your tray and pick a tile that matches it.",
+        "Uncover the tall stacks early so the dark tiles don't trap you at the end.",
+        "Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.",
+        "Your level is saved, so you can come back later and carry on."
       ]
     }
   ]

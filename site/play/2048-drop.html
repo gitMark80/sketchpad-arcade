@@ -391,7 +391,7 @@ function merge(a,b){
   hud(true);
 }
 
-/* ---------- physics: position-based solver, the same approach as Sea Merge, tuned for numbered balls ---------- */
+/* ---------- physics: position-based solver, the same approach as Margin Merge, tuned for numbered balls ---------- */
 let lastTap=0;
 function bump(b,imp){b.wob=Math.max(b.wob,Math.min(1,imp*.5));if(T-b.snd>.15&&T-lastTap>.04&&b.age>.05){b.snd=T;lastTap=T;sfx.tap(imp)}}
 function physics(dt){

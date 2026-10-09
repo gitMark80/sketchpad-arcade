@@ -2,7 +2,32 @@
 
 Free, family-friendly browser games drawn like a page from a kid's sketchbook, at https://www.sketchpadarcade.com, by Restless Faith Media LLC.
 
-Every game is a pencil-styled twin of a [Beach Day Arcade](https://github.com/gitMark80/beach-day-arcade) game, under the same slug. Gameplay is identical; only the look changes.
+Every game started as a pencil-styled twin of a [Beach Day Arcade](https://github.com/gitMark80/beach-day-arcade) game. In October 2026 they were renamed for Sketchpad Arcade (old slugs redirect to the new ones in `vercel.json`):
+
+| Beach Day Arcade | Sketchpad Arcade |
+|---|---|
+| Seaside Sprint (`seaside-sprint`) | Sketch Sprint (`sketch-sprint`) |
+| Plank Plunk (`plank-plunk`) | Pencil Plunk (`pencil-plunk`) |
+| Letter Lagoon (`letter-lagoon`) | Letter Links (`letter-links`) |
+| Lighthouse Drop (`lighthouse-drop`) | Doodle Drop (`doodle-drop`) |
+| Tide Clash (`tide-clash`) | Draw Brawl (`draw-brawl`) |
+| Shore Search (`shore-search`) | Sketch Search (`sketch-search`) |
+| Shell Stacks (`shell-stacks`) | Doodle Stacks (`doodle-stacks`) |
+| Tiki Putt (`tiki-putt`) | Pencil Putt (`pencil-putt`) |
+| Splash Slice (`splash-slice`) | Scribble Slice (`scribble-slice`) |
+| Sea Merge (`sea-merge`) | Margin Merge (`margin-merge`) |
+| Boardwalk Darts (`boardwalk-darts`) | Doodle Darts (`doodle-darts`) |
+| Word Waves (`word-waves`) | Word Workshop (`word-workshop`) |
+| Tide Pop (`tide-pop`) | Bubble Doodle (`bubble-doodle`) |
+| Crab Hop (`crab-hop`) | Sidewalk Hop (`sidewalk-hop`) |
+| Tide Gates (`tide-gates`) | Paper Gates (`paper-gates`) |
+| Four by Sea (`four-by-sea`) | Four in a Frame (`four-in-a-frame`) |
+| Whirlpool Gulp (`whirlpool-gulp`) | Eraser Gulp (`eraser-gulp`) |
+| Bottle Words (`bottle-words`) | Note Quest (`note-quest`) |
+| Octo Swing (`octo-swing`) | Scribble Swing (`scribble-swing`) |
+| Treasure Trio (`treasure-trio`) | Margin Match (`margin-match`) |
+
+`sketchify.py` takes the Beach Day Arcade slug and writes to the Sketchpad slug.
 
 - `site/` is the finished website that Vercel serves (set by `vercel.json`).
 - `src/games/<slug>.html` holds each game, `src/img/<slug>.jpg` its square pencil cover, and `src/assets/<slug>/` its pencil art (served at `/assets/<slug>/`).
