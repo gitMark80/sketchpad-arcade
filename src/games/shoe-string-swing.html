@@ -94,7 +94,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
           <li><b>1</b><span>Press and hold to grab the nearest pin with your shoestring.</span></li>
           <li><b>2</b><span>Swing down and up, then let go to fling forward.</span></li>
           <li><b>3</b><span>Grab smiling stars for bonus points. Bounce off bouncy balls.</span></li>
-          <li><b>4</b><span>Don't tumble to the ground! The scenery changes every 200 m.</span></li>
+          <li><b>4</b><span>Don't tumble to the ground! The scenery changes every 1000 m.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <div class="best" id="bestLine">Best score: 0</div>
@@ -496,24 +496,24 @@ function skyline(par,slot,lay){
     }
   }
 }
-/* ---------- scenes: the scenery changes every 200 m ---------- */
-const SCENE_M=200,SCENE_FADE=320; // meters per scene, world units of crossfade
+/* ---------- scenes: the scenery changes every 1000 m ---------- */
+const SCENE_M=1000,SCENE_FADE=420; // meters per scene, world units of crossfade
+// art = which background drawing to use; night scenes reuse the city drawing in the dark, lit by the hero's flashlight
 const SCENES=[
-  {id:'city',name:'The City',sky:'sun'},
-  {id:'park',name:'The Park',sky:'sun'},
-  {id:'beach',name:'The Beach',sky:'sun'},
-  {id:'farm',name:'The Farm',sky:'sun'},
-  {id:'night',name:'The Night Sky',sky:'moon'},
-  {id:'mountains',name:'The Mountains',sky:'sun'}
+  {id:'city',art:'city',name:'The City',sky:'sun'},
+  {id:'night',art:'city',name:'The City at Night',sky:'moon'},
+  {id:'beach',art:'beach',name:'The Beach',sky:'sun'},
+  {id:'mountains',art:'mountains',name:'The Mountains',sky:'sun'},
+  {id:'farm',art:'farm',name:'The Farm',sky:'sun'}
 ];
 function sceneAtX(x){return Math.floor(Math.max(0,meters(x))/SCENE_M)}
 function sceneEdgeX(i){return 150+i*SCENE_M*20}
 function sceneOf(i){return SCENES[((i%SCENES.length)+SCENES.length)%SCENES.length]}
 // optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.webp (wide, loops left to right)
 const BGIMG={};
-const PAINTED=['city','park','beach','farm','night','mountains'];
+const PAINTED=['city','beach','farm','mountains'];
 const GRAPHITE_BG=['city']; // scenes whose art is already graphite (the rest are shown greyscale) // scene ids that have a painted background in /assets/shoe-string-swing/
-SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.webp'});
+PAINTED.forEach(id=>{const im=new Image();im.onload=()=>{BGIMG[id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+id+'.webp'});
 function sceneMix(){ // which scene we're in and how far we've faded into the next
   const cx=camX+VW*.5,i=sceneAtX(cx),edge=sceneEdgeX(i+1),f=Math.max(0,Math.min(1,(cx-(edge-SCENE_FADE))/SCENE_FADE));
   return{a:i,b:i+1,f};
@@ -703,15 +703,65 @@ function groundSnow(t){
   ctx.strokeStyle=OUT;ctx.lineWidth=2.5;ctx.beginPath();for(let x=0;x<=W+8;x+=8){const u=x/S+camX;ctx.lineTo(x,g+Math.sin(u/40)*1.5*S)}ctx.stroke();
 }
 const GROUND_DRAW={city:groundCity,night:groundCity,park:t=>groundGrass(t,true),farm:t=>groundGrass(t,true),beach:groundBeach,mountains:groundSnow};
+/* ---------- night: the city goes dark and the hero's flashlight lights a cone ahead of him ---------- */
+function nightAmount(){const m=sceneMix();return (sceneOf(m.a).id==='night'?1-m.f:0)+(sceneOf(m.b).id==='night'?m.f:0)}
+let beamA=0,nightCv=null,nightCtx=null,heroPx=-999,heroPy=-999;
+function beamDir(){ // smooth the beam so it follows his motion without flicking around in a flip
+  const sp=Math.hypot(o.vx,o.vy),want=sp>60?Math.atan2(o.vy,o.vx):(o.face>=0?0:Math.PI);
+  beamA+=angWrap(want-beamA)*.18;return beamA;
+}
+function drawNight(t){
+  const n=nightAmount();if(n<=.01)return;
+  if(!nightCv){nightCv=document.createElement('canvas');nightCtx=nightCv.getContext('2d')}
+  if(nightCv.width!==cv.width||nightCv.height!==cv.height){nightCv.width=cv.width;nightCv.height=cv.height}
+  const c=nightCtx;c.setTransform(DPR,0,0,DPR,0,0);c.globalCompositeOperation='source-over';c.clearRect(0,0,W,H);
+  c.fillStyle=`rgba(22,24,38,${(.68*n).toFixed(3)})`;c.fillRect(0,0,W,H);
+  const lit=running||deadT<=0;
+  if(lit&&heroPx>-900){
+    const a=beamDir(),L=330*S,half=.36,x=heroPx+Math.cos(a)*14*S,y=heroPy+Math.sin(a)*14*S;
+    c.globalCompositeOperation='destination-out';
+    const gr=c.createRadialGradient(x,y,0,x,y,L);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(.7,'rgba(0,0,0,.85)');gr.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=gr;c.beginPath();c.moveTo(x,y);c.arc(x,y,L,a-half,a+half);c.closePath();c.fill();
+    const g2=c.createRadialGradient(heroPx,heroPy,0,heroPx,heroPy,60*S);g2.addColorStop(0,'rgba(0,0,0,.9)');g2.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=g2;c.beginPath();c.arc(heroPx,heroPy,60*S,0,7);c.fill();
+    c.globalCompositeOperation='source-over';
+  }
+  ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(nightCv,0,0);ctx.restore();
+  if(lit&&heroPx>-900){ // a warm glow in the beam
+    const a=beamA,L=330*S,half=.36,x=heroPx+Math.cos(a)*14*S,y=heroPy+Math.sin(a)*14*S;
+    ctx.save();const gr=ctx.createRadialGradient(x,y,0,x,y,L);gr.addColorStop(0,`rgba(255,240,170,${(.28*n).toFixed(3)})`);gr.addColorStop(1,'rgba(255,240,170,0)');
+    ctx.fillStyle=gr;ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,L,a-half,a+half);ctx.closePath();ctx.fill();ctx.restore();
+  }
+}
+function drawFlashlight(){ // a little pencil flashlight in his hand, pointing along the beam
+  const n=nightAmount();if(n<=.01||heroPx<-900||!(running||deadT<=0))return;
+  const a=beamA,k=S*1.2;ctx.save();ctx.globalAlpha=Math.min(1,n*1.5);ctx.translate(heroPx+Math.cos(a)*6*k,heroPy+Math.sin(a)*6*k);ctx.rotate(a);
+  ctx.lineJoin='round';ctx.strokeStyle=OUT;ctx.lineWidth=1.8;
+  ctx.fillStyle='#d9d7d0';ctx.beginPath();ctx.roundRect(-2*k,-2.6*k,10*k,5.2*k,1.5*k);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#ecebe6';ctx.beginPath();ctx.moveTo(8*k,-2.6*k);ctx.lineTo(12*k,-4.2*k);ctx.lineTo(12*k,4.2*k);ctx.lineTo(8*k,2.6*k);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.fillStyle='rgba(255,236,150,.95)';ctx.beginPath();ctx.ellipse(12*k,0,1.4*k,4*k,0,0,7);ctx.fill();ctx.stroke();
+  ctx.strokeStyle='rgba(46,46,51,.5)';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<3;i++){ctx.moveTo((1+i*2.2)*k,-2.6*k);ctx.lineTo((1+i*2.2)*k,2.6*k)}ctx.stroke();
+  ctx.restore();
+}
 function paintedBg(sc){ // a painted background image, looped with slow parallax and sat on the ground line
-  const im=BGIMG[sc.id];if(!im)return false;
+  const im=BGIMG[sc.art];if(!im)return false;
   const g=wy(SEA),h=Math.min(g*.62,W*.75*im.height/im.width*2),w=im.width*(h/im.height),off=((camX*.3*S)%w+w)%w;
-  ctx.save();if(!GRAPHITE_BG.includes(sc.id))ctx.filter='grayscale(1) contrast(1.15)';for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,g-h,w+1,h);ctx.restore();
+  ctx.save();if(!GRAPHITE_BG.includes(sc.art))ctx.filter='grayscale(1) contrast(1.15)';for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,g-h,w+1,h);ctx.restore();
   return true;
+}
+function drawBlueSky(){ // light blue coloured-pencil sky: hatched strokes, strongest at the top, fading to paper at the skyline
+  const g=wy(SEA);
+  const gr=ctx.createLinearGradient(0,0,0,g);gr.addColorStop(0,'rgba(150,190,232,.42)');gr.addColorStop(.75,'rgba(170,205,238,.16)');gr.addColorStop(1,'rgba(170,205,238,0)');
+  ctx.fillStyle=gr;ctx.fillRect(0,0,W,g);
+  ctx.save();ctx.beginPath();ctx.rect(0,0,W,g);ctx.clip();ctx.lineWidth=1.3;ctx.lineCap='round';
+  const p=(camX*.05*S)%9;
+  for(let band=0;band<6;band++){const y0=band*g/6,y1=y0+g/6,a=.3*(1-band/6.5);ctx.strokeStyle=`rgba(95,145,205,${a.toFixed(3)})`;ctx.beginPath();
+    for(let x=-g/6-p;x<W+9;x+=9){const j=hash(Math.round((x+p)/9),band)*4;ctx.moveTo(x+j,y1);ctx.lineTo(x+j+g/6*.55,y0)}ctx.stroke()}
+  ctx.restore();
 }
 function drawSceneBg(sc,t){
   ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
-  if(sc.sky==='moon')drawNightSky(t,1);else{drawSun(t,1);drawClouds(1)}
+  if(sc.sky==='moon')drawNightSky(t,1);else{drawBlueSky();drawSun(t,1);drawClouds(1)}
   if(!paintedBg(sc))SCENE_DRAW[sc.id](t);
 }
 // draw a scene onto an offscreen layer so it can fade over the last one
@@ -790,7 +840,7 @@ function drawPlayer(t){
       for(let i=0;i<3;i++){const a=t*4+i*2.09;drawStar(ctx,hx_+Math.cos(a)*14*k,hy_+Math.sin(a)*4*k,5*k,a,1.6)}}
     return;
   }
-  const px=wx(o.x),py=wy(o.y);
+  const px=wx(o.x),py=wy(o.y);heroPx=px;heroPy=py;
   let want;
   if(o.att>=0){const a=anchors[o.att];want=Math.atan2(wy(a.y)-py,wx(a.x)-px)+Math.PI/2}
   else if(heroReady()){const ang=air.mode==='spin'?0:Math.max(-.35,Math.min(.35,Math.atan2(o.vy,Math.abs(o.vx)+60)*.45));want=o.face>=0?ang:-ang}
@@ -811,7 +861,9 @@ function draw(t){
   for(const s of stars){if(s.got)continue;const x=wx(s.x);if(x<-30||x>W+30)continue;drawStar(ctx,x,wy(s.y)+Math.sin(t*3+s.ph)*4*S,15*S,Math.sin(t*2+s.ph)*.3)}
   drawGround(t);
   for(const b of balls)drawBall(b,t);
+  drawNight(t);
   drawPlayer(t);
+  drawFlashlight();
   for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*1.6));ctx.fillStyle=mix(p.c,.45);ctx.strokeStyle=p.c;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(wx(p.x),wy(p.y),p.r*S,0,7);ctx.fill();ctx.stroke()}
   ctx.globalAlpha=1;
   ctx.restore();
