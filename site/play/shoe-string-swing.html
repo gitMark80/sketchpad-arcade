@@ -532,7 +532,8 @@ function sceneEdgeX(i){return 150+i*SCENE_M*20}
 function sceneOf(i){return SCENES[((i%SCENES.length)+SCENES.length)%SCENES.length]}
 // optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.webp (wide, loops left to right)
 const BGIMG={};
-const PAINTED=['city','park','beach','farm','night','mountains']; // scene ids that have a painted background in /assets/shoe-string-swing/
+const PAINTED=['city','park','beach','farm','night','mountains'];
+const GRAPHITE_BG=['city']; // scenes whose art is already graphite (the rest are shown greyscale) // scene ids that have a painted background in /assets/shoe-string-swing/
 SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.webp'});
 function sceneMix(){ // which scene we're in and how far we've faded into the next
   const cx=camX+VW*.5,i=sceneAtX(cx),edge=sceneEdgeX(i+1),f=Math.max(0,Math.min(1,(cx-(edge-SCENE_FADE))/SCENE_FADE));
@@ -543,7 +544,7 @@ function drawSun(t,alpha){
   const sx=W*.8,sy=H*.12,sr=Math.min(W,H)*.075;
   ctx.strokeStyle=ORANGE;ctx.lineWidth=2.5;ctx.lineCap='round';
   for(let i=0;i<12;i++){const a=i/12*6.283+t*.1;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*sr*1.3,sy+Math.sin(a)*sr*1.3);ctx.lineTo(sx+Math.cos(a)*sr*(1.65+.15*(i%2)),sy+Math.sin(a)*sr*(1.65+.15*(i%2)));ctx.stroke()}
-  pfill(ctx,cc=>{for(let i=0;i<=40;i++){const a=i/40*6.283;const rr=sr*(1+.04*Math.sin(i*2.7));cc.lineTo(sx+Math.cos(a)*rr,sy+Math.sin(a)*rr)}cc.closePath()},YELLOW,[sx-sr*1.1,sy-sr*1.1,sr*2.2,sr*2.2],4,2.5);
+  pfill(ctx,cc=>{for(let i=0;i<=40;i++){const a=i/40*6.283;const rr=sr*(1+.04*Math.sin(i*2.7));cc.lineTo(sx+Math.cos(a)*rr,sy+Math.sin(a)*rr)}cc.closePath()},YELLOW,[sx-sr*1.1,sy-sr*1.1,sr*2.2,sr*2.2],5,2.5,{a:.35,wash:.12});
   ctx.strokeStyle=OUT;ctx.lineWidth=2;ctx.fillStyle=OUT;ctx.beginPath();ctx.arc(sx-sr*.32,sy-sr*.12,2.2,0,7);ctx.arc(sx+sr*.32,sy-sr*.12,2.2,0,7);ctx.fill();ctx.beginPath();ctx.arc(sx,sy+sr*.1,sr*.38,.3,Math.PI-.3);ctx.stroke();
   ctx.restore();
 }
@@ -726,7 +727,7 @@ const GROUND_DRAW={city:groundCity,night:groundCity,park:t=>groundGrass(t,true),
 function paintedBg(sc){ // a painted background image, looped with slow parallax and sat on the ground line
   const im=BGIMG[sc.id];if(!im)return false;
   const g=wy(SEA),h=Math.min(g*.62,W*.75*im.height/im.width*2),w=im.width*(h/im.height),off=((camX*.3*S)%w+w)%w;
-  ctx.save();ctx.filter='grayscale(1) contrast(1.15)';for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,g-h,w+1,h);ctx.restore();
+  ctx.save();if(!GRAPHITE_BG.includes(sc.id))ctx.filter='grayscale(1) contrast(1.15)';for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,g-h,w+1,h);ctx.restore();
   return true;
 }
 function drawSceneBg(sc,t){
@@ -755,7 +756,7 @@ function drawGround(t){
   if(m.f>0)withLayer(m.f,()=>{GROUND_DRAW[sceneOf(m.b).id](t)});
 }
 function drawStar(c,x,y,r,rot,lw){
-  pfill(c,cc=>starPath(cc,x,y,r,rot),YELLOW,[x-r,y-r,r*2,r*2],Math.max(2.4,r*.2),lw||2.5);
+  pfill(c,cc=>starPath(cc,x,y,r,rot),YELLOW,[x-r,y-r,r*2,r*2],Math.max(3,r*.25),lw||2.5,{a:.45,wash:.12});
   c.save();c.translate(x,y);c.rotate(rot);c.fillStyle=OUT;c.beginPath();c.arc(-r*.2,-r*.05,r*.09,0,7);c.arc(r*.2,-r*.05,r*.09,0,7);c.fill();
   c.strokeStyle=OUT;c.lineWidth=Math.max(1.4,r*.09);c.beginPath();c.arc(0,r*.08,r*.2,.3,Math.PI-.3);c.stroke();c.restore();
 }
