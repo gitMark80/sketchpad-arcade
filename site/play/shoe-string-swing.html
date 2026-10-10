@@ -380,7 +380,26 @@ function blob(c,x,y,r,col,lw){c.beginPath();c.arc(x,y,r,0,7);c.fillStyle=mix(col
 const HAND_Y=-35; // where the hands hold the rope, in kid units above the body centre
 /* The superhero kid. (px,py) is the body centre in pixels, k pixels per kid unit, rot turns "up" towards the rope.
    st: vx,vy = velocity in the kid's own frame, t = time, lw = outline px, pose = 'swing' | 'fly' | 'down' */
+// Mark's pencil hero art (faces right; flipped to fly left). Falls back to the drawn kid until it loads.
+const HERO={},HERO_NAMES=['fly-a','fly-b','fly-c','swing-a','swing-b','tumbled'];
+const HA={"fly-a":{"w":310,"h":132,"ax":309,"ay":86},"fly-b":{"w":353,"h":133,"ax":352,"ay":89},"fly-c":{"w":328,"h":133,"ax":327,"ay":89},"swing-a":{"w":241,"h":350,"ax":215,"ay":0},"swing-b":{"w":274,"h":319,"ax":244,"ay":0},"tumbled":{"w":292,"h":183,"ax":146,"ay":182}};
+const HERO_SIZE=1.2,UPX={fly:.259*HERO_SIZE,swing:.189*HERO_SIZE,tumbled:.246*HERO_SIZE}; // kid units per sprite pixel
+HERO_NAMES.forEach(n=>{const im=new Image();im.onload=()=>{HERO[n]=im};im.src='/assets/shoe-string-swing/hero-'+n+'.png'});
+function heroReady(){return HERO_NAMES.every(n=>HERO[n])}
+function drawHero(c,px,py,k,rot,st){
+  const t=st.t,spd=Math.hypot(st.vx,st.vy),face=st.face||1;let n;
+  if(st.pose==='fly'||(st.pose==='down'&&st.tumbling)){const seq=['fly-a','fly-b','fly-c','fly-b'];n=seq[Math.floor(t*(6+spd/160))%4]}
+  else if(st.pose==='swing')n=spd>520?'swing-a':'swing-b'; // stretched at the bottom of the swing, tucked near the top
+  else n='tumbled';
+  const im=HERO[n],a=HA[n],u=UPX[n.split('-')[0]];
+  // where the sprite's anchor goes, in kid units: fist ahead of the body when flying, fists on the shoestring when swinging, bottom on the ground when tumbled
+  const ox=n[0]==='f'?37*HERO_SIZE:0,oy=n[0]==='f'?-6:n[0]==='s'?HAND_Y:(st.groundY||8.5);
+  c.save();c.translate(px,py);c.rotate(rot);c.scale(k*u*face,k*u);
+  c.drawImage(im,ox/u-a.ax,oy/u-a.ay);
+  c.restore();
+}
 function drawKid(c,px,py,k,rot,st){
+  if(heroReady()){drawHero(c,px,py,k,rot,st);return}
   const lw=st.lw/k,sp=Math.max(2.2/k,1.6),t=st.t,vx=st.vx,vy=st.vy,spd=Math.hypot(vx,vy),pose=st.pose;
   const face=st.face||1;
   c.save();c.translate(px,py);c.rotate(rot);c.scale(k,k);c.lineJoin='round';c.lineCap='round';
@@ -496,7 +515,7 @@ function sceneEdgeX(i){return 150+i*SCENE_M*20}
 function sceneOf(i){return SCENES[((i%SCENES.length)+SCENES.length)%SCENES.length]}
 // optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.png (wide, loops left to right)
 const BGIMG={};
-const PAINTED=[]; // scene ids that have a painted background in /assets/shoe-string-swing/
+const PAINTED=['city']; // scene ids that have a painted background in /assets/shoe-string-swing/
 SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.png'});
 function sceneMix(){ // which scene we're in and how far we've faded into the next
   const cx=camX+VW*.5,i=sceneAtX(cx),edge=sceneEdgeX(i+1),f=Math.max(0,Math.min(1,(cx-(edge-SCENE_FADE))/SCENE_FADE));
@@ -689,15 +708,14 @@ function groundSnow(t){
 const GROUND_DRAW={city:groundCity,night:groundCity,park:t=>groundGrass(t,true),farm:t=>groundGrass(t,true),beach:groundBeach,mountains:groundSnow};
 function paintedBg(sc){ // a painted background image, looped with slow parallax and sat on the ground line
   const im=BGIMG[sc.id];if(!im)return false;
-  const g=wy(SEA),h=g,w=im.width*(h/im.height),off=((camX*.3*S)%w+w)%w;
-  for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,0,w+1,h);
+  const g=wy(SEA),h=Math.min(g*.62,W*.75*im.height/im.width*2),w=im.width*(h/im.height),off=((camX*.3*S)%w+w)%w;
+  for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,g-h,w+1,h);
   return true;
 }
 function drawSceneBg(sc,t){
   ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
-  if(paintedBg(sc))return;
   if(sc.sky==='moon')drawNightSky(t,1);else{drawSun(t,1);drawClouds(1)}
-  SCENE_DRAW[sc.id](t);
+  if(!paintedBg(sc))SCENE_DRAW[sc.id](t);
 }
 // draw a scene onto an offscreen layer so it can fade over the last one
 let fadeCv=null,fadeCtx=null;
@@ -769,6 +787,7 @@ function drawPlayer(t){
   const k=S*1.2,dt=Math.min(.05,Math.max(0,t-kidT));kidT=t;
   if(!running&&deadT>0){ // tumble along the sidewalk and land flat, seeing stars
     const u=1-Math.exp(-deadT*4.5),x=wx(deadX+deadVx*.32*u),rot=deadRot+u*(Math.PI*2*(deadVx>=0?2:-2)+(deadVx>=0?1:-1)*Math.PI/2-deadRot),y=wy(SEA)-10*S-Math.sin(Math.min(1,deadT*2.2)*Math.PI)*28*S;
+    if(heroReady()){const tum=deadT<.45;drawKid(ctx,x,tum?y:wy(SEA)-10*S,k,tum?rot:0,{vx:400,vy:0,t,lw:2.5,pose:'down',face:deadVx>=0?1:-1,tumbling:tum});return}
     drawKid(ctx,x,y,k,rot,{vx:0,vy:0,t,lw:2.5,pose:'down',face:1});
     if(deadT>.5){const hx_=x+Math.cos(rot-Math.PI/2)*17*k,hy_=y+Math.sin(rot-Math.PI/2)*17*k-16*k;
       for(let i=0;i<3;i++){const a=t*4+i*2.09;drawStar(ctx,hx_+Math.cos(a)*14*k,hy_+Math.sin(a)*4*k,5*k,a,1.6)}}
@@ -777,6 +796,7 @@ function drawPlayer(t){
   const px=wx(o.x),py=wy(o.y);
   let want;
   if(o.att>=0){const a=anchors[o.att];want=Math.atan2(wy(a.y)-py,wx(a.x)-px)+Math.PI/2}
+  else if(heroReady()){const ang=Math.max(-.8,Math.min(.8,Math.atan2(o.vy,Math.abs(o.vx)+60)));want=o.face>=0?ang:-ang}
   else want=Math.max(-.4,Math.min(.4,o.vx/2800));
   kidRot+=angWrap(want-kidRot)*Math.min(1,dt*(o.att>=0?18:6));
   const c=Math.cos(-kidRot),s=Math.sin(-kidRot),lvx=o.vx*c-o.vy*s,lvy=o.vx*s+o.vy*c;
