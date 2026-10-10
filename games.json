@@ -991,9 +991,9 @@
       "name": "Word Scribble",
       "genre": "Word",
       "added": "2026-10-09",
-      "tagline": "Drop letter bubbles, merge matching letters and swipe to spell words.",
-      "meta": "Play Word Scribble free online. Drop letter bubbles into a fish tank, merge matching letters into bigger ones, and swipe across nearby bubbles to spell words before the tank fills up.",
-      "lead": "A merge game and a word game in one fish tank. Letters drop in color-coded sets that each spell a hidden word, and when two of the same letter touch they merge into a bigger letter worth more points. Swipe across nearby bubbles to spell words, which pops them and makes room for more. Spell enough words to clear the level before the tank fills up.",
+      "tagline": "Drop letter bubbles into a pencil box, merge matching letters and swipe to spell words.",
+      "meta": "Play Word Scribble free online. Drop letter bubbles into a wooden pencil box, merge matching letters into bigger ones, and swipe across nearby bubbles to spell words before the box fills up.",
+      "lead": "A merge game and a word game in one pencil box. Letters drop in color-coded sets that each spell a hidden word, and when two of the same letter touch they merge into a bigger letter worth more points. Swipe across nearby bubbles to spell words, which pops them and makes room for more. Spell enough words to clear the level before the box fills up.",
       "facts": [
         "Word + merge",
         "Levels",
@@ -1001,11 +1001,11 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap or drag above the bubbles, then let go to drop a letter into the tank. Every letter of a hidden word drops in the same color, so matching colors can be unscrambled into a word.",
-        "When two of the same letter touch, in any color, they merge into a bigger silver letter worth double, then a gold one worth triple. Silver and gold letters fit any word, and two gold letters make a wild starfish that can stand for any letter.",
+        "Tap or drag above the bubbles, then let go to drop a letter into the pencil box. Every letter of a hidden word drops in the same color, so matching colors can be unscrambled into a word.",
+        "When two of the same letter touch, in any color, they merge into a bigger silver letter worth double, then a gold one worth triple. Silver and gold letters fit any word, and two gold letters make a wild gold star that can stand for any letter.",
         "Swipe across bubbles in order to spell one of the hidden words. They don't have to touch, just be close together. A hidden word pops, frees up room and counts toward the level, and spelled in a single color it scores double.",
-        "Any other real word of three or more letters is a Bonus Word: it earns bonus points and the letters stay in the tank. Each bonus word counts once per level.",
-        "Spell the number of hidden words shown at the top to clear the level. The wave word counts double and pays a big bonus.",
+        "Any other real word of three or more letters is a Bonus Word: it earns bonus points and the letters stay in the box. Each bonus word counts once per level.",
+        "Spell the number of hidden words shown at the top to clear the level. The star word counts double, pays a big bonus and starts Star Mode.",
         "The game ends if the bubbles stay above the dotted line."
       ],
       "controls": [
@@ -1015,9 +1015,9 @@
       ],
       "tips": [
         "Drop each color's letters close together so you can swipe its hidden word in one go for double points.",
-        "Keep vowels spread around the tank so every group of letters has something to spell with.",
+        "Keep vowels spread around the box so every group of letters has something to spell with.",
         "Longer words score much more than short ones, so build up before you cash in.",
-        "Save your wild starfish for the wave word or a long word."
+        "Save your wild gold star for the star word or a long word."
       ]
     }
   ]
