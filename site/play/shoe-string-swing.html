@@ -384,7 +384,7 @@ const HAND_Y=-35; // where the hands hold the rope, in kid units above the body 
 const HERO={},HERO_NAMES=['fly-a','fly-b','fly-c','swing-a','swing-b','tumbled'];
 const HA={"fly-a":{"w":310,"h":132,"ax":309,"ay":86},"fly-b":{"w":353,"h":133,"ax":352,"ay":89},"fly-c":{"w":328,"h":133,"ax":327,"ay":89},"swing-a":{"w":241,"h":350,"ax":215,"ay":0},"swing-b":{"w":274,"h":319,"ax":244,"ay":0},"tumbled":{"w":292,"h":183,"ax":146,"ay":182}};
 const HERO_SIZE=1.2,UPX={fly:.259*HERO_SIZE,swing:.189*HERO_SIZE,tumbled:.246*HERO_SIZE}; // kid units per sprite pixel
-HERO_NAMES.forEach(n=>{const im=new Image();im.onload=()=>{HERO[n]=im};im.src='/assets/shoe-string-swing/hero-'+n+'.png'});
+HERO_NAMES.forEach(n=>{const im=new Image();im.onload=()=>{HERO[n]=im};im.src='/assets/shoe-string-swing/hero-'+n+'.webp'});
 function heroReady(){return HERO_NAMES.every(n=>HERO[n])}
 function drawHero(c,px,py,k,rot,st){
   const t=st.t,spd=Math.hypot(st.vx,st.vy),face=st.face||1;let n;
@@ -513,10 +513,10 @@ const SCENES=[
 function sceneAtX(x){return Math.floor(Math.max(0,meters(x))/SCENE_M)}
 function sceneEdgeX(i){return 150+i*SCENE_M*20}
 function sceneOf(i){return SCENES[((i%SCENES.length)+SCENES.length)%SCENES.length]}
-// optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.png (wide, loops left to right)
+// optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.webp (wide, loops left to right)
 const BGIMG={};
-const PAINTED=['city','beach']; // scene ids that have a painted background in /assets/shoe-string-swing/
-SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.png'});
+const PAINTED=['city','park','beach','farm','night','mountains']; // scene ids that have a painted background in /assets/shoe-string-swing/
+SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.webp'});
 function sceneMix(){ // which scene we're in and how far we've faded into the next
   const cx=camX+VW*.5,i=sceneAtX(cx),edge=sceneEdgeX(i+1),f=Math.max(0,Math.min(1,(cx-(edge-SCENE_FADE))/SCENE_FADE));
   return{a:i,b:i+1,f};
