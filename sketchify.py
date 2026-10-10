@@ -47,7 +47,7 @@ RENAMED = {
     "four-by-sea": "four-in-a-frame",
     "whirlpool-gulp": "eraser-gulp",
     "bottle-words": "note-quest",
-    "octo-swing": "scribble-swing",
+    "octo-swing": "shoe-string-swing",
     "treasure-trio": "margin-match",
     "beach-link": "no-2-pencil",
     "pearl-blocks": "scribble-blocks",
