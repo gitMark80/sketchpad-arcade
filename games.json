@@ -111,8 +111,8 @@
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Lasso push-pins with a shoestring and swing a caped kid through the city, park, beach and beyond.",
-      "meta": "Play Shoe String Swing free online. Hold to lasso the nearest push-pin with a shoestring, swing high and let go to fling a caped superhero kid through the city, the park, the beach, the farm, the night sky and the mountains. Grab smiling stars, bounce on bouncy balls and see how far you can go. Works on phone and computer.",
-      "lead": "A one-button swinging game starring a caped kid in a mask and a very long shoestring. Hold to lasso the nearest push-pin, swing down and up, then let go to fling forward. Every 200 meters the scenery changes, from the city to the park, the beach, the farm, the night sky and the snowy mountains. Catch the next pin before you tumble to the ground, collect stars along the way and see how far you can go.",
+      "meta": "Play Shoe String Swing free online. Hold to lasso the nearest push-pin with a shoestring, swing high and let go to fling a caped superhero kid through the city by day and by flashlight at night, the beach, the mountains and the farm. Grab smiling stars, bounce on bouncy balls and see how far you can go. Works on phone and computer.",
+      "lead": "A one-button swinging game starring a caped kid in a mask and a very long shoestring. Hold to lasso the nearest push-pin, swing down and up, then let go to fling forward. Every 1000 meters the scenery changes, from the city to the city at night with a flashlight, then the beach, the snowy mountains and the farm. Catch the next pin before you tumble to the ground, collect stars along the way and see how far you can go.",
       "facts": [
         "Arcade",
         "One button",
@@ -124,7 +124,7 @@
         "Swing down and back up, then let go to fling forward through the air.",
         "Hold again to catch the next pin. If you tumble to the ground, the game is over.",
         "Your score is the distance you swing plus 5 points for every star.",
-        "Every 200 meters you swing into a new place: the city, the park, the beach, the farm, the night sky and the mountains.",
+        "Every 1000 meters you swing into a new place: the city, the city at night (where your flashlight lights the way), the beach, the mountains and the farm.",
         "The farther you go, the farther apart the pins get. Pink balloons bob up and down, and soap bubbles pop soon after you grab them."
       ],
       "controls": [
