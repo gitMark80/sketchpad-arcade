@@ -515,7 +515,7 @@ function sceneEdgeX(i){return 150+i*SCENE_M*20}
 function sceneOf(i){return SCENES[((i%SCENES.length)+SCENES.length)%SCENES.length]}
 // optional painted backgrounds: /assets/shoe-string-swing/bg-<scene>.png (wide, loops left to right)
 const BGIMG={};
-const PAINTED=['city']; // scene ids that have a painted background in /assets/shoe-string-swing/
+const PAINTED=['city','beach']; // scene ids that have a painted background in /assets/shoe-string-swing/
 SCENES.filter(s=>PAINTED.includes(s.id)).forEach(s=>{const im=new Image();im.onload=()=>{BGIMG[s.id]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/bg-'+s.id+'.png'});
 function sceneMix(){ // which scene we're in and how far we've faded into the next
   const cx=camX+VW*.5,i=sceneAtX(cx),edge=sceneEdgeX(i+1),f=Math.max(0,Math.min(1,(cx-(edge-SCENE_FADE))/SCENE_FADE));
