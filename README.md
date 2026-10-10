@@ -24,7 +24,7 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 | Four by Sea (`four-by-sea`) | Four in a Frame (`four-in-a-frame`) |
 | Whirlpool Gulp (`whirlpool-gulp`) | Eraser Gulp (`eraser-gulp`) |
 | Bottle Words (`bottle-words`) | Note Quest (`note-quest`) |
-| Octo Swing (`octo-swing`) | Scribble Swing (`scribble-swing`) |
+| Octo Swing (`octo-swing`) | Shoe String Swing (`shoe-string-swing`; was Scribble Swing) |
 | Treasure Trio (`treasure-trio`) | Margin Match (`margin-match`) |
 | Beach Link (`beach-link`) | No. 2 Pencil (`no-2-pencil`) |
 | Pearl Blocks (`pearl-blocks`) | Scribble Blocks (`scribble-blocks`) |

@@ -184,12 +184,12 @@
     },
     {
       "source": "/octo-swing",
-      "destination": "/scribble-swing",
+      "destination": "/shoe-string-swing",
       "permanent": true
     },
     {
       "source": "/play/octo-swing",
-      "destination": "/play/scribble-swing",
+      "destination": "/play/shoe-string-swing",
       "permanent": true
     },
     {
@@ -340,6 +340,16 @@
     {
       "source": "/play/scribble-swap",
       "destination": "/play/drop-swap",
+      "permanent": true
+    },
+    {
+      "source": "/scribble-swing",
+      "destination": "/shoe-string-swing",
+      "permanent": true
+    },
+    {
+      "source": "/play/scribble-swing",
+      "destination": "/play/shoe-string-swing",
       "permanent": true
     }
   ]
