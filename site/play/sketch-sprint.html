@@ -1404,6 +1404,18 @@ function drawImgChar(id,c,fx,fy,p,o){
 }
 function drawChar(id,c,fx,fy,p,o){if(hasImg(id+'-run')||hasImg(id+'-run-1'))drawImgChar(id,c,fx,fy,p,o);else DRAW[id](c,fx,fy,p,o)}
 function boardRock(){return Math.sin(T*2.2)*.025}
+/* On a skateboard power-up the runner hops onto the board they picked, in the skating stance from Mark's
+   coloured runner sheet (seen from behind), with the deck foreshortened as it points down the path. */
+function drawSkater(id,fp,p){
+  const K=PICKIMG[id],B=PICKIMG['board-'+boardId];
+  const bw=.9*p,bh=bw*B.naturalHeight/B.naturalWidth*.34,kh=1.36*p,kw=kh*K.naturalWidth/K.naturalHeight;
+  ctx.save();ctx.translate(fp[0],fp[1]);ctx.rotate(P.lean*.18+boardRock()*2);
+  ctx.fillStyle='rgba(46,46,51,.22)';ctx.beginPath();ctx.ellipse(0,0,bw*.55,bh*.18,0,0,7);ctx.fill();
+  ctx.drawImage(B,-bw/2,-bh*1.02,bw,bh);
+  const bob=Math.sin(T*9)*.012*p;
+  ctx.drawImage(K,-kw/2,-bh*.5-kh+bob,kw,kh);
+  ctx.restore();
+}
 let slideOn=false,slideT0=-9,slideT1=-9; // when the current slide began / the last one ended, for easing in and out
 function drawRunner(){
   const C=CHR(),rx=P.x-camXl,p0=proj(rx,0,0),p=p0[2];
@@ -1428,6 +1440,7 @@ function drawRunner(){
   else if(dying&&hasDown){// the first beat of a crash: standing, tipping back
     const k=Math.min(1,deadT/.18);ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,1-.35*k);ctx.translate(-fp[0],-fp[1]);
     drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:0,sq:0,slide:0,air:false,tumble:0,dir:1,wob:0});ctx.restore()}
+  else if(!blink&&P.boostT>0&&PICKIMG[C.id]&&PICKIMG['board-'+boardId])drawSkater(C.id,fp,p);
   else if(!blink)drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:P.lean,slide:slideOn?1:0,slideIn:T-slideT0,rise:slideOn||P.air?null:T-slideT1,air:P.air,vy:P.vy,surf:P.boostT>0,tumble:P.tumble,dir:P.x>0?-1:1,wob:P.boostT>0?0:P.wobT,sq:P.boostT>0?0:P.sq});
   if(P.shieldT>0){const S=SPR.pipBubble,bp=proj(rx,P.y+(P.slideT>0?.35:.68),0),w=S.w*p*(1+.03*Math.sin(T*6)),a=P.shieldT<2.5?(.5+.5*Math.sin(T*18)):1;
     ctx.globalAlpha=a;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-w/2,w,w);ctx.globalAlpha=1}
