@@ -582,7 +582,7 @@ const IMGFILE={pipBubble:'shield',pine2:'pine'};
 const IMG={},BGIMG={};let imgsReady=0,pickTO=0;
 function loadArt(){
   Object.keys(IMGSPR).forEach(n=>{const im=new Image();im.onload=()=>{IMG[n]=im;imgsReady++;applyImages()};im.onerror=()=>{};im.src=ASSET+(IMGFILE[n]||n)+'.webp'});
-  // the scenic backdrops are no longer drawn (the sky is a sketchpad page), so they are not downloaded
+  Object.keys(BIOME).forEach(b=>{const im=new Image();im.onload=()=>{BGIMG[b]=im};im.onerror=()=>{};im.src=ASSET+'bg-'+b+'.jpg'});
 }
 function applyImages(){
   if(!$('start').hidden){clearTimeout(pickTO);pickTO=setTimeout(()=>buildPicker(),150)}
@@ -1475,43 +1475,13 @@ function speedLines(){
 /* the painted backdrop for the place we are in; the horizon in each painting sits on the game's horizon, and a new place fades in */
 const BGHZ={beach:.445,pond:.55,river:.5,marsh:.41,woods:.58};
 let bgCur='beach',bgPrev='',bgFade=1;
-/* The sky is a page of grid sketch paper with a spiral binding along the top, like the top of a kid's sketchpad.
-   It is drawn once into a cached layer (rebuilt only when the screen size changes). */
-let padCv=null,padKey='';
-function buildPad(){
-  const h=Math.ceil(hz+4),c=document.createElement('canvas');c.width=Math.ceil(W*dpr);c.height=Math.ceil(h*dpr);
-  const x=c.getContext('2d');x.scale(dpr,dpr);
-  x.fillStyle='#f8f6ef';x.fillRect(0,0,W,h);
-  // graph-paper grid: fine blue lines with a stronger line every fifth square, starting below the binding
-  const top=34,g=Math.max(12,Math.round(W/26));
-  for(let i=0,y=top;y<=h;i++,y+=g){x.strokeStyle=i%5===0?'rgba(70,125,190,.32)':'rgba(70,125,190,.16)';x.lineWidth=i%5===0?1.1:.8;x.beginPath();x.moveTo(0,y+.5);x.lineTo(W,y+.5);x.stroke()}
-  const x0=(W%g)/2;
-  for(let i=0,xx=x0;xx<=W;i++,xx+=g){x.strokeStyle=i%5===0?'rgba(70,125,190,.32)':'rgba(70,125,190,.16)';x.lineWidth=i%5===0?1.1:.8;x.beginPath();x.moveTo(xx+.5,top);x.lineTo(xx+.5,h);x.stroke()}
-  // a little paper grain
-  let sd=3;const r=()=>{sd=(sd*16807)%2147483647;return sd/2147483647};
-  for(let i=0;i<W*h/40;i++){x.fillStyle=`rgba(46,46,51,${(r()*.05).toFixed(3)})`;x.fillRect(r()*W,r()*h,1,1)}
-  // the top strip of the page with its punched holes and a soft shadow under the coils
-  x.fillStyle='rgba(46,46,51,.06)';x.fillRect(0,0,W,top-6);
-  x.strokeStyle='rgba(46,46,51,.35)';x.lineWidth=1;x.setLineDash([3,3]);x.beginPath();x.moveTo(0,top-6.5);x.lineTo(W,top-6.5);x.stroke();x.setLineDash([]);
-  const pitch=Math.max(18,Math.round(W/18)),n=Math.floor(W/pitch),sx=(W-(n-1)*pitch)/2;
-  for(let i=0;i<n;i++){const cx=sx+i*pitch,hy=17;
-    // punched hole
-    x.fillStyle='#3a3a40';x.beginPath();x.ellipse(cx,hy,3.6,4.4,0,0,7);x.fill();
-    x.fillStyle='rgba(46,46,51,.18)';x.beginPath();x.ellipse(cx+1.5,hy+6,5,2,0,0,7);x.fill();
-    // the wire coil looping over the top edge and down into the hole: dark pencil outline, light grey wire, a shine
-    const path=()=>{x.beginPath();x.moveTo(cx-1,hy);x.bezierCurveTo(cx-9,hy-6,cx-8,-6,cx+1,-8)};
-    path();x.strokeStyle='#2e2e33';x.lineWidth=5.2;x.lineCap='round';x.stroke();
-    path();x.strokeStyle='#b9b8b3';x.lineWidth=3;x.stroke();
-    x.beginPath();x.moveTo(cx-5.5,hy-6);x.bezierCurveTo(cx-7,hy-10,cx-5,-2,cx-2,-5);x.strokeStyle='rgba(255,255,255,.75)';x.lineWidth=1;x.stroke();
-  }
-  // horizon line where the page meets the ground
-  x.strokeStyle='#2e2e33';x.lineWidth=1.4;x.beginPath();x.moveTo(0,hz);x.lineTo(W,hz);x.stroke();
-  return c;
-}
 function drawBackdrop(){
-  const key=W+'x'+H+'@'+dpr+':'+Math.round(hz);
-  if(padKey!==key){padCv=buildPad();padKey=key}
-  ctx.drawImage(padCv,0,0,W,padCv.height/dpr);
+  const b=SEGS[curSeg].biome;if(b!==bgCur){bgPrev=bgCur;bgCur=b;bgFade=0}
+  bgFade=Math.min(1,bgFade+1/36);
+  const one=(name,a)=>{const im=BGIMG[name];if(!im){if(bg){ctx.globalAlpha=a;ctx.drawImage(bg,-W*.06,-H*.03,W*1.12,H*1.06);ctx.globalAlpha=1}return}
+    const ih=(hz+H*.02)/BGHZ[name]*1.04,iw=ih*im.naturalWidth/im.naturalHeight,w=Math.max(iw,W*1.2),h=w*im.naturalHeight/im.naturalWidth;
+    ctx.globalAlpha=a;ctx.drawImage(im,W/2-w/2,hz-h*BGHZ[name],w,h);ctx.globalAlpha=1};
+  if(bgFade<1&&bgPrev)one(bgPrev,1);one(bgCur,bgFade<1?bgFade:1);
 }
 function render(){
   ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -1521,6 +1491,7 @@ function render(){
   ctx.translate(sx,sy);
   if(tilt&&!RM){ctx.translate(W/2,H*.7);ctx.rotate(-tilt*.06);ctx.translate(-W/2,-H*.7)}
   drawBackdrop();
+  if(!BGIMG[bgCur])clouds.forEach(c=>{c.x+=c.v*(1/60);if(c.x>W+c.w)c.x=-c.w;const S=SPR.cloud;ctx.globalAlpha=.9;ctx.drawImage(S.c,c.x,c.y,c.w,c.w*S.h/S.w)});ctx.globalAlpha=1;
   drawGround();
   const items=[];
   for(const s of scen){const z=s.z-dist;if(z<VIEW+8&&z>-40){const q=pc(s.z,s.x,s.seg);if(q[1]<VIEW&&q[1]>-6)items.push([q[1],0,s])}}
