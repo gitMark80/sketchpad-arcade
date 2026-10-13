@@ -263,10 +263,10 @@ const sector=()=>SECTORS[Math.min(9,sec-1)];
    World units: lanes are x = -1, 0, 1 and heights are y = -1, 0, 1 (y up); the tunnel walls sit at x = +-1.5, floor and
    ceiling at y = -+1.5. The camera is at the origin looking down +z, vanishing point in the middle of the page.
    Things travel from Z_FAR to Z_END; the plane flies at Z_PLANE. t is the old 0..1 progress, mapped onto z. */
-const VX=W/2,VY=300,F=430,Z_FAR=36,Z_END=1.4,Z_PLANE=3.3,TW=1.5,TH=1.5;
+const VX=W/2,VY=270,F=430,Z_FAR=36,Z_END=1.4,Z_PLANE=3.3,TW=1.5,TH=1.5,CAM_Y=.6;   // CAM_Y: the camera rides above the plane (chase cam), so your own cell is in view ahead of you
 const zAt=t=>Z_FAR*Math.pow(Z_END/Z_FAR,t);
 const PLANE_T=Math.log(Z_PLANE/Z_FAR)/Math.log(Z_END/Z_FAR);
-const proj=(x,y,z)=>({x:VX+F*x/z,y:VY-F*y/z,s:Z_PLANE/z});       // s = 1 at the plane's depth
+const proj=(x,y,z)=>({x:VX+F*x/z,y:VY-F*(y-CAM_Y)/z,s:Z_PLANE/z});       // s = 1 at the plane's depth
 const laneW=l=>l-1,altH=a=>a-1;
 
 /* ---------- state ---------- */
@@ -388,13 +388,15 @@ function drawPaper(x){const S=sector(),r=S.rule,zn=Z_END,zf=Z_FAR,cur=plane.alt,
   for(let i=0;i<10;i++){const z=zn+.5+((i*3.4-(dist*.6)%3.4+3.4)%(zf-zn-1));const side=i%2?1:-1,yy=((i*37)%3-1)*.9;const p=proj(side*TW,yy,z);const d=S.doodles[(i+sec*3)%S.doodles.length];
     x.save();x.translate(p.x,p.y);x.globalAlpha=Math.min(.6,.1+p.s*.5);x.font=`${Math.max(6,Math.round(26*p.s))}px "Patrick Hand",cursive`;x.textAlign=side<0?'left':'right';x.fillStyle=INK;x.fillText(d,side<0?6:-6,0);x.restore()}
   x.globalAlpha=1;
-  // the plane's cell at its depth: a dashed blue box
-  {const z=Z_PLANE,x0=laneW(cl)-.5,x1=laneW(cl)+.5,y0=altH(cur)-.5,y1=altH(cur)+.5;x.strokeStyle=C.blue;x.lineWidth=2;x.setLineDash([10,6]);x.lineDashOffset=-T*40;
+  // the plane's cell at its depth: a dashed blue box, red when something is headed into it
+  {const z=Z_PLANE,x0=laneW(cl)-.5,x1=laneW(cl)+.5,y0=altH(cur)-.5,y1=altH(cur)+.5;const w=threat();x.strokeStyle=w?C.red:C.blue;x.lineWidth=w?3:2;x.setLineDash([10,6]);x.lineDashOffset=-T*40;
     quad3(x,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z]]);x.stroke();x.setLineDash([])}
   // page name in the corner
   x.save();x.translate(14,22);x.rotate(-.04);x.font='15px "Patrick Hand",cursive';x.textAlign='left';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle=PAPER;const nm=S.n+(sec>10?' (endless)':'');x.strokeText(nm,0,0);x.fillStyle=GRAPH;x.fillText(nm,0,0);x.restore();
   x.font='14px "Patrick Hand",cursive';x.textAlign='right';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle=PAPER;x.strokeText('p. '+sec,W-14,22);x.fillStyle=GRAPH;x.fillText('p. '+sec,W-14,22);
   x.restore()}
+/* an obstacle in the plane's own cell within the next stretch (0 = none, else how close, 0..1) */
+function threat(){let m=0;for(const o of objs){if(o.dead||!OBST.includes(o.k)||!covers(o,plane.lane,plane.alt))continue;const d=PLANE_T-o.t;if(d>0&&d<.3)m=Math.max(m,1-d/.3)}return power.boost>0?0:m}
 function drawObj(x,o){const z=zAt(o.t);let wx=laneW(o.lane)+(WIDE[o.k]?.5:0),wy=altH(o.alt);
   if(o.pull){const fx=laneW(o.pull.from)+(WIDE[o.k]?.5:0),fy=altH(o.pull.fromAlt);wx=fx+(wx-fx)*o.pull.a;wy=fy+(wy-fy)*o.pull.a}
   const p=proj(wx,wy,z),fade=o.t>PLANE_T+.03?Math.max(0,1-(o.t-PLANE_T-.03)/.08):1;if(fade<=0)return;
@@ -413,9 +415,9 @@ function drawPlane(x){
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.6;x.beginPath();for(const i of [-1,1]){const l=14+sp*10,o=(T*300)%10;x.moveTo(i*46,-4+o);x.lineTo(i*(46+l*.3),-4+o+l)}x.stroke();x.globalAlpha=1;
   if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,6.28);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
   if(power.magnet>0){x.save();x.translate(0,-50);x.scale(.45,.45);x.globalAlpha=.6+Math.sin(T*8)*.3;DRAW.magnet(x);x.restore()}
-  {const im=img(planeId+'-back');if(im){x.save();x.rotate(plane.bank*.55);x.scale(1,1-Math.abs(plane.pitch)*.3);x.translate(0,-plane.pitch*8);drawImg(x,im,104);
+  {const im=img(planeId+'-back');const th=threat();if(th>.4)x.globalAlpha=.7;if(im){x.save();x.rotate(plane.bank*.55);x.scale(1,1-Math.abs(plane.pitch)*.3);x.translate(0,-plane.pitch*8);drawImg(x,im,92);
       if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,6.28);x.fill();x.globalAlpha=1}x.restore()}
-    else DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0)}
+    else DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0);x.globalAlpha=1}
   if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,6.28);x.stroke()}
   x.restore()}
 function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);ctx.save();
