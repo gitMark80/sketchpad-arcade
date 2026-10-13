@@ -133,7 +133,7 @@ const PLANES=[
   {id:'dart',n:'Dart',cost:0},{id:'glider',n:'Glider',cost:100},{id:'stunt',n:'Stunt',cost:250},{id:'lined',n:'Lined Page',cost:450},
   {id:'graph',n:'Graph Paper',cost:700},{id:'jumbo',n:'Jumbo',cost:1000},{id:'night',n:'Night Flyer',cost:1400},{id:'scribble',n:'Scribble',cost:2000}];
 const IMG={};function img(name){if(!IMG[name]){const im=new Image();im.src=ART_DIR+name+'.webp';IMG[name]=im}const im=IMG[name];return im.complete&&im.naturalWidth?im:null}
-for(const k in ITEM_W)img(k);for(const p of PLANES){img(p.id+'-back');img(p.id+'-top')}
+for(const k in ITEM_W)img(k);for(const p of PLANES){img(p.id+'-fly');img(p.id+'-up');img(p.id+'-down');img(p.id+'-top')}
 /* paper balls come in construction-paper colours: the grey ball drawing tinted (multiply) once per colour */
 const BALL_COLORS=['#ffffff','#ff5e5e','#ff9f3a','#ffe04a','#5fd27a','#4fa9ff','#b57bff','#ff7fc1'];const BALLS={};
 function ballImg(seed){const base=img('ball');if(!base)return null;const i=Math.floor(Math.abs(seed)*7)%BALL_COLORS.length,col=BALL_COLORS[i];
@@ -424,9 +424,9 @@ function drawPlane(x){
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.6;x.beginPath();for(const i of [-1,1]){const l=14+sp*10,o=(T*300)%10;x.moveTo(i*46,-4+o);x.lineTo(i*(46+l*.3),-4+o+l)}x.stroke();x.globalAlpha=1;
   if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,6.28);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
   if(power.magnet>0){x.save();x.translate(0,-50);x.scale(.45,.45);x.globalAlpha=.6+Math.sin(T*8)*.3;DRAW.magnet(x);x.restore()}
-  {const im=img(planeId+'-top');const th=threat();if(th>.4)x.globalAlpha=.7;if(im){x.save();x.rotate(plane.bank*.5);
-      // seen from behind and a little above: the top of the plane foreshortened; nose up shows more of it, nose down less
-      x.scale(1,Math.max(.3,.55+plane.pitch*.22));x.translate(0,-plane.pitch*6);drawImg(x,im,96,-6);
+  {// three drawings from behind and above: level, climbing (nose up) and diving (nose down); the bank rotates it
+    const pose=plane.pitch>.35?'up':plane.pitch<-.35?'down':'fly';const im=img(planeId+'-'+pose)||img(planeId+'-fly');const th=threat();if(th>.4)x.globalAlpha=.7;
+    if(im){x.save();x.rotate(plane.bank*.5);x.translate(0,-plane.pitch*8);drawImg(x,im,pose==='down'?104:96,-4);
       if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,6.28);x.fill();x.globalAlpha=1}x.restore()}
     else DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0);x.globalAlpha=1}
   if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,6.28);x.stroke()}
