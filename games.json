@@ -10,6 +10,7 @@
     "policy_date": "October 8, 2026",
     "paper": "grid",
     "picks": [
+      "paper-plane-dash",
       "margin-merge",
       "sketch-sprint",
       "doodle-drop",
@@ -31,6 +32,42 @@
     }
   },
   "games": [
+    {
+      "slug": "paper-plane-dash",
+      "name": "Paper Plane Dash",
+      "genre": "Arcade",
+      "added": "2026-10-13",
+      "tagline": "Swipe your paper airplane down three lanes of a notebook. Dodge the junk, grab the stars, fire darts.",
+      "meta": "Play Paper Plane Dash free online. Swipe a paper airplane between three lanes down the pages of a kid's notebook, dodge crumpled paper, erasers, pencils, rulers and ink blots, collect gold stars to start Dart Mode and grab magnet, shield, boost and x2 power-ups across ten sector pages. Works on phone and computer.",
+      "lead": "A fast three-lane dash drawn in pencil. Your paper airplane flies down the pages of a notebook on its own, and you swipe left and right to dodge crumpled paper balls, erasers, pencil stubs, two-lane rulers and inky blots. Grab gold star stickers: every ten fill the meter and start Dart Mode, when your plane fires paper darts that pop everything in its lane. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, from a lined notebook and graph paper to the science fair, a treasure map and the Ink Vortex, each faster than the last.",
+      "facts": [
+        "Arcade",
+        "Swipe to steer",
+        "10 sector pages, then endless",
+        "Saves your best score"
+      ],
+      "how": [
+        "Your paper airplane flies forward on its own and gets faster with every sector page.",
+        "Swipe left or right (or tap the side of the screen) to hop between the three lanes.",
+        "Dodge crumpled paper, erasers, pencil stubs and paint blobs. Rulers and ink blots are two lanes wide, so get to the open lane early.",
+        "Grab gold stars for 10 points each. Every 10 stars fills the meter and starts Dart Mode: for 8 seconds your plane fires paper darts that pop everything in its lane for 25 points each.",
+        "Power-ups: the magnet pulls stars to you, the shield gives you one free bump, the boost smashes through everything for 3 seconds, and x2 doubles your points for 10 seconds.",
+        "Every 600 metres is a new sector page, with a 100 point bonus. After sector 10, the Ink Vortex, it keeps going faster and faster.",
+        "Bump into anything without a shield or boost and your plane crumples. That's the run."
+      ],
+      "controls": [
+        "Phone or tablet: swipe left or right, or tap the left or right half of the page.",
+        "Computer: arrow keys or A and D to change lanes, P or Esc to pause.",
+        "Pause stops the action, and the Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Look at the far end of the corridor, not at your plane. Wide rulers and ink blots show up early.",
+        "Lines of stars sit in a safe lane. Follow them and you'll usually dodge the junk too.",
+        "Save your shield by not relying on it: it's there for the surprise you didn't see.",
+        "Dart Mode pops things in your lane only, so park in the busiest lane while it lasts.",
+        "A boost makes you invincible, so steer straight into the junk for 25 points a pop."
+      ]
+    },
     {
       "slug": "margin-merge",
       "name": "Margin Merge",
