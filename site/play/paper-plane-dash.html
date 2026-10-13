@@ -90,7 +90,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
 <body>
 <div class="app" id="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Swipe your paper airplane down three lanes of a notebook. Dodge the junk, grab the stars, fire darts."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook. Dodge the junk, grab the stars, fire darts."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button">How to play</button>
   </div>
   <div class="hud">
@@ -99,7 +99,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
     <div class="stat end"><small id="meterLbl">Dart mode</small><div class="meter" id="meterEl"><i></i></div></div>
   </div>
   <div class="stagewrap" id="stage">
-    <canvas id="cv" aria-label="A notebook corridor with three lanes. Swipe left or right to steer your paper airplane."></canvas>
+    <canvas id="cv" aria-label="A notebook corridor with three lanes and three heights. Swipe left, right, up or down to steer your paper airplane."></canvas>
   </div>
   <div class="dock">
     <button class="iconbtn" id="pauseBtn" type="button">Pause</button>
@@ -152,6 +152,8 @@ function noise(d=.2,f=1000,type='lowpass',v=.06,sweep=0,delay=0){if(!ok())return
 const sfx={
   click(){tone(660,.05,'triangle',.04)},
   swish(){noise(.12,1800,'bandpass',.05,-900)},
+  climb(){noise(.14,1200,'bandpass',.05,1500);tone(440,.1,'triangle',.03,260)},
+  dive(){noise(.14,2200,'bandpass',.05,-1400);tone(520,.1,'triangle',.03,-220)},
   star(n){const f=[523,587,659,698,784,880,988,1047,1175,1319][Math.min(9,n)];tone(f,.09,'triangle',.05);tone(f*2,.06,'sine',.02,0,.03)},
   pop(){tone(300,.07,'square',.04,260);noise(.08,2200,'bandpass',.04)},
   dart(){tone(900,.04,'triangle',.025,-300)},
@@ -233,34 +235,39 @@ const yAt=t=>Y0+(Y1-Y0)*Math.pow(t,1.9);
 const sAt=t=>.22+.78*Math.pow(t,1.4);
 const halfAt=t=>34+92*Math.pow(t,1.4);
 const laneX=(l,t)=>W/2+(l-1)*halfAt(t);
+const ALT=46;                                        // pixels of lift per altitude step (at the plane's row)
 const PLANE_Y=536,PLANE_T=Math.pow((PLANE_Y-Y0)/(Y1-Y0),1/1.9);
 
 /* ---------- state ---------- */
 let state='idle',paused=false,T=0,score=0,startBest=0,sec=1,dist=0,secDist=0,stars=0,starsTotal=0,pops=[],parts=[],objs=[],darts=[],fx=[];
-let scoredM=0,plane={lane:1,x:W/2,bank:0,vx:0},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,laneWob=0;
+let scoredM=0,plane={lane:1,alt:0,x:W/2,ly:0,bank:0,pitch:0},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,laneWob=0;
 const speed=()=>(1+Math.min(1.1,(sec-1)*.11))*(power.boost>0?1.9:1)*(RM?.9:1);
 function hud(){$('scoreEl').textContent=score;$('sectorEl').textContent=sec;const m=$('meterEl');
   if(power.dart>0){m.classList.add('full');m.firstElementChild.style.width=(power.dart/8*100)+'%';$('meterLbl').textContent='Dart mode!'}
   else{m.classList.remove('full');m.firstElementChild.style.width=(meter/10*100)+'%';$('meterLbl').textContent=power.magnet>0?'Magnet':power.x2>0?'x2 points':power.boost>0?'Boost!':'Dart mode'}}
 function newGame(){startBest=best;score=0;sec=1;dist=0;scoredM=0;secDist=0;stars=0;starsTotal=0;pops=[];parts=[];objs=[];darts=[];fx=[];meter=0;spawnT=.3;puT=7;starQ=null;shake=0;crashT=0;laneWob=0;
-  plane={lane:1,x:W/2,bank:0,vx:0};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
+  plane={lane:1,alt:0,x:W/2,ly:0,bank:0,pitch:0};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
   banner={text:'Sector 1',sub:SECTORS[0].n,t:2.2};sfx.sector()}
 function award(n,x,y,color=INK){if(power.x2>0)n*=2;score+=n;pops.push({s:'+'+n,x,y,life:1,color});if(score>best){best=score;store.set('best',best)}hud()}
 function burst(x,y,col,n=10,spd=150){if(RM)n=Math.ceil(n/3);for(let i=0;i<n;i++){const a=Math.random()*6.28,v=spd*(.3+Math.random()*.8);
   parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:.4+Math.random()*.4,r:2+Math.random()*3,col})}}
-function covers(o,lane){return WIDE[o.k]?(lane===o.lane||lane===o.lane+1):lane===o.lane}
+function covers(o,lane,alt){if(o.alt!==alt)return false;return WIDE[o.k]?(lane===o.lane||lane===o.lane+1):lane===o.lane}
 function setLane(l){l=Math.max(0,Math.min(2,l));if(l===plane.lane||state!=='play'||paused)return;plane.lane=l;sfx.swish()}
+function setAlt(a){a=Math.max(0,Math.min(2,a));if(a===plane.alt||state!=='play'||paused)return;const up=a>plane.alt;plane.alt=a;up?sfx.climb():sfx.dive()}
 
 /* ---------- spawning ---------- */
-function freeLanes(obs){const used=new Set();for(const o of obs){used.add(o.lane);if(WIDE[o.k])used.add(o.lane+1)}return [0,1,2].filter(l=>!used.has(l))}
-function spawnRow(){const S=sector(),row=[];const n=Math.random()<Math.min(.65,.15+sec*.07)?2:1;
-  for(let i=0;i<n;i++){const k=S.kinds[Math.floor(Math.random()*S.kinds.length)];const free=freeLanes(row);
-    const opts=WIDE[k]?[0,1].filter(l=>free.includes(l)&&free.includes(l+1)&&free.length-2>=1):free.filter(()=>free.length-1>=1);
-    if(!opts.length)continue;const lane=opts[Math.floor(Math.random()*opts.length)];row.push({k,lane,t:-.02-i*.04,seed:Math.random()*9,dead:false})}
+/* The corridor is a 3x3 grid: three lanes across and three altitudes (0 low, 1 middle, 2 high). A cell is lane*10+alt. */
+function freeCells(obs){const used=new Set();for(const o of obs){used.add(o.lane*10+o.alt);if(WIDE[o.k])used.add((o.lane+1)*10+o.alt)}
+  const out=[];for(let l=0;l<3;l++)for(let a=0;a<3;a++)if(!used.has(l*10+a))out.push([l,a]);return out}
+const pick=arr=>arr[Math.floor(Math.random()*arr.length)];
+function spawnRow(){const S=sector(),row=[];const n=2+Math.floor(Math.min(3,sec*.45))+(Math.random()<.35?1:0);   // 2 to 6 things across the nine cells
+  for(let i=0;i<n;i++){const k=S.kinds[Math.floor(Math.random()*S.kinds.length)];const free=freeCells(row);const need=WIDE[k]?2:1;if(free.length-need<2)break;
+    const opts=WIDE[k]?free.filter(([l,a])=>l<2&&free.some(([l2,a2])=>l2===l+1&&a2===a)):free;
+    if(!opts.length)continue;const [lane,alt]=pick(opts);row.push({k,lane,alt,t:-.02-i*.03,seed:Math.random()*9,dead:false})}
   objs.push(...row);
-  if(!starQ&&Math.random()<.5){const free=freeLanes(row);starQ={lane:free[Math.floor(Math.random()*free.length)],n:3+Math.floor(Math.random()*3),gap:0,t:.08}}}
+  if(!starQ&&Math.random()<.55){const free=freeCells(row);const [lane,alt]=pick(free);starQ={lane,alt,n:3+Math.floor(Math.random()*3),gap:0}}}
 function spawnPower(){const kinds=['magnet','shield','boost','x2'];let k=kinds[Math.floor(Math.random()*kinds.length)];if(k==='shield'&&power.shield)k='magnet';
-  const near=objs.filter(o=>o.t<.25),free=freeLanes(near);if(!free.length)return;objs.push({k,lane:free[Math.floor(Math.random()*free.length)],t:-.02,seed:0,dead:false})}
+  const near=objs.filter(o=>o.t<.25),free=freeCells(near);if(!free.length)return;const [lane,alt]=pick(free);objs.push({k,lane,alt,t:-.02,seed:0,dead:false})}
 
 /* ---------- update ---------- */
 function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
@@ -270,6 +277,7 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
   if(banner){banner.t-=dt;if(banner.t<=0)banner=null}
   // plane eases to its lane and banks
   const tx=laneX(plane.lane,PLANE_T)+(sec>=10?Math.sin(T*1.3)*6:0);const dx=tx-plane.x;plane.x+=dx*Math.min(1,dt*14);plane.bank+=(Math.max(-1,Math.min(1,dx/40))-plane.bank)*Math.min(1,dt*10);
+  const ty=-plane.alt*ALT,dy=ty-plane.ly;plane.ly+=dy*Math.min(1,dt*12);plane.pitch+=(Math.max(-1,Math.min(1,dy/40))-plane.pitch)*Math.min(1,dt*10);
   if(state==='crash'){crashT+=dt;if(crashT>1.3)gameOver();return}
   if(state!=='play'||paused)return;
   const sp=speed(),v=.42*sp;
@@ -278,19 +286,19 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
   for(const k of ['magnet','boost','x2','dart'])if(power[k]>0){power[k]-=dt;if(power[k]<=0){power[k]=0;hud()}}
   // spawning
   spawnT-=v*dt;if(spawnT<=0){spawnRow();spawnT=Math.max(.26,.5-sec*.02)+Math.random()*.15}
-  if(starQ){starQ.gap-=v*dt;if(starQ.gap<=0){objs.push({k:'star',lane:starQ.lane,t:-.02,seed:Math.random()*9,dead:false});starQ.gap=.075;if(--starQ.n<=0)starQ=null}}
+  if(starQ){starQ.gap-=v*dt;if(starQ.gap<=0){objs.push({k:'star',lane:starQ.lane,alt:starQ.alt,t:-.02,seed:Math.random()*9,dead:false});starQ.gap=.075;if(--starQ.n<=0)starQ=null}}
   puT-=dt;if(puT<=0){spawnPower();puT=7+Math.random()*5}
   // darts
-  if(power.dart>0){dartT-=dt;if(dartT<=0){dartT=.2;darts.push({lane:plane.lane,t:PLANE_T-.04});sfx.dart()}}
+  if(power.dart>0){dartT-=dt;if(dartT<=0){dartT=.2;darts.push({lane:plane.lane,alt:plane.alt,t:PLANE_T-.04});sfx.dart()}}
   for(let i=darts.length-1;i>=0;i--){const d=darts[i];d.t-=1.1*dt;if(d.t<0){darts.splice(i,1);continue}
     for(const o of objs){if(o.dead||!OBST.includes(o.k))continue;
-      if(covers(o,d.lane)&&o.t<d.t+.02&&o.t>d.t-.06){popObj(o,25);darts.splice(i,1);break}}}
+      if(covers(o,d.lane,d.alt)&&o.t<d.t+.02&&o.t>d.t-.06){popObj(o,25);darts.splice(i,1);break}}}
   // objects
   for(const o of objs){if(o.dead)continue;o.t+=v*dt;
-    if(o.k==='star'&&power.magnet>0&&o.t>PLANE_T-.42&&o.t<PLANE_T+.02&&o.lane!==plane.lane){o.pull={from:o.lane,a:0};o.lane=plane.lane}
+    if(o.k==='star'&&power.magnet>0&&o.t>PLANE_T-.42&&o.t<PLANE_T+.02&&(o.lane!==plane.lane||o.alt!==plane.alt)){o.pull={from:o.lane,fromAlt:o.alt,a:0};o.lane=plane.lane;o.alt=plane.alt}
     if(o.pull){o.pull.a=Math.min(1,o.pull.a+dt*5)}
-    if(Math.abs(o.t-PLANE_T)<.045&&covers(o,plane.lane)){
-      if(o.k==='star'){o.dead=true;stars++;starsTotal++;award(10,plane.x,PLANE_Y-40,C.yellow);burst(plane.x,PLANE_Y-20,C.yellow,6,120);
+    if(Math.abs(o.t-PLANE_T)<.045&&covers(o,plane.lane,plane.alt)){
+      if(o.k==='star'){o.dead=true;stars++;starsTotal++;award(10,plane.x,PLANE_Y+plane.ly-40,C.yellow);burst(plane.x,PLANE_Y+plane.ly-20,C.yellow,6,120);
         if(power.dart<=0){meter++;sfx.star(meter);if(meter>=10){meter=0;power.dart=8;dartT=0;banner={text:'Dart mode!',sub:'Pop everything in your lane',t:1.6};sfx.dartmode()}}else sfx.star(9);hud()}
       else if(o.k==='magnet'){o.dead=true;power.magnet=8;sfx.power();banner={text:'Magnet!',sub:'Stars fly to you',t:1.3};hud()}
       else if(o.k==='shield'){o.dead=true;power.shield=true;sfx.power();banner={text:'Shield!',sub:'One free bump',t:1.3};hud()}
@@ -301,9 +309,9 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
       else crash(o)}}
   objs=objs.filter(o=>!o.dead&&o.t<1.08);
 }
-function popObj(o,pts){o.dead=true;const x=laneX(o.lane+(WIDE[o.k]?.5:0),o.t),y=yAt(o.t);burst(x,y,o.k==='blot'?C.purple:o.k==='eraser'?C.pink:o.k==='pencil'?C.yellow:GRAPH,12,170);sfx.pop();if(pts)award(pts,x,y-20);
+function popObj(o,pts){o.dead=true;const x=laneX(o.lane+(WIDE[o.k]?.5:0),o.t),y=yAt(o.t)-o.alt*ALT*sAt(Math.min(1,o.t));burst(x,y,o.k==='blot'?C.purple:o.k==='eraser'?C.pink:o.k==='pencil'?C.yellow:GRAPH,12,170);sfx.pop();if(pts)award(pts,x,y-20);
   if(pts&&Math.random()<.25)sfx.cheer()}
-function crash(o){state='crash';crashT=0;sfx.crash();shake=RM?0:14;burst(plane.x,PLANE_Y,GRAPH,22,220);burst(plane.x,PLANE_Y,C.blue,10,180);o.dead=true}
+function crash(o){state='crash';crashT=0;sfx.crash();shake=RM?0:14;burst(plane.x,PLANE_Y+plane.ly,GRAPH,22,220);burst(plane.x,PLANE_Y+plane.ly,C.blue,10,180);o.dead=true}
 function gameOver(){state='over';const isBest=score>startBest;
   showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Crumpled!</h2><div class="big">${score}</div>
   <p>You flew ${Math.floor(dist)} m to sector ${sec}${sec<=10?': '+sector().n:''} and collected ${starsTotal} star${starsTotal===1?'':'s'}. Best score: ${best}.</p><button class="btn" id="againBtn" type="button">Fly again</button>`);
@@ -339,17 +347,21 @@ function drawPaper(x){const S=sector(),r=S.rule,off=(dist*2)%40;x.save();
   x.font='14px "Patrick Hand",cursive';x.textAlign='right';x.fillStyle=GRAPH;x.fillText('p. '+sec,W-14,Y0-30);
 }
 function drawObj(x,o){const t=Math.min(1.08,o.t),s=sAt(Math.min(1,t)),y=yAt(t);let px=laneX(o.lane+(WIDE[o.k]?.5:0),t);
-  if(o.pull){const fx=laneX(o.pull.from,t);px=fx+(px-fx)*o.pull.a}
+  let alt=o.alt;if(o.pull){const fx=laneX(o.pull.from,t);px=fx+(px-fx)*o.pull.a;alt=o.pull.fromAlt+(o.alt-o.pull.fromAlt)*o.pull.a}
   x.save();x.translate(px,y);x.scale(s,s);
-  x.fillStyle='rgba(46,46,51,.15)';x.beginPath();x.ellipse(4,30,WIDE[o.k]?70:24,7,0,0,6.28);x.fill();
+  x.fillStyle=alt>0?'rgba(46,46,51,.09)':'rgba(46,46,51,.15)';x.beginPath();x.ellipse(4,30,(WIDE[o.k]?70:24)*(1-alt*.12),7,0,0,6.28);x.fill();
+  if(alt>0){x.strokeStyle=PENCIL;x.lineWidth=1.2;x.setLineDash([3,4]);x.beginPath();x.moveTo(0,28);x.lineTo(0,-alt*ALT+22);x.stroke();x.setLineDash([])}
+  x.translate(0,-alt*ALT);
   switch(o.k){case 'ball':DRAW.ball(x,o.seed);break;case 'eraser':DRAW.eraser(x);break;case 'pencil':DRAW.pencil(x);break;case 'ruler':DRAW.ruler(x);break;
     case 'blob':DRAW.blob(x,o.seed);break;case 'blot':DRAW.blot(x,o.seed,T*3);break;case 'star':DRAW.star(x,Math.sin(T*3+o.seed)*.25);break;
     case 'magnet':DRAW.magnet(x);break;case 'shield':DRAW.shield(x);break;case 'boost':DRAW.boost(x);break;case 'x2':DRAW.x2(x);break}
   if(['magnet','shield','boost','x2'].includes(o.k)){x.strokeStyle=C.yellow;x.lineWidth=2;x.setLineDash([4,5]);x.lineDashOffset=-T*30;x.beginPath();x.arc(0,0,36,0,6.28);x.stroke();x.setLineDash([])}
   x.restore()}
 function drawPlane(x){x.save();x.translate(plane.x,PLANE_Y);
-  if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);DRAW.ball(x,2);x.restore();return}
-  x.fillStyle='rgba(46,46,51,.18)';x.beginPath();x.ellipse(6,34,22,7,0,0,6.28);x.fill();
+  if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.translate(0,plane.ly*(1-k));x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);DRAW.ball(x,2);x.restore();return}
+  const lift=-plane.ly/ALT;x.fillStyle=`rgba(46,46,51,${.18-lift*.045})`;x.beginPath();x.ellipse(6,34,22*(1-lift*.12),7,0,0,6.28);x.fill();
+  if(lift>.05){x.strokeStyle=PENCIL;x.lineWidth=1.2;x.setLineDash([3,4]);x.beginPath();x.moveTo(0,30);x.lineTo(0,plane.ly+24);x.stroke();x.setLineDash([])}
+  x.translate(0,plane.ly);x.scale(1,1-Math.abs(plane.pitch)*.12);
   // motion lines
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.7;x.beginPath();for(let i=-1;i<=1;i++){const l=14+sp*10+(i?0:8);x.moveTo(i*12,30+((T*300)%10));x.lineTo(i*12,30+((T*300)%10)+l)}x.stroke();x.globalAlpha=1;
   if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,0,42,0,6.28);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
@@ -365,11 +377,11 @@ function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.
   drawPlane(ctx);
   for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2.5));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill()}ctx.globalAlpha=1;
   for(const p of pops){ctx.globalAlpha=Math.min(1,p.life*2);txt(ctx,p.s,p.x,p.y,22,undefined,p.color)}ctx.globalAlpha=1;
-  for(const f of fx){if(f.k==='ring'){ctx.strokeStyle=C.blue;ctx.lineWidth=3;ctx.globalAlpha=1-f.t/f.d;ctx.beginPath();ctx.arc(plane.x,PLANE_Y,42+f.t*200,0,6.28);ctx.stroke();ctx.globalAlpha=1}
+  for(const f of fx){if(f.k==='ring'){ctx.strokeStyle=C.blue;ctx.lineWidth=3;ctx.globalAlpha=1-f.t/f.d;ctx.beginPath();ctx.arc(plane.x,PLANE_Y+plane.ly,42+f.t*200,0,6.28);ctx.stroke();ctx.globalAlpha=1}
     if(f.k==='page'){ctx.fillStyle='rgba(246,243,234,'+(.6*(1-f.t/f.d))+')';ctx.fillRect(0,0,W,H)}}
   if(banner){const a=Math.min(1,banner.t*2);ctx.save();ctx.globalAlpha=a;ctx.translate(W/2,250);ctx.rotate(-.035);txt(ctx,banner.text,0,0,34);if(banner.sub)txt(ctx,banner.sub,0,34,19,'"Patrick Hand",cursive',GRAPH);ctx.restore()}
   if(state==='play'&&paused){ctx.fillStyle='rgba(246,243,234,.6)';ctx.fillRect(0,0,W,H);txt(ctx,'Paused',W/2,H/2-10,36);txt(ctx,'Tap Resume to keep flying',W/2,H/2+26,18,'"Patrick Hand",cursive',GRAPH)}
-  if(state==='idle'){txt(ctx,'Swipe to steer',W/2,H/2-10,30);txt(ctx,'Dodge the junk, grab the stars',W/2,H/2+24,18,'"Patrick Hand",cursive',GRAPH)}
+  if(state==='idle'){txt(ctx,'Swipe any way to steer',W/2,H/2-10,30);txt(ctx,'Dodge the junk, grab the stars',W/2,H/2+24,18,'"Patrick Hand",cursive',GRAPH)}
   ctx.restore()}
 
 /* ---------- loop ---------- */
@@ -379,12 +391,14 @@ fit();requestAnimationFrame(frame);
 /* ---------- input: swipe or tap the side you want to go; arrows / A D on a keyboard ---------- */
 let pd=null;
 cv.addEventListener('pointerdown',e=>{pd={x:e.clientX,y:e.clientY,moved:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
-cv.addEventListener('pointermove',e=>{if(!pd||pd.moved)return;const dx=e.clientX-pd.x;if(Math.abs(dx)>22){pd.moved=true;setLane(plane.lane+(dx>0?1:-1))}});
+cv.addEventListener('pointermove',e=>{if(!pd||pd.moved)return;const dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(Math.abs(dx)>22||Math.abs(dy)>22){pd.moved=true;if(Math.abs(dx)>=Math.abs(dy))setLane(plane.lane+(dx>0?1:-1));else setAlt(plane.alt+(dy<0?1:-1))}});
 const endPtr=e=>{if(!pd)return;if(!pd.moved&&state==='play'&&!paused){const r=cv.getBoundingClientRect();setLane(plane.lane+((e.clientX-r.left)/r.width>.5?1:-1))}pd=null};
 cv.addEventListener('pointerup',endPtr);cv.addEventListener('pointercancel',()=>{pd=null});
 addEventListener('keydown',e=>{if(e.repeat)return;const k=e.key;
   if(k==='ArrowLeft'||k==='a'||k==='A'){setLane(plane.lane-1);e.preventDefault()}
   else if(k==='ArrowRight'||k==='d'||k==='D'){setLane(plane.lane+1);e.preventDefault()}
+  else if(k==='ArrowUp'||k==='w'||k==='W'){setAlt(plane.alt+1);e.preventDefault()}
+  else if(k==='ArrowDown'||k==='s'||k==='S'){setAlt(plane.alt-1);e.preventDefault()}
   else if(k==='p'||k==='P'||k==='Escape'){if(state==='play')setPaused(!paused)}
   else if(k===' '||k==='Enter'){if(state==='idle'||state==='over'){const b=$('card').querySelector('.btn');if(b&&!$('overlay').hidden){b.click();e.preventDefault()}}}});
 
@@ -394,9 +408,9 @@ function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const
     if(k==='plane')DRAW.plane(x,0,false);else if(k==='ruler'){x.scale(.6,.6);DRAW.ruler(x)}else if(k==='blot'){x.scale(.6,.6);DRAW.blot(x,1,0)}else if(DRAW[k])DRAW[k](x,1)})}
 function hideCard(){$('overlay').hidden=true}
 function helpHtml(){const w=(k,n,p)=>`<figure><canvas class="ic" data-k="${k}"></canvas><figcaption>${n}<br><b>${p}</b></figcaption></figure>`;
-  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down the pages of a notebook. Swipe between the three lanes to dodge the junk, and grab gold stars.</p>
+  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down the pages of a notebook. Swipe left and right between three lanes, and up and down between three heights, to dodge the junk and grab gold stars.</p>
   <div class="who">${w('star','Star','10 pts')}${w('ball','Paper ball','Dodge')}${w('ruler','Ruler','2 lanes wide')}${w('blot','Ink blot','2 lanes wide')}${w('magnet','Magnet','Pulls stars')}${w('shield','Shield','1 free bump')}${w('boost','Boost','Smash through')}${w('x2','Double','2x points')}</div>
-  <p class="keys">Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything in its lane for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: arrows or A and D to steer, P to pause.</p>`}
+  <p class="keys">Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything in its lane for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: arrows or W A S D to steer, P to pause.</p>`}
 function showMenu(){const playing=state==='play';if(playing)setPaused(true);
   showCard(helpHtml()+`<button class="btn" id="goBtn" type="button">${playing?'Keep flying':'Play'}</button>`);
   $('goBtn').onclick=()=>{sfx.click();if(playing){hideCard();setPaused(false)}else newGame()}}
@@ -408,7 +422,7 @@ renderSound();hud();
 showCard(helpHtml()+(best?`<p>Best score: <b>${best}</b></p>`:'')+`<button class="btn" id="goBtn" type="button">Play</button>`);$('goBtn').onclick=()=>{sfx.click();newGame()};
 
 /* Square cover for the site (used once by a build-time screenshot). */
-window.PPD={peek:()=>({objs,lane:plane.lane,pt:PLANE_T,state,sec,power}),go:setLane,cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
+window.PPD={peek:()=>({objs,lane:plane.lane,alt:plane.alt,pt:PLANE_T,state,sec,power}),go:setLane,up:setAlt,cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
   x.strokeStyle='rgba(47,111,181,.3)';x.lineWidth=2;for(let y=60;y<S;y+=40){x.beginPath();x.moveTo(0,y);x.lineTo(S,y);x.stroke()}x.strokeStyle='rgba(196,74,74,.4)';x.beginPath();x.moveTo(70,0);x.lineTo(70,S);x.stroke();
   x.strokeStyle=INK;x.lineWidth=3;x.beginPath();x.moveTo(150,640);x.lineTo(262,160);x.moveTo(490,640);x.lineTo(378,160);x.stroke();
   const items=[['ball',205,235,.6,1],['star',330,225,.6,0],['eraser',430,250,.75,0],['star',322,305,.8,0],['pencil',225,350,1,0],['magnet',428,372,.9,0],['star',318,390,1,0],['ball',195,470,1.15,5]];
