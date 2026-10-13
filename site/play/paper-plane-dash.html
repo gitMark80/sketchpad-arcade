@@ -235,7 +235,7 @@ const yAt=t=>Y0+(Y1-Y0)*Math.pow(t,1.9);
 const sAt=t=>.22+.78*Math.pow(t,1.4);
 const halfAt=t=>34+92*Math.pow(t,1.4);
 const laneX=(l,t)=>W/2+(l-1)*halfAt(t);
-const ALT=46;                                        // pixels of lift per altitude step (at the plane's row)
+const ALT=64;                                        // pixels of lift per altitude step (at the plane's row)
 const PLANE_Y=536,PLANE_T=Math.pow((PLANE_Y-Y0)/(Y1-Y0),1/1.9);
 
 /* ---------- state ---------- */
@@ -336,6 +336,7 @@ function drawPaper(x){const S=sector(),r=S.rule,off=(dist*2)%40;x.save();
   x.restore();
   // corridor edges
   x.strokeStyle=INK;x.lineWidth=2.5;x.beginPath();x.moveTo(W/2-halfAt(0)*1.6,Y0-10);x.lineTo(W/2-halfAt(1)*1.6,H);x.moveTo(W/2+halfAt(0)*1.6,Y0-10);x.lineTo(W/2+halfAt(1)*1.6,H);x.stroke();
+  drawWalls(x);
   // margin doodles scrolling down both sides
   x.fillStyle='rgba(46,46,51,.45)';x.textAlign='center';x.textBaseline='middle';
   for(let i=0;i<8;i++){const tt=((i/8)+(dist/700))%1,y=yAt(tt),s=sAt(tt);const d=S.doodles[(i+sec*3)%S.doodles.length];x.font=`${Math.round(14+16*s)}px "Patrick Hand",cursive`;
@@ -346,6 +347,31 @@ function drawPaper(x){const S=sector(),r=S.rule,off=(dist*2)%40;x.save();
   x.save();x.translate(14,Y0-30);x.rotate(-.04);x.font='15px "Patrick Hand",cursive';x.textAlign='left';x.fillStyle=GRAPH;x.fillText(S.n+(sec>10?' (endless)':''),0,0);x.restore();
   x.font='14px "Patrick Hand",cursive';x.textAlign='right';x.fillStyle=GRAPH;x.fillText('p. '+sec,W-14,Y0-30);
 }
+/* The 3D box: a rail on each side wall for every height (low, middle, high), converging into the distance, plus
+   rungs between them that slide toward you. The plane's own height is drawn in blue with a guide line across the corridor. */
+function drawWalls(x){const ex=(side,t)=>W/2+side*halfAt(t)*1.6,wy=(t,a)=>yAt(t)-a*ALT*sAt(t);const cur=plane.alt;
+  x.save();x.lineCap='round';
+  // the walls themselves: a pale wash from the floor rail up to the high rail
+  for(const side of [-1,1]){x.fillStyle='rgba(47,111,181,.07)';x.beginPath();x.moveTo(ex(side,.03),wy(.03,0));x.lineTo(ex(side,1.08),wy(1.08,0));x.lineTo(ex(side,1.08),wy(1.08,2.3));x.lineTo(ex(side,.03),wy(.03,2.3));x.closePath();x.fill()}
+  // rungs (vertical ticks on both walls) at moving depths
+  x.strokeStyle='rgba(46,46,51,.35)';x.lineWidth=1.3;x.beginPath();
+  for(let i=0;i<10;i++){const t=((i/10)+(dist/900))%1;if(t<.04)continue;for(const side of [-1,1]){x.moveTo(ex(side,t),wy(t,0));x.lineTo(ex(side,t),wy(t,2.3))}}x.stroke();
+  // a cross-grid at the plane's own height, so the level you fly on reads like a floor
+  if(cur>0){x.strokeStyle='rgba(47,111,181,.28)';x.lineWidth=1.2;x.beginPath();
+    for(let i=0;i<10;i++){const t=((i/10)+(dist/900))%1;if(t<.04)continue;x.moveTo(ex(-1,t),wy(t,cur));x.lineTo(ex(1,t),wy(t,cur))}
+    for(const l of [.5,1.5]){x.moveTo(laneX(l,.03),wy(.03,cur));x.lineTo(laneX(l,1.08),wy(1.08,cur))}x.stroke()}
+  // one rail per height on each wall, the plane's height in blue
+  for(let a=0;a<=2;a++){const on=a===cur;x.strokeStyle=on?C.blue:'rgba(46,46,51,.55)';x.lineWidth=on?3.5:1.8;x.beginPath();
+    for(const side of [-1,1]){x.moveTo(ex(side,.03),wy(.03,a));x.lineTo(ex(side,1.08),wy(1.08,a))}x.stroke()}
+  // ceiling edge
+  x.strokeStyle='rgba(46,46,51,.5)';x.lineWidth=1.8;x.beginPath();x.moveTo(ex(-1,.03),wy(.03,2.3));x.lineTo(ex(1,.03),wy(.03,2.3));x.stroke();
+  // guide line across the corridor at the plane's height
+  const gy=PLANE_Y+plane.ly;x.strokeStyle=C.blue;x.lineWidth=2;x.setLineDash([10,6]);x.lineDashOffset=-T*40;x.beginPath();x.moveTo(ex(-1,PLANE_T),gy);x.lineTo(ex(1,PLANE_T),gy);x.stroke();x.setLineDash([]);
+  // height labels just inside the right wall at the plane's row
+  x.textAlign='right';x.textBaseline='bottom';const lx=ex(1,PLANE_T)-8;
+  [['low',0],['mid',1],['high',2]].forEach(([n,a])=>{const on=a===cur;x.font=on?'19px "Gloria Hallelujah",cursive':'15px "Patrick Hand",cursive';
+    x.lineWidth=4;x.strokeStyle=PAPER;x.strokeText(n,lx,wy(PLANE_T,a)-3);x.fillStyle=on?C.blue:'rgba(46,46,51,.6)';x.fillText(n,lx,wy(PLANE_T,a)-3)});
+  x.restore()}
 function drawObj(x,o){const t=Math.min(1.08,o.t),s=sAt(Math.min(1,t)),y=yAt(t);let px=laneX(o.lane+(WIDE[o.k]?.5:0),t);
   let alt=o.alt;if(o.pull){const fx=laneX(o.pull.from,t);px=fx+(px-fx)*o.pull.a;alt=o.pull.fromAlt+(o.alt-o.pull.fromAlt)*o.pull.a}
   x.save();x.translate(px,y);x.scale(s,s);
