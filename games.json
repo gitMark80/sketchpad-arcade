@@ -37,18 +37,20 @@
       "name": "Paper Plane Dash",
       "genre": "Arcade",
       "added": "2026-10-13",
-      "tagline": "Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook. Dodge the junk, grab the stars, fire darts.",
+      "tagline": "Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook tunnel. Dodge the junk, grab the stars, unlock 8 planes.",
       "meta": "Play Paper Plane Dash free online. Swipe a paper airplane left, right, up and down through three lanes and three heights down the pages of a kid's notebook, dodge crumpled paper, erasers, pencils, rulers and ink blots, collect gold stars to start Dart Mode and grab magnet, shield, boost and x2 power-ups across ten sector pages. Works on phone and computer.",
       "lead": "A fast dash drawn in pencil, seen from right behind your paper airplane as it flies down a notebook tunnel. Swipe left and right between three lanes and up and down between three heights to dodge crumpled paper balls, erasers, pencil stubs, two-lane rulers and inky blots. The blue lines on the floor, ceiling and walls always point at the spot you're flying in. Grab gold star stickers: every ten fill the meter and start Dart Mode, when your plane fires paper darts that pop everything ahead of it. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, from a lined notebook and graph paper to the science fair, a treasure map and the Ink Vortex, each faster than the last.",
       "facts": [
         "Arcade",
         "Swipe in any direction",
         "3 lanes by 3 heights",
+        "8 paper planes to unlock",
         "10 sector pages, then endless",
         "Saves your best score"
       ],
       "how": [
         "Your paper airplane flies forward on its own and gets faster with every sector page.",
+        "Pick your plane on the start card. The Dart is free, and the stars you collect add up between runs to unlock the Glider, Stunt, Lined Page, Graph Paper, Jumbo, Night Flyer and Scribble planes.",
         "Swipe left or right to hop between the three lanes, and swipe up or down to climb or dive between the three heights. That's nine spots to fly in.",
         "Dodge crumpled paper, erasers, pencil stubs and paint blobs. The tunnel is a 3 by 3 grid: the blue lines on the floor, ceiling and walls and the dashed blue box show the spot you're in, and anything coming straight at that box is yours to dodge. Rulers and ink blots are two lanes wide, so get to an open spot early.",
         "Grab gold stars for 10 points each. Every 10 stars fills the meter and starts Dart Mode: for 8 seconds your plane fires paper darts that pop everything straight ahead of it (same lane, same height) for 25 points each.",
@@ -66,7 +68,8 @@
         "Lines of stars sit in a safe spot. Follow them and you'll usually dodge the junk too.",
         "Save your shield by not relying on it: it's there for the surprise you didn't see.",
         "Dart Mode pops things in your lane at your height only, so line up with the busiest row while it lasts.",
-        "A boost makes you invincible, so steer straight into the junk for 25 points a pop."
+        "A boost makes you invincible, so steer straight into the junk for 25 points a pop.",
+        "Stars count toward new planes even on a short run, so grab every line of them you can."
       ]
     },
     {

@@ -54,7 +54,15 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
 .card p{margin:6px 0 12px;color:var(--pencil);font-size:1.05rem;line-height:1.35}
 .who{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px;margin:4px 0 12px}
 .who figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:1px}
-.who canvas{width:46px;height:46px}
+.who img{width:46px;height:46px;object-fit:contain}
+.pick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:6px 0 4px}
+.pl{appearance:none;border:2px dashed var(--faint);background:var(--paper);border-radius:var(--wob);padding:6px 2px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:400 .8rem/1.1 var(--body);color:var(--ink)}
+.pl img{width:54px;height:44px;object-fit:contain}
+.pl.sel{background:var(--yellow-wash);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--pencil)}
+.pl.lock{opacity:.5;cursor:default}.pl.lock img{filter:grayscale(1)}
+.pl small{font-size:.75rem;color:var(--muted)}
+.bankline{margin:0 0 10px!important;font-size:.95rem!important}
+.unlock{color:var(--ink)!important;background:var(--yellow-wash);border:2px solid var(--yellow);border-radius:var(--wob2);padding:4px 10px;display:inline-block}
 .who figcaption{font-size:.85rem;color:var(--muted);line-height:1.15}
 .who b{color:var(--ink);font-weight:400}
 .big{font-family:var(--display);font-weight:400;font-size:2.5rem;line-height:1.1;color:var(--ink);margin:2px 0}
@@ -90,7 +98,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
 <body>
 <div class="app" id="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook. Dodge the junk, grab the stars, fire darts."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook tunnel. Dodge the junk, grab the stars, unlock 8 planes."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button">How to play</button>
   </div>
   <div class="hud">
@@ -117,6 +125,18 @@ const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').match
 const store={get(k,d){try{const v=localStorage.getItem('paperplanedash.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem('paperplanedash.'+k,JSON.stringify(v))}catch(e){}}};
 let best=store.get('best',0),muted=store.get('muted',false);
+
+/* ---------- art: Mark's drawings in assets/paper-plane-dash/ (the code-drawn versions below are the fallback) ---------- */
+const ART_DIR='../assets/paper-plane-dash/';
+const ITEM_W={ball:58,eraser:66,pencil:76,blob:60,ruler:150,blot:150,star:46,magnet:54,shield:54,boost:46,x2:54};   // drawn width at the plane's depth
+const PLANES=[
+  {id:'dart',n:'Dart',cost:0},{id:'glider',n:'Glider',cost:100},{id:'stunt',n:'Stunt',cost:250},{id:'lined',n:'Lined Page',cost:450},
+  {id:'graph',n:'Graph Paper',cost:700},{id:'jumbo',n:'Jumbo',cost:1000},{id:'night',n:'Night Flyer',cost:1400},{id:'scribble',n:'Scribble',cost:2000}];
+const IMG={};function img(name){if(!IMG[name]){const im=new Image();im.src=ART_DIR+name+'.webp';IMG[name]=im}const im=IMG[name];return im.complete&&im.naturalWidth?im:null}
+for(const k in ITEM_W)img(k);for(const p of PLANES){img(p.id+'-back');img(p.id+'-top')}
+let bank=store.get('bank',0),planeId=store.get('plane','dart');if(!PLANES.some(p=>p.id===planeId))planeId='dart';
+/* draws an image centred at the origin at a given width (height follows the picture) */
+function drawImg(x,im,w,dy=0){const h=w*im.naturalHeight/im.naturalWidth;x.drawImage(im,-w/2,-h/2+dy,w,h)}
 
 /* ---------- pencil palette ---------- */
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
@@ -326,9 +346,9 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
 function popObj(o,pts){o.dead=true;const pp=proj(laneW(o.lane)+(WIDE[o.k]?.5:0),altH(o.alt),zAt(o.t)),x=pp.x,y=pp.y;burst(x,y,o.k==='blot'?C.purple:o.k==='eraser'?C.pink:o.k==='pencil'?C.yellow:GRAPH,12,170);sfx.pop();if(pts)award(pts,x,y-20);
   if(pts&&Math.random()<.25)sfx.cheer()}
 function crash(o){state='crash';crashT=0;sfx.crash();shake=RM?0:14;burst(plane.sx,plane.sy,GRAPH,22,220);burst(plane.sx,plane.sy,C.blue,10,180);o.dead=true}
-function gameOver(){state='over';const isBest=score>startBest;
+function gameOver(){state='over';const isBest=score>startBest;bank+=starsTotal;store.set('bank',bank);const unlocked=PLANES.filter(p=>p.cost>bank-starsTotal&&p.cost<=bank);
   showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Crumpled!</h2><div class="big">${score}</div>
-  <p>You flew ${Math.floor(dist)} m to sector ${sec}${sec<=10?': '+sector().n:''} and collected ${starsTotal} star${starsTotal===1?'':'s'}. Best score: ${best}.</p><button class="btn" id="againBtn" type="button">Fly again</button>`);
+  <p>You flew ${Math.floor(dist)} m to sector ${sec}${sec<=10?': '+sector().n:''} and collected ${starsTotal} star${starsTotal===1?'':'s'}. Best score: ${best}.</p>${unlocked.length?`<p class="unlock">New plane unlocked: <b>${unlocked.map(p=>p.n).join(', ')}</b>!</p>`:''}<button class="btn" id="againBtn" type="button">Fly again</button>`);
   window.BDA&&BDA.shareScore({score,line:'Sector '+sec,into:'#card',after:'.big'});
   $('againBtn').onclick=()=>{sfx.click();newGame()}}
 function setPaused(p){if(state!=='play'&&p)return;paused=p;$('pauseBtn').textContent=p?'Resume':'Pause'}
@@ -380,19 +400,22 @@ function drawObj(x,o){const z=zAt(o.t);let wx=laneW(o.lane)+(WIDE[o.k]?.5:0),wy=
   const p=proj(wx,wy,z),fade=o.t>PLANE_T+.03?Math.max(0,1-(o.t-PLANE_T-.03)/.08):1;if(fade<=0)return;
   const sh=proj(wx,-TH,z);x.save();x.globalAlpha=fade;x.fillStyle='rgba(46,46,51,.13)';x.beginPath();x.ellipse(sh.x,sh.y,(WIDE[o.k]?70:24)*sh.s,7*sh.s,0,0,6.28);x.fill();
   x.translate(p.x,p.y);x.scale(p.s,p.s);
-  switch(o.k){case 'ball':DRAW.ball(x,o.seed);break;case 'eraser':DRAW.eraser(x);break;case 'pencil':DRAW.pencil(x);break;case 'ruler':DRAW.ruler(x);break;
+  const im=img(o.k);if(im){if(o.k==='star')x.rotate(Math.sin(T*3+o.seed)*.2);drawImg(x,im,ITEM_W[o.k])}
+  else switch(o.k){case 'ball':DRAW.ball(x,o.seed);break;case 'eraser':DRAW.eraser(x);break;case 'pencil':DRAW.pencil(x);break;case 'ruler':DRAW.ruler(x);break;
     case 'blob':DRAW.blob(x,o.seed);break;case 'blot':DRAW.blot(x,o.seed,T*3);break;case 'star':DRAW.star(x,Math.sin(T*3+o.seed)*.25);break;
     case 'magnet':DRAW.magnet(x);break;case 'shield':DRAW.shield(x);break;case 'boost':DRAW.boost(x);break;case 'x2':DRAW.x2(x);break}
   if(['magnet','shield','boost','x2'].includes(o.k)){x.strokeStyle=C.yellow;x.lineWidth=2;x.setLineDash([4,5]);x.lineDashOffset=-T*30;x.beginPath();x.arc(0,0,36,0,6.28);x.stroke();x.setLineDash([])}
   x.restore()}
 function drawPlane(x){
-  if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.save();x.translate(plane.sx,plane.sy);x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);DRAW.ball(x,2);x.restore();return}
+  if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.save();x.translate(plane.sx,plane.sy);x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);const bi=img('ball');if(bi)drawImg(x,bi,70);else DRAW.ball(x,2);x.restore();return}
   const sh=proj(plane.wx,-TH,Z_PLANE);x.save();x.fillStyle='rgba(46,46,51,.16)';x.beginPath();x.ellipse(sh.x,sh.y,30*sh.s,8*sh.s,0,0,6.28);x.fill();x.restore();
   x.save();x.translate(plane.sx,plane.sy);
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.6;x.beginPath();for(const i of [-1,1]){const l=14+sp*10,o=(T*300)%10;x.moveTo(i*46,-4+o);x.lineTo(i*(46+l*.3),-4+o+l)}x.stroke();x.globalAlpha=1;
   if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,6.28);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
   if(power.magnet>0){x.save();x.translate(0,-50);x.scale(.45,.45);x.globalAlpha=.6+Math.sin(T*8)*.3;DRAW.magnet(x);x.restore()}
-  DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0);
+  {const im=img(planeId+'-back');if(im){x.save();x.rotate(plane.bank*.55);x.scale(1,1-Math.abs(plane.pitch)*.3);x.translate(0,-plane.pitch*8);drawImg(x,im,104);
+      if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,6.28);x.fill();x.globalAlpha=1}x.restore()}
+    else DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0)}
   if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,6.28);x.stroke()}
   x.restore()}
 function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);ctx.save();
@@ -430,22 +453,24 @@ addEventListener('keydown',e=>{if(e.repeat)return;const k=e.key;
 
 /* ---------- cards ---------- */
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const b=$('card').querySelector('.btn');if(b)setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},40);
-  $('card').querySelectorAll('canvas.ic').forEach(c=>{c.width=c.height=92;const x=c.getContext('2d');x.translate(46,46);x.scale(.7,.7);const k=c.dataset.k;
-    if(k==='plane')DRAW.plane(x,0,false);else if(k==='ruler'){x.scale(.6,.6);DRAW.ruler(x)}else if(k==='blot'){x.scale(.6,.6);DRAW.blot(x,1,0)}else if(DRAW[k])DRAW[k](x,1)})}
+}
 function hideCard(){$('overlay').hidden=true}
-function helpHtml(){const w=(k,n,p)=>`<figure><canvas class="ic" data-k="${k}"></canvas><figcaption>${n}<br><b>${p}</b></figcaption></figure>`;
+function pickerHtml(){return `<div class="pick" id="pick">${PLANES.map(p=>{const open=p.cost<=bank;return `<button type="button" class="pl${p.id===planeId?' sel':''}${open?'':' lock'}" data-id="${p.id}" ${open?'':'disabled'} aria-label="${p.n}${open?'':', unlock at '+p.cost+' stars'}">
+  <img src="${ART_DIR}${p.id}-top.webp" alt=""><span>${p.n}</span>${open?'':`<small>${p.cost} &#9733;</small>`}</button>`}).join('')}</div><p class="bankline">Stars collected: <b>${bank}</b></p>`}
+function wirePicker(){$('card').querySelectorAll('.pl:not(.lock)').forEach(b=>b.onclick=()=>{planeId=b.dataset.id;store.set('plane',planeId);sfx.click();$('card').querySelectorAll('.pl').forEach(o=>o.classList.toggle('sel',o===b))})}
+function helpHtml(){const w=(k,n,p)=>`<figure><img class="ic" src="${ART_DIR}${k}.webp" alt=""><figcaption>${n}<br><b>${p}</b></figcaption></figure>`;
   return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down a notebook tunnel. Swipe left and right between three lanes, and up and down between three heights, to dodge the junk and grab gold stars. The blue lines always point at the spot you are in.</p>
   <div class="who">${w('star','Star','10 pts')}${w('ball','Paper ball','Dodge')}${w('ruler','Ruler','2 lanes wide')}${w('blot','Ink blot','2 lanes wide')}${w('magnet','Magnet','Pulls stars')}${w('shield','Shield','1 free bump')}${w('boost','Boost','Smash through')}${w('x2','Double','2x points')}</div>
   <p class="keys">Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything in its lane for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: arrows or W A S D to steer, P to pause.</p>`}
 function showMenu(){const playing=state==='play';if(playing)setPaused(true);
-  showCard(helpHtml()+`<button class="btn" id="goBtn" type="button">${playing?'Keep flying':'Play'}</button>`);
+  showCard(helpHtml()+(playing?'':pickerHtml())+`<button class="btn" id="goBtn" type="button">${playing?'Keep flying':'Play'}</button>`);if(!playing)wirePicker();
   $('goBtn').onclick=()=>{sfx.click();if(playing){hideCard();setPaused(false)}else newGame()}}
 $('helpBtn').onclick=()=>{sfx.click();showMenu()};
 $('pauseBtn').onclick=()=>{sfx.click();if(state==='play')setPaused(!paused)};
 function renderSound(){$('soundBtn').textContent=muted?'Sound: off':'Sound: on';$('soundBtn').setAttribute('aria-pressed',String(!muted))}
 $('soundBtn').onclick=()=>{muted=!muted;store.set('muted',muted);if(master)master.gain.value=muted?0:VOL;if(muted&&unmuteEl){try{unmuteEl.pause()}catch(e){}unmuteEl=null}renderSound();if(!muted)tone(880,.08,'triangle',.05)};
 renderSound();hud();
-showCard(helpHtml()+(best?`<p>Best score: <b>${best}</b></p>`:'')+`<button class="btn" id="goBtn" type="button">Play</button>`);$('goBtn').onclick=()=>{sfx.click();newGame()};
+showCard(helpHtml()+pickerHtml()+(best?`<p>Best score: <b>${best}</b></p>`:'')+`<button class="btn" id="goBtn" type="button">Play</button>`);wirePicker();$('goBtn').onclick=()=>{sfx.click();newGame()};
 
 /* Square cover for the site (used once by a build-time screenshot). */
 window.PPD={peek:()=>({objs,lane:plane.lane,alt:plane.alt,pt:PLANE_T,state,sec,power}),go:setLane,up:setAlt,cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
