@@ -67,6 +67,40 @@
       ]
     },
     {
+      "slug": "candy-snip",
+      "name": "Candy Snip",
+      "genre": "Puzzle",
+      "added": "2026-10-14",
+      "tagline": "Snip the strings and swing a wrapped candy down to Pip, the kid waiting with his mouth open.",
+      "meta": "Play Candy Snip free online. Swipe to snip strings, swing a wrapped candy through the gold star stickers and drop it to Pip the hungry kid. 24 pencil-sketched physics puzzles. Works on phone and computer.",
+      "lead": "A string-snipping puzzle drawn in a sketchbook. A wrapped candy hangs from strings tied to pushpins stuck in the page, and Pip the kid is peeking over the desk edge below with his mouth wide open. Swipe across a string to snip it and the candy swings and drops. Time your snips so it lands right in Pip's mouth, and swing it through the gold star stickers on the way for up to 3 stars. Gum bubbles, bouncy balls, binder rings and party blowers join in as you go.",
+      "facts": [
+        "Puzzle",
+        "24 levels",
+        "Phone, tablet and computer",
+        "Saves your stars and best score"
+      ],
+      "how": [
+        "Swipe across a string to snip it. The candy swings or drops when its strings let go.",
+        "Get the candy into Pip's mouth to finish the level. If it falls off the desk, just try again.",
+        "Each level has 3 gold star stickers. Swing the candy through them for stars and bonus points.",
+        "Gum bubbles float the candy up until you tap to pop them. Bouncy balls bounce it, binder rings grab it with a new string, and party blowers puff it along when you tap them.",
+        "Your score is your best points from every level added up. Feed Pip to unlock the next level."
+      ],
+      "controls": [
+        "Phone or tablet: swipe across a string to snip it. Tap a bubble or a party blower.",
+        "Computer: drag the mouse across a string, or just click it. Click bubbles and party blowers.",
+        "Press R to restart the level and L to pick a level.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Watch the swing first. Snip when the candy is heading toward Pip.",
+        "With two or three strings, the order you snip them changes the swing.",
+        "A binder ring only grabs the candy once, so think about where that new swing will go.",
+        "Pop a bubble right above Pip and the candy drops straight into his mouth."
+      ]
+    },
+    {
       "slug": "paper-plane-dash",
       "name": "Paper Plane Dash",
       "genre": "Arcade",

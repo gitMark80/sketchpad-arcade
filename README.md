@@ -35,6 +35,7 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 | Gem Cove (`gem-cove`) | Chibi Chib (`chibi-chib`) |
 | Word Plop (`word-plop`) | Word Scribble (`word-scribble`) |
 | Pearl Patrol (`pearl-patrol`) | Pencil Patrol (`pencil-patrol`) |
+| Taffy Drop (`taffy-drop`) | Candy Snip (`candy-snip`) |
 
 `sketchify.py` takes the Beach Day Arcade slug and writes to the Sketchpad slug.
 
