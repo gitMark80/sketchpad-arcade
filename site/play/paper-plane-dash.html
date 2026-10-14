@@ -98,7 +98,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
 <body>
 <div class="app" id="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook tunnel. Dodge the junk, grab the stars, unlock 8 planes."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Spin a paper tube so your paper airplane dodges the junk, grabs the stars and flies through the ring gaps."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button">How to play</button>
   </div>
   <div class="hud">
@@ -107,7 +107,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
     <div class="stat end"><small id="meterLbl">Dart mode</small><div class="meter" id="meterEl"><i></i></div></div>
   </div>
   <div class="stagewrap" id="stage">
-    <canvas id="cv" aria-label="A notebook corridor with three lanes and three heights. Swipe left, right, up or down to steer your paper airplane."></canvas>
+    <canvas id="cv" aria-label="A round paper tube. Drag left or right to spin it so your paper airplane dodges the junk and flies through the ring gaps."></canvas>
   </div>
   <div class="dock">
     <button class="iconbtn" id="pauseBtn" type="button">Pause</button>
@@ -263,50 +263,61 @@ const SECTORS=[
   {n:'The Ink Vortex',rule:'vortex',doodles:['@','◎','◉','~','〰','◌'],kinds:['ball','eraser','pencil','blob','blot','ruler']},
 ];
 const SECTOR_M=600;                                   // metres per sector page
-const WIDE={ruler:1,blot:1};const OBST=['ball','eraser','pencil','ruler','blob','blot'];                          // things that cover two lanes
+const WIDE={ruler:1,blot:1};const OBST=['ball','eraser','pencil','ruler','blob','blot'];                          // WIDE things cover two spots
 const sector=()=>SECTORS[Math.min(9,sec-1)];
 
-/* ---------- perspective: a tunnel seen from behind the plane ----------
-   World units: lanes are x = -1, 0, 1 and heights are y = -1, 0, 1 (y up); the tunnel walls sit at x = +-1.5, floor and
-   ceiling at y = -+1.5. The camera is at the origin looking down +z, vanishing point in the middle of the page.
-   Things travel from Z_FAR to Z_END; the plane flies at Z_PLANE. t is the old 0..1 progress, mapped onto z. */
-const VX=W/2,VY=270,F=430,Z_FAR=36,Z_END=1.4,Z_PLANE=3.3,TW=1.5,TH=1.5,CAM_Y=.6;   // CAM_Y: the camera rides above the plane (chase cam), so your own cell is in view ahead of you
+/* ---------- perspective: a round paper tube seen from behind the plane ----------
+   The camera looks straight down the tube; its centre is the vanishing point. Everything sits on the inside wall at
+   radius R, at an angle around the tube and a depth z (Z_FAR far away, Z_END just behind the camera). The plane is
+   fixed at the bottom of the screen (screen angle PA); dragging spins the whole tube (rot), like the pencil in
+   Doodle Drop, so the junk, stars and ring gaps swing round to meet it. t is the old 0..1 progress, mapped onto z. */
+const VX=W/2,VY=300,F=430,Z_FAR=36,Z_END=1.4,Z_PLANE=3.3,R=1.5,PA=Math.PI/2,SLOTS=12,SLOT=Math.PI*2/SLOTS,TAU=Math.PI*2;
 const zAt=t=>Z_FAR*Math.pow(Z_END/Z_FAR,t);
 const PLANE_T=Math.log(Z_PLANE/Z_FAR)/Math.log(Z_END/Z_FAR);
-const proj=(x,y,z)=>({x:VX+F*x/z,y:VY-F*(y-CAM_Y)/z,s:Z_PLANE/z});       // s = 1 at the plane's depth
-const laneW=l=>l-1,altH=a=>a-1;
+const rAt=z=>F*R/z;
+const proj=(a,z,r=R)=>({x:VX+F*r*Math.cos(a)/z,y:VY+F*r*Math.sin(a)/z,s:Z_PLANE/z});   // a = screen angle (0 right, PA down)
+const wrap=a=>((a%TAU)+TAU)%TAU,adiff=(a,b)=>{const d=wrap(a-b);return d>Math.PI?d-TAU:d};
+const PLANE_R=R*.86;
 
 /* ---------- state ---------- */
 let state='idle',paused=false,T=0,score=0,startBest=0,sec=1,dist=0,secDist=0,stars=0,starsTotal=0,pops=[],parts=[],objs=[],darts=[],fx=[];
-let scoredM=0,plane={lane:1,alt:1,wx:0,wy:0,sx:VX,sy:VY,bank:0,pitch:0},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,laneWob=0;
+let scoredM=0,rot=0,rotT=0,rotV=0,plane={sx:VX,sy:VY,bank:0},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,rowsSinceRing=0,keyL=false,keyR=false;
 const speed=()=>(1+Math.min(1.1,(sec-1)*.11))*(power.boost>0?1.9:1)*(RM?.9:1);
+const planeWorld=()=>wrap(PA-rot);                      // the plane's angle in tube (world) terms
+const screenA=o=>wrap(o.a+rot);                          // a thing's angle on screen
 function hud(){$('scoreEl').textContent=score;$('sectorEl').textContent=sec;const m=$('meterEl');
   if(power.dart>0){m.classList.add('full');m.firstElementChild.style.width=(power.dart/8*100)+'%';$('meterLbl').textContent='Dart mode!'}
   else{m.classList.remove('full');m.firstElementChild.style.width=(meter/10*100)+'%';$('meterLbl').textContent=power.magnet>0?'Magnet':power.x2>0?'x2 points':power.boost>0?'Boost!':'Dart mode'}}
-function newGame(){startBest=best;score=0;sec=1;dist=0;scoredM=0;secDist=0;stars=0;starsTotal=0;pops=[];parts=[];objs=[];darts=[];fx=[];meter=0;spawnT=.3;puT=7;starQ=null;shake=0;crashT=0;laneWob=0;
-  plane={lane:1,alt:1,wx:0,wy:0,sx:VX,sy:VY,bank:0,pitch:0};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
+function newGame(){startBest=best;score=0;sec=1;dist=0;scoredM=0;secDist=0;stars=0;starsTotal=0;pops=[];parts=[];objs=[];darts=[];fx=[];meter=0;spawnT=.3;puT=7;starQ=null;shake=0;crashT=0;rowsSinceRing=0;
+  rot=rotT=0;rotV=0;plane={sx:VX,sy:VY,bank:0};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
   banner={text:'Sector 1',sub:SECTORS[0].n,t:2.2};sfx.sector()}
 function award(n,x,y,color=INK){if(power.x2>0)n*=2;score+=n;pops.push({s:'+'+n,x,y,life:1,color});if(score>best){best=score;store.set('best',best)}hud()}
 function burst(x,y,col,n=10,spd=150){if(RM)n=Math.ceil(n/3);for(let i=0;i<n;i++){const a=Math.random()*6.28,v=spd*(.3+Math.random()*.8);
   parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:.4+Math.random()*.4,r:2+Math.random()*3,col})}}
-function covers(o,lane,alt){if(o.alt!==alt)return false;return WIDE[o.k]?(lane===o.lane||lane===o.lane+1):lane===o.lane}
-function setLane(l){l=Math.max(0,Math.min(2,l));if(l===plane.lane||state!=='play'||paused)return;plane.lane=l;sfx.swish()}
-function setAlt(a){a=Math.max(0,Math.min(2,a));if(a===plane.alt||state!=='play'||paused)return;const up=a>plane.alt;plane.alt=a;up?sfx.climb():sfx.dive()}
+/* does a thing at its angle overlap the plane (or a dart) at angle a? */
+const halfW=o=>WIDE[o.k]?SLOT*.95:SLOT*.55;
+function hits(o,a){if(o.k==='ring')return Math.abs(adiff(o.a,a))>o.gap-SLOT*.42;return Math.abs(adiff(o.a,a))<halfW(o)}
+function spin(d){if(state!=='play'||paused)return;rotT+=d}
 
-/* ---------- spawning ---------- */
-/* The corridor is a 3x3 grid: three lanes across and three altitudes (0 low, 1 middle, 2 high). A cell is lane*10+alt. */
-function freeCells(obs){const used=new Set();for(const o of obs){used.add(o.lane*10+o.alt);if(WIDE[o.k])used.add((o.lane+1)*10+o.alt)}
-  const out=[];for(let l=0;l<3;l++)for(let a=0;a<3;a++)if(!used.has(l*10+a))out.push([l,a]);return out}
+/* ---------- spawning: 12 slots around the tube; rings with a gap every few rows ---------- */
 const pick=arr=>arr[Math.floor(Math.random()*arr.length)];
-function spawnRow(){const S=sector(),row=[];const n=2+Math.floor(Math.min(3,sec*.45))+(Math.random()<.35?1:0);   // 2 to 6 things across the nine cells
-  for(let i=0;i<n;i++){const k=S.kinds[Math.floor(Math.random()*S.kinds.length)];const free=freeCells(row);const need=WIDE[k]?2:1;if(free.length-need<2)break;
-    let opts=WIDE[k]?free.filter(([l,a])=>l<2&&free.some(([l2,a2])=>l2===l+1&&a2===a)):free;
-    if(dist<120)opts=opts.filter(([l,a])=>!(a===1&&(l===1||(WIDE[k]&&l===0))));   // the first stretch keeps the starting cell clear
-    if(!opts.length)continue;const [lane,alt]=pick(opts);row.push({k,lane,alt,t:-.02-i*.03,seed:Math.random()*9,dead:false})}
+const RING_COLORS=['#ff5e5e','#ff9f3a','#ffe04a','#5fd27a','#4fa9ff','#b57bff','#ff7fc1','#f3eee0'];
+function freeSlots(row){const used=new Set();for(const o of row){const s=Math.round(o.a/SLOT);used.add(s%SLOTS);if(WIDE[o.k])used.add((s+1)%SLOTS)}
+  return [...Array(SLOTS).keys()].filter(s=>!used.has(s))}
+function spawnRow(){const S=sector();rowsSinceRing++;
+  const ringEvery=sec<2?99:Math.max(3,6-Math.floor(sec/2));
+  if(rowsSinceRing>=ringEvery&&Math.random()<.7){rowsSinceRing=0;const gap=Math.max(.5,.95-sec*.035);   // a paper ring with one gap in it
+    const o={k:'ring',a:wrap(Math.random()*TAU),gap,t:-.02,col:pick(RING_COLORS),seed:Math.random()*9,dead:false,passed:false};objs.push(o);
+    if(Math.random()<.6)starQ={a:o.a,n:3,gap:.05};return}
+  const row=[];const n=2+Math.floor(Math.min(4,sec*.5))+(Math.random()<.35?1:0);       // 2 to 7 things around the twelve slots
+  for(let i=0;i<n;i++){const k=S.kinds[Math.floor(Math.random()*S.kinds.length)];const free=freeSlots(row);const need=WIDE[k]?2:1;if(free.length-need<3)break;
+    let opts=WIDE[k]?free.filter(s=>free.includes((s+1)%SLOTS)):free;
+    if(dist<120){const ps=Math.round(planeWorld()/SLOT)%SLOTS;opts=opts.filter(s=>Math.min((s-ps+SLOTS)%SLOTS,(ps-s+SLOTS)%SLOTS)>1)}   // the first stretch keeps the plane's spot clear
+    if(!opts.length)continue;const s=pick(opts);row.push({k,a:wrap(s*SLOT),t:-.02-i*.03,seed:Math.random()*9,dead:false})}
   objs.push(...row);
-  if(!starQ&&Math.random()<.55){const free=freeCells(row);const [lane,alt]=pick(free);starQ={lane,alt,n:3+Math.floor(Math.random()*3),gap:0}}}
+  if(!starQ&&Math.random()<.55){const free=freeSlots(row);if(free.length)starQ={a:wrap(pick(free)*SLOT),n:3+Math.floor(Math.random()*3),gap:0}}}
 function spawnPower(){const kinds=['magnet','shield','boost','x2'];let k=kinds[Math.floor(Math.random()*kinds.length)];if(k==='shield'&&power.shield)k='magnet';
-  const near=objs.filter(o=>o.t<.25),free=freeCells(near);if(!free.length)return;const [lane,alt]=pick(free);objs.push({k,lane,alt,t:-.02,seed:0,dead:false})}
+  const near=objs.filter(o=>o.t<.25&&o.k!=='ring'),free=freeSlots(near);if(!free.length)return;objs.push({k,a:wrap(pick(free)*SLOT),t:-.02,seed:0,dead:false})}
 
 /* ---------- update ---------- */
 function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
@@ -314,11 +325,10 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
   for(let i=pops.length-1;i>=0;i--){const p=pops[i];p.life-=dt;p.y-=34*dt;if(p.life<=0)pops.splice(i,1)}
   for(let i=fx.length-1;i>=0;i--){fx[i].t+=dt;if(fx[i].t>fx[i].d)fx.splice(i,1)}
   if(banner){banner.t-=dt;if(banner.t<=0)banner=null}
-  // plane eases to its lane and height; bank follows sideways motion, pitch follows climbing and diving
-  {const tx=laneW(plane.lane)+(sec>=10?Math.sin(T*1.3)*.06:0),ty=altH(plane.alt);const dx=tx-plane.wx,dy=ty-plane.wy;
-    plane.wx+=dx*Math.min(1,dt*11);plane.wy+=dy*Math.min(1,dt*11);
-    plane.bank+=(Math.max(-1,Math.min(1,dx*2.2))-plane.bank)*Math.min(1,dt*9);plane.pitch+=(Math.max(-1,Math.min(1,dy*2.2))-plane.pitch)*Math.min(1,dt*9);
-    const pp=proj(plane.wx,plane.wy,Z_PLANE);plane.sx=pp.x;plane.sy=pp.y}
+  // the tube spins toward where you dragged it; the plane banks with the spin
+  if(state==='play'&&!paused){if(keyL)rotT-=3.2*dt;if(keyR)rotT+=3.2*dt}
+  {const d=rotT-rot;const step=d*Math.min(1,dt*14);rot+=step;rotV=dt>0?step/dt:0;plane.bank+=(Math.max(-1,Math.min(1,rotV*.35))-plane.bank)*Math.min(1,dt*9);
+    const pp=proj(PA,Z_PLANE,PLANE_R);plane.sx=pp.x;plane.sy=pp.y}
   if(state==='crash'){crashT+=dt;if(crashT>1.3)gameOver();return}
   if(state!=='play'||paused)return;
   const sp=speed(),v=.42*sp;
@@ -327,20 +337,27 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
   for(const k of ['magnet','boost','x2','dart'])if(power[k]>0){power[k]-=dt;if(power[k]<=0){power[k]=0;hud()}}
   // spawning
   spawnT-=v*dt;if(spawnT<=0){spawnRow();spawnT=Math.max(.26,.5-sec*.02)+Math.random()*.15}
-  if(starQ){starQ.gap-=v*dt;if(starQ.gap<=0){objs.push({k:'star',lane:starQ.lane,alt:starQ.alt,t:-.02,seed:Math.random()*9,dead:false});starQ.gap=.075;if(--starQ.n<=0)starQ=null}}
+  if(starQ){starQ.gap-=v*dt;if(starQ.gap<=0){objs.push({k:'star',a:starQ.a,t:-.02,seed:Math.random()*9,dead:false});starQ.gap=.075;if(--starQ.n<=0)starQ=null}}
   puT-=dt;if(puT<=0){spawnPower();puT=7+Math.random()*5}
-  // darts
-  if(power.dart>0){dartT-=dt;if(dartT<=0){dartT=.2;darts.push({lane:plane.lane,alt:plane.alt,t:PLANE_T-.04});sfx.dart()}}
+  // darts fly straight ahead from the plane
+  if(power.dart>0){dartT-=dt;if(dartT<=0){dartT=.2;darts.push({a:planeWorld(),t:PLANE_T-.04});sfx.dart()}}
   for(let i=darts.length-1;i>=0;i--){const d=darts[i];d.t-=1.1*dt;if(d.t<0){darts.splice(i,1);continue}
     for(const o of objs){if(o.dead||!OBST.includes(o.k))continue;
-      if(covers(o,d.lane,d.alt)&&o.t<d.t+.02&&o.t>d.t-.06){popObj(o,25);darts.splice(i,1);break}}}
-  // objects
+      if(hits(o,d.a)&&o.t<d.t+.02&&o.t>d.t-.06){popObj(o,25);darts.splice(i,1);break}}}
+  // things on the wall
+  const pw=planeWorld();
   for(const o of objs){if(o.dead)continue;o.t+=v*dt;
-    if(o.k==='star'&&power.magnet>0&&o.t>PLANE_T-.42&&o.t<PLANE_T+.02&&(o.lane!==plane.lane||o.alt!==plane.alt)){o.pull={from:o.lane,fromAlt:o.alt,a:0};o.lane=plane.lane;o.alt=plane.alt}
+    if(o.k==='star'&&power.magnet>0&&o.t>PLANE_T-.42&&o.t<PLANE_T+.02&&Math.abs(adiff(o.a,pw))>.05){if(!o.pull)o.pull={from:o.a,a:0};o.a=pw}
     if(o.pull){o.pull.a=Math.min(1,o.pull.a+dt*5)}
-    if(Math.abs(o.t-PLANE_T)<.045&&covers(o,plane.lane,plane.alt)){
+    if(o.k==='ring'){if(!o.passed&&o.t>=PLANE_T-.02){o.passed=true;
+        if(!hits(o,pw)){award(50,plane.sx,plane.sy-50,C.green);sfx.cheer();fx.push({k:'through',t:0,d:.5})}
+        else if(power.boost>0){popObj(o,50)}
+        else if(power.shield){power.shield=false;popObj(o,0);sfx.shieldHit();shake=RM?0:8;banner={text:'Shield gone!',sub:'',t:1};fx.push({k:'ring',t:0,d:.5})}
+        else crash(o)}
+      continue}
+    if(Math.abs(o.t-PLANE_T)<.045&&hits(o,pw)){
       if(o.k==='star'){o.dead=true;stars++;starsTotal++;award(10,plane.sx,plane.sy-40,C.yellow);burst(plane.sx,plane.sy-20,C.yellow,6,120);
-        if(power.dart<=0){meter++;sfx.star(meter);if(meter>=10){meter=0;power.dart=8;dartT=0;banner={text:'Dart mode!',sub:'Pop everything in your lane',t:1.6};sfx.dartmode()}}else sfx.star(9);hud()}
+        if(power.dart<=0){meter++;sfx.star(meter);if(meter>=10){meter=0;power.dart=8;dartT=0;banner={text:'Dart mode!',sub:'Pop everything straight ahead',t:1.6};sfx.dartmode()}}else sfx.star(9);hud()}
       else if(o.k==='magnet'){o.dead=true;power.magnet=8;sfx.power();banner={text:'Magnet!',sub:'Stars fly to you',t:1.3};hud()}
       else if(o.k==='shield'){o.dead=true;power.shield=true;sfx.power();banner={text:'Shield!',sub:'One free bump',t:1.3};hud()}
       else if(o.k==='boost'){o.dead=true;power.boost=3;sfx.boost();banner={text:'Boost!',sub:'Smash through everything',t:1.3};hud()}
@@ -350,9 +367,10 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
       else crash(o)}}
   objs=objs.filter(o=>!o.dead&&o.t<PLANE_T+.12);
 }
-function popObj(o,pts){o.dead=true;const pp=proj(laneW(o.lane)+(WIDE[o.k]?.5:0),altH(o.alt),zAt(o.t)),x=pp.x,y=pp.y;burst(x,y,o.k==='blot'?C.purple:o.k==='eraser'?C.pink:o.k==='pencil'?C.yellow:GRAPH,12,170);sfx.pop();if(pts)award(pts,x,y-20);
+function popObj(o,pts){o.dead=true;const pp=o.k==='ring'?{x:plane.sx,y:plane.sy-30}:proj(screenA(o),zAt(o.t)),x=pp.x,y=pp.y;
+  burst(x,y,o.k==='ring'?o.col:o.k==='blot'?C.purple:o.k==='eraser'?C.pink:o.k==='pencil'?C.yellow:GRAPH,o.k==='ring'?24:12,170);sfx.pop();if(pts)award(pts,x,y-20);
   if(pts&&Math.random()<.25)sfx.cheer()}
-function crash(o){state='crash';crashT=0;sfx.crash();shake=RM?0:14;burst(plane.sx,plane.sy,GRAPH,22,220);burst(plane.sx,plane.sy,C.blue,10,180);o.dead=true}
+function crash(o){state='crash';crashT=0;sfx.crash();shake=RM?0:14;burst(plane.sx,plane.sy,GRAPH,22,220);burst(plane.sx,plane.sy,C.blue,10,180);if(o.k!=='ring')o.dead=true}
 function gameOver(){state='over';const isBest=score>startBest;bank+=starsTotal;store.set('bank',bank);const unlocked=PLANES.filter(p=>p.cost>bank-starsTotal&&p.cost<=bank);
   showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Crumpled!</h2><div class="big">${score}</div>
   <p>You flew ${Math.floor(dist)} m to sector ${sec}${sec<=10?': '+sector().n:''} and collected ${starsTotal} star${starsTotal===1?'':'s'}. Best score: ${best}.</p>${unlocked.length?`<p class="unlock">New plane unlocked: <b>${unlocked.map(p=>p.n).join(', ')}</b>!</p>`:''}<button class="btn" id="againBtn" type="button">Fly again</button>`);
@@ -361,108 +379,110 @@ function gameOver(){state='over';const isBest=score>startBest;bank+=starsTotal;s
 function setPaused(p){if(state!=='play'&&p)return;paused=p;$('pauseBtn').textContent=p?'Resume':'Pause'}
 
 /* ---------- drawing ---------- */
-/* The tunnel: floor, ceiling and both walls drawn as paper, with the sector's rulings running into the distance,
-   rings that slide toward you, the plane's own lane and height picked out in blue, and doodles on the walls. */
+/* The tube: black construction paper, twelve pencil lines running into the distance that spin with the tube, depth
+   rings sliding toward you, the sector's doodles on the wall, and the plane's own spot picked out in blue. */
 const RING_GAP=3;
-function line3(x,a,b){const p=proj(...a),q=proj(...b);x.moveTo(p.x,p.y);x.lineTo(q.x,q.y)}
-function quad3(x,pts){x.beginPath();pts.forEach((p,i)=>{const q=proj(...p);i?x.lineTo(q.x,q.y):x.moveTo(q.x,q.y)});x.closePath()}
-function drawPaper(x){const S=sector(),r=S.rule,zn=Z_END,zf=Z_FAR,cur=plane.alt,cl=plane.lane;x.save();
-  // black construction paper: the floor a shade lighter than the walls, the ceiling darkest; sector 9-10 go indigo and purple-black
-  const floorC=r==='dark'?'#232338':r==='vortex'?'#2a2033':'#303034',wallC=r==='dark'?'#1c1c2e':r==='vortex'?'#221a2a':'#262629',ceilC=r==='dark'?'#16162a':r==='vortex'?'#1c1522':'#1e1e21';
-  x.fillStyle=floorC;quad3(x,[[-TW,-TH,zn],[TW,-TH,zn],[TW,-TH,zf],[-TW,-TH,zf]]);x.fill();
-  x.fillStyle=ceilC;quad3(x,[[-TW,TH,zn],[TW,TH,zn],[TW,TH,zf],[-TW,TH,zf]]);x.fill();
-  x.fillStyle=wallC;quad3(x,[[-TW,-TH,zn],[-TW,TH,zn],[-TW,TH,zf],[-TW,-TH,zf]]);x.fill();quad3(x,[[TW,-TH,zn],[TW,TH,zn],[TW,TH,zf],[TW,-TH,zf]]);x.fill();
-  const fe=proj(TW,TH,zf);x.fillStyle='rgba(0,0,0,.35)';x.fillRect(VX-(fe.x-VX),fe.y,(fe.x-VX)*2,(VY-fe.y)*2);
-  // sector rulings on the floor and ceiling, moving with the plane
-  x.lineWidth=1;x.strokeStyle='rgba(140,190,255,.35)';
-  if(r==='lined'||r==='music'||r==='grid'){x.beginPath();for(let i=0;i<16;i++){const z=zn+((i*2.2-(dist*.6)%2.2+2.2)%(zf-zn));line3(x,[-TW,-TH,z],[TW,-TH,z]);line3(x,[-TW,TH,z],[TW,TH,z])}x.stroke()}
-  if(r==='grid'){x.beginPath();for(let i=-5;i<=5;i++){line3(x,[i*.3,-TH,zn],[i*.3,-TH,zf]);line3(x,[i*.3,TH,zn],[i*.3,TH,zf])}x.stroke()}
-  if(r==='lined'){x.strokeStyle='rgba(255,120,130,.5)';x.lineWidth=2;x.beginPath();line3(x,[-TW+.35,-TH,zn],[-TW+.35,-TH,zf]);x.stroke()}
-  if(r==='dots'||r==='dark'){x.fillStyle=r==='dark'?'rgba(255,255,255,.5)':'rgba(140,190,255,.5)';for(let i=0;i<14;i++){const z=zn+((i*2.5-(dist*.6)%2.5+2.5)%(zf-zn));for(let k=-4;k<=4;k++){for(const y of [-TH,TH]){const p=proj(k*.35,y,z);x.beginPath();x.arc(p.x,p.y,Math.min(3,1+2*p.s),0,6.28);x.fill()}}}}
-  if(r==='vortex'){x.strokeStyle='rgba(190,150,255,.45)';x.lineWidth=2;x.beginPath();for(let a=0;a<30;a+=.15){const rr=a*2.2+((dist*3)%6);x.lineTo(VX+Math.cos(a-T)*rr,VY+Math.sin(a-T)*rr)}x.stroke()}
-  // tunnel edges
-  x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=2.2;x.beginPath();for(const [sx,sy] of [[-TW,-TH],[TW,-TH],[-TW,TH],[TW,TH]])line3(x,[sx,sy,zn],[sx,sy,zf]);x.stroke();
-  // the 3x3 grid: lane lines on floor and ceiling, height rails on the walls
+/* something lined up with the plane within the next stretch (0 = none, else how close, 0..1) */
+function threat(){let m=0;const pw=planeWorld();for(const o of objs){if(o.dead||!(OBST.includes(o.k)||o.k==='ring')||!hits(o,pw))continue;const d=PLANE_T-o.t;if(d>0&&d<.3)m=Math.max(m,1-d/.3)}return power.boost>0?0:m}
+function drawPaper(x){const S=sector(),r=S.rule,zn=Z_END,zf=Z_FAR;x.save();
+  const wallC=r==='dark'?'#1e1e32':r==='vortex'?'#241c2c':'#272729';x.fillStyle=wallC;x.fillRect(0,0,W,H);
+  // a little lighter toward the bottom, where the plane flies
+  const g=x.createRadialGradient(VX,VY,rAt(zf),VX,VY,rAt(zn));g.addColorStop(0,'rgba(0,0,0,.45)');g.addColorStop(.5,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(255,255,255,.05)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  // sector rulings: depth circles coloured by page, extra lines for graph paper, dots for the map and night pages
+  x.lineWidth=1;
+  if(r==='lined'||r==='music'||r==='grid'){x.strokeStyle='rgba(140,190,255,.3)';x.beginPath();for(let i=0;i<16;i++){const z=zn+((i*2.2-(dist*.6)%2.2+2.2)%(zf-zn));x.moveTo(VX+rAt(z),VY);x.arc(VX,VY,rAt(z),0,TAU)}x.stroke()}
+  if(r==='lined'){x.strokeStyle='rgba(255,120,130,.5)';x.lineWidth=2;const a=wrap(SLOT*2.5+rot),p=proj(a,zf),q=proj(a,zn);x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke();x.lineWidth=1}
+  if(r==='dots'||r==='dark'){x.fillStyle=r==='dark'?'rgba(255,255,255,.5)':'rgba(140,190,255,.5)';for(let i=0;i<14;i++){const z=zn+((i*2.5-(dist*.6)%2.5+2.5)%(zf-zn));for(let k=0;k<SLOTS;k++){const p=proj(wrap((k+.5)*SLOT+rot),z);x.beginPath();x.arc(p.x,p.y,Math.min(3,1+2*p.s),0,TAU);x.fill()}}}
+  if(r==='vortex'){x.strokeStyle='rgba(190,150,255,.45)';x.lineWidth=2;x.beginPath();for(let a=0;a<40;a+=.15){const rr=a*2.2+((dist*3)%6);x.lineTo(VX+Math.cos(a-T+rot)*rr,VY+Math.sin(a-T+rot)*rr)}x.stroke();x.lineWidth=1}
+  // the twelve pencil lines along the tube (they turn with it)
   x.strokeStyle='rgba(255,255,255,.4)';x.lineWidth=1.4;x.setLineDash([8,6]);x.beginPath();
-  for(const k of [-.5,.5]){line3(x,[k,-TH,zn],[k,-TH,zf]);line3(x,[k,TH,zn],[k,TH,zf]);line3(x,[-TW,k,zn],[-TW,k,zf]);line3(x,[TW,k,zn],[TW,k,zf])}x.stroke();x.setLineDash([]);
-  // blue: the rails at the plane's height and the lane line of its lane
-  x.strokeStyle='#5fb3ff';x.lineWidth=3;x.beginPath();const hy=altH(cur),lx=laneW(cl);
-  line3(x,[-TW,hy,zn],[-TW,hy,zf]);line3(x,[TW,hy,zn],[TW,hy,zf]);line3(x,[lx,-TH,zn],[lx,-TH,zf]);line3(x,[lx,TH,zn],[lx,TH,zf]);x.stroke();
-  // rings sliding toward you
+  for(let k=0;k<SLOTS;k++){const a=wrap((k+.5)*SLOT+rot),p=proj(a,zf),q=proj(a,zn);x.moveTo(p.x,p.y);x.lineTo(q.x,q.y)}x.stroke();x.setLineDash([]);
+  // depth rings sliding toward you
   for(let i=0;i<12;i++){const z=zn+((i*RING_GAP-(dist*.6)%RING_GAP+RING_GAP)%(zf-zn));const near=Math.max(0,Math.min(1,(zf-z)/(zf-zn)));
-    x.strokeStyle=`rgba(255,255,255,${.1+near*.3})`;x.lineWidth=1+near*1.2;quad3(x,[[-TW,-TH,z],[TW,-TH,z],[TW,TH,z],[-TW,TH,z]]);x.stroke()}
-  // doodles on the walls
-  x.textBaseline='middle';
-  for(let i=0;i<10;i++){const z=zn+.5+((i*3.4-(dist*.6)%3.4+3.4)%(zf-zn-1));const side=i%2?1:-1,yy=((i*37)%3-1)*.9;const p=proj(side*TW,yy,z);const d=S.doodles[(i+sec*3)%S.doodles.length];
-    x.save();x.translate(p.x,p.y);x.globalAlpha=Math.min(.6,.1+p.s*.5);x.font=`${Math.max(6,Math.round(26*p.s))}px "Patrick Hand",cursive`;x.textAlign=side<0?'left':'right';x.fillStyle='#fff';x.fillText(d,side<0?6:-6,0);x.restore()}
+    x.strokeStyle=`rgba(255,255,255,${.1+near*.3})`;x.lineWidth=1+near*1.2;x.beginPath();x.arc(VX,VY,rAt(z),0,TAU);x.stroke()}
+  // the far end
+  x.fillStyle='rgba(0,0,0,.4)';x.beginPath();x.arc(VX,VY,rAt(zf),0,TAU);x.fill();x.strokeStyle='rgba(255,255,255,.7)';x.lineWidth=1.5;x.stroke();
+  // doodles on the wall, turning with the tube
+  x.textAlign='center';x.textBaseline='middle';
+  for(let i=0;i<10;i++){const z=zn+.5+((i*3.4-(dist*.6)%3.4+3.4)%(zf-zn-1));const a=wrap(((i*5)%SLOTS+.5)*SLOT+rot);const p=proj(a,z,R*1.08);const d=S.doodles[(i+sec*3)%S.doodles.length];
+    x.save();x.translate(p.x,p.y);x.rotate(a+Math.PI/2);x.globalAlpha=Math.min(.6,.1+p.s*.5);x.font=`${Math.max(6,Math.round(26*p.s))}px "Patrick Hand",cursive`;x.fillStyle='#fff';x.fillText(d,0,0);x.restore()}
   x.globalAlpha=1;
-  // the plane's cell at its depth: a dashed blue box, red when something is headed into it
-  {const z=Z_PLANE,x0=laneW(cl)-.5,x1=laneW(cl)+.5,y0=altH(cur)-.5,y1=altH(cur)+.5;const w=threat();x.strokeStyle=w?'#ff5a5a':'#5fb3ff';x.lineWidth=w?3:2;x.setLineDash([10,6]);x.lineDashOffset=-T*40;
-    quad3(x,[[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z]]);x.stroke();x.setLineDash([])}
+  // blue: the plane's line down the tube and its spot on the wall at its depth (red when something is lined up with it)
+  const w=threat();x.strokeStyle=w?'#ff5a5a':'#5fb3ff';x.lineWidth=3;x.beginPath();{const p=proj(PA,zf),q=proj(PA,zn);x.moveTo(p.x,p.y);x.lineTo(q.x,q.y)}x.stroke();
+  x.lineWidth=w?4:2.5;x.setLineDash([10,6]);x.lineDashOffset=-T*40;x.beginPath();x.arc(VX,VY,rAt(Z_PLANE),PA-SLOT*.55,PA+SLOT*.55);x.stroke();x.setLineDash([]);
   // page name in the corner
   x.save();x.translate(14,22);x.rotate(-.04);x.font='15px "Patrick Hand",cursive';x.textAlign='left';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,.6)';const nm=S.n+(sec>10?' (endless)':'');x.strokeText(nm,0,0);x.fillStyle='#ddd';x.fillText(nm,0,0);x.restore();
   x.font='14px "Patrick Hand",cursive';x.textAlign='right';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,.6)';x.strokeText('p. '+sec,W-14,22);x.fillStyle='#ddd';x.fillText('p. '+sec,W-14,22);
   x.restore()}
-/* an obstacle in the plane's own cell within the next stretch (0 = none, else how close, 0..1) */
-function threat(){let m=0;for(const o of objs){if(o.dead||!OBST.includes(o.k)||!covers(o,plane.lane,plane.alt))continue;const d=PLANE_T-o.t;if(d>0&&d<.3)m=Math.max(m,1-d/.3)}return power.boost>0?0:m}
-function drawObj(x,o){const z=zAt(o.t);let wx=laneW(o.lane)+(WIDE[o.k]?.5:0),wy=altH(o.alt);
-  if(o.pull){const fx=laneW(o.pull.from)+(WIDE[o.k]?.5:0),fy=altH(o.pull.fromAlt);wx=fx+(wx-fx)*o.pull.a;wy=fy+(wy-fy)*o.pull.a}
-  const p=proj(wx,wy,z),fade=o.t>PLANE_T+.03?Math.max(0,1-(o.t-PLANE_T-.03)/.08):1;if(fade<=0)return;
-  const sh=proj(wx,-TH,z);x.save();x.globalAlpha=fade;x.fillStyle='rgba(255,255,255,.14)';x.beginPath();x.ellipse(sh.x,sh.y,(WIDE[o.k]?70:24)*sh.s,7*sh.s,0,0,6.28);x.fill();
-  x.translate(p.x,p.y);x.scale(p.s,p.s);
+function drawRing(x,o){const z=zAt(o.t),ro=rAt(z)*1.02,ri=rAt(z)*.74,fade=o.t>PLANE_T+.02?Math.max(0,1-(o.t-PLANE_T-.02)/.1):1;if(fade<=0)return;
+  const a0=wrap(screenA(o)+o.gap),a1=wrap(screenA(o)-o.gap);      // the ring runs from one edge of the gap round to the other
+  x.save();x.globalAlpha=fade;x.beginPath();x.arc(VX,VY,ro,a0,a1);x.arc(VX,VY,ri,a1,a0,true);x.closePath();
+  x.fillStyle=o.col;x.fill();x.lineWidth=Math.max(1.5,3*Math.min(1,rAt(z)/150));x.strokeStyle=INK;x.stroke();
+  // pencil hatching across the ring
+  x.save();x.clip();x.strokeStyle='rgba(0,0,0,.28)';x.lineWidth=1;x.beginPath();for(let k=0;k<36;k++){const a=k/36*TAU+o.seed;x.moveTo(VX+Math.cos(a)*ri,VY+Math.sin(a)*ri);x.lineTo(VX+Math.cos(a+.12)*ro,VY+Math.sin(a+.12)*ro)}x.stroke();x.restore();
+  // white chalk marks at the gap edges
+  x.strokeStyle='#fff';x.lineWidth=2.5;x.beginPath();for(const a of [a0,a1]){x.moveTo(VX+Math.cos(a)*ri,VY+Math.sin(a)*ri);x.lineTo(VX+Math.cos(a)*ro,VY+Math.sin(a)*ro)}x.stroke();
+  x.restore()}
+function drawObj(x,o){if(o.k==='ring')return drawRing(x,o);const z=zAt(o.t);let a=screenA(o);
+  if(o.pull){const fa=wrap(o.pull.from+rot);a=wrap(fa+adiff(a,fa)*o.pull.a)}
+  const p=proj(a,z),fade=o.t>PLANE_T+.03?Math.max(0,1-(o.t-PLANE_T-.03)/.08):1;if(fade<=0)return;
+  x.save();x.globalAlpha=fade;x.translate(p.x,p.y);x.scale(p.s,p.s);
+  // things sit on the wall: a faint chalk smudge under each one
+  x.fillStyle='rgba(255,255,255,.1)';x.beginPath();x.ellipse(0,6,(WIDE[o.k]?64:22),(WIDE[o.k]?16:10),a+Math.PI/2,0,TAU);x.fill();
+  if(WIDE[o.k])x.rotate(a+Math.PI/2);    // rulers and blots lie along the wall
   const im=o.k==='ball'?ballImg(o.seed):img(o.k);if(im){if(o.k==='star')x.rotate(Math.sin(T*3+o.seed)*.2);
     if(o.k==='blot'){x.save();x.shadowColor='rgba(255,255,255,.9)';x.shadowBlur=14;drawImg(x,im,ITEM_W[o.k]);x.restore()}else drawImg(x,im,ITEM_W[o.k])}
   else switch(o.k){case 'ball':DRAW.ball(x,o.seed);break;case 'eraser':DRAW.eraser(x);break;case 'pencil':DRAW.pencil(x);break;case 'ruler':DRAW.ruler(x);break;
     case 'blob':DRAW.blob(x,o.seed);break;case 'blot':DRAW.blot(x,o.seed,T*3);break;case 'star':DRAW.star(x,Math.sin(T*3+o.seed)*.25);break;
     case 'magnet':DRAW.magnet(x);break;case 'shield':DRAW.shield(x);break;case 'boost':DRAW.boost(x);break;case 'x2':DRAW.x2(x);break}
-  if(['magnet','shield','boost','x2'].includes(o.k)){x.strokeStyle=C.yellow;x.lineWidth=2;x.setLineDash([4,5]);x.lineDashOffset=-T*30;x.beginPath();x.arc(0,0,36,0,6.28);x.stroke();x.setLineDash([])}
+  if(['magnet','shield','boost','x2'].includes(o.k)){x.strokeStyle=C.yellow;x.lineWidth=2;x.setLineDash([4,5]);x.lineDashOffset=-T*30;x.beginPath();x.arc(0,0,36,0,TAU);x.stroke();x.setLineDash([])}
   x.restore()}
 function drawPlane(x){
   if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.save();x.translate(plane.sx,plane.sy);x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);const bi=img('ball');if(bi)drawImg(x,bi,70);else DRAW.ball(x,2);x.restore();return}
-  const sh=proj(plane.wx,-TH,Z_PLANE);x.save();x.fillStyle='rgba(255,255,255,.16)';x.beginPath();x.ellipse(sh.x,sh.y,30*sh.s,8*sh.s,0,0,6.28);x.fill();x.restore();
   x.save();x.translate(plane.sx,plane.sy);
+  x.fillStyle='rgba(255,255,255,.14)';x.beginPath();x.ellipse(0,26,34,8,0,0,TAU);x.fill();
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.6;x.beginPath();for(const i of [-1,1]){const l=14+sp*10,o=(T*300)%10;x.moveTo(i*46,-4+o);x.lineTo(i*(46+l*.3),-4+o+l)}x.stroke();x.globalAlpha=1;
-  if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,6.28);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
+  if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,TAU);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
   if(power.magnet>0){x.save();x.translate(0,-50);x.scale(.45,.45);x.globalAlpha=.6+Math.sin(T*8)*.3;DRAW.magnet(x);x.restore()}
-  {// three drawings from behind and above: level, climbing (nose up) and diving (nose down); the bank rotates it
-    const pose=plane.pitch>.35?'up':plane.pitch<-.35?'down':'fly';const im=img(planeId+'-'+pose)||img(planeId+'-fly');const th=threat();if(th>.4)x.globalAlpha=.7;
-    if(im){x.save();x.rotate(plane.bank*.5);x.translate(0,-plane.pitch*8);drawImg(x,im,pose==='down'?104:96,-4);
-      if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,6.28);x.fill();x.globalAlpha=1}x.restore()}
-    else DRAW.planeBack(x,plane.bank,plane.pitch,power.boost>0);x.globalAlpha=1}
-  if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,6.28);x.stroke()}
+  {const im=img(planeId+'-fly');const th=threat();if(th>.4)x.globalAlpha=.7;
+    if(im){x.save();x.rotate(plane.bank*.6);drawImg(x,im,96,-4);
+      if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,TAU);x.fill();x.globalAlpha=1}x.restore()}
+    else DRAW.planeBack(x,plane.bank,0,power.boost>0);x.globalAlpha=1}
+  if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,TAU);x.stroke()}
   x.restore()}
 function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);ctx.save();
   if(shake)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
   drawPaper(ctx);
   const sorted=objs.slice().sort((a,b)=>a.t-b.t);for(const o of sorted)drawObj(ctx,o);
-  for(const d of darts){const p=proj(laneW(d.lane),altH(d.alt),zAt(Math.max(0,d.t)));ctx.save();ctx.translate(p.x,p.y);ctx.scale(p.s,p.s);DRAW.dart(ctx);ctx.restore()}
+  for(const d of darts){const p=proj(wrap(d.a+rot),zAt(Math.max(0,d.t)),PLANE_R);ctx.save();ctx.translate(p.x,p.y);ctx.scale(p.s,p.s);DRAW.dart(ctx);ctx.restore()}
   drawPlane(ctx);
-  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2.5));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.28);ctx.fill()}ctx.globalAlpha=1;
+  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life*2.5));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill()}ctx.globalAlpha=1;
   for(const p of pops){ctx.globalAlpha=Math.min(1,p.life*2);txt(ctx,p.s,p.x,p.y,22,undefined,p.color)}ctx.globalAlpha=1;
-  for(const f of fx){if(f.k==='ring'){ctx.strokeStyle=C.blue;ctx.lineWidth=3;ctx.globalAlpha=1-f.t/f.d;ctx.beginPath();ctx.arc(plane.sx,plane.sy,42+f.t*200,0,6.28);ctx.stroke();ctx.globalAlpha=1}
+  for(const f of fx){if(f.k==='ring'){ctx.strokeStyle=C.blue;ctx.lineWidth=3;ctx.globalAlpha=1-f.t/f.d;ctx.beginPath();ctx.arc(plane.sx,plane.sy,42+f.t*200,0,TAU);ctx.stroke();ctx.globalAlpha=1}
+    if(f.k==='through'){ctx.strokeStyle=C.green;ctx.lineWidth=4;ctx.globalAlpha=1-f.t/f.d;ctx.beginPath();ctx.arc(VX,VY,rAt(Z_PLANE)*(1+f.t*.6),0,TAU);ctx.stroke();ctx.globalAlpha=1}
     if(f.k==='page'){ctx.fillStyle='rgba(255,255,255,'+(.35*(1-f.t/f.d))+')';ctx.fillRect(0,0,W,H)}}
   if(banner){const a=Math.min(1,banner.t*2);ctx.save();ctx.globalAlpha=a;ctx.translate(W/2,110);ctx.rotate(-.035);txt(ctx,banner.text,0,0,34);if(banner.sub)txt(ctx,banner.sub,0,34,19,'"Patrick Hand",cursive',GRAPH);ctx.restore()}
   if(state==='play'&&paused){ctx.fillStyle='rgba(246,243,234,.6)';ctx.fillRect(0,0,W,H);txt(ctx,'Paused',W/2,H/2-10,36);txt(ctx,'Tap Resume to keep flying',W/2,H/2+26,18,'"Patrick Hand",cursive',GRAPH)}
-  if(state==='idle'){txt(ctx,'Swipe any way to steer',W/2,H-90,30);txt(ctx,'Dodge the junk, grab the stars',W/2,H-56,18,'"Patrick Hand",cursive',GRAPH)}
+  if(state==='idle'){txt(ctx,'Drag to spin the tube',W/2,H-90,30);txt(ctx,'Dodge the junk, fly through the gaps',W/2,H-56,18,'"Patrick Hand",cursive',GRAPH)}
   ctx.restore()}
 
 /* ---------- loop ---------- */
 let last=0;function frame(ts){const dt=Math.min(.05,(ts-last)/1000||0);last=ts;update(dt);draw();requestAnimationFrame(frame)}
 fit();requestAnimationFrame(frame);
 
-/* ---------- input: swipe or tap the side you want to go; arrows / A D on a keyboard ---------- */
-let pd=null;
-cv.addEventListener('pointerdown',e=>{pd={x:e.clientX,y:e.clientY,moved:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
-cv.addEventListener('pointermove',e=>{if(!pd||pd.moved)return;const dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(Math.abs(dx)>22||Math.abs(dy)>22){pd.moved=true;if(Math.abs(dx)>=Math.abs(dy))setLane(plane.lane+(dx>0?1:-1));else setAlt(plane.alt+(dy<0?1:-1))}});
-const endPtr=e=>{if(!pd)return;if(!pd.moved&&state==='play'&&!paused){const r=cv.getBoundingClientRect();setLane(plane.lane+((e.clientX-r.left)/r.width>.5?1:-1))}pd=null};
+/* ---------- input: drag left or right to spin the tube (or tap a side to nudge it one notch); arrows / A D on a keyboard ---------- */
+let pd=null;const DRAG=120;    // pixels of drag per radian of spin
+cv.addEventListener('pointerdown',e=>{pd={x:e.clientX,lx:e.clientX,moved:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
+cv.addEventListener('pointermove',e=>{if(!pd)return;const dx=e.clientX-pd.lx;pd.lx=e.clientX;if(Math.abs(e.clientX-pd.x)>6)pd.moved=true;if(pd.moved)spin(dx/(DRAG*vs))});
+const endPtr=e=>{if(!pd)return;if(!pd.moved&&state==='play'&&!paused){const r=cv.getBoundingClientRect();spin(((e.clientX-r.left)/r.width>.5?1:-1)*SLOT);sfx.swish()}pd=null};
 cv.addEventListener('pointerup',endPtr);cv.addEventListener('pointercancel',()=>{pd=null});
-addEventListener('keydown',e=>{if(e.repeat)return;const k=e.key;
-  if(k==='ArrowLeft'||k==='a'||k==='A'){setLane(plane.lane-1);e.preventDefault()}
-  else if(k==='ArrowRight'||k==='d'||k==='D'){setLane(plane.lane+1);e.preventDefault()}
-  else if(k==='ArrowUp'||k==='w'||k==='W'){setAlt(plane.alt+1);e.preventDefault()}
-  else if(k==='ArrowDown'||k==='s'||k==='S'){setAlt(plane.alt-1);e.preventDefault()}
+addEventListener('keydown',e=>{const k=e.key;
+  if(k==='ArrowLeft'||k==='a'||k==='A'){keyL=true;e.preventDefault()}
+  else if(k==='ArrowRight'||k==='d'||k==='D'){keyR=true;e.preventDefault()}
+  else if(e.repeat)return;
   else if(k==='p'||k==='P'||k==='Escape'){if(state==='play')setPaused(!paused)}
   else if(k===' '||k==='Enter'){if(state==='idle'||state==='over'){const b=$('card').querySelector('.btn');if(b&&!$('overlay').hidden){b.click();e.preventDefault()}}}});
+addEventListener('keyup',e=>{const k=e.key;if(k==='ArrowLeft'||k==='a'||k==='A')keyL=false;if(k==='ArrowRight'||k==='d'||k==='D')keyR=false});
 
 /* ---------- cards ---------- */
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const b=$('card').querySelector('.btn');if(b)setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},40);
@@ -472,9 +492,9 @@ function pickerHtml(){return `<div class="pick" id="pick">${PLANES.map(p=>{const
   <img src="${ART_DIR}${p.id}-top.webp" alt=""><span>${p.n}</span>${open?'':`<small>${p.cost} &#9733;</small>`}</button>`}).join('')}</div><p class="bankline">Stars collected: <b>${bank}</b></p>`}
 function wirePicker(){$('card').querySelectorAll('.pl:not(.lock)').forEach(b=>b.onclick=()=>{planeId=b.dataset.id;store.set('plane',planeId);sfx.click();$('card').querySelectorAll('.pl').forEach(o=>o.classList.toggle('sel',o===b))})}
 function helpHtml(){const w=(k,n,p)=>`<figure><img class="ic" src="${ART_DIR}${k}.webp" alt=""><figcaption>${n}<br><b>${p}</b></figcaption></figure>`;
-  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down a notebook tunnel. Swipe left and right between three lanes, and up and down between three heights, to dodge the junk and grab gold stars. The blue lines always point at the spot you are in.</p>
-  <div class="who">${w('star','Star','10 pts')}${w('ball','Paper ball','Dodge')}${w('ruler','Ruler','2 lanes wide')}${w('blot','Ink blot','2 lanes wide')}${w('magnet','Magnet','Pulls stars')}${w('shield','Shield','1 free bump')}${w('boost','Boost','Smash through')}${w('x2','Double','2x points')}</div>
-  <p class="keys">Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything in its lane for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: arrows or W A S D to steer, P to pause.</p>`}
+  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down a round paper tube. Drag left or right to spin the tube, so the junk swings out of your way, the stars swing in, and the gap in each paper ring lines up with your plane.</p>
+  <div class="who">${w('star','Star','10 pts')}${w('ball','Paper ball','Dodge')}${w('ruler','Ruler','2 spots wide')}${w('blot','Ink blot','2 spots wide')}${w('magnet','Magnet','Pulls stars')}${w('shield','Shield','1 free bump')}${w('boost','Boost','Smash through')}${w('x2','Double','2x points')}</div>
+  <p class="keys">Spin the gap in a <span class="hl">paper ring</span> under your plane to fly through it for 50 points. Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything straight ahead for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: hold the left or right arrow (or A and D) to spin, P to pause.</p>`}
 function showMenu(){const playing=state==='play';if(playing)setPaused(true);
   showCard(helpHtml()+(playing?'':pickerHtml())+`<button class="btn" id="goBtn" type="button">${playing?'Keep flying':'Play'}</button>`);if(!playing)wirePicker();
   $('goBtn').onclick=()=>{sfx.click();if(playing){hideCard();setPaused(false)}else newGame()}}
@@ -486,7 +506,7 @@ renderSound();hud();
 showCard(helpHtml()+pickerHtml()+(best?`<p>Best score: <b>${best}</b></p>`:'')+`<button class="btn" id="goBtn" type="button">Play</button>`);wirePicker();$('goBtn').onclick=()=>{sfx.click();newGame()};
 
 /* Square cover for the site (used once by a build-time screenshot). */
-window.PPD={ball:ballImg,peek:()=>({objs,lane:plane.lane,alt:plane.alt,pt:PLANE_T,state,sec,power}),go:setLane,up:setAlt,cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
+window.PPD={ball:ballImg,peek:()=>({objs:objs.map(o=>({k:o.k,a:o.a,gap:o.gap,t:o.t,dead:o.dead})),pw:planeWorld(),rot,pt:PLANE_T,state,sec,power,slot:SLOT}),spin:d=>{rotT+=d},cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
   x.strokeStyle='rgba(47,111,181,.3)';x.lineWidth=2;for(let y=60;y<S;y+=40){x.beginPath();x.moveTo(0,y);x.lineTo(S,y);x.stroke()}x.strokeStyle='rgba(196,74,74,.4)';x.beginPath();x.moveTo(70,0);x.lineTo(70,S);x.stroke();
   x.strokeStyle=INK;x.lineWidth=3;x.beginPath();x.moveTo(150,640);x.lineTo(262,160);x.moveTo(490,640);x.lineTo(378,160);x.stroke();
   const items=[['ball',205,235,.6,1],['star',330,225,.6,0],['eraser',430,250,.75,0],['star',322,305,.8,0],['pencil',225,350,1,0],['magnet',428,372,.9,0],['star',318,390,1,0],['ball',195,470,1.15,5]];

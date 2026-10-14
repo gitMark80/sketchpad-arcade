@@ -37,38 +37,38 @@
       "name": "Paper Plane Dash",
       "genre": "Arcade",
       "added": "2026-10-13",
-      "tagline": "Swipe your paper airplane through a 3 by 3 grid of lanes and heights down a notebook tunnel. Dodge the junk, grab the stars, unlock 8 planes.",
-      "meta": "Play Paper Plane Dash free online. Swipe a paper airplane left, right, up and down through three lanes and three heights down the pages of a kid's notebook, dodge crumpled paper, erasers, pencils, rulers and ink blots, collect gold stars to start Dart Mode and grab magnet, shield, boost and x2 power-ups across ten sector pages. Works on phone and computer.",
-      "lead": "A fast dash drawn in pencil, seen from right behind your paper airplane as it flies down a notebook tunnel. Swipe left and right between three lanes and up and down between three heights to dodge crumpled paper balls, erasers, pencil stubs, two-lane rulers and inky blots. The blue lines on the floor, ceiling and walls always point at the spot you're flying in. Grab gold star stickers: every ten fill the meter and start Dart Mode, when your plane fires paper darts that pop everything ahead of it. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, from a lined notebook and graph paper to the science fair, a treasure map and the Ink Vortex, each faster than the last.",
+      "tagline": "Spin a paper tube so your paper airplane dodges the junk, grabs the stars and flies through the ring gaps.",
+      "meta": "Play Paper Plane Dash free online. Drag to spin a round paper tube drawn on black construction paper so your paper airplane dodges crumpled paper, erasers, pencils, rulers and ink blots, flies through the gap in each paper ring, collects gold stars for Dart Mode and grabs magnet, shield, boost and x2 power-ups across ten sector pages. Unlock 8 folded planes. Works on phone and computer.",
+      "lead": "A fast tube-flying dash drawn in pencil on black construction paper. Your paper airplane flies down a round tube on its own, and you drag left or right to spin the whole tube, the way you spin the pencil in Doodle Drop. The junk sits on the inside of the tube: crumpled paper balls in every construction-paper colour, erasers, pencil stubs, two-spot-wide rulers and inky blots. Spin them out of your way, spin the stars in, and when a paper ring comes down the tube, spin its gap under your plane to fly through for 50 points. Every ten stars start Dart Mode, when your plane fires paper darts that pop everything straight ahead. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, each faster than the last, and the stars you collect unlock seven more planes.",
       "facts": [
         "Arcade",
-        "Swipe in any direction",
-        "3 lanes by 3 heights",
+        "Drag to spin",
+        "Paper rings with gaps",
         "8 paper planes to unlock",
         "10 sector pages, then endless",
         "Saves your best score"
       ],
       "how": [
-        "Your paper airplane flies forward on its own and gets faster with every sector page.",
+        "Your paper airplane flies down the tube on its own and gets faster with every sector page. It stays at the bottom of the screen.",
+        "Drag left or right to spin the tube. Everything on the inside of the tube swings round with it, so you move the junk away from your plane instead of moving the plane.",
         "Pick your plane on the start card. The Dart is free, and the stars you collect add up between runs to unlock the Glider, Stunt, Lined Page, Graph Paper, Jumbo, Night Flyer and Scribble planes.",
-        "Swipe left or right to hop between the three lanes, and swipe up or down to climb or dive between the three heights. That's nine spots to fly in.",
-        "Dodge crumpled paper, erasers, pencil stubs and paint blobs. The tunnel is a 3 by 3 grid: the blue lines on the floor, ceiling and walls and the dashed blue box show the spot you're in, and anything coming straight at that box is yours to dodge. Rulers and ink blots are two lanes wide, so get to an open spot early.",
-        "Grab gold stars for 10 points each. Every 10 stars fills the meter and starts Dart Mode: for 8 seconds your plane fires paper darts that pop everything straight ahead of it (same lane, same height) for 25 points each.",
-        "Power-ups: the magnet pulls stars to you, the shield gives you one free bump, the boost smashes through everything for 3 seconds, and x2 doubles your points for 10 seconds.",
-        "Every 600 metres is a new sector page, with a 100 point bonus. After sector 10, the Ink Vortex, it keeps going faster and faster.",
-        "Bump into anything without a shield or boost and your plane crumples. That's the run."
+        "Dodge crumpled paper, erasers, pencil stubs and paint blobs. Rulers and ink blots are two spots wide. The blue line and the dashed blue arc show your spot; it turns red when something is lined up with you.",
+        "Paper rings come down the tube with one gap. Spin the gap under your plane to fly through for 50 points. Hit the ring and your plane crumples.",
+        "Grab gold stars for 10 points each. Every 10 stars fills the meter and starts Dart Mode: for 8 seconds your plane fires paper darts that pop everything straight ahead for 25 points each.",
+        "Power-ups: the magnet pulls stars to you, the shield gives you one free bump, the boost smashes through everything (rings too) for 3 seconds, and x2 doubles your points for 10 seconds.",
+        "Every 600 metres is a new sector page, with a 100 point bonus. After sector 10, the Ink Vortex, it keeps going faster and faster."
       ],
       "controls": [
-        "Phone or tablet: swipe left, right, up or down. A tap on the left or right half of the page also changes lanes.",
-        "Computer: arrow keys or W A S D to change lanes and heights, P or Esc to pause.",
+        "Phone or tablet: drag left or right to spin the tube. A tap on the left or right half of the page nudges it one notch.",
+        "Computer: hold the left or right arrow key (or A and D) to spin, P or Esc to pause.",
         "Pause stops the action, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Look at the far end of the tunnel, not at your plane. Wide rulers and ink blots show up early, and anything lined up with your blue box is headed for you.",
-        "Lines of stars sit in a safe spot. Follow them and you'll usually dodge the junk too.",
-        "Save your shield by not relying on it: it's there for the surprise you didn't see.",
-        "Dart Mode pops things in your lane at your height only, so line up with the busiest row while it lasts.",
-        "A boost makes you invincible, so steer straight into the junk for 25 points a pop.",
+        "Watch the far end of the tube. Rings show up as a coloured circle long before they arrive, so start spinning the gap round early.",
+        "Lines of stars sit in a safe spot, and a ring's stars sit in its gap. Follow them.",
+        "Small spins are faster than big ones. If the gap is on the far side, go the short way round.",
+        "Dart Mode pops things straight ahead only, so line up with the busiest column while it lasts.",
+        "A boost makes you invincible and even smashes rings for 50 points, so spin into the junk on purpose.",
         "Stars count toward new planes even on a short run, so grab every line of them you can."
       ]
     },
