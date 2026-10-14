@@ -388,6 +388,56 @@ between("function drawMini(){", "/* ---------- input ---------- */", r"""functio
 # ---------------------------------------------------------------- aria / tests
 rep("jellies:J.map(j=>", "jellies:J.map(j=>")  # untouched; keeps the test hook shape
 
+# ---------------------------------------------------------------- Mark's art (src/assets/pencil-patrol/); the code drawings stay as fallbacks
+rep("const KEY='spa-pencil-patrol-';", """const KEY='spa-pencil-patrol-';
+const ART_DIR='../assets/pencil-patrol/';
+const IMG={};function img(name){if(!IMG[name]){const im=new Image();im.src=ART_DIR+name+'.webp';IMG[name]=im}const im=IMG[name];return im.complete&&im.naturalWidth?im:null}
+/* draws an image centred at (cx,cy) at a given width (height follows the picture) */
+function drawImg(g,im,cx,cy,w,dy=0){const h=w*im.naturalHeight/im.naturalWidth;g.drawImage(im,cx-w/2,cy-h/2+dy,w,h)}
+['stubby','stubby_run','stubby_dizzy','eraser_pink','eraser_purple','eraser_green','eraser_orange','eraser_scared','eraser_bonked','star','apple','glue','crayon','pencil_case','life'].forEach(img);""")
+# Stubby
+rep("""  g.scale(face,1);g.lineJoin='round';g.lineCap='round';
+  const ol=Math.max(1.3,r*.1),bh=r*.62,bw=r*1.1,x0=-r*.75; // body: from x0 to x0+bw, tip beyond""",
+    """  g.scale(face,1);g.lineJoin='round';g.lineCap='round';
+  {const im=img(o.dizzy?'stubby_dizzy':(!o.still&&Math.floor(ph*1.2)%2?'stubby_run':'stubby'));
+    if(im){drawImg(g,im,0,o.dizzy?-r*.15:0,r*2.7);g.restore();return}}
+  const ol=Math.max(1.3,r*.1),bh=r*.62,bw=r*1.1,x0=-r*.75; // body: from x0 to x0+bw, tip beyond""")
+# erasers
+rep("""  g.translate(0,bob-r*.1);g.scale(1+wob,1-wob);if(home)g.scale(.82,.82);g.rotate(Math.sin(ph*.7)*.08);
+  // crumbs below""",
+    """  g.translate(0,bob-r*.1);g.scale(1+wob,1-wob);if(home)g.scale(.82,.82);g.rotate(Math.sin(ph*.7)*.08);
+  {const im=img(home?'eraser_bonked':fr?'eraser_scared':['eraser_pink','eraser_purple','eraser_green','eraser_orange'][j&&j.i!=null?j.i:0]);
+    if(im){if(lx<-.05)g.scale(-1,1);if(fr&&flash)g.globalAlpha*=.55;drawImg(g,im,0,0,r*2.5);g.restore();g.globalAlpha=1;return}}
+  // crumbs below""")
+rep("J=JDEF.map((d,i)=>({i,name:d.name,col:d.col,wash:d.wash,corner:d.corner,", "J=JDEF.map((d,i)=>({i,name:d.name,col:d.col,wash:d.wash,corner:d.corner,")
+# gold star
+rep("""  g.save();g.translate(x,y);g.rotate(Math.sin(ph)*.15);const s=1+Math.sin(ph*2)*.08;g.scale(s,s);
+  g.strokeStyle=C.yellow;g.lineWidth=1;g.globalAlpha=.5;""",
+    """  g.save();g.translate(x,y);g.rotate(Math.sin(ph)*.15);const s=1+Math.sin(ph*2)*.08;g.scale(s,s);
+  {const im=img('star');if(im){drawImg(g,im,0,0,r*2.9);g.restore();return}}
+  g.strokeStyle=C.yellow;g.lineWidth=1;g.globalAlpha=.5;""")
+# treats
+rep("""  g.fillStyle='rgba(46,46,51,.16)';g.beginPath();g.ellipse(0,r*.95,r*.7,r*.18,0,0,7);g.fill();
+  const ol=Math.max(1.3,r*.1);
+  if(k==='apple'){""",
+    """  g.fillStyle='rgba(46,46,51,.16)';g.beginPath();g.ellipse(0,r*.95,r*.7,r*.18,0,0,7);g.fill();
+  {const im=img(k);if(im){const h=r*2.1,w=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-w/2,-h/2-r*.05,w,h);g.restore();return}}
+  const ol=Math.max(1.3,r*.1);
+  if(k==='apple'){""")
+# the pencil case picture sits on top of the code-drawn tin
+rep("""  if(wallC)ctx.drawImage(flash?wallFlashC:wallC,ox,oy,mw,mh);
+""", """  if(wallC)ctx.drawImage(flash?wallFlashC:wallC,ox,oy,mw,mh);
+  {const im=img('pencil_case');if(im){const w=cs*4.35,h=w*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,ox+9.5*cs-w/2,oy+9.85*cs-h/2,w,h)}}
+""")
+# lives icon
+rep("""let h='';for(let k=0;k<n;k++)h+=SHELL.replace('<svg','<svg class="'+(k>=lives?'gone':(newLife&&k===lives-1?'new':''))+'"');""",
+    """let h='';for(let k=0;k<n;k++)h+='<img src="'+ART_DIR+'life.webp" alt="" class="'+(k>=lives?'gone':(newLife&&k===lives-1?'new':''))+'">';""")
+rep(""".lives svg{width:22px;height:22px}
+.lives svg.gone{opacity:.18;filter:grayscale(1)}
+.lives svg.new{animation:pop .5s 2}""", """.lives img{width:30px;height:22px;object-fit:contain}
+.lives img.gone{opacity:.18;filter:grayscale(1)}
+.lives img.new{animation:pop .5s 2}""")
+
 # nothing sea-coloured may remain
 for bad in ['#0b4a63','#123a44','#1a8fae','#ff6a4d','#ffb3d1','#fffaf0','#fff','#ffffff','Baloo','Nunito','Shelly the hermit','jellyfish','pearl ']:
     assert bad not in s, f"leftover {bad!r}"

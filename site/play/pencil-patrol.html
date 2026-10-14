@@ -49,9 +49,9 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 @keyframes pop{50%{transform:scale(1.18)}}
 .row2{grid-column:1/-1;display:flex;align-items:center;gap:10px}
 .lives{display:flex;gap:2px;flex:none;min-width:70px}
-.lives svg{width:22px;height:22px}
-.lives svg.gone{opacity:.18;filter:grayscale(1)}
-.lives svg.new{animation:pop .5s 2}
+.lives img{width:30px;height:22px;object-fit:contain}
+.lives img.gone{opacity:.18;filter:grayscale(1)}
+.lives img.new{animation:pop .5s 2}
 .prog{flex:1;position:relative;height:18px;border-radius:9px;background:var(--paper);border:2px solid var(--ink);overflow:hidden}
 .prog i{position:absolute;left:0;top:0;bottom:0;width:0;transition:width .3s;
   background:repeating-linear-gradient(135deg,var(--yellow) 0 2px,var(--yellow-wash) 2px 6px)}
@@ -165,6 +165,11 @@ const cv=$('cv'),ctx=cv.getContext('2d');
 const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 const TOUCH=!!(window.matchMedia&&matchMedia('(pointer: coarse)').matches);
 const KEY='spa-pencil-patrol-';
+const ART_DIR='../assets/pencil-patrol/';
+const IMG={};function img(name){if(!IMG[name]){const im=new Image();im.src=ART_DIR+name+'.webp';IMG[name]=im}const im=IMG[name];return im.complete&&im.naturalWidth?im:null}
+/* draws an image centred at (cx,cy) at a given width (height follows the picture) */
+function drawImg(g,im,cx,cy,w,dy=0){const h=w*im.naturalHeight/im.naturalWidth;g.drawImage(im,cx-w/2,cy-h/2+dy,w,h)}
+['stubby','stubby_run','stubby_dizzy','eraser_pink','eraser_purple','eraser_green','eraser_orange','eraser_scared','eraser_bonked','star','apple','glue','crayon','pencil_case','life'].forEach(img);
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const C={yellow:'#e0b020',yellowW:'#f6e7a8',orange:'#e8742a',orangeW:'#f5cfae',blue:'#3a7fd0',blueW:'#d4e3f5',green:'#5fae72',greenW:'#dcefdf',purple:'#7a4fb0',purpleW:'#e6daf2',pink:'#e06aa0',pinkW:'#f6d6e5',red:'#d8473c',redW:'#f3c9c4',teal:'#3d9aa8',tealW:'#d2ecef',brown:'#a06a3a',brownW:'#e8d2bd'};
 function sget(k,d){try{const v=localStorage.getItem(KEY+k);return v==null?d:v}catch(e){return d}}
@@ -517,6 +522,8 @@ function drawShelly(g,x,y,r,face,lx,ly,ph,o){
   g.fillStyle='rgba(46,46,51,.18)';g.beginPath();g.ellipse(0,r*.78,r*.95,r*.26,0,0,7);g.fill();
   const bob=o.still?0:Math.abs(Math.sin(ph))*r*.08;g.translate(0,-bob);
   g.scale(face,1);g.lineJoin='round';g.lineCap='round';
+  {const im=img(o.dizzy?'stubby_dizzy':(!o.still&&Math.floor(ph*1.2)%2?'stubby_run':'stubby'));
+    if(im){drawImg(g,im,0,o.dizzy?-r*.15:0,r*2.7);g.restore();return}}
   const ol=Math.max(1.3,r*.1),bh=r*.62,bw=r*1.1,x0=-r*.75; // body: from x0 to x0+bw, tip beyond
   // little legs
   g.strokeStyle=INK;g.lineWidth=Math.max(1.2,r*.1);g.beginPath();
@@ -554,6 +561,8 @@ function drawJelly(g,x,y,r,col,lx,ly,ph,o){
   if(!o.noShadow){g.fillStyle='rgba(46,46,51,.16)';g.beginPath();g.ellipse(0,r*1.02,r*.8,r*.2,0,0,7);g.fill()}
   const wob=Math.sin(ph)*(fr?.1:.05),bob=Math.sin(ph*.8)*r*.08;
   g.translate(0,bob-r*.1);g.scale(1+wob,1-wob);if(home)g.scale(.82,.82);g.rotate(Math.sin(ph*.7)*.08);
+  {const im=img(home?'eraser_bonked':fr?'eraser_scared':['eraser_pink','eraser_purple','eraser_green','eraser_orange'][j&&j.i!=null?j.i:0]);
+    if(im){if(lx<-.05)g.scale(-1,1);if(fr&&flash)g.globalAlpha*=.55;drawImg(g,im,0,0,r*2.5);g.restore();g.globalAlpha=1;return}}
   // crumbs below
   g.fillStyle=line;g.globalAlpha*= .8;for(let k=0;k<4;k++){const cx=(k-1.5)*r*.45+Math.sin(ph*1.6+k)*r*.12,cy=r*.85+Math.abs(Math.sin(ph+k*1.3))*r*.25;g.beginPath();g.ellipse(cx,cy,r*.1,r*.07,k,0,7);g.fill()}
   g.globalAlpha=home?.75:1;
@@ -576,6 +585,7 @@ function drawJelly(g,x,y,r,col,lx,ly,ph,o){
 /* a gold star sticker */
 function drawStarfish(g,x,y,r,ph){
   g.save();g.translate(x,y);g.rotate(Math.sin(ph)*.15);const s=1+Math.sin(ph*2)*.08;g.scale(s,s);
+  {const im=img('star');if(im){drawImg(g,im,0,0,r*2.9);g.restore();return}}
   g.strokeStyle=C.yellow;g.lineWidth=1;g.globalAlpha=.5;for(let k=0;k<8;k++){const a=k*Math.PI/4+ph*.3;g.beginPath();g.moveTo(Math.cos(a)*r*1.25,Math.sin(a)*r*1.25);g.lineTo(Math.cos(a)*r*1.6,Math.sin(a)*r*1.6);g.stroke()}g.globalAlpha=1;
   const st=c=>starPath(c,r,.5);
   hatch(g,st,C.yellow,C.yellowW,3,-.8);outline(g,st,Math.max(1.3,r*.12));
@@ -587,6 +597,7 @@ function drawStarfish(g,x,y,r,ph){
 function drawTreat(g,k,x,y,r,ph){
   g.save();g.translate(x,y+Math.sin(ph)*r*.1);g.lineJoin='round';g.lineCap='round';
   g.fillStyle='rgba(46,46,51,.16)';g.beginPath();g.ellipse(0,r*.95,r*.7,r*.18,0,0,7);g.fill();
+  {const im=img(k);if(im){const h=r*2.1,w=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-w/2,-h/2-r*.05,w,h);g.restore();return}}
   const ol=Math.max(1.3,r*.1);
   if(k==='apple'){
     const ap=c=>{c.moveTo(0,-r*.45);c.bezierCurveTo(-r*.3,-r*.95,-r*1.05,-r*.55,-r*.85,r*.1);c.bezierCurveTo(-r*.7,r*.7,-r*.25,r*.95,0,r*.75);c.bezierCurveTo(r*.25,r*.95,r*.7,r*.7,r*.85,r*.1);c.bezierCurveTo(r*1.05,-r*.55,r*.3,-r*.95,0,-r*.45);c.closePath()};
@@ -622,6 +633,7 @@ function draw(){
   // walls
   let flash=false;if(state==='clear'){const u=T-clrT;flash=u<1.8&&Math.floor(u*5)%2===0}
   if(wallC)ctx.drawImage(flash?wallFlashC:wallC,ox,oy,mw,mh);
+  {const im=img('pencil_case');if(im){const w=cs*4.35,h=w*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,ox+9.5*cs-w/2,oy+9.85*cs-h/2,w,h)}}
   // dots and gold stars
   const tx=(x)=>ox+(x+.5)*cs,ty=(y)=>oy+(y+.5)*cs;
   const ps=pearlSpr?pearlSpr.width/dpr:cs;
@@ -673,7 +685,7 @@ let shownScore=-1,shownLives=-1;
 function hud(bump,newLife){
   $('lvlEl').textContent=level;$('scoreEl').textContent=score;$('bestEl').textContent=best;
   if(bump&&shownScore!==score){const el=$('scoreEl');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}shownScore=score;
-  if(shownLives!==lives||newLife){const n=Math.max(3,Math.min(5,lives));let h='';for(let k=0;k<n;k++)h+=SHELL.replace('<svg','<svg class="'+(k>=lives?'gone':(newLife&&k===lives-1?'new':''))+'"');$('lives').innerHTML=h;shownLives=lives;
+  if(shownLives!==lives||newLife){const n=Math.max(3,Math.min(5,lives));let h='';for(let k=0;k<n;k++)h+='<img src="'+ART_DIR+'life.webp" alt="" class="'+(k>=lives?'gone':(newLife&&k===lives-1?'new':''))+'">';$('lives').innerHTML=h;shownLives=lives;
     $('lives').setAttribute('aria-label',lives+(lives===1?' pencil':' pencils')+' left')}
   const got=pearlTotal-pearlsLeft;$('barFill').style.width=(pearlTotal?got/pearlTotal*100:0).toFixed(1)+'%';
   $('progTxt').textContent=pearlsLeft+(pearlsLeft===1?' dot left':' dots left');
