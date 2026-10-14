@@ -98,7 +98,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
 <body>
 <div class="app" id="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Spin a paper tube so your paper airplane dodges the junk, grabs the stars and flies through the ring gaps."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Plane Dash</h1><button class="sa-share" type="button" aria-label="Share Paper Plane Dash" data-share-url="https://www.sketchpadarcade.com/paper-plane-dash" data-share-title="Paper Plane Dash" data-share-text="Play Paper Plane Dash free on Sketchpad Arcade! Fly a paper airplane round the inside of a paper tube: dodge the junk, grab the stars, thread the ring gaps."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="helpBtn" type="button">How to play</button>
   </div>
   <div class="hud">
@@ -107,7 +107,7 @@ body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;backgroun
     <div class="stat end"><small id="meterLbl">Dart mode</small><div class="meter" id="meterEl"><i></i></div></div>
   </div>
   <div class="stagewrap" id="stage">
-    <canvas id="cv" aria-label="A round paper tube. Drag left or right to spin it so your paper airplane dodges the junk and flies through the ring gaps."></canvas>
+    <canvas id="cv" aria-label="A round paper tube. Touch or drag where you want your paper airplane to fly round to, dodging the junk and flying through the ring gaps."></canvas>
   </div>
   <div class="dock">
     <button class="iconbtn" id="pauseBtn" type="button">Pause</button>
@@ -268,9 +268,9 @@ const sector=()=>SECTORS[Math.min(9,sec-1)];
 
 /* ---------- perspective: a round paper tube seen from behind the plane ----------
    The camera looks straight down the tube; its centre is the vanishing point. Everything sits on the inside wall at
-   radius R, at an angle around the tube and a depth z (Z_FAR far away, Z_END just behind the camera). The plane is
-   fixed at the bottom of the screen (screen angle PA); dragging spins the whole tube (rot), like the pencil in
-   Doodle Drop, so the junk, stars and ring gaps swing round to meet it. t is the old 0..1 progress, mapped onto z. */
+   radius R, at an angle around the tube and a depth z (Z_FAR far away, Z_END just behind the camera). The plane flies
+   round the inside of the tube too: touch or drag where you want it and it goes there the short way round, up the
+   sides, over the top and back. t is the old 0..1 progress, mapped onto z. (rot is kept at 0: the tube itself is still.) */
 const VX=W/2,VY=300,F=430,Z_FAR=36,Z_END=1.4,Z_PLANE=3.3,R=1.5,PA=Math.PI/2,SLOTS=12,SLOT=Math.PI*2/SLOTS,TAU=Math.PI*2;
 const zAt=t=>Z_FAR*Math.pow(Z_END/Z_FAR,t);
 const PLANE_T=Math.log(Z_PLANE/Z_FAR)/Math.log(Z_END/Z_FAR);
@@ -281,15 +281,15 @@ const PLANE_R=R*.86;
 
 /* ---------- state ---------- */
 let state='idle',paused=false,T=0,score=0,startBest=0,sec=1,dist=0,secDist=0,stars=0,starsTotal=0,pops=[],parts=[],objs=[],darts=[],fx=[];
-let scoredM=0,rot=0,rotT=0,rotV=0,plane={sx:VX,sy:VY,bank:0},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,rowsSinceRing=0,keyL=false,keyR=false;
+let scoredM=0,rot=0,pA=PA,pT=PA,plane={sx:VX,sy:VY,a:PA},power={magnet:0,shield:false,boost:0,x2:0,dart:0},meter=0,spawnT=0,puT=6,starQ=null,banner=null,shake=0,crashT=0,dartT=0,rowsSinceRing=0,keyL=false,keyR=false;
 const speed=()=>(1+Math.min(1.1,(sec-1)*.11))*(power.boost>0?1.9:1)*(RM?.9:1);
-const planeWorld=()=>wrap(PA-rot);                      // the plane's angle in tube (world) terms
+const planeWorld=()=>wrap(pA);                           // the plane's angle round the tube
 const screenA=o=>wrap(o.a+rot);                          // a thing's angle on screen
 function hud(){$('scoreEl').textContent=score;$('sectorEl').textContent=sec;const m=$('meterEl');
   if(power.dart>0){m.classList.add('full');m.firstElementChild.style.width=(power.dart/8*100)+'%';$('meterLbl').textContent='Dart mode!'}
   else{m.classList.remove('full');m.firstElementChild.style.width=(meter/10*100)+'%';$('meterLbl').textContent=power.magnet>0?'Magnet':power.x2>0?'x2 points':power.boost>0?'Boost!':'Dart mode'}}
 function newGame(){startBest=best;score=0;sec=1;dist=0;scoredM=0;secDist=0;stars=0;starsTotal=0;pops=[];parts=[];objs=[];darts=[];fx=[];meter=0;spawnT=.3;puT=7;starQ=null;shake=0;crashT=0;rowsSinceRing=0;
-  rot=rotT=0;rotV=0;plane={sx:VX,sy:VY,bank:0};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
+  rot=0;pA=pT=PA;plane={sx:VX,sy:VY,a:PA};power={magnet:0,shield:false,boost:0,x2:0,dart:0};hud();hideCard();state='play';setPaused(false);
   banner={text:'Sector 1',sub:SECTORS[0].n,t:2.2};sfx.sector()}
 function award(n,x,y,color=INK){if(power.x2>0)n*=2;score+=n;pops.push({s:'+'+n,x,y,life:1,color});if(score>best){best=score;store.set('best',best)}hud()}
 function burst(x,y,col,n=10,spd=150){if(RM)n=Math.ceil(n/3);for(let i=0;i<n;i++){const a=Math.random()*6.28,v=spd*(.3+Math.random()*.8);
@@ -297,7 +297,7 @@ function burst(x,y,col,n=10,spd=150){if(RM)n=Math.ceil(n/3);for(let i=0;i<n;i++)
 /* does a thing at its angle overlap the plane (or a dart) at angle a? */
 const halfW=o=>WIDE[o.k]?SLOT*.95:SLOT*.55;
 function hits(o,a){if(o.k==='ring')return Math.abs(adiff(o.a,a))>o.gap-SLOT*.42;return Math.abs(adiff(o.a,a))<halfW(o)}
-function spin(d){if(state!=='play'||paused)return;rotT+=d}
+function goTo(a){if(state!=='play'||paused)return;pT=wrap(a)}
 
 /* ---------- spawning: 12 slots around the tube; rings with a gap every few rows ---------- */
 const pick=arr=>arr[Math.floor(Math.random()*arr.length)];
@@ -325,10 +325,10 @@ function update(dt){T+=dt;shake*=.88;if(shake<.2)shake=0;
   for(let i=pops.length-1;i>=0;i--){const p=pops[i];p.life-=dt;p.y-=34*dt;if(p.life<=0)pops.splice(i,1)}
   for(let i=fx.length-1;i>=0;i--){fx[i].t+=dt;if(fx[i].t>fx[i].d)fx.splice(i,1)}
   if(banner){banner.t-=dt;if(banner.t<=0)banner=null}
-  // the tube spins toward where you dragged it; the plane banks with the spin
-  if(state==='play'&&!paused){if(keyL)rotT-=3.2*dt;if(keyR)rotT+=3.2*dt}
-  {const d=rotT-rot;const step=d*Math.min(1,dt*14);rot+=step;rotV=dt>0?step/dt:0;plane.bank+=(Math.max(-1,Math.min(1,rotV*.35))-plane.bank)*Math.min(1,dt*9);
-    const pp=proj(PA,Z_PLANE,PLANE_R);plane.sx=pp.x;plane.sy=pp.y}
+  // the plane flies round the tube toward where you pointed, the short way, hugging the wall
+  if(state==='play'&&!paused){if(keyL)pT+=3.4*dt;if(keyR)pT-=3.4*dt;pT=wrap(pT)}
+  {const d=adiff(pT,pA);pA=wrap(pA+Math.sign(d)*Math.min(Math.abs(d),Math.max(Math.abs(d)*dt*12,0)));plane.a=pA;
+    const pp=proj(pA,Z_PLANE,PLANE_R);plane.sx=pp.x;plane.sy=pp.y}
   if(state==='crash'){crashT+=dt;if(crashT>1.3)gameOver();return}
   if(state!=='play'||paused)return;
   const sp=speed(),v=.42*sp;
@@ -408,8 +408,8 @@ function drawPaper(x){const S=sector(),r=S.rule,zn=Z_END,zf=Z_FAR;x.save();
     x.save();x.translate(p.x,p.y);x.rotate(a+Math.PI/2);x.globalAlpha=Math.min(.6,.1+p.s*.5);x.font=`${Math.max(6,Math.round(26*p.s))}px "Patrick Hand",cursive`;x.fillStyle='#fff';x.fillText(d,0,0);x.restore()}
   x.globalAlpha=1;
   // blue: the plane's line down the tube and its spot on the wall at its depth (red when something is lined up with it)
-  const w=threat();x.strokeStyle=w?'#ff5a5a':'#5fb3ff';x.lineWidth=3;x.beginPath();{const p=proj(PA,zf),q=proj(PA,zn);x.moveTo(p.x,p.y);x.lineTo(q.x,q.y)}x.stroke();
-  x.lineWidth=w?4:2.5;x.setLineDash([10,6]);x.lineDashOffset=-T*40;x.beginPath();x.arc(VX,VY,rAt(Z_PLANE),PA-SLOT*.55,PA+SLOT*.55);x.stroke();x.setLineDash([]);
+  const w=threat();x.strokeStyle=w?'#ff5a5a':'#5fb3ff';x.lineWidth=3;x.beginPath();{const p=proj(pA,zf),q=proj(pA,zn);x.moveTo(p.x,p.y);x.lineTo(q.x,q.y)}x.stroke();
+  x.lineWidth=w?4:2.5;x.setLineDash([10,6]);x.lineDashOffset=-T*40;x.beginPath();x.arc(VX,VY,rAt(Z_PLANE),pA-SLOT*.55,pA+SLOT*.55);x.stroke();x.setLineDash([]);
   // page name in the corner
   x.save();x.translate(14,22);x.rotate(-.04);x.font='15px "Patrick Hand",cursive';x.textAlign='left';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,.6)';const nm=S.n+(sec>10?' (endless)':'');x.strokeText(nm,0,0);x.fillStyle='#ddd';x.fillText(nm,0,0);x.restore();
   x.font='14px "Patrick Hand",cursive';x.textAlign='right';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,.6)';x.strokeText('p. '+sec,W-14,22);x.fillStyle='#ddd';x.fillText('p. '+sec,W-14,22);
@@ -439,15 +439,15 @@ function drawObj(x,o){if(o.k==='ring')return drawRing(x,o);const z=zAt(o.t);let 
   x.restore()}
 function drawPlane(x){
   if(state==='crash'||state==='over'){const k=Math.min(1,crashT*1.6);x.save();x.translate(plane.sx,plane.sy);x.rotate(k*2.5);x.scale(1-k*.35,1-k*.35);const bi=img('ball');if(bi)drawImg(x,bi,70);else DRAW.ball(x,2);x.restore();return}
-  x.save();x.translate(plane.sx,plane.sy);
+  x.save();x.translate(plane.sx,plane.sy);x.rotate(pA-PA);     // keel toward the wall, wherever it is round the tube
   x.fillStyle='rgba(255,255,255,.14)';x.beginPath();x.ellipse(0,26,34,8,0,0,TAU);x.fill();
   const sp=speed();x.strokeStyle=power.boost>0?C.orange:GRAPH;x.lineWidth=1.5;x.globalAlpha=.6;x.beginPath();for(const i of [-1,1]){const l=14+sp*10,o=(T*300)%10;x.moveTo(i*46,-4+o);x.lineTo(i*(46+l*.3),-4+o+l)}x.stroke();x.globalAlpha=1;
   if(power.shield){x.strokeStyle=C.blue;x.lineWidth=2.5;x.setLineDash([6,4]);x.lineDashOffset=-T*25;x.beginPath();x.arc(0,-4,46,0,TAU);x.stroke();x.setLineDash([]);x.fillStyle='rgba(58,127,208,.12)';x.fill()}
   if(power.magnet>0){x.save();x.translate(0,-50);x.scale(.45,.45);x.globalAlpha=.6+Math.sin(T*8)*.3;DRAW.magnet(x);x.restore()}
   {const im=img(planeId+'-fly');const th=threat();if(th>.4)x.globalAlpha=.7;
-    if(im){x.save();x.rotate(plane.bank*.6);drawImg(x,im,96,-4);
+    if(im){x.save();drawImg(x,im,96,-4);
       if(power.boost>0){x.globalAlpha=.35;x.fillStyle=C.orange;x.beginPath();x.ellipse(0,4,56,16,0,0,TAU);x.fill();x.globalAlpha=1}x.restore()}
-    else DRAW.planeBack(x,plane.bank,0,power.boost>0);x.globalAlpha=1}
+    else DRAW.planeBack(x,0,0,power.boost>0);x.globalAlpha=1}
   if(power.dart>0){x.strokeStyle=C.orange;x.lineWidth=2;x.beginPath();x.arc(0,-6,44+Math.sin(T*12)*3,0,TAU);x.stroke()}
   x.restore()}
 function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);ctx.save();
@@ -463,22 +463,24 @@ function draw(){ctx.setTransform(vs*dpr,0,0,vs*dpr,0,0);ctx.fillStyle=PAPER;ctx.
     if(f.k==='page'){ctx.fillStyle='rgba(255,255,255,'+(.35*(1-f.t/f.d))+')';ctx.fillRect(0,0,W,H)}}
   if(banner){const a=Math.min(1,banner.t*2);ctx.save();ctx.globalAlpha=a;ctx.translate(W/2,110);ctx.rotate(-.035);txt(ctx,banner.text,0,0,34);if(banner.sub)txt(ctx,banner.sub,0,34,19,'"Patrick Hand",cursive',GRAPH);ctx.restore()}
   if(state==='play'&&paused){ctx.fillStyle='rgba(246,243,234,.6)';ctx.fillRect(0,0,W,H);txt(ctx,'Paused',W/2,H/2-10,36);txt(ctx,'Tap Resume to keep flying',W/2,H/2+26,18,'"Patrick Hand",cursive',GRAPH)}
-  if(state==='idle'){txt(ctx,'Drag to spin the tube',W/2,H-90,30);txt(ctx,'Dodge the junk, fly through the gaps',W/2,H-56,18,'"Patrick Hand",cursive',GRAPH)}
+  if(state==='idle'){txt(ctx,'Touch where you want to fly',W/2,H-90,30);txt(ctx,'Round the tube: dodge the junk, thread the rings',W/2,H-56,18,'"Patrick Hand",cursive',GRAPH)}
   ctx.restore()}
 
 /* ---------- loop ---------- */
 let last=0;function frame(ts){const dt=Math.min(.05,(ts-last)/1000||0);last=ts;update(dt);draw();requestAnimationFrame(frame)}
 fit();requestAnimationFrame(frame);
 
-/* ---------- input: drag left or right to spin the tube (or tap a side to nudge it one notch); arrows / A D on a keyboard ---------- */
-let pd=null;const DRAG=120;    // pixels of drag per radian of spin
-cv.addEventListener('pointerdown',e=>{pd={x:e.clientX,lx:e.clientX,moved:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
-cv.addEventListener('pointermove',e=>{if(!pd)return;const dx=e.clientX-pd.lx;pd.lx=e.clientX;if(Math.abs(e.clientX-pd.x)>6)pd.moved=true;if(pd.moved)spin(dx/(DRAG*vs))});
-const endPtr=e=>{if(!pd)return;if(!pd.moved&&state==='play'&&!paused){const r=cv.getBoundingClientRect();spin(((e.clientX-r.left)/r.width>.5?1:-1)*SLOT);sfx.swish()}pd=null};
-cv.addEventListener('pointerup',endPtr);cv.addEventListener('pointercancel',()=>{pd=null});
+/* ---------- input: touch or drag anywhere and the plane flies round to that side of the tube; arrows / A D on a keyboard ---------- */
+let pd=null;
+function aim(e){const r=cv.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*W,y=(e.clientY-r.top)/r.height*H;const dx=x-VX,dy=y-VY;if(dx*dx+dy*dy<30*30)return;goTo(Math.atan2(dy,dx))}
+cv.addEventListener('pointerdown',e=>{pd=true;try{cv.setPointerCapture(e.pointerId)}catch(err){}aim(e)});
+cv.addEventListener('pointermove',e=>{if(!pd)return;aim(e)});
+cv.addEventListener('pointerup',()=>{pd=null});cv.addEventListener('pointercancel',()=>{pd=null});
 addEventListener('keydown',e=>{const k=e.key;
   if(k==='ArrowLeft'||k==='a'||k==='A'){keyL=true;e.preventDefault()}
   else if(k==='ArrowRight'||k==='d'||k==='D'){keyR=true;e.preventDefault()}
+  else if(k==='ArrowUp'||k==='w'||k==='W'){goTo(-PA);e.preventDefault()}
+  else if(k==='ArrowDown'||k==='s'||k==='S'){goTo(PA);e.preventDefault()}
   else if(e.repeat)return;
   else if(k==='p'||k==='P'||k==='Escape'){if(state==='play')setPaused(!paused)}
   else if(k===' '||k==='Enter'){if(state==='idle'||state==='over'){const b=$('card').querySelector('.btn');if(b&&!$('overlay').hidden){b.click();e.preventDefault()}}}});
@@ -492,9 +494,9 @@ function pickerHtml(){return `<div class="pick" id="pick">${PLANES.map(p=>{const
   <img src="${ART_DIR}${p.id}-top.webp" alt=""><span>${p.n}</span>${open?'':`<small>${p.cost} &#9733;</small>`}</button>`}).join('')}</div><p class="bankline">Stars collected: <b>${bank}</b></p>`}
 function wirePicker(){$('card').querySelectorAll('.pl:not(.lock)').forEach(b=>b.onclick=()=>{planeId=b.dataset.id;store.set('plane',planeId);sfx.click();$('card').querySelectorAll('.pl').forEach(o=>o.classList.toggle('sel',o===b))})}
 function helpHtml(){const w=(k,n,p)=>`<figure><img class="ic" src="${ART_DIR}${k}.webp" alt=""><figcaption>${n}<br><b>${p}</b></figcaption></figure>`;
-  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down a round paper tube. Drag left or right to spin the tube, so the junk swings out of your way, the stars swing in, and the gap in each paper ring lines up with your plane.</p>
+  return `<h2>Paper Plane Dash</h2><p>Fly your paper airplane down a round paper tube. Touch or drag on the side of the tube you want to be on and the plane flies round to it, up the sides, over the top and back, dodging the junk, catching the stars and threading the gap in each paper ring.</p>
   <div class="who">${w('star','Star','10 pts')}${w('ball','Paper ball','Dodge')}${w('ruler','Ruler','2 spots wide')}${w('blot','Ink blot','2 spots wide')}${w('magnet','Magnet','Pulls stars')}${w('shield','Shield','1 free bump')}${w('boost','Boost','Smash through')}${w('x2','Double','2x points')}</div>
-  <p class="keys">Spin the gap in a <span class="hl">paper ring</span> under your plane to fly through it for 50 points. Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything straight ahead for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: hold the left or right arrow (or A and D) to spin, P to pause.</p>`}
+  <p class="keys">Spin the gap in a <span class="hl">paper ring</span> under your plane to fly through it for 50 points. Every 10 stars fills the meter and starts <span class="hl">Dart Mode</span>: your plane fires paper darts that pop everything straight ahead for 25 points each. Every 600 m is a new sector page, faster than the last, with 10 pages to reach the Ink Vortex.<br>Keyboard: hold the left or right arrow (or A and D) to fly round, Up and Down for the top and bottom, P to pause.</p>`}
 function showMenu(){const playing=state==='play';if(playing)setPaused(true);
   showCard(helpHtml()+(playing?'':pickerHtml())+`<button class="btn" id="goBtn" type="button">${playing?'Keep flying':'Play'}</button>`);if(!playing)wirePicker();
   $('goBtn').onclick=()=>{sfx.click();if(playing){hideCard();setPaused(false)}else newGame()}}
@@ -506,7 +508,7 @@ renderSound();hud();
 showCard(helpHtml()+pickerHtml()+(best?`<p>Best score: <b>${best}</b></p>`:'')+`<button class="btn" id="goBtn" type="button">Play</button>`);wirePicker();$('goBtn').onclick=()=>{sfx.click();newGame()};
 
 /* Square cover for the site (used once by a build-time screenshot). */
-window.PPD={ball:ballImg,peek:()=>({objs:objs.map(o=>({k:o.k,a:o.a,gap:o.gap,t:o.t,dead:o.dead})),pw:planeWorld(),rot,pt:PLANE_T,state,sec,power,slot:SLOT}),spin:d=>{rotT+=d},cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
+window.PPD={ball:ballImg,peek:()=>({objs:objs.map(o=>({k:o.k,a:o.a,gap:o.gap,t:o.t,dead:o.dead})),pw:planeWorld(),rot,pt:PLANE_T,state,sec,power,slot:SLOT}),go:goTo,cover(c){const S=640;c.width=c.height=S;const x=c.getContext('2d');x.fillStyle=PAPER;x.fillRect(0,0,S,S);
   x.strokeStyle='rgba(47,111,181,.3)';x.lineWidth=2;for(let y=60;y<S;y+=40){x.beginPath();x.moveTo(0,y);x.lineTo(S,y);x.stroke()}x.strokeStyle='rgba(196,74,74,.4)';x.beginPath();x.moveTo(70,0);x.lineTo(70,S);x.stroke();
   x.strokeStyle=INK;x.lineWidth=3;x.beginPath();x.moveTo(150,640);x.lineTo(262,160);x.moveTo(490,640);x.lineTo(378,160);x.stroke();
   const items=[['ball',205,235,.6,1],['star',330,225,.6,0],['eraser',430,250,.75,0],['star',322,305,.8,0],['pencil',225,350,1,0],['magnet',428,372,.9,0],['star',318,390,1,0],['ball',195,470,1.15,5]];
