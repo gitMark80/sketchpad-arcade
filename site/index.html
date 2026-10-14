@@ -184,7 +184,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <img class="thumb" src="img/note-quest.jpg" alt="Note Quest" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag word">Word</span></div></a><a class="card" href="paper-gates.html" data-slug="paper-gates" data-added="2026-10-08" data-genre="Puzzle" aria-label="Paper Gates, Puzzle game" title="Paper Gates">
 <img class="thumb" src="img/paper-gates.jpg" alt="Paper Gates" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="pencil-path.html" data-slug="pencil-path" data-added="2026-10-09" data-genre="Puzzle" aria-label="Pencil Path, Puzzle game" title="Pencil Path">
+<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
+<img class="thumb" src="img/paper-plane-dash.jpg" alt="Paper Plane Dash" loading="lazy" width="640" height="640">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="pencil-path.html" data-slug="pencil-path" data-added="2026-10-09" data-genre="Puzzle" aria-label="Pencil Path, Puzzle game" title="Pencil Path">
 <img class="thumb" src="img/pencil-path.jpg" alt="Pencil Path" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="pencil-plunk.html" data-slug="pencil-plunk" data-added="2026-10-08" data-genre="Puzzle" aria-label="Pencil Plunk, Puzzle game" title="Pencil Plunk">
 <img class="thumb" src="img/pencil-plunk.jpg" alt="Pencil Plunk" loading="lazy" width="640" height="640">
@@ -225,7 +227,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   const taken=new Set(),rows={};
   ["new","all","recent","picks"].forEach(k=>rows[k]=document.getElementById("row-"+k));
   const GENRES=["Arcade", "Puzzle", "Word"];GENRES.forEach(x=>rows["genre-"+x.toLowerCase()]=document.getElementById("row-genre-"+x.toLowerCase()));
-  const PICKS=["margin-merge", "sketch-sprint", "doodle-drop", "pencil-putt", "pencil-plunk", "letter-links", "sidewalk-hop", "scribble-slice"];
+  const PICKS=["paper-plane-dash", "margin-merge", "sketch-sprint", "doodle-drop", "pencil-putt", "pencil-plunk", "letter-links", "sidewalk-hop", "scribble-slice"];
   const restHead=document.querySelector("#row-rest h2");
   function fill(k,slugs){const strip=rows[k].querySelector(".strip");
     slugs.forEach(s=>{taken.add(s);strip.appendChild(cards.get(s))});
