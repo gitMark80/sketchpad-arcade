@@ -58,6 +58,7 @@ RENAMED = {
     "sea-glass": "space-glass",
     "gem-cove": "chibi-chib",
     "word-plop": "word-scribble",
+    "taffy-drop": "candy-snip",
 }
 SLUG = RENAMED.get(SRC_SLUG, SRC_SLUG)
 SRC = BDA / "src/assets" / SRC_SLUG
@@ -127,6 +128,10 @@ TINTS = {
     },
     "octo-swing": {
         "star": [.78, .55, .05], "pearl-pink": [.77, .35, .54], "pearl-bubble": [.18, .44, .71],
+    },
+    "taffy-drop": {  # Candy Snip: the candy is pink, string tan, bubble blue, bouncy ball red
+        "taffy": [.77, .35, .54], "rope": [.62, .45, .22], "bubble": [.18, .44, .71],
+        "beach-ball": [.54, .23, .23], "snip-hand": [.54, .23, .23], "rope-ring": [.18, .44, .71],
     },
 }
 TINT = TINTS.get(SRC_SLUG, {})
