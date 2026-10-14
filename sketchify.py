@@ -43,6 +43,7 @@ RENAMED = {
     "word-waves": "word-workshop",
     "tide-pop": "bubble-doodle",
     "crab-hop": "sidewalk-hop",
+    "pearl-patrol": "pencil-patrol",
     "tide-gates": "paper-gates",
     "four-by-sea": "four-in-a-frame",
     "whirlpool-gulp": "eraser-gulp",
