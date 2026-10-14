@@ -33,6 +33,40 @@
   },
   "games": [
     {
+      "slug": "pencil-patrol",
+      "name": "Pencil Patrol",
+      "genre": "Arcade",
+      "added": "2026-10-14",
+      "tagline": "Scuttle through a notebook-page maze collecting pencil dots while silly erasers chase you.",
+      "meta": "Play Pencil Patrol free online. Guide Stubby the pencil through hand-drawn notebook mazes, collect every pencil dot and dodge four giggly erasers. Grab a gold star sticker to turn the tables and bonk them for big points. Works on phone and computer.",
+      "lead": "A maze chase drawn on a notebook page. Stubby the stubby little pencil scuttles through coloured-pencil mazes collecting pencil dots, while four googly-eyed erasers wander around trying to rub him out. Each eraser has its own way of moving, so you can learn to dodge them. Grab a gold star sticker and the erasers go pale and wobbly, and for a few seconds Stubby can bonk them back into the pencil case for bonus points. Clear every dot to turn to the next page, where everything moves a little faster.",
+      "facts": [
+        "Arcade",
+        "4 pages that repeat and speed up",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Guide Stubby around the page and collect every pencil dot to clear the level.",
+        "Steer before you reach a turn. Stubby remembers your move and takes the next opening that way.",
+        "If an eraser touches Stubby, he gets rubbed dizzy and loses a pencil. Lose all 3 pencils and the game is over.",
+        "Grab a gold star sticker in a corner and the erasers turn pale for a few seconds. Bonk them for 200, 400, 800 and 1600 points.",
+        "Watch for an apple, glue stick or crayon below the pencil case for bonus points. Score 10,000 to earn an extra pencil."
+      ],
+      "controls": [
+        "Phone or tablet: swipe anywhere on the page to steer, or use the arrow pad below the maze.",
+        "Computer: arrow keys or W, A, S, D to steer. P pauses and M turns sound on or off.",
+        "The Pause button stops the game, and the cross button shows or hides the arrow pad.",
+        "The sound button turns sound on or off."
+      ],
+      "tips": [
+        "Use the side tunnels. Erasers slow down in them, but Stubby doesn't.",
+        "Save the gold star until erasers are close, then bonk as many as you can in a row.",
+        "Pinky chases you, Smudge tries to get ahead of you, Zigzag zigzags and Dozer gets shy up close.",
+        "Every so often the erasers drift back to their own corners, which gives you room to grab dots."
+      ]
+    },
+    {
       "slug": "paper-plane-dash",
       "name": "Paper Plane Dash",
       "genre": "Arcade",
