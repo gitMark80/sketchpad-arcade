@@ -697,6 +697,12 @@ REEL_MANIFEST = {"name": "Sketchpad Arcade Reel Studio", "short_name": "Reel Stu
     "display": "standalone", "background_color": "#f6f3ea", "theme_color": "#f6f3ea",
     "icons": [{"src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png"}]}
 
+def stats_page():
+    """Game Stats (/stats): play counts per game from /api/stats. Unlisted and noindex."""
+    games = [{"slug": g["slug"], "name": g["name"], "genre": g.get("genre", ""), "added": g.get("added", "")} for g in GAMES]
+    data = json.dumps(games, ensure_ascii=False).replace("</", "<\\/")
+    return (ROOT / "src" / "stats.html").read_text().replace("/*STATS_GAMES*/null", data, 1)
+
 def build():
     if OUT.exists(): shutil.rmtree(OUT)
     (OUT / "play").mkdir(parents=True); (OUT / "img").mkdir()
@@ -715,6 +721,7 @@ def build():
     for x in POSTS:
         (OUT / "news" / f'{x["slug"]}.html').write_text(post(x))
     (OUT / "reel.html").write_text(reel_page())
+    (OUT / "stats.html").write_text(stats_page())
     (OUT / "reel.webmanifest").write_text(json.dumps(REEL_MANIFEST, indent=2) + "\n")
     for g in GAMES:
         (OUT / f'{g["slug"]}.html').write_text(detail(g))
