@@ -105,6 +105,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -161,7 +174,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click a tile to move it to the tray.</li><li>Undo puts your last tile back on the pile. Lift moves 3 tiles from your tray up to a holding spot, and you can tap them back in later. Shuffle mixes up the treasures on the pile. You get one of each every level.</li><li>The ? button shows the rules and lets you continue from your last level or start a new game.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Before you tap, look at what&#x27;s already in your tray and pick a tile that matches it.</li><li>Uncover the tall stacks early so the dark tiles don&#x27;t trap you at the end.</li><li>Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.</li><li>Your level is saved, so you can come back later and carry on.</li></ul></section>
 </div>
-
+<section class="panel about"><h2>About Margin Match</h2><p>Margin Match is a tile-matching puzzle in the style of the popular triple-match games, piled high with sketchbook doodles. Tiles are stacked in overlapping layers, and only tiles with nothing on top can be picked. Tap one and it hops into a seven-slot tray; collect three of a kind and they clear.</p><p>Clearing the whole pile with a seven-slot tray takes a little planning, because grabbing two of something you cannot finish is the fastest way to run out of room. The pencils, paperclips and other doodles are our own drawings, and your level is saved so you can come back to it.</p></section>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -226,8 +239,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Margin Match", "description": "A cheerful tile-matching puzzle piled high with sketchbook doodles. Tap a tile and it hops into your tray. Collect three of the same, like three pencils or three paperclips, and they clear away. Clear the whole pile to win the level, but don't let your 7-spot tray fill up.", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

@@ -105,6 +105,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -161,7 +174,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: touch or drag anywhere on the tube and the plane flies round to that side. Keep your finger down and slide it to steer.</li><li>Computer: hold the left or right arrow key (or A and D) to fly round the tube, Up and Down to go to the top or bottom, P or Esc to pause.</li><li>Pause stops the action, and the Sound button turns sound effects on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Watch the far end of the tube. Rings show up as a coloured circle long before they arrive, so head for the gap early.</li><li>Lines of stars sit in a safe spot, and a ring&#x27;s stars sit in its gap. Follow them.</li><li>The plane always takes the short way round, so a spot straight across the tube is the longest trip. Start moving early.</li><li>Dart Mode pops things straight ahead only, so line up with the busiest column while it lasts.</li><li>A boost makes you invincible and even smashes rings for 50 points, so spin into the junk on purpose.</li><li>Stars count toward new planes even on a short run, so grab every line of them you can.</li></ul></section>
 </div>
-
+<section class="panel about"><h2>About Paper Plane Dash</h2><p>Paper Plane Dash is an original Sketchpad Arcade game, not a twin of anything on our sister site. Your paper airplane flies down the inside of a round tube drawn on black construction paper, and you touch the side of the tube you want to be on. The plane rolls round to it the short way, belly to the wall, dodging crumpled paper balls, erasers, rulers and ink blots.</p><p>Every plane you can unlock is a real fold you could make at a desk, from the Basic Glider and Bulldog Dart to the Nakamura Lock, Harrier, Hammerhead and Delta Wing. Stars unlock them, rings and Dart Mode keep a good run exciting, and every 600 metres turns to a faster sector page.</p></section>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="margin-merge.html" data-slug="margin-merge" data-added="2026-10-08" data-genre="Puzzle" aria-label="Margin Merge, Puzzle game" title="Margin Merge">
@@ -226,8 +239,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Plane Dash", "description": "A fast tube-flying dash drawn in pencil on black construction paper. Your paper airplane flies down a round tube on its own, and you touch or drag on the side of the tube you want to be on: the plane flies round to it the short way, up the sides, over the top and back down, keeping its belly to the wall the whole way. The junk sits on the inside of the tube: crumpled paper balls in every construction-paper colour, erasers, pencil stubs, two-spot-wide rulers and inky blots. Fly round them, fly through the stars, and when a paper ring comes down the tube, get into its gap to fly through for 50 points. Every ten stars start Dart Mode, when your plane fires paper darts that pop everything straight ahead. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, each faster than the last, and the stars you collect unlock nine more planes, all real folds: the Basic Glider, Bulldog Dart, Nakamura Lock, Harrier, Hammerhead, Flying Wing, Canard, Stunt Plane and the blue-and-gold Delta Wing.", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

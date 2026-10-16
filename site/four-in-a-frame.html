@@ -105,6 +105,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -161,7 +174,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click a word to pick it, and tap it again to put it back.</li><li>Shuffle mixes up the words, Clear unpicks them, and Hint lights up two words that go together.</li><li>On a keyboard, press Enter to check and Escape to clear.</li><li>The Sound button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Find the easiest group first. Fewer words left makes the tricky groups easier to spot.</li><li>If a word fits two groups, save it for last and work out which group needs it.</li><li>Some groups are word puzzles, like words that go before FISH or words that sound like letters.</li><li>Use Shuffle when you feel stuck. Seeing the words in a new order often helps.</li></ul></section>
 </div>
-
+<section class="panel about"><h2>About Four in a Frame</h2><p>Four in a Frame is a word-grouping puzzle. Sixteen words hide four groups of four; your job is to find the groups. Some are obvious, like animals or colours, and some are sneaky, with words that seem to belong in two groups at once or groups that are really word puzzles in disguise.</p><p>We wrote it for the whole family to play together on one screen, calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give younger players a way in.</p></section>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -226,8 +239,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Four in a Frame", "description": "A word-sorting puzzle for the whole family. Sixteen words wash up on the beach, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like sea animals and colours, and get sneakier as you go, with words that seem to fit two groups at once.", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

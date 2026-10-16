@@ -105,6 +105,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -161,7 +174,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Drag and release with a mouse or finger to aim and shoot.</li><li>Tap the waiting bubble to swap it with your current one.</li><li>On a keyboard, use the arrow keys to aim and Space to shoot.</li><li>Every 6 pops charges a bomb that clears everything around where it lands.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Bank shots off the walls to reach gaps you can&#x27;t hit directly.</li><li>Dropping a big hanging cluster is worth far more than popping.</li><li>Watch the new-row counter and clear the lowest rows first.</li></ul></section>
 </div>
-
+<section class="panel about"><h2>About Bubble Doodle</h2><p>Bubble Doodle is Sketchpad Arcade&#x27;s bubble shooter. The glowing aim line shows exactly where your shot will land, including after a bounce off the wall, which makes the game friendly for younger players while still rewarding the tricky bank shots older players like to set up.</p><p>Popping a group of three or more clears it, but the real points come from the bubbles left hanging underneath, which drop away in a cascade. The rows creep down a little at a time, so there is always a reason to plan two or three shots ahead.</p></section>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -226,8 +239,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Bubble Doodle", "description": "A bubble shooter with a glowing aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the tide line.", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

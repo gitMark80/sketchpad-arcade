@@ -2,7 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.sketchpadarcade.com/</loc></url>
   <url><loc>https://www.sketchpadarcade.com/about</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/contact</loc></url>
   <url><loc>https://www.sketchpadarcade.com/privacy</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/terms</loc></url>
   <url><loc>https://www.sketchpadarcade.com/pencil-patrol</loc></url>
   <url><loc>https://www.sketchpadarcade.com/paper-plane-dash</loc></url>
   <url><loc>https://www.sketchpadarcade.com/margin-merge</loc></url>
@@ -34,4 +37,10 @@
   <url><loc>https://www.sketchpadarcade.com/space-glass</loc></url>
   <url><loc>https://www.sketchpadarcade.com/chibi-chib</loc></url>
   <url><loc>https://www.sketchpadarcade.com/word-scribble</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/pencil-patrol</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/paper-plane-dash</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/new-names</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/sketch-sprint</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/how-we-choose-games</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/news/welcome</loc></url>
 </urlset>

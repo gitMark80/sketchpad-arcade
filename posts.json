@@ -1,0 +1,94 @@
+{
+  "_comment": "News posts for /news. Newest first. body is a list of paragraphs; a paragraph starting with '## ' is a heading. Link games with {{slug}}.",
+  "posts": [
+    {
+      "slug": "pencil-patrol",
+      "title": "Pencil Patrol: Stubby versus the erasers",
+      "date": "2026-10-14",
+      "summary": "A maze chase on a notebook page, with four erasers that each move their own way. Notes on drawing it and tuning the erasers.",
+      "body": [
+        "{{pencil-patrol}} is a maze-chase game in the spirit of the arcade classics, and it is the newest game on the site. Stubby, a stubby little pencil, scuttles through coloured-pencil mazes collecting dots while four googly-eyed erasers try to rub him out.",
+        "## Four erasers, four habits",
+        "The thing that makes a maze chase fun is not the maze, it is the chasers. Each eraser has its own way of moving: Pinky chases you directly, Smudge tries to get ahead of you, Zigzag zigzags, and Dozer gets shy and backs off when you are close. Once you learn those four habits you can play the erasers against each other, which is where the game gets good.",
+        "## The gold star",
+        "Grab a gold star sticker and the erasers go pale and wobbly for a few seconds. Bonk them back into the pencil case and the points climb: 200, 400, 800, 1600. Saving the star until the erasers are bunched up is the single best trick in the game.",
+        "Stubby, the erasers and the mazes are all hand-drawn in pencil for this game, with dark outlines and coloured-pencil cross-hatching inside, which is the look we are moving every Sketchpad game toward. The erasers go back to their corners every so often, which gives you a breather to grab dots. Clear the page and the next one is a little faster."
+      ]
+    },
+    {
+      "slug": "paper-plane-dash",
+      "title": "Paper Plane Dash and ten real folds",
+      "date": "2026-10-13",
+      "summary": "Our first original Sketchpad game, not a twin of anything. A tube-flying dash on black construction paper, with paper planes you could actually fold.",
+      "body": [
+        "Every game on Sketchpad Arcade so far has been a pencil-sketch twin of a Beach Day Arcade game. {{paper-plane-dash}} is the first one that is ours alone.",
+        "## Flying round a tube",
+        "The idea started as a lane runner, three lanes wide and three high, with the plane banking as it moved. We built that, played it, and it felt like a lot of other runners. So we tried something else: a round tube, drawn on black construction paper, with the plane flying along the inside wall. You touch the side of the tube you want to be on and the plane rolls round to it the short way, up the sides, over the top and back down, belly to the wall the whole way. It feels like nothing else on either site.",
+        "## Real folds",
+        "The planes you unlock are all real folds. The Basic Glider, the Bulldog Dart, the Nakamura Lock, the Harrier, the Hammerhead, the Flying Wing, the Canard, the Stunt Plane and the Delta Wing. If you have ever folded one at a desk when you should have been doing something else, it is in the game. Stars unlock them, and every 600 metres turns to a new, faster sector page.",
+        "The junk in the tube is drawn from the same desk: crumpled paper balls in every construction-paper colour, erasers, pencil stubs, rulers and ink blots. Fly through a paper ring's gap for 50 points, and every ten stars starts Dart Mode, when your plane fires paper darts that pop everything straight ahead."
+      ]
+    },
+    {
+      "slug": "new-names",
+      "title": "Why every game got a new name",
+      "date": "2026-10-10",
+      "summary": "Sea Merge became Margin Merge, Tide Clash became Draw Brawl. The thinking behind renaming every game on the site, and what is still on the list.",
+      "body": [
+        "When Sketchpad Arcade opened, the games had the same names as their Beach Day Arcade twins. That was fine for a week, and then it was confusing: two sites, the same name, different art. So we renamed all of them.",
+        "## From the beach to the desk",
+        "The new names come from the sketchbook: {{margin-merge}}, {{doodle-darts}}, {{pencil-putt}}, {{scribble-blocks}}, {{paper-gates}}. A few got a bigger change than a name. Sonar Sub became {{space-blaster}}, a retro shooter on grid paper with UFOs instead of sea creatures. Sea Glass became {{space-glass}}, a colour-by-number of rockets and planets. Gem Cove became {{chibi-chib}}, with big-eyed chibi animals to sort. Beach Link became {{no-2-pencil}}, drawn in plain pencil with classroom doodles that colour in when you tap them.",
+        "## Still on the list",
+        "Some games have their new name but still carry their beach art inside, and we are working through them one at a time, drawing new characters and scenery to match the sketchbook. The goal for the whole site is the same: dark pencil outlines, bright coloured-pencil cross-hatching, and no ocean in sight. If a game looks a little beachy for now, that is why.",
+        "Old links still work. Every old game address redirects to the new one, so anything you bookmarked or shared will still land in the right place."
+      ]
+    },
+    {
+      "slug": "sketch-sprint",
+      "title": "Sketch Sprint, the game that started the site",
+      "date": "2026-10-09",
+      "summary": "It began as a request to redraw a boardwalk runner like a ten-year-old's sketchbook. It ended up as a whole second site.",
+      "body": [
+        "Sketchpad Arcade exists because of one request: take our sister site's boardwalk runner and make it look like a ten-year-old drew it in pencil in a sketchbook. We did, and the result was {{sketch-sprint}}.",
+        "## What a sketch twin is",
+        "A sketch twin is the same game underneath, with every piece of art redrawn in pencil. Same corners, same power-ups, same unlockable runners, but the path twists through downtown, the backyard, the park, a creek and the woods instead of the beach, and the eight runners are kids with backpacks instead of beach animals. Fixes on one side reach the other, which keeps both games honest.",
+        "## Why a second site",
+        "We thought about offering the sketch look as a toggle inside each game and decided against it. The sketch versions have their own names and their own mood, and they deserve a home where everything matches, right down to the hand-drawn buttons and the graph-paper background. Keeping the sites separate also keeps each one simple: Beach Day Arcade stays bright and painted, and Sketchpad Arcade stays pencil and paper.",
+        "Sketch Sprint is still the game we show people first. Swipe the way the arrow points to take each corner, jump the logs, slide under the nets, and collect stars to unlock the rest of the kids."
+      ]
+    },
+    {
+      "slug": "how-we-choose-games",
+      "title": "How we decide what makes a Sketchpad Arcade game",
+      "date": "2026-10-08",
+      "summary": "The short list of rules every game on the site has to follow before it goes live.",
+      "body": [
+        "Sketchpad Arcade is run by a dad of four, and the first question about any game is whether we would be happy with our own kids playing it. That turns into a short list of rules, and every game on the site has to pass all of them.",
+        "## The rules",
+        "Family-friendly, always. No violence beyond a cartoon bonk, nothing scary, and nothing you would not want on the screen with a six-year-old next to you.",
+        "No gambling mechanics. No loot boxes, no spinning wheels, no fake currencies you buy with real money. Progress is earned by playing.",
+        "Nothing to install and nobody to sign up. Every game runs in the browser, and your scores and progress are saved on your own device, not on our servers.",
+        "Original work. We happily borrow mechanics, because a bubble shooter is a bubble shooter, but every character, drawing and word list on the site is ours. We never use another game's name, art or text.",
+        "Drawn by hand. The whole site is meant to look like a page from a kid's sketchbook, so every game's art is pencil on paper, with dark outlines and coloured-pencil inside.",
+        "## How a game gets here",
+        "New games start on a private preview where we play them, usually with the kids, for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. The games you see in the New This Week row are the survivors.",
+        "If you think something on the site breaks one of these rules, tell us from the contact page. We would rather hear about it than not."
+      ]
+    },
+    {
+      "slug": "welcome",
+      "title": "Welcome to Sketchpad Arcade",
+      "date": "2026-10-08",
+      "summary": "Free browser games drawn like a page from a kid's sketchbook, from a family studio in Pensacola, Florida. What the site is and why we made it.",
+      "body": [
+        "Sketchpad Arcade is a collection of free games you can play in your browser on a phone, tablet or computer, and every one of them is drawn to look like a kid sketched it in pencil. There is nothing to download, no account to make and nothing on the site we would not want our own kids to see. It is made by Restless Faith Media, a small independent studio in Pensacola, Florida.",
+        "## Why we built it",
+        "We already ran Beach Day Arcade, a site of bright, painted beach games. Then we tried redrawing one of them in pencil, as if a ten-year-old had copied it into a sketchbook, and we liked it so much we wanted a whole site that looked that way. Sketchpad Arcade is that site: the same kind of quick, clean, family-friendly games, on graph paper and lined notebook pages, with dark pencil outlines and coloured-pencil inside.",
+        "## What is here",
+        "The site opened with sketch twins of the Beach Day games, like {{sketch-sprint}}, {{doodle-drop}}, {{draw-brawl}} and {{margin-merge}}, and has started adding games of its own, beginning with {{paper-plane-dash}}. Every game has its own page with a short guide on how to play, the controls, a few tips and a bit about how it was made.",
+        "## What to expect",
+        "Family-friendly, always. Hand-drawn art and characters. Progress saved on your device, not ours. And a site that keeps getting a little better every week. If you have an idea for a game, or you found a bug, the contact page is the place to tell us."
+      ]
+    }
+  ]
+}

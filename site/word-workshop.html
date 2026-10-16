@@ -105,6 +105,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -161,7 +174,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Controls</h2><ul><li>Drag with your finger or mouse across the letters. Slide back to the previous letter to undo it.</li><li>Shuffle mixes up the letters. The lightbulb costs sand dollars per step (10 on Beginner, 15 on Intermediate, 25 on Advanced): first it lights up a starting shell, then the next shell, then shows the word&#x27;s first letters in the grid.</li><li>The star shows your bonus words and personal bests, the bars button lets you switch difficulty or start over, and the speaker button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Look for short three-letter words first. They often unlock the crossing letters for longer words.</li><li>Shuffle when you feel stuck. Seeing the letters in a new order often shows you a word right away.</li><li>Try every word you can see. Real words that don&#x27;t fit the grid still earn bonus points and fill the Bonus meter.</li><li>The level&#x27;s name is always one of the answers, and it uses every letter on the wheel.</li></ul></section>
 </div>
-
+<section class="panel about"><h2>About Word Workshop</h2><p>Word Workshop is a letter-wheel crossword game. Each level gives you a handful of letters on a wheel and a small crossword above it; drag across letters to spell words, and the ones in the puzzle drop into place. Any real word you find counts, so extra words still earn points.</p><p>We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device, and the word list is family-friendly.</p></section>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -226,8 +239,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Word Workshop", "description": "A relaxing word puzzle on a sunny beach. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words make a splash.", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;
