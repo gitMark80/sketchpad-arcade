@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Game Stats | Sketchpad Arcade</title>
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f6fbfe;--band:#d6f1fc;--ink:#0b2e45;--muted:#4a6478;--coral:#ff6f59;--sun:#ffd23f;--teal:#0fa3b8;--deep:#0b3550;--card:#fff;--line:#dcebf3;
+--display:"Fredoka","Arial Rounded MT Bold",system-ui,sans-serif;--body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--body)}
+header{background:var(--deep);color:#fff;padding:18px 16px 16px}
+header .in,main{max-width:760px;margin:0 auto}
+header a{color:#bfe9f5;text-decoration:none;font-size:13px}
+h1{font:600 26px/1.15 var(--display);margin:6px 0 2px}
+header p{margin:0;color:#bfe9f5;font-size:13px}
+main{padding:16px}
+.tabs{display:flex;gap:6px;background:var(--band);padding:4px;border-radius:12px;margin-bottom:14px}
+.tabs button{flex:1;border:0;background:none;padding:9px 4px;border-radius:9px;font:600 14px var(--body);color:var(--muted);cursor:pointer}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(11,46,69,.15)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tile b{display:block;font:600 24px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;color:var(--muted)}
+.tile .top{font-size:15px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+.card h2{font:600 17px var(--display);margin:0 0 10px}
+.chart{display:flex;align-items:flex-end;gap:2px;height:110px}
+.chart div{flex:1;background:var(--teal);border-radius:3px 3px 0 0;min-height:2px;position:relative}
+.chart div.today{background:var(--coral)}
+.axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+.row{display:grid;grid-template-columns:22px 44px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);cursor:pointer}
+.row:first-of-type{border-top:0}
+.rank{font:600 14px var(--display);color:var(--muted);text-align:right}
+.row img{width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--band)}
+.nm{font-weight:600;line-height:1.2}
+.nm small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+.bar{height:5px;background:var(--band);border-radius:3px;margin-top:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:3px}
+.n{font:600 18px var(--display);text-align:right;font-variant-numeric:tabular-nums}
+.n small{display:block;font:500 11px var(--body);color:var(--muted)}
+.new{display:inline-block;background:var(--sun);color:var(--ink);font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:4px;vertical-align:2px}
+.spark{grid-column:1/-1;display:none;padding:2px 0 6px 32px}
+.row.open + .spark{display:block}
+.spark .chart{height:50px}
+.note{font-size:12px;color:var(--muted);margin:4px 2px 20px}
+.msg{padding:30px 10px;text-align:center;color:var(--muted)}
+@media (max-width:420px){.tile b{font-size:20px}.tiles{gap:6px}.tile{padding:9px}}
+</style>
+</head>
+<body>
+<header><div class="in">
+<a href="/">&larr; Sketchpad Arcade</a>
+<h1>Game Stats</h1>
+<p id="updated">Loading…</p>
+</div></header>
+<main>
+<div class="tabs" role="tablist">
+<button data-r="1">Today</button><button data-r="7" class="on">7 days</button><button data-r="30">30 days</button><button data-r="all">All time</button>
+</div>
+<div class="tiles">
+<div class="tile"><b id="t-plays">–</b><span id="t-plays-l">plays</span></div>
+<div class="tile"><b id="t-avg">–</b><span>plays per day</span></div>
+<div class="tile"><b id="t-top" class="top">–</b><span>top game</span></div>
+</div>
+<div class="card">
+<h2>Plays per day (last 30 days)</h2>
+<div class="chart" id="daily"></div>
+<div class="axis"><span id="ax0"></span><span>today</span></div>
+</div>
+<div class="card">
+<h2 id="list-h">Most played</h2>
+<div id="list"><div class="msg">Loading…</div></div>
+</div>
+<p class="note">A play is one person opening a game on a given day, so refreshing or replaying the same game that day doesn't add more. Days run on UTC time (they roll over at 7pm Central). New games show a per-day average since they were added, so you can compare them fairly. Tap a game for its daily trend.</p>
+</main>
+<script>
+const GAMES = [{"slug": "pencil-patrol", "name": "Pencil Patrol", "genre": "Arcade", "added": "2026-10-14"}, {"slug": "paper-plane-dash", "name": "Paper Plane Dash", "genre": "Arcade", "added": "2026-10-13"}, {"slug": "margin-merge", "name": "Margin Merge", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "2048-drop", "name": "2048 DROP", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "shoe-string-swing", "name": "Shoe String Swing", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "note-quest", "name": "Note Quest", "genre": "Word", "added": "2026-10-08"}, {"slug": "eraser-gulp", "name": "Eraser Gulp", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "sidewalk-hop", "name": "Sidewalk Hop", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "paper-gates", "name": "Paper Gates", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "doodle-stacks", "name": "Doodle Stacks", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "scribble-slice", "name": "Scribble Slice", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "sketch-search", "name": "Sketch Search", "genre": "Word", "added": "2026-10-08"}, {"slug": "pencil-putt", "name": "Pencil Putt", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "letter-links", "name": "Letter Links", "genre": "Word", "added": "2026-10-08"}, {"slug": "sketch-sprint", "name": "Sketch Sprint", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "doodle-drop", "name": "Doodle Drop", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "pencil-plunk", "name": "Pencil Plunk", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "draw-brawl", "name": "Draw Brawl", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "doodle-darts", "name": "Doodle Darts", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "word-workshop", "name": "Word Workshop", "genre": "Word", "added": "2026-10-08"}, {"slug": "bubble-doodle", "name": "Bubble Doodle", "genre": "Arcade", "added": "2026-10-08"}, {"slug": "four-in-a-frame", "name": "Four in a Frame", "genre": "Word", "added": "2026-10-08"}, {"slug": "margin-match", "name": "Margin Match", "genre": "Puzzle", "added": "2026-10-08"}, {"slug": "no-2-pencil", "name": "No. 2 Pencil", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "scribble-blocks", "name": "Scribble Blocks", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "drop-swap", "name": "Drop Swap", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "pencil-path", "name": "Pencil Path", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "space-blaster", "name": "Space Blaster", "genre": "Arcade", "added": "2026-10-09"}, {"slug": "space-glass", "name": "Space Glass", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "chibi-chib", "name": "Chibi Chib", "genre": "Puzzle", "added": "2026-10-09"}, {"slug": "word-scribble", "name": "Word Scribble", "genre": "Word", "added": "2026-10-09"}];
+const byslug = Object.fromEntries(GAMES.map(g => [g.slug, g]));
+let data = null, range = "7";
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString();
+const short = d => new Date(d + "T12:00:00Z").toLocaleDateString(undefined, {month: "short", day: "numeric"});
+
+function bars(el, vals, todayLast) {
+  const max = Math.max(1, ...vals);
+  el.innerHTML = vals.map((v, i) => `<div style="height:${Math.max(2, v / max * 100)}%" ${todayLast && i === vals.length - 1 ? 'class="today"' : ""} title="${v}"></div>`).join("");
+}
+
+function daysSince(added) {
+  if (!added) return Infinity;
+  return Math.floor((Date.parse(data.today) - Date.parse(added)) / 86400000) + 1;
+}
+
+function render() {
+  const days = data.days;
+  let counts = {}, span;
+  if (range === "all") { counts = data.allTime; span = null; }
+  else {
+    span = Number(range);
+    for (const d of days.slice(-span)) for (const [s, n] of Object.entries(d.games)) counts[s] = (counts[s] || 0) + n;
+  }
+  const rows = GAMES.map(g => {
+    const plays = counts[g.slug] || 0;
+    const age = daysSince(g.added);
+    const live = span ? Math.min(span, age) : age;
+    return { g, plays, age, perDay: live > 0 && isFinite(live) ? plays / live : null };
+  }).sort((a, b) => b.plays - a.plays || a.g.name.localeCompare(b.g.name));
+  const total = rows.reduce((a, r) => a + r.plays, 0);
+  $("t-plays").textContent = fmt(total);
+  $("t-plays-l").textContent = range === "1" ? "plays today" : range === "all" ? "plays all time" : `plays, last ${range} days`;
+  const nDays = span || Math.max(1, ...GAMES.map(g => isFinite(daysSince(g.added)) ? daysSince(g.added) : 1));
+  $("t-avg").textContent = range === "1" ? fmt(total) : (total / nDays).toFixed(total / nDays < 10 ? 1 : 0);
+  $("t-top").textContent = rows[0] && rows[0].plays ? rows[0].g.name : "–";
+  $("list-h").textContent = range === "1" ? "Most played today" : range === "all" ? "Most played, all time" : `Most played, last ${range} days`;
+  const max = Math.max(1, rows[0] ? rows[0].plays : 1);
+  $("list").innerHTML = rows.map((r, i) => {
+    const isNew = r.age <= 7;
+    const sub = [r.g.genre, isFinite(r.age) ? `added ${short(r.g.added)}` : ""].filter(Boolean).join(" · ");
+    const per = range !== "1" && r.perDay != null ? `${r.perDay.toFixed(r.perDay < 10 ? 1 : 0)}/day` : "";
+    return `<div class="row" data-s="${r.g.slug}"><span class="rank">${i + 1}</span><img src="/img/${r.g.slug}.jpg" alt="" loading="lazy">
+<div class="nm">${r.g.name}${isNew ? '<span class="new">NEW</span>' : ""}<small>${sub}</small><div class="bar"><i style="width:${r.plays / max * 100}%"></i></div></div>
+<div class="n">${fmt(r.plays)}<small>${per}</small></div></div><div class="spark"><div class="chart"></div><div class="axis"><span>${short(days[0].date)}</span><span>today</span></div></div>`;
+  }).join("");
+  document.querySelectorAll(".row").forEach(row => row.addEventListener("click", () => {
+    row.classList.toggle("open");
+    const sp = row.nextElementSibling.querySelector(".chart");
+    if (!sp.childElementCount) bars(sp, days.map(d => d.games[row.dataset.s] || 0), true);
+  }));
+}
+
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x === b));
+  range = b.dataset.r;
+  try { localStorage.setItem("bda.stats.range", range); } catch (e) {}
+  if (data) render();
+}));
+try {
+  const saved = localStorage.getItem("bda.stats.range");
+  if (saved) { range = saved; document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x.dataset.r === saved)); }
+} catch (e) {}
+
+fetch("/api/stats", {cache: "no-store"}).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(d => {
+  data = d;
+  $("updated").textContent = "Updated " + new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}) + " · pull down to refresh";
+  bars($("daily"), d.days.map(x => x.total), true);
+  $("ax0").textContent = short(d.days[0].date);
+  render();
+}).catch(e => {
+  $("updated").textContent = "Couldn't load stats";
+  $("list").innerHTML = `<div class="msg">${e === 503 ? "The play counter isn't connected. In Vercel, add Storage → Upstash Redis to this project." : "Couldn't reach the stats right now. Try again in a minute."}</div>`;
+});
+</script>
+</body>
+</html>

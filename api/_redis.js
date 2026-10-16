@@ -20,6 +20,9 @@ export async function pipeline(cmds) {
   });
 }
 
-export const ALL_KEY = "plays:all";
-export const dayKey = (d) => `plays:day:${d.toISOString().slice(0, 10)}`;
+// Sketchpad shares Beach Day Arcade's Upstash database (one free database per account),
+// so every key it writes starts with "sketch:" to keep the two sites' data apart.
+export const PREFIX = "sketch:";
+export const ALL_KEY = `${PREFIX}plays:all`;
+export const dayKey = (d) => `${PREFIX}plays:day:${d.toISOString().slice(0, 10)}`;
 export const RECENT_DAYS = 30;
