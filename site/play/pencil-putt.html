@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Pencil Putt, sketchbook edition: the same portrait column (title row, HUD, hole/par strip, the course from above) drawn in pencil
-   on cream paper. Coloured pencil only on water and tide (blue), the crab (pink) and the flag (orange). */
+   on cream paper. Art: tools/pencil-putt-art.py draws the school-desk sprites (rulers, erasers, pinwheel, crayon gate, sticky-note tee). */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -126,7 +126,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   </div>
   <div class="strip"><span class="lv" id="holeEl">Hole 1</span><span class="par" id="parEl">Par 2</span><div class="dots" id="dots" aria-hidden="true"></div><span class="strokes" id="strokeEl">Strokes 0</span></div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A beach mini golf hole seen from above. Press anywhere, pull back and let go to putt the ball toward the flag."></canvas>
+    <canvas id="cv" aria-label="A desktop mini golf hole seen from above. Press anywhere, pull back and let go to putt the ball toward the flag."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
@@ -135,7 +135,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <ul class="rules">
           <li><b>1</b><span><strong>Press anywhere and pull back</strong> like a slingshot. The dotted line shows where the ball goes. Pull further for more power, then let go to putt.</span></li>
           <li><b>2</b><span>Sink the ball in as few strokes as you can. Every hole has a <strong>par</strong>. Beat it for big points!</span></li>
-          <li><b>3</b><span>Sand slows you down, the tide pushes you along and beach balls bounce you away. Water costs a stroke. Mind the crab!</span></li>
+          <li><b>3</b><span>Pencil shavings slow you down, the blue arrows push you along and bouncy balls bounce you away. Spilled ink costs a stroke. Mind the eraser!</span></li>
           <li><b>4</b><span>Finish a hole over par and you lose a shell. Lose all 3 and the game is over. A hole in one wins a shell back.</span></li>
         </ul>
         <div class="keys" aria-label="Keyboard: arrows aim and set power, Space putts"><span>&larr;</span><span>&rarr;</span>aim<span>&uarr;</span><span>&darr;</span>power<span>Space</span>putt</div>
