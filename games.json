@@ -2,12 +2,15 @@
   "site": {
     "name": "Sketchpad Arcade",
     "owner": "Restless Faith Media LLC",
+    "location": "Pensacola, Florida",
     "url": "https://www.sketchpadarcade.com",
     "headline": "Games drawn in a sketchbook",
     "intro": "Free puzzle and arcade games that look like a kid drew them in pencil. No downloads, no sign-ups, and nothing you wouldn't want your kids to see.",
     "description": "Free, family-friendly browser games drawn in a hand-sketched pencil style. Play on a phone, tablet or computer with no downloads and no sign-ups.",
     "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
+    "contact_email": "hello@sketchpadarcade.com",
     "policy_date": "October 8, 2026",
+    "terms_date": "October 15, 2026",
     "paper": "grid",
     "picks": [
       "paper-plane-dash",
@@ -64,6 +67,10 @@
         "Save the gold star until erasers are close, then bonk as many as you can in a row.",
         "Pinky chases you, Smudge tries to get ahead of you, Zigzag zigzags and Dozer gets shy up close.",
         "Every so often the erasers drift back to their own corners, which gives you room to grab dots."
+      ],
+      "about": [
+        "Pencil Patrol is a maze-chase game in the spirit of the arcade classics, drawn on a notebook page. Stubby the pencil scuttles through coloured-pencil mazes collecting dots while four googly-eyed erasers try to rub him out, and each eraser has its own habit: Pinky chases, Smudge cuts you off, Zigzag zigzags and Dozer gets shy up close. Learning those habits is the whole game.",
+        "The gold star sticker turns the tables for a few seconds, letting Stubby bonk the erasers back into the pencil case for climbing bonus points. Nothing here is scary, just a lot of googly eyes, and every page you clear is a little faster than the last. Stubby, the erasers and the mazes are all our own pencil art."
       ]
     },
     {
@@ -104,6 +111,10 @@
         "Dart Mode pops things straight ahead only, so line up with the busiest column while it lasts.",
         "A boost makes you invincible and even smashes rings for 50 points, so spin into the junk on purpose.",
         "Stars count toward new planes even on a short run, so grab every line of them you can."
+      ],
+      "about": [
+        "Paper Plane Dash is an original Sketchpad Arcade game, not a twin of anything on our sister site. Your paper airplane flies down the inside of a round tube drawn on black construction paper, and you touch the side of the tube you want to be on. The plane rolls round to it the short way, belly to the wall, dodging crumpled paper balls, erasers, rulers and ink blots.",
+        "Every plane you can unlock is a real fold you could make at a desk, from the Basic Glider and Bulldog Dart to the Nakamura Lock, Harrier, Hammerhead and Delta Wing. Stars unlock them, rings and Dart Mode keep a good run exciting, and every 600 metres turns to a faster sector page."
       ]
     },
     {
@@ -137,6 +148,10 @@
         "Check the Next window before you drop so you can plan where the following piece will go.",
         "A merge can bump into a matching neighbor and set off a combo, so line up chains when you can.",
         "Save your Pop for a small piece stuck between two big ones."
+      ],
+      "about": [
+        "Margin Merge is the pencil-sketch twin of Sea Merge, one of the most played games on our sister site. Two identical pieces that touch combine into the next one up the chain, and the physics are loose and bouncy, so every drop shifts the pile. The sketch version keeps the same chain and the same tank, redrawn in pencil lines.",
+        "It is a game about patience more than reflexes. Dropping a small piece next to its match is easy; keeping the big ones from getting buried under the small ones is the skill. Your best score is saved on your device, and the Next window is worth a glance before every drop."
       ]
     },
     {
@@ -176,7 +191,7 @@
         "A ball crossing the danger line for a moment is fine. Watch the countdown and clear the top before it runs out."
       ],
       "about": [
-        "2048 DROP is an original number-merging physics game made by Sketchpad Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.",
+        "2048 DROP is an original number-merging physics game made by Beach Day Arcade. It mixes the satisfying doubling of a number puzzle with balls that fall, roll and bounce, so every drop changes the whole pile.",
         "Reaching 2048 is a big moment, but it isn't the end. Skilled players can keep merging to 4096 and beyond. Your personal best, today's best and lifetime stats are saved on your device. No account needed."
       ]
     },
@@ -212,6 +227,10 @@
         "Letting go too late sends you straight up. Letting go too early sends you down toward the ground.",
         "Stars follow the swing paths, so a nice smooth swing usually scoops them up.",
         "On a soap bubble, swing once and let go fast before it pops."
+      ],
+      "about": [
+        "Shoe String Swing is a one-button swinging game starring a caped kid in a mask with a very long shoestring. Hold to lasso the nearest push-pin, swing under it, and let go at the right moment to fling forward. The scenery changes every 1000 meters, from the city by day to the city at night by flashlight, then the beach, the snowy mountains and the farm.",
+        "It is built around rhythm. Once you feel the swing, you can chain pin after pin and scoop up the stars that sit along the swing paths. The hero, the push-pins and all five scenes are our own hand-drawn art, and your best distance is saved on your device."
       ]
     },
     {
@@ -245,6 +264,10 @@
         "Grey keys on the keyboard are letters you can skip.",
         "A yellow letter is in the word, so try it in a new spot on your next guess.",
         "Save your hint for when you're down to your last couple of tries."
+      ],
+      "about": [
+        "Note Quest is a word-guessing game in the style of the daily word puzzles many families play together, drawn in pencil. Each note hides a secret word; type a guess and the letters light up to show which are right and in place, right but in the wrong spot, or not in the word at all.",
+        "Unlike a once-a-day puzzle, Note Quest keeps going. Words start at four letters and grow to six, and you have a limited supply of tries to spend on wrong guesses. The word list is family-friendly, and all the words are ones you would actually use."
       ]
     },
     {
@@ -279,6 +302,10 @@
         "Umbrella camps have towels, coolers, buckets and balls all close together. Swirl around them for a quick feast.",
         "Big things are worth lots of points, so head for them as soon as they fit.",
         "A banner tells you when a new kind of thing fits, so watch for it."
+      ],
+      "about": [
+        "Eraser Gulp is an eat-and-grow arcade game drawn in pencil. You start small enough to gulp the littlest things on the page, and every bite makes you a little bigger, until you can swallow things many times your starting size. Fill the size meter before the clock runs out to move on to a bigger, busier page.",
+        "It is silly in the best way. The moment you finally get big enough for the thing that has been in your way all level is the whole point, and younger players in particular seem to love it. The banner that tells you when a new kind of thing fits is worth watching."
       ]
     },
     {
@@ -314,6 +341,10 @@
         "Long rafts are the easiest to land on. Little tubes need good timing.",
         "Umbrellas, sandcastles, rocks and palm trees block the way, so plan around them.",
         "Don't wait too long. A few quick hops keep you well ahead of the rain."
+      ],
+      "about": [
+        "Sidewalk Hop is an endless hopping game in the tradition of road-crossing arcade games, starring Milo, a curly-haired kid with a red backpack. Hop one step at a time, dodge the cars, ice-cream vans and bikes, ride logs and crates across the creek, and keep moving, because a rainstorm is chasing you up the street.",
+        "Every run is different because the streets and creeks are generated as you go, and stars scattered along the way give you a reason to take the risky lane. Milo and his neighbourhood are our own pencil art, and your best distance is saved on your device."
       ]
     },
     {
@@ -347,6 +378,10 @@
         "Clearing one block often opens up room for the ones behind it.",
         "Long blocks need wide gates, so check the gate sizes before you start sliding.",
         "Every board can be solved, so if you feel stuck, try moving a different block out of the way."
+      ],
+      "about": [
+        "Paper Gates is a sliding-block puzzle on a sheet of graph paper. The board is packed with patterned coloured-pencil blocks, and the edges have matching gates; you drag each block past the others and out through its gate. Clear the whole board before the timer runs out to move on.",
+        "Every level is a freshly generated board, so there is nothing to memorise, and the boards grow as you progress. It sits somewhere between a sliding puzzle and a parking puzzle, and it is a good one for players who like to see the whole solution before they touch anything."
       ]
     },
     {
@@ -382,6 +417,10 @@
         "Look under the top colour. When it hops away, the colour below might match a neighbour and start a chain.",
         "Save the Wave for when the sandbar is nearly full.",
         "Don't fill every spot. An empty spot or two gives you room to move."
+      ],
+      "about": [
+        "Doodle Stacks is a colour-sorting puzzle on a little hexagon board. You drag a stack onto an empty space, and any neighbouring stacks with the same colour on top send their pieces hopping over one at a time. Build a stack of ten or more of one colour and it pops in a splash of points.",
+        "The board is small, so every placement matters, and later levels add new colours and blockers that get in the way. It is a thoughtful game with a satisfying pop at the end of every good chain. Keeping an empty spot or two free is the habit that separates a short game from a long one."
       ]
     },
     {
@@ -416,6 +455,10 @@
         "Long sweeping swipes through a bunch of fruit score big combos.",
         "Swipe around the sea urchins, not through them. Lift your finger if one is in the way.",
         "Golden starfruit is worth 50 points, and a beach ball slows everything down for a few seconds."
+      ],
+      "about": [
+        "Scribble Slice is a fruit-slicing arcade game drawn in pencil. Fruit leaps up into the frame and you swipe across it to cut it in half. Slice several in one stroke for a combo bonus, and steer clear of the spiky things that come up with it.",
+        "Rounds get faster and the fruit comes in bigger bunches the longer you last, so a good run turns into a flurry of swipes. It works especially well on a phone or tablet where you can swipe with a finger, and it is one of the quickest games on the site to pick up."
       ]
     },
     {
@@ -451,6 +494,10 @@
         "Find the longest words early, while the board is still full of letters to check.",
         "Find words quickly one after another for bonus points.",
         "You get one extra hint for every level you clear, so don't be afraid to use them."
+      ],
+      "about": [
+        "Sketch Search is a word search with a theme on every board and a list of words hidden in a grid of letter tiles. Drag from the first letter of a word to the last and it lights up and gets crossed off. Find every word before the timer runs out to move to the next board.",
+        "Boards start small with words running left to right and grow into larger grids with words hidden diagonally and backwards. It is a relaxed game that still gives you a reason to hurry, and the themed lists make it a nice one to play with kids who are learning to spell."
       ]
     },
     {
@@ -485,6 +532,10 @@
         "Use the walls! A bank shot off the driftwood is often the only way round a corner.",
         "Wait for the crab and the spinning umbrella to move out of the way before you putt.",
         "A hole in one wins back a lost shell, so it is worth going for it on the short holes."
+      ],
+      "about": [
+        "Pencil Putt is a top-down mini golf game with 36 holes. Pull back like a slingshot to aim and let go to putt, and try to finish each hole in as few strokes as you can. Walls, rocks, sand traps and water make up the basic course, and moving obstacles keep the later holes interesting.",
+        "After the full 36, the Back Nine Tour replays the course with everything moving faster. Your best scores per hole are saved on your device, so there is always a stroke or two left to shave off, and a well-judged bank shot off a wall is often the only way round a corner."
       ]
     },
     {
@@ -523,6 +574,10 @@
         "Deleting the first letter of a word takes back your previous word, so you can try another path.",
         "Save hints for the hard puzzles. You earn a new hint bulb every three puzzles you solve.",
         "Under par pays the most: each word you save is worth 150 bonus points."
+      ],
+      "about": [
+        "Letter Links is a word-chain puzzle with twelve chalk letters around a path in the park, three on each side. Each word you spell must hop between sides and must start with the last letter of the word before, and you win by turning every letter gold. Finish in par or fewer words for a bonus.",
+        "There are 72 hand-made puzzles across three difficulty levels. Beginner uses easy letters and a shorter list; Intermediate is the full run; Advanced brings in J, Q and Z with a four-letter minimum. It is a thinker's game that rewards a good vocabulary."
       ]
     },
     {
@@ -561,6 +616,10 @@
         "Wait until you're past something before you switch lanes, or you'll bump its side.",
         "A paper plane lets you fly over everything and grab a line of stars in the sky.",
         "A magnet pulls stars to you, and a bubble saves you from one bump."
+      ],
+      "about": [
+        "Sketch Sprint is the game that started Sketchpad Arcade. It began as a request to redraw our sister site's boardwalk runner to look like a ten-year-old had sketched it in a notebook, and the result was so much fun that we built a whole site around the idea. It is a fast endless runner with hard 90-degree corners through downtown, the backyard, the park, a creek and the woods.",
+        "Stars carry over between runs and unlock new runners, so there is always something to work toward. Power-ups like the paper plane, magnet, bubble and skateboard change how each run feels, and every 500 meters a new wave arrives, faster and worth more. The eight kids, the scenery and the power-ups are all our own pencil art."
       ]
     },
     {
@@ -596,6 +655,10 @@
         "Chain drops together for big points and a rainbow smash that even breaks scribbles.",
         "Watch the ink blots slide before you land near them.",
         "If you pop, Retry starts the same level again with the score you had when it began."
+      ],
+      "about": [
+        "Doodle Drop is a tower-falling game. A striped ball sits on top of a giant pencil ringed with paper discs, and you drag to spin the pencil so the ball can drop through the gaps. Spiky pink scribbles and sliding ink blots on the rings end your run if you land on them.",
+        "The rainbow mechanic rewards nerve: fall through three rings in a row without touching anything and the ball glows and smashes straight through the next ring, scribbles included. It is a quick game with a very satisfying rhythm once you find it."
       ]
     },
     {
@@ -631,6 +694,10 @@
         "Look before you pull a stick's second-to-last tack. It will swing down and may cover tacks below it.",
         "Every cup shows its tack's symbol, so you can match by shape as well as color.",
         "Save +1 slot for when the pencil case is almost full."
+      ],
+      "about": [
+        "Pencil Plunk is a pin-pulling puzzle on a corkboard. Popsicle sticks are pinned down with bright thumbtacks; tap a tack that no stick is lying on and it pops out and flies into the paper cup of its colour. When a stick loses its last tack it plunks onto the desk, and a little ink-drop buddy cheers.",
+        "Tacks with no cup wait in the pencil case, and if the case fills up the level is lost, so the whole game is about choosing the right order. Early boards are gentle; later ones stack sticks several deep and need a careful look before the first tap."
       ]
     },
     {
@@ -668,6 +735,10 @@
         "Head for your fort when the sprinkler warning appears so you're not stuck in the spray.",
         "Leo's box shield blocks every hit for a moment: pop it when two rivals close in.",
         "Showdown wins pay 3 bonus stars, so pick fights when your health is high."
+      ],
+      "about": [
+        "Draw Brawl is a two-minute backyard arena where you and three computer rivals compete for the same gold stars. You pick Max, Ruby or Leo, scoop stars and carry them home to your own cardboard fort, where they are banked and safe. Get splatted by a rival on the way and you drop what you are carrying.",
+        "Every 25 seconds the sprinklers soak the outer lanes, so the shortest route is not always the safest one. The rivals are tuned to feel like other players rather than a rigged clock, and the kids, the forts and the paint-splat arena are our own pencil art."
       ]
     },
     {
@@ -700,6 +771,10 @@
         "Coins come from every hit, with bullseyes and bonus sand dollars paying the most.",
         "Out of darts? Keep playing for 50 coins gives you one more dart, once per game.",
         "Beat Gull, Crab, Clownfish and the rest of the beach friends on the way to the Whale."
+      ],
+      "about": [
+        "Doodle Darts is a one-tap timing game that we built to be played in short bursts. Your aim never stops moving over the target, so the whole game lives in the moment you tap. Hit near the centre and the target shatters; hit the gold spot for a bullseye and a combo boost.",
+        "A row of opponents each has a score to beat, and knocking them off one by one gives the game a sense of progress beyond the raw number. It is easy to learn in ten seconds and hard to put down, which is exactly what we were after."
       ]
     },
     {
@@ -734,6 +809,10 @@
         "Shuffle when you feel stuck. Seeing the letters in a new order often shows you a word right away.",
         "Try every word you can see. Real words that don't fit the grid still earn bonus points and fill the Bonus meter.",
         "The level's name is always one of the answers, and it uses every letter on the wheel."
+      ],
+      "about": [
+        "Word Workshop is a letter-wheel crossword game. Each level gives you a handful of letters on a wheel and a small crossword above it; drag across letters to spell words, and the ones in the puzzle drop into place. Any real word you find counts, so extra words still earn points.",
+        "We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device, and the word list is family-friendly."
       ]
     },
     {
@@ -766,6 +845,10 @@
         "Bank shots off the walls to reach gaps you can't hit directly.",
         "Dropping a big hanging cluster is worth far more than popping.",
         "Watch the new-row counter and clear the lowest rows first."
+      ],
+      "about": [
+        "Bubble Doodle is Sketchpad Arcade's bubble shooter. The glowing aim line shows exactly where your shot will land, including after a bounce off the wall, which makes the game friendly for younger players while still rewarding the tricky bank shots older players like to set up.",
+        "Popping a group of three or more clears it, but the real points come from the bubbles left hanging underneath, which drop away in a cascade. The rows creep down a little at a time, so there is always a reason to plan two or three shots ahead."
       ]
     },
     {
@@ -802,6 +885,10 @@
         "If a word fits two groups, save it for last and work out which group needs it.",
         "Some groups are word puzzles, like words that go before FISH or words that sound like letters.",
         "Use Shuffle when you feel stuck. Seeing the words in a new order often helps."
+      ],
+      "about": [
+        "Four in a Frame is a word-grouping puzzle. Sixteen words hide four groups of four; your job is to find the groups. Some are obvious, like animals or colours, and some are sneaky, with words that seem to belong in two groups at once or groups that are really word puzzles in disguise.",
+        "We wrote it for the whole family to play together on one screen, calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give younger players a way in."
       ]
     },
     {
@@ -835,6 +922,10 @@
         "Uncover the tall stacks early so the dark tiles don't trap you at the end.",
         "Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.",
         "Your level is saved, so you can come back later and carry on."
+      ],
+      "about": [
+        "Margin Match is a tile-matching puzzle in the style of the popular triple-match games, piled high with sketchbook doodles. Tiles are stacked in overlapping layers, and only tiles with nothing on top can be picked. Tap one and it hops into a seven-slot tray; collect three of a kind and they clear.",
+        "Clearing the whole pile with a seven-slot tray takes a little planning, because grabbing two of something you cannot finish is the fastest way to run out of room. The pencils, paperclips and other doodles are our own drawings, and your level is saved so you can come back to it."
       ]
     },
     {
@@ -868,6 +959,10 @@
         "Matching quickly builds a combo multiplier up to x5.",
         "From level 4, tiles slide after each match, so think one move ahead.",
         "Save your hints for the bigger boards."
+      ],
+      "about": [
+        "No. 2 Pencil is our take on the classic tile-connecting puzzle, sometimes called a link-link or mahjong-connect game, drawn entirely in plain pencil. Every tile is a classroom doodle, an apple, a globe, a school bus, a trophy, and it colours in when you tap it. Two matching tiles clear if a path with no more than two turns joins them.",
+        "We built it with a short timer and a quick restart so it works as well in a two-minute wait as in a longer sitting. From level 4 the tiles slide after each match, which turns a relaxed game into a sharper one, and linking tiles that are far apart earns extra stars."
       ]
     },
     {
@@ -899,6 +994,10 @@
         "Keep the middle of the board open for the big square pieces.",
         "Avoid leaving single empty cells that only a 1x1 piece can fill.",
         "Clearing several lines at once, or on back-to-back moves, multiplies your score."
+      ],
+      "about": [
+        "Scribble Blocks is a block-placing puzzle in the style of a 1010-type game, with bright coloured-pencil pieces outlined in black. You get three pieces at a time, place them anywhere on the 8x8 board, and clear full rows or columns. There is no timer and no falling pieces, so it suits players who like to think before they move.",
+        "The twist is the gold stars. Some pieces carry star blocks that are worth extra when they clear, and the game ends only when none of your three pieces fit. Learning to keep a corner open for the long bar is the difference between a short game and a very long one."
       ]
     },
     {
@@ -932,6 +1031,10 @@
         "Make an L or T shape to make scissors that snip the tiles around them.",
         "Match 5 in a line to make a paint palette. Swap it with any tile to clear every tile of that kind.",
         "Wait a few seconds and two tiles will pulse to show you a move."
+      ],
+      "about": [
+        "Drop Swap is a 30-level match-3 puzzle with a different goal on every board, drawn in coloured pencil with classroom tiles: apples, pencils, books, backpacks, crayons and star stickers. Each level gives you a fixed number of moves, so it rewards planning over fast swiping.",
+        "Lining up four or five tiles makes special pieces, a ruler that clears a line, scissors that snip the tiles around them, a paint palette that clears every tile of one kind. The stars you earn decorate your classroom, and progress is saved on your device."
       ]
     },
     {
@@ -963,6 +1066,10 @@
         "Start with pencils on the edges pointing out. They always have a clear path.",
         "Before tapping, trace the pencil's line all the way to the edge of the page.",
         "Finish without any bumps to earn all 3 stars."
+      ],
+      "about": [
+        "Pencil Path is a gentle logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so the whole puzzle is about order: which pencil can slide off the page right now, and which ones are blocking each other.",
+        "There is no clock. You can study the page as long as you like, but you only have a few hearts, and every bump costs one. Early pages have a handful of pencils; later ones pack the paper with crisscrossing lines that take real thought to untangle, and a clean solve earns all three stars."
       ]
     },
     {
@@ -996,6 +1103,10 @@
         "Zap the power star for 12 seconds of an extra laser stream.",
         "Watch for goo and slide out of the way. It falls toward where you were.",
         "You earn an extra ship at 20,000 points and again at 70,000."
+      ],
+      "about": [
+        "Space Blaster is a nod to the fixed-screen arcade shooters of the early 1980s, drawn on grid paper. UFOs of every shape and size line up in formation and then peel off to dive at your little rocket, and you answer with rapid laser bolts while dodging their alien goo.",
+        "Each level adds faster dives and a shielded mothership to crack, and your lasers get a little quicker as you go. It is a game of pattern reading: learn when each UFO breaks formation and you can clear whole waves without a scratch, and diving UFOs are worth double for the brave."
       ]
     },
     {
@@ -1028,6 +1139,10 @@
         "The small number on each color shows how many squares are left.",
         "Tap a square with a different number and the game shows you which color it needs.",
         "Finished pictures are saved in the Pictures collection on the start screen."
+      ],
+      "about": [
+        "Space Glass is a colour-by-number puzzle on grid paper. Every level is a detailed pixel picture from outer space, a rocket, an astronaut, a UFO, a ringed planet, a galaxy, and you fill it in by picking a numbered colour and tapping or dragging across the matching squares, zooming in for the small details.",
+        "It is one of the calmest games on the site and a favourite for anyone who likes to wind down. Dragging skips squares of other colours, so big areas go fast, and finished pictures stay in your collection on your device so you can look back at them."
       ]
     },
     {
@@ -1060,6 +1175,10 @@
         "Zoom in on busy spots so it's easier to tap exactly the square you want.",
         "Finish a picture without boosters for 5 bonus coins.",
         "Finished pictures are saved in My pictures on the start screen."
+      ],
+      "about": [
+        "Chibi Chib is a sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour, and each square shows the colour it wants. You pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.",
+        "The small tray is the whole strategy. It has only a few slots, so you cannot simply scoop everything up; you have to plan a route that frees the right squares in the right order. Finish a picture without boosters for bonus coins, and finished pictures are saved in My Pictures."
       ]
     },
     {
@@ -1094,6 +1213,10 @@
         "Keep vowels spread around the box so every group of letters has something to spell with.",
         "Longer words score much more than short ones, so build up before you cash in.",
         "Save your wild gold star for the star word or a long word."
+      ],
+      "about": [
+        "Word Scribble mixes two things we love, merge games and word games, in a single pencil box. Letters fall in colour-coded groups that each spell a hidden word, and matching letters that touch merge into a bigger letter worth more points. You clear space by swiping across nearby letters to spell words.",
+        "The tension comes from the fill line. Spell enough words and the level clears; let the box fill and the game ends. It rewards both vocabulary and a sharp eye for where the next letter will land, and the word list is family-friendly."
       ]
     }
   ]

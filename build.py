@@ -128,6 +128,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
 .prose h2{font-size:1.5rem;margin:28px 0 8px}
 .prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
 section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
@@ -164,7 +177,12 @@ def sister_btn(cls="sharebtn sisterbtn"):
     if not x: return ""
     return f'<a class="{cls}" href="{E(x["url"])}" title="Play the same games at {E(x["name"])}" aria-label="Visit {E(x["name"])}">{SISTER_ICON}<span>{E(x["short"])}</span></a>'
 
-def page(title, desc, body, active="", full=True, canonical=None, extra_head="", share=None):
+def footlink(rel, p, name, current):
+    cur = ' aria-current="page"' if current else ""
+    return f'<li><a href="{rel}{p}.html"{cur}>{name}</a></li>'
+
+def page(title, desc, body, active="", full=True, canonical=None, extra_head="", share=None, rel=""):
+    """rel is the path back to the site root from this page ("" at the root, "../" inside news/)."""
     share = share or site_share()
     t = E(title)
     base = SITE.get("url", "").rstrip("/")
@@ -175,12 +193,13 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
     extra_head = '<meta name="twitter:card" content="summary_large_image">\n' + extra_head
     head = f'<title>{t}</title>\n{canon}{icons}{ADSENSE}{ANALYTICS}{SHARE_CSS}\n<meta name="description" content="{E(desc)}">\n<meta property="og:title" content="{t}">\n<meta property="og:description" content="{E(desc)}">\n{FONTS}\n{extra_head}<style>{CSS}</style>\n{PAPER_STYLE}\n'
     nav = f'''<div class="top"><nav class="wrap nav" aria-label="Main">
-<a class="logo" href="index.html">{LOGO_SVG}<span>{E(SITE["name"])}</span></a>
-<div class="navr"><a class="sharebtn homebtn" href="index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
+<a class="logo" href="{rel}index.html">{LOGO_SVG}<span>{E(SITE["name"])}</span></a>
+<div class="navr"><a class="sharebtn homebtn" href="{rel}index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
 <button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button>{sister_btn()}</div>
 </nav></div>'''
-    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}.<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>'''
+    links = [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
+    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.</span>
+<ul>{"".join(footlink(rel, p, n, active == p) for p, n in links)}</ul></div></footer>'''
     content = f"{nav}\n<main>{body}</main>\n{foot}\n{SHARE_JS}"
     if not full:  # fragment for the claude.ai preview, which supplies its own document shell
         return head + content
@@ -210,6 +229,7 @@ def home(full=True):
 {"".join(f'<section class="row" id="row-genre-{E(x.lower())}" hidden><h2 class="sec">{E(x)} Games</h2><div class="strip"></div></section>' for x in genres)}
 <section class="row" id="row-rest"><h2 class="sec" hidden>More Games</h2><div class="grid" id="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
 {also}
+{home_outro()}
 </div>
 <script>
 /* Home rows. Without JavaScript (or before the counts load) every game shows A to Z in the grid.
@@ -296,19 +316,141 @@ def detail(g):
     return page(g.get("title") or f'{g["name"]}: play free online | {SITE["name"]}', g["meta"], body, "games", canonical=g["slug"], share=game_share(g),
                 extra_head=(f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/img/{g["slug"]}.jpg">\n' if SITE.get("url") else ""))
 
+POSTS = json.loads((ROOT / "posts.json").read_text())["posts"] if (ROOT / "posts.json").exists() else []
+POSTS.sort(key=lambda x: x["date"], reverse=True)
+BY_SLUG = {g["slug"]: g for g in GAMES}
+
+def nice_date(d):
+    import datetime
+    return datetime.date.fromisoformat(d).strftime("%B %-d, %Y")
+
+def gamelinks(text, rel=""):
+    """Turn {{slug}} into a link to that game's page (plain name if the slug isn't on the site)."""
+    def sub(m):
+        g = BY_SLUG.get(m.group(1))
+        return f'<a href="{rel}{g["slug"]}.html">{E(g["name"])}</a>' if g else E(m.group(1))
+    return re.sub(r"\{\{([a-z0-9-]+)\}\}", sub, E(text))
+
+def home_outro():
+    n = len(GAMES)
+    genres = sorted({g["genre"] for g in GAMES})
+    latest = POSTS[:3]
+    news = "".join(f'<li><a href="news/{E(x["slug"])}.html">{E(x["title"])}</a> <span class="date">{E(nice_date(x["date"]))}</span></li>' for x in latest)
+    sis = SITE.get("sister", {})
+    return f"""<section class="prose homeabout">
+<h2>What is {E(SITE["name"])}?</h2>
+<p>{E(SITE["name"])} is a collection of {n} free, original browser games drawn to look like a page from a kid's sketchbook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
+<p>The games fall into {len(genres)} groups: {", ".join(E(x) for x in genres)}. Arcade games are the quick ones about timing and reflexes, puzzle games are about thinking a few moves ahead, and word games are about spelling, guessing and sorting. Each game has its own page with a short guide on how to play, the controls, a few tips and a note on how it was made, so you can see what a game is like before you press play.</p>
+<p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own. We are a family studio, and the first question about every game is whether we would want our own kids playing it: no violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
+<h2>Latest from the studio</h2>
+<ul class="newslist">{news}</ul>
+<p><a href="news.html">All news and updates</a></p>
+</section>"""
+
 def about():
-    body = f'''<div class="wrap prose">
+    n = len(GAMES)
+    sis = SITE.get("sister", {})
+    body = f"""<div class="wrap prose">
 <h1>About {E(SITE["name"])}</h1>
-<p>{E(SITE["name"])} is a small collection of free browser games made by {E(SITE["owner"])}, an independent studio. Every game is drawn to look like a page from a kid\'s sketchbook: pencil lines on paper, with a little coloured pencil where it counts. They are the sister games of our Beach Day Arcade, built to be quick to pick up and clean enough for the whole family.</p>
+<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn to look like a page from a kid's sketchbook: dark pencil outlines on paper, with bright coloured pencil inside. They are built to be quick to pick up, pleasant to look at and clean enough for the whole family. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
+<h2>Who makes it</h2>
+<p>{E(SITE["name"])} is run by a dad of four who has worked as a graphic designer for twenty years and makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if a ten-year-old had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
 <h2>What you can expect</h2>
 <ul><li>Games that run in your browser on a phone, tablet or computer, with nothing to install.</li>
 <li>No accounts or sign-ups. Your progress and best scores are saved on your own device.</li>
-<li>No violence, no mature content and no chat with strangers.</li>
-<li>New games added regularly.</li></ul>
+<li>No violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers.</li>
+<li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
+<li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
+<li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
+<h2>How a game gets here</h2>
+<p>New games start on a private preview where we play them, usually with the kids, for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
+<h2>Ads</h2>
+<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never inside the games themselves and never ads that would be out of place on a family site. Our <a href="privacy.html">privacy policy</a> explains what that means for you.</p>
+<h2>Contact</h2>
+<p>{E(SITE["contact_text"])} There is more on the <a href="contact.html">contact page</a>.</p>
+</div>"""
+    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}: who makes these free, family-friendly sketchbook games, the rules every game follows and how to get in touch.', body, "about", canonical="about")
+
+def contact():
+    email = SITE.get("contact_email", "hello@sketchpadarcade.com")
+    sis = SITE.get("sister", {})
+    body = f"""<div class="wrap prose">
+<h1>Contact</h1>
+<p>We read every message. The best way to reach {E(SITE["name"])} is by email at <a href="mailto:{E(email)}">{E(email)}</a>.</p>
+<h2>Found a bug?</h2>
+<p>Tell us which game, what device and browser you were using, and what happened. A screenshot or a short screen recording helps a lot. We usually fix game-breaking bugs within a few days.</p>
+<h2>Have an idea for a game?</h2>
+<p>We would love to hear it. Most of the games on the site started as a one-line idea, and some of the best ones were suggested by players and by our own kids.</p>
+<h2>Parents and teachers</h2>
+<p>If you have a question about whether a game is suitable for your child or classroom, or you spotted something you think should not be on a family site, please let us know and we will look into it right away.</p>
+<h2>Business and press</h2>
+<p>For partnership, licensing, press or advertising questions, use the same address with a short note about what you have in mind. {E(SITE["name"])} is owned by {E(SITE["owner"])}, {E(SITE.get("location", "Pensacola, Florida"))}.</p>
+<h2>Elsewhere</h2>
+<p>The painted, full-colour originals of most of these games live at <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and we post short gameplay clips on YouTube at <a href="https://www.youtube.com/@BeachDayArcade" rel="noopener">@BeachDayArcade</a>.</p>
+</div>"""
+    return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas, parent questions or business inquiries.', body, "contact", canonical="contact")
+
+def terms():
+    body = f"""<div class="wrap prose">
+<h1>Terms of use</h1>
+<p><strong>Last updated:</strong> {E(SITE.get("terms_date", SITE["policy_date"]))}</p>
+<p>Welcome to {E(SITE["name"])}, a website operated by {E(SITE["owner"])} ("we"). By using this site and playing the games on it, you agree to these terms. They are short because the site is simple.</p>
+<h2>Using the games</h2>
+<p>The games are free for personal, non-commercial use. You may play them as much as you like, share links to them, and record or stream your own play. You may not copy the games, their code, art, characters or text to other websites or apps, sell them, or present them as your own.</p>
+<h2>Our content</h2>
+<p>Everything on this site, including the games, characters, artwork, names, word lists and writing, is the original work of {E(SITE["owner"])} and is protected by copyright. {E(SITE["name"])} and the game names are our trademarks. Game mechanics and genres are not ours to claim, and we make no such claim.</p>
+<h2>Accounts and saved data</h2>
+<p>There are no accounts. Scores, progress and settings are stored in your own browser. Clearing your browser's site data removes them, and we cannot restore them.</p>
+<h2>Ads and links</h2>
+<p>We may show ads to keep the games free, and we link to a small number of other sites, including our sister site. We are not responsible for the content of third-party sites or ads, and a link does not mean we endorse what is on the other side of it.</p>
+<h2>No warranty</h2>
+<p>The site and games are provided as they are. We work hard to keep them bug-free and available, but we cannot promise that they will always work on every device or browser, and we are not liable for any loss arising from your use of the site. Where the law does not allow that limitation, our liability is limited to the fullest extent it does allow.</p>
+<h2>Changes</h2>
+<p>We may update these terms from time to time. The date at the top shows when they last changed. Continuing to use the site after a change means you accept the new terms.</p>
 <h2>Contact</h2>
 <p>{E(SITE["contact_text"])}</p>
-</div>'''
-    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}, a collection of free, family-friendly browser games.', body, "about", canonical="about")
+</div>"""
+    return page(f'Terms of use | {SITE["name"]}', f'The terms for playing the free games on {SITE["name"]}.', body, "terms", canonical="terms")
+
+def post_body(x, rel):
+    out = []
+    for para in x["body"]:
+        if para.startswith("## "):
+            out.append(f"<h2>{E(para[3:])}</h2>")
+        else:
+            out.append(f"<p>{gamelinks(para, rel)}</p>")
+    return "".join(out)
+
+def post(x):
+    rel = "../"
+    body = f"""<div class="wrap prose">
+<div class="crumbs"><a href="{rel}index.html">All games</a> / <a href="{rel}news.html">News</a></div>
+<h1>{E(x["title"])}</h1>
+<p class="date">{E(nice_date(x["date"]))}</p>
+{post_body(x, rel)}
+<p class="backlink"><a href="{rel}news.html">More news</a> · <a href="{rel}index.html">All games</a></p>
+</div>
+<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@type": "BlogPosting", "headline": x["title"], "datePublished": x["date"], "description": x["summary"], "author": {"@type": "Organization", "name": SITE["owner"]}, "publisher": {"@type": "Organization", "name": SITE["name"]}})}</script>"""
+    return page(f'{x["title"]} | {SITE["name"]}', x["summary"], body, "news", canonical=f'news/{x["slug"]}', rel=rel,
+                share=share_attrs(f'{SITE.get("url", "").rstrip("/")}/news/{x["slug"]}', x["title"], x["summary"]))
+
+def news():
+    items = "".join(f"""<li><h2><a href="news/{E(x["slug"])}.html">{E(x["title"])}</a></h2><p class="date">{E(nice_date(x["date"]))}</p><p>{E(x["summary"])}</p></li>""" for x in POSTS)
+    body = f"""<div class="wrap prose">
+<h1>News and updates</h1>
+<p>What is new on {E(SITE["name"])}: new games, what changed in old ones, and notes from the studio on how the games get drawn.</p>
+<ul class="newsindex">{items}</ul>
+</div>"""
+    return page(f'News | {SITE["name"]}', f'New games, updates and notes from the {SITE["name"]} studio.', body, "news", canonical="news")
+
+def not_found():
+    body = f"""<div class="wrap prose">
+<h1>That page got erased</h1>
+<p>We could not find the page you were looking for. It may have moved, or the link may have a typo in it.</p>
+<p><a class="btn" href="index.html">All games</a></p>
+<p>Or try one of these: {", ".join(f'<a href="{E(g["slug"])}.html">{E(g["name"])}</a>' for g in GAMES[:6])}.</p>
+</div>"""
+    return page(f'Page not found | {SITE["name"]}', "That page could not be found.", body, extra_head='<meta name="robots" content="noindex">\n')
 
 def privacy():
     body = f'''<div class="wrap prose">
@@ -565,6 +707,13 @@ def build():
     (OUT / "index.html").write_text(home())
     (OUT / "about.html").write_text(about())
     (OUT / "privacy.html").write_text(privacy())
+    (OUT / "contact.html").write_text(contact())
+    (OUT / "terms.html").write_text(terms())
+    (OUT / "news.html").write_text(news())
+    (OUT / "404.html").write_text(not_found())
+    (OUT / "news").mkdir()
+    for x in POSTS:
+        (OUT / "news" / f'{x["slug"]}.html').write_text(post(x))
     (OUT / "reel.html").write_text(reel_page())
     (OUT / "reel.webmanifest").write_text(json.dumps(REEL_MANIFEST, indent=2) + "\n")
     for g in GAMES:
@@ -576,7 +725,7 @@ def build():
     (OUT / "vercel.json").write_text(json.dumps({"cleanUrls": True}, indent=2) + "\n")
     url = SITE.get("url", "").rstrip("/")
     if url:
-        pages = ["", "about", "privacy"] + [g["slug"] for g in GAMES]
+        pages = ["", "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
         (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
             "".join(f"  <url><loc>{url}/{p}</loc></url>\n" for p in pages) + "</urlset>\n")
         (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {url}/sitemap.xml\n")
