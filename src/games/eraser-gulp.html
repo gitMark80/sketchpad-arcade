@@ -430,7 +430,7 @@ function drawHoleTop(h,t){
 function whirlArt(){return ok(ART.swirl)&&ok(ART.face)}
 // the swirl spins; falling things sink into its dark middle; the face stays upright on top and glances the way you move
 function drawSwirl(h){const r=h.vr*(1+h.pulse*.06),D=r*2.34;ctx.save();ctx.translate(h.x,h.y);ctx.rotate(-h.spin*.8);ctx.drawImage(ART.swirl,-D/2,-D/2,D,D);ctx.restore()}
-function drawFace(h){const r=h.vr*(1+h.pulse*.06),F=r*2.34*.377,lx=Math.max(-1,Math.min(1,h.vx/220))*r*.07,ly=Math.max(-1,Math.min(1,h.vy/220))*r*.07;
+function drawFace(h){const r=h.vr*(1+h.pulse*.06),F=r*2.34*.6,lx=Math.max(-1,Math.min(1,h.vx/220))*r*.07,ly=Math.max(-1,Math.min(1,h.vy/220))*r*.07;
   ctx.save();ctx.translate(h.x+lx,h.y+ly);ctx.scale(1+h.pulse*.1,1+h.pulse*.16);ctx.drawImage(ART.face,-F/2,-F/2,F,F);ctx.restore()}
 function drawBg(t){
   // sea around the edges of the beach
