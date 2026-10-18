@@ -278,7 +278,8 @@ let parts=[],floaters=[];
 const TILE_COLS=['#f6f3ea','#e4ebf2','#f5efd6','#f2e3ea','#e6efe4','#ece6f1'];
 /* Mark's hand-drawn art (pencil versions); the tiles themselves are drawn in code as torn paper squares */
 const ART={},ART_DIR='../assets/letter-scramble/';
-['tray','sparkle'].forEach(n=>{const im=new Image();im.onload=()=>{try{drawMini()}catch(e){}};im.src=ART_DIR+n+'.webp';ART[n]=im});
+['tray','sparkle','tile-plain','tile-blue','tile-yellow','tile-pink','tile-green','tile-purple','tile-star','highlighter-stroke'].forEach(n=>{const im=new Image();im.onload=()=>{try{drawMini()}catch(e){}};im.src=ART_DIR+n+'.webp';ART[n]=im});
+const TILE_IMG=['tile-plain','tile-blue','tile-yellow','tile-pink','tile-green','tile-purple'];
 const img=n=>{const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null};
 let sparks=[];
 
@@ -463,7 +464,7 @@ function buildTray(){const c=document.createElement('canvas');c.width=c.height=M
   const r=S*.07,ti=img('tray');trayArt=!!ti;
   if(ti){/* the tray drawing is square (the file carries a sliver of junk past 291px); scale it up a touch so its rim sits just outside the tiles */
     x.fillStyle='rgba(46,46,51,.18)';rr(x,S*.012,S*.016,S,S-S*.012,r*.8);x.fill();
-    x.save();rr(x,0,0,S,S-S*.012,r*.8);x.clip();const k=1.08,sz=S*k,o=(S-sz)/2;x.drawImage(ti,0,0,291,291,o,o,sz,sz);x.restore();
+    x.save();rr(x,0,0,S,S-S*.012,r*.8);x.clip();const k=1.08,sz=S*k,o=(S-sz)/2;x.drawImage(ti,o,o,sz,sz);x.restore();
     trayCv=c;traySize=S;return}
   /* fallback: a wooden desk tray drawn in pencil */
   x.fillStyle='rgba(46,46,51,.18)';rr(x,S*.012,S*.016,S,S-S*.012,r);x.fill();
@@ -488,6 +489,14 @@ function drawShell(i,sel,k){
   if(sel){fill=k==='ok'?GREEN_WASH:k==='dup'?GOLD_WASH:k==='no'?'#dedcd4':'#f3e6b0'}
   const edge=sel?(k==='ok'?GREEN:k==='dup'?GOLD:k==='no'?GRAPH:INK):INK;
   ctx.save();ctx.translate(x,y);ctx.rotate(tilt);
+  const ti=img(gold?'tile-star':TILE_IMG[colors[i]]);
+  if(ti){/* Mark's drawn tile: shadow, picture, then a coloured outline / wash when selected */
+    ctx.fillStyle='rgba(46,46,51,.2)';torn(ctx,-w/2+w*.05,-h/2+h*.07,w,h,i);ctx.fill();
+    ctx.drawImage(ti,-w/2,-h/2,w,h);
+    if(sel){ctx.globalAlpha=.45;ctx.fillStyle=fill;ctx.fillRect(-w/2,-h/2,w,h);ctx.globalAlpha=1;ctx.lineJoin='round';ctx.lineWidth=Math.max(2.5,w*.05);ctx.strokeStyle=edge;ctx.strokeRect(-w/2+1,-h/2+1,w-2,h-2)}
+    if(gold&&!RM){const sp=img('sparkle'),pu=(Math.sin(T*3+1)+1)/2,ss=w*.3*(.7+.3*pu);ctx.globalAlpha=.45+.55*pu;
+      if(sp)ctx.drawImage(sp,w*.22-ss/2,-h*.42-ss/2,ss,ss*sp.naturalHeight/sp.naturalWidth);else sparkle(w*.28,-h*.3,ss*.4);ctx.globalAlpha=1}
+    ctx.restore();drawLetter(i,sel,k,s);return}
   /* drop shadow, then the torn square */
   ctx.fillStyle='rgba(46,46,51,.2)';torn(ctx,-w/2+w*.05,-h/2+h*.07,w,h,i);ctx.fill();
   ctx.fillStyle=fill;torn(ctx,-w/2,-h/2,w,h,i);ctx.fill();
@@ -515,8 +524,11 @@ function drawRope(p,k,alpha){
   if(p.length<2)return;const [c1,c2]=LINECOL[k]||LINECOL[''];ctx.save();ctx.globalAlpha=alpha;ctx.lineJoin='round';ctx.lineCap='round';
   const pts=p.map(i=>[cx(i),cy(i)+CELL*.02]);
   const line=()=>{ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let j=1;j<pts.length;j++)ctx.lineTo(pts[j][0],pts[j][1])};
-  /* fat highlighter stroke, then a pencil line down the middle */
-  line();ctx.strokeStyle=c1;ctx.lineWidth=CELL*.22;ctx.stroke();
+  /* fat highlighter stroke (Mark's drawn swipe, one per segment), then a pencil line down the middle */
+  const hi=img('highlighter-stroke');
+  if(hi){for(let j=1;j<pts.length;j++){const [x0,y0]=pts[j-1],[x1,y1]=pts[j],dx=x1-x0,dy=y1-y0,len=Math.hypot(dx,dy)+CELL*.3,hh=CELL*.3;
+      ctx.save();ctx.translate((x0+x1)/2,(y0+y1)/2);ctx.rotate(Math.atan2(dy,dx));ctx.globalAlpha=alpha*(k==='no'?.35:.8);ctx.drawImage(hi,-len/2,-hh/2,len,hh);ctx.restore()}}
+  else{line();ctx.strokeStyle=c1;ctx.lineWidth=CELL*.22;ctx.stroke()}
   line();ctx.strokeStyle=c2;ctx.lineWidth=Math.max(2,CELL*.035);ctx.stroke();
   ctx.restore()}
 function drawDots(p,k,alpha){const [,c2]=LINECOL[k]||LINECOL[''];ctx.save();ctx.globalAlpha=alpha;

@@ -338,10 +338,10 @@ function symSprite(ci,size){ // a paper doodle with an ink outline, cached per s
 /* ---------- Mark's hand-drawn art, pencilled (the code-drawn jar stays as the fallback until each file loads) ---------- */
 const ART={},ART_DIR='../assets/ink-jars/';
 function loadArt(n){const im=new Image();im.onload=()=>{if(state==='menu')drawMini()};im.src=ART_DIR+n+'.webp';ART[n]=im}
-['jar','cork','ledge','splash'].forEach(loadArt);
+['jar','cork','ledge','splash'].concat(COLORS.map(c=>'badge-'+c.s)).forEach(loadArt);
 function art(n){const im=ART[n];return im&&im.complete&&im.naturalWidth?im:null}
 /* jar.webp: lip+neck+shoulder are the top 80 rows, base the bottom 79; the straight middle stretches to the jar's height */
-const JAR_IMG={w:163,h:294,top:80,bot:79};
+const JAR_IMG={w:163,h:294,top:117,bot:72};
 const badgeCache={};
 function badgeSprite(ci,size){ // a colour's badge drawing, cached per size (null when that colour has no drawing; the doodles above are used instead)
   const im=art('badge-'+COLORS[ci].s);if(!im)return null;
@@ -556,7 +556,11 @@ function drawJar(g,Gm,o,base){
   // glass back (a hair lighter than the paper, so the glass reads as glass)
   bodyPath(g,Gm,0);g.fillStyle='rgba(255,255,255,.35)';g.fill();
   // ink
-  g.save();bodyPath(g,Gm,jarIm?t*.45:t);g.clip();
+  g.save();
+  if(jarIm){ // clip the ink to Mark's bottle: straight sides, then a shoulder that tapers to the neck
+    const J=JAR_IMG,s=W/J.w,th=J.top*s,TH=BH+NH+LPH+W*.06,ys=-TH+W*.03+th,hw=W*.47,nw=W*.27,sh=W*.3;
+    g.beginPath();g.moveTo(-hw,W*.1);g.lineTo(hw,W*.1);g.lineTo(hw,ys);g.quadraticCurveTo(hw,ys-sh*.75,nw,ys-sh);g.lineTo(nw,-TH);g.lineTo(-nw,-TH);g.lineTo(-nw,ys-sh);g.quadraticCurveTo(-hw,ys-sh*.75,-hw,ys);g.closePath();g.clip()}
+  else{bodyPath(g,Gm,t);g.clip()}
   const L=o.layers;let tot=0;for(const l of L)tot+=l[1];
   if(tot>0.001){
     if(Math.abs(rot)<.002){
