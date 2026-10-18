@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta name="robots" content="noindex">
+<title>Ink Jars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Ink Jars, sketchbook edition: the same portrait column (title row, HUD card with level, score, best and the sorted bar, the paper desk
+   playfield with glass ink bottles, then a dock of tool buttons) drawn in pencil on cream paper. Coloured pencil only on the ink itself,
+   which the player has to sort by colour. */
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+button{font-family:inherit;color:inherit;cursor:pointer}
+.app{height:100%;max-width:560px;margin:0 auto;padding-inline:16px;padding-block:10px 12px;display:flex;flex-direction:column;gap:8px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);overflow:hidden;text-overflow:ellipsis;line-height:1;margin:0;letter-spacing:.04em;white-space:nowrap;
+  color:var(--ink);text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center}
+.iconbtn{appearance:none;border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 1rem var(--body);min-height:44px;
+  border-radius:var(--wob);padding:8px 12px;box-shadow:2px 2px 0 var(--pencil);display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex:none}
+.iconbtn svg{width:18px;height:18px;flex:none}
+.iconbtn:focus-visible,.gold:focus-visible,.alt:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:none}
+.iconbtn:disabled{opacity:.5;cursor:default}
+.iconbtn.hot{background:var(--yellow-wash);border-color:var(--yellow);animation:nudge 1.2s ease-in-out infinite}
+@keyframes nudge{50%{transform:scale(1.06)}}
+.count{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:var(--wob2);border:1.5px solid var(--ink);background:var(--yellow-wash);color:var(--ink);font-size:.8rem;padding:0 5px}
+.iconbtn:disabled .count{background:var(--paper-2);border-color:var(--faint)}
+.hud{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px 12px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:8px 14px 10px;box-shadow:3px 3px 0 var(--pencil)}
+.stat{display:flex;flex-direction:column;gap:3px;min-width:0}
+.stat small{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.stat b{font-family:var(--display);font-weight:400;font-size:1.45rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat.mid{align-items:center}
+.stat.mid b{font-size:1.7rem;color:var(--orange)}
+.stat.end{align-items:flex-end}
+.stat b.pop{animation:pop .25s}
+@keyframes pop{50%{transform:scale(1.18)}}
+.prog{grid-column:1/-1;position:relative;height:18px;border-radius:9px;background:var(--paper);border:2px solid var(--ink);overflow:hidden}
+.prog i{position:absolute;left:0;top:0;bottom:0;width:0;background:repeating-linear-gradient(135deg,var(--yellow) 0 2px,var(--yellow-wash) 2px 6px);transition:width .35s}
+.prog span{position:relative;display:block;text-align:center;font:400 .82rem/14px var(--body);color:var(--ink);white-space:nowrap}
+.field{flex:1;min-height:0;position:relative;border-radius:var(--wob2);overflow:hidden;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--pencil);background:var(--paper)}
+#cv{display:block;width:100%;height:100%;touch-action:none;cursor:pointer}
+.banner{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) rotate(-2deg) scale(.8);font:400 2.3rem/1 var(--display);color:var(--ink);text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);
+  opacity:0;transition:opacity .25s,transform .3s;pointer-events:none;white-space:nowrap;text-align:center;z-index:2}
+.banner.show{opacity:1;transform:translate(-50%,-50%) rotate(-2deg) scale(1)}
+.banner small{display:block;font:400 1.05rem/1.25 var(--body);margin-top:6px;white-space:normal;width:min(300px,80vw);margin-inline:auto}
+.toast{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 1rem/1.3 var(--body);text-align:center;
+  padding:8px 14px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil);pointer-events:none;z-index:2;width:max-content;max-width:92%}
+.dock{display:flex;justify-content:center;gap:8px}
+.dock .iconbtn{flex:1 1 0;min-width:0;padding:8px 6px}
+.dock #soundBtn{flex:0 0 48px}
+.overlay{position:fixed;inset:0;background:rgba(246,243,234,.55);display:grid;place-items:center;padding:16px;z-index:10;overflow:auto}
+.card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 18px 16px;width:100%;max-width:370px;text-align:center;box-shadow:4px 4px 0 var(--pencil);
+  max-height:calc(100% - 8px);overflow-y:auto;animation:rise .35s cubic-bezier(.2,1.4,.4,1)}
+.card>*{position:relative}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font:400 2.1rem/1.05 var(--display);margin:0;color:var(--ink);text-transform:uppercase;letter-spacing:.03em;text-wrap:balance}
+.card p{margin:6px 0 0;color:var(--muted);font-weight:400;font-size:1.05rem;line-height:1.4}
+#mini{width:200px;height:110px;display:block;margin:0 auto 2px}
+.rules{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;font-weight:400;color:var(--ink);line-height:1.35}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
+.rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .85rem var(--display)}
+.rules em{font-style:normal;color:var(--purple);text-decoration:underline wavy}
+.big{font:400 3rem/1 var(--display);color:var(--ink);margin:6px 0 0;font-variant-numeric:tabular-nums}
+.newbest{display:inline-block;background:var(--yellow-wash);border:2px solid var(--ink);color:var(--ink);font-weight:400;font-size:.9rem;border-radius:var(--wob2);padding:3px 10px;margin-bottom:6px;transform:rotate(-2deg)}
+.stars{display:flex;justify-content:center;gap:6px;margin:8px 0 0}
+.stars svg{width:44px;height:44px}
+.stars svg.on{animation:starIn .45s cubic-bezier(.2,1.6,.4,1) both}
+.stars svg:nth-child(2){animation-delay:.15s}.stars svg:nth-child(3){animation-delay:.3s}
+@keyframes starIn{from{transform:scale(0) rotate(-40deg)}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 0}
+.stats div{background:var(--paper);border:2px dashed var(--faint);border-radius:var(--wob2);padding:8px 4px}
+.stats b{display:block;font:400 1.35rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.stats span{font-size:.85rem;color:var(--muted);font-weight:400}
+.gold{position:relative;appearance:none;border:2px solid var(--ink);width:100%;margin-top:14px;border-radius:var(--wob2);padding:12px 18px;min-height:56px;font:400 2rem/1 var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink);
+  background:var(--yellow-wash);box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
+.gold:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.gold.sm{font-size:1.45rem}
+.alt{appearance:none;border:2px solid var(--ink);margin-top:10px;width:100%;min-height:44px;border-radius:var(--wob);padding:10px;font:400 1.1rem var(--body);color:var(--ink);background:var(--paper);box-shadow:2px 2px 0 var(--pencil)}
+.alt:active{transform:translate(2px,2px);box-shadow:none}
+.bestline{margin-top:10px;font-size:1rem;color:var(--muted);font-weight:400}
+.keys{margin-top:8px;font-size:.92rem;color:var(--muted);font-weight:400;line-height:1.35}
+.keys kbd{display:inline-block;min-width:22px;padding:1px 5px;border-radius:6px;background:var(--paper);border:1.5px solid var(--ink);box-shadow:1px 1px 0 var(--pencil);font:400 .85rem var(--body);color:var(--ink)}
+@media (pointer:coarse){.keys{display:none}}
+@media (prefers-reduced-motion:reduce){.card{animation:none}.iconbtn.hot,.brand{animation:none}.banner{transition:none}.stars svg.on{animation:none}}
+@media (max-height:700px){#mini{height:80px;width:150px}.rules{font-size:.92rem;gap:4px}.card h2{font-size:1.8rem}.gold{min-height:50px;font-size:1.6rem;padding:9px}.hud{padding:6px 12px 8px}.stat b{font-size:1.25rem}.stat.mid b{font-size:1.45rem}}
+@media (max-width:370px){.brand{font-size:1.05rem}.iconbtn{font-size:.9rem}}
+</style>
+<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
+<style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
+<style>
+.bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
+@media (min-width:600px){.bda-sheet{align-items:center}}
+.bda-sheet[hidden]{display:none!important}
+.bda-card{width:100%;max-width:380px;background:#f6f3ea;color:#2e2e33;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c}
+.bda-card h2{margin:0 0 4px;font:400 1.3rem/1.2 "Gloria Hallelujah","Comic Sans MS",cursive;color:#2e2e33}
+.bda-card .u{margin:0 0 12px;font-size:.9rem;color:#7a7a80;overflow-wrap:anywhere}
+.bda-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.bda-opts a,.bda-opts button{appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#2e2e33;text-decoration:none;font:400 .85rem "Patrick Hand","Comic Sans MS",cursive;padding:4px 0;border-radius:12px}
+.bda-opts i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid #2e2e33;font:800 1.05rem system-ui,sans-serif;font-style:normal;color:#fff}
+.bda-opts a:focus-visible,.bda-opts button:focus-visible,.bda-x:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+.bda-x{appearance:none;border:2px solid #2e2e33;margin-top:12px;width:100%;padding:8px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;background:#f6f3ea;color:#2e2e33;font:400 1.05rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bda-toast[hidden]{display:none!important}
+</style>
+<style>@media (hover:hover) and (pointer:fine) and (min-aspect-ratio:3/4) and (min-width:700px){html{background:#e9e5d8!important;height:100%;overflow:hidden}html::before{content:'';position:fixed;inset:-60px;z-index:-1;background:#e9e5d8 url(../img/ink-jars.jpg) center/cover no-repeat;filter:blur(30px) opacity(.5)}body{width:min(100vw,calc(100vh*9/16));width:min(100vw,calc(100dvh*9/16));height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;transform:translateZ(0);box-shadow:0 0 0 2px #2e2e33,8px 8px 0 #55555c}body>.app,body>.wrap,body>#app{max-width:none!important}}</style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="top">
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Ink Jars</h1><button class="sa-share" type="button" aria-label="Share Ink Jars" data-share-url="https://www.sketchpadarcade.com/ink-jars" data-share-title="Ink Jars" data-share-text="Play Ink Jars free on Sketchpad Arcade! Pour layers of colored ink between glass jars until every jar holds one color."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <button class="iconbtn" id="helpBtn" type="button">How to play</button>
+  </div>
+  <div class="hud" id="hud">
+    <div class="stat"><small>Level</small><b id="lvlEl">1</b></div>
+    <div class="stat mid"><small>Score</small><b id="scoreEl">0</b></div>
+    <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
+    <div class="prog" aria-hidden="true"><i id="barFill"></i><span id="progTxt">0 of 3 sorted</span></div>
+  </div>
+  <div class="field" id="field">
+    <canvas id="cv" aria-label="Glass ink jars on a paper desk. Tap a jar to lift it, then tap another jar to pour."></canvas>
+    <div class="banner" id="banner" role="status" aria-live="polite"></div>
+    <div class="toast" id="toast" hidden></div>
+  </div>
+  <div class="dock" id="dock">
+    <button class="iconbtn" id="undoBtn" type="button" aria-label="Undo the last pour"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 4 10l5 5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 10H14a6 6 0 0 1 0 12h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>Undo <span class="count" id="undoCount">5</span></button>
+    <button class="iconbtn" id="jarBtn" type="button" aria-label="Add an empty jar, once per level"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v3l2 3v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9l2-3Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 11v7M8.5 14.5h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Jar <span class="count" id="jarCount">1</span></button>
+    <button class="iconbtn" id="restartBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Restart</button>
+    <button class="iconbtn" id="soundBtn" type="button" aria-label="Sound on"></button>
+  </div>
+</div>
+<div class="overlay" id="overlay" hidden><div class="card" id="card" role="dialog" aria-modal="true"></div></div>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const cv=$('cv'),ctx=cv.getContext('2d');
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const FINE=!!(window.matchMedia&&matchMedia('(pointer: fine)').matches);
+const store={get(k,d){try{const v=localStorage.getItem('inkjars.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('inkjars.'+k,JSON.stringify(v))}catch(e){}}};
+let best=+store.get('best',0)||0, savedLevel=Math.max(1,+store.get('level',1)||1), savedScore=Math.max(0,+store.get('score',0)||0), muted=!!store.get('muted',false);
+
+/* ---------- paper + graphite palette for everything the canvas draws ---------- */
+const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
+/* ---------- ink colours (coloured pencil), each with its own doodle for color-blind players ---------- */
+const COLORS=[
+  {c:'#b8433f',n:'cherry red',s:'star'},  {c:'#2f6fb5',n:'pen blue',s:'heart'},   {c:'#c99a1a',n:'mustard yellow',s:'moon'},
+  {c:'#5a9a6a',n:'leaf green',s:'flower'},{c:'#6f4a9a',n:'grape purple',s:'bolt'},{c:'#d9661a',n:'orange',s:'sun'},
+  {c:'#c45a8a',n:'pink',s:'diamond'},     {c:'#3d7a8a',n:'teal',s:'cloud'},       {c:'#8a6a3b',n:'cocoa brown',s:'note'},
+  {c:'#8aa030',n:'lime',s:'smile'},       {c:'#3d48b5',n:'navy',s:'spiral'},      {c:'#7a7a80',n:'pencil gray',s:'arrow'}];
+const NCOL=COLORS.length;
+
+/* ---------- helpers ---------- */
+function mix(h,amt){const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=amt>0?255:0,a=Math.abs(amt);return `rgb(${r+(t-r)*a|0},${g+(t-g)*a|0},${b+(t-b)*a|0})`}
+function rgba(h,a){const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const easeOut=t=>1-Math.pow(1-t,3);
+const easeInOut=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const easeBack=t=>{const c=1.7;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
+function rngOf(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(a,rng){for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+/* coloured-pencil hatching inside a rectangle of ink (clipped by the caller) */
+function inkHatch(g,col,x,y,w,h,seed){if(h<3||w<3)return;g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.strokeStyle=rgba(col,.55);g.lineWidth=1;g.beginPath();
+  const step=Math.max(4,w*.11),off=((seed||0)*3)%step;for(let k=x-h+off;k<x+w;k+=step){g.moveTo(k,y+h);g.lineTo(k+h,y)}g.stroke();g.restore()}
+function rrect(g,x,y,w,h,r){r=Math.min(r,w/2,h/2);g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+
+/* ---------- rules (shared by the game and the solver) ---------- */
+function runOf(j){const n=j.length;if(!n)return 0;const c=j[n-1];let r=1;while(r<n&&j[n-1-r]===c)r++;return r}
+function isDone(j,cap){if(j.length!==cap)return false;for(let i=1;i<cap;i++)if(j[i]!==j[0])return false;return true}
+/* how many layers jar a can pour into jar b (0 = not allowed) */
+function canPour(J,cap,a,b){if(a===b)return 0;const A=J[a],B=J[b];if(!A||!B||!A.length||isDone(A,cap)||B.length>=cap)return 0;
+  const c=A[A.length-1];if(B.length&&B[B.length-1]!==c)return 0;return Math.min(runOf(A),cap-B.length)}
+function allSorted(J,cap){for(const j of J)if(j.length&&!isDone(j,cap))return false;return true}
+function anyMove(J,cap){for(let a=0;a<J.length;a++)for(let b=0;b<J.length;b++)if(canPour(J,cap,a,b))return true;return false}
+const keyOf=J=>J.map(j=>j.join(',')).sort().join('|');
+/* Depth-first search with a memo of canonical states (jar order does not matter).
+   Returns {path} when solved, {fail:true} when proven impossible, {cap:true} when it gave up. */
+function solve(J0,cap,maxNodes){
+  const J=J0.map(j=>j.slice()),seen=new Set(),path=[];let nodes=0,hit=false;
+  function moves(){
+    const out=[];let firstEmpty=-1;
+    for(let b=0;b<J.length;b++)if(!J[b].length){firstEmpty=b;break}
+    for(let a=0;a<J.length;a++){const A=J[a];if(!A.length||isDone(A,cap))continue;
+      const r=runOf(A),c=A[A.length-1],mono=r===A.length;
+      for(let b=0;b<J.length;b++){if(b===a)continue;const B=J[b];
+        if(!B.length){if(b!==firstEmpty||mono)continue;out.push([a,b,r,1+(r>=2?.5:0)]);continue} // empty jars are all alike: try one
+        if(B.length>=cap||B[B.length-1]!==c)continue;
+        const amt=Math.min(r,cap-B.length);
+        let p=4+(amt===r?2:0)+(runOf(B)===B.length?2:0)+(mono&&amt===r?1:0);
+        if(mono&&runOf(B)!==B.length&&amt===r&&A.length>=B.length)p-=3;
+        out.push([a,b,amt,p])}}
+    out.sort((x,y)=>y[3]-x[3]);return out}
+  function dfs(){
+    if(allSorted(J,cap))return true;
+    if(++nodes>maxNodes){hit=true;return false}
+    const k=keyOf(J);if(seen.has(k))return false;seen.add(k);
+    for(const [a,b,amt] of moves()){
+      for(let i=0;i<amt;i++)J[b].push(J[a].pop());path.push([a,b]);
+      if(dfs())return true;
+      path.pop();for(let i=0;i<amt;i++)J[a].push(J[b].pop());
+      if(hit)return false}
+    return false}
+  const ok=dfs();
+  return ok?{path:path.slice(),nodes}:hit?{cap:true,nodes}:{fail:true,nodes};
+}
+
+/* ---------- levels: level N always comes from the same seed ---------- */
+function params(L){
+  const steps=[[1,3],[3,4],[5,5],[8,6],[11,7],[15,8],[19,9],[24,10],[30,11],[37,12]];
+  let nc=3;for(const [l,n] of steps)if(L>=l)nc=n;
+  return{nc,cap:L>=15&&L%3===0?5:4,empty:2};
+}
+const levelCache={};
+function genLevel(L){
+  if(levelCache[L])return levelCache[L];
+  const P=params(L);
+  for(let at=0;at<500;at++){
+    const rng=rngOf(L*7919+at*104729+17);
+    const cols=shuffle([...Array(NCOL).keys()],rng).slice(0,P.nc);
+    const bag=[];for(const c of cols)for(let k=0;k<P.cap;k++)bag.push(c);shuffle(bag,rng);
+    const J=[];for(let i=0;i<P.nc;i++)J.push(bag.slice(i*P.cap,(i+1)*P.cap));
+    if(J.some(j=>runOf(j)>=3))continue;                  // no jar starts nearly sorted
+    let pairs=0;for(const j of J)for(let i=1;i<j.length;i++)if(j[i]===j[i-1])pairs++;
+    if(L>=3&&pairs>Math.max(1,Math.floor(P.nc*.45)))continue;
+    for(let e=0;e<P.empty;e++)J.push([]);
+    const s=solve(J,P.cap,L<8?60000:150000);           // every level is checked by the solver before you see it
+    if(!s.path)continue;
+    return levelCache[L]={L,cap:P.cap,nc:P.nc,jars:J,par:s.path.length,attempt:at};
+  }
+  return null; // never reached in practice
+}
+
+/* ---------- canvas sizing + jar layout ---------- */
+let dpr=1,cw=1,ch=1,bgC=null,seaH=40;
+function geo(W,cap){const t=W*.08,LH=W*(cap===5?.5:.56),IH=cap*LH,BH=IH+t+W*.14,NH=W*.16,LPH=W*.13;
+  return{W,t,LH,IH,BH,NW:W*.6,NH,LW:W*.74,LPH,TH:BH+NH+LPH,iw:W-2*t}}
+let G=geo(50,4),colW=70,layoutRows=1;
+function layout(snap){
+  if(!S)return;
+  const n=S.J.length,cap=S.cap,unitTH=geo(1,cap).TH,padTop=seaH*.35;
+  let bestW=0,bestR=1;
+  for(let r=1;r<=4;r++){const cols=Math.ceil(n/r);
+    const w=Math.min((cw-16)/(cols*1.38),(ch-padTop-10)/(r*(unitTH+.95)+.6));
+    if(w>bestW+.5){bestW=w;bestR=r}}
+  const W=Math.max(16,Math.min(bestW,72));G=geo(W,cap);layoutRows=bestR;
+  const r=bestR,base=Math.floor(n/r),extra=n%r,rowH=G.TH+W*.95;
+  const blockH=r*rowH+W*.35,y0=padTop+Math.max(0,(ch-padTop-blockH)/2)+W*.9;
+  let i=0;colW=Math.min(W*1.75,(cw-16)/Math.max(1,base+(extra?1:0)));
+  for(let row=0;row<r;row++){
+    const cnt=base+(row<extra?1:0),gap=Math.min(W*1.75,(cw-16)/Math.max(cnt,1));
+    for(let k=0;k<cnt;k++,i++){const d=JD[i];d.hx=cw/2+(k-(cnt-1)/2)*gap;d.hy=y0+row*rowH+G.TH;d.row=row;
+      if(snap||d.x==null){d.x=d.hx;d.y=d.hy}}
+  }
+}
+function fit(){
+  const r=$('field').getBoundingClientRect();cw=Math.max(50,r.width);ch=Math.max(50,r.height);
+  dpr=Math.min(window.devicePixelRatio||1,2.5);cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
+  seaH=Math.min(64,Math.max(34,ch*.09));buildBG();layout(true);
+}
+addEventListener('resize',fit);
+
+/* ---------- background: a sheet of paper on the desk, with a ruled strip of notebook lines at the top ---------- */
+function buildBG(){
+  bgC=document.createElement('canvas');bgC.width=cv.width;bgC.height=cv.height;const g=bgC.getContext('2d');g.scale(dpr,dpr);
+  g.fillStyle=PAPER;g.fillRect(0,0,cw,ch);
+  const r=rngOf(99);
+  // faint graphite specks, like a well-used page
+  for(let k=0;k<Math.floor(cw*ch/700);k++){g.fillStyle='rgba(46,46,51,.07)';g.beginPath();g.arc(r()*cw,seaH+r()*(ch-seaH),.5+r()*1.1,0,7);g.fill()}
+  // the top strip is a slightly darker scrap of ruled paper
+  g.fillStyle='#efeadd';g.fillRect(0,0,cw,seaH);
+  g.strokeStyle='rgba(47,111,181,.28)';g.lineWidth=1;
+  for(let y=10;y<seaH-4;y+=9){g.beginPath();g.moveTo(0,y+Math.sin(y)*.6);g.lineTo(cw,y+Math.cos(y)*.6);g.stroke()}
+  g.strokeStyle='rgba(196,90,138,.35)';g.beginPath();g.moveTo(cw*.08,0);g.lineTo(cw*.08+1,seaH);g.stroke();
+  // a few pencil doodles around the edges of the page
+  const deco=[[.06,.94,'star'],[.94,.9,'heart'],[.9,.22,'spiral'],[.08,.3,'flower']];
+  for(const [fx,fy,s] of deco){g.save();g.translate(fx*cw,seaH+fy*(ch-seaH)-6);g.rotate((fx-.5)*.9);g.globalAlpha=.35;
+    g.fillStyle=PAPER;g.strokeStyle=INK;g.lineWidth=1.4;sym(g,s,10,true);g.restore()}
+}
+function drawSea(){
+  ctx.drawImage(bgC,0,0,cw,ch);
+  // the torn edge of the ruled scrap, wobbling very slightly like a page in a breeze
+  const y=seaH,amp=2.5;ctx.fillStyle=PAPER;ctx.beginPath();ctx.moveTo(0,y+12);
+  for(let x=0;x<=cw+10;x+=10)ctx.lineTo(x,y+Math.sin(x*.045+T*.6)*amp+Math.sin(x*.21)*1.5);
+  ctx.lineTo(cw,y+12);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=PENCIL;ctx.lineWidth=1.6;ctx.lineJoin='round';ctx.beginPath();
+  for(let x=0;x<=cw+10;x+=10)ctx.lineTo(x,y+Math.sin(x*.045+T*.6)*amp+Math.sin(x*.21)*1.5);ctx.stroke();
+}
+
+/* ---------- little doodle symbols (drawn in unit size r), paper fill with an ink outline ---------- */
+function sym(g,s,r){
+  g.save();g.lineCap='round';g.lineJoin='round';const lw=g.lineWidth||Math.max(1,r*.14);g.lineWidth=lw;
+  const fs=()=>{g.fill();g.stroke()};
+  g.beginPath();
+  if(s==='star'){for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.46:r;g.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}g.closePath();fs()}
+  else if(s==='heart'){g.moveTo(0,r*.9);g.bezierCurveTo(-r*1.1,r*.1,-r*.7,-r*.9,0,-r*.35);g.bezierCurveTo(r*.7,-r*.9,r*1.1,r*.1,0,r*.9);g.closePath();fs()}
+  else if(s==='moon'){g.arc(0,0,r*.9,-Math.PI*.4,Math.PI*.4,true);g.quadraticCurveTo(-r*.45,0,Math.cos(-Math.PI*.4)*r*.9,Math.sin(-Math.PI*.4)*r*.9);g.closePath();fs()}
+  else if(s==='flower'){for(let k=0;k<5;k++){const a=-Math.PI/2+k*Math.PI*2/5;g.moveTo(Math.cos(a)*r*.52+r*.42,Math.sin(a)*r*.52);g.arc(Math.cos(a)*r*.52,Math.sin(a)*r*.52,r*.42,0,7)}fs();
+    g.beginPath();g.arc(0,0,r*.3,0,7);fs()}
+  else if(s==='bolt'){g.moveTo(r*.15,-r);g.lineTo(-r*.55,r*.1);g.lineTo(-r*.05,r*.1);g.lineTo(-r*.25,r);g.lineTo(r*.55,-r*.15);g.lineTo(r*.05,-r*.15);g.closePath();fs()}
+  else if(s==='sun'){g.arc(0,0,r*.5,0,7);fs();g.beginPath();for(let k=0;k<8;k++){const a=k*Math.PI/4;g.moveTo(Math.cos(a)*r*.66,Math.sin(a)*r*.66);g.lineTo(Math.cos(a)*r*.98,Math.sin(a)*r*.98)}g.stroke()}
+  else if(s==='diamond'){g.moveTo(0,-r*.95);g.lineTo(r*.75,-r*.15);g.lineTo(0,r*.95);g.lineTo(-r*.75,-r*.15);g.closePath();fs();g.beginPath();g.moveTo(-r*.75,-r*.15);g.lineTo(r*.75,-r*.15);g.moveTo(-r*.3,-r*.15);g.lineTo(0,r*.95);g.lineTo(r*.3,-r*.15);g.stroke()}
+  else if(s==='cloud'){g.moveTo(-r*.8,r*.45);g.arc(-r*.45,r*.1,r*.4,Math.PI*.9,Math.PI*1.6);g.arc(r*.1,-r*.15,r*.5,Math.PI*1.15,Math.PI*1.9);g.arc(r*.6,r*.2,r*.35,Math.PI*1.4,Math.PI*.5);g.lineTo(-r*.8,r*.45);g.closePath();fs()}
+  else if(s==='note'){g.ellipse(-r*.3,r*.6,r*.42,r*.3,-.4,0,7);fs();g.beginPath();g.moveTo(r*.08,r*.5);g.lineTo(r*.08,-r*.9);g.quadraticCurveTo(r*.5,-r*.8,r*.6,-r*.3);g.stroke()}
+  else if(s==='smile'){g.arc(0,0,r*.9,0,7);fs();g.beginPath();g.arc(-r*.32,-r*.2,r*.1,0,7);g.arc(r*.32,-r*.2,r*.1,0,7);g.fillStyle=g.strokeStyle;g.fill();g.beginPath();g.arc(0,r*.08,r*.5,Math.PI*.15,Math.PI*.85);g.stroke()}
+  else if(s==='spiral'){g.arc(0,0,r*.92,0,7);fs();g.beginPath();for(let a=0;a<4*Math.PI;a+=.2){const rr=r*.72*(1-a/(4.2*Math.PI));g.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}g.stroke()}
+  else if(s==='arrow'){g.moveTo(-r*.95,-r*.3);g.lineTo(r*.1,-r*.3);g.lineTo(r*.1,-r*.8);g.lineTo(r*.95,0);g.lineTo(r*.1,r*.8);g.lineTo(r*.1,r*.3);g.lineTo(-r*.95,r*.3);g.closePath();fs()}
+  g.restore();
+}
+const symCache={};
+function symSprite(ci,size){ // a paper doodle with an ink outline, cached per size
+  const px=Math.max(8,Math.round(size*dpr)),k=ci+':'+px;if(symCache[k])return symCache[k];
+  const c=document.createElement('canvas');c.width=c.height=px+8;const g=c.getContext('2d');g.translate((px+8)/2,(px+8)/2);
+  g.fillStyle='rgba(246,243,234,.92)';g.strokeStyle=INK;g.lineWidth=Math.max(1.2,px*.07);sym(g,COLORS[ci].s,px*.44);
+  return symCache[k]=c;
+}
+
+/* ---------- Mark's hand-drawn art, pencilled (the code-drawn jar stays as the fallback until each file loads) ---------- */
+const ART={},ART_DIR='../assets/ink-jars/';
+function loadArt(n){const im=new Image();im.onload=()=>{if(state==='menu')drawMini()};im.src=ART_DIR+n+'.webp';ART[n]=im}
+['jar','cork','ledge','splash'].forEach(loadArt);
+function art(n){const im=ART[n];return im&&im.complete&&im.naturalWidth?im:null}
+/* jar.webp: lip+neck+shoulder are the top 80 rows, base the bottom 79; the straight middle stretches to the jar's height */
+const JAR_IMG={w:163,h:294,top:80,bot:79};
+const badgeCache={};
+function badgeSprite(ci,size){ // a colour's badge drawing, cached per size (null when that colour has no drawing; the doodles above are used instead)
+  const im=art('badge-'+COLORS[ci].s);if(!im)return null;
+  const px=Math.max(8,Math.round(size*dpr)),k=ci+':'+px;if(badgeCache[k])return badgeCache[k];
+  const c=document.createElement('canvas');c.width=c.height=px+8;const g=c.getContext('2d');
+  g.shadowColor='rgba(0,40,60,.45)';g.shadowBlur=px*.08+1;g.shadowOffsetY=px*.04;g.drawImage(im,4,4,px,px);
+  return badgeCache[k]=c;
+}
+const ledgeCache={};
+function ledgeStrip(w,h){ // the desk ledge tiled to a row's width (inner slice only, so no outline seams) with soft ends
+  const im=art('ledge'),pw=Math.round(w*dpr),ph=Math.round(h*dpr),k=pw+'x'+ph;if(ledgeCache[k])return ledgeCache[k];
+  const c=document.createElement('canvas');c.width=pw;c.height=ph;const g=c.getContext('2d');
+  const sx=4,sw=im.naturalWidth-8,seg=ph*sw/im.naturalHeight;
+  for(let x=0;x<pw;x+=seg-1)g.drawImage(im,sx,0,sw,im.naturalHeight,x,0,seg,ph);
+  g.globalCompositeOperation='destination-out';const f=Math.min(pw*.2,ph*1.2);
+  let gr=g.createLinearGradient(0,0,f,0);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,f,ph);
+  gr=g.createLinearGradient(pw-f,0,pw,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,1)');g.fillStyle=gr;g.fillRect(pw-f,0,f,ph);
+  return ledgeCache[k]=c;
+}
+const splashCache={};
+function splashSprite(ci,wpx){ // the splash drawing tinted toward the ink colour
+  const im=art('splash');if(!im)return null;
+  const px=Math.max(16,Math.round(wpx*dpr)),k=ci+':'+px;if(splashCache[k])return splashCache[k];
+  const c=document.createElement('canvas');c.width=px;c.height=Math.round(px*im.naturalHeight/im.naturalWidth);const g=c.getContext('2d');
+  g.drawImage(im,0,0,c.width,c.height);g.globalCompositeOperation='source-atop';g.fillStyle=rgba(COLORS[ci].c,.5);g.fillRect(0,0,c.width,c.height);
+  return splashCache[k]=c;
+}
+
+/* ---------- sound (synthesized after the first tap) ---------- */
+let ac=null,nbuf=null,master=null;const VOL=2.4;
+function actx(){if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;try{ac=new A();master=ac.createGain();master.gain.value=muted?0:VOL;
+  const comp=ac.createDynamicsCompressor();comp.threshold.value=-14;comp.knee.value=10;comp.ratio.value=5;comp.attack.value=.003;comp.release.value=.2;master.connect(comp).connect(ac.destination)}catch(e){return null}}
+  if(ac.state!=='running'){try{const p=ac.resume();if(p&&p.catch)p.catch(()=>{})}catch(e){}}return ac}
+function unlock(e){if(e&&(e.type==='touchstart'||(e.type==='pointerdown'&&e.pointerType!=='mouse')))return;const a=actx();if(a)setTimeout(startAmbience,60);if(!a||a.state==='running')return;
+  try{const b=a.createBuffer(1,1,22050),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(0)}catch(err){}}
+['pointerdown','pointerup','touchstart','touchend','mousedown','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{capture:true,passive:true}));
+document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden){try{ac.suspend()}catch(e){}}else if(ac.state!=='running'){try{ac.resume()}catch(e){}}});
+function noiseBuf(){if(!nbuf){nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const x=nbuf.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}return nbuf}
+let amb=null;
+function startAmbience(){return; /* background ambience removed: the games keep only their own effects */if(amb||!ac||ac.state!=='running')return;try{ // soft hush
+  const src=ac.createBufferSource();src.buffer=noiseBuf();src.loop=true;
+  const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=480;
+  const g=ac.createGain();g.gain.value=.028;const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.1;lg.gain.value=.02;lfo.connect(lg).connect(g.gain);
+  src.connect(lp).connect(g).connect(master);src.start();lfo.start();amb={g};
+}catch(e){}}
+function tone(f,d=.1,type='sine',v=.08,slide=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+slide),t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.03)}catch(e){}}
+function noise(d=.2,f=1000,type='lowpass',v=.08,sweep=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{
+  const t=ac.currentTime+delay,s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noiseBuf();fl.type=type;fl.frequency.setValueAtTime(f,t);
+  if(sweep)fl.frequency.exponentialRampToValueAtTime(Math.max(40,f+sweep),t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  s.connect(fl).connect(g).connect(master);s.start(t,Math.random()*.5);s.stop(t+d+.03)}catch(e){}}
+const sfx={
+  lift(){tone(1480,.09,'sine',.05);tone(2220,.07,'sine',.02,0,.015)},
+  drop(){tone(980,.06,'sine',.035,-200)},
+  pour(n,d){noise(d,700,'bandpass',.05,500,.05);const k=Math.max(3,Math.round(d/.06));for(let i=0;i<k;i++)tone(280+i*28+Math.random()*90,.06,'sine',.045,260,.05+i*d/k)},
+  plip(){tone(620,.08,'sine',.05,380)},
+  cork(){noise(.06,2200,'bandpass',.12);tone(240,.09,'triangle',.08,420);[1047,1319,1568,2093].forEach((f,k)=>tone(f,.22,'triangle',.045,0,.08+k*.06))},
+  nope(){tone(210,.12,'triangle',.07,-60);tone(160,.12,'sine',.06,0,.05)},
+  undo(){tone(760,.14,'sine',.05,-360);noise(.12,1800,'bandpass',.03,-900)},
+  jar(){tone(1760,.1,'sine',.05);tone(2350,.14,'sine',.035,0,.06);tone(523,.12,'triangle',.05,0,.02)},
+  win(){[523,659,784,1047,1319,1568].forEach((f,k)=>tone(f,.3,'triangle',.06,0,k*.08));noise(.6,1500,'lowpass',.05,-1000,.1)},
+  stuck(){[523,440,392,330].forEach((f,k)=>tone(f,.3,'triangle',.055,0,k*.15))},
+  click(){tone(740,.04,'square',.02)},
+  start(){tone(392,.1,'triangle',.05);tone(587,.14,'triangle',.05,0,.08)}
+};
+
+/* ---------- game state ---------- */
+let state='menu',level=1,score=0,levelStart=0,T=0,runBest=0;
+let LV=null,S=null,JD=[],sel=-1,anims=[],history=[],undos=5,helper=1,moves=0,doneCols=new Set(),jarPts=0;
+let parts=[],floaters=[],kbOn=false,kbSel=0,shake=0,pendingTap=-1,stuckChecked=false,winAt=0,winFx=false;
+const UNDOS=5;
+
+function startRun(L,sc){level=L;score=sc;runBest=best;startLevel()}
+function startLevel(){
+  LV=genLevel(level);
+  S={J:LV.jars.map(j=>j.slice()),cap:LV.cap};
+  JD=S.J.map((_,i)=>({x:null,y:null,hx:0,hy:0,lift:0,wigT:-9,corkT:-1,bounceT:-9,dropT:T+.08+i*.05,row:0}));
+  sel=-1;anims=[];history=[];undos=UNDOS;helper=1;moves=0;doneCols=new Set();jarPts=0;parts=[];floaters=[];pendingTap=-1;stuckChecked=false;winFx=false;kbSel=0;
+  levelStart=score;store.set('level',level);store.set('score',score);savedLevel=level;savedScore=score;
+  layout(true);state='play';hideOverlay();hud();
+  const tips={1:'Tap a jar, then tap where to pour',2:'Pour onto the same color or an empty jar',3:'Stuck? Undo or + Jar can help'};
+  banner('Level '+level,tips[level]||(params(level).cap===5&&params(level-1).cap!==5?'Taller jars: 5 layers each!':''));
+  sfx.start();
+}
+function busy(i){for(const a of anims)if(a.a===i||a.b===i)return true;return false}
+function sortedCount(){let n=0;for(const j of S.J)if(isDone(j,S.cap))n++;return n}
+
+/* ---------- moves ---------- */
+function tapJar(i){
+  if(state!=='play'||i<0||i>=S.J.length)return;
+  if(busy(i)||(sel>=0&&busy(sel))){pendingTap=i;return}
+  const J=S.J;
+  if(sel<0){
+    if(!J[i].length){JD[i].wigT=T;sfx.nope();return}
+    if(isDone(J[i],S.cap)){JD[i].bounceT=T;sfx.plip();toastOnce('done','That jar is one colour and corked. Nice!');return}
+    sel=i;sfx.lift();return}
+  if(sel===i){sel=-1;sfx.drop();return}
+  const amt=canPour(J,S.cap,sel,i);
+  if(!amt){JD[i].wigT=T;sfx.nope();
+    toastOnce('rule',J[i].length>=S.cap?'That jar is full.':'Pour only onto the same color or an empty jar.');
+    sel=-1;return}
+  pour(sel,i,amt);sel=-1;
+}
+function pour(a,b,amt){
+  const J=S.J;history.push(J.map(j=>j.slice()));if(history.length>60)history.shift();
+  const c=J[a][J[a].length-1],fromBefore=J[a].slice(),toBefore=J[b].slice();
+  for(let k=0;k<amt;k++)J[b].push(J[a].pop());
+  moves++;stuckChecked=false;
+  const d=JD[a];let side=JD[b].hx>=d.hx?1:-1;
+  if(side>0&&JD[b].hx-G.W*2.9<0)side=-1;else if(side<0&&JD[b].hx+G.W*2.9>cw)side=1; // keep the tipped jar on screen
+  const an={a,b,c,amt,fromBefore,toBefore,t0:T,side,d1:.24,d2:.2+.1*amt,d3:.26,sx:d.x,sy:d.y-G.W*.45*d.lift,done:false};
+  if(RM){an.d1=.08;an.d3=.08}
+  anims.push(an);setTimeout(()=>sfx.pour(amt,an.d2),an.d1*1000);hud();
+}
+function endAnim(an){
+  if(an.done)return;an.done=true;
+  const b=an.b,J=S.J;JD[b].bounceT=T;JD[an.a].lift=0;sfx.plip();
+  if(isDone(J[b],S.cap)&&JD[b].corkT<0){
+    JD[b].corkT=T;setTimeout(()=>sfx.cork(),180);
+    const col=J[b][0];
+    if(!doneCols.has(col)){doneCols.add(col);score+=10;jarPts+=10;floaters.push({s:'+10',x:JD[b].hx,y:JD[b].hy-G.TH-G.W*.5,life:1.1,size:22,gold:true});saveBest()}
+    setTimeout(()=>sparkle(b),200);
+  }
+  hud(true);
+}
+function finishAll(){for(const an of anims)endAnim(an);anims=[]}
+function sparkle(i){const d=JD[i],x=d.hx,y=d.hy-G.TH,col=COLORS[S.J[i][0]]?COLORS[S.J[i][0]].c:GRAPH;
+  for(let k=0;k<22;k++){const a=-Math.PI/2+(Math.random()-.5)*3,sp=70+Math.random()*150;
+    parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.8,max:.8,r:2+Math.random()*2.5,col:k%3?'#c99a1a':col,g:260,spark:k%2===0,conf:k%2===1,rot:Math.random()*6})}
+  if(!RM)shake=Math.max(shake,1.6)}
+function saveBest(){if(score>best){best=score;store.set('best',best)}}
+function undo(){
+  if(state!=='play')return;
+  if(!history.length){toast('Nothing to undo yet');return}
+  if(undos<=0){toast('No undos left on this level');return}
+  finishAll();undos--;S.J=history.pop();
+  // the +Jar tool may have been used after this snapshot: keep the extra jar
+  while(S.J.length<JD.length)S.J.push([]);
+  moves=Math.max(0,moves-1);sel=-1;stuckChecked=false;
+  for(let i=0;i<S.J.length;i++){const dn=isDone(S.J[i],S.cap);if(!dn)JD[i].corkT=-1;else if(JD[i].corkT<0)JD[i].corkT=T-1;JD[i].bounceT=T}
+  sfx.undo();hud();
+}
+function addJar(){
+  if(state!=='play')return;
+  if(helper<=0){toast('You already added a jar on this level');return}
+  finishAll();helper=0;S.J.push([]);for(const h of history)h.push([]);
+  JD.push({x:null,y:null,hx:0,hy:0,lift:0,wigT:-9,corkT:-1,bounceT:-9,dropT:T,row:0});
+  layout(false);const d=JD[JD.length-1];d.x=d.hx;d.y=d.hy;
+  stuckChecked=false;sfx.jar();
+  for(let k=0;k<14;k++){const a=Math.random()*6.28,sp=60+Math.random()*110;parts.push({x:d.hx,y:d.hy-G.TH/2,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.6,max:.6,r:2+Math.random()*2,col:k%2?GRAPH:'#c99a1a',g:0,spark:true})}
+  floaters.push({s:'+1 jar',x:d.hx,y:d.hy-G.TH-G.W*.4,life:1.1,size:20,gold:true});
+  hud();
+}
+function restartLevel(){if(state!=='play'&&state!=='paused'&&state!=='over')return;score=levelStart;startLevel()}
+/* runs when every pour has finished: level clear, or a gentle dead-end check */
+function settle(){
+  if(state!=='play'||anims.length)return;
+  if(allSorted(S.J,S.cap)){state='won';winAt=T;sel=-1;return}
+  if(stuckChecked)return;stuckChecked=true;
+  let stuck=!anyMove(S.J,S.cap),why='No pours are left.';
+  if(!stuck){const r=solve(S.J,S.cap,6000);if(r.fail){stuck=true;why='These jars can’t be sorted from here.'}}
+  if(!stuck)return;
+  const canUndo=undos>0&&history.length>0;
+  if(canUndo||helper>0){toast(why+' Try '+(canUndo&&helper>0?'Undo or + Jar':canUndo?'Undo':'+ Jar')+'.');return}
+  state='over';setTimeout(()=>{if(state==='over')stuckCard(why)},700);sfx.stuck();
+}
+function finishLevel(){
+  const par=LV.par,lvBonus=50+10*level,mvBonus=moves<=par?60+(par-moves)*10:Math.max(0,60-(moves-par)*4);
+  const stars=moves<=par?3:moves<=Math.ceil(par*1.35)?2:1;
+  score+=lvBonus+mvBonus;saveBest();
+  store.set('level',level+1);store.set('score',score);savedLevel=level+1;savedScore=score;
+  state='clear';hud(true);
+  const st=k=>`<svg viewBox="0 0 48 48" class="${k<stars?'on':''}" aria-hidden="true"><path d="M24 4l5.9 12.6 13.6 1.6-10 9.4 2.6 13.5L24 34.4 11.9 41.1l2.6-13.5-10-9.4 13.6-1.6Z" fill="${k<stars?'#f3e6b0':'#f6f3ea'}" stroke="${k<stars?'#c99a1a':'#c9c6bc'}" stroke-width="3" stroke-linejoin="round"/></svg>`;
+  showCard(`<h2>Level ${level} sorted!</h2><div class="stars" aria-label="${stars} of 3 stars">${st(0)}${st(1)}${st(2)}</div>
+    <p>${moves} moves${moves<=par?' – neat as a fresh page!':' (par '+par+')'}</p>
+    <div class="stats"><div><b>+${jarPts}</b><span>jars corked</span></div><div><b>+${lvBonus}</b><span>level bonus</span></div><div><b>+${mvBonus}</b><span>move bonus</span></div></div>
+    <div class="big">${score}</div>
+    <button class="gold" id="nextBtn" type="button">Next level</button>
+    <div class="bestline">Best score: ${best}</div>`);
+  $('nextBtn').onclick=()=>{sfx.click();level++;startLevel()};
+}
+function stuckCard(why){
+  const isBest=score>=best&&score>runBest&&score>0;
+  showCard(`${isBest?'<span class="newbest">New best score</span>':''}<h2>Stuck in a blot!</h2><p>${why} Give level ${level} another go.</p>
+    <div class="big">${score}</div>
+    <div class="stats"><div><b>${level}</b><span>level</span></div><div><b>${moves}</b><span>moves</span></div><div><b>${best}</b><span>best</span></div></div>
+    <button class="gold" id="againBtn" type="button">Play again</button>`);
+  window.BDA&&BDA.shareScore({score,line:'Level '+level,into:'#card',after:'.stats'});
+  $('againBtn').onclick=()=>{sfx.click();restartLevel()};
+}
+
+/* ---------- drawing a jar ---------- */
+function bodyPath(g,Gm,inset){
+  const {W,BH}=Gm,i=inset||0,x=-W/2+i,w=W-2*i,top=-BH+i,bot=-i,rb=Math.max(2,W*.3-i),rt=Math.max(2,W*.22-i);
+  g.beginPath();g.moveTo(x+rt,top);g.lineTo(x+w-rt,top);g.quadraticCurveTo(x+w,top,x+w,top+rt);g.lineTo(x+w,bot-rb);g.quadraticCurveTo(x+w,bot,x+w-rb,bot);
+  g.lineTo(x+rb,bot);g.quadraticCurveTo(x,bot,x,bot-rb);g.lineTo(x,top+rt);g.quadraticCurveTo(x,top,x+rt,top);g.closePath();
+}
+/* area of the part of polygon P lying below the world line y=Y */
+function areaBelow(P,Y){const out=[];for(let k=0;k<P.length;k++){const p=P[k],q=P[(k+1)%P.length],pi=p[1]>=Y,qi=q[1]>=Y;
+    if(pi)out.push(p);if(pi!==qi){const t=(Y-p[1])/(q[1]-p[1]);out.push([p[0]+(q[0]-p[0])*t,Y])}}
+  let a=0;for(let k=0;k<out.length;k++){const p=out[k],q=out[(k+1)%out.length];a+=p[0]*q[1]-q[0]*p[1]}return Math.abs(a)/2}
+/* o: {cx,cy,rot,sx,sy,layers:[[color,amount]],cork:0..1+,glow,label,alpha} ; base: canvas transform for world space */
+function drawJar(g,Gm,o,base){
+  const {W,t,LH,IH,BH,NW,NH,LW,LPH,iw}=Gm,rot=o.rot||0;
+  g.save();g.translate(o.cx,o.cy);g.rotate(rot);g.translate(0,BH/2);if(o.sx)g.scale(o.sx,o.sy);
+  if(o.alpha!=null)g.globalAlpha=o.alpha;
+  if(o.glow>0){ // a corked jar gets a few pencil sparkle ticks around its lip
+    g.save();g.globalAlpha=(o.alpha??1)*clamp(o.glow,0,1)*.9;g.strokeStyle='#c99a1a';g.lineWidth=Math.max(1.2,W*.04);g.lineCap='round';g.beginPath();
+    for(let k=0;k<6;k++){const a=-Math.PI/2+(k-2.5)*.42,r0=W*.72,r1=W*.86+(k%2)*W*.06,cy=-BH-NH-LPH*.5;g.moveTo(Math.cos(a)*r0,cy+Math.sin(a)*r0*.6);g.lineTo(Math.cos(a)*r1,cy+Math.sin(a)*r1*.6)}g.stroke();g.restore()}
+  const jarIm=art('jar'),corkIm=art('cork');
+  // glass back (a hair lighter than the paper, so the glass reads as glass)
+  bodyPath(g,Gm,0);g.fillStyle='rgba(255,255,255,.35)';g.fill();
+  // ink
+  g.save();bodyPath(g,Gm,jarIm?t*.45:t);g.clip();
+  const L=o.layers;let tot=0;for(const l of L)tot+=l[1];
+  if(tot>0.001){
+    if(Math.abs(rot)<.002){
+      let y=-t;
+      for(let k=0;k<L.length;k++){const [c,a]=L[k],h=a*LH;if(h<=.01)continue;const col=COLORS[c].c;
+        const y0=y-h-(k===0?0:.5),hh=h+(k===0?t+2:.5);
+        g.fillStyle=rgba(col,.42);g.fillRect(-W/2,y0,W,hh);
+        inkHatch(g,col,-W/2,y0,W,hh,k+(o.seed||0));
+        // pencil line where one colour meets the next
+        g.strokeStyle=rgba(col,.9);g.lineWidth=Math.max(1,W*.03);g.beginPath();g.moveTo(-W/2,y0+.5);g.lineTo(W/2,y0+.5);g.stroke();
+        y-=h}
+      if(o.symbols!==false){let yy=-t;const sz=Math.min(LH*.66,iw*.66);
+        for(const [c,a] of L){const h=a*LH;if(a>.6){const sp=badgeSprite(c,sz)||symSprite(c,sz),s=sp.width/dpr;g.globalAlpha=(o.alpha??1)*clamp((a-.6)/.3,0,1);g.drawImage(sp,-s/2,yy-h/2-s/2,s,s);g.globalAlpha=o.alpha??1}yy-=h}}
+    }else{
+      // tilted: keep the water surface level in world space
+      const ca=Math.cos(rot),sa=Math.sin(rot),wp=(x,y)=>[o.cx+x*ca-(y+BH/2)*sa,o.cy+x*sa+(y+BH/2)*ca];
+      const P=[wp(-iw/2,-t),wp(iw/2,-t),wp(iw/2,-t-IH),wp(-iw/2,-t-IH)];
+      let y0=1e9,y1=-1e9,x0=1e9,x1=-1e9;for(const p of P){y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1]);x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0])}
+      const cut=v=>{let lo=y0,hi=y1;for(let k=0;k<22;k++){const m=(lo+hi)/2;if(areaBelow(P,m)>v)lo=m;else hi=m}return(lo+hi)/2};
+      g.setTransform(base[0],base[1],base[2],base[3],base[4],base[5]);
+      let acc=0,prevY=y1+W;
+      for(const [c,a] of L){acc+=a*LH*iw;const Y=cut(acc),col=COLORS[c].c;
+        g.fillStyle=rgba(col,.42);g.fillRect(x0-W,Y,x1-x0+2*W,prevY-Y+.5);
+        inkHatch(g,col,x0-W,Y,x1-x0+2*W,prevY-Y+.5,0);
+        g.strokeStyle=rgba(col,.9);g.lineWidth=Math.max(1,W*.03);g.beginPath();g.moveTo(x0-W,Y+.5);g.lineTo(x1+W,Y+.5);g.stroke();prevY=Y}
+    }
+  }
+  g.restore();
+  // glass front: rim, neck, highlights
+  g.lineJoin='round';
+  if(jarIm){ // Mark's jar over the water: lip/neck and base keep their proportions, the straight sides stretch to the jar's height
+    const J=JAR_IMG,q=jarIm.naturalWidth/J.w,s=W/J.w,th=J.top*s,bh=J.bot*s,TH=BH+NH+LPH+W*.06,mh=Math.max(1,TH-th-bh),y0=-TH+W*.03; // q: the pencil file is a larger scan of the same drawing
+    g.drawImage(jarIm,0,0,J.w*q,J.top*q,-W/2,y0,W,th);
+    g.drawImage(jarIm,0,J.top*q,J.w*q,(J.h-J.top-J.bot)*q,-W/2,y0+th-.5,W,mh+1);
+    g.drawImage(jarIm,0,(J.h-J.bot)*q,J.w*q,J.bot*q,-W/2,y0+th+mh,W,bh);
+  }else{
+  bodyPath(g,Gm,0);g.lineWidth=Math.max(1.5,W*.045);g.strokeStyle=INK;g.stroke();
+  rrect(g,-NW/2,-BH-NH,NW,NH+W*.04,W*.04);g.fillStyle='rgba(255,255,255,.35)';g.fill();g.lineWidth=Math.max(1.3,W*.04);g.strokeStyle=INK;g.stroke();
+  rrect(g,-LW/2,-BH-NH-LPH,LW,LPH,LPH/2);g.fillStyle=PAPER;g.fill();g.strokeStyle=INK;g.stroke();
+  g.strokeStyle=PENCIL;g.lineWidth=Math.max(1,W*.03);g.beginPath();g.moveTo(-W/2+W*.14,-BH+W*.3);g.lineTo(-W/2+W*.14,-W*.4);g.stroke();
+  }
+  // cork
+  if(o.cork>0){const u=o.cork,drop=u<1?(1-easeOut(Math.min(1,u/1)))*W*1.4:0,sq=u>=1&&u<1.35?Math.sin((u-1)/.35*Math.PI)*.18:0;
+    const cwid=W*.58*(1+sq),chh=W*.36*(1-sq*.8),y=-BH-NH-LPH-W*.16-drop+(W*.36-chh);
+    g.globalAlpha=(o.alpha??1)*clamp(u*3,0,1);
+    if(corkIm){const kw=W*.8*(1+sq),kh=kw*corkIm.naturalHeight/corkIm.naturalWidth*(1-sq*.8),ky=-BH-NH-LPH+W*.1-kh-drop;
+      g.drawImage(corkIm,-kw/2,ky,kw,kh)}
+    else{
+    rrect(g,-cwid/2,y,cwid,chh,W*.08);g.fillStyle='#e9e6db';g.fill();
+    g.lineWidth=Math.max(1,W*.03);g.strokeStyle=INK;g.stroke();
+    g.fillStyle='rgba(46,46,51,.35)';for(const [px,py] of [[-.15,.3],[.12,.55],[.2,.25],[-.05,.7]]){g.beginPath();g.arc(px*cwid,y+py*chh,W*.025,0,7);g.fill()}}
+    g.globalAlpha=o.alpha??1}
+  g.restore();
+}
+
+/* ---------- main draw ---------- */
+function jarLayers(i){
+  const an=anims.find(a=>a.a===i||a.b===i);
+  if(!an)return S.J[i].map(c=>[c,1]);
+  const ph=animPhase(an);
+  if(an.a===i){const p=ph.k<1?0:ph.k===1?ph.u:1,L=an.fromBefore.map(c=>[c,1]);let rem=an.amt*p;
+    for(let k=L.length-1;k>=0&&rem>0;k--){const d=Math.min(1,rem);L[k][1]-=d;rem-=d}return L.filter(l=>l[1]>.001)}
+  const p=ph.k<1?0:ph.k===1?ph.u:1,L=an.toBefore.map(c=>[c,1]);let add=an.amt*p;
+  while(add>0){const d=Math.min(1,add);L.push([an.c,d]);add-=d}
+  return L;
+}
+function animPhase(an){const e=T-an.t0;if(e<an.d1)return{k:0,u:e/an.d1};if(e<an.d1+an.d2)return{k:1,u:(e-an.d1)/an.d2};return{k:2,u:Math.min(1,(e-an.d1-an.d2)/an.d3)}}
+function mouthLocal(side){return[side*G.LW*.42,-(G.BH+G.NH+G.LPH)+G.BH/2]}
+function pourPose(an,rot){ // body centre that puts the jar's lip just above the target
+  const tb=JD[an.b],m=mouthLocal(an.side),ca=Math.cos(rot),sa=Math.sin(rot);
+  const mx=tb.hx-an.side*G.W*.3,my=tb.hy-G.TH-G.W*.3;
+  return{x:mx-(m[0]*ca-m[1]*sa),y:my-(m[0]*sa+m[1]*ca)}}
+function sourcePose(an){
+  const ph=animPhase(an),th1=an.side*1.08,th2=an.side*(1.1+.3*Math.min(1,an.amt/3+.3));
+  if(ph.k===0){const e=easeInOut(ph.u),r=th1*e,p=pourPose(an,r);return{x:lerp(an.sx,p.x,e),y:lerp(an.sy-G.BH/2,p.y,e),rot:r}}
+  if(ph.k===1){const r=lerp(th1,th2,easeInOut(ph.u)),p=pourPose(an,r);return{x:p.x,y:p.y,rot:r}}
+  const e=easeInOut(ph.u),p=pourPose(an,th2),d=JD[an.a];return{x:lerp(p.x,d.hx,e),y:lerp(p.y,d.hy-G.BH/2,e),rot:th2*(1-e)}
+}
+function jarPose(i){
+  const d=JD[i];let x=d.x,y=d.y-G.W*.45*d.lift-G.BH/2,sx=1,sy=1,rot=0;
+  if(d.lift>0&&sel===i)y+=Math.sin(T*4)*G.W*.04;
+  const wt=T-d.wigT;if(wt<.4)rot+=Math.sin(wt*38)*.09*(1-wt/.4);
+  const bt=T-d.bounceT;if(bt<.35){const k=Math.sin(bt/.35*Math.PI)*(1-bt/.35);sx=1+k*.08;sy=1-k*.08}
+  if(winFx){const h=T-winAt-.1-i*.07;if(h>0&&h<.5)y-=Math.sin(h/.5*Math.PI)*G.W*.6}
+  const dt=T-d.dropT;let alpha=1;if(dt<.5){const u=clamp(dt/.5,0,1);y-=(1-easeBack(u))*G.W*1.2;alpha=clamp(u*3,0,1)}
+  return{x,y,sx,sy,rot,alpha}
+}
+function baseT(){let sx=0,sy=0;if(shake>0&&!RM){sx=(Math.random()-.5)*shake;sy=(Math.random()-.5)*shake}return[dpr,0,0,dpr,sx*dpr,sy*dpr]}
+function textOut(s,x,y,size,fill=INK,stroke=PAPER){ctx.save();ctx.font=`${size}px "Gloria Hallelujah","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.lineJoin='round';ctx.lineWidth=size*.22;ctx.strokeStyle=stroke;ctx.strokeText(s,x,y);ctx.fillStyle=fill;ctx.fillText(s,x,y);ctx.restore()}
+function draw(){
+  const B=baseT();ctx.setTransform(B[0],B[1],B[2],B[3],B[4],B[5]);
+  drawSea();
+  if(!S||state==='menu'&&!LV)return;
+  const W=G.W,n=S.J.length,srcs=new Set(anims.map(a=>a.a));
+  // a pencil desk ledge under each row of jars
+  const ledge=art('ledge');
+  if(ledge){const rows={};for(let i=0;i<n;i++){const d=JD[i],r=rows[d.row]||(rows[d.row]={x0:1e9,x1:-1e9,y:d.hy});r.x0=Math.min(r.x0,d.hx);r.x1=Math.max(r.x1,d.hx)}
+    const lh=W*.42;
+    for(const k in rows){const r=rows[k],x0=r.x0-W*1.05,x1=r.x1+W*1.05,st=ledgeStrip(x1-x0,lh);ctx.drawImage(st,x0,r.y-lh*.3,x1-x0,lh)}}
+  // shadows
+  for(let i=0;i<n;i++){const d=JD[i];let lift=d.lift;if(srcs.has(i))lift=1;const a=.24-.1*lift;
+    ctx.fillStyle=`rgba(46,46,51,${a*.8})`;ctx.beginPath();ctx.ellipse(d.x,d.y+W*.04,W*(.62-.12*lift),W*(.15-.04*lift),0,0,7);ctx.fill()}
+  // valid targets glow softly while a jar is lifted
+  if(sel>=0&&state==='play')for(let i=0;i<n;i++){if(i===sel||busy(i)||!canPour(S.J,S.cap,sel,i))continue;const d=JD[i],k=.5+.5*Math.sin(T*5);
+    ctx.strokeStyle=`rgba(46,46,51,${.35+.4*k})`;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(d.x,d.y-G.TH-W*.12,W*(.36+.05*k),W*.1,0,0,7);ctx.stroke();ctx.setLineDash([])}
+  for(let i=0;i<n;i++){if(srcs.has(i))continue;const p=jarPose(i),d=JD[i];
+    const ck=d.corkT>=0?(T-d.corkT)/.32:0;
+    drawJar(ctx,G,{cx:p.x,cy:p.y,rot:p.rot,sx:p.sx,sy:p.sy,alpha:p.alpha,layers:jarLayers(i),cork:ck,glow:d.corkT>=0?(.55+.25*Math.sin(T*2+i)):0,seed:i},B);
+    if((kbOn||FINE)&&i<10&&state!=='menu'){const lx=d.x,ly=d.y+W*.34,lab=String((i+1)%10),on=kbOn&&kbSel===i;
+      ctx.fillStyle=on?INK:'rgba(246,243,234,.9)';rrect(ctx,lx-11,ly-9,22,18,9);ctx.fill();ctx.strokeStyle=on?INK:PENCIL;ctx.lineWidth=1.2;ctx.stroke();
+      ctx.font='13px "Patrick Hand","Comic Sans MS",cursive';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=on?PAPER:GRAPH;ctx.fillText(lab,lx,ly+.5)}
+    else if(kbOn&&kbSel===i){ctx.fillStyle=INK;ctx.beginPath();ctx.arc(d.x,d.y+W*.34,5,0,7);ctx.fill()}
+  }
+  // pours: stream, then the tilted jar on top
+  for(const an of anims){const ph=animPhase(an),p=sourcePose(an);
+    if(ph.k===1||(ph.k===2&&ph.u<.12)){
+      const m=mouthLocal(an.side),ca=Math.cos(p.rot),sa=Math.sin(p.rot),mx=p.x+m[0]*ca-m[1]*sa,my=p.y+m[0]*sa+m[1]*ca;
+      const tb=JD[an.b],filled=an.toBefore.length+an.amt*(ph.k===1?ph.u:1),ex=tb.hx-an.side*W*.05,ey=tb.hy-G.t-filled*G.LH;
+      const head=ph.k===1?clamp(ph.u*an.d2/.08,0,1):1,tail=ph.k===2?clamp(ph.u/.12,0,1):0;
+      const sy0=lerp(my,ey,tail),sy1=lerp(my,ey,head),wd=W*.15*(ph.k===2?1-tail:1)+(Math.sin(T*40)*W*.01),col=COLORS[an.c].c;
+      ctx.lineCap='round';ctx.strokeStyle=rgba(col,.55);ctx.lineWidth=wd;ctx.beginPath();ctx.moveTo(lerp(mx,ex,tail*.8),sy0);ctx.quadraticCurveTo(lerp(mx,ex,.25),lerp(sy0,sy1,.35),lerp(mx,ex,head),sy1);ctx.stroke();
+      ctx.strokeStyle=col;ctx.lineWidth=Math.max(1,wd*.25);ctx.stroke();
+      const spl=ph.k===1&&head>=1?splashSprite(an.c,W*1.1):null;
+      if(spl){const sw=spl.width/dpr,sh=spl.height/dpr,wob=1+Math.sin(T*22)*.06;ctx.save();ctx.globalAlpha=.85;ctx.translate(ex,ey-W*.02);ctx.scale(an.side<0?-wob:wob,wob);
+        ctx.drawImage(spl,-sw/2,-sh*.78,sw,sh);ctx.restore()}
+      else if(ph.k===1&&head>=1&&Math.random()<.5){const a=-Math.PI/2+(Math.random()-.5)*2.2,sp=40+Math.random()*60;parts.push({x:ex,y:ey,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.3,max:.3,r:1.2+Math.random()*1.8,col:Math.random()<.5?GRAPH:col,g:500})}
+    }
+    drawJar(ctx,G,{cx:p.x,cy:p.y,rot:p.rot,layers:jarLayers(an.a),cork:0,glow:0,symbols:Math.abs(p.rot)<.002,seed:an.a},B);
+  }
+  for(const p of parts){const a=clamp(p.life/p.max,0,1);ctx.globalAlpha=a;ctx.fillStyle=p.col;
+    if(p.conf){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillRect(-p.r,-p.r*.5,p.r*2,p.r);ctx.restore()}
+    else if(p.spark){ctx.save();ctx.translate(p.x,p.y);const s=p.r*1.6;ctx.beginPath();ctx.moveTo(0,-s);ctx.quadraticCurveTo(0,0,s,0);ctx.quadraticCurveTo(0,0,0,s);ctx.quadraticCurveTo(0,0,-s,0);ctx.quadraticCurveTo(0,0,0,-s);ctx.fill();ctx.restore()}
+    else{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill()}}
+  ctx.globalAlpha=1;
+  for(const f of floaters){ctx.globalAlpha=clamp(f.life*1.6,0,1);textOut(f.s,f.x,f.y,f.size,f.gold?'#c99a1a':INK,PAPER)}
+  ctx.globalAlpha=1;
+}
+
+/* ---------- update ---------- */
+function update(dt){
+  T+=dt;shake*=.86;if(shake<.2)shake=0;
+  if(S){
+    for(let i=0;i<JD.length;i++){const d=JD[i],k=1-Math.pow(.0005,dt);d.x=lerp(d.x,d.hx,k);d.y=lerp(d.y,d.hy,k);
+      const want=sel===i?1:0;d.lift=lerp(d.lift,want,1-Math.pow(.00002,dt));if(Math.abs(d.lift-want)<.002)d.lift=want}
+    let fin=false;for(const an of anims)if(T-an.t0>=an.d1+an.d2+an.d3){endAnim(an);fin=true}
+    if(fin){anims=anims.filter(a=>!a.done);if(pendingTap>=0){const p=pendingTap;pendingTap=-1;if(!busy(p)&&!(sel>=0&&busy(sel)))tapJar(p);else pendingTap=p}}
+    // the pour itself finishing early lets the source jar settle while the next tap is handled
+    if(!anims.length&&state==='play')settle();
+    if(state==='won'){
+      if(!winFx&&T-winAt>.45){winFx=true;sfx.win();
+        for(let k=0;k<60;k++){const a=-Math.PI/2+(Math.random()-.5)*2.4,sp=220+Math.random()*280;parts.push({x:cw/2,y:ch*.7,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1.5,max:1.5,r:3+Math.random()*3,col:COLORS[k%NCOL].c,g:430,conf:true,rot:Math.random()*6})}}
+      if(T-winAt>1.7)finishLevel()}
+  }
+  for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=(p.g||0)*dt;p.vx*=.985;if(p.conf)p.rot+=dt*8;if(p.life<=0)parts.splice(i,1)}
+  for(let i=floaters.length-1;i>=0;i--){const f=floaters[i];f.life-=dt*.9;f.y-=30*dt;if(f.life<=0)floaters.splice(i,1)}
+}
+let last=0;function frame(ts){const dt=Math.min(.033,(ts-last)/1000||0);last=ts;update(dt);draw();requestAnimationFrame(frame)}
+
+/* ---------- HUD, cards ---------- */
+let shownScore=-1;
+function hud(bump){
+  $('lvlEl').textContent=level;$('scoreEl').textContent=score;$('bestEl').textContent=best;
+  if(bump&&shownScore!==score){const el=$('scoreEl');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}shownScore=score;
+  if(S&&LV){const sc=sortedCount();$('barFill').style.width=(100*sc/LV.nc).toFixed(1)+'%';$('progTxt').textContent=`${sc} of ${LV.nc} sorted · ${moves} move${moves===1?'':'s'} · par ${LV.par}`}
+  const play=state==='play';
+  $('undoCount').textContent=undos;$('undoBtn').disabled=!(play&&undos>0&&history.length>0);
+  $('jarCount').textContent=helper;$('jarBtn').disabled=!(play&&helper>0);
+  const hot=play&&S&&stuckChecked&&!anims.length&&!allSorted(S.J,S.cap)&&$('toast').hidden===false;
+  $('undoBtn').classList.toggle('hot',!!hot&&undos>0&&history.length>0);$('jarBtn').classList.toggle('hot',!!hot&&helper>0);
+}
+let toastT=null;function toast(s){const el=$('toast');el.textContent=s;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{el.hidden=true;hud()},2600);hud()}
+const toastSeen={};function toastOnce(k,s){toastSeen[k]=(toastSeen[k]||0)+1;if(toastSeen[k]<=3)toast(s)}
+let banT=null;function banner(t,sub){const el=$('banner');el.innerHTML=t+(sub?`<small>${sub}</small>`:'');el.classList.add('show');clearTimeout(banT);banT=setTimeout(()=>el.classList.remove('show'),sub?2200:1400)}
+function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const b=$('card').querySelector('.gold');if(b)setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},40);hud()}
+function hideOverlay(){$('overlay').hidden=true}
+const RULES=`<ul class="rules">
+  <li><b>1</b><span>Tap a jar to lift it, then tap another jar to pour.</span></li>
+  <li><b>2</b><span>Ink only pours onto the <em>same color</em>, or into an <em>empty jar</em>. The whole top color pours over, as much as fits.</span></li>
+  <li><b>3</b><span>Fill a jar with one color and it gets a cork. Cork every color to finish the level.</span></li>
+  <li><b>4</b><span>Each color has its own little doodle. Undo works 5 times a level, and + Jar adds one empty jar.</span></li></ul>
+  <p class="keys">Keys: <kbd>1</kbd>&ndash;<kbd>0</kbd> pick a jar, or <kbd>&larr;</kbd><kbd>&rarr;</kbd> and <kbd>Enter</kbd>. <kbd>U</kbd> undo, <kbd>+</kbd> add a jar.</p>`;
+function startCard(){
+  state='menu';
+  const cont=savedLevel>1;
+  showCard(`<canvas id="mini" aria-hidden="true"></canvas><h2>Ink Jars</h2>${RULES}
+    <button class="gold" id="playBtn" type="button">${cont?'Continue: level '+savedLevel:'Play'}</button>
+    ${cont?'<button class="alt" id="newBtn" type="button">New game from level 1</button>':''}
+    <div class="bestline">Best score: ${best}</div>`);
+  drawMini();
+  $('playBtn').onclick=()=>{sfx.click();cont?startRun(savedLevel,savedScore):startRun(1,0)};
+  if($('newBtn'))$('newBtn').onclick=()=>{sfx.click();startRun(1,0)};
+}
+function helpCard(){
+  if(state==='menu'){startCard();return}
+  if(state!=='play')return;
+  state='paused';
+  showCard(`<h2>How to play</h2>${RULES}<button class="gold sm" id="resumeBtn" type="button">Keep playing</button>`);
+  $('resumeBtn').onclick=()=>{sfx.click();state='play';hideOverlay();hud()};
+}
+function drawMini(){
+  const c=$('mini');if(!c)return;const r=c.getBoundingClientRect(),d=Math.min(2.5,devicePixelRatio||1);c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);
+  const g=c.getContext('2d'),k=r.width/200;g.scale(d*k,d*k);const base=[d*k,0,0,d*k,0,0];
+  const Gm=geo(30,4);
+  g.strokeStyle=PENCIL;g.lineWidth=1.5;g.beginPath();g.moveTo(8,106);g.lineTo(192,105);g.stroke();
+  g.fillStyle='rgba(46,46,51,.18)';for(const x of [40,100,160]){g.beginPath();g.ellipse(x,104,20,4.5,0,0,7);g.fill()}
+  drawJar(g,Gm,{cx:40,cy:104-Gm.BH/2,rot:0,layers:[[1,1],[0,1],[2,1],[0,1]],cork:0},base);
+  drawJar(g,Gm,{cx:160,cy:104-Gm.BH/2,rot:0,layers:[[3,1],[3,1],[3,1],[3,1]],cork:2,glow:.6},base);
+  drawJar(g,Gm,{cx:100,cy:104-Gm.BH/2,rot:0,layers:[[2,1],[1,1],[1,.6]],cork:0},base);
+  // a little pour stream into the middle jar from a tipped jar
+  const rot=-1.2,cx=136,cy=26;g.strokeStyle=COLORS[1].c;g.lineWidth=3;g.lineCap='round';g.beginPath();g.moveTo(112,20);g.quadraticCurveTo(104,30,102,46);g.stroke();
+  drawJar(g,geo(22,4),{cx,cy,rot,layers:[[1,1],[1,.6]],cork:0,symbols:false},base);
+  g.fillStyle='#c99a1a';for(const [x,y,s] of [[176,14,5],[188,30,3],[150,40,3]]){g.beginPath();g.moveTo(x,y-s);g.quadraticCurveTo(x,y,x+s,y);g.quadraticCurveTo(x,y,x,y+s);g.quadraticCurveTo(x,y,x-s,y);g.quadraticCurveTo(x,y,x,y-s);g.fill()}
+}
+
+/* ---------- input ---------- */
+function jarAt(px,py){
+  if(!S)return -1;let bi=-1,bd=1e9;
+  for(let i=0;i<S.J.length;i++){const d=JD[i],top=d.hy-G.TH-G.W*.7,bot=d.hy+G.W*.5;
+    const dx=Math.abs(px-d.hx);if(dx>colW*.5+2)continue;
+    const dy=py<top?top-py:py>bot?py-bot:0;if(dy>G.W*.6)continue;const s=dx+dy*2;if(s<bd){bd=s;bi=i}}
+  return bi}
+cv.addEventListener('pointerdown',e=>{
+  if(e.cancelable)e.preventDefault();if(state!=='play')return;const r=cv.getBoundingClientRect();
+  const i=jarAt(e.clientX-r.left,e.clientY-r.top);kbOn=false;
+  if(i>=0)tapJar(i);else if(sel>=0){sel=-1;sfx.drop()}
+});
+$('field').addEventListener('touchmove',e=>{if(e.cancelable)e.preventDefault()},{passive:false});
+function kbMove(dx,dy){
+  const n=S.J.length;if(!kbOn){kbOn=true;return}
+  if(dx){kbSel=(kbSel+dx+n)%n;return}
+  const cur=JD[kbSel],want=cur.row+dy;let bi=-1,bd=1e9;
+  for(let i=0;i<n;i++){if(JD[i].row!==want)continue;const dd=Math.abs(JD[i].hx-cur.hx);if(dd<bd){bd=dd;bi=i}}
+  if(bi>=0)kbSel=bi}
+addEventListener('keydown',e=>{
+  if(!$('overlay').hidden||state!=='play'||e.metaKey||e.altKey)return;
+  const k=e.key;
+  if(e.ctrlKey){if(k==='z'||k==='Z'){e.preventDefault();undo()}return}
+  if(/^[0-9]$/.test(k)){const i=k==='0'?9:+k-1;if(i<S.J.length){e.preventDefault();kbOn=true;kbSel=i;tapJar(i)}}
+  else if(k==='ArrowLeft'||k==='ArrowRight'){e.preventDefault();kbMove(k==='ArrowLeft'?-1:1,0)}
+  else if(k==='ArrowUp'||k==='ArrowDown'){e.preventDefault();kbMove(0,k==='ArrowUp'?-1:1)}
+  else if(k==='Enter'||k===' '){e.preventDefault();if(!kbOn){kbOn=true;return}tapJar(kbSel)}
+  else if(k==='u'||k==='U'||k==='Backspace'){e.preventDefault();undo()}
+  else if(k==='+'||k==='='||k==='j'||k==='J'){e.preventDefault();addJar()}
+  else if(k==='Escape'){if(sel>=0){sel=-1;sfx.drop()}}
+});
+$('helpBtn').onclick=()=>{sfx.click();helpCard()};
+$('restartBtn').onclick=()=>{if(state!=='play'&&state!=='paused')return;sfx.click();restartLevel()};
+$('undoBtn').onclick=()=>undo();
+$('jarBtn').onclick=()=>addJar();
+const SND_ON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+const SND_OFF='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+function renderSound(){$('soundBtn').innerHTML=muted?SND_OFF:SND_ON;$('soundBtn').setAttribute('aria-label',muted?'Sound off':'Sound on');$('soundBtn').setAttribute('aria-pressed',String(!muted))}
+$('soundBtn').onclick=()=>{muted=!muted;store.set('muted',muted);if(master)master.gain.value=muted?0:VOL;renderSound();if(!muted){actx();tone(880,.08,'triangle',.05);startAmbience()}};
+renderSound();
+
+/* ---------- read-only hook for automated tests ---------- */
+window.__test={
+  get state(){return state},get level(){return level},get score(){return score},get best(){return best},get moves(){return moves},
+  get par(){return LV?LV.par:0},get undos(){return undos},get extraJar(){return helper},get selected(){return sel},get busy(){return anims.length},
+  get cap(){return S?S.cap:0},get colors(){return LV?LV.nc:0},get sorted(){return S?sortedCount():0},
+  get jars(){return S?S.J.map(j=>j.slice()):[]},get savedLevel(){return savedLevel},
+  jarPoints(){const r=cv.getBoundingClientRect();return S?JD.map(d=>({x:r.left+d.hx,y:r.top+d.hy-G.TH*.5})):[]},
+  hint(){if(!S)return null;const s=solve(S.J,S.cap,200000);return s.path&&s.path.length?s.path[0]:null},
+  levelInfo(L){const t0=performance.now();const lv=genLevel(L);return{ms:Math.round(performance.now()-t0),colors:lv.nc,cap:lv.cap,jars:lv.jars.length,par:lv.par}}
+};
+
+fit();startCard();requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* Home button on every end screen: added next to the game's own "Play again" style button, once per card. */
+(()=>{const RX=/(^|\s)again\b|^(retry|replay|try again|start over|new game|next level|next beach|back to start|keep going|play on)\b/i;
+const ICON="<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 11.5 12 4l9 7.5\"/><path d=\"M5.5 9.5V20h5v-5.5h3V20h5V9.5\"/></svg>";
+function vis(b){const r=b.getBoundingClientRect();if(r.width<2||r.height<2)return false;const c=getComputedStyle(b);return c.visibility!=='hidden'&&c.display!=='none'&&+c.opacity!==0}
+function scan(){document.querySelectorAll('.sa-endhome').forEach(h=>{const p=h.previousElementSibling;if(!p||!p.dataset.saHome){h.remove()}});document.querySelectorAll('[data-sa-home]').forEach(b=>{if(!b.nextElementSibling||!b.nextElementSibling.classList.contains('sa-endhome'))delete b.dataset.saHome});document.querySelectorAll('button,a').forEach(b=>{if(b.dataset.saHome||b.closest('.sa-head,.sa-endhome,nav,header'))return;
+  const t=(b.textContent||'').replace(/\s+/g,' ').trim();if(!t||t.length>24||!RX.test(t)||/^restart/i.test(t))return;if(!vis(b))return;
+  const box=b.parentElement;if(!box||box.querySelector(':scope>.sa-endhome'))return;b.dataset.saHome='1';
+  const a=document.createElement('a');a.className='sa-endhome';a.href='../';a.innerHTML=ICON+'<span>Home</span>';a.setAttribute('aria-label','Home: all games');
+  const fx=getComputedStyle(box).display;if(/flex|grid/.test(fx)&&getComputedStyle(box).flexDirection!=='column'&&fx.indexOf('grid')<0){a.style.margin='0 0 0 8px'}
+  b.insertAdjacentElement('afterend',a)})}
+let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class','style','open']});
+addEventListener('load',scan);setTimeout(scan,600)})();
+</script>
+<script>window.BDA_GAME={"slug": "ink-jars", "name": "Ink Jars", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/ink-jars", "short": "sketchpadarcade.com/ink-jars"};</script>
+<script>(()=>{const s="ink-jars";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
+<script>
+(()=>{
+  let sheet,toastEl,tt;
+  const enc=encodeURIComponent;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='bda-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2200)}
+  async function copy(url){try{await navigator.clipboard.writeText(url);toast('Link copied')}catch(e){
+    const ta=document.createElement('textarea');ta.value=url;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Link copied':'Copy this link: '+url)}}
+  function openSheet(d){
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sheet';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet)sheet.hidden=true});document.body.appendChild(sheet)}
+    const msg=d.text+' '+d.url;
+    sheet.innerHTML='<div class="bda-card"><h2></h2><p class="u"></p><div class="bda-opts">'+
+      '<button type="button" data-a="copy"><i style="background:#0fa3b8">&#128279;</i>Copy link</button>'+
+      '<a href="https://www.facebook.com/sharer/sharer.php?u='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#1877f2">f</i>Facebook</a>'+
+      '<a href="https://twitter.com/intent/tweet?text='+enc(d.text)+'&url='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#111">X</i>X</a>'+
+      '<a href="https://wa.me/?text='+enc(msg)+'" target="_blank" rel="noopener"><i style="background:#25d366">W</i>WhatsApp</a>'+
+      '<a href="mailto:?subject='+enc(d.title)+'&body='+enc(msg)+'"><i style="background:#ff6f59">@</i>Email</a>'+
+      '</div><button type="button" class="bda-x">Close</button></div>';
+    sheet.querySelector('h2').textContent='Share '+d.title;sheet.querySelector('.u').textContent=d.url;
+    sheet.querySelector('[data-a=copy]').onclick=()=>{copy(d.url);sheet.hidden=true};
+    sheet.querySelector('.bda-x').onclick=()=>sheet.hidden=true;
+    sheet.hidden=false;sheet.querySelector('[data-a=copy]').focus();
+  }
+  async function share(el){
+    const d={url:el.dataset.shareUrl,title:el.dataset.shareTitle,text:el.dataset.shareText};
+    try{if(window.va)window.va('event',{name:'Share',data:{page:d.title}})}catch(e){}
+    const touch=matchMedia('(pointer:coarse)').matches;
+    if(navigator.share&&touch){try{await navigator.share({title:d.title,text:d.text,url:d.url});return}catch(e){if(e&&e.name==='AbortError')return}}
+    openSheet(d);
+  }
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-share-url]');if(el){e.preventDefault();share(el)}});
+})();
+</script>
+<style>
+.bda-scorebtn{appearance:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;padding:9px 18px 9px 14px;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;font:400 1.15rem/1 "Patrick Hand","Comic Sans MS",cursive;
+  background:#f3e6b0;color:#2e2e33;box-shadow:3px 3px 0 #55555c;position:relative;transition:transform .12s}
+.bda-scorebtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #55555c}
+.bda-scorebtn svg{width:18px;height:18px;flex:none}
+.bda-scorebtn:focus-visible{outline:3px solid #2e2e33;outline-offset:3px}
+.bda-scorebtn.float{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9000;margin:0}
+.bda-scorebtn.float:active{transform:translate(-50%,2px)}
+.bda-sc{position:fixed;inset:0;z-index:10001;display:grid;place-items:center;padding:16px;background:rgba(46,46,51,.5);font-family:"Patrick Hand","Comic Sans MS",cursive;overflow:auto}
+.bda-sc[hidden]{display:none!important}
+.bda-sc .in{width:100%;max-width:400px;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:14px;box-shadow:4px 4px 0 #55555c;text-align:center}
+.bda-sc img{display:block;width:100%;height:auto;border:2px solid #2e2e33;border-radius:12px;background:#f6f3ea;aspect-ratio:1}
+.bda-sc .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.bda-sc .row button,.bda-sc .row a{appearance:none;border:2px solid #2e2e33;cursor:pointer;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;padding:9px 6px;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;display:flex;align-items:center;justify-content:center;color:#2e2e33;background:#f6f3ea}
+.bda-sc .go{background:#f3e6b0;box-shadow:2px 2px 0 #55555c}
+.bda-sc .alt{background:#f6f3ea}
+.bda-sc .x{appearance:none;border:0;margin-top:10px;width:100%;padding:9px;background:none;color:#7a7a80;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-sc button:focus-visible,.bda-sc a:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
+<script>
+/* Share-my-score card. A game calls BDA.shareScore({score, line, into, after, lead}) when a game ends:
+   score = the number to brag about, line = optional extra like "Level 5" or "Advanced",
+   into = the game-over card (element or selector) to put the button in, after = where in it; without into the button floats.
+   lead replaces "I scored" (e.g. "I reached" with score "Level 12"). */
+(()=>{
+  const G=window.BDA_GAME||{},nf=n=>typeof n==='number'?n.toLocaleString('en-US'):String(n);
+  const ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg>';
+  let floatBtn=null,sheet=null,cur=null;
+  const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+  function fitText(c,t,max,size,weight,fam){let s=size;do{c.font=weight+' '+s+'px '+fam;s-=2}while(c.measureText(t).width>max&&s>18);return c.font}
+  async function makeCard(d){
+    const F='"Gloria Hallelujah","Comic Sans MS",cursive',F2='"Patrick Hand","Comic Sans MS",cursive',INK='#2e2e33',PAPER='#f6f3ea';
+    try{await Promise.all([document.fonts.load('120px "Gloria Hallelujah"'),document.fonts.load('40px "Patrick Hand"')])}catch(e){}
+    const cover=await load('../img/'+G.slug+'.jpg');
+    const S=1080,cv=document.createElement('canvas');cv.width=cv.height=S;const c=cv.getContext('2d');
+    c.fillStyle=PAPER;c.fillRect(0,0,S,S);
+    // faint pencil grain and a doodled frame
+    c.fillStyle='rgba(46,46,51,.035)';for(let i=0;i<1400;i++){const x=(i*197)%S,y=(i*331+i*i)%S;c.fillRect(x,y,2,2)}
+    c.strokeStyle=INK;c.lineWidth=5;c.lineJoin='round';c.beginPath();for(let i=0;i<=80;i++){const t=i/80,p=t*4,k=Math.floor(p),f=p-k,w=12*Math.sin(i*1.7);
+      const pts=[[40,40],[S-40,40],[S-40,S-40],[40,S-40],[40,40]];const a=pts[k],b=pts[k+1]||pts[4];c.lineTo(a[0]+(b[0]-a[0])*f+(k%2?w:0),a[1]+(b[1]-a[1])*f+(k%2?0:w))}c.stroke();
+    // site name, hand lettered
+    c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=INK;c.font='62px '+F;c.fillText((G.site||'Sketchpad Arcade').toUpperCase(),S/2,120);
+    // cover art in a pencil frame
+    const cs=470,cx=(S-cs)/2,cy=162;
+    c.save();rr(c,cx,cy,cs,cs,26);c.clip();if(cover)c.drawImage(cover,cx,cy,cs,cs);c.restore();
+    c.lineWidth=6;c.strokeStyle=INK;rr(c,cx,cy,cs,cs,26);c.stroke();
+    // "I scored" + the big number
+    c.font='54px '+F2;c.fillStyle='#55555c';c.fillText(d.lead||'I scored',S/2,712);
+    const big=nf(d.score);fitText(c,big,S-120,150,400,F);
+    c.fillStyle=INK;c.fillText(big,S/2,852);
+    c.lineWidth=4;c.strokeStyle='#c99a1a';c.beginPath();c.moveTo(S/2-c.measureText(big).width/2-10,872);c.quadraticCurveTo(S/2,886,S/2+c.measureText(big).width/2+10,870);c.stroke();
+    const line=(d.line?d.line+' · ':'')+'in '+(G.name||'');
+    fitText(c,line,S-140,46,400,F2);c.fillStyle=INK;c.fillText(line,S/2,930);
+    // challenge + link, in a wobbly box
+    const pill='Can you beat me? '+(G.short||'sketchpadarcade.com');fitText(c,pill,S-200,38,400,F2);
+    const pw=c.measureText(pill).width+72,ph=72,px=(S-pw)/2,py=962;
+    c.fillStyle='#f3e6b0';rr(c,px,py,pw,ph,30);c.fill();c.lineWidth=4;c.strokeStyle=INK;c.stroke();
+    c.fillStyle=INK;c.fillText(pill,S/2,py+49);
+    return new Promise(r=>cv.toBlob(b=>r(b),'image/png'));
+  }
+  function message(d){return (d.lead||'I scored')+' '+nf(d.score)+(d.line?' ('+d.line+')':'')+' in '+G.name+' on '+(G.site||'Sketchpad Arcade')+'! Can you beat me?'}
+  async function open(d){
+    try{if(window.va)window.va('event',{name:'Share score',data:{game:G.slug}})}catch(e){}
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sc';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share your score');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet&&!sheet.hidden)close()});document.body.appendChild(sheet)}
+    sheet.innerHTML='<div class="in"><img alt="Your score card"><div class="row"><button type="button" class="go" data-a="share">Share</button><a class="alt" data-a="save" download>Save image</a><button type="button" class="alt" data-a="copy">Copy link</button></div><button type="button" class="x">Close</button></div>';
+    sheet.hidden=false;
+    const blob=await makeCard(d);const url=URL.createObjectURL(blob);
+    const img=sheet.querySelector('img');img.src=url;img.alt='Score card: '+message(d);
+    const file=new File([blob],(G.slug||'score')+'-score.png',{type:'image/png'});
+    const save=sheet.querySelector('[data-a=save]');save.href=url;save.download=file.name;
+    const text=message(d);
+    sheet.querySelector('[data-a=share]').onclick=async()=>{
+      try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:G.name,text:text+' '+G.url});return}
+        if(navigator.share){await navigator.share({title:G.name,text,url:G.url});return}}catch(e){if(e&&e.name==='AbortError')return}
+      copyText(text+' '+G.url,'Message and link copied')};
+    sheet.querySelector('[data-a=copy]').onclick=()=>copyText(G.url,'Link copied');
+    sheet.querySelector('.x').onclick=close;
+    sheet.querySelector('[data-a=share]').focus();
+  }
+  function close(){if(sheet)sheet.hidden=true}
+  async function copyText(t,msg){let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove()}
+    const b=sheet&&sheet.querySelector('[data-a=copy]');if(b){const o=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=o,1500)}}
+  function button(d){const b=document.createElement('button');b.type='button';b.className='bda-scorebtn';b.innerHTML=ICON+'<span>Share my score</span>';
+    b.addEventListener('click',e=>{e.stopPropagation();open(d)});return b}
+  window.BDA=window.BDA||{};
+  window.BDA.shareScore=function(d){
+    let host=d&&d.into;if(typeof host==='string')host=document.querySelector(host);
+    if(host)host.querySelectorAll('.bda-scorebtn').forEach(x=>x.remove());
+    if(!d||d.score==null||d.score===''||(typeof d.score==='number'&&!(d.score>0)))return;
+    cur=d;
+    if(host){const b=button(d);
+      const after=d.after&&host.querySelector(d.after);if(after)after.insertAdjacentElement('afterend',b);else host.appendChild(b);return b}
+    // no card given: a floating button that goes away on the next tap anywhere else
+    if(floatBtn)floatBtn.remove();floatBtn=button(d);floatBtn.classList.add('float');document.body.appendChild(floatBtn);
+    const fb=floatBtn;setTimeout(()=>document.addEventListener('pointerdown',function h(e){if(!fb.contains(e.target)&&!(sheet&&sheet.contains(e.target))){fb.remove();document.removeEventListener('pointerdown',h,true)}},true),400);
+    return fb};
+  window.BDA.hideScore=function(){if(floatBtn){floatBtn.remove();floatBtn=null}};
+})();
+</script>
+<script>
+(()=>{const h=document.querySelector('.sa-head h1');if(!h)return;let base=0;
+function fit(){h.style.fontSize='';base=parseFloat(getComputedStyle(h).fontSize);let fs=base;
+  while(h.scrollWidth>h.clientWidth+1&&fs>14){fs-=1;h.style.fontSize=fs+'px'}}
+fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();
+</script>
+</body>
+</html>

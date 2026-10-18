@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Marble Blitz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Marble Blitz, sketchbook edition: one portrait column. Title row, HUD card (turn, score, best), the board (a sheet of ruled paper with
+   numbered paper cups marching down it, a desk edge at the bottom), then a dock of buttons. Everything is pencil on cream paper;
+   coloured pencil only on the cups' numbers-by-size tint, the blue swirl in each marble, the gold star stickers and the pink eraser. */
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.app{height:100%;max-width:520px;margin:0 auto;padding-inline:16px;padding-block:10px 14px;display:flex;flex-direction:column;gap:9px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);line-height:1;margin:0;color:var(--ink);letter-spacing:.04em;white-space:nowrap;
+  text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{appearance:none;border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 1rem var(--body);
+  border-radius:var(--wob);padding:8px 12px;cursor:pointer;box-shadow:2px 2px 0 var(--pencil);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-height:36px;flex:none}
+.iconbtn:focus-visible,.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.iconbtn.hot{background:var(--yellow-wash);border-color:var(--yellow);animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:scale(1.05)}}
+.hud{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:7px 14px 9px;
+  box-shadow:3px 3px 0 var(--pencil)}
+.stat{display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat small{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stat b{font-family:var(--display);font-weight:400;font-size:1.4rem;line-height:1.1;font-variant-numeric:tabular-nums;display:inline-block}
+.stat.mid{align-items:center}
+.stat.mid b{color:var(--ink);font-size:1.55rem}
+.stat.end{align-items:flex-end}
+.stat b.pop{animation:pop .3s}
+@keyframes pop{40%{transform:scale(1.25)}}
+.stagewrap{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;position:relative}
+.board{position:relative;border-radius:var(--wob);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--pencil);overflow:hidden;background:var(--paper)}
+#cv{display:block;touch-action:none;cursor:crosshair}
+.banner{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) scale(.7) rotate(-2deg);font:400 2rem/1 var(--display);color:var(--ink);white-space:nowrap;
+  text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);opacity:0;transition:opacity .2s,transform .3s cubic-bezier(.2,1.6,.4,1);pointer-events:none;text-align:center}
+.banner.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+.banner small{display:block;font:400 1.1rem/1.2 var(--body);margin-top:4px;color:var(--pencil)}
+.dock{display:flex;justify-content:center;gap:8px;flex-wrap:nowrap}
+.overlay{position:fixed;inset:0;background:rgba(246,243,234,.55);display:grid;place-items:center;padding:16px;z-index:10}
+.card{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:20px 18px;width:100%;max-width:380px;text-align:center;box-shadow:4px 4px 0 var(--pencil);max-height:92vh;overflow:auto;animation:rise .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font-family:var(--display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:0 0 6px;color:var(--ink);text-wrap:balance;text-transform:uppercase;letter-spacing:.03em}
+.card p{margin:6px 0 12px;color:var(--pencil);line-height:1.4;font-size:1.05rem}
+#hero{display:block;width:220px;height:110px;margin:0 auto 4px;max-width:100%}
+.rules{list-style:none;padding:0;margin:8px 0 14px;display:grid;gap:7px;text-align:left;font-size:1rem;color:var(--ink);line-height:1.3}
+.rules li{display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:start}
+.rules b.n{display:grid;place-items:center;width:24px;height:24px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:400 .9rem/1 var(--display)}
+.rules .bad{color:var(--pink);text-decoration:underline wavy}
+.rules .good{color:var(--blue);text-decoration:underline wavy}
+.big{font-family:var(--display);font-weight:400;font-size:2.8rem;line-height:1;color:var(--ink);margin:2px 0}
+.newbest{display:inline-block;background:var(--yellow-wash);border:2px solid var(--yellow);color:var(--ink);font:400 1rem var(--body);border-radius:var(--wob);padding:3px 10px;margin-bottom:6px}
+.btn{appearance:none;border:2px solid var(--ink);cursor:pointer;font:400 1.6rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:var(--yellow-wash);
+  border-radius:var(--wob2);padding:10px 26px;box-shadow:4px 4px 0 var(--pencil)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:none}
+@media (max-height:700px){.card{padding:14px 14px}.card h2{font-size:1.65rem}#hero{height:84px}.rules{font-size:.92rem;gap:5px;margin-bottom:10px}.app{gap:7px}.brand{font-size:1.4rem}}
+@media (prefers-reduced-motion:reduce){.iconbtn.hot{animation:none}.card{animation:none}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="top">
+    <h1 class="brand">Marble Blitz</h1>
+    <button class="iconbtn" id="helpBtn" type="button">How to play</button>
+  </div>
+  <div class="hud" id="hud">
+    <div class="stat"><small>Turn</small><b id="turnEl">1</b></div>
+    <div class="stat mid"><small>Score</small><b id="scoreEl">0</b></div>
+    <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
+  </div>
+  <div class="stagewrap" id="stage">
+    <div class="board" id="board">
+      <canvas id="cv" aria-label="Desk board. Drag to aim, let go to roll your marbles."></canvas>
+      <div class="banner" id="banner"></div>
+    </div>
+  </div>
+  <div class="dock" id="dock">
+    <button class="iconbtn" id="restartBtn" type="button">New game</button>
+    <button class="iconbtn hot" id="ffBtn" type="button" hidden>Speed up</button>
+    <button class="iconbtn hot" id="recallBtn" type="button" hidden>Recall marbles</button>
+    <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
+  </div>
+</div>
+<div class="overlay" id="overlay" hidden><div class="card" id="card"></div></div>
+
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const cv=$('cv');let ctx=cv.getContext('2d');
+const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
+const BLUE='#2f6fb5',BLUE_W='#d6e4f2',GOLD='#c99a1a',GOLD_W='#f3e6b0',PINK='#c45a8a',PINK_W='#f0d5e2',ORANGE='#d9661a';
+const DISP='"Gloria Hallelujah","Comic Sans MS",cursive',BODYF='"Patrick Hand","Comic Sans MS",cursive';
+
+/* ---------- world ---------- */
+const COLS=7,ROWS=10,CELL=50,W=COLS*CELL,GT=8;     // grid: 7 columns, cups live in rows 0..9
+const BL=GT+ROWS*CELL;                            // the desk edge; a cup crossing it ends the game
+const FLOOR=BL+52,H=FLOOR+36;                     // marbles come to rest on the desk at FLOOR
+const PAD=3,BS=CELL-PAD*2;                        // cup box inside its cell
+const R=7.5,SPEED=780,FIRE_GAP=.07;               // marble radius, speed px/s, gap between launches
+const MINA=12*Math.PI/180,MINVY=SPEED*Math.sin(9*Math.PI/180);
+const PR=14;                                      // pickup radius
+
+const SLUG='marble-blitz';
+const store={get(k,d){try{const v=localStorage.getItem(SLUG+'.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(SLUG+'.'+k,JSON.stringify(v))}catch(e){}}};
+let best=store.get('best',0),muted=store.get('muted',false);
+const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let seedV=0;function rnd(){if(!seedV)return Math.random();seedV|=0;seedV=seedV+0x6D2B79F5|0;let t=Math.imul(seedV^seedV>>>15,1|seedV);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}
+
+let state='menu';               // menu | aim | fire | shift | ending | over
+let items=[],grid=new Array(ROWS*COLS).fill(null),balls=[],parts=[],floaters=[],flyers=[],waves=[];
+let turn=1,ballCount=1,pendingAdd=0,bonus=0,stars=0,startBest=0;
+let launchX=W/2,crabX=W/2,nextX=null,toFire=0,fireT=0,volleyT=0,speed=1,volleyHits=0,aimA=Math.PI/2,aiming=false,showAim=false,aimOK=false;
+let shiftT=0,T=0,shake=0,crabWalk=0,lastBlip=0,lastLaunch=0,dangerPulse=0;
+const SHIFT_DUR=.32;
+
+function clamp(v,a,b){return v<a?a:v>b?b:v}
+const score=()=>turn+bonus;
+
+/* ---------- layout ---------- */
+let vs=1,dpr=1;
+function fit(){
+  const st=$('stage'),aw=st.clientWidth,ah=st.clientHeight;
+  vs=Math.max(.3,Math.min(aw/W,ah/H));dpr=Math.min(window.devicePixelRatio||1,3);
+  cv.style.width=W*vs+'px';cv.style.height=H*vs+'px';
+  cv.width=Math.round(W*vs*dpr);cv.height=Math.round(H*vs*dpr);
+  buildArt();
+}
+window.addEventListener('resize',fit);
+
+/* ---------- sound (synthesized; starts after a finished tap, which phones require) ---------- */
+let ac=null,nbuf=null,master=null;const VOL=2.6;
+/* iPhone: a looping silent media element moves web audio onto the "playback" channel, so sound plays even with the silent switch on. */
+let unmuteEl=null;function unmuteIOS(){return; /* the looping silent clip claimed the speakers and paused audiobooks */}
+try{if(navigator.audioSession)navigator.audioSession.type='ambient'}catch(e){}
+function actx(){if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;try{ac=new A();master=ac.createGain();master.gain.value=muted?0:VOL;const comp=ac.createDynamicsCompressor();comp.threshold.value=-14;comp.knee.value=10;comp.ratio.value=5;comp.attack.value=.003;comp.release.value=.2;master.connect(comp).connect(ac.destination)}catch(e){return null}}
+  if(ac.state!=='running'){try{const p=ac.resume();if(p&&p.catch)p.catch(()=>{})}catch(e){}}return ac}
+function unlock(e){if(e&&(e.type==='touchstart'||(e.type==='pointerdown'&&e.pointerType!=='mouse')))return;unmuteIOS();const a=actx();if(!a||a.state==='running')return;
+  try{const b=a.createBuffer(1,1,22050),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(0)}catch(err){}}
+['pointerdown','pointerup','touchstart','touchend','mousedown','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{capture:true,passive:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ac&&ac.state!=='running')ac.resume()});
+function tone(f,d=.1,type='sine',v=.08,slide=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+slide),t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.03)}catch(e){}}
+function noise(d=.2,f=1000,type='lowpass',v=.08,sweep=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{if(!nbuf){nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const x=nbuf.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}
+  const t=ac.currentTime+delay,s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nbuf;fl.type=type;fl.frequency.setValueAtTime(f,t);
+  if(sweep)fl.frequency.exponentialRampToValueAtTime(Math.max(40,f+sweep),t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  s.connect(fl).connect(g).connect(master);s.start(t,Math.random()*.5);s.stop(t+d+.03)}catch(e){}}
+const sfx={
+  launch(){if(T-lastLaunch<.05)return;lastLaunch=T;noise(.05,2400,'bandpass',.025,-900);tone(520,.04,'sine',.015,300)},
+  blip(){if(T-lastBlip<.028)return;lastBlip=T;const f=330*Math.pow(2,Math.min(volleyHits,72)/36);tone(f,.07,'sine',.05,f*.15);tone(f*2,.04,'triangle',.012,0,.01)},
+  wall(){if(T-lastBlip<.04)return;lastBlip=T;tone(260,.035,'sine',.018)},
+  burst(){noise(.18,1700,'bandpass',.07,-1100);tone(880,.09,'triangle',.04,500);tone(1320,.08,'sine',.025,0,.04)},
+  ring(){tone(784,.09,'triangle',.06);tone(1175,.14,'triangle',.05,0,.07)},
+  star(){[1047,1319,1568].forEach((f,k)=>tone(f,.12,'sine',.045,0,k*.05))},
+  wave(){noise(.7,500,'lowpass',.14,2200);noise(.5,3000,'highpass',.04,-1500,.15);tone(392,.3,'sine',.04,400)},
+  land(){tone(180,.07,'sine',.05,-60);noise(.05,700,'lowpass',.04)},
+  shift(){tone(150,.12,'sine',.07,-50);noise(.16,600,'lowpass',.05,-300)},
+  warn(){tone(440,.08,'square',.022);tone(415,.1,'square',.022,0,.14)},
+  sweep(){[523,659,784,1047,1319].forEach((f,k)=>tone(f,.2,'triangle',.06,0,k*.07));noise(.5,2500,'highpass',.04,0,.1)},
+  over(){noise(1.1,1200,'lowpass',.12,-900);[523,440,349,262].forEach((f,k)=>tone(f,.32,'triangle',.06,0,.12+k*.16))},
+  speed(){tone(660,.06,'triangle',.05,400);tone(990,.07,'triangle',.04,400,.05)},
+  recall(){tone(880,.18,'sine',.05,-500);noise(.25,1500,'bandpass',.04,-800)},
+  click(){tone(740,.04,'square',.02)}
+};
+
+/* ---------- Mark's art ----------
+   Only the pencil "poof" is a picture for now; marbles, cups, the doodle buddy, paper clips, gold stars and the eraser are drawn in code.
+   Drop a sketched webp with one of these names into ../assets/marble-blitz/ and it is used instead of the doodle. */
+const ART={};
+function load(n){const i=new Image();i.decoding='async';i.onload=()=>{if($('hero'))drawHero()};i.onerror=()=>{};i.src='../assets/marble-blitz/'+n+'.webp';ART[n]=i}
+['burst'].forEach(load);
+function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
+function sprite(im,cx,cy,w,h,rot){ctx.save();ctx.translate(cx,cy);if(rot)ctx.rotate(rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
+function fitIn(im,maxW,maxH){const k=Math.min(maxW/im.naturalWidth,maxH/im.naturalHeight);return[im.naturalWidth*k,im.naturalHeight*k]}
+let puffs=[],lvMax=1;   // paper poofs from crumpled cups (drawing only); biggest cup on the board this turn
+function drawBall(x,y,rot){const im=art('marble');if(im)sprite(im,x,y,2*R+1,2*R+1,rot||0);else{ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);ctx.drawImage(ballSprite,-R-1,-R-1,2*R+2,2*R+2);ctx.restore()}}
+
+/* ---------- art ---------- */
+let ballSprite=null,bgCanvas=null;
+// a glass marble in pencil: paper fill, a blue coloured-pencil cat's-eye swirl, ink outline, one short grey highlight arc
+function makeBall(px){
+  const c=document.createElement('canvas');c.width=c.height=px;const x=c.getContext('2d'),r=px/2-1.5,cx=px/2,cy=px/2;
+  x.fillStyle=BLUE_W;x.beginPath();x.arc(cx,cy,r,0,7);x.fill();
+  x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.clip();
+  x.strokeStyle=BLUE;x.lineCap='round';x.lineWidth=Math.max(1.2,px/9);
+  x.beginPath();x.moveTo(cx-r*.75,cy+r*.45);x.bezierCurveTo(cx-r*.2,cy-r*.9,cx+r*.3,cy+r*.9,cx+r*.75,cy-r*.45);x.stroke();
+  x.globalAlpha=.5;x.lineWidth=Math.max(1,px/16);x.beginPath();x.moveTo(cx-r*.6,cy+r*.7);x.bezierCurveTo(cx,cy-r*.4,cx+r*.1,cy+r*.5,cx+r*.6,cy-r*.7);x.stroke();
+  x.restore();
+  x.strokeStyle=INK;x.lineWidth=Math.max(1.2,px/14);x.beginPath();x.arc(cx,cy,r,0,7);x.stroke();
+  x.strokeStyle=GRAPH;x.globalAlpha=.6;x.lineWidth=Math.max(1,px/20);x.beginPath();x.arc(cx,cy,r*.68,3.5,4.4);x.stroke();
+  return c;
+}
+function buildArt(){
+  const s=vs*dpr;ballSprite=makeBall(Math.ceil(R*2*s*1.4)+2);
+  bgCanvas=document.createElement('canvas');bgCanvas.width=cv.width;bgCanvas.height=cv.height;const x=bgCanvas.getContext('2d');x.setTransform(s,0,0,s,0,0);
+  // the sheet of ruled paper the cups sit on
+  x.fillStyle=PAPER;x.fillRect(0,0,W,H);
+  x.strokeStyle='rgba(47,111,181,.22)';x.lineWidth=1;
+  for(let y=GT+CELL;y<BL;y+=CELL){x.beginPath();x.moveTo(0,y+.5);x.lineTo(W,y+.5);x.stroke()}
+  // a red-ish margin line down the left, like a notebook page
+  x.strokeStyle='rgba(196,90,138,.28)';x.lineWidth=1.2;x.beginPath();x.moveTo(14.5,0);x.lineTo(14.5,BL-2);x.stroke();
+  // the desk: a darker paper tone with pencil grain seams
+  x.fillStyle='#e4e2d8';x.fillRect(0,BL,W,H-BL);
+  x.strokeStyle=PENCIL;x.lineWidth=1;
+  for(let i=0;i<5;i++){const y=BL+10+i*11+(i%2)*3;x.globalAlpha=.25+(i%3)*.08;x.beginPath();x.moveTo(-2,y);for(let X=0;X<=W+4;X+=14)x.lineTo(X,y+Math.sin(X*.09+i)*.9);x.stroke()}
+  x.globalAlpha=1;
+  // hatching in the desk's lower corner
+  x.strokeStyle='rgba(85,85,92,.35)';x.lineWidth=1;
+  for(let i=0;i<10;i++){x.beginPath();x.moveTo(W-70+i*7,H);x.lineTo(W-40+i*7,H-22);x.stroke()}
+  // a pencil stub resting on the desk corner and a paper clip on the other side
+  pencilStub(x,30,H-13);
+  clipDoodle(x,W-26,BL+24,.8);
+}
+function pencilStub(x,X,Y){x.save();x.translate(X,Y);x.rotate(-.18);
+  x.fillStyle=GOLD_W;x.strokeStyle=INK;x.lineWidth=1.3;x.beginPath();x.rect(-22,-4,32,8);x.fill();x.stroke();
+  x.beginPath();x.moveTo(10,-4);x.lineTo(20,0);x.lineTo(10,4);x.closePath();x.fillStyle=PAPER;x.fill();x.stroke();
+  x.fillStyle=INK;x.beginPath();x.moveTo(16,-1.6);x.lineTo(20,0);x.lineTo(16,1.6);x.closePath();x.fill();
+  x.fillStyle=PINK_W;x.beginPath();x.rect(-22,-4,6,8);x.fill();x.stroke();
+  x.strokeStyle=GRAPH;x.globalAlpha=.5;x.beginPath();x.moveTo(-14,0);x.lineTo(8,0);x.stroke();x.restore()}
+function clipDoodle(x,X,Y,k){x.save();x.translate(X,Y);x.scale(k,k);x.rotate(.35);x.strokeStyle=INK;x.lineWidth=1.8;x.lineCap='round';x.lineJoin='round';
+  x.beginPath();x.moveTo(-5,-12);x.lineTo(-5,10);x.arc(0,10,5,Math.PI,0,true);x.lineTo(5,-10);x.arc(1.5,-10,3.5,0,Math.PI,true);x.lineTo(-2,6);x.arc(0,6,2,Math.PI,0,true);x.lineTo(2,-6);x.stroke();x.restore()}
+
+// cup tint by hits left: graphite -> yellow -> orange -> pink -> purple (coloured-pencil lines, pale wash fills)
+const STOPS=[[1,[110,110,118]],[4,[201,154,26]],[10,[217,102,26]],[22,[196,90,138]],[45,[160,70,150]],[85,[111,74,154]],[160,[80,60,140]]];
+function castleRGB(v){
+  if(v<=1)return STOPS[0][1];for(let i=1;i<STOPS.length;i++){const[a,ca]=STOPS[i-1],[b,cb]=STOPS[i];if(v<=b){const t=(Math.log(v)-Math.log(a))/(Math.log(b)-Math.log(a));return ca.map((q,k)=>q+(cb[k]-q)*t)}}
+  return STOPS[STOPS.length-1][1]}
+const rgb=(c,m=0,a=1)=>{const f=m>0?(q=>q+(255-q)*m):(q=>q*(1+m));return `rgba(${c.map(q=>Math.round(clamp(f(q),0,255))).join(',')},${a})`};
+function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
+
+/* ---------- board ---------- */
+function rebuildGrid(){grid.fill(null);for(const it of items)if(!it.dead&&it.r>=0&&it.r<ROWS)grid[it.r*COLS+it.c]=it}
+function cellX(c){return c*CELL+CELL/2}
+function cellY(r){return GT+r*CELL+CELL/2}
+function spawnRow(t){
+  const cols=[0,1,2,3,4,5,6];for(let i=6;i>0;i--){const j=Math.floor(rnd()*(i+1));[cols[i],cols[j]]=[cols[j],cols[i]]}
+  const ringC=cols.pop();items.push({kind:'ring',c:ringC,r:-1,dy:0,ph:rnd()*6});
+  let n;if(t<=2)n=2;else if(t<=6)n=2+Math.floor(rnd()*2);else n=2+Math.floor(rnd()*Math.min(5,2+t/8));
+  n=Math.min(n,6);
+  for(let i=0;i<n;i++){const c=cols.pop();let v=t;if(t>=5&&rnd()<.22)v=t*2;else if(t>=3&&rnd()<.25)v=Math.max(1,t-1-Math.floor(rnd()*Math.min(4,t*.2)));
+    items.push({kind:'block',c,r:-1,dy:0,hp:v,max:v,sq:0,pop:0,flash:0})}
+  let waveDone=t<5;
+  while(cols.length){const c=cols.pop(),q=rnd();
+    if(!waveDone&&q<.13){waveDone=true;items.push({kind:'wave',c,r:-1,dy:0,ph:rnd()*6})}
+    else if(t>=2&&q<.32){items.push({kind:'star',c,r:-1,dy:0,ph:rnd()*6})}}
+}
+function startShift(){
+  for(const it of items){it.r++;it.dy=-CELL}
+  shiftT=0;state='shift';sfx.shift();
+}
+function finishShift(){
+  for(const it of items)it.dy=0;
+  let lost=false;
+  for(let i=items.length-1;i>=0;i--){const it=items[i];if(it.r<ROWS)continue;
+    if(it.kind==='block'){if(!it.dead)lost=true;continue}
+    if(it.kind==='ring'){ballCount++;floatText(cellX(it.c),BL-6,'+1 marble',INK)}
+    if(it.kind==='star'){stars++;bonus+=3;floatText(cellX(it.c),BL-6,'+3',GOLD)}
+    items.splice(i,1)}
+  rebuildGrid();hud();
+  if(lost){gameOver();return}
+  state='aim';
+  if(items.some(it=>it.kind==='block'&&it.r===ROWS-1)){sfx.warn()}
+}
+
+/* ---------- physics ---------- */
+// One fixed sub-step for a marble. live=false is the aim preview (no damage, no pickups).
+function stepBall(b,h,live){
+  b.x+=b.vx*h;b.y+=b.vy*h;let hit=0;
+  if(b.x<R){b.x=R;if(b.vx<0){b.vx=-b.vx;hit=1}}else if(b.x>W-R){b.x=W-R;if(b.vx>0){b.vx=-b.vx;hit=1}}
+  if(b.y<R){b.y=R;if(b.vy<0){b.vy=-b.vy;hit=1}}
+  const c0=Math.max(0,Math.floor((b.x-R)/CELL)),c1=Math.min(COLS-1,Math.floor((b.x+R)/CELL));
+  const r0=Math.max(0,Math.floor((b.y-R-GT)/CELL)),r1=Math.min(ROWS-1,Math.floor((b.y+R-GT)/CELL));
+  let bestIt=null,bd=R*R,nx=0,ny=0,qx=0,qy=0,inside=false;
+  for(let r=r0;r<=r1;r++)for(let c=c0;c<=c1;c++){const it=grid[r*COLS+c];if(!it||it.kind!=='block'||it.dead)continue;
+    const x0=c*CELL+PAD,y0=GT+r*CELL+PAD,x1=x0+BS,y1=y0+BS;
+    const px=clamp(b.x,x0,x1),py=clamp(b.y,y0,y1),dx=b.x-px,dy=b.y-py,d2=dx*dx+dy*dy;
+    if(d2===0){ // centre inside the box: push out along the shallowest side
+      const dl=b.x-x0,dr=x1-b.x,du=b.y-y0,dd=y1-b.y,m=Math.min(dl,dr,du,dd);
+      bestIt=it;inside=true;bd=-1;
+      if(m===dl){nx=-1;ny=0;qx=x0;qy=b.y}else if(m===dr){nx=1;ny=0;qx=x1;qy=b.y}else if(m===du){nx=0;ny=-1;qx=b.x;qy=y0}else{nx=0;ny=1;qx=b.x;qy=y1}
+    }else if(d2<bd){const d=Math.sqrt(d2);bd=d2;bestIt=it;inside=false;nx=dx/d;ny=dy/d;qx=px;qy=py}
+  }
+  if(bestIt){
+    b.x=qx+nx*R;b.y=qy+ny*R;
+    const vn=b.vx*nx+b.vy*ny;
+    if(vn<0){b.vx-=2*vn*nx;b.vy-=2*vn*ny;hit=2;if(live)damage(bestIt)}
+  }
+  if(hit){ // never let a marble skim perfectly sideways
+    if(Math.abs(b.vy)<MINVY){b.vy=(b.vy<0?-1:1)*MINVY}
+    const sx=b.vx<0?-1:1;b.vx=sx*Math.sqrt(Math.max(0,SPEED*SPEED-b.vy*b.vy));
+    if(live&&hit===1)sfx.wall();
+  }
+  if(live){
+    const cc=Math.floor(b.x/CELL),rc=Math.floor((b.y-GT)/CELL);
+    for(let r=rc-1;r<=rc+1;r++)for(let c=cc-1;c<=cc+1;c++){if(r<0||r>=ROWS||c<0||c>=COLS)continue;const it=grid[r*COLS+c];
+      if(!it||it.kind==='block'||it.dead)continue;const dx=b.x-cellX(c),dy=b.y-cellY(r);if(dx*dx+dy*dy<(R+PR)*(R+PR))pickup(it)}
+  }
+  return hit;
+}
+function damage(it){
+  it.hp--;it.sq=1;it.pop=1;it.flash=1;volleyHits++;sfx.blip();
+  const s=castleRGB(it.hp+1);for(let i=0;i<3;i++)spark(cellX(it.c)+(rnd()-.5)*BS,cellY(it.r)+(rnd()-.5)*BS,rgb(s,0),.35,90);
+  if(it.hp<=0)burst(it);
+}
+function burst(it){
+  it.dead=true;grid[it.r*COLS+it.c]=null;const i=items.indexOf(it);if(i>=0)items.splice(i,1);
+  const cx=cellX(it.c),cy=cellY(it.r),c=castleRGB(it.max);
+  for(let k=0;k<18;k++){const a=rnd()*Math.PI*2,s=60+rnd()*200;parts.push({x:cx+(rnd()-.5)*30,y:cy+(rnd()-.5)*30,vx:Math.cos(a)*s,vy:Math.sin(a)*s-80,life:.6+rnd()*.5,max:1.1,sz:2+rnd()*3.5,col:rnd()<.5?rgb(c,0):GRAPH,g:520,scrap:rnd()<.5})}
+  for(let k=0;k<8;k++){const a=rnd()*Math.PI*2,s=40+rnd()*120;parts.push({x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.45+rnd()*.3,max:.75,sz:2.2,col:GOLD,g:0,star:1})}
+  puffs.push({x:cx,y:cy,t:0});
+  sfx.burst();
+}
+function spark(x,y,col,life,sp){const a=rnd()*Math.PI*2,s=sp*(.4+rnd());parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life,max:life,sz:1.8,col,g:200})}
+function pickup(it){
+  it.dead=true;grid[it.r*COLS+it.c]=null;const i=items.indexOf(it);if(i>=0)items.splice(i,1);
+  const x=cellX(it.c),y=cellY(it.r);
+  if(it.kind==='ring'){pendingAdd++;flyers.push({x,y,t:0,kind:'ring'});floatText(x,y-18,'+1 marble',INK);sfx.ring()}
+  else if(it.kind==='star'){stars++;bonus+=3;flyers.push({x,y,t:0,kind:'star'});floatText(x,y-18,'+3',GOLD);sfx.star();hud()}
+  else if(it.kind==='wave'){
+    const row=it.r;waves.push({row,x,t:0});sfx.wave();floatText(x,y-20,'Erased!',PINK);
+    for(const b of items)if(b.kind==='block'&&b.r===row&&!b.dead){b.dead=true;grid[b.r*COLS+b.c]=null;b.doom=Math.abs(cellX(b.c)-x)/700+.05}
+  }
+}
+function floatText(x,y,s,col){floaters.push({x,y,s,col,life:1})}
+
+/* ---------- turns ---------- */
+function newGame(){
+  items=[];balls=[];parts=[];floaters=[];flyers=[];waves=[];puffs=[];
+  turn=1;ballCount=1;pendingAdd=0;bonus=0;stars=0;startBest=best;launchX=crabX=W/2;nextX=null;speed=1;showAim=false;aiming=false;
+  spawnRow(1);rebuildGrid();hideOverlay();hideVolleyBtns();hud();startShift();
+}
+function fire(){
+  if(state!=='aim')return;
+  state='fire';toFire=ballCount;fireT=0;volleyT=0;speed=1;volleyHits=0;nextX=null;showAim=false;aiming=false;
+}
+function launchOne(){
+  toFire--;sfx.launch();
+  balls.push({x:launchX,y:FLOOR-R,vx:Math.cos(aimA)*SPEED,vy:-Math.sin(aimA)*SPEED,st:'fly'});
+}
+function recall(){
+  if(state!=='fire')return;toFire=0;if(nextX===null)nextX=launchX;
+  for(const b of balls)if(b.st==='fly')b.st='recall';sfx.recall();hideVolleyBtns();
+}
+function endVolley(){
+  balls=[];launchX=nextX===null?launchX:nextX;nextX=null;ballCount+=pendingAdd;pendingAdd=0;speed=1;hideVolleyBtns();
+  if(!items.some(it=>it.kind==='block'&&!it.dead)){bonus+=5;showBanner('Clean page!','+5 bonus');sfx.sweep()}
+  turn++;
+  if(turn%10===0)showBanner('Turn '+turn+'!','Keep it up');
+  spawnRow(turn);hud();startShift();
+}
+function gameOver(){
+  state='ending';sfx.over();shake=RM?0:10;
+  for(const it of items)if(it.kind==='block'&&it.r>=ROWS-1)it.flash=1;
+  const sc=score();if(sc>best){best=sc;store.set('best',best)}hud();
+  setTimeout(()=>{state='over';const isBest=sc>startBest&&sc>0;showCard(`
+    ${isBest?'<span class="newbest">New best score</span>':''}
+    <h2>A cup slid off the desk!</h2><div class="big">${sc}</div>
+    <p>You reached turn <b>${turn}</b> with <b>${ballCount}</b> marbles and collected <b>${stars}</b> gold stars. Best score: ${best}.</p>
+    <button class="btn" id="againBtn" type="button">Play again</button>`);
+    window.BDA&&BDA.shareScore({score:sc,line:'Turn '+turn,into:'#card',after:'.big'});
+    $('againBtn').onclick=()=>{sfx.click();newGame()}},1100);
+}
+
+/* ---------- update ---------- */
+function update(dt){
+  T+=dt;shake*=.86;if(shake<.2)shake=0;dangerPulse+=dt;
+  const paused=!$('overlay').hidden;
+  // the doodle buddy shuffles to the next launch spot
+  const target=state==='fire'?launchX:(state==='shift'||state==='aim')?launchX:crabX;
+  if(Math.abs(target-crabX)>.5){const st=Math.sign(target-crabX)*Math.min(Math.abs(target-crabX),dt*420);crabX+=st;crabWalk+=dt*18}else crabX=target;
+  if(!paused){
+    if(state==='fire'){
+      volleyT+=dt;const sdt=dt*speed;
+      if(toFire>0){fireT-=sdt;while(toFire>0&&fireT<=0){launchOne();fireT+=FIRE_GAP}}
+      simBalls(sdt);
+      if(volleyT>3&&$('ffBtn').hidden&&state==='fire'&&balls.some(b=>b.st==='fly'))showVolleyBtns();
+      if(toFire===0&&balls.every(b=>b.st==='home'))endVolley();
+    }else if(state==='shift'){
+      shiftT+=dt;const k=Math.min(1,shiftT/SHIFT_DUR),e=1-Math.pow(1-k,3);
+      for(const it of items)it.dy=-CELL*(1-e);
+      if(k>=1)finishShift();
+    }
+  }
+  for(const it of items){if(it.sq)it.sq=Math.max(0,it.sq-dt*6);if(it.pop)it.pop=Math.max(0,it.pop-dt*5);if(it.flash)it.flash=Math.max(0,it.flash-dt*4)}
+  // cups caught by the eraser crumple one after another as it rubs across the row
+  for(let i=items.length-1;i>=0;i--){const it=items[i];if(it.doom===undefined)continue;it.doom-=dt;if(it.doom<=0){it.doom=undefined;burst(it)}}
+  for(let i=waves.length-1;i>=0;i--){waves[i].t+=dt;if(waves[i].t>.75)waves.splice(i,1)}
+  for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=p.g*dt;p.vx*=.985;if(p.life<=0)parts.splice(i,1)}
+  if(parts.length>500)parts.splice(0,parts.length-500);
+  for(let i=floaters.length-1;i>=0;i--){const f=floaters[i];f.life-=dt*1.1;f.y-=34*dt;if(f.life<=0)floaters.splice(i,1)}
+  for(let i=flyers.length-1;i>=0;i--){const f=flyers[i];f.t+=dt*2.2;if(f.t>=1)flyers.splice(i,1)}
+  for(let i=puffs.length-1;i>=0;i--){puffs[i].t+=dt;if(puffs[i].t>=.55)puffs.splice(i,1)}
+}
+function simBalls(sdt){
+  for(const b of balls){
+    if(b.st==='fly'){
+      const n=Math.max(1,Math.ceil(SPEED*sdt/2.5)),h=sdt/n;
+      for(let i=0;i<n;i++){stepBall(b,h,true);
+        if(b.y>=FLOOR-R&&b.vy>0){b.y=FLOOR-R;b.st='roll';if(nextX===null){nextX=clamp(b.x,32,W-32);sfx.land();if(!$('ffBtn').hidden&&toFire===0&&!balls.some(q=>q!==b&&q.st==='fly'))hideVolleyBtns()}break}}
+    }else if(b.st==='roll'){
+      const d=nextX-b.x,m=sdt*620;if(Math.abs(d)<=m){b.x=nextX;b.st='home'}else b.x+=Math.sign(d)*m;
+    }else if(b.st==='recall'){
+      const tx=nextX,ty=FLOOR-R,dx=tx-b.x,dy=ty-b.y,d=Math.hypot(dx,dy),m=sdt*1100;
+      if(d<=m){b.x=tx;b.y=ty;b.st='home'}else{b.x+=dx/d*m;b.y+=dy/d*m}
+    }
+  }
+}
+
+/* ---------- aim preview ---------- */
+function tracePath(a){
+  const b={x:launchX,y:FLOOR-R,vx:Math.cos(a)*SPEED,vy:-Math.sin(a)*SPEED},pts=[[b.x,b.y]],h=2/SPEED;
+  let after=-1,hitAt=null,dist=0;
+  for(let i=0;i<1400;i++){const px=b.x,py=b.y;const hit=stepBall(b,h,false);dist+=Math.hypot(b.x-px,b.y-py);
+    if(dist>=12){pts.push([b.x,b.y]);dist=0}
+    if(hit&&!hitAt){hitAt=[b.x,b.y];pts.push([b.x,b.y]);after=0}
+    if(after>=0){after+=2;if(after>90)break}
+    if(b.y>FLOOR-R)break}
+  return {pts,hitAt};
+}
+
+/* ---------- drawing ---------- */
+function draw(){
+  const s=vs*dpr;ctx.setTransform(1,0,0,1,0,0);
+  const sx=shake?(Math.random()-.5)*shake*s:0,sy=shake?(Math.random()-.5)*shake*s:0;
+  ctx.drawImage(bgCanvas,0,0);
+  ctx.setTransform(s,0,0,s,sx,sy);
+  drawShore();
+  // danger hatching along the desk edge
+  const danger=items.some(it=>it.kind==='block'&&it.r>=ROWS-1&&!it.dead);
+  if(danger&&state!=='menu'){ctx.save();ctx.globalAlpha=.25+.15*Math.sin(dangerPulse*6);ctx.strokeStyle=ORANGE;ctx.lineWidth=1.5;ctx.beginPath();
+    for(let X=-CELL;X<W+CELL;X+=9){ctx.moveTo(X,BL);ctx.lineTo(X+CELL,BL-CELL)}ctx.stroke();ctx.restore()}
+  for(const w of waves)drawWave(w);
+  lvMax=1;for(const it of items)if(it.kind==='block'&&it.max>lvMax)lvMax=it.max;
+  for(const it of items)drawItem(it);
+  for(const p of puffs)drawPuff(p);
+  for(const f of flyers)drawFlyer(f);
+  if(showAim&&state==='aim'&&aimOK)drawAim();
+  if(nextX!==null&&state==='fire'&&Math.abs(nextX-launchX)>2){ctx.globalAlpha=.55+.25*Math.sin(T*8);drawBall(nextX,FLOOR-R);ctx.globalAlpha=1}
+  drawCrab();
+  for(const b of balls)if(b.st!=='home')drawBall(b.x,b.y,(b.x-b.y)/R);
+  for(const p of parts){ctx.globalAlpha=Math.max(0,Math.min(1,p.life/p.max*1.6));ctx.fillStyle=p.col;
+    if(p.star){const z=p.sz*(.6+p.life/p.max);ctx.fillRect(p.x-z,p.y-z*.25,z*2,z*.5);ctx.fillRect(p.x-z*.25,p.y-z,z*.5,z*2)}
+    else if(p.scrap){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.life*5);ctx.fillStyle=PAPER;ctx.strokeStyle=p.col;ctx.lineWidth=1;ctx.beginPath();ctx.rect(-p.sz,-p.sz*.6,p.sz*2,p.sz*1.2);ctx.fill();ctx.stroke();ctx.restore()}
+    else{ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,7);ctx.fill()}}
+  ctx.globalAlpha=1;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  for(const f of floaters){ctx.globalAlpha=Math.min(1,f.life*2);ctx.font='17px '+DISP;ctx.lineWidth=4;ctx.strokeStyle=PAPER;ctx.strokeText(f.s,f.x,f.y);ctx.fillStyle=f.col;ctx.fillText(f.s,f.x,f.y)}
+  ctx.globalAlpha=1;
+  if(speed>1&&state==='fire'){ctx.font='15px '+DISP;ctx.textAlign='right';ctx.lineWidth=3;ctx.strokeStyle=PAPER;ctx.strokeText('x'+speed+' fast',W-10,BL+16);ctx.fillStyle=INK;ctx.fillText('x'+speed+' fast',W-10,BL+16);ctx.textAlign='center'}
+}
+function drawShore(){
+  // the edge of the page: a wobbly ink line, with a dashed pencil line below it marching along the desk
+  const im=art('desk');
+  if(im){const h=40,sw=im.naturalWidth-4,w=sw*h/im.naturalHeight,off=((T*6)%w);
+    ctx.save();ctx.beginPath();ctx.rect(0,BL-24,W,h);ctx.clip();ctx.translate(0,BL-24);
+    for(let x=-off-w;x<W+w;x+=w)ctx.drawImage(im,2,0,sw,im.naturalHeight,x,0,w+.6,h);
+    ctx.restore();
+  }else{
+    ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();
+    for(let x=0;x<=W;x+=7){const y=BL+Math.sin(x*.07)*1.2+Math.sin(x*.19)*.6;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+    // torn-page shading just above the edge
+    ctx.strokeStyle='rgba(85,85,92,.3)';ctx.lineWidth=1;ctx.beginPath();for(let x=4;x<W;x+=9){ctx.moveTo(x,BL-1);ctx.lineTo(x+4,BL-7)}ctx.stroke();
+  }
+  ctx.setLineDash([6,7]);ctx.lineDashOffset=-T*12;ctx.strokeStyle=PENCIL;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,BL+12);ctx.lineTo(W,BL+12);ctx.stroke();ctx.setLineDash([]);
+}
+function drawWave(w){
+  // the eraser rubbing across the row: a grey smudge spreading both ways, with eraser crumbs at its ends
+  const k=w.t/.75,y=cellY(w.row),reach=k*W*1.1,a=1-k;
+  ctx.save();ctx.globalAlpha=Math.min(1,a*1.6);
+  const x0=Math.max(0,w.x-reach),x1=Math.min(W,w.x+reach);
+  ctx.fillStyle='rgba(85,85,92,.16)';ctx.fillRect(x0,y-CELL/2+4,x1-x0,CELL-8);
+  ctx.strokeStyle='rgba(85,85,92,.45)';ctx.lineWidth=1.2;ctx.beginPath();
+  for(let X=x0;X<x1;X+=8){ctx.moveTo(X,y-CELL/2+6);ctx.lineTo(X+5,y+CELL/2-6)}ctx.stroke();
+  ctx.fillStyle=PINK_W;ctx.strokeStyle=PINK;ctx.lineWidth=1;
+  for(const d of[-1,1]){const X=w.x+d*reach;for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(X-d*i*6,y-CELL/2+8+i*8,3.5-i*.4,0,7);ctx.fill();ctx.stroke()}}
+  ctx.restore();
+}
+function drawItem(it){
+  const x=cellX(it.c),y=cellY(it.r)+it.dy;
+  if(it.kind==='block')return drawCastle(it,x,y);
+  const bob=Math.sin(T*2.4+it.ph)*2.5;
+  if(it.kind==='ring'){
+    // a paper clip worth one more marble
+    ctx.save();ctx.translate(x,y+bob);const p=1+.06*Math.sin(T*5+it.ph);ctx.scale(p,p);
+    const im=art('clip');
+    if(im){const[w,h]=fitIn(im,40,40);ctx.drawImage(im,-w/2,-h/2,w,h)}
+    else{
+      ctx.fillStyle='rgba(46,46,51,.15)';ctx.beginPath();ctx.ellipse(1,14,12,3,0,0,7);ctx.fill();
+      ctx.save();ctx.rotate(.3+Math.sin(T*.8+it.ph)*.1);ctx.strokeStyle=INK;ctx.lineWidth=2.2;ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.beginPath();ctx.moveTo(-6,-14);ctx.lineTo(-6,11);ctx.arc(0,11,6,Math.PI,0,true);ctx.lineTo(6,-12);ctx.arc(2,-12,4,0,Math.PI,true);ctx.lineTo(-2,7);ctx.arc(0,7,2,Math.PI,0,true);ctx.lineTo(2,-7);ctx.stroke();
+      ctx.restore();
+    }
+    ctx.font='11px '+DISP;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle=PAPER;ctx.strokeText('+1',11,-10);ctx.fillStyle=INK;ctx.fillText('+1',11,-10);
+    ctx.restore();
+  }else if(it.kind==='star'){
+    // a gold star sticker, drawn with the yellow pencil
+    ctx.save();ctx.translate(x,y+bob);ctx.rotate(Math.sin(T*1.5+it.ph)*.25);
+    const im=art('star');
+    if(im){const[w,h]=fitIn(im,36,36);ctx.fillStyle='rgba(46,46,51,.15)';ctx.beginPath();ctx.ellipse(1,5,14,12,0,0,7);ctx.fill();ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return}
+    ctx.fillStyle='rgba(46,46,51,.15)';starPath(1,4,13,5.5);ctx.fill();
+    ctx.fillStyle=GOLD_W;starPath(0,0,13,5.5);ctx.fill();ctx.strokeStyle=GOLD;ctx.lineWidth=1.8;ctx.lineJoin='round';ctx.stroke();
+    ctx.strokeStyle=GOLD;ctx.globalAlpha=.6;ctx.lineWidth=1;ctx.beginPath();for(let i=-2;i<=2;i++){ctx.moveTo(-6+i*3,4);ctx.lineTo(-1+i*3,-3)}ctx.stroke();ctx.globalAlpha=1;
+    ctx.restore();
+  }else if(it.kind==='wave'){
+    // a pink eraser; touch it and it rubs out its whole row
+    ctx.save();ctx.translate(x,y+bob);ctx.rotate(-.35+Math.sin(T*2+it.ph)*.08);
+    ctx.fillStyle='rgba(46,46,51,.15)';ctx.beginPath();ctx.ellipse(1,13,15,3.5,0,0,7);ctx.fill();
+    ctx.fillStyle=PINK_W;ctx.strokeStyle=PINK;ctx.lineWidth=1.8;ctx.lineJoin='round';
+    ctx.beginPath();ctx.moveTo(-16,-7);ctx.lineTo(13,-7);ctx.lineTo(16,-3);ctx.lineTo(16,7);ctx.lineTo(-13,7);ctx.lineTo(-16,3);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.moveTo(13,-7);ctx.lineTo(13,3);ctx.lineTo(16,7);ctx.moveTo(13,3);ctx.lineTo(-16,3);ctx.stroke();
+    ctx.strokeStyle=PINK;ctx.globalAlpha=.55;ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<6;i++){ctx.moveTo(-13+i*5,6);ctx.lineTo(-9+i*5,-6)}ctx.stroke();ctx.globalAlpha=1;
+    ctx.strokeStyle=INK;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(-10,-2);ctx.lineTo(6,-2);ctx.stroke();
+    ctx.restore();
+  }
+}
+function starPath(x,y,ro,ri){ctx.beginPath();for(let i=0;i<10;i++){const a=i*Math.PI/5-Math.PI/2,r=i%2?ri:ro;const X=x+Math.cos(a)*r,Y=y+Math.sin(a)*r;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath()}
+function drawCastle(it,x,y){
+  // a paper cup, seen from the side, with its number pencilled on the front. Tint lines get warmer/darker as the number climbs.
+  const c=castleRGB(Math.max(1,it.hp)),sq=it.sq,sxs=1+sq*.12,sys=1-sq*.12;
+  ctx.save();ctx.translate(x,y+BS/2);ctx.scale(sxs,sys);ctx.translate(0,-BS/2);
+  const h=BS/2,mh=7;
+  const k=Math.max(0,it.hp)/Math.max(1,lvMax),im=art(k<=1/3?'cup-low':k<=2/3?'cup-mid':'cup-high');
+  const line=rgb(c,0),wash=rgb(c,0,.2);
+  ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,h-2,h-3,4.5,0,0,7);ctx.fill();
+  if(im){
+    if(it.flash){ctx.fillStyle=`rgba(246,243,234,${it.flash*.6})`;ctx.beginPath();ctx.arc(0,0,h+2,0,7);ctx.fill()}
+    const[w,hh]=fitIn(im,BS+4,BS+2);ctx.drawImage(im,-w/2,h-hh+1,w,hh);
+  }else{
+    // cup body: a trapezoid, wider at the rim, paper fill with a coloured-pencil wash
+    const tw=h-2,bw=h-9,top=-h+mh,bot=h-4;
+    ctx.beginPath();ctx.moveTo(-tw,top);ctx.lineTo(tw,top);ctx.lineTo(bw,bot);ctx.lineTo(-bw,bot);ctx.closePath();
+    ctx.fillStyle=PAPER;ctx.fill();ctx.fillStyle=wash;ctx.fill();
+    ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.lineJoin='round';ctx.stroke();
+    // rim: a rolled lip
+    ctx.beginPath();ctx.ellipse(0,top,tw,3.2,0,0,7);ctx.fillStyle=PAPER;ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.stroke();
+    ctx.beginPath();ctx.ellipse(0,top,tw-3,1.6,0,0,Math.PI);ctx.strokeStyle=GRAPH;ctx.lineWidth=1;ctx.stroke();
+    // coloured-pencil band and hatching down one side
+    ctx.strokeStyle=line;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(-tw+1.5,top+8);ctx.lineTo(tw-1.5,top+8);ctx.stroke();
+    ctx.globalAlpha=.55;ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<5;i++){ctx.moveTo(tw-5-i*3,top+12+i*2);ctx.lineTo(bw-2-i*2,bot-2-i*4)}ctx.stroke();ctx.globalAlpha=1;
+    // pencil shading along the left edge
+    ctx.strokeStyle='rgba(85,85,92,.4)';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<4;i++){ctx.moveTo(-tw+3+i*2.5,top+12+i*3);ctx.lineTo(-bw+2+i*2.5,bot-3)}ctx.stroke();
+    if(it.flash){ctx.fillStyle=`rgba(246,243,234,${it.flash*.5})`;ctx.beginPath();ctx.moveTo(-tw,top);ctx.lineTo(tw,top);ctx.lineTo(bw,bot);ctx.lineTo(-bw,bot);ctx.closePath();ctx.fill()}
+  }
+  if(it.r>=ROWS-1&&state!=='menu'){ctx.strokeStyle=ORANGE;ctx.globalAlpha=.55+.35*Math.sin(dangerPulse*7);ctx.lineWidth=2.5;ctx.setLineDash([5,4]);rr(ctx,-h,-h+mh,BS,BS-mh,8);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1}
+  // number, written on the cup in ink with a paper halo
+  const t=String(Math.max(0,it.hp)),fs=(t.length>=3?15:t.length===2?19:21)*(1+it.pop*.35);
+  ctx.font=`${fs}px ${DISP}`;ctx.textAlign='center';ctx.textBaseline='middle';
+  const ty=6;ctx.lineJoin='round';ctx.lineWidth=4;ctx.strokeStyle=PAPER;ctx.strokeText(t,0,ty);ctx.fillStyle=INK;ctx.fillText(t,0,ty);
+  ctx.restore();
+}
+function drawPuff(p){
+  const im=art('burst'),k=p.t/.55;
+  if(!im){ctx.strokeStyle=GRAPH;ctx.globalAlpha=1-k;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4;ctx.moveTo(p.x+Math.cos(a)*8,p.y+Math.sin(a)*8);ctx.lineTo(p.x+Math.cos(a)*(14+k*22),p.y+Math.sin(a)*(14+k*22))}ctx.stroke();ctx.globalAlpha=1;return}
+  ctx.globalAlpha=1-k*k;const s=CELL*(.7+k*1.1);sprite(im,p.x,p.y-k*10,s,s*im.naturalHeight/im.naturalWidth);ctx.globalAlpha=1;
+}
+function drawFlyer(f){
+  const k=f.t,e=k*k,tx=crabX,ty=FLOOR-4,x=f.x+(tx-f.x)*e,y=f.y+(ty-f.y)*e-Math.sin(k*Math.PI)*40;
+  ctx.globalAlpha=1-k*.6;
+  const im=art(f.kind==='ring'?'clip':'star');
+  if(im){const z=(f.kind==='ring'?26:24)*(1-k*.4);sprite(im,x,y,z,z*im.naturalHeight/im.naturalWidth,f.kind==='star'?k*3:0)}
+  else if(f.kind==='ring'){ctx.save();ctx.translate(x,y);ctx.scale(1-k*.4,1-k*.4);ctx.rotate(k*2);ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-5,-12);ctx.lineTo(-5,10);ctx.arc(0,10,5,Math.PI,0,true);ctx.lineTo(5,-10);ctx.arc(1.5,-10,3.5,0,Math.PI,true);ctx.lineTo(-2,6);ctx.stroke();ctx.restore()}
+  else{ctx.fillStyle=GOLD_W;ctx.strokeStyle=GOLD;ctx.lineWidth=1.5;starPath(x,y,9*(1-k*.4),4*(1-k*.4));ctx.fill();ctx.stroke()}
+  ctx.globalAlpha=1;
+}
+function drawAim(){
+  // a pencil-dotted guide line
+  const {pts,hitAt}=tracePath(aimA);
+  for(let i=1;i<pts.length;i++){const k=i/pts.length;ctx.fillStyle=`rgba(46,46,51,${.8-k*.5})`;ctx.beginPath();ctx.arc(pts[i][0],pts[i][1],2.6-k*1.1,0,7);ctx.fill()}
+  if(hitAt){ctx.strokeStyle=INK;ctx.lineWidth=1.8;ctx.setLineDash([3,3]);ctx.beginPath();ctx.arc(hitAt[0],hitAt[1],R,0,7);ctx.stroke();ctx.setLineDash([])}
+}
+function drawCrab(){
+  // the doodle buddy: a round scribble creature with stick arms who flicks the marbles
+  const x=crabX,y=FLOOR+15,moving=Math.abs(launchX-crabX)>.5,w=moving?Math.sin(crabWalk):0;
+  const throwing=state==='fire'&&toFire>0,im=art(throwing?'buddy-throw':'buddy')||art('buddy');
+  if(im){
+    ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(x,FLOOR+30,24,4,0,0,7);ctx.fill();
+    const[cw,ch]=fitIn(im,58,54);sprite(im,x,FLOOR+9,cw,ch,w*.06);
+  }else{
+  ctx.save();ctx.translate(x,y);
+  ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,15,22,4,0,0,7);ctx.fill();
+  ctx.lineCap='round';ctx.lineJoin='round';
+  // legs: two little stick legs that wiggle when walking
+  ctx.strokeStyle=INK;ctx.lineWidth=2;
+  for(const sd of[-1,1]){const wig=(sd>0?w:-w)*3;ctx.beginPath();ctx.moveTo(sd*6,8);ctx.lineTo(sd*8+wig,15);ctx.lineTo(sd*13+wig,15);ctx.stroke()}
+  // arms: one holds a marble bag, the other flicks forward when throwing
+  const fl=throwing?Math.sin(T*22)*.5:0;
+  ctx.beginPath();ctx.moveTo(-14,-2);ctx.quadraticCurveTo(-22,-6,-22,-14);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(14,-2);ctx.quadraticCurveTo(22+fl*4,-6-fl*6,20+fl*6,-15-fl*4);ctx.stroke();
+  // the marble bag on the left: a little drawstring pouch
+  ctx.fillStyle=BLUE_W;ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(-24,-14);ctx.quadraticCurveTo(-34,-10,-32,0);ctx.quadraticCurveTo(-28,8,-20,2);ctx.quadraticCurveTo(-16,-8,-24,-14);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle=BLUE;ctx.lineWidth=1;ctx.globalAlpha=.6;ctx.beginPath();for(let i=0;i<3;i++){ctx.moveTo(-30+i*3,2-i*3);ctx.lineTo(-24+i*3,-2-i*3)}ctx.stroke();ctx.globalAlpha=1;
+  // body: a wobbly circle, paper fill, pencil hatching on one side
+  ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=24;i++){const a=i/24*Math.PI*2,rr0=15+Math.sin(a*3+1)*.8;const X=Math.cos(a)*rr0*1.15,Y=Math.sin(a)*rr0*.85;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle='rgba(85,85,92,.45)';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<5;i++){ctx.moveTo(4+i*2.5,10-i*1.5);ctx.lineTo(12+i*1.5,-2+i*1.2)}ctx.stroke();
+  // eyes look the way the shot is aimed
+  const lx=Math.cos(aimA)*1.4,ly=-Math.sin(aimA)*1.4;
+  for(const sd of[-1,1]){ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(sd*6,-4,4,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=INK;ctx.beginPath();ctx.arc(sd*6+lx,-4+ly,1.8,0,7);ctx.fill()}
+  ctx.strokeStyle=INK;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,3,4.5,.25,Math.PI-.25);ctx.stroke();
+  // a tuft of scribble hair
+  ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(-3,-13);ctx.lineTo(-5,-19);ctx.moveTo(0,-13);ctx.lineTo(1,-20);ctx.moveTo(3,-13);ctx.lineTo(6,-18);ctx.stroke();
+  ctx.restore();}
+  // marble ready to go + count
+  const ready=state==='aim'||state==='menu'||state==='shift'||(state==='fire'&&toFire>0);
+  const left=state==='fire'?toFire:ballCount;
+  if(ready&&left>0)drawBall(x,FLOOR-R-1);
+  if(state!=='over'&&state!=='ending'&&!(state==='fire'&&left===0)){
+    const label='×'+(state==='fire'?left:ballCount+(state==='shift'?0:0)),lx=x>W-80?x-48:x+48;
+    ctx.font='16px '+DISP;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.lineWidth=4;ctx.strokeStyle=PAPER;ctx.strokeText(label,lx,FLOOR+14);ctx.fillStyle=INK;ctx.fillText(label,lx,FLOOR+14);
+  }
+}
+
+/* ---------- loop ---------- */
+let last=0;
+function frame(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;update(dt);draw();requestAnimationFrame(frame)}
+
+/* ---------- HUD + UI ---------- */
+const shown={turn:-1,score:-1,best:-1};
+function setStat(id,key,v){const el=$(id);if(shown[key]!==v){if(shown[key]>=0&&v>shown[key]){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}shown[key]=v;el.textContent=v}}
+function hud(){setStat('turnEl','turn',turn);setStat('scoreEl','score',score());setStat('bestEl','best',Math.max(best,0))}
+let bannerT=null;function showBanner(a,b){const el=$('banner');el.innerHTML=a+(b?`<small>${b}</small>`:'');el.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>el.classList.remove('show'),1300)}
+function showVolleyBtns(){$('ffBtn').hidden=false;$('recallBtn').hidden=false;$('restartBtn').hidden=true;renderFF()}
+function hideVolleyBtns(){$('ffBtn').hidden=true;$('recallBtn').hidden=true;$('restartBtn').hidden=false}
+function renderFF(){$('ffBtn').textContent=speed>=3?'Speed x3':'Speed up'+(speed>1?' (x'+speed+')':'')}
+function speedUp(){if(state!=='fire'||speed>=3)return;speed++;sfx.speed();renderFF();if($('ffBtn').hidden)showVolleyBtns()}
+function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false;const b=$('card').querySelector('.btn');if(b)setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},40)}
+function hideOverlay(){$('overlay').hidden=true}
+function helpHtml(){return `<canvas id="hero" width="440" height="220" aria-hidden="true"></canvas><h2>Marble Blitz</h2>
+  <ol class="rules">
+   <li><b class="n">1</b><span>Drag to aim, then let go. Your doodle buddy flicks <b>all</b> its marbles in a quick stream.</span></li>
+   <li><b class="n">2</b><span>Every bump knocks 1 off a paper cup's number. At 0 it crumples up!</span></li>
+   <li><b class="n">3</b><span>Grab <b class="good">+1 paper clips</b> for more marbles and <b>gold stars</b> for 3 bonus points. A <b class="bad">pink eraser</b> rubs out its whole row.</span></li>
+   <li><b class="n">4</b><span>Cups slide down one row each turn. Don't let one fall off the desk!</span></li>
+  </ol>`}
+function drawHero(){
+  const h=$('hero');if(!h)return;const x=h.getContext('2d');x.setTransform(2,0,0,2,0,0);x.clearRect(0,0,220,110);
+  // a little sketch of the board: ruled paper, a desk edge, a few cups, a dotted shot and the buddy
+  x.fillStyle=PAPER;rr(x,0,0,220,110,10);x.fill();
+  x.strokeStyle='rgba(47,111,181,.22)';x.lineWidth=1;for(let y=22;y<78;y+=14){x.beginPath();x.moveTo(0,y+.5);x.lineTo(220,y+.5);x.stroke()}
+  x.fillStyle='#e4e2d8';x.fillRect(0,80,220,30);x.strokeStyle=INK;x.lineWidth=1.5;x.beginPath();for(let X=0;X<=220;X+=6){const yy=80+Math.sin(X*.1)*.8;X?x.lineTo(X,yy):x.moveTo(X,yy)}x.stroke();
+  x.strokeStyle=INK;x.lineWidth=1.5;rr(x,.75,.75,218.5,108.5,10);x.stroke();
+  const demo=[[1,0,3],[2,0,12],[4,0,30],[5,0,60],[0,1,1],[3,1,7],[6,1,95]];
+  const main=ctx,lm=lvMax;ctx=x;lvMax=95;
+  x.save();x.translate(4,4);x.scale(.6,.6);
+  for(const [c,r,v] of demo)drawCastle({hp:v,max:v,sq:0,pop:0,flash:0,c,r:0},cellX(c),cellY(r));
+  x.restore();lvMax=lm;
+  // a dotted shot and a few marbles
+  x.fillStyle=GRAPH;for(let i=0;i<9;i++){x.beginPath();x.arc(110+i*6,96-i*8,1.6,0,7);x.fill()}
+  const bs=makeBall(40),bi=art('marble');[[118,86],[129,72],[140,58]].forEach(([a,b])=>bi?x.drawImage(bi,a-5.5,b-5.5,11,11):x.drawImage(bs,a-5.5,b-5.5,11,11));
+  const ci=art('buddy');
+  if(ci){const[cw,ch]=fitIn(ci,30,28);x.drawImage(ci,108-cw/2,104-ch/2,cw,ch)}else{
+  x.fillStyle=PAPER;x.strokeStyle=INK;x.lineWidth=1.5;x.beginPath();x.ellipse(104,99,11,8,0,0,7);x.fill();x.stroke();
+  x.beginPath();x.arc(100,97,2.6,0,7);x.moveTo(110.6,97);x.arc(108,97,2.6,0,7);x.fill();x.stroke();x.fillStyle=INK;x.beginPath();x.arc(100.8,96.6,1.2,0,7);x.arc(108.8,96.6,1.2,0,7);x.fill();
+  x.strokeStyle=INK;x.lineWidth=1.2;x.beginPath();x.arc(104,101,3,.3,Math.PI-.3);x.stroke();}
+  ctx=main;
+}
+function showMenu(){const playing=state==='aim'||state==='fire'||state==='shift';
+  showCard(helpHtml()+`<button class="btn" id="goBtn" type="button">${playing?'Keep playing':'Play'}</button>`);drawHero();
+  $('goBtn').onclick=()=>{sfx.click();if(playing)hideOverlay();else newGame()}}
+$('helpBtn').onclick=()=>{sfx.click();showMenu()};
+$('restartBtn').onclick=()=>{sfx.click();newGame()};
+$('ffBtn').onclick=()=>speedUp();
+$('recallBtn').onclick=()=>recall();
+function renderSound(){$('soundBtn').textContent=muted?'Sound: off':'Sound: on';$('soundBtn').setAttribute('aria-pressed',String(!muted))}
+$('soundBtn').onclick=()=>{muted=!muted;store.set('muted',muted);if(master)master.gain.value=muted?0:VOL;if(muted&&unmuteEl){try{unmuteEl.pause()}catch(e){}unmuteEl=null}renderSound();if(!muted)tone(880,.08,'triangle',.05)};
+renderSound();
+
+/* ---------- input ---------- */
+function toWorld(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/vs,y:(e.clientY-r.top)/vs}}
+function aimAt(p){const dx=p.x-launchX,dy=(FLOOR-R)-p.y;
+  if(dy<14){aimOK=false;return}aimOK=true;aimA=clamp(Math.atan2(dy,dx),MINA,Math.PI-MINA)}
+cv.addEventListener('pointerdown',e=>{
+  if(!$('overlay').hidden)return;
+  if(state==='fire'){speedUp();return}
+  if(state!=='aim')return;
+  e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(err){}
+  aiming=true;showAim=true;aimAt(toWorld(e));
+});
+cv.addEventListener('pointermove',e=>{if(aiming&&state==='aim'){aimAt(toWorld(e))}});
+function release(e){if(!aiming)return;aiming=false;if(state!=='aim'){showAim=false;return}aimAt(toWorld(e));if(aimOK)fire();else showAim=false}
+cv.addEventListener('pointerup',release);
+cv.addEventListener('pointercancel',()=>{aiming=false;showAim=false});
+addEventListener('keydown',e=>{
+  if(!$('overlay').hidden)return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){if(state==='aim'){const st=(e.shiftKey?.5:2)*Math.PI/180;aimA=clamp(aimA+(e.key==='ArrowLeft'?st:-st),MINA,Math.PI-MINA);showAim=true;aimOK=true}e.preventDefault()}
+  else if(e.code==='Space'||e.key==='Enter'||e.key==='ArrowUp'){if(e.target&&e.target.tagName==='BUTTON'&&e.key!=='ArrowUp')return;e.preventDefault();if(state==='aim'){aimOK=true;fire()}else if(state==='fire')speedUp()}
+});
+
+/* ---------- test hook (read-only views + deterministic helpers) ---------- */
+window.__test={
+  get state(){return state},get score(){return score()},get level(){return turn},get turn(){return turn},get balls(){return ballCount},get best(){return best},
+  get bonus(){return bonus},get speed(){return speed},get aim(){return aimA},
+  get blocks(){return items.filter(i=>i.kind==='block'&&!i.dead).map(i=>({c:i.c,r:i.r,hp:i.hp}))},
+  get pickups(){return items.filter(i=>i.kind!=='block'&&!i.dead).map(i=>({c:i.c,r:i.r,kind:i.kind}))},
+  get flying(){return balls.filter(b=>b.st!=='home').length},
+  world(){return{W,H,FLOOR,BL,launchX,launchY:FLOOR-R}},
+  toClient(x,y){const r=cv.getBoundingClientRect();return{x:r.left+x*vs,y:r.top+y*vs}},
+  seed(n){seedV=n|0},
+  // makes the game harder (fills the row above the desk edge), used to test the game-over flow quickly
+  crowd(hp=999){for(let c=0;c<COLS;c++)if(!grid[(ROWS-1)*COLS+c])items.push({kind:'block',c,r:ROWS-1,dy:0,hp,max:hp,sq:0,pop:0,flash:0});rebuildGrid()}
+};
+
+/* ---------- start ---------- */
+fit();hud();showMenu();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

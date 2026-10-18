@@ -29,6 +29,16 @@ if not (BDA / "src/games").exists():
 SRC_SLUG = sys.argv[1]
 # Sketchpad Arcade renamed its games (Oct 2026). Pass the Beach Day Arcade slug; output goes to the Sketchpad slug.
 RENAMED = {
+    "tide-jars": "ink-jars",
+    "shell-scramble": "letter-scramble",
+    "castle-keeper": "doodle-keeper",
+    "even-tide": "even-sketch",
+    "sand-peaks": "paper-peaks",
+    "beach-ball-blitz": "marble-blitz",
+    "sandy-strikes": "desk-strikes",
+    "taffy-drop": "cookie-drop",
+    "wiggle-reef": "squiggle-worm",
+    "piper-parade": "pencil-parade",
     "seaside-sprint": "sketch-sprint",
     "plank-plunk": "pencil-plunk",
     "letter-lagoon": "letter-links",
