@@ -403,7 +403,8 @@ let bannerT=0;
 function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
 
 /* ---------- art ----------
-   Lane tiles, Milo, traffic, creek floats and sidewalk props (made by tools/sidewalk-hop-sprites.py).
+   Lane tiles, Milo, traffic, creek floats and sidewalk props: Mark's coloured-pencil sheets, cut out and
+   saved over the old tools/sidewalk-hop-sprites.py doodles. Milo's poses share one canvas, feet at the bottom.
    Anything not loaded yet is drawn the simple way. */
 const ART={};
 function load(n,src){const i=new Image();i.decoding='async';i.src=src;ART[n]=i}
@@ -518,7 +519,7 @@ function drawKid(px,py,s,face,squash,t,dead,hop){
   if(ok(ART[nm])){
     ctx.save();ctx.translate(px,py);const sq=1+squash*.15;ctx.scale(sq*(side<-.5?-1:1),1/sq);
     if(dead==='bonk')ctx.rotate(Math.sin(t*12)*.12);else if(!hop&&!away)ctx.rotate(Math.sin(t*6)*.03);
-    const h=s*1.22,w=h*ART[nm].naturalWidth/ART[nm].naturalHeight;ctx.drawImage(ART[nm],-w/2,-h*.7,w,h);ctx.restore();return}
+    const h=s*1.62,w=h*ART[nm].naturalWidth/ART[nm].naturalHeight;ctx.drawImage(ART[nm],-w/2,-h+s*.38,w,h);ctx.restore();return}
   // simple stand-in until the pictures load: round head, curls, orange shirt
   const r=s*.34;ctx.save();ctx.translate(px,py);ctx.strokeStyle=INK;ctx.lineWidth=r*.1;
   ctx.fillStyle='#f6d7bd';ctx.beginPath();rr(-r*.6,-r*.2,r*1.2,r*1.1,r*.3);ctx.fill();ctx.stroke();
