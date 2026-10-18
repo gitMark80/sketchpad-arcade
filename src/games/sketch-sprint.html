@@ -552,7 +552,7 @@ const BOARDS=['rocket','wave','sunset','shark','pineapple','lightning']; // skat
 /* Mark's pencil runners (and the four animal buddies): every pose of one character shares one scale, ['px', meters per pixel],
    so the run cycle never changes size. The run frames share one canvas with the feet on the bottom edge.
    Their SURF pose has its own skateboard drawn in, and DOWN is a crouch rather than lying flat. */
-const PXH={francis:287,clare:291,george:297,therese:307,joan:287,catherine:304,john:307,joseph:297,coral:124,gully:123,pip:134,shelly:114};
+const PXH={francis:328,clare:323,george:326,therese:319,joan:328,catherine:329,john:338,joseph:331,coral:124,gully:324,pip:333,shelly:274};
 const PENCILKID=new Set(['francis','clare','george','therese','joan','catherine','john','joseph']),PETS=new Set(['coral','gully','pip','shelly']);
 Object.keys(PXH).forEach(id=>{const mpp=(PETS.has(id)?.9:1.35)/PXH[id];
   for(let f=1;f<=8;f++)IMGSPR[id+'-run-'+f]=['px',mpp];['jump','slide','down','surf'].forEach(p=>IMGSPR[id+'-'+p]=['px',mpp]);
