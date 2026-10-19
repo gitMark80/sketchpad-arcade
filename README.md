@@ -35,6 +35,26 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 | Gem Cove (`gem-cove`) | Chibi Chib (`chibi-chib`) |
 | Word Plop (`word-plop`) | Word Scribble (`word-scribble`) |
 | Pearl Patrol (`pearl-patrol`) | Pencil Patrol (`pencil-patrol`) |
+| Tide Jars (`tide-jars`) | Ink Jars (`ink-jars`) |
+| Shell Scramble (`shell-scramble`) | Letter Scramble (`letter-scramble`) |
+| Castle Keeper (`castle-keeper`) | Doodle Keeper (`doodle-keeper`) |
+| Even-Tide (`even-tide`) | Even Sketch (`even-sketch`) |
+| Sand Peaks (`sand-peaks`) | Paper Peaks (`paper-peaks`) |
+| Beach Ball Blitz (`beach-ball-blitz`) | Marble Blitz (`marble-blitz`) |
+| Sandy Strikes (`sandy-strikes`) | Desk Strikes (`desk-strikes`) |
+| Taffy Drop (`taffy-drop`) | Cookie Drop (`cookie-drop`) |
+| Wiggle Reef (`wiggle-reef`) | Squiggle Worm (`squiggle-worm`) |
+| Piper Parade (`piper-parade`) | Pencil Parade (`pencil-parade`) |
+| Tide Jars (`tide-jars`) | Ink Jars (`ink-jars`) |
+| Shell Scramble (`shell-scramble`) | Letter Scramble (`letter-scramble`) |
+| Castle Keeper (`castle-keeper`) | Doodle Keeper (`doodle-keeper`) |
+| Even-Tide (`even-tide`) | Even Sketch (`even-sketch`) |
+| Sand Peaks (`sand-peaks`) | Paper Peaks (`paper-peaks`) |
+| Beach Ball Blitz (`beach-ball-blitz`) | Marble Blitz (`marble-blitz`) |
+| Sandy Strikes (`sandy-strikes`) | Desk Strikes (`desk-strikes`) |
+| Taffy Drop (`taffy-drop`) | Cookie Drop (`cookie-drop`) |
+| Wiggle Reef (`wiggle-reef`) | Squiggle Worm (`squiggle-worm`) |
+| Piper Parade (`piper-parade`) | Pencil Parade (`pencil-parade`) |
 
 `sketchify.py` takes the Beach Day Arcade slug and writes to the Sketchpad slug.
 

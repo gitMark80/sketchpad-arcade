@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Doodle Keeper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<style>
+/* Doodle Keeper: a letter-guessing word game drawn in a 10-year-old's sketchbook. Paper, graphite lines, wobbly borders.
+   Layout: one portrait column. Title row (help, sound), a HUD card (score / level / best + pencils and streak),
+   the sketchbook page with the doodle house (canvas), the clue chip + Peek button, the hidden word as paper tiles,
+   and a sticky-note keyboard at the bottom. */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
+  --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
+  --green:#5a9a6a; --green-wash:#dcebdd; --purple:#6f4a9a; --purple-wash:#e6dcef; --pink:#c45a8a; --pink-wash:#f0d5e2;
+  --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;
+  --body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+  --wob:255px 15px 225px 15px/15px 225px 15px 255px;
+  --wob2:15px 255px 15px 225px/225px 15px 255px 15px;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;font-family:var(--body);color:var(--ink);overflow:hidden;overscroll-behavior:none;
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+[hidden]{display:none!important}
+button{font-family:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.app{height:100%;max-width:520px;margin:0 auto;padding-inline:16px;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:8px;touch-action:none}
+.top{display:flex;align-items:center;gap:8px}
+.brand{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);line-height:1.1;margin:0;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:var(--ink);
+  transform:rotate(-1.5deg);transform-origin:left center;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{appearance:none;border:2px solid var(--ink);background:var(--paper);color:var(--ink);width:44px;height:44px;border-radius:var(--wob2);padding:0;
+  box-shadow:2px 2px 0 var(--pencil);display:inline-flex;align-items:center;justify-content:center;flex:none;font:400 1.45rem/1 var(--display)}
+.iconbtn svg{width:22px;height:22px}
+.iconbtn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--pencil)}
+
+/* HUD */
+.hud{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:8px 14px 8px;box-shadow:3px 3px 0 var(--pencil);display:grid;gap:6px;flex:none}
+.hrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.stat{display:flex;flex-direction:column;gap:3px;min-width:0}
+.stat small{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:var(--body)}
+.stat b{font-family:var(--display);font-weight:400;font-size:1.45rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat.end{align-items:flex-end}
+.pop{animation:pop .28s}
+@keyframes pop{50%{transform:scale(1.2)}}
+.lvl{flex:none;height:30px;border-radius:var(--wob2);padding:0 14px;display:grid;place-items:center;font:400 .95rem/1 var(--display);letter-spacing:.03em;color:var(--ink);
+  background:var(--yellow-wash);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--pencil);white-space:nowrap}
+.hrow2{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px}
+.pails{display:flex;align-items:center;gap:4px}
+.pails small{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.pail{width:24px;height:24px;display:block;transition:transform .3s,filter .3s,opacity .3s}
+.pail.gone{filter:grayscale(1);opacity:.3;transform:scale(.85) rotate(-14deg)}
+.pail.lose{animation:pailLose .7s}
+@keyframes pailLose{30%{transform:scale(1.35) rotate(10deg)}100%{transform:scale(.85) rotate(-14deg)}}
+.streak{font:400 .9rem/1 var(--body);padding:4px 10px;border-radius:var(--wob2);border:2px dashed var(--faint);background:var(--paper);color:var(--muted);white-space:nowrap;transition:background .2s}
+.streak.hot{background:var(--yellow-wash);border:2px solid var(--ink);color:var(--ink);box-shadow:2px 2px 0 var(--pencil)}
+
+/* stage */
+.stage{flex:1;min-height:120px;position:relative;border:2px solid var(--ink);border-radius:var(--wob);overflow:hidden;box-shadow:3px 3px 0 var(--pencil);background:var(--paper)}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.banner{position:absolute;left:50%;top:22%;transform:translate(-50%,-50%) rotate(-2deg) scale(.8);font:400 1.9rem/1 var(--display);color:var(--ink);text-align:center;
+  padding:12px 22px 10px;text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);
+  opacity:0;transition:opacity .2s,transform .25s;pointer-events:none;white-space:nowrap;z-index:2}
+.banner.show{opacity:1;transform:translate(-50%,-50%) rotate(-2deg) scale(1)}
+.banner small{display:block;font:400 1rem/1.2 var(--body);margin-top:5px;color:var(--pencil)}
+
+/* clue row */
+.clue{display:flex;align-items:center;gap:8px;flex:none}
+.cat{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:4px 14px 4px 6px;box-shadow:2px 2px 0 var(--pencil);min-height:40px}
+.cat i{flex:none;width:28px;height:28px;border-radius:var(--wob2);display:grid;place-items:center;background:var(--yellow-wash);border:2px solid var(--ink);font:400 .95rem/1 var(--display);font-style:normal;color:var(--ink)}
+.cat span{min-width:0;font:400 .78rem/1.1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cat b{display:block;font:400 1.08rem/1.1 var(--display);letter-spacing:0;text-transform:none;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat.new{animation:pop .35s}
+.peek{position:relative;appearance:none;border:2px solid var(--ink);flex:none;min-height:40px;border-radius:var(--wob2);padding:4px 14px 4px 10px;display:flex;align-items:center;gap:6px;color:var(--ink);
+  background:var(--blue-wash);box-shadow:2px 2px 0 var(--pencil);font:400 1.05rem/1 var(--display)}
+.peek svg{width:22px;height:22px;flex:none}
+.peek small{display:block;font:400 .72rem/1 var(--body);letter-spacing:.02em;color:var(--pencil)}
+.peek span{text-align:left}
+.peek:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--pencil)}
+.peek:disabled{filter:grayscale(.9);opacity:.5;cursor:default;transform:none}
+.peek.free{background:var(--yellow-wash)}
+.peek.free.got{animation:pop .5s 2}
+
+/* hidden word */
+.word{flex:none;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;column-gap:calc(var(--s,36px)*.55);row-gap:7px;min-height:calc(var(--s,36px)*1.15 + 4px);padding:2px 0}
+.wd{display:flex;gap:var(--g,5px)}
+.tile{position:relative;width:var(--s,36px);height:calc(var(--s,36px)*1.15);border-radius:var(--wob2);display:grid;place-items:center;perspective:200px;
+  background:var(--paper-2);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--pencil);font:400 calc(var(--s,36px)*.72)/1 var(--display);color:var(--ink)}
+.tile::after{content:"";position:absolute;left:22%;right:22%;bottom:18%;height:2px;border-radius:2px;background:var(--pencil)}
+.tile.on::after,.tile.punct::after{display:none}
+.tile b{display:block;transform-origin:50% 50%;margin-top:6%}
+.tile.on{background:var(--yellow-wash);animation:flip .42s cubic-bezier(.2,1.3,.4,1)}
+@keyframes flip{0%{transform:rotateX(90deg) scale(.9)}60%{transform:rotateX(-12deg) scale(1.08)}100%{transform:none}}
+.tile.miss{background:var(--pink-wash);border-color:var(--pink);color:var(--pink)}
+.tile.punct{background:none;border:0;box-shadow:none;width:calc(var(--s,36px)*.45)}
+.tile.win{animation:hop .5s ease both}
+@keyframes hop{40%{transform:translateY(-10px)}}
+.spark{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;pointer-events:none;
+  background:radial-gradient(circle,var(--yellow) 0 25%,rgba(201,154,26,.6) 26% 45%,transparent 46%);animation:spark .6s ease-out forwards}
+@keyframes spark{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.1);opacity:0}}
+
+/* sticky-note keyboard */
+.kb{flex:none;display:grid;gap:7px}
+.krow{display:flex;justify-content:center;gap:5px}
+.key{position:relative;appearance:none;border:2px solid var(--ink);padding:0;flex:0 0 calc((100% - 45px)/10);height:52px;display:grid;place-items:center;
+  border-radius:var(--wob2);color:var(--ink);font:400 1.35rem/1 var(--display);
+  background:var(--paper);box-shadow:2px 2px 0 var(--pencil);transition:transform .08s}
+.krow:nth-child(2) .key{border-radius:var(--wob)}
+.key::after{content:"";position:absolute;left:50%;top:-3px;width:34%;height:6px;transform:translateX(-50%) rotate(-3deg);border-radius:1px;
+  background:var(--yellow-wash);border:1px solid var(--pencil);opacity:.9}
+.key:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--pencil)}
+.key.hit{color:var(--ink);background:var(--green-wash);border-color:var(--green);box-shadow:2px 2px 0 var(--green)}
+.key.hit::after{background:var(--green-wash)}
+.key.miss{color:var(--faint);background:var(--paper);border:2px dashed var(--faint);box-shadow:none}
+.key.miss::after{opacity:.35}
+.key.used{cursor:default}
+.key.pressed{animation:keypop .3s}
+@keyframes keypop{0%{transform:scale(.86)}55%{transform:scale(1.14) translateY(-3px)}100%{transform:none}}
+.key.shake{animation:kshake .35s}
+@keyframes kshake{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+
+.float{position:fixed;z-index:20;pointer-events:none;font:400 1.3rem/1 var(--display);color:var(--ink);text-shadow:0 0 6px var(--paper),0 0 12px var(--paper),2px 2px 0 var(--paper);
+  transform:translate(-50%,-50%);animation:floatUp .9s ease-out forwards;white-space:nowrap}
+.float.gold{color:var(--yellow);font-size:1.6rem}
+@keyframes floatUp{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-60%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-190%) scale(1)}}
+
+/* cards */
+.cover{position:fixed;inset:0;display:grid;place-items:center;padding:14px;background:rgba(246,243,234,.55);overflow:auto;z-index:10;touch-action:pan-y}
+.card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 18px 16px;width:100%;max-width:370px;text-align:center;box-shadow:4px 4px 0 var(--pencil);
+  animation:rise .35s cubic-bezier(.2,1.4,.4,1);margin:auto}
+.card>*{position:relative}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+.card h2{font:400 1.9rem/1.1 var(--display);margin:0;color:var(--ink);text-wrap:balance;transform:rotate(-1.5deg)}
+.card p{margin:8px 0 0;color:var(--pencil);line-height:1.4;font-size:1.05rem}
+#mini{width:170px;height:104px;display:block;margin:0 auto 4px}
+.rules{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px;text-align:left;font-size:1rem;color:var(--ink)}
+.rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;line-height:1.3}
+.rules b{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--wob2);background:var(--paper);border:2px solid var(--ink);color:var(--ink);font:400 .8rem var(--display)}
+.rules em{font-style:normal;color:var(--purple);text-decoration:underline wavy}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 0}
+.stats div{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:8px 4px;min-width:0;box-shadow:2px 2px 0 var(--pencil)}
+.stats b{display:block;font:400 1.3rem/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats span{font-size:.85rem;color:var(--muted)}
+.bigscore{font:400 3rem/1 var(--display);color:var(--ink);margin:6px 0 0;font-variant-numeric:tabular-nums}
+.newbest{display:inline-block;background:var(--yellow-wash);border:2px solid var(--ink);color:var(--ink);font:400 .9rem var(--display);border-radius:var(--wob2);padding:3px 12px;margin-top:6px;box-shadow:2px 2px 0 var(--pencil);animation:pop .6s .2s;transform:rotate(-2deg)}
+.answer{display:inline-block;margin-top:8px;background:var(--yellow-wash);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--pencil);border-radius:var(--wob);padding:6px 14px 3px;
+  font:400 1.5rem/1.1 var(--display);letter-spacing:.06em;color:var(--ink);max-width:100%;overflow-wrap:anywhere}
+.answer small{display:block;font:400 .8rem/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.bigpails{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.bigpails .pail{width:40px;height:40px}
+.big{position:relative;overflow:hidden;appearance:none;border:2px solid var(--ink);width:100%;margin-top:14px;border-radius:var(--wob2);padding:12px 18px;font:400 2rem/1 var(--display);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);min-height:56px;
+  background:var(--yellow-wash);box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
+.big.gold{background:var(--green-wash)}
+.big:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.best{margin-top:10px;font-size:1rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.card,.newbest,.tile.on,.tile.win,.key.pressed,.key.shake{animation:none}.banner{transition:none}}
+@media (max-height:740px){.key{height:46px;font-size:1.2rem}.kb{gap:6px}.hud{padding:6px 12px;gap:4px}.stat b{font-size:1.3rem}.brand{font-size:clamp(1rem,5.6vw,1.45rem)}.iconbtn{width:40px;height:40px}
+  #mini{width:140px;height:86px}.rules{font-size:.95rem;gap:4px}.card h2{font-size:1.7rem}.big{margin-top:10px;font-size:1.65rem;min-height:50px}}
+@media (max-height:640px){.key{height:42px}.app{gap:6px}.cat,.peek{min-height:36px}.hrow2{min-height:20px}.pail{width:20px;height:20px}}
+@media (max-width:370px){.brand{font-size:1.3rem}.stat b{font-size:1.25rem}.hud{padding:7px 10px}.key{font-size:1.15rem}.krow{gap:4px}.key{flex-basis:calc((100% - 36px)/10)}}
+
+/* sketched paper tile (class is added once the image has loaded; the CSS-drawn tile above is the fallback) */
+.art-tile .tile{background:url(../assets/doodle-keeper/tile.webp) center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:20%;height:calc(var(--s,36px)*1.06)}
+.art-tile .tile.on{background-image:linear-gradient(rgba(201,154,26,.28),rgba(201,154,26,.28)),url(../assets/doodle-keeper/tile.webp)}
+.art-tile .tile.miss{background-image:linear-gradient(rgba(196,90,138,.3),rgba(196,90,138,.3)),url(../assets/doodle-keeper/tile.webp)}
+.art-tile .tile.punct{background:none}
+.art-tile .tile::after{bottom:20%;background:var(--pencil)}
+
+/* Mark's pencil for the lives (classes added once each picture loads; the SVG pencil / CSS key stay as fallbacks) */
+.art-pencil .pail{background:url(../assets/doodle-keeper/pencil.webp) center/contain no-repeat}
+.art-pencil .pail use{display:none}
+/* sticky-note keys: the drawn note is the key face, the letter sits on top. hit = note turns green, miss = faded grey note */
+.art-key .key{background:url(../assets/doodle-keeper/key-note.webp) center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;padding-top:5px;
+  filter:drop-shadow(1.5px 2px 0 rgba(85,85,92,.45))}
+.art-key .key::after{display:none}
+.art-key .key:active{box-shadow:none;filter:none}
+.art-key .key.hit{background-color:transparent;border:0;box-shadow:none;color:var(--ink);filter:hue-rotate(62deg) saturate(.65) drop-shadow(1.5px 2px 0 rgba(90,154,106,.7))}
+.art-key .key.miss{background-color:transparent;border:0;color:var(--muted);filter:grayscale(1) opacity(.38)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="pailSym" viewBox="0 0 32 32">
+      <path d="M6 24.5 L21 9.5 L26.5 15 L11.5 30 L5 31 Z" fill="#f3e6b0" stroke="#2e2e33" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M6 24.5 L11.5 30 L5 31 Z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="1.4" stroke-linejoin="round"/>
+      <path d="M5.3 29.7 L7.4 27.6" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/>
+      <path d="M21 9.5 L24 6.5 L29.5 12 L26.5 15 Z" fill="#f0d5e2" stroke="#2e2e33" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M9 22 L22 9" stroke="#c99a1a" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+      <path d="M13.5 26.5 L25 15" stroke="#55555c" stroke-width=".9" stroke-linecap="round" opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="app" id="app">
+  <div class="top">
+    <h1 class="brand">Doodle Keeper</h1>
+    <button class="iconbtn" id="helpBtn" type="button" aria-label="How to play">?</button>
+    <button class="iconbtn" id="soundBtn" type="button" aria-label="Sound on" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l5-4v14l-5-4H3z" fill="#2e2e33"/><g id="sndWaves" stroke="#2e2e33" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></g><g id="sndOff" stroke="#d9661a" stroke-width="2.4" stroke-linecap="round" style="display:none"><path d="M15 9l6 6M21 9l-6 6"/></g></svg>
+    </button>
+  </div>
+
+  <div class="hud">
+    <div class="hrow">
+      <div class="stat"><small>Score</small><b id="scoreEl">0</b></div>
+      <div class="lvl" id="lvlEl">Level 1</div>
+      <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
+    </div>
+    <div class="hrow2">
+      <div class="pails" id="pailsEl" aria-label="Pencils left: 3"><small>Pencils</small></div>
+      <div class="streak" id="streakEl">Streak x1</div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="Your doodle house on the sketchbook page. Each wrong letter erases one piece."></canvas>
+    <div class="banner" id="banner" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="clue">
+    <div class="cat" id="catBox"><i>?</i><span>Clue<b id="catEl">Doodles</b></span></div>
+    <button class="peek" id="peekBtn" type="button" aria-label="Peek at one letter">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z" fill="#f6f3ea" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.6" fill="#2e2e33"/><circle cx="13.2" cy="10.8" r="1.2" fill="#f6f3ea"/></svg>
+      <span>Peek<small id="peekSub">-1 piece</small></span>
+    </button>
+  </div>
+
+  <div class="word" id="word" aria-live="polite"></div>
+
+  <div class="kb" id="kb" role="group" aria-label="Letter keys"></div>
+</div>
+
+<div class="cover" id="start">
+  <div class="card">
+    <canvas id="mini" aria-hidden="true"></canvas>
+    <h2>Keep your doodle on the page!</h2>
+    <ul class="rules">
+      <li><b>1</b><span>Guess the hidden word one letter at a time. Tap the sticky-note keys or type.</span></li>
+      <li><b>2</b><span>The clue tells you what kind of word it is. Every right letter scores <em>10 points</em>.</span></li>
+      <li><b>3</b><span>Each wrong letter sends a bouncing eraser that rubs out one piece of your doodle house.</span></li>
+      <li><b>4</b><span>Solve it before the doodle is gone. Pieces still drawn add a big bonus, and perfect words build a <em>streak</em>.</span></li>
+      <li><b>5</b><span>Lose the doodle and you lose a pencil. You have 3. Stuck? <em>Peek</em> shows a letter.</span></li>
+    </ul>
+    <button class="big" id="playBtn" type="button">Play</button>
+    <div class="best" id="bestLine">Best score: 0</div>
+  </div>
+</div>
+
+<div class="cover" id="missed" hidden>
+  <div class="card">
+    <h2>Rubbed out!</h2>
+    <p>Good try! The word was</p>
+    <div class="answer" id="mAns"><small>Doodles</small>HOUSE</div>
+    <div class="bigpails" id="mPails"></div>
+    <p id="mMsg">2 pencils left. Let's draw it again!</p>
+    <button class="big gold" id="nextBtn" type="button">New word</button>
+  </div>
+</div>
+
+<div class="cover" id="over" hidden>
+  <div class="card">
+    <h2>The page went blank</h2>
+    <div class="bigscore" id="oScore">0</div>
+    <div id="oBest" hidden><span class="newbest">New best!</span></div>
+    <div class="stats">
+      <div><b id="oLevel">1</b><span>Level</span></div>
+      <div><b id="oWords">0</b><span>Words</span></div>
+      <div><b id="oStreak">0</b><span>Best streak</span></div>
+    </div>
+    <p>The last word was</p>
+    <div class="answer" id="oAns"><small>Doodles</small>HOUSE</div>
+    <button class="big" id="againBtn" type="button">Play again</button>
+    <div class="best" id="oBestLine">Best score: 0</div>
+  </div>
+</div>
+
+<script>
+const CATS=["Pencil case", "Classroom", "Snacks", "Things in a backpack", "Weather", "Recess fun", "Art class", "Places at school", "Getting to school", "Pets and animals", "Action words", "School clothes", "Desk drawer treasures", "Doodles", "Field trip", "Games", "People at school"];
+const WORDS="PENCIL|0|1;ERASER|0|1;RULER|0|1;CRAYON|0|1;MARKER|0|1;PEN|0|3;INK|0|3;GLUE|0|2;TAPE|0|2;CHALK|0|1;STAPLER|0|1;SCISSORS|0|2;SHARPENER|0|2;HIGHLIGHTER|0|3;PROTRACTOR|0|3;COMPASS|0|1;CALCULATOR|0|3;GLUE STICK|0|4;PAPER CLIP|0|4;STICKY NOTE|0|4;FELT TIP|0|3;GEL PEN|0|3;BALLPOINT|0|2;FOUNTAIN PEN|0|4;RUBBER BAND|0|4;BINDER CLIP|0|4;THUMBTACK|0|2;PUSHPIN|0|1;WHITEOUT|0|2;LEAD|0|2;PENCIL GRIP|0|4;COLORED PENCIL|0|4;MECHANICAL PENCIL|0|4;INK CARTRIDGE|0|4;CORRECTION TAPE|0|4;HOLE PUNCH|0|4;SET SQUARE|0|4;STENCIL|0|1;ERASER CAP|0|4;PEN LID|0|3;PAINTBRUSH|0|3;WAX CRAYON|0|4;OIL PASTEL|0|4;TIP|0|3;PINK ERASER|0|4;NUMBER TWO PENCIL|0|4;DESK|1|2;CHAIR|1|1;CLOCK|1|1;BELL|1|2;GLOBE|1|1;MAP|1|3;FLAG|1|2;POSTER|1|1;LOCKER|1|1;CUBBY|1|1;BOOKSHELF|1|2;WHITEBOARD|1|3;CHALKBOARD|1|3;CORK BOARD|1|4;BULLETIN BOARD|1|4;PROJECTOR|1|2;SMART BOARD|1|4;TEACHER'S DESK|1|4;READING CORNER|1|4;BEANBAG|1|1;WINDOW|1|1;DOOR|1|2;CALENDAR|1|2;ALPHABET|1|2;NUMBER LINE|1|4;TIMETABLE|1|2;HOMEWORK|1|2;WORKSHEET|1|2;TEXTBOOK|1|2;SPELLING TEST|1|4;REPORT CARD|1|4;GOLD STAR|1|3;STICKER CHART|1|4;ATTENDANCE|1|3;ROLL CALL|1|3;SHOW AND TELL|1|4;GROUP WORK|1|4;QUIET TIME|1|4;STORY TIME|1|4;HAND SANITIZER|1|4;TISSUE BOX|1|4;PENCIL SHARPENER|1|4;RECYCLING BIN|1|4;COAT HOOK|1|3;NAME TAG|1|3;SEATING CHART|1|4;ART WALL|1|3;TACO|2|2;CHIPS|2|1;FRIES|2|1;PEACH|2|1;PLUM|2|2;PEAR|2|2;APPLE|2|1;GRAPES|2|1;MELON|2|1;MANGO|2|1;PRETZEL|2|1;POPCORN|2|1;SANDWICH|2|2;LEMONADE|2|2;COOKIE|2|1;CUPCAKE|2|1;TAFFY|2|1;FUDGE|2|1;CORN DOG|2|3;HOT DOG|2|3;ICE CREAM|2|3;COTTON CANDY|2|4;WATERMELON|2|3;PINEAPPLE|2|2;ICE POP|2|3;FRUIT SALAD|2|4;GRANOLA BAR|2|4;TRAIL MIX|2|3;PEANUTS|2|1;CRACKERS|2|2;CHEESE|2|1;BAGEL|2|1;MUFFIN|2|1;DONUT|2|1;PIZZA|2|1;NACHOS|2|1;SMOOTHIE|2|2;JUICE BOX|2|3;CARROT STICKS|2|4;CHERRIES|2|2;STRAWBERRIES|2|3;COCONUT|2|1;FUNNEL CAKE|2|4;ORANGE SLICES|2|4;FROZEN YOGURT|2|4;MILKSHAKE|2|2;ICED TEA|2|3;LEMON|2|1;KIWI|2|2;S'MORES|2|1;BANANA|2|1;BLUEBERRIES|2|3;CHEESE STICK|2|4;RAISINS|2|1;YOGURT|2|1;APPLESAUCE|2|3;PUDDING CUP|2|4;GRILLED CHEESE|2|4;PEANUT BUTTER|2|4;JELLY SANDWICH|2|4;RICE CAKE|2|3;FRUIT CUP|2|3;VEGGIE STICKS|2|4;ANIMAL CRACKERS|2|4;TRAIL MIX BAR|2|4;BOOK|3|2;FOLDER|3|1;BINDER|3|1;NOTEBOOK|3|2;CRAYONS|3|1;PENCIL CASE|3|4;LUNCH BOX|3|3;WATER BOTTLE|3|4;HEADPHONES|3|3;LIBRARY BOOK|3|4;HOMEWORK|3|2;PLANNER|3|1;SKETCHBOOK|3|3;CALCULATOR|3|3;GYM SHOES|3|3;SWEATER|3|1;HOODIE|3|1;UMBRELLA|3|2;RAINCOAT|3|2;KEYS|3|2;TISSUES|3|1;SNACK BOX|3|3;PERMISSION SLIP|3|4;READING LOG|3|4;SPELLING LIST|3|4;FLASH CARDS|3|4;RULER|3|1;GLUE STICK|3|4;MARKERS|3|1;TABLET|3|1;CHARGER|3|1;LUNCH MONEY|3|4;HAIRBRUSH|3|2;COMB|3|2;LIP BALM|3|3;BANDAGES|3|2;GYM CLOTHES|3|4;SPARE SOCKS|3|4;MITTENS|3|1;SCARF|3|1;BUS PASS|3|3;ID CARD|3|3;NOTE FROM HOME|3|4;SECRET NOTE|3|4;COMIC BOOK|3|4;PUZZLE BOOK|3|4;DECK OF CARDS|3|4;WET WIPES|3|3;APPLE|3|1;GRANOLA BAR|3|4;SUN|4|3;RAIN|4|2;WIND|4|2;FOG|4|3;MIST|4|2;SNOW|4|2;HAIL|4|2;ICE|4|3;CLOUD|4|1;STORM|4|1;BREEZE|4|1;SUNNY|4|1;CLOUDY|4|1;WINDY|4|1;RAINY|4|1;SNOWY|4|1;FROSTY|4|1;CHILLY|4|1;DRIZZLE|4|1;THUNDER|4|1;RAINBOW|4|1;SUNSHINE|4|2;HEAT WAVE|4|3;COLD SNAP|4|3;SUNSET|4|1;SUNRISE|4|1;FORECAST|4|2;HUMID|4|1;WARM|4|2;SHOWER|4|1;SPRINKLE|4|2;HAZE|4|2;CLEAR SKY|4|3;BLUE SKY|4|3;TEMPERATURE|4|3;PUFFY CLOUD|4|4;DOWNPOUR|4|2;SUMMER|4|1;WINTER|4|1;SPRING|4|1;AUTUMN|4|1;FALL|4|2;GOLDEN HOUR|4|4;LIGHT RAIN|4|4;PARTLY CLOUDY|4|4;GUST|4|2;SCORCHER|4|2;HEAT|4|2;DRY SPELL|4|3;SUN SHOWER|4|4;DOUBLE RAINBOW|4|4;LIGHTNING|4|2;SNOW DAY|4|3;SNOWFLAKE|4|2;FROST|4|1;PUDDLE|4|1;SLEET|4|1;BLIZZARD|4|2;TORNADO|4|1;WINDCHILL|4|2;MUGGY|4|1;OVERCAST|4|2;RAIN DAY|4|3;TAG|5|3;SWING|5|1;SLIDE|5|1;SEESAW|5|1;MONKEY BARS|5|4;HOPSCOTCH|5|2;JUMP ROPE|5|3;KICKBALL|5|2;FOUR SQUARE|5|4;TETHERBALL|5|3;HULA HOOP|5|3;FREEZE TAG|5|4;DUCK DUCK GOOSE|5|4;RED ROVER|5|3;CLIMBING FRAME|5|4;JUNGLE GYM|5|4;CARTWHEELS|5|3;HANDSTANDS|5|3;CHALK DRAWING|5|4;SIDEWALK CHALK|5|4;MARBLES|5|1;JACKS|5|1;YO-YO|5|2;LEAPFROG|5|2;WALL BALL|5|3;HOT POTATO|5|4;FOOTBALL|5|2;SOCCER|5|1;BASKETBALL|5|3;SKIPPING|5|2;CHASE|5|1;RACES|5|1;RELAY RACE|5|4;TUG OF WAR|5|3;SACK RACE|5|3;EGG AND SPOON RACE|5|4;FOLLOW THE LEADER|5|4;SIMON SAYS|5|4;HIDE AND SEEK|5|4;CAPTURE THE FLAG|5|4;DODGEBALL|5|2;SPUD|5|2;DOUBLE DUTCH|5|4;CLAPPING GAMES|5|4;SPINNING|5|2;BUBBLES|5|1;SNOWBALL FIGHT|5|4;SNOW ANGEL|5|4;WATER FOUNTAIN|5|4;LINE UP|5|3;THE BELL|5|3;PAINT|6|1;BRUSH|6|1;EASEL|6|1;CANVAS|6|1;SKETCH|6|1;DOODLE|6|1;SHADE|6|1;HATCH|6|1;OUTLINE|6|1;PALETTE|6|1;SMUDGE|6|1;BLEND|6|1;TRACE|6|1;STENCIL|6|1;COLLAGE|6|1;CLAY|6|2;SCULPTURE|6|2;PASTEL|6|1;CHARCOAL|6|2;WATERCOLOR|6|3;FINGER PAINT|6|4;PAPER MACHE|6|4;ORIGAMI|6|1;GLITTER|6|1;GLUE|6|2;TISSUE PAPER|6|4;PORTRAIT|6|2;LANDSCAPE|6|2;STILL LIFE|6|4;SELF PORTRAIT|6|4;COLOR WHEEL|6|4;PRIMARY COLORS|6|4;WARM COLORS|6|4;COOL COLORS|6|4;SHADOW|6|1;HIGHLIGHT|6|2;TEXTURE|6|1;PATTERN|6|1;SYMMETRY|6|2;MOSAIC|6|1;PRINT|6|1;POTATO PRINT|6|4;HANDPRINT|6|2;SMOCK|6|1;APRON|6|1;ART SHOW|6|3;MASTERPIECE|6|3;FRAME|6|1;GALLERY|6|1;CRAYON RUBBING|6|4;SCRIBBLE|6|2;ZIGZAG|6|1;SPIRAL|6|1;DOT|6|3;LINE|6|2;CURVE|6|1;PENCIL SHADING|6|4;CROSS HATCHING|6|4;ERASER SMUDGE|6|4;ROUGH DRAFT|6|4;FINAL COPY|6|4;SKETCHBOOK PAGE|6|4;GYM|7|3;HALL|7|2;LIBRARY|7|1;CAFETERIA|7|2;HALLWAY|7|1;PLAYGROUND|7|3;ART ROOM|7|3;MUSIC ROOM|7|4;SCIENCE LAB|7|4;COMPUTER LAB|7|4;NURSE'S OFFICE|7|4;FRONT OFFICE|7|4;PRINCIPAL'S OFFICE|7|4;BUS STOP|7|3;LOCKER ROOM|7|4;AUDITORIUM|7|3;STAGE|7|1;FIELD|7|1;TRACK|7|1;CLASSROOM|7|2;LOST AND FOUND|7|4;LUNCHROOM|7|2;COURTYARD|7|2;GARDEN|7|1;BIKE RACK|7|3;DROP OFF|7|3;PICKUP LINE|7|4;MAIN ENTRANCE|7|4;STAIRS|7|1;BATHROOM|7|2;WATER FOUNTAIN|7|4;CLOAKROOM|7|2;STORAGE CLOSET|7|4;BOOK NOOK|7|3;READING CORNER|7|4;QUIET ROOM|7|4;TEACHERS' LOUNGE|7|4;TROPHY CASE|7|4;ASSEMBLY HALL|7|4;BLEACHERS|7|2;BASKETBALL COURT|7|4;SOCCER FIELD|7|4;SCHOOL BUS|7|4;PARKING LOT|7|4;FLAGPOLE|7|2;CROSSWALK|7|2;BACK FIELD|7|4;BAND ROOM|7|3;DRAMA ROOM|7|4;KINDERGARTEN|7|3;HOMEROOM|7|2;BUS|8|3;BIKE|8|2;CAR|8|3;WALK|8|2;VAN|8|3;TRAIN|8|1;TRAM|8|2;SUBWAY|8|1;SCOOTER|8|1;SKATEBOARD|8|3;CARPOOL|8|1;SCHOOL BUS|8|4;MINIVAN|8|1;ROLLER SKATES|8|4;WAGON|8|1;TRICYCLE|8|2;STROLLER|8|2;TAXI|8|2;ON FOOT|8|3;PIGGYBACK|8|2;BIKE LANE|8|3;CROSSWALK|8|2;CROSSING GUARD|8|4;WALKING BUS|8|4;BUS STOP|8|3;BUS PASS|8|3;SEAT BELT|8|3;CAR SEAT|8|3;BOOSTER SEAT|8|4;BACK SEAT|8|3;WINDOW SEAT|8|4;HELMET|8|1;KICKSTAND|8|2;BIKE LOCK|8|3;BELL|8|2;TRAFFIC LIGHT|8|4;STOP SIGN|8|3;ZEBRA CROSSING|8|4;SIDEWALK|8|2;SHORTCUT|8|2;RUNNING LATE|8|4;EARLY BIRD|8|4;MORNING BELL|8|4;BIG YELLOW BUS|8|4;BUS DRIVER|8|4;PICKUP|8|1;DROP OFF|8|3;WHEELS|8|1;PEDALS|8|1;SNEAKERS|8|2;DOG|9|3;CAT|9|3;PUP|9|3;KIT|9|3;PUPPY|9|1;KITTEN|9|1;HAMSTER|9|1;GERBIL|9|1;RABBIT|9|1;BUNNY|9|1;GUINEA PIG|9|4;GOLDFISH|9|2;PARROT|9|1;BUDGIE|9|1;CANARY|9|1;TURTLE|9|1;TORTOISE|9|2;LIZARD|9|1;GECKO|9|1;FROG|9|2;TOAD|9|2;SNAIL|9|1;MOUSE|9|1;RAT|9|3;PONY|9|2;HORSE|9|1;DONKEY|9|1;GOAT|9|2;SHEEP|9|1;LAMB|9|2;COW|9|3;CALF|9|2;PIG|9|3;PIGLET|9|1;CHICK|9|1;HEN|9|3;ROOSTER|9|1;DUCK|9|2;DUCKLING|9|2;GOOSE|9|1;OWL|9|3;ROBIN|9|1;SPARROW|9|1;PIGEON|9|1;SQUIRREL|9|2;HEDGEHOG|9|2;CHIPMUNK|9|2;FERRET|9|1;CLASS PET|9|3;STICK INSECT|9|4;BUTTERFLY|9|2;CATERPILLAR|9|3;LADYBUG|9|1;TADPOLE|9|1;ANT FARM|9|3;BEETLE|9|1;DRAGONFLY|9|2;FIREFLY|9|1;DEER|9|2;FOX|9|3;RACCOON|9|1;HAMSTER WHEEL|9|4;DOG WALK|9|3;VET VISIT|9|3;RUN|10|3;HOP|10|3;SIT|10|3;JUMP|10|2;SKIP|10|2;WALK|10|2;PLAY|10|2;LAUGH|10|1;CHEER|10|1;CLAP|10|2;BUILD|10|1;DRAW|10|2;WRITE|10|1;READ|10|2;COLOR|10|1;PAINT|10|1;CUT|10|3;PASTE|10|1;FOLD|10|2;ERASE|10|1;SHARPEN|10|1;SCRIBBLE|10|2;SKETCH|10|1;DOODLE|10|1;TRACE|10|1;DANCE|10|1;ROLL|10|2;TOSS|10|2;CATCH|10|1;THROW|10|1;RELAX|10|1;NAP|10|3;SNOOZE|10|1;EXPLORE|10|1;SEARCH|10|1;COLLECT|10|1;STROLL|10|1;SPRINT|10|1;CARTWHEEL|10|2;SOMERSAULT|10|3;TUMBLE|10|1;GIGGLE|10|1;WIGGLE|10|1;WANDER|10|1;BOUNCE|10|1;SCAMPER|10|1;TIPTOE|10|1;SHARE|10|1;SMILE|10|1;WHISTLE|10|1;LEAP|10|2;STRETCH|10|1;LISTEN|10|1;RAISE YOUR HAND|10|4;LINE UP|10|3;SIT DOWN|10|3;SPELL IT OUT|10|4;COUNT TO TEN|10|4;TAKE A GUESS|10|4;SOUND IT OUT|10|4;TURN THE PAGE|10|4;HOP SKIP AND JUMP|10|4;THINK HARD|10|4;TRY AGAIN|10|3;DRAW A PICTURE|10|4;CAP|11|3;HAT|11|3;TIE|11|3;SOCKS|11|1;SHORTS|11|1;SKIRT|11|1;JACKET|11|1;HOODIE|11|1;SWEATER|11|1;CARDIGAN|11|2;BLAZER|11|1;UNIFORM|11|1;POLO SHIRT|11|4;T-SHIRT|11|1;SWEATSHIRT|11|3;GYM SHORTS|11|4;GYM SHIRT|11|3;SNEAKERS|11|2;TRAINERS|11|2;RAIN BOOTS|11|4;RAIN JACKET|11|4;PONCHO|11|1;SCARF|11|1;MITTENS|11|1;GLOVES|11|1;BEANIE|11|1;BASEBALL CAP|11|4;BUCKET HAT|11|4;JEANS|11|1;LEGGINGS|11|2;OVERALLS|11|2;DRESS|11|1;SUNDRESS|11|2;TANK TOP|11|3;BACKPACK STRAPS|11|4;SHOELACES|11|2;VELCRO SHOES|11|4;WRISTBAND|11|2;HAIR BOW|11|3;HEADBAND|11|2;HAIR CLIP|11|3;BELT|11|2;NAME LABEL|11|4;SPIRIT SHIRT|11|4;CLASS T-SHIRT|11|4;ART SMOCK|11|3;APRON|11|1;COSTUME|11|1;PAJAMA DAY|11|4;CRAZY HAT DAY|11|4;SPORTS KIT|11|4;TIE-DYE SHIRT|11|4;WINTER COAT|11|4;PUFFER JACKET|11|4;STICKER|12|1;MARBLE|12|1;BADGE|12|1;GOLD STAR|12|3;TRADING CARD|12|4;BOTTLE CAP|12|4;KEYCHAIN|12|2;LUCKY PENNY|12|4;SHINY ROCK|12|4;FEATHER|12|1;FOSSIL|12|1;ACORN|12|1;PINECONE|12|2;FRIENDSHIP BRACELET|12|4;SECRET NOTE|12|4;TREASURE MAP|12|4;GOLD COIN|12|3;SILVER COIN|12|4;LOCKET|12|1;CHARM|12|1;BEAD|12|2;BUTTON|12|1;RIBBON|12|1;MEDAL|12|1;TROPHY|12|1;CERTIFICATE|12|3;SPECIAL PENCIL|12|4;SMELLY MARKER|12|4;GLITTER PEN|12|4;ERASER COLLECTION|12|4;FANCY ERASER|12|4;ORIGAMI CRANE|12|4;PAPER FORTUNE TELLER|12|4;COOTIE CATCHER|12|4;FOLDED NOTE|12|4;DOODLE PAGE|12|4;OLD TICKET|12|4;MOVIE STUB|12|4;BOOKMARK|12|2;MAGNET|12|1;TINY TOY|12|3;SPINNING TOP|12|4;SLAP BRACELET|12|4;GLOW STICK|12|4;PRIZE TOKEN|12|4;COMPASS|12|1;MAGNIFYING GLASS|12|4;CRYSTAL|12|1;AMBER|12|1;AGATE|12|1;JEWEL|12|1;TREASURE|12|2;GOLD|12|2;RUBY|12|2;CROWN|12|1;KEY|12|3;OLD KEY|12|3;PHOTO|12|1;POSTCARD|12|2;BIRTHDAY CARD|12|4;SUN|13|3;STAR|13|2;HEART|13|1;MOON|13|2;HOUSE|13|1;TREE|13|2;FLOWER|13|1;ARROW|13|1;CUBE|13|2;SPIRAL|13|1;ZIGZAG|13|1;SQUIGGLE|13|2;SMILEY FACE|13|4;STICK FIGURE|13|4;SPEECH BUBBLE|13|4;THOUGHT BUBBLE|13|4;LIGHTNING BOLT|13|4;RAINBOW|13|1;ROCKET|13|1;ROBOT|13|1;DRAGON|13|1;UNICORN|13|1;DINOSAUR|13|2;CASTLE|13|1;PAPER PLANE|13|4;CUPCAKE|13|1;MUSTACHE|13|2;GLASSES|13|1;CROWN|13|1;CAT FACE|13|3;DOG FACE|13|3;MONSTER|13|1;ALIEN|13|1;EYEBALL|13|1;SKULL|13|1;BONE|13|2;CLOUD|13|1;RAIN CLOUD|13|4;SNOWMAN|13|1;PUMPKIN|13|1;GHOST|13|1;BAT|13|3;FISH|13|2;WORM|13|2;SNAIL|13|1;BEE|13|3;LADYBUG|13|1;BUTTERFLY|13|2;BALLOON|13|1;KITE|13|2;TRAIN|13|1;CAR|13|3;TRUCK|13|1;BOAT|13|2;PLANE|13|1;MAZE|13|2;DOT TO DOT|13|3;BUBBLE LETTERS|13|4;BLOCK LETTERS|13|4;FANCY S|13|3;INFINITY SIGN|13|4;PEACE SIGN|13|4;SWIRL|13|1;LOOP|13|2;DOODLE KEEPER|13|4;LITTLE HOUSE|13|4;TREE HOUSE|13|4;FLYING SAUCER|13|4;SUPERHERO|13|2;PENCIL FRIEND|13|4;ZOO|14|3;FARM|14|2;MUSEUM|14|1;AQUARIUM|14|2;PLANETARIUM|14|3;BAKERY|14|1;FIRE STATION|14|4;POLICE STATION|14|4;POST OFFICE|14|4;LIBRARY|14|1;THEATER|14|1;PUMPKIN PATCH|14|4;APPLE ORCHARD|14|4;NATURE TRAIL|14|4;BOTANICAL GARDEN|14|4;SCIENCE CENTER|14|4;ART GALLERY|14|4;HISTORY MUSEUM|14|4;CITY HALL|14|3;FACTORY TOUR|14|4;DAIRY FARM|14|4;PETTING ZOO|14|4;BUTTERFLY HOUSE|14|4;CAVE|14|2;PARK|14|2;LAKE|14|2;FOREST|14|1;CAMPSITE|14|2;NATURE WALK|14|4;HAYRIDE|14|1;PERMISSION SLIP|14|4;BUDDY SYSTEM|14|4;PACKED LUNCH|14|4;NAME TAG|14|3;HEAD COUNT|14|4;BUS RIDE|14|3;CHAPERONE|14|2;GIFT SHOP|14|3;SOUVENIR|14|2;GUIDE|14|1;TOUR GUIDE|14|4;WORKSHEET|14|2;SCAVENGER HUNT|14|4;CLIPBOARD|14|2;PICNIC|14|1;LUNCH BREAK|14|4;GROUP PHOTO|14|4;BEST DAY EVER|14|4;EARLY START|14|4;BACK BY THREE|14|4;SLEEPOVER TRIP|14|4;CAMPFIRE|14|2;TENT|14|2;TRAIL MIX|14|3;BINOCULARS|14|3;TAG|15|3;CHESS|15|1;CHECKERS|15|2;DOMINOES|15|2;BINGO|15|1;CHARADES|15|2;I SPY|15|3;HIDE AND SEEK|15|4;TREASURE HUNT|15|4;SCAVENGER HUNT|15|4;TIC TAC TOE|15|4;DOTS AND BOXES|15|4;GO FISH|15|3;OLD MAID|15|3;SNAP|15|2;MEMORY|15|1;CRAZY EIGHTS|15|4;WAR|15|3;SOLITAIRE|15|2;JIGSAW PUZZLE|15|4;WORD SEARCH|15|4;CROSSWORD|15|2;SUDOKU|15|1;MAZE|15|2;RIDDLE|15|1;TWENTY QUESTIONS|15|4;SIMON SAYS|15|4;FOLLOW THE LEADER|15|4;MUSICAL CHAIRS|15|4;DUCK DUCK GOOSE|15|4;RED LIGHT GREEN LIGHT|15|4;CAPTURE THE FLAG|15|4;HOPSCOTCH|15|2;JUMP ROPE|15|3;KICKBALL|15|2;DODGEBALL|15|2;BADMINTON|15|2;SOCCER|15|1;FOOTBALL|15|2;CRICKET|15|1;BOCCE|15|1;CORNHOLE|15|2;RING TOSS|15|3;HORSESHOES|15|3;LIMBO|15|1;RELAY RACE|15|4;TUG OF WAR|15|3;SACK RACE|15|3;EGG AND SPOON RACE|15|4;PADDLEBALL|15|3;DISC GOLF|15|3;MARCO POLO|15|4;HOT POTATO|15|4;ROCK PAPER SCISSORS|15|4;THUMB WAR|15|3;STARING CONTEST|15|4;SPELLING BEE|15|4;TRIVIA|15|1;BOARD GAME|15|4;CARD GAME|15|3;GUESS THE WORD|15|4;DRAW AND GUESS|15|4;SPOT THE DIFFERENCE|15|4;CONNECT THE DOTS|15|4;TEACHER|16|1;PRINCIPAL|16|2;LIBRARIAN|16|2;NURSE|16|1;COACH|16|1;JANITOR|16|1;CUSTODIAN|16|2;BUS DRIVER|16|4;CROSSING GUARD|16|4;LUNCH LADY|16|4;LUNCH MONITOR|16|4;SUBSTITUTE|16|3;CLASSMATE|16|2;BEST FRIEND|16|4;ART TEACHER|16|4;MUSIC TEACHER|16|4;GYM TEACHER|16|4;SCIENCE TEACHER|16|4;HALL MONITOR|16|4;LINE LEADER|16|4;CLASS CLOWN|16|4;NEW KID|16|3;TEACHER'S HELPER|16|4;READING BUDDY|16|4;CLASS PRESIDENT|16|4;SAFETY PATROL|16|4;COUNSELOR|16|2;SECRETARY|16|2;TUTOR|16|1;STUDENT|16|1;PUPIL|16|1;KINDERGARTNER|16|3;FIRST GRADER|16|4;FIFTH GRADER|16|4;BIG KID|16|3;TEAM CAPTAIN|16|4;GOALIE|16|1;DRUMMER|16|1;CHOIR|16|1;BAND|16|2;PARENT HELPER|16|4;VOLUNTEER|16|2;GRANDMA|16|1;GRANDPA|16|1;LITTLE SISTER|16|4;BIG BROTHER|16|4;TWINS|16|1;LUNCH BUDDY|16|4;PEN PAL|16|3;BOOK CLUB|16|3;DOODLER|16|1;ARTIST|16|1;SPELLING CHAMP|16|4;QUIZ WHIZ|16|3;EARLY BIRD|16|4;DAYDREAMER|16|3;DOODLE KEEPER|16|4";
+
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem('doodlekeeper.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('doodlekeeper.'+k,JSON.stringify(v))}catch(e){}}};
+const reduced=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
+
+/* ---------- words ---------- */
+const LIST=WORDS.split(';').map(s=>{const [a,c,t]=s.split('|');return {a,c:CATS[+c],t:+t}});
+const BY_TIER={1:[],2:[],3:[],4:[]};LIST.forEach(w=>BY_TIER[w.t].push(w));
+let used=new Set();
+function tiersFor(lv){if(lv<=3)return [1];if(lv<=6)return [1,1,2];if(lv<=10)return [2,2,1];if(lv<=14)return [2,3];if(lv<=18)return [3,4];return [3,4,4]}
+function pickWord(lv){
+  const ts=tiersFor(lv);const order=[ts[Math.floor(Math.random()*ts.length)],...ts,1,2,3,4];
+  for(const t of order){const pool=BY_TIER[t].filter(w=>!used.has(w.a));if(pool.length){const w=pool[Math.floor(Math.random()*pool.length)];used.add(w.a);return w}}
+  used=new Set();return pickWord(lv);
+}
+
+/* ---------- sound (synthesized; starts after a finished tap, which phones require) ---------- */
+let muted=!!store.get('muted',false);
+let ac=null,nbuf=null,master=null;const VOL=3.2;
+try{if(navigator.audioSession)navigator.audioSession.type='ambient'}catch(e){}
+function actx(){if(!ac){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;try{ac=new A();master=ac.createGain();master.gain.value=muted?0:VOL;const comp=ac.createDynamicsCompressor();comp.threshold.value=-14;comp.knee.value=10;comp.ratio.value=5;comp.attack.value=.003;comp.release.value=.2;master.connect(comp).connect(ac.destination)}catch(e){return null}}
+  if(ac.state!=='running'){try{const p=ac.resume();if(p&&p.catch)p.catch(()=>{})}catch(e){}}return ac}
+function unlock(e){if(e&&(e.type==='touchstart'||(e.type==='pointerdown'&&e.pointerType!=='mouse')))return;const a=actx();if(!a||a.state==='running')return;
+  try{const b=a.createBuffer(1,1,22050),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(0)}catch(err){}}
+['pointerdown','pointerup','touchstart','touchend','mousedown','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{capture:true,passive:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ac&&ac.state!=='running'){try{ac.resume()}catch(e){}}});
+function tone(f,d=.1,type='sine',v=.08,slide=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{const t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+slide),t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.03)}catch(e){}}
+function noise(d=.2,f=1000,type='lowpass',v=.08,sweep=0,delay=0){if(muted||!ac||ac.state!=='running')return;try{if(!nbuf){nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const x=nbuf.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=Math.random()*2-1}
+  const t=ac.currentTime+delay,s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=nbuf;fl.type=type;fl.frequency.setValueAtTime(f,t);
+  if(sweep)fl.frequency.exponentialRampToValueAtTime(Math.max(40,f+sweep),t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.06,d*.3));g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  s.connect(fl).connect(g).connect(master);s.start(t,Math.random()*.5);s.stop(t+d+.03)}catch(e){}}
+const PENTA=[523,587,659,784,880,1047,1175,1319,1568,1760,2093,2349];
+const sfx={
+  key(){tone(1900,.035,'triangle',.035,-600);noise(.035,3400,'bandpass',.05)},
+  chime(k){const f=PENTA[Math.min(PENTA.length-1,k)];tone(f,.22,'sine',.07,0);tone(f*2,.14,'triangle',.02,0,.01)},
+  wrong(){noise(.55,500,'lowpass',.13,1600);noise(.4,2600,'highpass',.06,-1800,.45);tone(300,.25,'sine',.04,-140,.05)},
+  splash(){noise(.35,1800,'bandpass',.11,-1200);tone(900,.06,'sine',.03,600,.02);tone(1300,.05,'sine',.025,700,.08)},
+  peek(){[1319,1568,2093].forEach((f,k)=>tone(f,.12,'sine',.045,0,k*.06));noise(.2,5000,'highpass',.03)},
+  solve(){[523,659,784,1047].forEach((f,k)=>tone(f,.2,'triangle',.07,0,k*.1));tone(1319,.45,'sine',.06,0,.42);tone(1568,.5,'sine',.05,0,.48);noise(.5,6000,'highpass',.03,0,.4)},
+  sad(){tone(494,.5,'triangle',.06,-240);tone(392,.6,'triangle',.05,-190,.32);noise(.7,700,'lowpass',.07,-400,.1)},
+  over(){noise(1.1,1200,'lowpass',.1,-1000);[523,440,392,330,262].forEach((f,k)=>tone(f,.32,'triangle',.06,0,.12+k*.17))},
+  pail(){tone(660,.08,'square',.025);tone(520,.12,'square',.025,0,.1)},
+  bonus(){tone(1047,.1,'triangle',.05);tone(1568,.18,'triangle',.05,0,.08)},
+  click(){tone(740,.04,'square',.02)},
+  build(k){tone(260+k*70,.07,'sine',.04,120);noise(.06,1200,'bandpass',.03)}
+};
+
+/* ---------- canvas & the doodle house ---------- */
+const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
+const PINK='#c45a8a',PINK_W='#f0d5e2',YEL='#c99a1a',YEL_W='#f3e6b0',ORG='#d9661a',ORG_W='#f0c9a8',GRN='#5a9a6a',GRN_W='#dcebdd';
+const cv=$('cv'),stage=$('stage');let ctx=cv.getContext('2d');
+const LW=360,LH=228,GY=176;
+let dpr=1,cw=0,ch=0,S=1,OX=0,OY=0;
+function fit(){dpr=Math.min(3,window.devicePixelRatio||1);const r=stage.getBoundingClientRect();cw=Math.max(1,r.width);ch=Math.max(1,r.height);
+  cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);S=Math.min(cw/300,ch/256);OX=cw/2-180*S;OY=(ch-(LH+24)*S)*.6+26*S;
+  sizeTiles()}
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const ease=x=>x<0?0:x>1?1:x*x*(3-2*x);
+const sm=(x,a,b)=>ease((x-a)/(b-a));
+
+// doodle pieces: geometry in logical units. ct = the house, walls = the picket fence, gate = the garden gate,
+// lt / rt = the trees either side, flag = the pennant on the roof.
+const P={
+  ct:{x:180,w:84,top:66,p:0,target:0,delay:0,wob:0},
+  walls:{x:180,w:176,top:GY-30,p:0,target:0,delay:0,wob:0},
+  gate:{x:180,w:38,top:GY-40,p:0,target:0,delay:0,wob:0},
+  lt:{x:92,w:52,top:84,p:0,target:0,delay:0,wob:0},
+  rt:{x:268,w:52,top:84,p:0,target:0,delay:0,wob:0},
+  flag:{x:180,w:20,top:6,p:0,target:0,delay:0,wob:0},
+};
+const GROUPS={6:[['flag'],['lt'],['rt'],['ct'],['gate'],['walls']],5:[['lt'],['rt'],['flag','ct'],['gate'],['walls']],4:[['lt'],['rt'],['flag','ct'],['gate','walls']]};
+let mood='idle',moodT=0,happyT=0,tNow=0;
+const speck={};
+['ct','walls','gate','lt','rt'].forEach((k,i)=>{const r=rng(17+i*31);speck[k]=Array.from({length:40},()=>[r(),r(),r()])});
+
+/* pencil helpers */
+function wline(g,x0,y0,x1,y1,seed){ // a slightly wobbly pencil line
+  const n=Math.max(2,Math.round(Math.hypot(x1-x0,y1-y0)/9));const r=rng(seed||1);g.moveTo(x0,y0);
+  for(let i=1;i<=n;i++){const u=i/n;const nx=-(y1-y0),ny=x1-x0,L=Math.hypot(nx,ny)||1;const o=(r()-.5)*1.4*(i<n?1:0);g.lineTo(x0+(x1-x0)*u+nx/L*o,y0+(y1-y0)*u+ny/L*o)}}
+function hatch(g,x,y,w,h,gap,alpha,seed){g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.strokeStyle=GRAPH;g.globalAlpha*=alpha;g.lineWidth=.9;g.beginPath();
+  for(let s=x-h;s<x+w;s+=gap){g.moveTo(s,y+h);g.lineTo(s+h,y)}g.stroke();g.restore()}
+function speckles(g,k,x,y,w,h){const a=speck[k];g.fillStyle=GRAPH;g.globalAlpha*=.35;for(let i=0;i<a.length;i++){const s=a[i];g.fillRect(x+3+s[0]*(w-6),y+3+s[1]*(h-6),1.2,1.2)}g.globalAlpha/=.35}
+
+/* the house (centre piece) */
+function housePath(g,p){const l=p.x-p.w/2,r=p.x+p.w/2,ry=p.top+34;g.beginPath();g.moveTo(l+2,GY);g.lineTo(l,ry);g.lineTo(l-8,ry+1);g.lineTo(p.x,p.top);g.lineTo(r+8,ry+1);g.lineTo(r,ry);g.lineTo(r-1,GY);g.closePath()}
+function drawCT(g){const p=P.ct;const l=p.x-p.w/2,r=p.x+p.w/2,ry=p.top+34;
+  {const m=happyT>0?'happy':mood;const im=ART['house-'+m]||ART.house;if(im){ // Mark's drawn house, one picture per mood
+    const w=116,h=w*im.height/im.width;g.drawImage(im,p.x-w/2,GY+3-h,w,h);return}}
+  g.lineJoin='round';g.lineCap='round';
+  // body
+  g.fillStyle=PAPER;g.beginPath();g.moveTo(l+2,GY);g.lineTo(l,ry+2);g.lineTo(r,ry+2);g.lineTo(r-1,GY);g.closePath();g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
+  hatch(g,r-14,ry+2,14,GY-ry-2,5,.35);
+  // roof, hatched like a kid's pencil shading
+  g.fillStyle=PAPER;g.beginPath();g.moveTo(l-8,ry+1);g.lineTo(p.x,p.top);g.lineTo(r+8,ry+1);g.closePath();g.fill();
+  g.save();g.clip();hatch(g,l-8,p.top,p.w+16,ry-p.top+2,4,.5);g.restore();
+  g.strokeStyle=INK;g.lineWidth=2;g.beginPath();g.moveTo(l-8,ry+1);g.lineTo(p.x,p.top);g.lineTo(r+8,ry+1);g.closePath();g.stroke();
+  // the face: two window eyes and a mouth under them
+  const fy=ry+22,ex=18;const m=happyT>0?'happy':mood;
+  g.strokeStyle=INK;g.fillStyle=INK;g.lineWidth=2;
+  if(m==='happy'){[-ex,ex].forEach(d=>{g.beginPath();g.arc(p.x+d,fy+3,6,Math.PI*1.1,Math.PI*1.9);g.stroke()});
+    g.beginPath();g.moveTo(p.x-10,fy+14);g.quadraticCurveTo(p.x,fy+28,p.x+10,fy+14);g.closePath();g.fillStyle=PINK_W;g.fill();g.stroke()}
+  else{const blink=(tNow%4.2)>4.05;[-ex,ex].forEach(d=>{ // square window eyes with a cross-pane
+      g.fillStyle=PAPER;g.beginPath();g.rect(p.x+d-7,fy-7,14,blink?2:14);g.fill();g.stroke();
+      if(!blink){g.beginPath();g.moveTo(p.x+d-7,fy);g.lineTo(p.x+d+7,fy);g.moveTo(p.x+d,fy-7);g.lineTo(p.x+d,fy+7);g.stroke();
+        g.fillStyle=INK;g.beginPath();g.ellipse(p.x+d+(m==='worried'?0:1.5),fy+(m==='worried'?-1:1.5),2.6,3,0,0,7);g.fill()}});
+    if(m==='worried'){g.beginPath();g.moveTo(p.x-ex-7,fy-11);g.lineTo(p.x-ex+6,fy-14);g.moveTo(p.x+ex+7,fy-11);g.lineTo(p.x+ex-6,fy-14);g.stroke();
+      g.fillStyle=PAPER;g.beginPath();g.ellipse(p.x,fy+18,3.6,4.4,0,0,7);g.fill();g.stroke()}
+    else{g.beginPath();g.moveTo(p.x-8,fy+15);g.quadraticCurveTo(p.x,fy+21,p.x+8,fy+15);g.stroke()}}
+  // a little heart doodle on the wall
+  g.strokeStyle=PINK;g.lineWidth=1.3;g.beginPath();const hx=l+10,hy=GY-12;g.moveTo(hx,hy+4);g.bezierCurveTo(hx-6,hy-2,hx-2,hy-7,hx,hy-3);g.bezierCurveTo(hx+2,hy-7,hx+6,hy-2,hx,hy+4);g.stroke();
+}
+/* picket fence */
+function drawWalls(g){const p=P.walls,x0=p.x-p.w/2,x1=p.x+p.w/2,gl=P.gate.x-P.gate.w/2-4,gr=P.gate.x+P.gate.w/2+4;
+  if(ART.fence){const im=ART.fence,w=70,h=w*im.height/im.width; // one drawn fence section either side of the gate
+    g.drawImage(im,(x0+gl)/2-w/2,GY+3-h,w,h);g.drawImage(im,(gr+x1)/2-w/2,GY+3-h,w,h);return}
+  g.lineCap='round';g.lineJoin='round';g.strokeStyle=INK;g.lineWidth=1.6;
+  const picket=(x)=>{g.fillStyle=PAPER;g.beginPath();g.moveTo(x-4,GY);g.lineTo(x-4,p.top+6);g.lineTo(x,p.top);g.lineTo(x+4,p.top+6);g.lineTo(x+4,GY);g.closePath();g.fill();g.stroke()};
+  for(let x=x0+4;x<=x1-4;x+=12){if(x>gl&&x<gr)continue;picket(x)}
+  // rails
+  g.lineWidth=1.4;[p.top+11,GY-9].forEach((y,i)=>{g.beginPath();wline(g,x0,y,gl,y,5+i);g.stroke();g.beginPath();wline(g,gr,y,x1,y,9+i);g.stroke()});
+  hatch(g,x0,GY-8,gl-x0,7,6,.3);hatch(g,gr,GY-8,x1-gr,7,6,.3);
+}
+function gatePath(g){const p=P.gate,l=p.x-p.w/2,r=p.x+p.w/2;g.beginPath();g.moveTo(l,GY);g.lineTo(l,p.top+p.w/2);g.arc(p.x,p.top+p.w/2,p.w/2,Math.PI,0);g.lineTo(r,GY);g.closePath()}
+function drawGate(g){const p=P.gate;
+  if(ART.gate){const im=ART.gate,w=58,h=w*im.height/im.width;g.drawImage(im,p.x-w/2,GY+3-h,w,h);return}
+  gatePath(g);g.fillStyle=YEL_W;g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
+  g.save();gatePath(g);g.clip();g.strokeStyle=PENCIL;g.lineWidth=1.1;for(let i=1;i<4;i++){const x=p.x-p.w/2+i*p.w/4;g.beginPath();wline(g,x,p.top+2,x,GY,20+i);g.stroke()}
+  g.beginPath();wline(g,p.x-p.w/2,GY-14,p.x+p.w/2,GY-14,31);g.stroke();g.restore();
+  g.strokeStyle=INK;g.lineWidth=1.6;g.beginPath();g.arc(p.x+9,p.top+26,2.6,0,7);g.stroke()}
+function drawGateHole(g){const p=P.gate;gatePath(g);g.fillStyle='rgba(46,46,51,.12)';g.fill()}
+/* trees */
+function drawTree(g,k,cx,top,w,base){
+  if(ART.tree){const im=ART.tree,h=96,tw=h*im.width/im.height;g.save();g.translate(cx,0);if(k==='rt')g.scale(-1,1); // mirrored on the right
+    g.drawImage(im,-tw/2,base+3-h,tw,h);g.restore();return}
+  g.lineJoin='round';g.lineCap='round';
+  const r=w/2,cy=top+r*.9;
+  // trunk
+  g.fillStyle=PAPER;g.beginPath();g.moveTo(cx-r*.28,base);g.lineTo(cx-r*.22,cy+r*.4);g.lineTo(cx+r*.22,cy+r*.4);g.lineTo(cx+r*.28,base);g.closePath();g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
+  hatch(g,cx+r*.02,cy+r*.4,r*.3,base-cy-r*.4,4,.4);
+  // canopy: a wobbly cloud outline with a green pencil wash
+  g.fillStyle=GRN_W;g.beginPath();for(let i=0;i<=36;i++){const a=i/36*Math.PI*2;const rr=r*(1+.08*Math.sin(i*1.9)+.05*Math.cos(i*3.1));g.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr*.92)}g.closePath();g.fill();
+  g.strokeStyle=GRN;g.lineWidth=1.2;g.stroke();g.strokeStyle=INK;g.lineWidth=1.6;g.globalAlpha*=.85;g.stroke();g.globalAlpha/=.85;
+  g.save();g.clip();hatch(g,cx-r,cy-r,r*2,r*2,5,.25);g.restore();
+  // a couple of leaf squiggles
+  g.strokeStyle=GRN;g.lineWidth=1.1;g.beginPath();g.arc(cx-r*.3,cy-r*.2,4,.3,3);g.moveTo(cx+r*.35,cy+r*.15);g.arc(cx+r*.25,cy+r*.15,4,.6,3.2);g.stroke();
+}
+function drawLT(g){const p=P.lt;drawTree(g,'lt',p.x,p.top,p.w,GY)}
+function drawRT(g){const p=P.rt;drawTree(g,'rt',p.x,p.top,p.w,GY)}
+/* the pennant on the roof */
+const FLAG_CROP=.855,FLAG_POLE=.197; // pennant art: rows kept (pole without its grass tuft), pole x as a fraction of width
+function drawFlag(g){const ct=P.ct,top=ct.top-11;const px=180;
+  if(ART.pennant){const im=ART.pennant,sh=im.height*FLAG_CROP,h=44,w=h*im.width/sh,base=ct.top+4;
+    const amp=happyT>0?.09:.035,sp=happyT>0?12:5; // the cloth flutters: a small stretch and skew about the pole
+    g.save();g.translate(px,base);g.transform(1+Math.sin(tNow*sp)*amp,Math.sin(tNow*sp+1)*amp*.8,0,1,0,0);
+    g.drawImage(im,0,0,im.width,sh,-w*FLAG_POLE,-h,w,h);g.restore();return}
+  g.strokeStyle=INK;g.lineWidth=2.2;g.lineCap='round';g.beginPath();g.moveTo(px,top+9);g.lineTo(px,top-30);g.stroke();
+  g.fillStyle=YEL_W;g.beginPath();g.arc(px,top-31,3,0,7);g.fill();g.lineWidth=1.4;g.stroke();
+  const amp=happyT>0?5:2.4,sp=happyT>0?12:5,L=32,y0=top-29;
+  g.beginPath();g.moveTo(px+1,y0);for(let i=1;i<=12;i++){const u=i/12;g.lineTo(px+1+u*L,y0+u*8+Math.sin(tNow*sp-u*5)*amp*u)}
+  for(let i=12;i>=0;i--){const u=i/12;g.lineTo(px+1+u*L,y0+16-u*8+Math.sin(tNow*sp-u*5)*amp*u)}g.closePath();
+  g.fillStyle=ORG_W;g.fill();g.strokeStyle=ORG;g.lineWidth=1.2;g.stroke();g.strokeStyle=INK;g.lineWidth=1.4;g.globalAlpha*=.8;g.stroke();g.globalAlpha/=.8;
+  g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.arc(px+12,y0+8+Math.sin(tNow*sp-1.9)*amp*.37,3,0,7);g.stroke()}
+/* eraser crumbs left where a piece used to be */
+const CRUMB_DX={ct:-14,gate:14};
+function crumbs(g,k,cx,w,h){
+  if(ART.crumbs){const im=ART.crumbs,draw=(x,cw)=>{const chh=cw*im.height/im.width;g.drawImage(im,x-cw/2,GY+8-chh*.6,cw,chh)};
+    if(w>120){draw(cx-w*.28,40);draw(cx+w*.28,40)}else draw(cx+(CRUMB_DX[k]||0),Math.min(44,w*.65));return}
+  const a=speck[k];g.save();g.lineCap='round';
+  for(let i=0;i<a.length;i+=2){const s=a[i];const x=cx-w/2+s[0]*w,y=GY+2+s[1]*Math.min(h,14)*.6;const len=2+s[2]*5;
+    g.strokeStyle=s[2]<.5?PINK:GRAPH;g.lineWidth=1.6;g.globalAlpha=.75;g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+len*.5,y-2.5,x+len,y+.5);g.stroke()}
+  g.restore()}
+
+function drawPiece(g,k,fn,mw,mh){const pc=P[k];const p=ease(pc.p);const a=1-sm(pc.p,.3,1);
+  if(a>0.01){g.save();g.globalAlpha*=a;let wob=0;if(pc.wob>0&&!reduced)wob=Math.sin(tNow*42)*.045*Math.min(1,pc.wob/.3);
+    let bounce=0;if(happyT>0&&!reduced)bounce=Math.max(0,Math.sin(happyT*9))*.04;
+    g.translate(pc.x,GY);g.rotate(wob);g.scale(1-bounce*.5,(1-.06*p)*(1+bounce));g.translate(-pc.x,-GY);
+    fn(g);
+    // half-rubbed look: paper smears across the piece while it fades
+    if(pc.p>0&&pc.p<1){g.globalAlpha=sm(pc.p,0,.6)*.6;g.strokeStyle=PAPER;g.lineWidth=4;g.lineCap='round';
+      for(let i=0;i<7;i++){const y=pc.top+i*((GY-pc.top)/7)+3,x0=pc.x-mw*.4+(i%2)*8;g.beginPath();g.moveTo(x0,y+3);g.lineTo(x0+mw*.7,y-2);g.stroke()}}
+    g.restore()}
+  const ma=sm(pc.p,.25,.85);if(ma>0.01&&mw){g.save();g.globalAlpha*=ma;crumbs(g,k,pc.x,mw,mh);g.restore()}}
+function drawFlagPiece(g){const f=P.flag,ct=P.ct;const p=ease(f.p);if(f.p>=1&&ART.pennant){const im=ART.pennant,sh=im.height*FLAG_CROP,h=30,w=h*im.width/sh;
+    g.save();g.translate(196,GY+30);g.rotate(Math.PI/2-.22);g.globalAlpha*=.9;g.drawImage(im,0,0,im.width,sh,-w*FLAG_POLE,-h/2,w,h);g.restore();return}
+  if(f.p>=1){ // fallen pennant lying on the ground
+    g.save();g.translate(206,GY+30);g.rotate(-.22);g.globalAlpha*=.9;g.strokeStyle=INK;g.lineWidth=2;g.beginPath();g.moveTo(-14,0);g.lineTo(14,0);g.stroke();
+    g.fillStyle=ORG_W;g.strokeStyle=ORG;g.lineWidth=1.2;g.beginPath();g.moveTo(10,0);g.lineTo(2,-7);g.lineTo(-4,0);g.closePath();g.fill();g.stroke();g.restore();return}
+  const cp=ease(ct.p);const topY=GY-(GY-(ct.top-11))*(1-.8*cp);
+  g.save();g.translate(180,topY);let wob=f.wob>0&&!reduced?Math.sin(tNow*40)*.12*Math.min(1,f.wob/.3):0;g.rotate(wob+p*1.5);g.translate(0,p*20);g.globalAlpha*=1-p;g.translate(-180,-(ct.top-11));drawFlag(g);g.restore()}
+
+function drawCastle(g){
+  // a stepping-stone path from the gate down the page
+  g.save();g.strokeStyle=PENCIL;g.lineWidth=1.2;for(let i=0;i<3;i++){const y=GY+8+i*8,w=14-i*2;g.beginPath();g.ellipse(180+(i%2?5:-4),y,w,3,0,0,7);g.stroke()}g.restore();
+  // ground shadow
+  g.fillStyle='rgba(46,46,51,.12)';g.beginPath();g.ellipse(180,GY+2,124,5,0,0,7);g.fill();
+  drawPiece(g,'ct',drawCT,74,22);
+  drawFlagPiece(g);
+  drawPiece(g,'walls',drawWalls,200,16);
+  if(P.walls.p<.5){ if(P.gate.p>0){g.save();g.globalAlpha*=Math.min(1,P.gate.p*2)*(1-P.walls.p*2);drawGateHole(g);g.restore()} drawPiece(g,'gate',drawGate,44,10)}
+  else drawPiece(g,'gate',drawGate,44,10);
+  drawPiece(g,'lt',drawLT,64,20);
+  drawPiece(g,'rt',drawRT,64,20);
+}
+
+/* scene: a sketchbook page */
+const clouds=[{x:110,y:30,s:1},{x:250,y:18,s:.8},{x:330,y:56,s:.6}];
+function cloud(g,x,y,s){g.save();g.translate(x,y);g.scale(s,s);g.strokeStyle=INK;g.lineWidth=1.6/s;g.lineCap='round';g.fillStyle=PAPER;
+  g.beginPath();g.moveTo(-12,6);g.arc(-4,0,10,Math.PI,Math.PI*1.75);g.arc(14,-6,13,Math.PI*1.15,Math.PI*1.9);g.arc(30,0,10,Math.PI*1.3,Math.PI*.5);g.lineTo(-12,6);g.closePath();g.fill();g.stroke();g.restore()}
+function drawScene(g,L,R,T,B){
+  g.fillStyle=PAPER;g.fillRect(L,T,R-L,B-T);
+  // faint ruled lines like a notebook page
+  g.strokeStyle='#c9c6bc';g.lineWidth=.8;g.globalAlpha=.55;for(let y=Math.ceil(T/18)*18;y<GY-4;y+=18){g.beginPath();g.moveTo(L,y);g.lineTo(R,y);g.stroke()}g.globalAlpha=1;
+  // the sun: a wobbly circle with rays, like the corner of every kid's drawing
+  const sx=Math.max(L+30,26),sy=30,sr=16;g.strokeStyle=INK;g.lineCap='round';g.lineWidth=2;g.fillStyle=YEL_W;
+  g.beginPath();for(let i=0;i<=36;i++){const a=i/36*Math.PI*2,r=sr*(1+.05*Math.sin(i*2.3));g.lineTo(sx+Math.cos(a)*r,sy+Math.sin(a)*r)}g.closePath();g.fill();g.stroke();
+  g.save();g.translate(sx,sy);g.rotate(tNow*.15);for(let i=0;i<12;i++){const a=i/12*Math.PI*2+.2,r0=sr*1.3,r1=sr*(1.7+.25*(i%2));g.beginPath();g.moveTo(Math.cos(a)*r0,Math.sin(a)*r0);g.lineTo(Math.cos(a)*r1,Math.sin(a)*r1);g.stroke()}g.restore();
+  g.fillStyle=INK;g.beginPath();g.arc(sx-5,sy-2,1.6,0,7);g.arc(sx+5,sy-2,1.6,0,7);g.fill();g.lineWidth=1.6;g.beginPath();g.arc(sx,sy+2,6,.3,Math.PI-.3);g.stroke();
+  const span=R-L+120;clouds.forEach(c=>{const x=L-60+(((c.x-L+60+tNow*4*c.s)%span)+span)%span;cloud(g,x,c.y,c.s)});
+  // a few birds (little m shapes)
+  g.strokeStyle=GRAPH;g.lineWidth=1.2;for(let i=0;i<3;i++){const bx=L+((i*110+tNow*3)%(R-L+40))-20,by=70+(i%2)*12+Math.sin(tNow*2+i)*2;g.beginPath();g.moveTo(bx-6,by);g.quadraticCurveTo(bx-3,by-4,bx,by);g.quadraticCurveTo(bx+3,by-4,bx+6,by);g.stroke()}
+  // ground: a wobbly pencil line with grass tufts and hatching underneath
+  g.strokeStyle=INK;g.lineWidth=1.6;g.beginPath();wline(g,L,GY+2,R,GY+2,77);g.stroke();
+  g.strokeStyle=GRAPH;g.lineWidth=1;for(let x=L+6;x<R;x+=17){const h=4+((x*7)%5);g.beginPath();g.moveTo(x,GY+2);g.lineTo(x-2,GY+2-h);g.moveTo(x+3,GY+2);g.lineTo(x+5,GY+1-h*.7);g.stroke()}
+  hatch(g,L,GY+3,R-L,B-GY-3,9,.18);
+  // doodles in the margin: a star, a flower, a spiral
+  star(g,28,GY+30,8);flower(g,332,GY+34,1.6);spiral(g,58,GY+40);
+}
+function star(g,x,y,r){g.save();g.translate(x,y);g.rotate(.3);g.fillStyle=YEL_W;g.strokeStyle=INK;g.lineWidth=1.3;g.lineJoin='round';g.beginPath();
+  for(let i=0;i<10;i++){const a=i*Math.PI/5-Math.PI/2,rr=i%2?r*.45:r;g.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}g.closePath();g.fill();g.stroke();g.restore()}
+function flower(g,x,y,s){g.save();g.translate(x,y);g.scale(s,s);g.strokeStyle=INK;g.lineWidth=1.2/s;g.fillStyle=PINK_W;
+  for(let i=0;i<5;i++){const a=i/5*Math.PI*2;g.beginPath();g.ellipse(Math.cos(a)*4,Math.sin(a)*4,3,2,a,0,7);g.fill();g.stroke()}
+  g.fillStyle=YEL_W;g.beginPath();g.arc(0,0,2.2,0,7);g.fill();g.stroke();g.restore()}
+function spiral(g,x,y){g.save();g.strokeStyle=GRAPH;g.lineWidth=1.1;g.beginPath();for(let i=0;i<=40;i++){const a=i/40*Math.PI*5,r=i/40*7;g.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r)}g.stroke();g.restore()}
+
+/* the eraser & particles */
+let waves=[],parts=[];
+function spawnWave(keys,small){
+  const tx=keys.reduce((s,k)=>s+P[k].x,0)/keys.length;
+  const side=tx<180?'L':tx>180?'R':(Math.random()<.5?'L':'R');
+  keys.forEach(k=>{P[k].wob=.55});
+  waves.push({keys,side,tx:side==='R'?Math.max(tx,150):Math.min(tx,210),h:small?52:74,t:0,phase:0,hit:false});
+}
+function splashAt(x,y,n){for(let i=0;i<n;i++){const a=-Math.PI*Math.random(),sp=60+Math.random()*130;parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-40,life:.9,max:.9,r:1.5+Math.random()*2.5,c:Math.random()<.5?GRAPH:PINK,kind:'drop'})}
+  for(let i=0;i<10;i++){const a=-Math.PI*Math.random();parts.push({x:x+(Math.random()-.5)*30,y:GY,vx:Math.cos(a)*50,vy:Math.sin(a)*60,life:.7,max:.7,r:2+Math.random()*2,c:GRAPH,kind:'drop'})}}
+function confetti(){const cols=[ORG,YEL,GRN,'#2f6fb5',PINK,'#6f4a9a'];const L=-OX/S,R=(cw-OX)/S;
+  const n=reduced?24:70;for(let i=0;i<n;i++)parts.push({x:L+Math.random()*(R-L),y:-OY/S-10-Math.random()*60,vx:(Math.random()-.5)*40,vy:40+Math.random()*60,life:2.6,max:2.6,r:3+Math.random()*3,c:cols[i%cols.length],kind:'conf',rot:Math.random()*6,vr:(Math.random()-.5)*10})}
+function sparkles(x,y,n){for(let i=0;i<n;i++){const a=Math.random()*7,sp=30+Math.random()*60;parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.8,max:.8,r:3+Math.random()*3,c:YEL,kind:'spark'})}}
+function drawWave(g,w){const R=Math.max(LW,(cw-OX)/S)+40;let fx;
+  const startX=R+30,endX=w.side==='R'?w.tx-14:360-w.tx-14;let h=w.h;
+  let hop=0,rub=0;
+  if(w.phase===0){const u=Math.min(1,w.t/.6);fx=startX+(endX-startX)*(1-Math.pow(1-u,2));hop=Math.abs(Math.sin(u*Math.PI*3))*26*(1-u*.5)}
+  else{const u=Math.min(1,w.t/.9);fx=endX+(startX+40-endX)*u*u;h=w.h*(1-.5*u);rub=Math.sin(w.t*38)*7*(1-u);hop=u>.4?Math.abs(Math.sin((u-.4)*Math.PI*2))*22:0}
+  g.save();if(w.side==='L'){g.translate(360,0);g.scale(-1,1)}
+  const a=w.phase===1?1-Math.max(0,(w.t-.5)/.4):1;g.globalAlpha*=Math.max(0,a);
+  // the eraser: a pink block with a dark band, a cheeky face, tilted as it bounces
+  const EW=46,EH=24;const ex=fx+rub,ey=GY-h*.55-hop,tilt=w.phase===0?-.25+Math.sin(w.t*20)*.1:Math.sin(w.t*38)*.08;
+  if(ART.eraser){const im=ART.eraser,iw=44,ih=iw*im.height/im.width;
+    if(hop>2){g.fillStyle='rgba(46,46,51,.15)';g.beginPath();g.ellipse(ex,GY-h*.55+ih*.5,EW*.5,4,0,0,7);g.fill()}
+    g.translate(ex,ey);g.rotate(tilt);g.drawImage(im,-iw/2,-ih/2,iw,ih);g.restore();return fx}
+  if(hop>2){g.fillStyle='rgba(46,46,51,.15)';g.beginPath();g.ellipse(ex,GY-h*.55+EH*.5+2,EW*.5,4,0,0,7);g.fill()}
+  g.translate(ex,ey);g.rotate(tilt);
+  g.lineJoin='round';g.lineCap='round';g.fillStyle=PINK_W;g.strokeStyle=INK;g.lineWidth=2;
+  g.beginPath();g.moveTo(-EW/2,-EH/2+3);g.quadraticCurveTo(-EW/2,-EH/2,-EW/2+3,-EH/2);g.lineTo(EW/2-3,-EH/2);g.quadraticCurveTo(EW/2,-EH/2,EW/2,-EH/2+3);
+  g.lineTo(EW/2,EH/2-3);g.quadraticCurveTo(EW/2,EH/2,EW/2-3,EH/2);g.lineTo(-EW/2+3,EH/2);g.quadraticCurveTo(-EW/2,EH/2,-EW/2,EH/2-3);g.closePath();g.fill();
+  g.strokeStyle=PINK;g.lineWidth=1.2;g.stroke();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
+  // darker band at the back
+  g.fillStyle=PINK;g.globalAlpha*=.35;g.fillRect(EW/2-12,-EH/2+1,10,EH-2);g.globalAlpha/=.35;g.beginPath();g.moveTo(EW/2-12,-EH/2);g.lineTo(EW/2-12,EH/2);g.stroke();
+  hatch(g,-EW/2+2,EH/2-6,EW-16,5,4,.3);
+  // face: eyes look toward the doodle
+  g.fillStyle=PAPER;g.beginPath();g.ellipse(-12,-2,4,4.8,0,0,7);g.ellipse(0,-2,4,4.8,0,0,7);g.fill();g.lineWidth=1.3;g.stroke();
+  g.fillStyle=INK;g.beginPath();g.arc(-13.5,-1.5,2,0,7);g.arc(-1.5,-1.5,2,0,7);g.fill();
+  g.lineWidth=1.6;g.beginPath();g.arc(-6,4,5,.2,Math.PI-.2);g.stroke();
+  g.strokeStyle=PINK;g.lineWidth=1.2;g.beginPath();g.arc(-18,5,2.2,0,7);g.arc(6,5,2.2,0,7);g.stroke();
+  g.restore();
+  return fx}
+function step(dt){
+  tNow+=dt;if(happyT>0)happyT=Math.max(0,happyT-dt);
+  Object.values(P).forEach(pc=>{if(pc.wob>0)pc.wob=Math.max(0,pc.wob-dt);if(pc.delay>0){pc.delay-=dt;return}
+    if(pc.p<pc.target)pc.p=Math.min(pc.target,pc.p+dt/.7);else if(pc.p>pc.target)pc.p=Math.max(pc.target,pc.p-dt/.45)});
+  waves.forEach(w=>{w.t+=dt;if(w.phase===0&&w.t>=.6){w.phase=1;w.t=0;w.keys.forEach(k=>{P[k].target=1});splashAt(w.tx,GY-w.h*.6,reduced?8:22);sfx.splash()}});
+  waves=waves.filter(w=>!(w.phase===1&&w.t>.95));
+  parts.forEach(p=>{p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.kind==='drop')p.vy+=320*dt;else if(p.kind==='conf'){p.vy=Math.min(p.vy+30*dt,110);p.vx+=Math.sin(tNow*3+p.r)*20*dt;p.rot+=p.vr*dt}else{p.vx*=.95;p.vy*=.95}});
+  parts=parts.filter(p=>p.life>0);
+}
+function render(){
+  const g=ctx;g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,cw,ch);
+  g.setTransform(dpr*S,0,0,dpr*S,dpr*OX,dpr*OY);
+  const L=-OX/S,R=(cw-OX)/S,T=-OY/S,B=(ch-OY)/S;
+  drawScene(g,L,R,T,B);drawCastle(g);waves.forEach(w=>drawWave(g,w));
+  parts.forEach(p=>{const a=Math.min(1,p.life/p.max*1.6);g.globalAlpha=a;g.fillStyle=p.c;g.strokeStyle=p.c;
+    if(p.kind==='conf'){g.save();g.translate(p.x,p.y);g.rotate(p.rot);g.fillRect(-p.r,-p.r*.45,p.r*2,p.r*.9);g.restore()}
+    else if(p.kind==='spark'){g.save();g.translate(p.x,p.y);g.beginPath();for(let i=0;i<8;i++){const an=i*Math.PI/4,rr=i%2?p.r*.35:p.r;g.lineTo(Math.cos(an)*rr,Math.sin(an)*rr)}g.fill();g.restore()}
+    else{g.save();g.translate(p.x,p.y);g.rotate(p.x*.3);g.fillRect(-p.r,-p.r*.5,p.r*2,p.r);g.restore()}});
+  g.globalAlpha=1;
+}
+let last=performance.now();
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;step(dt);render();requestAnimationFrame(loop)}
+
+function setCastle(max,remaining){const gs=GROUPS[max];const washed=max-remaining;
+  Object.keys(P).forEach(k=>{P[k].target=0});gs.forEach((grp,i)=>{if(i<washed)grp.forEach(k=>{P[k].target=1})})}
+function rebuild(max){waves=[];const order=['walls','gate','lt','rt','ct','flag'];order.forEach((k,i)=>{const pc=P[k];if(pc.p>0){pc.target=0;pc.delay=i*.08}});setCastle(max,max);
+  order.forEach((k,i)=>{P[k].delay=P[k].p>0?i*.09:0})}
+
+/* mini doodle on the start card */
+function drawMini(){const m=$('mini');const d=Math.min(3,window.devicePixelRatio||1);const w=170,h=104;m.width=w*d;m.height=h*d;const g=m.getContext('2d');
+  const s=Math.min(w/330,h/200);g.setTransform(d*s,0,0,d*s,d*(w-360*s)/2,d*(h-206*s));
+  g.strokeStyle=INK;g.lineWidth=1.6;g.beginPath();wline(g,10,GY+2,350,GY+2,77);g.stroke();drawCastle(g)}
+
+/* ---------- Mark's drawn art (each piece falls back to the pencil drawing above until its picture loads) ---------- */
+const ART_DIR='../assets/doodle-keeper/';
+const ART={};
+function loadArt(name,cls,cb){const im=new Image();im.decoding='async';im.onload=()=>{ART[name]=im;if(cls)document.documentElement.classList.add(cls);cb&&cb()};im.onerror=()=>{ART[name]=null};im.src=ART_DIR+name+'.webp'}
+
+/* ---------- DOM: keyboard, tiles ---------- */
+const ROWS=['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];const keyEls={};
+ROWS.forEach(r=>{const row=document.createElement('div');row.className='krow';[...r].forEach(ch=>{const b=document.createElement('button');b.type='button';b.className='key';b.textContent=ch;b.dataset.k=ch;b.setAttribute('aria-label','Letter '+ch);
+  b.addEventListener('click',()=>guess(ch));row.appendChild(b);keyEls[ch]=b});$('kb').appendChild(row)});
+// pointer taps feel instant on touch; click still fires for mouse/keyboard
+let wordEl=$('word'),tiles=[];
+function buildTiles(){wordEl.innerHTML='';tiles=[];
+  answer.split(' ').forEach(wd=>{const g=document.createElement('div');g.className='wd';
+    [...wd].forEach(ch=>{const t=document.createElement('div');t.className='tile';const b=document.createElement('b');t.appendChild(b);
+      if(/[A-Z]/.test(ch)){t.dataset.ch=ch;tiles.push(t)}else{t.classList.add('punct','on');b.textContent=ch}g.appendChild(t)});wordEl.appendChild(g)});
+  sizeTiles()}
+function sizeTiles(){if(!answer)return;const W=wordEl.clientWidth||300;const ws=answer.split(' ').map(w=>w.length);const gap=5;
+  const fits=(s)=>{const wg=s*.55;let lines=1,cur=0;for(const n of ws){const w=n*s+(n-1)*gap;if(w>W)return 99;if(cur&&cur+wg+w>W){lines++;cur=w}else cur+=(cur?wg:0)+w}return lines};
+  let s=44;while(s>22&&fits(s)>2)s--;if(fits(s)>2){s=44;while(s>20&&fits(s)>3)s--}
+  wordEl.style.setProperty('--s',s+'px');wordEl.style.setProperty('--g',(s<30?4:5)+'px')}
+
+/* ---------- game state ---------- */
+let screen='start',score=0,level=1,pails=3,maxPieces=6,pieces=6,best=+store.get('best',0)||0,answer='',cat='',guessed=new Set(),missesWord=0,
+  streak=0,bestStreak=0,solvedCount=0,freePeeks=0,timers=[];
+const later=(fn,ms)=>{const id=setTimeout(()=>{timers=timers.filter(t=>t!==id);fn()},ms);timers.push(id);return id};
+function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+function piecesFor(lv){return lv>=16?4:lv>=9?5:6}
+function pailSvg(){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 32 32');s.setAttribute('class','pail');s.setAttribute('aria-hidden','true');
+  const u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href','#pailSym');s.appendChild(u);return s}
+const pailEls=[0,1,2].map(()=>{const s=pailSvg();$('pailsEl').appendChild(s);return s});
+function hud(){$('scoreEl').textContent=score.toLocaleString('en-US');$('bestEl').textContent=Math.max(best,score).toLocaleString('en-US');$('lvlEl').textContent='Level '+level;
+  pailEls.forEach((p,i)=>p.classList.toggle('gone',i>=pails));$('pailsEl').setAttribute('aria-label','Pencils left: '+pails);
+  const m=streakMult(streak+1);const st=$('streakEl');st.textContent=streak>0?'Streak '+streak+' · next x'+m:'Perfect word: x1.5';st.classList.toggle('hot',streak>0);
+  const pk=$('peekBtn');pk.classList.toggle('free',freePeeks>0);$('peekSub').textContent=freePeeks>0?'Free x'+freePeeks:'-1 piece';
+  pk.disabled=screen!=='play'||(freePeeks<=0&&pieces<=1)||!unrevealed().length}
+function streakMult(n){return Math.min(3,1+.5*n)}
+function bump(el){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+function floatText(txt,x,y,gold){const d=document.createElement('div');d.className='float'+(gold?' gold':'');d.textContent=txt;d.style.left=x+'px';d.style.top=y+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),950)}
+function banner(html,ms){const b=$('banner');b.innerHTML=html;b.classList.add('show');later(()=>b.classList.remove('show'),ms||1500)}
+function unrevealed(){const s=new Set();for(const ch of answer)if(/[A-Z]/.test(ch)&&!guessed.has(ch))s.add(ch);return [...s]}
+function revealTile(t,k,cls){t.firstChild.textContent=t.dataset.ch;t.classList.add('on');if(cls)t.classList.add(cls);
+  if(!reduced&&!cls)for(let i=0;i<4;i++){const s=document.createElement('i');s.className='spark';const a=Math.random()*6.28,r=18+Math.random()*14;s.style.setProperty('--dx',Math.cos(a)*r+'px');s.style.setProperty('--dy',Math.sin(a)*r+'px');s.style.animationDelay=(i*.03)+'s';t.appendChild(s);setTimeout(()=>s.remove(),800)}}
+
+function newWord(){clearTimers();const w=pickWord(level);answer=w.a;cat=w.c;guessed=new Set();missesWord=0;maxPieces=piecesFor(level);pieces=maxPieces;mood='idle';
+  $('catEl').textContent=cat;bump($('catBox'));
+  Object.values(keyEls).forEach(k=>{k.className='key'});buildTiles();rebuild(maxPieces);sfx.build(0);later(()=>sfx.build(2),120);later(()=>sfx.build(4),240);
+  screen='play';hud()}
+function startGame(){clearTimers();score=0;level=1;pails=3;streak=0;bestStreak=0;solvedCount=0;freePeeks=0;used=new Set();
+  ['start','missed','over'].forEach(id=>$(id).hidden=true);newWord()}
+
+function guess(L){
+  if(screen!=='play')return;const k=keyEls[L];
+  if(guessed.has(L)){if(k){k.classList.remove('shake');void k.offsetWidth;k.classList.add('shake')}return}
+  guessed.add(L);sfx.key();if(k){k.classList.add('used');k.classList.remove('pressed');void k.offsetWidth;k.classList.add('pressed')}
+  const hits=tiles.filter(t=>t.dataset.ch===L);
+  if(hits.length){k&&k.classList.add('hit');const pts=10*hits.length;score+=pts;
+    hits.forEach((t,i)=>later(()=>{revealTile(t,i);sfx.chime(i+Math.min(6,tiles.filter(x=>x.classList.contains('on')).length>>1))},i*90));
+    const r=hits[0].getBoundingClientRect();floatText('+'+pts,r.left+r.width/2,r.top-6);bump($('scoreEl'));
+    if(!unrevealed().length){screen='solving';later(solve,hits.length*90+250)}
+    hud()}
+  else{k&&k.classList.add('miss');missesWord++;loseCastlePiece(false)}
+}
+function loseCastlePiece(small){
+  const gs=GROUPS[maxPieces];const grp=gs[maxPieces-pieces];pieces--;mood='worried';spawnWave(grp,small);
+  sfx.wrong();later(()=>{if(screen==='play'||screen==='lost')mood=pieces<=2?'worried':'idle'},1400);
+  if(pieces<=0){screen='lost';later(lose,1500)}hud()}
+function peek(){
+  if(screen!=='play')return;const opts=unrevealed();if(!opts.length)return;
+  if(freePeeks>0)freePeeks--;else{if(pieces<=1)return;loseCastlePiece(true)}
+  const L=opts[Math.floor(Math.random()*opts.length)];guessed.add(L);keyEls[L]&&keyEls[L].classList.add('hit','used');sfx.peek();
+  const hits=tiles.filter(t=>t.dataset.ch===L);hits.forEach((t,i)=>later(()=>{revealTile(t,i);const r=t.getBoundingClientRect();if(i===0)floatText('Peek!',r.left+r.width/2,r.top-6)},i*90));
+  if(!unrevealed().length){screen='solving';later(solve,hits.length*90+300)}
+  hud()}
+function solve(){
+  screen='solved';const perfect=missesWord===0;if(perfect){streak++;bestStreak=Math.max(bestStreak,streak)}else streak=0;
+  const mult=perfect?streakMult(streak):1;const bonus=Math.round((50*pieces+level*10)*mult);score+=bonus;solvedCount++;
+  happyT=2.2;mood='idle';confetti();sparkles(180,30,14);sfx.solve();
+  tiles.forEach((t,i)=>{t.style.animationDelay=(i*.04)+'s';t.classList.add('win')});
+  const r=$('stage').getBoundingClientRect();later(()=>{floatText('+'+bonus,r.left+r.width/2,r.top+r.height*.62,true);sfx.bonus()},350);
+  let sub=perfect?(streak>1?'Perfect streak '+streak+'! x'+mult:'Perfect word! x'+mult):pieces+' piece'+(pieces===1?'':'s')+' still drawn';
+  let earned=false;if(solvedCount%5===0){freePeeks++;earned=true}
+  banner((perfect?'Doodle saved!':'You got it!')+'<small>+'+bonus+' · '+sub+(earned?' · free Peek!':'')+'</small>',1700);
+  level++;bump($('scoreEl'));bump($('lvlEl'));
+  if(earned){const pk=$('peekBtn');pk.classList.remove('got');void pk.offsetWidth;pk.classList.add('got')}
+  hud();
+  later(()=>{tiles.forEach(t=>{t.classList.remove('win');t.style.animationDelay=''});newWord()},2100)}
+function lose(){
+  mood='worried';streak=0;tiles.forEach(t=>{if(!t.classList.contains('on'))revealTile(t,0,'miss')});sfx.sad();
+  pails--;const pe=pailEls[pails];if(pe){pe.classList.add('lose');setTimeout(()=>pe.classList.remove('lose'),800)}sfx.pail();hud();
+  later(()=>{if(pails<=0)gameOver();else showMissed()},1500)}
+function ansHtml(el){el.innerHTML='';const s=document.createElement('small');s.textContent=cat;el.appendChild(s);el.appendChild(document.createTextNode(answer))}
+function showMissed(){screen='missed';ansHtml($('mAns'));const bp=$('mPails');bp.innerHTML='';for(let i=0;i<3;i++){const s=pailSvg();if(i>=pails)s.classList.add('gone');bp.appendChild(s)}
+  $('mMsg').textContent=pails===1?'1 pencil left. You can do it!':pails+' pencils left. Let’s draw it again!';$('missed').hidden=false;setTimeout(()=>$('nextBtn').focus({preventScroll:true}),50)}
+function gameOver(){screen='over';sfx.over();const nb=score>best&&score>0;if(nb){best=score;store.set('best',best)}
+  $('oScore').textContent=score.toLocaleString('en-US');$('oBest').hidden=!nb;$('oLevel').textContent=level;$('oWords').textContent=solvedCount;$('oStreak').textContent=bestStreak;
+  ansHtml($('oAns'));$('oBestLine').textContent='Best score: '+best.toLocaleString('en-US');$('over').hidden=false;hud();setTimeout(()=>$('againBtn').focus({preventScroll:true}),50)}
+
+/* ---------- wiring ---------- */
+let paused=null;
+$('playBtn').onclick=()=>{sfx.click();if(paused){$('start').hidden=true;screen=paused;paused=null;$('playBtn').textContent='Play';hud();return}startGame()};
+$('againBtn').onclick=()=>{sfx.click();startGame()};
+$('nextBtn').onclick=()=>{sfx.click();$('missed').hidden=true;newWord()};
+$('peekBtn').onclick=()=>peek();
+$('helpBtn').onclick=()=>{sfx.click();if(!$('start').hidden||screen!=='play')return;
+  paused=screen;screen='paused';$('playBtn').textContent='Back to game';$('start').hidden=false;hud()};
+function renderSound(){$('sndWaves').style.display=muted?'none':'';$('sndOff').style.display=muted?'':'none';$('soundBtn').setAttribute('aria-pressed',String(!muted));$('soundBtn').setAttribute('aria-label',muted?'Sound off':'Sound on')}
+$('soundBtn').onclick=()=>{muted=!muted;store.set('muted',muted);if(master)master.gain.value=muted?0:VOL;renderSound();if(!muted){actx();tone(880,.08,'triangle',.05)}};
+addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key;
+  if(k==='Enter'||k===' '){if(!$('start').hidden){e.preventDefault();$('playBtn').click()}else if(!$('missed').hidden){e.preventDefault();$('nextBtn').click()}else if(!$('over').hidden){e.preventDefault();$('againBtn').click()}return}
+  if(k==='Escape'&&!$('start').hidden&&paused){$('playBtn').click();return}
+  if(/^[a-zA-Z]$/.test(k)&&!e.repeat){e.preventDefault();guess(k.toUpperCase())}
+  else if(k==='?'){$('helpBtn').click()}});
+document.addEventListener('contextmenu',e=>{if(e.target.closest('.app'))e.preventDefault()});
+
+$('bestLine').textContent='Best score: '+best.toLocaleString('en-US');
+renderSound();
+answer='LITTLE HOUSE';cat='Doodles';$('catEl').textContent=cat;buildTiles();
+fit();addEventListener('resize',fit);try{new ResizeObserver(fit).observe(stage)}catch(e){}
+drawMini();hud();requestAnimationFrame(loop);
+
+loadArt('tile','art-tile');
+['house','house-worried','house-happy','tree','fence','gate','pennant','eraser','crumbs'].forEach(n=>loadArt(n,null,drawMini));
+loadArt('pencil','art-pencil');loadArt('key-note','art-key');
+window.__game={state:()=>({screen,score,level,pieces,maxPieces,pails,revealed:tiles.filter(t=>t.classList.contains('on')).length,answerLength:tiles.length,
+  pattern:answer.split('').map(c=>/[A-Z]/.test(c)?(guessed.has(c)?c:'_'):c).join(''),category:cat,guessed:[...guessed].join(''),freePeeks,streak,solved:solvedCount})};
+})();
+</script>
+</body>
+</html>

@@ -36,6 +36,392 @@
   },
   "games": [
     {
+      "slug": "pencil-parade",
+      "name": "Pencil Parade",
+      "genre": "Arcade",
+      "added": "2026-10-18",
+      "tagline": "Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus.",
+      "meta": "Play Pencil Parade free online. Steer a parade of pencil stubs through the best number gates, dodge bouncy balls and ink puddles, and climb the book stack for a bonus. Works on phone and computer.",
+      "lead": "A pencil-sketch runner where your score is a parade of little pencil stubs with smiley faces. Drag left and right to steer the whole parade down a long sheet of lined paper, through gates that add, multiply, subtract or halve your pencils. Dodge rolling bouncy balls, ink puddles, torn holes and spinning compasses along the way. At the end of each level the parade climbs a stack of books, and the higher it gets, the bigger the bonus.",
+      "facts": [
+        "Arcade game",
+        "Endless levels that get longer and faster",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Your parade walks down the page on its own. Drag left or right to steer it, and the whole parade follows.",
+        "Gates come in pairs across the path. Blue gates add pencils (+5, +10) or multiply them (×2, ×3). Purple gates take pencils away (−5, −10) or halve the parade (÷2). Your parade goes through whichever side you steer into.",
+        "Sometimes both sides are good, so pick the better one. Sometimes both are purple, so pick the one that costs the fewest pencils.",
+        "Pencils that bump a bouncy ball, splash into an ink puddle, step in a torn hole or get swept by a spinning compass hop off back to the pencil case, unhurt.",
+        "At the book stack the parade climbs books marked ×1 up to ×5, leaving a few pencils behind on each book. Your bonus is the pencils you had at the finish, times the highest book reached, times 10.",
+        "Each new level starts with 10 pencils and is longer and faster, with more purple gates and obstacles. If every pencil goes home, the game is over."
+      ],
+      "controls": [
+        "Phone or tablet: drag your finger left or right anywhere on the screen. The parade moves with your finger, so you don't need to touch the pencils.",
+        "Computer: click and drag left or right with the mouse.",
+        "Keyboard: hold the Left and Right arrow keys or A and D to steer. Press P or Escape to pause.",
+        "The question mark button shows how to play and pauses the game. The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "A ×2 or ×3 gate is worth much more once your parade is big. Early on, a +10 can beat a ×2.",
+        "Line up for the next gate early. Big parades are wide, and the whole line needs time to slide across.",
+        "Thread small parades through the gaps between puddles and holes. A big parade is safer passing beside an obstacle than through it.",
+        "The books cost more pencils on later levels, so save your gains for the book stack."
+      ],
+      "about": [
+        "Pencil Parade is a quick sketchbook runner about growing the biggest parade you can. Each choice is a small math puzzle: add or multiply, lose five or lose half. Rolling bouncy balls, ink puddles, torn holes and spinning compasses keep you steering all the way to the book stack.",
+        "The book stack finish turns your parade into points. Each book keeps a little tower of pencils behind, and the multiplier on the highest book you reach boosts your bonus. Levels get longer and faster as you go. Nobody gets hurt: pencils that bump into things just hop off to the pencil case for a nap."
+      ]
+    },
+    {
+      "slug": "squiggle-worm",
+      "name": "Squiggle Worm",
+      "genre": "Arcade",
+      "added": "2026-10-18",
+      "tagline": "Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest.",
+      "meta": "Play Squiggle Worm free online. Steer a smiling pencil-doodle worm around a page of graph paper, eat glowing ink dots and ink blots to grow longer, and out-squiggle the other doodles. Works on phone and computer.",
+      "lead": "A wiggly arcade game doodled on a page of graph paper. You steer a happy striped squiggle worm across the squares, gobbling glowing ink dots to grow longer and longer. Other coloured-pencil squiggles roam the page too. If one bumps its nose into your body, it goes poof into a puff of pencil scribbles and leaves a trail of ink blots for you to eat. Can you become the longest squiggle on the page?",
+      "facts": [
+        "Arcade",
+        "Endless play",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Your worm always squiggles forward. Steer it toward the glowing ink dots to eat them and grow longer.",
+        "Your score is your length. The live board in the corner shows the five longest squiggles, and you are in yellow.",
+        "If your worm's head bumps into another squiggle's body or the edge of the page, it's bonk and the game is over.",
+        "When another squiggle bumps into your body, it goes poof and drops a trail of ink blots. Ink blots are worth extra length!",
+        "Hold Zoom to dash. It costs a little length, so use it to grab ink blots or slip past other squiggles. The other squiggles get bigger and bolder the longer you play."
+      ],
+      "controls": [
+        "Phone or tablet: drag anywhere to steer, like a joystick. Hold the Zoom button (or a second finger) to dash.",
+        "Computer: your worm squiggles toward the mouse pointer. Hold the mouse button to dash.",
+        "Keyboard: arrow keys or W A S D to steer, Space to dash.",
+        "The sound button turns sound on or off."
+      ],
+      "tips": [
+        "Squiggle around the edge of big groups of doodles instead of through them.",
+        "Watch the mini-map for the edge of the page and for big squiggles nearby.",
+        "Curl around a smaller squiggle so it bumps into you. Then eat its ink blots!",
+        "Only dash when you need to. Every dash makes you a little shorter."
+      ],
+      "about": [
+        "Squiggle Worm is a grow-the-worm arcade game. You steer a pencil-drawn striped worm across a page of graph paper, eating glowing ink dots to get longer, while other coloured-pencil squiggles roam the same page. If one bumps its nose into your body it goes poof into pencil scribbles and leaves a trail of ink blots; if you bump into theirs, it is game over.",
+        "The other squiggles are computer-controlled and get bigger and bolder the longer you survive, so the live leaderboard in the corner is a real race. The Zoom dash costs a little length, which makes every escape a trade. The mini-map is worth a glance before you commit to a turn, especially near the pencil shavings, erasers and paper clips heaped around the page's edge."
+      ]
+    },
+    {
+      "slug": "cookie-drop",
+      "name": "Cookie Drop",
+      "genre": "Puzzle",
+      "added": "2026-10-18",
+      "tagline": "Snip the strings and swing a chocolate-chip cookie down to Doodle, the hungry doodle monster.",
+      "meta": "Play Cookie Drop free online. Swipe to snip strings, swing a cookie through the gold stars and drop it to Doodle the doodle monster. 24 pencil-drawn physics puzzles on a corkboard. Works on phone and computer.",
+      "lead": "A string-snipping puzzle drawn in pencil on a corkboard. A chocolate-chip cookie hangs from strings tied to thumbtacks, and Doodle the doodle monster is waiting at the bottom with his mouth open. Swipe across a string to snip it and the cookie swings and drops. Time your snips so it lands right in Doodle's mouth, and swing it through the gold stars on the way for up to 3 stars. Bubbles, bouncy balls, paper-clip hooks and puffing party blowers join in as you go.",
+      "facts": [
+        "Puzzle",
+        "24 levels",
+        "Phone, tablet and computer",
+        "Saves your stars and best score"
+      ],
+      "how": [
+        "Swipe across a string to snip it. The cookie swings or drops when its strings let go.",
+        "Get the cookie into Doodle's mouth to finish the level. If it plops into the ink puddle, just try again.",
+        "Each level has 3 gold stars. Swing the cookie through them for stars and bonus points.",
+        "Bubbles float the cookie up until you tap to pop them. Bouncy balls bounce it, paper-clip hooks grab it with a new string, and party blowers puff it along when you tap them.",
+        "Your score is your best points from every level added up. Feed Doodle to unlock the next level."
+      ],
+      "controls": [
+        "Phone or tablet: swipe across a string to snip it. Tap a bubble or a party blower.",
+        "Computer: drag the mouse across a string, or just click it. Click bubbles and party blowers.",
+        "Press R to restart the level and L to pick a level.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Watch the swing first. Snip when the cookie is heading toward Doodle.",
+        "With two or three strings, the order you snip them changes the swing.",
+        "A paper-clip hook only grabs the cookie once, so think about where that new swing will go.",
+        "Pop a bubble right above Doodle and the cookie drops straight into his mouth."
+      ],
+      "about": [
+        "Cookie Drop is a string-snipping physics puzzle sketched in pencil. A chocolate-chip cookie hangs from strings tied to thumbtacks on a corkboard, Doodle the doodle monster waits below with his mouth open, and you swipe to cut strings so the cookie swings and drops into him. Three gold stars on each level reward a clever swing.",
+        "The puzzle is in the order and timing of the snips. Bubbles float the cookie up until you pop them, bouncy balls bounce it, paper-clip hooks catch it with a fresh string and party blowers puff it sideways. Nothing is lost by missing; the cookie plops into the ink puddle and you try again."
+      ]
+    },
+    {
+      "slug": "desk-strikes",
+      "name": "Desk Strikes",
+      "genre": "Arcade",
+      "added": "2026-10-18",
+      "tagline": "Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs.",
+      "meta": "Play Desk Strikes free online. A desk bowling game: swipe to roll a round pink eraser down a ruler lane, curve it into the pocket for strikes, and beat the window draft and a wandering doodle bug over 10 frames with real bowling scoring. Works on phone and computer.",
+      "lead": "Ten-pin bowling on a school desk. Swipe up from the eraser to roll it along a long wooden ruler toward ten cheerful pencil stubs with little smiley faces, with a pencil cup and sticky notes doodled behind them. The direction of your swipe aims the eraser, a faster flick rolls it harder, and a bend in your swipe makes it curve. Pencils scatter, tumble into each other and drop off the end of the ruler, and a full 10-frame scoresheet keeps track of every strike and spare. From frame 4 a window draft nudges the eraser, and from frame 7 a friendly doodle bug wanders across the ruler.",
+      "facts": [
+        "Arcade",
+        "10 frames per game",
+        "Phone, tablet and computer",
+        "Saves your best score and strike streak"
+      ],
+      "how": [
+        "Swipe up from the eraser to bowl. Where you start the swipe sets the eraser's spot on the ruler, the direction of the swipe aims it, and a faster swipe rolls it harder.",
+        "Bend your swipe partway through to curve the eraser. A faint dotted line shows your aim while you drag.",
+        "Hit just beside the front pencil, in the pocket, for your best chance at a strike. Each frame gives you two rolls to knock down all ten.",
+        "Scoring is real bowling scoring: a strike adds your next two rolls as a bonus and a spare adds your next one. Strikes and spares in frame 10 earn extra rolls, and a perfect game is 300.",
+        "Frames 1 to 3 are calm. From frame 4 a window draft pushes the eraser sideways, so check the draft arrow, and from frame 7 a doodle bug scurries across the ruler. Bonk it and your eraser bounces off course, but the bug is fine."
+      ],
+      "controls": [
+        "Phone or tablet: put your finger on the eraser and swipe up toward the pencils. Tap during the replay to skip ahead.",
+        "Computer: click and drag upward from the eraser, then let go.",
+        "Keyboard: Left and Right move the eraser, Up or Space starts the aim sweep, press again to lock it, then Space sets the power on the meter.",
+        "The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Aim for the pocket, just beside the front pencil. A dead-center hit often leaves pencils standing on both sides.",
+        "A small curve into the pocket knocks more pencils than a perfectly straight roll.",
+        "In a draft, aim a little into the wind. More bars on the draft meter means a bigger push.",
+        "Watch the doodle bug before you swipe and roll when it has walked out of your path."
+      ],
+      "about": [
+        "Desk Strikes is a swipe-to-bowl game on a long wooden ruler laid across a school desk, drawn in pencil on sketchbook paper. You roll a round pink eraser at ten cheerful pencil-stub pins, and the pencils really knock into each other, so a good pocket hit sends them tumbling for a strike. Swipe direction, speed and curve all change the roll.",
+        "Each game is a full 10 frames with proper strikes, spares and frame 10 bonus rolls on a classic scoresheet. The game gets trickier as you go, with a window draft from frame 4 and a wandering doodle bug from frame 7. Your best game and your longest strike streak are saved on your device."
+      ]
+    },
+    {
+      "slug": "marble-blitz",
+      "name": "Marble Blitz",
+      "genre": "Arcade",
+      "added": "2026-10-18",
+      "tagline": "Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk.",
+      "meta": "Play Marble Blitz free online. Aim your doodle buddy's marbles, bounce them off paper cups to knock their numbers down, grab paper clips for more marbles and keep the cups on the desk. Works on phone and computer.",
+      "lead": "A bouncy marble-volley game drawn in pencil on a sheet of notebook paper. Rows of numbered paper cups slide down the page one turn at a time, and your little doodle buddy flicks a whole stream of glass marbles to knock them down. Every bump takes one off a cup's number, and at zero it crumples up. Grab paper clips for more marbles, collect gold star stickers for bonus points, and see how many turns you can last before a cup slides off the edge of the desk.",
+      "facts": [
+        "Arcade",
+        "Endless turns",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Drag anywhere on the page to aim. The pencil-dotted line shows where your first bounce will land.",
+        "Let go and your doodle buddy flicks all its marbles in a quick stream. They bounce off the walls and the paper cups.",
+        "Each hit knocks 1 off a cup's number, and a cup crumples when it reaches 0. Paper clips give you an extra marble, gold stars are worth 3 bonus points, and a pink eraser rubs out its whole row.",
+        "The first marble to roll back onto the desk sets where your buddy flicks from next. Then every cup slides down one row and a new, tougher row appears at the top.",
+        "Your score is the turn you reach plus your bonuses. The game ends when a cup slides off the desk."
+      ],
+      "controls": [
+        "Phone or tablet: drag to aim and lift your finger to flick. Tap the page during a volley to speed it up.",
+        "Computer: drag with the mouse and release to flick, or use the left and right arrow keys to aim and Space to flick.",
+        "During a long volley, Speed up makes the marbles roll faster and Recall marbles brings them all back. New game starts over.",
+        "The Sound button turns sound effects on or off."
+      ],
+      "tips": [
+        "Bounce your shot off a side wall to get marbles behind a row of cups, where they rattle around and score lots of hits.",
+        "Grab the paper clips early. More marbles make every turn stronger.",
+        "Clear the cups closest to the desk edge first, especially when they're circled in orange.",
+        "Save a pink eraser for a row of big numbers."
+      ],
+      "about": [
+        "Marble Blitz is a marble-volley game in the brick-breaker tradition, sketched in graphite on ruled paper. Numbered paper cups slide down one row per turn, and your doodle buddy flicks a stream of glass marbles that bounce off the walls and the cups, knocking one off a number with every hit. When a cup reaches zero it crumples into a puff of paper scraps.",
+        "The game is about angles. A shot bounced off a side wall can get your marbles behind a row, where they rattle around and score dozens of hits. Paper clips add marbles, gold stars add points and a pink eraser rubs out a whole row. It ends when a cup slides off the desk, so the cups nearest the edge always come first."
+      ]
+    },
+    {
+      "slug": "paper-peaks",
+      "name": "Paper Peaks",
+      "genre": "Puzzle",
+      "added": "2026-10-18",
+      "tagline": "Clear three folded-paper peaks of doodle cards by playing one higher or one lower.",
+      "meta": "Play Paper Peaks free online. A pencil-sketched card puzzle: tap cards one higher or one lower than the notepad card, build long streaks for big points and clear all three paper peaks. Wild doodle stars, hints and undo help on early levels. Works on phone and computer.",
+      "lead": "A cheerful card puzzle drawn on a school desk. Three folded-paper mountains are stacked with hand-doodled index cards, and you clear them by tapping any face-up card one higher or one lower than the card on the notepad. Keep a run going for bigger and bigger points, and when nothing fits, flip a new card from the draw pile. Each level hands out fewer wild doodle stars and a shorter draw pile, so plan your runs.",
+      "facts": [
+        "Puzzle",
+        "Card game",
+        "3 pencil lives",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap any face-up card that is one higher or one lower than the card on the notepad. King and Ace connect, so you can go K, A, 2 or 2, A, K.",
+        "Cards flip face up when both cards covering them are gone.",
+        "When no card fits, tap the draw pile to flip a new notepad card. The draw pile lights up when it is your only move.",
+        "Every card in an unbroken run scores more: 10, 20, 30 and up. Drawing a card ends the run.",
+        "Clear all three peaks to win the level. Peak tops are worth 100 bonus points, and every card left in the draw pile is worth 25.",
+        "Wild doodle stars in the draw pile, coloured in with every pencil in the box, let any card follow them.",
+        "If the draw pile runs out and nothing fits, you lose a pencil and get a fresh deal. Lose all 3 and the game is over."
+      ],
+      "controls": [
+        "Tap or click a card to play it, and tap or click the draw pile to draw.",
+        "On a keyboard, press 1 to 0 to play a face-up card (numbered left to right), or use the arrow keys and Enter. Space or D draws, U undoes and H shows a hint.",
+        "Undo takes back your last move and Hint circles a good card to play. Both are limited each round. The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Before you play, look for the card that keeps your run going longest. Sometimes the lower card opens a longer chain.",
+        "Play cards that are covering face-down cards first. Uncovering new cards gives you more choices.",
+        "Don't draw while you still have a move. Every card left in the draw pile is worth bonus points at the end.",
+        "Save your undo for the end of a round, when one wrong pick can leave you stuck."
+      ],
+      "about": [
+        "Paper Peaks is a solitaire card puzzle in the tri-peaks family, dealt across three folded-paper mountains on a sketchbook page. The suits are pencil doodles, stars, hearts, moons and flowers, and you clear cards by tapping any face-up card one higher or one lower than the card on the notepad. King and Ace connect, so a run can wrap all the way around.",
+        "The scoring rewards long unbroken runs, and every card left in the draw pile at the end is worth bonus points, so the skill is in not drawing until you have to. Wild doodle stars help, but each level hands out fewer of them and a shorter draw pile. You get three pencils before a game is over."
+      ]
+    },
+    {
+      "slug": "even-sketch",
+      "name": "Even Sketch",
+      "genre": "Puzzle",
+      "added": "2026-10-18",
+      "tagline": "Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.",
+      "meta": "Play Even Sketch free online. Fill a sheet of graph paper with stars and circles so every row and column balances, never three in a row, and every = and × sign is obeyed. Endless logic puzzles from 4×4 to 8×8. Works on phone and computer.",
+      "lead": "A calm little logic puzzle drawn on a sheet of graph paper. Tap a square to draw a smiling orange star, tap again for a blue circle. Every row and column needs as many stars as circles, you can never have three of the same side by side, and the little = and × badges between squares tell you which pairs match and which are opposite. Each puzzle has exactly one answer, so careful thinking always wins. Finish the page before the bell timer fills up and the next sheet is waiting.",
+      "facts": [
+        "Puzzle",
+        "Endless levels, 4×4 up to 8×8",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Tap a graph-paper square to draw a star, tap it again for a circle, and once more to erase it. Shaded squares with a pencil mark are already filled in and can't be changed.",
+        "Every row and every column must have the same number of stars and circles.",
+        "Never put more than two of the same doodle next to each other, across or down.",
+        "An = badge between two squares means they match. A × badge means one is a star and the other is a circle.",
+        "Break a rule and the squares turn pink and wiggle so you can spot it. Fill the whole grid correctly to solve the page.",
+        "Each level scores points for solving, 5 points for every second left before the bell and a bonus for not using a hint. If the bell bar fills up first, the game is over."
+      ],
+      "controls": [
+        "Phone or tablet: tap a square to cycle star, circle and empty.",
+        "Computer: click a square to cycle star, circle and empty.",
+        "Keyboard: arrow keys move, Space or Enter cycles, 1 draws a star, 2 a circle and 0 erases. U undoes and H gives a hint.",
+        "Undo takes back your last move, Hint reveals one correct square for 10 seconds off the bell timer, and Erase clears the sheet.",
+        "The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Look for two of the same side by side. The squares on both ends must be the other doodle.",
+        "A gap between two matching doodles, like star, empty, star, has to be a circle.",
+        "Once a row has its full half of stars, every empty square left in it is a circle.",
+        "Follow the signs: once one square next to an = or × is known, its partner is too."
+      ],
+      "about": [
+        "Even Sketch is a balancing logic puzzle. You fill a grid with stars and circles so that each row and column holds the same number of both, no three of a kind ever line up, and every = and × sign between squares is respected. Every puzzle is freshly made and checked to have exactly one solution.",
+        "The first levels are small 4×4 sheets with plenty of doodles already pencilled in. Then the grid grows to 6×6, the helpful shaded squares get fewer, more signs appear, and later pages alternate with big 8×8 sheets. A bell timer keeps gentle time pressure on, and your total score carries from page to page until the bell finally rings."
+      ]
+    },
+    {
+      "slug": "doodle-keeper",
+      "name": "Doodle Keeper",
+      "genre": "Word",
+      "added": "2026-10-18",
+      "tagline": "Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page.",
+      "meta": "Play Doodle Keeper free online. Guess hidden words letter by letter from a clue, and keep your pencil-drawn doodle house on the page as a cheeky eraser rubs out a piece with every miss. Over 900 family-friendly words. Works on phone and computer.",
+      "lead": "A letter-guessing word game drawn in a kid's sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.",
+      "facts": [
+        "Word game",
+        "Endless levels, one word each",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Read the clue, then guess the hidden word one letter at a time. Every right letter fills in its paper tiles and scores 10 points for each time it appears.",
+        "Each wrong letter sends an eraser that rubs out one piece of your doodle house. The doodle starts with 6 pieces, then 5 from level 9 and 4 from level 16.",
+        "Solve the word to save the doodle and move up a level. Your bonus is 50 points for every piece still drawn plus 10 points per level.",
+        "Solve words with no wrong letters in a row to build a streak. The streak multiplies your bonus, up to three times.",
+        "If the doodle is rubbed out, the word is shown and you lose one of your 3 pencils. You carry on at the same level with a new word. When the last pencil is gone, the game is over.",
+        "Peek shows one letter for the price of one doodle piece. Every 5 words you solve earns a free Peek."
+      ],
+      "controls": [
+        "Phone or tablet: tap the sticky-note keys to guess a letter. Tap Peek to reveal a letter.",
+        "Computer: click the sticky-note keys.",
+        "Keyboard: type any letter to guess it. Press Enter to start, to get a new word, or to play again.",
+        "The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Start with common vowels like E and A, then try S, T, R and N.",
+        "Think about the clue. A People at school word often ends in TEACHER, and Action words often end in ING or are short and snappy.",
+        "Save Peek for when the doodle still has a few pieces left. It cannot be used on the very last piece unless it is free.",
+        "Long words and phrases have more letters to find, so they are often easier than short ones."
+      ],
+      "about": [
+        "Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 family-friendly answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.",
+        "Instead of a timer, your doodle house is the countdown. Each wrong guess brings in a cheeky eraser that rubs one piece into a little pile of crumbs, and later levels start with a smaller doodle. Perfect words build a streak that multiplies your bonus, and three pencils give you a few second chances before the page goes blank."
+      ]
+    },
+    {
+      "slug": "letter-scramble",
+      "name": "Letter Scramble",
+      "genre": "Word",
+      "added": "2026-10-18",
+      "tagline": "Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out.",
+      "meta": "Play Letter Scramble free online. Swipe across neighboring paper letter tiles to spell words, hit the target score in 80 seconds, and turn the page to higher levels. Works on phone and computer.",
+      "lead": "A fast word search on a desk tray of 16 torn-notebook letter tiles. Swipe from tile to tile, even corner to corner, to spell words of three letters or more. Longer words score much more, and any word that uses the gold-star tile scores double. Reach the target score before the 80-second timer runs out and the next page comes with a bigger target.",
+      "facts": [
+        "Word game",
+        "80-second rounds",
+        "Phone, tablet and computer",
+        "Saves your best score"
+      ],
+      "how": [
+        "Swipe across tiles that touch, including diagonals, to spell a word of 3 or more letters. Let go to score it.",
+        "Each tile can be used once per word. The bar above the tray turns green for a new word, yellow for a word you already found, and gray if it isn't a word.",
+        "Words score 100 points for 3 letters, 300 for 4, 600 for 5, 1,000 for 6, 1,500 for 7 and 2,200 for 8. A word that uses the gold-star tile scores double.",
+        "Reach the page's target score before the 80 seconds run out to turn to the next page. Your total score carries over.",
+        "Each new page has a higher target. Miss it and it's pencils down."
+      ],
+      "controls": [
+        "Phone or tablet: swipe your finger across the tiles, then lift it to score the word. Slide back one tile to undo it.",
+        "Computer: click and drag across the tiles, then let go.",
+        "Keyboard: type a word to light up its path, press Enter to score it, Backspace to delete a letter and Escape to clear.",
+        "The Qu tile counts as two letters, Q and U.",
+        "The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Look for endings like S, ED and ING. Adding them to a word you just found is a quick way to score again.",
+        "Start your search from the gold-star tile. Even a short word through it is worth double.",
+        "Three-letter words add up fast early on, but one long word can be worth ten short ones.",
+        "Vowels in the middle of the tray connect to the most neighbors, so build words around them."
+      ],
+      "about": [
+        "Letter Scramble is a timed word search on a four-by-four tray of paper letter tiles, each one a little torn notebook square with a pencil letter on it. Swipe across touching tiles, including diagonals, to spell words of three letters or more. Longer words are worth far more than short ones, and any word through the gold-star sticker tile scores double.",
+        "Each page gives you 80 seconds to hit a target score, and the target climbs with every page you turn. The word list is family-friendly and checked for real words. It is a quick, repeatable game that rewards vocabulary and a good eye for endings like S, ED and ING."
+      ]
+    },
+    {
+      "slug": "ink-jars",
+      "name": "Ink Jars",
+      "genre": "Puzzle",
+      "added": "2026-10-18",
+      "tagline": "Pour layers of colored ink between glass jars until every jar holds one color.",
+      "meta": "Play Ink Jars free online. Pour layers of colored ink between glass jars on a sketchbook desk until every jar holds just one color. Endless calm levels. Works on phone and computer.",
+      "lead": "A calm pouring puzzle on a pencil-sketched desk. Glass ink jars sit on a sheet of paper, each one filled with mixed layers of colored ink. Tap a jar to lift it and tap another to pour. Ink only pours onto the same color or into an empty jar. Fill a jar with one color and it gets a cork with a happy sparkle. Every level is checked by a solver, so it can always be sorted.",
+      "facts": [
+        "Puzzle",
+        "Endless levels",
+        "Phone, tablet and computer",
+        "Saves your level and best score"
+      ],
+      "how": [
+        "Tap a jar to lift it, then tap another jar to pour into it.",
+        "Ink only pours onto the same color, or into an empty jar. The whole top color pours over, as much as fits.",
+        "When a jar is full of one color, it gets a cork. Later levels have taller jars with five layers. Cork every color to finish the level.",
+        "Each color has its own little doodle, like a star, heart or moon, so you can tell them apart.",
+        "Levels start with 3 colors and grow to 12. Finish in fewer moves for a bigger bonus and three stars."
+      ],
+      "controls": [
+        "Phone or tablet: tap a jar to lift it, then tap where to pour.",
+        "Computer: click jars, or press 1 to 9 and 0 to pick a jar. The arrow keys and Enter work too.",
+        "Undo (or the U key) takes back a pour, 5 times a level. + Jar (or the + key) adds one empty jar per level.",
+        "Restart starts the level over. The speaker button turns sound on or off."
+      ],
+      "tips": [
+        "Look for jars whose top color matches another jar's top before using an empty jar.",
+        "Try to keep one jar empty for as long as you can. It gives you room to sort.",
+        "Save + Jar for the big levels with lots of colors.",
+        "Beat the par number of moves to earn three stars and the biggest move bonus."
+      ],
+      "about": [
+        "Ink Jars is an ink-sorting puzzle. Jars on a sketchbook desk hold mixed layers of colored ink, and you pour from one into another until every jar holds a single color and earns its cork. Ink only pours onto a matching color or into an empty jar, so the empty jar is your most valuable piece.",
+        "Every level is checked by a solver before it reaches you, so there is always a way through. Each color has its own little doodle so they are easy to tell apart, and levels grow from three colors to twelve, with taller five-layer jars later on. Beat the par number of moves for three stars."
+      ]
+    },
+    {
       "slug": "pencil-patrol",
       "name": "Pencil Patrol",
       "genre": "Arcade",
