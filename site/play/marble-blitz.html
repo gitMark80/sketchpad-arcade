@@ -204,11 +204,11 @@ const sfx={
 };
 
 /* ---------- Mark's art ----------
-   Marbles, the three cup tiers, the buddy (idle + mid-flick), paper clips, gold stars, the crumpled-paper poof and the wooden desk are
-   Mark's drawings from ../assets/marble-blitz/. The code-drawn doodles stay as fallbacks until each image loads. The pink eraser is still code-drawn. */
+   Marbles, the three cup tiers, the buddy (idle + mid-flick), paper clips, gold stars, the crumpled-paper poof, the pink eraser and
+   the wooden desk are Mark's drawings from ../assets/marble-blitz/. The code-drawn doodles stay as fallbacks until each image loads. */
 const ART={};
 function load(n){const i=new Image();i.decoding='async';i.onload=()=>{if(n==='desk'&&bgCanvas)buildArt();if($('hero'))drawHero()};i.onerror=()=>{};i.src='../assets/marble-blitz/'+n+'.webp';ART[n]=i}
-['marble','cup-low','cup-mid','cup-high','buddy','buddy-throw','clip','star','poof','desk'].forEach(load);
+['marble','cup-low','cup-mid','cup-high','buddy','buddy-throw','clip','star','poof','desk','eraser'].forEach(load);
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
 function sprite(im,cx,cy,w,h,rot){ctx.save();ctx.translate(cx,cy);if(rot)ctx.rotate(rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
 // a cup drawing with its tier colour laid over it as a coloured-pencil wash (cached per tier/colour/size)
@@ -486,6 +486,7 @@ function draw(){
   lvMax=1;for(const it of items)if(it.kind==='block'&&it.max>lvMax)lvMax=it.max;
   for(const it of items)drawItem(it);
   for(const p of puffs)drawPuff(p);
+  for(const w of waves)drawWaveEraser(w);
   for(const f of flyers)drawFlyer(f);
   if(showAim&&state==='aim'&&aimOK)drawAim();
   if(nextX!==null&&state==='fire'&&Math.abs(nextX-launchX)>2){ctx.globalAlpha=.55+.25*Math.sin(T*8);drawBall(nextX,FLOOR-R);ctx.globalAlpha=1}
@@ -525,6 +526,14 @@ function drawWave(w){
   for(const d of[-1,1]){const X=w.x+d*reach;for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(X-d*i*6,y-CELL/2+8+i*8,3.5-i*.4,0,7);ctx.fill();ctx.stroke()}}
   ctx.restore();
 }
+function drawWaveEraser(w){
+  // the eraser drawing itself rubbing along at each end of the smudge (drawn over the paper poofs so it stays visible)
+  const im=art('eraser');if(!im)return;const k=w.t/.75,y=cellY(w.row),reach=k*W*1.1,[ew,eh]=fitIn(im,36,26);
+  ctx.save();ctx.globalAlpha=Math.min(1,(1-k)*1.6);
+  for(const d of[-1,1]){const X=w.x+d*reach;if(X<-ew||X>W+ew)continue;
+    ctx.save();ctx.translate(X,y+Math.sin(w.t*40+d)*1.5);ctx.rotate(d*.12);if(d<0)ctx.scale(-1,1);ctx.drawImage(im,-ew/2,-eh/2,ew,eh);ctx.restore()}
+  ctx.restore();
+}
 function drawItem(it){
   const x=cellX(it.c),y=cellY(it.r)+it.dy;
   if(it.kind==='block')return drawCastle(it,x,y);
@@ -553,6 +562,9 @@ function drawItem(it){
     ctx.restore();
   }else if(it.kind==='wave'){
     // a pink eraser; touch it and it rubs out its whole row
+    const im=art('eraser');
+    if(im){ctx.save();ctx.translate(x,y+bob);ctx.fillStyle='rgba(46,46,51,.15)';ctx.beginPath();ctx.ellipse(1,13,16,3.5,0,0,7);ctx.fill();
+      ctx.rotate(-.12+Math.sin(T*2+it.ph)*.08);const[w,h]=fitIn(im,36,26);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return}
     ctx.save();ctx.translate(x,y+bob);ctx.rotate(-.35+Math.sin(T*2+it.ph)*.08);
     ctx.fillStyle='rgba(46,46,51,.15)';ctx.beginPath();ctx.ellipse(1,13,15,3.5,0,0,7);ctx.fill();
     ctx.fillStyle=PINK_W;ctx.strokeStyle=PINK;ctx.lineWidth=1.8;ctx.lineJoin='round';
@@ -624,8 +636,8 @@ function drawCrab(){
   const throwing=state==='fire'&&toFire>0,im=art(throwing?'buddy-throw':'buddy')||art('buddy');
   if(im){
     ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(x,FLOOR+30,24,4,0,0,7);ctx.fill();
-    // both drawings share one body scale; the scribble body (not the bag / thrown marble) sits over the launch point, feet on the desk
-    const thr=im===art('buddy-throw'),cw=thr?80:58,ch=cw*im.naturalHeight/im.naturalWidth,bx=thr?.31:.35;
+    // both drawings share one body scale; the scribble body (not the bag / flicking arm) sits over the launch point, feet on the desk
+    const thr=im===art('buddy-throw'),cw=thr?57:58,ch=cw*im.naturalHeight/im.naturalWidth,bx=thr?.39:.35;
     ctx.save();ctx.translate(x+(.5-bx)*cw,FLOOR+31-ch/2);ctx.rotate(w*.06);ctx.drawImage(im,-cw/2,-ch/2,cw,ch);ctx.restore();
   }else{
   ctx.save();ctx.translate(x,y);

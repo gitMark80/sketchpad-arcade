@@ -564,8 +564,10 @@ function drawFlat(o,z){const c=ctx,s=sc(z);
     c.fillStyle='rgba(47,111,181,.22)';ell(c,X,cy,rx,ry);c.fill();c.strokeStyle=BLUE;c.lineWidth=Math.max(1,rx*.05);c.stroke();
     const rp=(time*.6+o.ph)%1;c.strokeStyle=`rgba(47,111,181,${1-rp})`;ell(c,X+rx*.1,cy,rx*.3+rx*.5*rp,ry*(.3+.5*rp));c.stroke()}
   else if(o.t==='pit'){const z0=z-o.d*.5,z1=z+o.d*.5,y0=py(z0,0),y1=py(z1,0);
-    if(ART.hole){// the dark middle of the drawing (about 80% of it) covers the hit box; the torn rim spills past it
-      const hw=(px(o.x+o.w,z)-px(o.x-o.w,z))/.8,hh=(y0-y1)/.8;c.drawImage(ART.hole,px(o.x,z)-hw/2,(y0+y1)/2-hh/2,hw,hh);return}
+    if(ART.hole){// Mark's torn hole, already drawn at a low angle: its black oval spans x 13-85%, y 17-90% of the image (centre 49%,53.5%).
+      // The oval is 1.35x the hit box's half-sizes so it covers the box (corners included, near enough); the torn white rim spills past it.
+      const im=ART.hole,ow=(px(o.x+o.w,z)-px(o.x-o.w,z))*1.35,oh=(y0-y1)*1.35,iw=ow/.72,ih=oh/.73;
+      c.drawImage(im,px(o.x,z)-iw*.49,(y0+y1)/2-ih*.535,iw,ih);return}
     const a=[px(o.x-o.w,z1),y1],b=[px(o.x+o.w,z1),y1],cc=[px(o.x+o.w,z0),y0],d=[px(o.x-o.w,z0),y0];
     // a hole torn out of the page: the desk shows through
     c.fillStyle='#d9d7cf';c.strokeStyle=INK;c.lineWidth=Math.max(1,1.6*s);c.lineJoin='round';
@@ -575,9 +577,9 @@ function drawFlat(o,z){const c=ctx,s=sc(z);
   else if(o.t==='towel'){const z0=z-.35,z1=z+.35,y0=py(z0,0),y1=py(z1,0);
     // a sticky note stuck to the page
     const xa=o.x-.25,xb=o.x+.25;
-    if(ART['sticky-note']){// lying flat on the page: squash the square note into the patch (mean of its far and near widths)
-      const im=ART['sticky-note'],mw=((px(xb,z1)-px(xa,z1))+(px(xb,z0)-px(xa,z0)))/2,mx=(px(xa,z1)+px(xb,z1)+px(xa,z0)+px(xb,z0))/4;
-      c.drawImage(im,mx-mw/2,y1,mw,y0-y1);return}
+    if(ART['sticky-note']){// Mark's note is already drawn lying flat at a low angle, so keep its own shape: as wide as the patch (mean of far and near widths), centred on it
+      const im=ART['sticky-note'],mw=((px(xb,z1)-px(xa,z1))+(px(xb,z0)-px(xa,z0)))/2,mx=(px(xa,z1)+px(xb,z1)+px(xa,z0)+px(xb,z0))/4,mh=mw*im.naturalHeight/im.naturalWidth;
+      c.drawImage(im,mx-mw/2,(y0+y1)/2-mh/2,mw,mh);return}
     c.fillStyle=TONES[o.c%2?1:0];c.strokeStyle=INK;c.lineWidth=Math.max(1,1.5*s);
     c.beginPath();c.moveTo(px(xa,z1),y1);c.lineTo(px(xb,z1),y1);c.lineTo(px(xb,z0),y0);c.lineTo(px(xa,z0),y0);c.closePath();c.fill();c.stroke();
     c.strokeStyle='rgba(85,85,92,.5)';c.lineWidth=1;c.beginPath();for(let k=1;k<4;k++){const zz=z0+(z1-z0)*k/4;c.moveTo(px(xa+.08,zz),py(zz,0));c.lineTo(px(xb-.08-(k===3?.14:0),zz),py(zz,0))}c.stroke()}
@@ -641,11 +643,12 @@ function drawBall(o,z){const c=ctx,s=sc(z),R=o.r*RW*s,X=px(o.x,z),Yg=py(z,0);sha
   c.strokeStyle=PINK;c.lineWidth=Math.max(1,R*.06);c.beginPath();c.moveTo(0,-R);c.quadraticCurveTo(R*.5,0,0,R);c.moveTo(0,-R);c.quadraticCurveTo(-R*.5,0,0,R);c.stroke();c.restore()}
 function drawSweep(o,z){const c=ctx,u=RW;shadowAt(o.x,z,.3);
   const ca=Math.cos(o.ang)*o.len,sa=Math.sin(o.ang)*o.len,y=.1;
-  if(ART.compass){// Mark's compass, seen from above, spinning: its hinge and points sit exactly on the two ends of the spinning bar (the hit line).
-    // The length follows the projected bar; the width is not squashed by the perspective so it stays readable when it points down the page.
-    const im=ART.compass,ax=px(o.x+ca,z+sa),ay=py(z+sa,.04),bx=px(o.x-ca,z-sa),by=py(z-sa,.04),dx=ax-bx,dy=ay-by,len=Math.hypot(dx,dy);
-    const wid=o.len*2*RW*sc(z)*im.naturalWidth/im.naturalHeight*.7,dl=Math.max(len,wid*.8);
-    c.save();c.translate((ax+bx)/2,(ay+by)/2);c.rotate(Math.atan2(dy,dx)-Math.PI/2);c.drawImage(im,-wid/2,-dl/2,wid,dl);c.restore();return}
+  if(ART.compass){// Mark's compass drawn from above, legs opened flat: needle tip (image x .5) and pencil tip (x 447.5) on the line y 106.5, hinge in the middle.
+    // Those two tips sit exactly on the two ends of the spinning bar (the hit line). Across that line the drawing keeps its own proportions as the
+    // line shortens with the perspective, but never gets thinner than 55% of its true width, so it still reads when it points down the road.
+    const im=ART.compass,IL=447,bx=px(o.x-ca,z-sa),by=py(z-sa,.04),ax=px(o.x+ca,z+sa),ay=py(z+sa,.04),ux=(ax-bx)/IL,uy=(ay-by)/IL,ul=Math.hypot(ux,uy)||1e-6;
+    const full=RW*sc(z)*2*o.len/IL,vl=Math.min(full,Math.max(ul,full*.55)),vx=-uy/ul*vl,vy=ux/ul*vl;
+    c.save();c.transform(ux,uy,vx,vy,bx-.5*ux-106.5*vx,by-.5*uy-106.5*vy);c.drawImage(im,0,0);c.restore();return}
   // a drawing compass spinning on its point: the two legs, far one first
   const ends=[[o.x+ca,z+sa,1],[o.x-ca,z-sa,0]].sort((a,b)=>b[1]-a[1]);
   for(const [ex,ez,pen] of ends){const X0=px(o.x,z),Y0=py(z,y),X1=px(ex,ez),Y1=py(ez,y),w=Math.max(2,.07*u*sc((z+ez)/2));

@@ -372,10 +372,12 @@ function buildBG(){
   const {w,h,step,left,top}=Lay;
   const pim=art('pediment');
   for(let p=0;p<3&&pim;p++){
-    // Mark's folded-paper mountain, apex on the old peak, base on the old base line
-    const cx=left+(1.5+3*p)*step+w/2,base=top+Lay.tabH-h*.12,peak=top-h*.32,hw=step*2.1;
+    // Mark's folded-paper mountain at its own proportions (apex at x 153.5, y 2 of 308x277; sides' bottom edge at y 258):
+    // apex peeks just above the top card so the flag stands on it; as wide as the outer ones can go without running off the board
+    const cx=left+(1.5+3*p)*step+w/2,apex=top-h*.2,edge=left+1.5*step+w/2;
+    const k=Math.min(2*edge/308,(top+Lay.tabH-apex)/256),hw=154*k,y0=apex-2*k,base=y0+258*k;
     g.fillStyle='rgba(46,46,51,.12)';g.beginPath();g.ellipse(cx,base+h*.04,hw*.98,h*.12,0,0,7);g.fill();
-    const ax=(206/421)*2*hw;g.drawImage(pim,cx-ax,peak,hw*2,base-peak);
+    g.drawImage(pim,cx-153.5*k,y0,308*k,277*k);
   }
   for(let p=0;p<3&&!pim;p++){
     const cx=left+(1.5+3*p)*step+w/2,base=top+Lay.tabH-h*.12,peak=top-h*.32,hw=step*1.85;

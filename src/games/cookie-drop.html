@@ -560,8 +560,10 @@ function drawPuddle(t){
 }
 function drawPeg(x,y,r){ // a thumbtack: round head, needle pushed into the cork
   ctx.save();ctx.translate(x,y);
+  const im=art('thumbtack');if(im){ // Mark's pushpin, seen from the front: round head centred on the anchor, soft shadow on the cork
+    ctx.fillStyle='rgba(46,46,51,.22)';ctx.beginPath();ctx.arc(2,3,r*1.02,0,TAU);ctx.fill();
+    const k=r*2.15/180;ctx.drawImage(im,-90*k,-89.5*k,180*k,179*k);ctx.restore();return}
   ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(3,r+5,r*.8,2.5,0,0,TAU);ctx.fill();
-  const im=art('thumbtack');if(im){const k=r*2.2/151;ctx.drawImage(im,-74*k,-66*k,151*k,257*k);ctx.restore();return} // Mark's pushpin: head centred on the anchor, needle into the cork
   ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,r*.5);ctx.lineTo(0,r+4);ctx.stroke();
   ctx.fillStyle='#e4e2d8';wobCircle(0,0,r,x*.1);ctx.fill();ctx.save();ctx.clip();hatch(0,0,r,r,4,.4);ctx.restore();ctx.strokeStyle=INK;ctx.lineWidth=1.8;wobCircle(0,0,r,x*.1);ctx.stroke();
   ctx.fillStyle=PAPER;wobCircle(0,0,r*.42,x*.3);ctx.fill();ctx.lineWidth=1.3;ctx.stroke();
@@ -672,8 +674,9 @@ function drawDoodle(t){ // Doodle: a hand-drawn doodle monster, mouth open at th
   const op=doodleMood.open,blink=doodleMood.blink<.12,lx=doodleMood.look[0],ly=doodleMood.look[1];
   ctx.fillStyle='rgba(46,46,51,.18)';ctx.beginPath();ctx.ellipse(px+4,py+48,44,8,0,0,TAU);ctx.fill();
   const dn=sad?'doodle-sad':(munch||happy)?'doodle-munching':'doodle-waiting',dim=art(dn);
-  if(dim){ // Mark's Doodle: the mouth sits on the catch point (sad lines up the feet instead, since the cookie is gone by then)
-    const K=.3,A={'doodle-waiting':[149,232,331,402],'doodle-munching':[175,225,375,398],'doodle-sad':[159,235,314,382]}[dn];
+  if(dim){ // Mark's Doodle: the mouth sits on the catch point. Sad lines up the feet instead: its mouth sits only 142px above its feet
+    // (vs ~170 for the other two), so mouth-aligning would lift Doodle ~8px off the cork when he gets sad; the cookie is gone by then anyway
+    const K=.3,A={'doodle-waiting':[149,232,331,402],'doodle-munching':[175,225,375,398],'doodle-sad':[145,215,283,357]}[dn];
     ctx.save();ctx.translate(px,sad?py+51-(A[3]-A[1])*K:py);if(happy)ctx.rotate(Math.sin(T*10)*.03);
     ctx.scale(1+op*.06+chew*.04-breathe*.004,1+op*.06-chew*.05+breathe*.004);
     ctx.drawImage(dim,-A[0]*K,-A[1]*K,A[2]*K,A[3]*K);ctx.restore();
