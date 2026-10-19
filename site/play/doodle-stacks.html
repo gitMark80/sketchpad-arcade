@@ -112,17 +112,17 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Doodle Stacks</h1><button class="sa-share" type="button" aria-label="Share Doodle Stacks" data-share-url="https://www.sketchpadarcade.com/doodle-stacks" data-share-title="Doodle Stacks" data-share-text="Play Doodle Stacks free on Sketchpad Arcade! Stack shiny sea-glass shells by colour and pop them in tens."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Doodle Stacks</h1><button class="sa-share" type="button" aria-label="Share Doodle Stacks" data-share-url="https://www.sketchpadarcade.com/doodle-stacks" data-share-title="Doodle Stacks" data-share-text="Play Doodle Stacks free on Sketchpad Arcade! Stack coloured-pencil discs by colour and pop them in tens."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <button class="wave" id="waveBtn" type="button" aria-label="Wave: wash one stack away, once per level"><img src="../assets/doodle-stacks/wave.webp" alt="" width="28" height="26"><span id="waveTxt">Wave</span></button>
+    <button class="wave" id="waveBtn" type="button" aria-label="Wipe: wipe one stack away, once per level"><img src="../assets/doodle-stacks/wave.webp" alt="" width="28" height="26"><span id="waveTxt">Wipe</span></button>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
   </div>
-  <div class="strip"><span class="lv" id="lvEl">Level 1</span><div class="tbar" aria-label="Shells popped this level"><i id="pFill"></i><span id="pText">0 / 30 shells</span></div></div>
+  <div class="strip"><span class="lv" id="lvEl">Level 1</span><div class="tbar" aria-label="Discs popped this level"><i id="pFill"></i><span id="pText">0 / 30 discs</span></div></div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A hexagon sandbar with stacks of coloured sea-glass shells, and a tray of three new stacks below. Drag a stack from the tray onto an empty spot."></canvas>
+    <canvas id="cv" aria-label="A hexagon board with stacks of coloured-pencil discs, and a tray of three new stacks below. Drag a stack from the tray onto an empty spot."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
   </div>
 </div>
@@ -131,12 +131,12 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     <canvas id="mini" width="340" height="240" aria-hidden="true"></canvas>
     <h2>Doodle Stacks</h2>
     <ul class="rules">
-      <li><b>1</b><span><strong>Drag</strong> a stack of shells from the tray onto any empty spot on the sandbar.</span></li>
+      <li><b>1</b><span><strong>Drag</strong> a stack of discs from the tray onto any empty spot on the board.</span></li>
       <li><b>2</b><span>Stacks side by side with the <strong>same top colour</strong> hop together onto one stack.</span></li>
       <li><b>3</b><span>Get <strong>10 or more</strong> of one colour on top and they pop for points. Chains score combos!</span></li>
-      <li><b>4</b><span>Pop enough shells to finish the level. If the sandbar fills up, the game is over. The <strong>Wave</strong> washes one stack away, once per level.</span></li>
+      <li><b>4</b><span>Pop enough discs to finish the level. If the board fills up, the game is over. The <strong>Wipe</strong> button wipes one stack off the board, once per level.</span></li>
     </ul>
-    <div class="keys">Keyboard: 1 2 3 pick a stack, arrows move, Enter drops, W for Wave</div>
+    <div class="keys">Keyboard: 1 2 3 pick a stack, arrows move, Enter drops, W for Wipe</div>
     <button class="big" id="playBtn" type="button">Play</button>
     <div class="best" id="bestLine">Best score: 0</div>
   </div>
@@ -151,9 +151,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 </div>
 <div class="cover" id="over" hidden>
   <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-    <h2 id="overTitle">Sandbar full!</h2>
+    <h2 id="overTitle">Board full!</h2>
     <p id="overText"></p>
-    <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stLevel">1</b><span>level</span></div><div><b id="stShells">0</b><span>shells popped</span></div></div>
+    <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stLevel">1</b><span>level</span></div><div><b id="stShells">0</b><span>discs popped</span></div></div>
     <div class="newbest" id="newBest" hidden>New best score!</div>
     <button class="big" id="againBtn" type="button">Play again</button>
     <div class="best" id="bestLine2">Best score: 0</div>
@@ -478,7 +478,7 @@ function afterTurn(){
   if(tray.every(s=>!s))deal();
   const empty=cells.some(free);
   if(!empty){
-    if(waveLeft>0){stuck=true;$('waveBtn').classList.add('pulse');showBanner('Sandbar full!','Tap Wave to wash a stack away',1e8)}
+    if(waveLeft>0){stuck=true;$('waveBtn').classList.add('pulse');showBanner('Board full!','Tap Wipe to wipe a stack away',1e8)}
     else gameOver();
   }else{stuck=false;$('waveBtn').classList.remove('pulse')}
   hud();
@@ -531,8 +531,8 @@ function pop(t,x,y,c,sz){pops.push({t,x,y,life:1.1,c:c||INK,sz:sz||1})}
 function hud(bumpScore){
   const s=$('scoreEl');s.textContent=score;if(bumpScore){s.classList.remove('bump');void s.offsetWidth;s.classList.add('bump')}
   $('bestEl').textContent=Math.max(save.best,score);$('lvEl').textContent='Level '+level;
-  const tg=cfg?cfg.target:30;$('pFill').style.width=Math.min(100,cleared/tg*100)+'%';$('pText').textContent=Math.min(cleared,tg)+' / '+tg+' shells';
-  const wb=$('waveBtn');wb.disabled=!running||waveLeft<=0;wb.classList.toggle('on',waveMode);$('waveTxt').textContent=waveMode?'Pick one':waveLeft>0?'Wave':'Used';
+  const tg=cfg?cfg.target:30;$('pFill').style.width=Math.min(100,cleared/tg*100)+'%';$('pText').textContent=Math.min(cleared,tg)+' / '+tg+' discs';
+  const wb=$('waveBtn');wb.disabled=!running||waveLeft<=0;wb.classList.toggle('on',waveMode);$('waveTxt').textContent=waveMode?'Pick one':waveLeft>0?'Wipe':'Used';
 }
 let bannerT=0;
 function showBanner(t,sub,ms){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),ms||1300)}
@@ -542,16 +542,16 @@ function startLevel(){
   gen++;cfg=cfgFor(level);cleared=0;waveLeft=1;waveMode=false;stuck=false;busy=false;selected=-1;kbCell=-1;
   flyers=[];parts=[];pops=[];drag=null;$('waveBtn').classList.remove('pulse');
   buildBoard();deal();running=true;hud();
-  const nc=cfg.colors;showBanner('Level '+level,'Pop '+cfg.target+' shells · '+nc+' colours',1600);
+  const nc=cfg.colors;showBanner('Level '+level,'Pop '+cfg.target+' discs · '+nc+' colours',1600);
 }
 function levelWon(){
   running=false;const bonus=level*50+cells.filter(free).length*5+(waveLeft>0?50:0);score+=bonus;sfx.win();
   save.bestLevel=Math.max(save.bestLevel,level+1);if(score>save.best)save.best=score;persist();hud();
   for(let j=0;j<40;j++){const a=rnd(0,TAU),s=rnd(100,360);parts.push({x:W/2,y:H*.4,vx:Math.cos(a)*s,vy:Math.sin(a)*s-100,life:rnd(.7,1.3),c:COL[j%cfg.colors].b,r:rnd(3,7),g:1})}
   setTimeout(()=>{
-    $('midTitle').textContent=['Sandbar sorted!','Shell-tastic!','Super stacking!','Splash-tacular!'][(level-1)%4];
+    $('midTitle').textContent=['Board sorted!','Disc-tastic!','Super stacking!','Stack-tacular!'][(level-1)%4];
     const nx=cfgFor(level+1);
-    $('midText').textContent='You popped '+cleared+' shells.'+(nx.colors>cfg.colors?' Next level adds a new colour!':nx.rocks>cfg.rocks?' Watch out for rocks next level!':nx.rows.join()!==cfg.rows.join()?' The sandbar grows next level!':' Next target: '+nx.target+' shells.');
+    $('midText').textContent='You popped '+cleared+' discs.'+(nx.colors>cfg.colors?' Next level adds a new colour!':nx.rocks>cfg.rocks?' Watch out for rocks next level!':nx.rows.join()!==cfg.rows.join()?' The board grows next level!':' Next target: '+nx.target+' discs.');
     $('mBonus').textContent='+'+bonus;$('mScore').textContent=score;$('mLevel').textContent=level;
     $('mid').hidden=false;$('nextBtn').focus({preventScroll:true});
   },700);
@@ -612,7 +612,7 @@ function newGame(){startBest=save.best;level=1;score=0;totalCleared=0;bestCombo=
 $('playBtn').onclick=()=>{audio();sfx.click();newGame()};
 $('againBtn').onclick=()=>{audio();sfx.click();newGame()};
 $('nextBtn').onclick=()=>{audio();sfx.click();$('mid').hidden=true;level++;startLevel()};
-$('waveBtn').onclick=()=>{if(!running||waveLeft<=0)return;audio();sfx.click();waveMode=!waveMode;if(waveMode){selected=-1;showBanner('Wave ready','Tap a stack to wash it away',1600)}hud()};
+$('waveBtn').onclick=()=>{if(!running||waveLeft<=0)return;audio();sfx.click();waveMode=!waveMode;if(waveMode){selected=-1;showBanner('Wipe ready','Tap a stack to wipe it away',1600)}hud()};
 function moveKb(dx,dy){
   if(selected<0)return;
   const fr=cells.filter(free);if(!fr.length)return;

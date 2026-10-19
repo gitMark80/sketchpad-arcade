@@ -85,12 +85,12 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <div class="lives" id="lives" aria-label="Shells left"></div>
+    <div class="lives" id="lives" aria-label="Stars left"></div>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
   </div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A sunny beach. Fruit splashes up out of the waves. Swipe across the fruit to slice it, but don't touch the spiky sea urchins."></canvas>
+    <canvas id="cv" aria-label="A wooden cutting board. Fruit tosses up from the bottom of the board. Swipe across the fruit to slice it, but don't touch the inky bombs."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
@@ -99,8 +99,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <ul class="rules">
           <li><b>1</b><span><strong>Swipe</strong> across the fruit to slice it. With a mouse, hold the button down and drag.</span></li>
           <li><b>2</b><span>Slice <strong>two or more</strong> in one swipe for a combo bonus!</span></li>
-          <li><b>3</b><span>Don't swipe the <strong>spiky sea urchins</strong>, and don't let fruit splash back into the sea. Each one costs a shell.</span></li>
-          <li><b>4</b><span>Golden starfruit is worth a big bonus. Swipe a <strong>beach ball</strong> for slow motion!</span></li>
+          <li><b>3</b><span>Don't swipe the <strong>inky bombs</strong>, and don't let fruit drop off the board. Each one costs a star.</span></li>
+          <li><b>4</b><span>A golden apple is worth a big bonus. Swipe a <strong>bouncy ball</strong> for slow motion!</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <div class="best" id="bestLine">Best score: 0</div>
@@ -108,7 +108,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     </div>
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-        <h2 id="overTitle">Splashed out!</h2>
+        <h2 id="overTitle">Dropped it!</h2>
         <p id="overText"></p>
         <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stCombo">0</b><span>best combo</span></div><div><b id="stFruit">0</b><span>fruit sliced</span></div></div>
         <div class="newbest" id="newBest" hidden>New best score!</div>
@@ -510,7 +510,7 @@ function finishStroke(){
     pop((n===2?'Double!':n+' fruit combo!')+' +'+bonus,Math.max(90,Math.min(W-90,stroke.x)),Math.max(60,stroke.y-50),'#c99a1a',n>=4?34:28,1.4)}
 }
 function addScore(p){score+=p;const el=$('scoreEl');el.textContent=score;el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');
-  if(score>=nextLifeAt){nextLifeAt+=500;if(lives<3&&running){lives++;sfx.life();showBanner('+1 shell!','Nice slicing');hud()}}}
+  if(score>=nextLifeAt){nextLifeAt+=500;if(lives<3&&running){lives++;sfx.life();showBanner('+1 star!','Nice slicing');hud()}}}
 function loseLife(why){
   if(!running)return;lives=Math.max(0,lives-1);cause=why;hud(true);
   if(lives<=0)gameOver();
@@ -524,8 +524,8 @@ function missed(it){
 function gameOver(){
   running=false;down=false;finishStroke();sfx.lose();
   const isBest=score>save.best;if(isBest)save.best=score;save.bestCombo=Math.max(save.bestCombo,bestCombo);persist();
-  $('overTitle').textContent=cause==='bonk'?'Bonk!':'Splashed out!';
-  $('overText').textContent=cause==='bonk'?'That sea urchin was too spiky to slice. Swipe around them!':'Too much fruit splashed back into the sea. Keep swiping!';
+  $('overTitle').textContent=cause==='bonk'?'Bonk!':'Dropped it!';
+  $('overText').textContent=cause==='bonk'?'That inky bomb was too splotchy to slice. Swipe around them!':'Too much fruit dropped off the board. Keep swiping!';
   $('stScore').textContent=score;$('stCombo').textContent=bestCombo;$('stFruit').textContent=sliced;
   $('newBest').hidden=!isBest||score===0;$('bestLine2').textContent='Best score: '+save.best+' · Best combo: '+save.bestCombo;
   hud();
@@ -559,7 +559,7 @@ const SHELL='<path d="M24 6C14 6 6 15 6 25c0 5 2 9 5 12l13 6 13-6c3-3 5-7 5-12C4
 function hud(hitAnim){
   $('scoreEl').textContent=score;$('bestEl').textContent=Math.max(save.best,score);
   const l=$('lives');l.innerHTML='';for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<i class="'+(i>=lives?'lost':'')+(hitAnim&&i===lives?' hit':'')+'"></i>');
-  l.setAttribute('aria-label',lives+' shells left');
+  l.setAttribute('aria-label',lives+' stars left');
 }
 let bannerT=0;
 function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
@@ -670,13 +670,13 @@ $('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audi
 setSoundLabel();
 $('bestLine').textContent='Best score: '+save.best+(save.bestCombo>1?' · Best combo: '+save.bestCombo:'');
 
-/* start-card art: a watermelon gets sliced while a pineapple and a sea urchin bob nearby */
+/* start-card art: a watermelon gets sliced while a pineapple and an inky bomb bob nearby */
 const mc=$('mini').getContext('2d');
 function mini(t){
   mc.setTransform(1,0,0,1,0,0);mc.clearRect(0,0,300,220);
-  mc.fillStyle='#e9e6db';mc.beginPath();mc.moveTo(0,220);for(let x=0;x<=300;x+=10)mc.lineTo(x,182+Math.sin(x/30+t*2)*5);mc.lineTo(300,220);mc.fill();
-  mc.strokeStyle=INK;mc.lineWidth=2;mc.lineCap='round';mc.beginPath();for(let x=0;x<=300;x+=10)mc.lineTo(x,182+Math.sin(x/30+t*2)*5);mc.stroke();
-  mc.strokeStyle=GRAPH;mc.lineWidth=1;for(let x=10;x<=300;x+=40){const y=200+Math.sin(x/30+t*2)*3;mc.beginPath();mc.moveTo(x,y);mc.quadraticCurveTo(x+8,y-3,x+16,y);mc.stroke()}
+  // a cutting-board edge along the bottom, with a few wood-grain lines
+  mc.fillStyle='#e8cfa3';mc.strokeStyle=INK;mc.lineWidth=2;mc.lineCap='round';mc.beginPath();mc.moveTo(8,222);mc.lineTo(8,190);mc.quadraticCurveTo(8,180,18,180);mc.lineTo(282,180);mc.quadraticCurveTo(292,180,292,190);mc.lineTo(292,222);mc.fill();mc.stroke();
+  mc.strokeStyle='#b98a55';mc.lineWidth=1.2;for(const[y,a,b]of[[192,30,140],[198,170,270],[206,24,110],[210,150,250]]){mc.beginPath();mc.moveTo(a,y);mc.quadraticCurveTo((a+b)/2,y-3,b,y);mc.stroke()}
   drawWhole(mc,'pineapple',58,112+Math.sin(t*2)*6,34,-.25,t);
   drawWhole(mc,'urchin',250,128+Math.sin(t*2+1)*6,26,Math.sin(t*2)*.15,t);
   const p=(t%2.4)/2.4,mx=150,my=100;

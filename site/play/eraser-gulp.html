@@ -111,7 +111,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Eraser Gulp</h1><button class="sa-share" type="button" aria-label="Share Eraser Gulp" data-share-url="https://www.sketchpadarcade.com/eraser-gulp" data-share-title="Eraser Gulp" data-share-text="Play Eraser Gulp free on Sketchpad Arcade! Steer a hungry little whirlpool and gulp up the beach to grow."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Eraser Gulp</h1><button class="sa-share" type="button" aria-label="Share Eraser Gulp" data-share-url="https://www.sketchpadarcade.com/eraser-gulp" data-share-title="Eraser Gulp" data-share-text="Play Eraser Gulp free on Sketchpad Arcade! Steer a hungry little eraser and gulp up the desk to grow."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
@@ -121,17 +121,17 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   </div>
   <div class="meter"><span class="lv" id="lvEl">Level 1</span><div class="bar" aria-label="Size goal"><i id="barFill"></i><span id="barText">Grow to the goal!</span></div></div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="Top-down beach. Steer the whirlpool to gulp down beach things smaller than it."></canvas>
+    <canvas id="cv" aria-label="Top-down desk. Steer the eraser to gulp down desk things smaller than it."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
         <canvas id="mini" width="280" height="280" aria-hidden="true"></canvas>
         <h2>Eraser Gulp</h2>
         <ul class="rules">
-          <li><b>1</b><span>You're a magic little whirlpool on a busy beach. Steer it around by dragging, moving the mouse, or with the arrow keys.</span></li>
+          <li><b>1</b><span>You're a hungry little eraser on a messy desk. Steer it around by dragging, moving the mouse, or with the arrow keys.</span></li>
           <li><b>2</b><span>Glide over things that are <strong>smaller than you</strong> to gulp them down and grow.</span></li>
-          <li><b>3</b><span>Start with shells, then buckets, umbrellas, sandcastles... even boats!</span></li>
-          <li><b>4</b><span>Fill the size meter before the timer runs out to reach the next beach.</span></li>
+          <li><b>3</b><span>Start with paper clips, then glue sticks, rulers, book stacks... even backpacks!</span></li>
+          <li><b>4</b><span>Fill the size meter before the timer runs out to reach the next desk.</span></li>
         </ul>
         <button class="big" id="playBtn" type="button">Play</button>
         <div class="best" id="bestLine">Best score: 0</div>
@@ -139,10 +139,10 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     </div>
     <div class="cover" id="mid" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="midTitle">
-        <h2 id="midTitle">Beach cleared!</h2>
+        <h2 id="midTitle">Desk cleared!</h2>
         <p id="midText"></p>
         <div class="stats"><div><b id="mBonus">0</b><span>time bonus</span></div><div><b id="mScore">0</b><span>score</span></div><div><b id="mGulps">0</b><span>gulps</span></div></div>
-        <button class="big" id="nextBtn" type="button">Next beach</button>
+        <button class="big" id="nextBtn" type="button">Next desk</button>
       </div>
     </div>
     <div class="cover" id="over" hidden>
@@ -347,13 +347,13 @@ function eat(o){
   hud();
   if(hole.r>=cfg.goal)endLevel(true);
 }
-const NAMES={shell:'Shells',star:'Starfish',dollar:'Sand dollars',spade:'Spades',sandal:'Flip-flops',bucket:'Buckets',ball:'Beach balls',cooler:'Coolers',towel:'Towels',chair:'Deck chairs',umbrella:'Umbrellas',surf:'Surfboards',castle:'Sandcastles',kayak:'Kayaks',tower:'Lifeguard towers',boat:'Boats',hut:'Beach huts'};
+const NAMES={shell:'Paper clips',star:'Gold stars',dollar:'Sticky notes',spade:'Pencils',sandal:'Crayons',bucket:'Glue sticks',ball:'Marbles',cooler:'Pencil cases',towel:'Rulers',chair:'Tape dispensers',umbrella:'Pushpin pouches',surf:'Laptops',castle:'Book stacks',kayak:'Staplers',tower:'Desk lamps',boat:'Backpacks',hut:'Lunch boxes'};
 function endLevel(won){
   if(!running)return;running=false;ptr=null;keys={};
   if(won){
     const bonus=Math.ceil(timeLeft)*10;score+=bonus;sfx.win();hud();
-    $('midTitle').textContent=['Beach cleared!','Gulp-tastic!','Super swirl!','Whirl-wow!'][(level-1)%4];
-    $('midText').textContent='You grew big enough with '+Math.ceil(timeLeft)+' seconds to spare. The next beach is bigger and the goal is too!';
+    $('midTitle').textContent=['Desk cleared!','Gulp-tastic!','Super swirl!','Whirl-wow!'][(level-1)%4];
+    $('midText').textContent='You grew big enough with '+Math.ceil(timeLeft)+' seconds to spare. The next desk is bigger and the goal is too!';
     $('mBonus').textContent='+'+bonus;$('mScore').textContent=score;$('mGulps').textContent=levelGulps;
     save.bestLevel=Math.max(save.bestLevel,level+1);if(score>save.best){save.best=score}persist();hud();
     setTimeout(()=>{$('mid').hidden=false;$('nextBtn').focus({preventScroll:true})},700);
@@ -515,7 +515,7 @@ $('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audi
 setSoundLabel();
 $('bestLine').textContent='Best score: '+save.best+(save.bestLevel>1?' · Best level: '+save.bestLevel:'');
 
-/* start-card art: the eraser gulping a shell */
+/* start-card art: the eraser gulping a paper clip */
 const mc=$('mini').getContext('2d');
 function mini(t){
   const sv=ctx;ctx=mc;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0,0,280,280);
