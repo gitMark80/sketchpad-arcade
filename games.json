@@ -508,9 +508,9 @@
       "name": "Margin Merge",
       "genre": "Puzzle",
       "added": "2026-10-08",
-      "tagline": "Drop pencil-drawn sea friends in the tank and merge matching pairs, all the way up to a dolphin.",
-      "meta": "Play Margin Merge free online. Drop pencil-sketched sand dollars, scallops, crabs and more into a hand-drawn tank, merge matching pairs into bigger sea friends and try to make a dolphin. Works on phone and computer.",
-      "lead": "A relaxing merge puzzle in a tank drawn on sketchbook paper. Drop sea friends from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny sand dollar all the way to a dolphin, but don't let the tank overflow.",
+      "tagline": "Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle.",
+      "meta": "Play Margin Merge free online. Drop pencil-drawn doodle balls with dots, stripes, zigzags and swirls into a glass jar, merge matching pairs into bigger, fancier doodles and try to make a Super Doodle. Works on phone and computer.",
+      "lead": "A relaxing merge puzzle in a glass jar drawn on notebook paper. Drop doodle balls from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny Dot all the way to a big gold Super Doodle, but don't let the jar overflow.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -518,25 +518,25 @@
         "Saves your best score"
       ],
       "how": [
-        "Move to aim, then let go to drop a sea friend into the tank.",
-        "When two of the same kind touch, they merge into the next sea friend and you score points.",
-        "Merges climb from Sand Dollar to Moon Snail, Scallop, Starfish, Crab, Clownfish, Pufferfish, Jellyfish, Octopus, Sea Turtle and Dolphin.",
-        "Two dolphins swim off together for a 100 point bonus.",
-        "The game ends when the stack stays above the dotted line at the top of the tank."
+        "Move to aim, then let go to drop a doodle ball into the jar.",
+        "When two of the same kind touch, they merge into the next doodle and you score points.",
+        "Merges climb from Dot to Stripe, Zigzag, Swirl, Checkers, Sprinkles, Wiggles, Starry, Confetti, Rainbow and Super Doodle.",
+        "Two Super Doodles bounce off together for a 100 point bonus.",
+        "The game ends when the stack stays above the dotted line at the top of the jar."
       ],
       "controls": [
         "Drag or move your mouse to aim, then release or click to drop. On a keyboard, use the arrow keys and Space.",
-        "Pop removes one sea friend of your choice. You start with one and earn another every 500 points.",
+        "Pop removes one doodle of your choice. You start with one and earn another every 500 points.",
         "New game starts over, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Keep small sea friends together and big ones along the bottom or sides.",
+        "Keep small doodles together and big ones along the bottom or sides.",
         "Check the Next window before you drop so you can plan where the following piece will go.",
         "A merge can bump into a matching neighbor and set off a combo, so line up chains when you can.",
         "Save your Pop for a small piece stuck between two big ones."
       ],
       "about": [
-        "Margin Merge is the pencil-sketch twin of Sea Merge, one of the most played games on our sister site. Two identical pieces that touch combine into the next one up the chain, and the physics are loose and bouncy, so every drop shifts the pile. The sketch version keeps the same chain and the same tank, redrawn in pencil lines.",
+        "Margin Merge is the pencil-sketch twin of one of the most played merge games on our sister site. Two identical pieces that touch combine into the next one up the chain, and the physics are loose and bouncy, so every drop shifts the pile. Here the pieces are smiling doodle balls in a glass jar on a desk, each one fancier than the last, drawn in pencil and coloured pencil.",
         "It is a game about patience more than reflexes. Dropping a small piece next to its match is easy; keeping the big ones from getting buried under the small ones is the skill. Your best score is saved on your device, and the Next window is worth a glance before every drop."
       ]
     },
@@ -663,7 +663,7 @@
       "added": "2026-10-08",
       "tagline": "Steer a hungry little eraser and gulp up the desk to grow.",
       "meta": "Play Eraser Gulp free online. Steer a cute swirling eraser around a busy school desk, gulp down paper clips, pencils, rulers and even backpacks, and grow big enough to reach the next desk before time runs out. Works on phone and computer.",
-      "lead": "A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and star stickers, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.",
+      "lead": "A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and gold stars, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.",
       "facts": [
         "Arcade",
         "Endless levels",
@@ -685,7 +685,7 @@
       ],
       "tips": [
         "Gulp lots of little things at the start. They add up fast.",
-        "Pouches of push-pins have rulers, tape, pencil cases and glue sticks all close together. Swirl around them for a quick feast.",
+        "Pushpin pouches have rulers, tape, pencil cases and glue sticks all close together. Swirl around them for a quick feast.",
         "Big things are worth lots of points, so head for them as soon as they fit.",
         "A banner tells you when a new kind of thing fits, so watch for it."
       ],
@@ -794,14 +794,14 @@
       "controls": [
         "Press on a stack in the tray and drag it onto the board. You can also tap a stack and then tap an empty spot.",
         "Works with a finger on a phone or tablet and with a mouse on a computer.",
-        "On a keyboard, press 1, 2 or 3 to pick a stack, move with the arrow keys and press Enter to drop it. W uses the Wave.",
-        "The Wave button washes one stack off the board, once per level.",
+        "On a keyboard, press 1, 2 or 3 to pick a stack, move with the arrow keys and press Enter to drop it. W uses the Wipe.",
+        "The Wipe button clears one stack off the board, once per level.",
         "The Sound button turns sound on or off."
       ],
       "tips": [
         "Keep each colour in its own corner of the board so stacks can grow tall.",
         "Look under the top colour. When it hops away, the colour below might match a neighbour and start a chain.",
-        "Save the Wave for when the board is nearly full.",
+        "Save the Wipe for when the board is nearly full.",
         "Don't fill every spot. An empty spot or two gives you room to move."
       ],
       "about": [
@@ -815,8 +815,8 @@
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Swipe to slice the juicy fruit that leaps up over the cutting board.",
-      "meta": "Play Scribble Slice free online. Juicy watermelons, pineapples, mangoes and more leap up over a wooden cutting board. Swipe to slice them, chain combos and dodge the fizzing bombs. Works on phone and computer.",
-      "lead": "A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the fizzing black bombs. The fruit comes faster and in bigger bunches the longer you last.",
+      "meta": "Play Scribble Slice free online. Juicy watermelons, pineapples, mangoes and more leap up over a wooden cutting board. Swipe to slice them, chain combos and dodge the inky bombs. Works on phone and computer.",
+      "lead": "A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the inky black bombs. The fruit comes faster and in bigger bunches the longer you last.",
       "facts": [
         "Arcade",
         "Endless play",
@@ -827,7 +827,7 @@
         "Fruit leaps up from the bottom of the cutting board.",
         "Swipe across a fruit to slice it and score 10 points.",
         "Slice two or more fruit in one swipe for a combo bonus.",
-        "Swiping a bomb costs a star, and so does letting a fruit fall back down off the board.",
+        "Swiping an inky bomb costs a star, and so does letting a fruit fall back down off the board.",
         "Lose all 3 stars and the game is over. Every 500 points gives you a lost star back."
       ],
       "controls": [
@@ -839,11 +839,11 @@
       "tips": [
         "Wait for the fruit to rise to the top of its jump, where it moves slowest, then slice.",
         "Long sweeping swipes through a bunch of fruit score big combos.",
-        "Swipe around the bombs, not through them. Lift your finger if one is in the way.",
-        "Shiny golden fruit is worth 50 points, and a striped ball slows everything down for a few seconds."
+        "Swipe around the inky bombs, not through them. Lift your finger if one is in the way.",
+        "A shiny golden apple is worth 50 points, and a bouncy ball slows everything down for a few seconds."
       ],
       "about": [
-        "Scribble Slice is a fruit-slicing arcade game drawn in pencil. Fruit leaps up into the frame and you swipe across it to cut it in half. Slice several in one stroke for a combo bonus, and steer clear of the spiky things that come up with it.",
+        "Scribble Slice is a fruit-slicing arcade game drawn in pencil. Fruit leaps up into the frame and you swipe across it to cut it in half. Slice several in one stroke for a combo bonus, and steer clear of the inky bombs that come up with it.",
         "Rounds get faster and the fruit comes in bigger bunches the longer you last, so a good run turns into a flurry of swipes. It works especially well on a phone or tablet where you can swipe with a finger, and it is one of the quickest games on the site to pick up."
       ]
     },
@@ -853,8 +853,8 @@
       "genre": "Word",
       "added": "2026-10-08",
       "tagline": "Find the hidden words in a board of graph-paper letter tiles.",
-      "meta": "Play Sketch Search free online. A summer word search with Beginner, Intermediate and Advanced levels and a new theme every round, from picnics and ice cream to summer clothes. Drag across the graph-paper letter tiles to find every hidden word before time runs out. Works on phone and computer.",
-      "lead": "A sunny summer word search on a notebook page. Every level has a theme, like Picnic, Weather or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.",
+      "meta": "Play Sketch Search free online. A sketchbook word search with Beginner, Intermediate and Advanced levels and a new theme every round, from pets and toy boxes to bake sales. Drag across the graph-paper letter tiles to find every hidden word before time runs out. Works on phone and computer.",
+      "lead": "A cheerful word search on a notebook page. Every level has a theme, like Pets, Art Class or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.",
       "facts": [
         "Word",
         "Beginner, Intermediate and Advanced",
@@ -863,7 +863,7 @@
       ],
       "how": [
         "Pick Beginner, Intermediate or Advanced. Each one keeps its own best score.",
-        "Each level has a summer theme and a list of words to find.",
+        "Each level has a fun theme and a list of words to find.",
         "Drag in a straight line from the first letter of a word to its last letter.",
         "Beginner words only go across and down, with small boards and plenty of time. Intermediate adds slanted words, then backwards ones. Advanced has big boards with words hiding in every direction from the start, a tighter clock and double points.",
         "Longer words score more, quick finds earn a bonus, and time left over is added at the end of the level.",
@@ -905,7 +905,7 @@
         "Pull further for a harder putt, then let go to hit the ball.",
         "Sink the ball in the cup. Beat the par for big points, and a hole in one is worth 1000.",
         "Pencil shavings slow the ball, blue arrows and slopes push it, bouncy balls bounce it and spilled ink costs a stroke.",
-        "Finish a hole over par and you lose a life. Lose all 3 lives and the game is over."
+        "Finish a hole over par and you lose a star. Lose all 3 stars and the game is over."
       ],
       "controls": [
         "Press anywhere, pull back to aim and set the power, then let go to putt.",
@@ -917,7 +917,7 @@
         "A soft putt that stops near the cup is often better than a big whack. A fast ball can roll right over the hole.",
         "Use the walls! A bank shot off the rulers is often the only way round a corner.",
         "Wait for the wind-up mouse and the spinning coffee mug to move out of the way before you putt.",
-        "A hole in one wins back a lost life, so it is worth going for it on the short holes."
+        "A hole in one wins back a lost star, so it is worth going for it on the short holes."
       ],
       "about": [
         "Pencil Putt is a top-down mini golf game with 36 holes on a school desk. Pull back like a slingshot to aim and let go to putt, and try to finish each hole in as few strokes as you can. Ruler walls, pencil sharpeners, shavings and spilled ink make up the basic course, and moving obstacles keep the later holes interesting.",
@@ -1133,8 +1133,8 @@
       "genre": "Arcade",
       "added": "2026-10-08",
       "tagline": "Tap at just the right moment to blast the target and nail the gold bullseye.",
-      "meta": "Play Doodle Darts free online. A one-tap timing darts game drawn in pencil: wait for your aim to drift over the target, throw, and blow it apart. Chain gold bullseyes, dodge pufferfish and unlock new backdrops and darts. Works on phone and computer.",
-      "lead": "A fast one-tap darts game drawn in pencil on a sketchbook page. Your aim drifts left, right, up and down over a sketched dartboard. Tap at the right moment and your dart smashes the target to pieces, then a new one pops up somewhere else. Hit the gold sand dollar for a bullseye, build combos, and see how many doodled friends you can beat.",
+      "meta": "Play Doodle Darts free online. A one-tap timing darts game drawn in pencil: wait for your aim to drift over the target, throw, and blow it apart. Chain gold bullseyes, dodge spiky blobs and unlock new backdrops and darts. Works on phone and computer.",
+      "lead": "A fast one-tap darts game drawn in pencil on a sketchbook page. Your aim drifts left, right, up and down over a sketched dartboard. Tap at the right moment and your dart smashes the target to pieces, then a new one pops up somewhere else. Hit the gold star for a bullseye, build combos, and see how many doodled desk friends you can beat.",
       "facts": [
         "Arcade",
         "One tap",
@@ -1143,9 +1143,9 @@
       ],
       "how": [
         "Watch your aim drift over the target. Tap when it's on the target to throw. Every hit is worth a point.",
-        "Hit the gold sand dollar in the middle for a Bullseye. Bullseyes in a row build a combo worth more and more points.",
-        "Miss the target and you lose a dart. You have 3. Never hit a pufferfish, or your game is over.",
-        "Smash the big bonus sand dollars when they appear for extra points and coins."
+        "Hit the gold star in the middle for a Bullseye. Bullseyes in a row build a combo worth more and more points.",
+        "Miss the target and you lose a dart. You have 3. Never hit a spiky blob, or your game is over.",
+        "Smash the big bonus gold stars when they appear for extra points and coins."
       ],
       "controls": [
         "Tap or click anywhere on the page to throw. On a keyboard, press Space.",
@@ -1153,10 +1153,10 @@
         "Use the Shop on the start screen to spend coins on new backdrops and new things to throw, like a feather or an ice pop."
       ],
       "tips": [
-        "Your aim speeds up as your score climbs, so save the Slow tide power-up for later in a run.",
-        "Coins come from every hit, with bullseyes and big bonus sand dollars paying the most.",
+        "Your aim speeds up as your score climbs, so save the Slowpoke power-up for later in a run.",
+        "Coins come from every hit, with bullseyes and big bonus gold stars paying the most.",
         "Out of darts? Keep playing for 50 coins gives you one more dart, once per game.",
-        "Beat Gull, Crab, Clownfish and the rest of the doodled friends on the way to the Whale."
+        "Beat Pencil, Eraser, Crayon and the rest of the doodled desk friends on the way to the Backpack."
       ],
       "about": [
         "Doodle Darts is a one-tap timing game that we built to be played in short bursts. Your aim never stops moving over the target, so the whole game lives in the moment you tap. Hit near the centre and the target shatters; hit the gold spot for a bullseye and a combo boost.",
@@ -1180,14 +1180,14 @@
       "how": [
         "Drag across the letters on the wheel to spell a word, then let go.",
         "Words that fit the crossword drop into the board. Fill every square to finish the level.",
-        "Any other real word is a Bonus Word. It earns points and fills the Bonus meter under the board, and every 6 bonus words pays 30 sand dollars.",
+        "Any other real word is a Bonus Word. It earns points and fills the Bonus meter under the board, and every 6 bonus words pays 30 stickers.",
         "Find words within a few seconds of each other to build a combo, up to 5X points. Longer words score much more.",
         "On Beginner, after five misses in a row the first two letters of an unsolved word light up as a clue (eight misses on Intermediate, no free clues on Advanced). Solve a level without hints for 3 stars.",
         "Pick a difficulty. Beginner has 28 relaxed levels with short words. Intermediate has 30 levels with 6 and 7 letter wheels, bigger grids and 1.5X points. Advanced has 30 levels with 7 and 8 letter wheels, only counts words of 4 or more letters, and gives you 4 minutes plus 10 seconds per grid word, for 2X points."
       ],
       "controls": [
         "Drag with your finger or mouse across the letters. Slide back to the previous letter to undo it.",
-        "Shuffle mixes up the letters. The lightbulb costs sand dollars per step (10 on Beginner, 15 on Intermediate, 25 on Advanced): first it lights up a starting letter, then the next letter, then shows the word's first letters in the grid.",
+        "Shuffle mixes up the letters. The lightbulb costs stickers per step (10 on Beginner, 15 on Intermediate, 25 on Advanced): first it lights up a starting letter, then the next letter, then shows the word's first letters in the grid.",
         "The star shows your bonus words and personal bests, the bars button lets you switch difficulty or start over, and the speaker button turns sound on or off."
       ],
       "tips": [
@@ -1255,7 +1255,7 @@
       "how": [
         "Tap four words you think belong together, then tap Check.",
         "Get it right and the group lifts to the top in its colour. Yellow groups are the easiest and pink groups are the trickiest.",
-        "If you're one word off, it tells you you're one away. Run out of tries and the groups are shown, and you lose a shell. Lose all 3 shells and the game ends.",
+        "If you're one word off, it tells you you're one away. Run out of tries and the groups are shown, and you lose a star. Lose all 3 stars and the game ends.",
         "Pick a level. Beginner has simple groups with 5 tries and 2 hints per puzzle. Intermediate adds wordplay like SUN___ with 4 tries, 1 hint and 1.5X points. Advanced is full of red herrings, with 3 tries, no hints and 2X points. Each level remembers where you got to.",
         "Play the Daily Puzzle from the yellow Daily button. Everyone gets the same puzzle that day, the clock only runs while you're playing, and solving one each day builds your streak. Share your result to challenge friends.",
         "Each group you find scores points, plus a bonus for every try you had left."
@@ -1269,7 +1269,7 @@
       "tips": [
         "Find the easiest group first. Fewer words left makes the tricky groups easier to spot.",
         "If a word fits two groups, save it for last and work out which group needs it.",
-        "Some groups are word puzzles, like words that go before FISH or words that sound like letters.",
+        "Some groups are word puzzles, like words that go before BOOK or words that sound like letters.",
         "Use Shuffle when you feel stuck. Seeing the words in a new order often helps."
       ],
       "about": [

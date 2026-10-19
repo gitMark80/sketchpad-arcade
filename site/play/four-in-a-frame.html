@@ -12,7 +12,7 @@
 <style>
 /* Four in a Frame, sketchbook edition: the word-group puzzle redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly
    hand-drawn borders; the four group colours stay as coloured pencil (yellow, green, blue, pink) so they can still be told apart.
-   Layout: one portrait column. Title row, HUD (shells, score, best), the level strip, then a 4x4 board of word tiles and a row of action buttons. */
+   Layout: one portrait column. Title row, HUD (stars, score, best), the level strip, then a 4x4 board of word tiles and a row of action buttons. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --orange-wash:#f0c9a8; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -120,7 +120,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .ex{margin-top:10px;text-align:left;background:var(--paper);border:2px dashed var(--faint);border-radius:var(--wob2);padding:8px 10px;font-size:1rem;color:var(--ink)}
 .ex b{color:var(--ink)}
 #mini{width:200px;height:110px;display:block;margin:0 auto 2px}
-/* Mark's art, now in pencil: sketched beach paper, the hand-drawn word tile frame and the turtle */
+/* Mark's art, now in pencil: sketched corkboard, the hand-drawn word tile frame and the turtle */
 body{background:var(--paper) url(../assets/four-in-a-frame/bg.jpg) center/cover no-repeat fixed}
 .board{background:rgba(239,234,221,.72)}
 .tile{background:transparent;box-shadow:none;border:solid transparent;border-width:7px;padding:0 2px;border-image:url(../assets/four-in-a-frame/tile.webp) 44 46 fill / 7px 8px stretch;border-radius:16px;word-break:keep-all;overflow-wrap:normal;hyphens:none;white-space:nowrap}
@@ -203,7 +203,7 @@ body{background:var(--paper) url(../assets/four-in-a-frame/bg.jpg) center/cover 
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <div class="lives" id="lives" aria-label="Shells left"></div>
+    <div class="lives" id="lives" aria-label="Stars left"></div>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small id="bestLbl">Best</small><b id="bestEl">0</b></div>
   </div>
@@ -215,7 +215,7 @@ body{background:var(--paper) url(../assets/four-in-a-frame/bg.jpg) center/cover 
       <div class="card">
         <canvas id="mini" width="400" height="220" aria-hidden="true"></canvas><img class="mascot" src="../assets/four-in-a-frame/turtle.webp" alt="" width="314" height="360">
         <h2>Four in a Frame</h2>
-        <p class="lede">Sixteen beach words make <strong>four secret groups of four</strong>. Tap four that belong together, then tap <strong>Check</strong>.</p>
+        <p class="lede">Sixteen pinned-up words make <strong>four secret groups of four</strong>. Tap four that belong together, then tap <strong>Check</strong>.</p>
         <div class="colors" aria-hidden="true"><i class="g0"></i><i class="g1"></i><i class="g2"></i><i class="g3"></i></div>
         <p class="small">Easiest group is yellow, trickiest is pink.</p>
         <p class="pick">Pick a level</p>
@@ -226,13 +226,13 @@ body{background:var(--paper) url(../assets/four-in-a-frame/bg.jpg) center/cover 
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="midTitle">
         <h2 id="midTitle">Solved!</h2>
         <p id="midText"></p>
-        <div class="stats"><div><b id="mScore">0</b><span>this puzzle</span></div><div><b id="mTotal">0</b><span>total</span></div><div><b id="mShells">3</b><span>shells</span></div></div>
+        <div class="stats"><div><b id="mScore">0</b><span>this puzzle</span></div><div><b id="mTotal">0</b><span>total</span></div><div><b id="mShells">3</b><span>stars</span></div></div>
         <button class="big" id="nextBtn" type="button">Next puzzle</button>
       </div>
     </div>
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-        <h2 id="overTitle">Tide's out!</h2>
+        <h2 id="overTitle">Out of stars!</h2>
         <p id="overText"></p>
         <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stSolved">0</b><span>puzzles solved</span></div><div><b id="stGroups">0</b><span>groups found</span></div></div>
         <div class="newbest" id="newBest" hidden>New best score!</div>
@@ -267,69 +267,69 @@ const $=s=>document.getElementById(s);
 
 /* ---------- puzzles: four groups each, easiest first ---------- */
 const P=[
- [["Sea animals","CRAB","SEAL","WHALE","OTTER"],["Colors","RED","BLUE","GREEN","PINK"],["Fruits","APPLE","MANGO","GRAPE","BANANA"],["Beach toys","BUCKET","SPADE","KITE","FRISBEE"]],
- [["Weather","SUNNY","RAINY","WINDY","CLOUDY"],["Shapes","CIRCLE","SQUARE","STAR","HEART"],["Drinks","MILK","JUICE","WATER","COCOA"],["Sea birds","GULL","PELICAN","PUFFIN","HERON"]],
+ [["Woodland animals","FOX","DEER","RABBIT","SQUIRREL"],["Colors","RED","BLUE","GREEN","PINK"],["Fruits","APPLE","MANGO","GRAPE","BANANA"],["Park toys","BALL","KITE","FRISBEE","SCOOTER"]],
+ [["Weather","SUNNY","RAINY","WINDY","CLOUDY"],["Shapes","CIRCLE","SQUARE","STAR","HEART"],["Drinks","MILK","JUICE","WATER","COCOA"],["Desk things","LAMP","STAPLER","NOTEBOOK","SCISSORS"]],
  [["Picnic things","BASKET","BLANKET","SANDWICH","LEMONADE"],["Farm animals","COW","PIG","HORSE","SHEEP"],["Numbers","ONE","TWO","SIX","TEN"],["Body parts","ARM","LEG","NOSE","KNEE"]],
- [["Green things","FROG","LIME","GRASS","PEA"],["Orange things","CARROT","PUMPKIN","TANGERINE","GOLDFISH"],["Yellow things","BANANA","LEMON","SUNFLOWER","DUCKLING"],["Pink things","FLAMINGO","PIG","BUBBLEGUM","SHRIMP"]],
+ [["Green things","FROG","LIME","GRASS","PEA"],["Orange things","CARROT","PUMPKIN","TANGERINE","GOLDFISH"],["Yellow things","BANANA","LEMON","SUNFLOWER","DUCKLING"],["Pink things","FLAMINGO","PIG","BUBBLEGUM","ERASER"]],
  [["Ice cream flavors","VANILLA","CHOCOLATE","STRAWBERRY","MINT"],["Things with wheels","BIKE","BUS","WAGON","SKATEBOARD"],["Instruments","DRUM","GUITAR","PIANO","FLUTE"],["Seasons","SPRING","SUMMER","AUTUMN","WINTER"]],
- [["In the sky","SUN","MOON","CLOUD","RAINBOW"],["Boats","CANOE","YACHT","FERRY","KAYAK"],["Breakfast","TOAST","CEREAL","PANCAKE","WAFFLE"],["Bugs","ANT","BEE","BEETLE","MOTH"]],
- [["Sandcastle parts","TOWER","MOAT","WALL","FLAG"],["Fish","TUNA","COD","SALMON","CLOWNFISH"],["Vegetables","CARROT","PEA","CORN","POTATO"],["Clothes","HAT","SOCK","SHIRT","SCARF"]],
- [["Beach outfit","SUNHAT","SANDALS","SUNGLASSES","SWIMSUIT"],["Pets","DOG","CAT","HAMSTER","GOLDFISH"],["Desserts","CAKE","PIE","COOKIE","BROWNIE"],["Jobs","CHEF","PILOT","DOCTOR","FARMER"]],
- [["___FISH","STAR","JELLY","SWORD","CAT"],["Tools","HAMMER","PLIERS","DRILL","WRENCH"],["Planets","MARS","VENUS","EARTH","SATURN"],["Footwear","BOOT","SNEAKER","SLIPPER","FLIPFLOP"]],
- [["___BALL","BEACH","FOOT","BASKET","SNOW"],["Trees","PALM","OAK","PINE","MAPLE"],["Kitchen things","SPOON","FORK","PLATE","BOWL"],["Months","MAY","JUNE","JULY","MARCH"]],
- [["Salty things","OCEAN","PRETZEL","CHIPS","POPCORN"],["Brrr, cold!","ICE","SNOW","FREEZER","POPSICLE"],["Sticky things","HONEY","GLUE","TAPE","SYRUP"],["Soft things","PILLOW","FEATHER","KITTEN","CLOUD"]],
- [["SEA___","SHELL","WEED","HORSE","SIDE"],["SUN___","FLOWER","BURN","DAY","GLASSES"],["Animal sounds","MOO","OINK","QUACK","WOOF"],["Royal family","KING","QUEEN","PRINCE","PRINCESS"]],
- [["Have shells","TURTLE","SNAIL","EGG","PEANUT"],["Have wings","PLANE","BIRD","BUTTERFLY","DRAGONFLY"],["Have keys","PIANO","MAP","KEYBOARD","LOCK"],["Have stripes","ZEBRA","TIGER","FLAG","BARCODE"]],
- [["Ocean on the move","WAVE","TIDE","CURRENT","RIPPLE"],["Ways to say hi","HELLO","HOWDY","ALOHA","HIYA"],["Sandwich fillings","HAM","CHEESE","TURKEY","JAM"],["Dog tricks","SIT","SPEAK","FETCH","SHAKE"]],
+ [["In the sky","SUN","MOON","CLOUD","RAINBOW"],["Art supplies","PAINT","BRUSH","GLUE","CRAYON"],["Breakfast","TOAST","CEREAL","PANCAKE","WAFFLE"],["Bugs","ANT","BEE","BEETLE","MOTH"]],
+ [["Castle parts","TOWER","MOAT","WALL","FLAG"],["Rooms","KITCHEN","BEDROOM","ATTIC","HALLWAY"],["Vegetables","CARROT","PEA","CORN","POTATO"],["Clothes","HAT","SOCK","SHIRT","SCARF"]],
+ [["Bedtime","PAJAMAS","PILLOW","TEDDY","BLANKET"],["Pets","DOG","CAT","HAMSTER","GOLDFISH"],["Desserts","CAKE","PIE","COOKIE","BROWNIE"],["Jobs","CHEF","PILOT","DOCTOR","FARMER"]],
+ [["___BOOK","NOTE","SKETCH","COOK","SCRAP"],["Tools","HAMMER","PLIERS","DRILL","WRENCH"],["Planets","MARS","VENUS","EARTH","SATURN"],["Footwear","BOOT","SNEAKER","SLIPPER","CLOG"]],
+ [["___BALL","GUM","FOOT","BASKET","SNOW"],["Trees","PALM","OAK","PINE","MAPLE"],["Kitchen things","SPOON","FORK","PLATE","BOWL"],["Months","MAY","JUNE","JULY","MARCH"]],
+ [["Salty things","BACON","PRETZEL","CHIPS","POPCORN"],["Brrr, cold!","ICE","SNOW","FREEZER","POPSICLE"],["Sticky things","HONEY","GLUE","TAPE","SYRUP"],["Soft things","PILLOW","FEATHER","KITTEN","CLOUD"]],
+ [["TOOTH___","BRUSH","PASTE","PICK","FAIRY"],["SUN___","FLOWER","BURN","DAY","GLASSES"],["Animal sounds","MOO","OINK","QUACK","WOOF"],["Royal family","KING","QUEEN","PRINCE","PRINCESS"]],
+ [["Have seeds","APPLE","PUMPKIN","SUNFLOWER","TOMATO"],["Have wings","PLANE","BIRD","BUTTERFLY","DRAGONFLY"],["Have keys","PIANO","MAP","KEYBOARD","LOCK"],["Have stripes","ZEBRA","TIGER","FLAG","BARCODE"]],
+ [["Ways to draw","SKETCH","DOODLE","TRACE","SCRIBBLE"],["Ways to say hi","HELLO","HOWDY","ALOHA","HIYA"],["Sandwich fillings","HAM","CHEESE","TURKEY","JAM"],["Dog tricks","SIT","SPEAK","FETCH","SHAKE"]],
  [["Pizza toppings","PEPPERONI","MUSHROOM","OLIVE","PINEAPPLE"],["Pencil case","ERASER","RULER","CRAYON","MARKER"],["Camping","TENT","LANTERN","CAMPFIRE","COMPASS"],["Big cats","LION","TIGER","CHEETAH","LEOPARD"]],
- [["Things that fly","KITE","BALLOON","ROCKET","HELICOPTER"],["Tide pool life","STARFISH","ANEMONE","URCHIN","BARNACLE"],["Bakery treats","BAGEL","CROISSANT","MUFFIN","DONUT"],["Ways to move","SKIP","HOP","JUMP","CRAWL"]],
- [["Rhymes with SAND","BAND","HAND","LAND","GRAND"],["Rhymes with SEA","TREE","BEE","KNEE","PEA"],["___CAKE","PAN","CHEESE","SPONGE","FISH"],["___BOARD","SURF","SKATE","CHALK","CARD"]],
+ [["Things that fly","KITE","BALLOON","ROCKET","HELICOPTER"],["Pond life","FROG","TADPOLE","LILYPAD","CATTAIL"],["Bakery treats","BAGEL","CROISSANT","MUFFIN","DONUT"],["Ways to move","SKIP","HOP","JUMP","CRAWL"]],
+ [["Rhymes with INK","PINK","SINK","WINK","DRINK"],["Rhymes with KEY","TREE","BEE","KNEE","PEA"],["___CAKE","PAN","CHEESE","SPONGE","FISH"],["___BOARD","SKATE","CHALK","CARD","CLIP"]],
  [["Shades of blue","NAVY","SKY","TEAL","ROYAL"],["Tastes","SWEET","SOUR","SALTY","BITTER"],["Feelings","HAPPY","SAD","ANGRY","PROUD"],["Directions","NORTH","SOUTH","EAST","WEST"]],
  [["Come in pairs","SOCKS","SHOES","GLOVES","TWINS"],["Have a peel","BANANA","ORANGE","LEMON","POTATO"],["Things that ring","BELL","PHONE","DOORBELL","ALARM"],["Things that pop","BALLOON","BUBBLE","POPCORN","CORK"]],
- [["BEACH___","BALL","TOWEL","HUT","UMBRELLA"],["SAND___","CASTLE","DOLLAR","BOX","PAPER"],["SUN___","SCREEN","FLOWER","RISE","SET"],["SEA___","HORSE","WEED","SHELL","LION"]],
- [["___CORN","POP","UNI","PEPPER","CANDY"],["___CAKE","PAN","CUP","CHEESE","SHORT"],["___FLY","BUTTER","DRAGON","HORSE","FIRE"],["___HOUSE","LIGHT","TREE","DOG","BIRD"]],
- [["Have a crust","PIZZA","PIE","BREAD","EARTH"],["Things you blow","BUBBLE","CANDLE","WHISTLE","NOSE"],["Things you crack","EGG","JOKE","CODE","KNUCKLES"],["Water sports","SURFING","SWIMMING","SAILING","DIVING"]],
- [["Can bark","DOG","TREE","SEAL","FOX"],["Have a bill","DUCK","PELICAN","PLATYPUS","TOUCAN"],["Have horns","RHINO","UNICORN","GOAT","TRUCK"],["Have a tail (not animals)","KITE","COMET","COIN","PLANE"]],
- [["Have arms","OCTOPUS","CHAIR","SWEATER","STARFISH"],["Have teeth","COMB","SAW","ZIPPER","SHARK"],["Have eyes","NEEDLE","POTATO","HURRICANE","PEACOCK"],["Have spines","BOOK","CACTUS","HEDGEHOG","URCHIN"]],
+ [["BOOK___","SHELF","MARK","WORM","END"],["BED___","ROOM","TIME","BUG","SIDE"],["PAPER___","CLIP","PLANE","WEIGHT","TOWEL"],["HOME___","WORK","MADE","SICK","TOWN"]],
+ [["___CORN","POP","UNI","PEPPER","CANDY"],["___CAKE","PAN","CUP","CHEESE","SHORT"],["___FLY","BUTTER","DRAGON","HORSE","FIRE"],["Things you flip","PANCAKE","COIN","SWITCH","PAGE"]],
+ [["Have a crust","PIZZA","PIE","BREAD","EARTH"],["Things you blow","BUBBLE","CANDLE","WHISTLE","NOSE"],["Things you crack","EGG","JOKE","CODE","KNUCKLES"],["___HOUSE","PLAY","TREE","DOG","BIRD"]],
+ [["Can bark","DOG","TREE","COYOTE","FOX"],["Have a bill","DUCK","GOOSE","PLATYPUS","TOUCAN"],["Have horns","RHINO","UNICORN","GOAT","TRUCK"],["Have a tail (not animals)","KITE","COMET","COIN","PLANE"]],
+ [["Have arms","CHAIR","SWEATER","SOFA","WINDMILL"],["Have teeth","COMB","SAW","ZIPPER","BEAVER"],["Have eyes","NEEDLE","POTATO","HURRICANE","PEACOCK"],["Have spines","BOOK","CACTUS","HEDGEHOG","PORCUPINE"]],
  [["Hide an animal","CATCH","BEARD","PLANT","COWBOY"],["Kitchen verbs","STIR","BAKE","MIX","WHISK"],["Have buttons","SHIRT","REMOTE","ELEVATOR","CALCULATOR"],["Garden things","SHOVEL","RAKE","HOSE","SEED"]],
- [["On the boardwalk","ARCADE","PIER","CAROUSEL","FUDGE"],["Things that beam","LIGHTHOUSE","FLASHLIGHT","LASER","SMILE"],["Sundae toppings","SPRINKLES","CHERRY","NUTS","SYRUP"],["Sparkly things","GLITTER","DIAMOND","SEQUIN","TINSEL"]],
- [["___FISH","JELLY","SWORD","GOLD","CAT"],["___FRUIT","STAR","GRAPE","PASSION","DRAGON"],["___BERRY","STRAW","RASP","CRAN","GOOSE"],["___NUT","PEA","COCO","DOUGH","HAZEL"]],
- [["Sound like letters","SEA","BEE","TEA","EYE"],["Sound like numbers","WON","TOO","FOR","ATE"],["Drinks","JUICE","COCOA","MILK","SODA"],["Ocean animals","SHARK","SQUID","EEL","CLAM"]],
- [["___BOAT","SAIL","ROW","TUG","BANANA"],["___SHIP","FRIEND","SPACE","LEADER","CHAMPION"],["___LINE","SHORE","SKY","FINISH","CLOTHES"],["___SHELL","SEA","EGG","NUT","CLAM"]],
- [["Have scales","FISH","PIANO","MAP","DRAGON"],["Have rings","TREE","SATURN","ONION","CIRCUS"],["Have needles","PINE","CACTUS","PORCUPINE","COMPASS"],["Have crowns","KING","QUEEN","TOOTH","PINEAPPLE"]]
+ [["At the fair","ARCADE","CAROUSEL","TICKETS","FUDGE"],["Things that beam","SUNSHINE","FLASHLIGHT","LASER","SMILE"],["Sundae toppings","SPRINKLES","CHERRY","NUTS","SYRUP"],["Sparkly things","GLITTER","DIAMOND","SEQUIN","TINSEL"]],
+ [["___BREAD","SHORT","GINGER","CORN","BANANA"],["___FRUIT","STAR","GRAPE","PASSION","DRAGON"],["___BERRY","STRAW","RASP","CRAN","GOOSE"],["___NUT","PEA","COCO","DOUGH","HAZEL"]],
+ [["Sound like letters","PEA","BEE","TEA","EYE"],["Sound like numbers","WON","TOO","FOR","ATE"],["Drinks","JUICE","COCOA","MILK","SODA"],["Farm animals","COW","PIG","EWE","HEN"]],
+ [["___CUP","TEA","EGG","BUTTER","SIPPY"],["___SHIP","FRIEND","SPACE","LEADER","CHAMPION"],["___LINE","SKY","FINISH","CLOTHES","OUT"],["___WORK","HOME","ART","TEAM","PAPER"]],
+ [["Have scales","SNAKE","PIANO","MAP","DRAGON"],["Have rings","TREE","SATURN","ONION","CIRCUS"],["Have needles","PINE","CACTUS","PORCUPINE","COMPASS"],["Have crowns","KING","QUEEN","TOOTH","PINEAPPLE"]]
 ];
 
 /* more puzzles, added with the difficulty levels */
 const NEW_BEG=[
  [["Zoo animals","LION","GIRAFFE","ZEBRA","MONKEY"],["Sports","SOCCER","TENNIS","GOLF","HOCKEY"],["In the bedroom","BED","LAMP","DRESSER","CLOSET"],["Snacks","CHIPS","PRETZEL","POPCORN","CRACKER"]],
  [["Party things","CAKE","BALLOON","PRESENT","CANDLE"],["Rainy day gear","UMBRELLA","RAINCOAT","BOOTS","PONCHO"],["Birds","ROBIN","OWL","EAGLE","PARROT"],["Toys","DOLL","YOYO","BLOCKS","PUZZLE"]],
- [["In the classroom","DESK","GLOBE","CLOCK","BACKPACK"],["Baby animals","PUPPY","KITTEN","CALF","CHICK"],["Under the sea","CORAL","KELP","REEF","PEARL"],["Hot things","FIRE","OVEN","STOVE","TOASTER"]],
+ [["In the classroom","DESK","GLOBE","CLOCK","BACKPACK"],["Baby animals","PUPPY","KITTEN","CALF","CHICK"],["On the playground","SWING","SLIDE","SEESAW","TUNNEL"],["Hot things","FIRE","OVEN","STOVE","TOASTER"]],
  [["Berries","STRAWBERRY","BLUEBERRY","RASPBERRY","BLACKBERRY"],["Goes in the air","PLANE","HELICOPTER","BLIMP","JET"],["Goes on water","SAILBOAT","SUBMARINE","CANOE","RAFT"],["Goes on land","CAR","TRAIN","TRUCK","TRACTOR"]],
- [["Kitchen machines","MICROWAVE","DISHWASHER","FRIDGE","BLENDER"],["Ocean mammals","DOLPHIN","WALRUS","MANATEE","ORCA"],["Flowers","ROSE","TULIP","DAISY","LILY"],["Hot dog toppings","MUSTARD","KETCHUP","RELISH","ONION"]],
- [["Rainbow colors","RED","ORANGE","YELLOW","VIOLET"],["Farm crops","CORN","WHEAT","BEANS","OATS"],["Bath time","SOAP","TOWEL","SPONGE","DUCKY"],["Sea creatures","SQUID","SHARK","STINGRAY","LOBSTER"]],
+ [["Kitchen machines","MICROWAVE","DISHWASHER","FRIDGE","BLENDER"],["Big animals","ELEPHANT","HIPPO","GIRAFFE","RHINO"],["Flowers","ROSE","TULIP","DAISY","LILY"],["Hot dog toppings","MUSTARD","KETCHUP","RELISH","ONION"]],
+ [["Rainbow colors","RED","ORANGE","YELLOW","VIOLET"],["Farm crops","CORN","WHEAT","BEANS","OATS"],["Bath time","SOAP","TOWEL","SPONGE","DUCKY"],["At school","TEACHER","RECESS","LUNCH","HOMEWORK"]],
  [["Write with it","PEN","PENCIL","CRAYON","CHALK"],["Read it","BOOK","MAGAZINE","SIGN","LETTER"],["Wear it on your head","HAT","CAP","HELMET","CROWN"],["Sit on it","CHAIR","SOFA","BENCH","STOOL"]],
  [["Sports gear","BAT","RACKET","NET","GLOVE"],["Ice cream treats","CONE","SUNDAE","MILKSHAKE","FLOAT"],["Jungle animals","JAGUAR","SLOTH","TOUCAN","GORILLA"],["In the night sky","MOON","STARS","COMET","PLANET"]],
- [["Water","LAKE","RIVER","POND","OCEAN"],["Land","HILL","VALLEY","DESERT","ISLAND"],["Weather","STORM","FOG","HAIL","BREEZE"],["Picnic foods","GRAPES","CHEESE","CRACKERS","CARROTS"]],
+ [["Water","LAKE","RIVER","POND","STREAM"],["Land","HILL","VALLEY","DESERT","MOUNTAIN"],["Weather","STORM","FOG","HAIL","BREEZE"],["Picnic foods","GRAPES","CHEESE","CRACKERS","CARROTS"]],
  [["Family","MOM","DAD","SISTER","GRANDMA"],["Holidays","CHRISTMAS","EASTER","HALLOWEEN","THANKSGIVING"],["Days","MONDAY","FRIDAY","SUNDAY","TUESDAY"],["Times of day","MORNING","NOON","EVENING","NIGHT"]],
- [["In the bathroom","TOOTHBRUSH","MIRROR","SINK","BATHTUB"],["Ocean jobs","LIFEGUARD","FISHERMAN","SAILOR","CAPTAIN"],["Pirate things","TREASURE","PLANK","EYEPATCH","ANCHOR"],["Fast animals","CHEETAH","HORSE","RABBIT","FALCON"]],
+ [["In the bathroom","TOOTHBRUSH","MIRROR","SINK","BATHTUB"],["School jobs","TEACHER","PRINCIPAL","LIBRARIAN","NURSE"],["Fairy tale things","CASTLE","DRAGON","WAND","CROWN"],["Fast animals","CHEETAH","HORSE","RABBIT","FALCON"]],
  [["Candy","LOLLIPOP","GUMMY","TOFFEE","FUDGE"],["Fruits with pits","PEACH","PLUM","CHERRY","APRICOT"],["Warm clothes","COAT","BEANIE","SWEATER","PARKA"],["Cooking tools","POT","PAN","WHISK","LADLE"]],
- [["Coins","PENNY","NICKEL","DIME","QUARTER"],["Found on the sand","SHELL","DRIFTWOOD","SEAGLASS","PEBBLE"],["Car parts","TIRE","HORN","ENGINE","TRUNK"],["Sour things","LEMON","LIME","PICKLE","VINEGAR"]]
+ [["Coins","PENNY","NICKEL","DIME","QUARTER"],["In a pencil case","PENCIL","ERASER","SHARPENER","RULER"],["Car parts","TIRE","HORN","ENGINE","TRUNK"],["Sour things","LEMON","LIME","PICKLE","VINEGAR"]]
 ];
 const NEW_INT=[
  [["WATER___","MELON","FALL","SLIDE","PARK"],["___SHOE","HORSE","SNOW","TENNIS","BALLET"],["Have a trunk","ELEPHANT","TREE","CAR","SUITCASE"],["Game night","DICE","CARDS","TOKENS","SPINNER"]],
  [["In a deck of cards","ACE","JOKER","QUEEN","JACK"],["Have a cap","BOTTLE","PEN","KNEE","MUSHROOM"],["Hoppers","FROG","KANGAROO","BUNNY","CRICKET"],["Lunchbox","APPLE","YOGURT","SANDWICH","THERMOS"]],
- [["Things that sting","BEE","WASP","JELLYFISH","NETTLE"],["Shades of green","LIME","OLIVE","EMERALD","JADE"],["___WORM","EARTH","BOOK","SILK","GLOW"],["Spices","PEPPER","CINNAMON","GINGER","NUTMEG"]],
- [["Catch a ___","BALL","FISH","BUS","WAVE"],["Break a ___","RECORD","RULE","PROMISE","SILENCE"],["Tie a ___","KNOT","BOW","SCORE","RIBBON"],["Fold the ___","LAUNDRY","NAPKIN","ARMS","MAP"]],
- [["___LIGHT","SUN","MOON","FLASH","STAR"],["___PAPER","NEWS","WALL","TISSUE","SAND"],["___STORM","SNOW","THUNDER","BRAIN","HAIL"],["Dog breeds","POODLE","BEAGLE","BOXER","COLLIE"]],
+ [["Things that sting","BEE","WASP","HORNET","NETTLE"],["Shades of green","LIME","OLIVE","EMERALD","JADE"],["___WORM","EARTH","BOOK","SILK","GLOW"],["Spices","PEPPER","CINNAMON","GINGER","NUTMEG"]],
+ [["Catch a ___","BALL","FISH","BUS","COLD"],["Break a ___","RECORD","RULE","PROMISE","SILENCE"],["Tie a ___","KNOT","BOW","SCORE","RIBBON"],["Fold the ___","LAUNDRY","NAPKIN","ARMS","MAP"]],
+ [["___LIGHT","SUN","MOON","FLASH","STAR"],["___PAPER","NEWS","WALL","TISSUE","WRAPPING"],["___STORM","SNOW","THUNDER","BRAIN","HAIL"],["Dog breeds","POODLE","BEAGLE","BOXER","COLLIE"]],
  [["Have strings","GUITAR","KITE","PUPPET","VIOLIN"],["Have pockets","JEANS","KANGAROO","APRON","BACKPACK"],["Have a lid","JAR","POT","EYE","LAPTOP"],["Pancake toppings","SYRUP","BUTTER","BERRIES","CREAM"]],
  [["Sleep all winter","BEAR","HEDGEHOG","GROUNDHOG","TORTOISE"],["Up at night","OWL","BAT","RACCOON","FIREFLY"],["In a nest","EGG","TWIG","CHICK","FEATHER"],["Snowman parts","CARROT","SCARF","COAL","BUTTONS"]],
  [["Big","HUGE","GIANT","MASSIVE","JUMBO"],["Small","TINY","MINI","PETITE","WEE"],["Fast","QUICK","SPEEDY","RAPID","SWIFT"],["Happy","GLAD","JOLLY","CHEERFUL","MERRY"]],
- [["Tackle box","HOOK","BOBBER","LURE","SINKER"],["Parts of a ship","MAST","HULL","DECK","BOW"],["Ways to cook an egg","FRIED","SCRAMBLED","POACHED","BOILED"],["Smoothie","BANANA","ICE","YOGURT","KALE"]],
- [["Things that melt","ICE","SNOWMAN","CHOCOLATE","CRAYON"],["Things that pop up","TOAST","UMBRELLA","TENT","GOPHER"],["Things that roll","DICE","WHEEL","MARBLE","THUNDER"],["Things that sink","ANCHOR","STONE","SINKER","BRICK"]],
+ [["Parts of a book","COVER","PAGE","SPINE","TITLE"],["Parts of a shoe","LACE","SOLE","HEEL","TONGUE"],["Ways to cook an egg","FRIED","SCRAMBLED","POACHED","BOILED"],["Smoothie","BANANA","ICE","YOGURT","KALE"]],
+ [["Things that melt","ICE","SNOWMAN","CHOCOLATE","CRAYON"],["Things that pop up","TOAST","UMBRELLA","TENT","GOPHER"],["Things that roll","DICE","WHEEL","MARBLE","THUNDER"],["Things that sink","STONE","BRICK","KEY","SPOON"]],
  [["ICE___","CUBE","CREAM","SKATE","BERG"],["SNOW___","MAN","FLAKE","ANGEL","GLOBE"],["FIRE___","FLY","PLACE","TRUCK","WORK"],["RAIN___","BOW","COAT","DROP","FOREST"]],
  [["Card suits","HEART","SPADE","DIAMOND","CLUB"],["Golf","TEE","PUTTER","CADDY","HOLE"],["Baseball","BASE","GLOVE","MOUND","INNING"],["Tennis","RACKET","NET","SERVE","LOVE"]],
- [["Have lanes","POOL","ROAD","TRACK","HIGHWAY"],["Have waves","OCEAN","HAIR","RADIO","CROWD"],["Have a mouth","RIVER","CAVE","JAR","VOLCANO"],["Have a tip","ICEBERG","PENCIL","FINGER","TONGUE"]],
- [["In the beach bag","SUNSCREEN","TOWEL","GOGGLES","FLIPFLOPS"],["Lifeguard gear","WHISTLE","BUOY","TOWER","MEGAPHONE"],["Full of sand","HOURGLASS","DESERT","SANDBOX","DUNE"],["Salty","SHAKER","TEARS","SEAWATER","PRETZEL"]]
+ [["Have lanes","POOL","ROAD","TRACK","HIGHWAY"],["Have a handle","DOOR","MUG","BROOM","SUITCASE"],["Have a mouth","RIVER","CAVE","JAR","VOLCANO"],["Have a tip","ICEBERG","PENCIL","FINGER","TONGUE"]],
+ [["In the backpack","BOOKS","LUNCH","FOLDER","JACKET"],["Coach's gear","WHISTLE","CLIPBOARD","STOPWATCH","CAP"],["Full of holes","SPONGE","NET","CHEESE","COLANDER"],["Have a point","PENCIL","NEEDLE","ARROW","STAR"]]
 ];
 const NEW_ADV=[
  [["___LIGHT","FLASH","SPOT","HEAD","TRAFFIC"],["___DAY","BIRTH","WEEK","PAY","WORK"],["___FLOWER","WALL","CORN","WILD","SUN"],["___BUG","LADY","BED","LOVE","LIGHTNING"]],
@@ -341,13 +341,13 @@ const NEW_ADV=[
  [["Shades of red","CHERRY","CRIMSON","SCARLET","RUBY"],["Gems","EMERALD","OPAL","TOPAZ","SAPPHIRE"],["Fruits","PLUM","PEACH","LIME","KIWI"],["Shades of blue","NAVY","TEAL","AZURE","COBALT"]],
  [["BOOK___","SHELF","MARK","CASE","CLUB"],["HAND___","BAG","SHAKE","STAND","WRITING"],["SHOE___","LACE","BOX","HORN","STRING"],["FOOT___","BALL","PRINT","STEP","NOTE"]],
  [["Fish that are verbs","CARP","FLOUNDER","PERCH","SMELT"],["Birds that are verbs","DUCK","SWALLOW","CRANE","QUAIL"],["Animals that are verbs","BADGER","HOUND","BEAR","FERRET"],["Hockey","PUCK","STICK","GOAL","SKATE"]],
- [["___GLASS","HOUR","SPY","LOOKING","SEA"],["___HORSE","RACE","ROCKING","SAW","HOBBY"],["___BELL","BLUE","DOOR","COW","JINGLE"],["___SIDE","OUT","IN","BED","UP"]],
+ [["___GLASS","HOUR","SPY","LOOKING","EYE"],["___HORSE","RACE","ROCKING","SAW","HOBBY"],["___BELL","BLUE","DOOR","COW","JINGLE"],["___SIDE","OUT","IN","BED","UP"]],
  [["___STONE","MILE","KEY","COBBLE","BIRTH"],["___STAR","ROCK","POP","SHOOTING","MOVIE"],["___MARK","LAND","TRADE","CHECK","QUESTION"],["___LINE","SKY","FINISH","BEE","HEAD"]],
  [["Can be flat","TIRE","SODA","FEET","PANCAKE"],["Can be sharp","CHEDDAR","PENCIL","TACK","NOTE"],["Can be cool","BREEZE","CUCUMBER","CAT","POOL"],["Can be loud","SHIRT","THUNDER","LAUGH","CROWD"]],
  [["Starts with a body part","HANDLE","LEGEND","SHINE","KNEEL"],["Planets","EARTH","MARS","VENUS","NEPTUNE"],["Starts with an animal","PIGMENT","ANTHEM","RATTLE","BATTER"],["Baseball","PITCHER","UMPIRE","SHORTSTOP","OUTFIELD"]],
  [["Animal groups","POD","FLOCK","GAGGLE","HERD"],["Feelings","JOY","HOPE","FEAR","PRIDE"],["Places to learn","LIBRARY","MUSEUM","CLASS","SCHOOL"],["In a jar","PICKLE","JAM","COOKIE","HONEY"]],
- [["Seashells","CONCH","COCKLE","WHELK","SCALLOP"],["Pasta","PENNE","BOWTIE","ORZO","RAVIOLI"],["Shore birds","SANDPIPER","PLOVER","TERN","EGRET"],["Ocean floor","TRENCH","REEF","RIDGE","CANYON"]],
- [["Rhymes with BEACH","PEACH","REACH","TEACH","SPEECH"],["Rhymes with WAVE","CAVE","BRAVE","GAVE","SHAVE"],["Rhymes with SHELL","BELL","SMELL","SPELL","WELL"],["Rhymes with TIDE","SLIDE","RIDE","HIDE","WIDE"]]
+ [["Pasta","PENNE","BOWTIE","ORZO","RAVIOLI"],["Worn on the neck","SCARF","NECKLACE","COLLAR","LOCKET"],["Garden birds","FINCH","WREN","ROBIN","THRUSH"],["Mountain parts","PEAK","RIDGE","SLOPE","SUMMIT"]],
+ [["Rhymes with BOOK","COOK","LOOK","HOOK","SHOOK"],["Rhymes with GLUE","BLUE","SHOE","TRUE","CLUE"],["Rhymes with CHALK","WALK","TALK","STALK","HAWK"],["Rhymes with RULE","POOL","COOL","TOOL","STOOL"]]
 ];
 
 /* ---------- difficulty levels ----------
@@ -493,8 +493,8 @@ function hud(){
   const m=$('mistEl');m.innerHTML='';for(let i=0;i<mode.tries;i++){const e=document.createElement('i');if(i>=mistakes)e.className='gone';m.appendChild(e)}
   const l=$('lives');l.innerHTML='';
   if(daily){l.innerHTML='<span class="dayic">'+CAL_ICON+'</span>';l.setAttribute('aria-label','Daily puzzle '+DAY);return}
-  for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<svg viewBox="0 0 48 48" class="'+(i>=shells?'lost':'')+'" aria-hidden="true"><path d="M24 6C14 6 6 15 6 25c0 5 2 9 5 12l13 6 13-6c3-3 5-7 5-12C42 15 34 6 24 6Z" fill="#f0c9a8" stroke="#2e2e33" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 9v32M17 11l3 29M31 11l-3 29M11 17l7 22M37 17l-7 22" stroke="#d9661a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M14 40h20l-3 4H17Z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="2" stroke-linejoin="round"/></svg>');
-  l.setAttribute('aria-label',shells+' shells left');
+  for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<svg viewBox="0 0 48 48" class="'+(i>=shells?'lost':'')+'" aria-hidden="true"><path d="M24.0 4.5L29.3 18.2L44.0 19.0L32.6 28.3L36.3 42.5L24.0 34.5L11.7 42.5L15.4 28.3L4.0 19.0L18.7 18.2Z" fill="#f3d36b" stroke="#2e2e33" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 12l-3 9M24 12l3 9M17 26l-4 3M31 26l4 3" stroke="#c99a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>');
+  l.setAttribute('aria-label',shells+' stars left');
 }
 let toastT=0;function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),1300)}
 
@@ -568,8 +568,8 @@ function puzzleLost(){
   hud();
   setTimeout(()=>{
     if(shells<=0){gameOver();return}
-    $('midTitle').textContent='Washed away!';
-    $('midText').textContent='Here were the groups. You lost a shell, but the next puzzle is waiting.';
+    $('midTitle').textContent='Stumped!';
+    $('midText').textContent='Here were the groups. You lost a star, but the next puzzle is waiting.';
     $('mScore').textContent=pScore;$('mTotal').textContent=score;$('mShells').textContent=shells;
     $('nextBtn').textContent='Keep going';$('mid').hidden=false;window.BDA&&BDA.shareScore({score,line:mode.label+' · '+solvedCount+(solvedCount===1?' puzzle':' puzzles')+' solved',into:'#mid .card',after:'.stats'});
   },700+n*350+900);
@@ -607,13 +607,13 @@ function dailyDone(won){
 }
 const SQ=['🟨','🟩','🟦','🟪'];
 function dailyText(){const t=dailyRec().today,st=liveStreak();
-  return 'Four in a Frame Daily #'+t.day+' 🌊\n'+t.history.map(r=>r.map(d=>SQ[d]).join('')).join('\n')+'\n'+(t.won?'⏱ '+fmt(t.ms/1000):'Washed away this time')+(st>1?'  🔥 '+st+'-day streak':'')}
+  return 'Four in a Frame Daily #'+t.day+' 📌\n'+t.history.map(r=>r.map(d=>SQ[d]).join('')).join('\n')+'\n'+(t.won?'⏱ '+fmt(t.ms/1000):'Stumped this time')+(st>1?'  🔥 '+st+'-day streak':'')}
 function untilMidnight(){const n=new Date(),m=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1);return m-n}
 function fmtWait(ms){const s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+'h '+m+'m':m?m+'m '+(s%60)+'s':s+'s'}
 let nextIv=0;
 function showDailyResult(fresh){
   const t=dailyRec().today,r=dailyRec();if(!t)return;
-  $('dTitle').textContent=t.won?(fresh?(t.mistakes===0?'Perfect daily!':'Daily solved!'):'You solved today\'s puzzle'):'Washed away!';
+  $('dTitle').textContent=t.won?(fresh?(t.mistakes===0?'Perfect daily!':'Daily solved!'):'You solved today\'s puzzle'):'Stumped!';
   $('dNum').textContent='Daily puzzle #'+t.day;
   $('dTime').textContent=t.won?fmt(t.ms/1000):'So close';
   $('dGrid').innerHTML=t.history.map(row=>'<div>'+row.map(d=>'<i class="g'+d+'"></i>').join('')+'</div>').join('');

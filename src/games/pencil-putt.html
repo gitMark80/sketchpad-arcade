@@ -69,8 +69,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .best{margin-top:12px;color:var(--muted);font-size:1rem}
 
 .lives{justify-self:start;display:flex;gap:3px;background:var(--paper);border:2px solid var(--ink);padding:3px 9px;border-radius:var(--wob);box-shadow:2px 2px 0 var(--pencil)}
-.lives svg{width:24px;height:24px;transition:opacity .3s,transform .3s}
-.lives svg.lost{opacity:.22;transform:scale(.8);filter:grayscale(1)}
+.lives svg,.lives img{width:24px;height:24px;object-fit:contain;transition:opacity .3s,transform .3s}
+.lives svg.lost,.lives img.lost{opacity:.22;transform:scale(.8);filter:grayscale(1)}
 .strip{display:flex;align-items:center;gap:6px;font:400 1rem/1 var(--body);color:var(--ink)}
 .strip .lv{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:5px 11px;box-shadow:2px 2px 0 var(--pencil);white-space:nowrap}
 .strip .par{background:var(--green-wash);border:2px solid var(--green);color:var(--ink);border-radius:var(--wob2);padding:5px 11px;box-shadow:2px 2px 0 var(--pencil);white-space:nowrap}
@@ -99,7 +99,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
-    <div class="lives" id="lives" aria-label="Shells left"></div>
+    <div class="lives" id="lives" aria-label="Stars left"></div>
     <div class="scorebox"><div class="score" id="scoreEl" aria-live="polite">0</div></div>
     <div class="bestbox"><small>Best</small><b id="bestEl">0</b></div>
   </div>
@@ -115,7 +115,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
           <li><b>1</b><span><strong>Press anywhere and pull back</strong> like a slingshot. The dotted line shows where the ball goes. Pull further for more power, then let go to putt.</span></li>
           <li><b>2</b><span>Sink the ball in as few strokes as you can. Every hole has a <strong>par</strong>. Beat it for big points!</span></li>
           <li><b>3</b><span>Pencil shavings slow you down, the blue arrows push you along and bouncy balls bounce you away. Spilled ink costs a stroke. Mind the eraser!</span></li>
-          <li><b>4</b><span>Finish a hole over par and you lose a shell. Lose all 3 and the game is over. A hole in one wins a shell back.</span></li>
+          <li><b>4</b><span>Finish a hole over par and you lose a star. Lose all 3 and the game is over. A hole in one wins a star back.</span></li>
         </ul>
         <div class="keys" aria-label="Keyboard: arrows aim and set power, Space putts"><span>&larr;</span><span>&rarr;</span>aim<span>&uarr;</span><span>&darr;</span>power<span>Space</span>putt</div>
         <button class="big" id="playBtn" type="button">Play</button>
@@ -133,7 +133,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
     </div>
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
-        <h2 id="overTitle">Out of shells!</h2>
+        <h2 id="overTitle">Out of stars!</h2>
         <p id="overText"></p>
         <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stHoles">0</b><span>holes played</span></div><div><b id="stAces">0</b><span>holes in one</span></div></div>
         <div class="newbest" id="newBest" hidden>New best score!</div>
@@ -242,87 +242,87 @@ const R=(x0,y0,x1,y1)=>({t:'r',x0,y0,x1,y1}),C=(x,y,r)=>({t:'c',x,y,r});
 const HOLES=[
   {name:'Welcome Walk',par:2,tee:[150,415],cup:[150,95],poly:oct(95,40,205,460,28),
    sand:[C(186,300,14)]},
-  {name:'Rocky Path',par:2,tee:[150,420],cup:[150,92],poly:oct(70,40,230,460,32),
+  {name:'Sharpener Path',par:2,tee:[150,420],cup:[150,92],poly:oct(70,40,230,460,32),
    rocks:[[150,255,20],[205,360,10]],sand:[C(200,140,22)]},
-  {name:'Driftwood Bend',par:3,tee:[90,425],cup:[218,102],
+  {name:'Ruler Bend',par:3,tee:[90,425],cup:[218,102],
    poly:[[60,470],[120,470],[140,450],[140,170],[260,170],[260,72],[228,40],[72,40],[40,72],[40,450]],
    sand:[C(72,72,26)],rocks:[[178,140,9]]},
-  {name:'Sand Gate',par:3,tee:[90,425],cup:[100,95],poly:oct(40,30,260,470,26),
+  {name:'Shavings Gate',par:3,tee:[90,425],cup:[100,95],poly:oct(40,30,260,470,26),
    walls:[[40,250,195,250]],sand:[C(165,108,26),C(225,340,22)],rocks:[[70,330,10]]},
-  {name:'Lagoon',par:3,tee:[118,428],cup:[110,95],poly:oct(50,30,250,470,26),
+  {name:'Ink Puddle',par:3,tee:[118,428],cup:[110,95],poly:oct(50,30,250,470,26),
    water:[R(50,200,184,300)],sand:[C(218,118,20)],rocks:[[214,385,10]]},
-  {name:'Beach Ball Bounce',par:3,tee:[150,428],cup:[150,85],poly:oct(45,30,255,470,48),
+  {name:'Bouncy Ball Bounce',par:3,tee:[150,428],cup:[150,85],poly:oct(45,30,255,470,48),
    balls:[[150,272,18],[100,190,16],[200,190,16]],sand:[C(80,400,18)]},
-  {name:'Tide Crossing',par:3,tee:[150,432],cup:[95,85],poly:oct(50,30,250,470,26),
+  {name:'Ink Stream Crossing',par:3,tee:[150,432],cup:[95,85],poly:oct(50,30,250,470,26),
    tide:[[R(50,212,250,292),230,0]],water:[R(206,212,250,292)],sand:[C(172,122,20)]},
-  {name:'Crab Crossing',par:2,tee:[150,428],cup:[150,85],poly:oct(80,30,220,470,22),
+  {name:'Mouse Crossing',par:2,tee:[150,428],cup:[150,85],poly:oct(80,30,220,470,22),
    movers:[{k:'crab',x:150,y:262,amp:30,spd:1.5,ph:0}],rocks:[[112,142,9],[188,142,9]]},
-  {name:'Umbrella Alley',par:3,tee:[150,432],cup:[150,82],poly:oct(60,30,240,470,30),
+  {name:'Mug Alley',par:3,tee:[150,432],cup:[150,82],poly:oct(60,30,240,470,30),
    movers:[{k:'umb',x:150,y:250,L:50,spd:1.25,ph:.4}],sand:[C(105,100,18),C(196,104,18)],rocks:[[92,380,11],[208,380,11]]},
-  {name:'Surf Gate',par:3,tee:[150,432],cup:[188,95],poly:oct(50,30,250,470,26),
+  {name:'Tape Gate',par:3,tee:[150,432],cup:[188,95],poly:oct(50,30,250,470,26),
    walls:[[50,240,122,240],[178,240,250,240]],movers:[{k:'gate',x:150,y:256,amp:40,hl:32,spd:1.2,ph:0}],
    water:[R(50,62,106,172)],sand:[C(138,118,17)]},
   {name:'Uphill Slope',par:4,tee:[150,440],cup:[150,80],poly:[[72,472],[228,472],[266,300],[236,38],[64,38],[34,300]],
    slope:[[R(30,152,270,214),0,170]],movers:[{k:'crab',x:150,y:330,amp:55,spd:1.3,ph:1.2}],balls:[[86,104,14],[214,104,14]],water:[C(208,414,15)]},
-  {name:'Palm Shortcut',par:2,tee:[95,430],cup:[205,88],poly:[[40,470],[150,470],[260,150],[260,40],[150,40],[40,360]],
+  {name:'Pencil Shortcut',par:2,tee:[95,430],cup:[205,88],poly:[[40,470],[150,470],[260,150],[260,40],[150,40],[40,360]],
    rocks:[[150,255,12]],sand:[C(90,300,15)]},
-  {name:'Coconut Corner',par:3,tee:[210,430],cup:[82,100],poly:[[160,470],[260,470],[260,62],[238,40],[62,40],[40,62],[40,160],[160,160]],
+  {name:'Crayon Corner',par:3,tee:[210,430],cup:[82,100],poly:[[160,470],[260,470],[260,62],[238,40],[62,40],[40,62],[40,160],[160,160]],
    rocks:[[210,290,10]],sand:[C(232,72,18)],balls:[[130,100,12]]},
-  {name:'Twin Lagoons',par:3,tee:[150,432],cup:[150,85],poly:oct(40,30,260,470,26),
+  {name:'Twin Ink Spills',par:3,tee:[150,432],cup:[150,85],poly:oct(40,30,260,470,26),
    water:[R(40,215,122,285),R(178,215,260,285)],rocks:[[150,365,11]],sand:[C(105,135,16),C(198,135,16)]},
-  {name:'Tide Pool Twist',par:3,tee:[150,432],cup:[185,90],poly:oct(45,30,255,470,30),
+  {name:'Ink Pool Twist',par:3,tee:[150,432],cup:[185,90],poly:oct(45,30,255,470,30),
    slope:[[R(45,190,255,255),0,150]],water:[C(92,128,18)],rocks:[[118,345,10],[182,345,10]],movers:[{k:'crab',x:150,y:155,amp:40,spd:1.2,ph:.6}]},
-  {name:'Zigzag Boardwalk',par:4,tee:[100,432],cup:[200,85],poly:oct(40,25,260,475,24),
+  {name:'Zigzag Hallway',par:4,tee:[100,432],cup:[200,85],poly:oct(40,25,260,475,24),
    walls:[[40,330,186,330],[114,190,260,190]],balls:[[150,262,12]],sand:[C(226,410,16),C(70,110,16)]},
-  {name:'Torch Maze',par:4,tee:[80,432],cup:[82,210],poly:oct(35,25,265,475,22),
+  {name:'Lamp Maze',par:4,tee:[80,432],cup:[82,210],poly:oct(35,25,265,475,22),
    walls:[[35,290,212,290],[132,118,132,290]],movers:[{k:'gate',x:198,y:205,amp:26,hl:24,spd:1.1,ph:0}],sand:[C(225,410,16)],rocks:[[220,60,9]]},
-  {name:'Grand Tiki Tour',par:5,tee:[70,435],cup:[226,62],poly:oct(30,20,270,480,26),
+  {name:'Grand Desk Tour',par:5,tee:[70,435],cup:[226,62],poly:oct(30,20,270,480,26),
    walls:[[30,365,196,365],[104,195,270,195]],
    movers:[{k:'umb',x:162,y:280,L:46,spd:-1.5,ph:0},{k:'crab',x:150,y:110,amp:50,spd:1.4,ph:2}],
    balls:[[150,428,14]],water:[C(238,150,20)],sand:[C(78,62,22),C(240,445,18),C(240,232,16)]},
   /* ---- the back 18: each hole a little more elaborate than the last ---- */
-  {name:'Sunrise Steps',par:3,tee:[150,432],cup:[150,88],poly:oct(45,30,255,470,26),
+  {name:'Homeroom Steps',par:3,tee:[150,432],cup:[150,88],poly:oct(45,30,255,470,26),
    slope:[[R(45,330,255,372),0,120],[R(45,180,255,222),0,120]],rocks:[[100,272,10],[200,272,10]],sand:[C(205,110,15)]},
-  {name:'Hammock Hook',par:3,tee:[215,432],cup:[75,215],
+  {name:'Backpack Hook',par:3,tee:[215,432],cup:[75,215],
    poly:[[170,470],[260,470],[260,60],[238,38],[62,38],[40,60],[40,250],[110,250],[110,130],[170,130]],
    balls:[[140,85,12]],sand:[C(232,72,16)],rocks:[[215,300,10]]},
-  {name:'Double Crab Dash',par:3,tee:[150,432],cup:[150,85],poly:oct(70,30,230,470,24),
+  {name:'Double Mouse Dash',par:3,tee:[150,432],cup:[150,85],poly:oct(70,30,230,470,24),
    movers:[{k:'crab',x:150,y:335,amp:42,spd:1.4,ph:0},{k:'crab',x:150,y:205,amp:42,spd:1.4,ph:1.6}],sand:[C(108,122,14)]},
-  {name:'Umbrella Twins',par:3,tee:[150,432],cup:[150,80],poly:oct(45,30,255,470,28),
+  {name:'Mug Twins',par:3,tee:[150,432],cup:[150,80],poly:oct(45,30,255,470,28),
    movers:[{k:'umb',x:98,y:262,L:40,spd:1.2,ph:0},{k:'umb',x:202,y:262,L:40,spd:-1.2,ph:.8}],sand:[C(150,140,15)],rocks:[[150,372,10]]},
-  {name:'Torch Slalom',par:3,tee:[150,440],cup:[190,78],poly:oct(55,25,245,475,24),
+  {name:'Lamp Slalom',par:3,tee:[150,440],cup:[190,78],poly:oct(55,25,245,475,24),
    rocks:[[112,380,11],[188,320,11],[112,260,11],[188,200,11],[112,140,11]],sand:[C(85,80,14)]},
-  {name:'Shipwreck Shoals',par:3,tee:[90,435],cup:[192,75],poly:oct(35,25,265,475,24),
+  {name:'Messy Art Table',par:3,tee:[90,435],cup:[192,75],poly:oct(35,25,265,475,24),
    water:[C(112,330,26),C(200,240,26),C(100,150,22)],rocks:[[172,385,9],[58,240,9],[242,140,9]],sand:[C(235,410,14)]},
-  {name:'Sandbar Shuffle',par:4,tee:[150,438],cup:[150,78],poly:oct(40,25,260,475,24),
+  {name:'Shavings Shuffle',par:4,tee:[150,438],cup:[150,78],poly:oct(40,25,260,475,24),
    sand:[R(40,205,260,262),C(72,90,14)],balls:[[92,330,13],[208,330,13]],water:[C(150,148,18)]},
-  {name:'Riptide Run',par:4,tee:[80,436],cup:[72,80],poly:oct(40,25,260,475,24),
+  {name:'Ink River Run',par:4,tee:[80,436],cup:[72,80],poly:oct(40,25,260,475,24),
    tide:[[R(40,190,260,300),220,0]],water:[R(218,190,260,300)],rocks:[[118,140,10],[200,380,10]],sand:[C(205,80,15)]},
-  {name:"Pirate's Plank",par:4,tee:[150,440],cup:[150,80],poly:oct(30,25,270,475,24),
+  {name:'Balance Beam',par:4,tee:[150,440],cup:[150,80],poly:oct(30,25,270,475,24),
    water:[R(30,140,124,360),R(176,140,270,360)],movers:[{k:'crab',x:150,y:250,amp:12,spd:2,ph:0}],sand:[C(70,90,15),C(230,90,15)],rocks:[[150,400,9]]},
   {name:'Gatekeeper',par:4,tee:[150,437],cup:[150,80],poly:oct(40,25,260,475,24),
    walls:[[40,320,118,320],[182,320,260,320],[40,170,118,170],[182,170,260,170]],
    movers:[{k:'gate',x:150,y:336,amp:36,hl:30,spd:1.3,ph:0},{k:'gate',x:150,y:186,amp:36,hl:30,spd:-1.3,ph:1.6}],sand:[C(80,248,14),C(220,248,14)]},
-  {name:'Lighthouse Loop',par:4,tee:[150,452],cup:[150,74],poly:oct(35,25,265,475,30),
+  {name:'Library Loop',par:4,tee:[150,452],cup:[150,74],poly:oct(35,25,265,475,30),
    walls:[[95,140,205,140],[205,140,205,360],[205,360,95,360],[95,360,95,140]],
    movers:[{k:'umb',x:150,y:400,L:26,spd:1.5,ph:0}],rocks:[[64,250,10],[236,250,10]],sand:[C(232,88,14)]},
-  {name:'Crab Canyon',par:4,tee:[80,435],cup:[212,88],poly:oct(35,25,265,475,22),
+  {name:'Mouse Canyon',par:4,tee:[80,435],cup:[212,88],poly:oct(35,25,265,475,22),
    walls:[[35,340,200,340],[100,200,265,200]],movers:[{k:'crab',x:150,y:270,amp:70,spd:1.3,ph:0}],balls:[[150,110,12]],sand:[C(232,410,14)]},
-  {name:'Volcano Rim',par:4,tee:[150,445],cup:[150,68],poly:oct(40,25,260,475,30),
+  {name:'Paint Pot Rim',par:4,tee:[150,445],cup:[150,68],poly:oct(40,25,260,475,30),
    water:[C(150,262,52)],balls:[[78,262,14],[222,262,14]],slope:[[R(40,168,260,200),0,150]],movers:[{k:'crab',x:150,y:132,amp:58,spd:1.3,ph:.5}],sand:[C(80,400,14),C(220,400,14)]},
-  {name:'Coral Spiral',par:5,tee:[60,440],cup:[128,330],poly:oct(30,25,270,475,24),
+  {name:'Notebook Spiral',par:5,tee:[60,440],cup:[128,330],poly:oct(30,25,270,475,24),
    walls:[[30,390,220,390],[220,110,220,390],[80,110,80,330],[80,200,180,200]],
    movers:[{k:'umb',x:245,y:250,L:20,spd:1.4,ph:0},{k:'crab',x:150,y:66,amp:55,spd:1.2,ph:0}],sand:[C(160,430,14)],rocks:[[150,262,9]]},
-  {name:'Typhoon Alley',par:4,tee:[150,445],cup:[150,72],poly:oct(50,25,250,475,24),
+  {name:'Pencil Case Alley',par:4,tee:[150,445],cup:[150,72],poly:oct(50,25,250,475,24),
    walls:[[50,180,120,180],[180,180,250,180]],tide:[[R(50,100,250,142),160,0]],
    movers:[{k:'umb',x:150,y:362,L:44,spd:1.4,ph:0},{k:'crab',x:150,y:262,amp:55,spd:1.6,ph:0},{k:'gate',x:150,y:196,amp:36,hl:28,spd:1.3,ph:.5}],sand:[C(80,420,13),C(220,420,13)]},
-  {name:'Hurricane Harbor',par:5,tee:[70,440],cup:[228,72],poly:oct(30,25,270,475,24),
+  {name:'Lunchroom Rush',par:5,tee:[70,440],cup:[228,72],poly:oct(30,25,270,475,24),
    walls:[[30,370,190,370],[110,200,270,200]],tide:[[R(190,250,270,370),0,-140]],water:[C(60,250,16)],
    movers:[{k:'umb',x:130,y:292,L:24,spd:1.4,ph:0},{k:'crab',x:150,y:115,amp:60,spd:1.4,ph:1}],balls:[[60,150,12]],sand:[C(150,420,14)]},
-  {name:'Mangrove Maze',par:6,tee:[60,445],cup:[66,70],poly:oct(30,25,270,475,22),
+  {name:'Locker Maze',par:6,tee:[60,445],cup:[66,70],poly:oct(30,25,270,475,22),
    walls:[[30,400,200,400],[100,330,270,330],[30,260,200,260],[100,190,270,190],[30,120,200,120]],
    rocks:[[150,365,9],[150,225,9]],balls:[[234,295,11]],movers:[{k:'crab',x:150,y:155,amp:45,spd:1.3,ph:0}],sand:[C(236,440,13)]},
-  {name:'Tiki Temple',par:6,tee:[60,450],cup:[222,74],poly:oct(25,20,275,480,26),
+  {name:'Teacher\'s Desk',par:6,tee:[60,450],cup:[222,74],poly:oct(25,20,275,480,26),
    walls:[[25,400,200,400],[100,310,275,310],[25,220,200,220],[100,130,275,130]],
    movers:[{k:'umb',x:150,y:355,L:30,spd:1.3,ph:0},{k:'crab',x:150,y:265,amp:52,spd:1.5,ph:0},{k:'umb',x:150,y:175,L:30,spd:-1.4,ph:.6}],
    water:[C(58,265,14)],tide:[[R(25,20,275,52),-120,0]],balls:[[128,78,12]],sand:[C(240,445,13),C(60,175,13)]}
@@ -533,7 +533,7 @@ function holeDone(){
     if(G.shells<=0){gameOver(title,strokes);return}
     $('midTitle').textContent=title;
     let txt=strokes+(strokes===1?' stroke':' strokes')+' on a par '+h.par+'.';
-    if(gained)txt+=' You won a shell back!';else if(lost)txt+=' Over par, so you lost a shell. '+G.shells+(G.shells===1?' shell':' shells')+' left.';
+    if(gained)txt+=' You won a star back!';else if(lost)txt+=' Over par, so you lost a star. '+G.shells+(G.shells===1?' star':' stars')+' left.';
     else if(d<0)txt+=' Under par, brilliant!';else txt+=' Nice and steady.';
     if(h.i===HOLES.length-1)txt+=' Course complete! Next comes the Back Nine Tour, with faster obstacles.';
     else if(h.i===17)txt+=' Front 18 complete! The back 18 gets wilder.';
@@ -548,7 +548,7 @@ function scoreCard(){const el=$('mCard');el.innerHTML='';G.card.forEach(c=>{cons
 function gameOver(title,strokes){
   G.state='over';const isBest=G.score>0&&G.score>G.startBest;save.best=Math.max(save.best,G.score);persist();
   $('stScore').textContent=G.score;$('stHoles').textContent=G.holeNo;$('stAces').textContent=G.aces;
-  $('overText').textContent=title+' on hole '+G.holeNo+' used your last shell. '+(G.holeNo<4?'Tip: a softer putt that stops near the cup is often better than a big whack.':'Great round! You played '+G.holeNo+' holes.');
+  $('overText').textContent=title+' on hole '+G.holeNo+' used your last star. '+(G.holeNo<4?'Tip: a softer putt that stops near the cup is often better than a big whack.':'Great round! You played '+G.holeNo+' holes.');
   $('newBest').hidden=!isBest;$('bestLine2').textContent='Best score: '+save.best+' · Furthest hole: '+save.bestHole;
   $('over').hidden=false;window.BDA&&BDA.shareScore({score:G.score,line:'Hole '+G.holeNo,into:'#over .card',after:'.stats'});$('againBtn').focus({preventScroll:true});
 }
@@ -559,8 +559,8 @@ function hud(){
   $('holeEl').textContent='Hole '+g.holeNo;$('parEl').textContent='Par '+par;$('strokeEl').textContent='Strokes '+g.strokes;
   const dd=$('dots');if(!dd.children.length)for(let i=0;i<8;i++)dd.appendChild(document.createElement('i'));
   [...dd.children].forEach((e,i)=>{e.className=i<g.strokes?(i>=par?'on over':'on'):''});
-  const l=$('lives');l.innerHTML='';for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<svg viewBox="0 0 48 48" class="'+(i>=g.shells?'lost':'')+'" aria-hidden="true"><path d="M24 6C14 6 6 15 6 25c0 5 2 9 5 12l13 6 13-6c3-3 5-7 5-12C42 15 34 6 24 6Z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="2.5"/><path d="M24 9v32M17 11l3 29M31 11l-3 29M11 17l7 22M37 17l-7 22" stroke="#2e2e33" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
-  l.setAttribute('aria-label',g.shells+' shells left');
+  const l=$('lives');l.innerHTML='';for(let i=0;i<3;i++)l.insertAdjacentHTML('beforeend','<img src="../assets/pencil-putt/star.webp" alt="" class="'+(i>=g.shells?'lost':'')+'" aria-hidden="true">');
+  l.setAttribute('aria-label',g.shells+' stars left');
 }
 let bannerT=0;
 function showBanner(t,sub,ms,ace){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.toggle('ace',!!ace);b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),ms||1300)}

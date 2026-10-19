@@ -82,12 +82,12 @@ button:disabled{opacity:.5}
   <div class="stage" id="stage">
     <canvas id="c"></canvas>
     <div class="over" id="over" hidden>
-      <h2>Washed out</h2>
-      <p id="overMsg">The bubbles reached the tide line.</p>
+      <h2>Out of room</h2>
+      <p id="overMsg">The bubbles crossed the dashed line.</p>
       <form class="save" id="saveForm">
         <label for="nick">Your name for the leaderboard</label>
         <div class="row">
-          <input id="nick" maxlength="16" autocomplete="nickname" placeholder="e.g. GulfCoastGull">
+          <input id="nick" maxlength="16" autocomplete="nickname" placeholder="e.g. DoodleDasher">
           <button id="saveBtn" type="submit">Save score</button>
         </div>
         <p class="status" id="saveStatus" aria-live="polite"></p>
@@ -313,7 +313,7 @@ function pushRow(){
   const row=newRow();grid.unshift(row);
   if(isShift(0))row[COLS-1]=null;
 }
-function end(){over=true;finalScore=score;sfx.over();saved=false;$("overMsg").textContent="The bubbles reached the tide line on level "+level+". You scored "+score.toLocaleString()+".";
+function end(){over=true;finalScore=score;sfx.over();saved=false;$("overMsg").textContent="The bubbles crossed the dashed line on level "+level+". You scored "+score.toLocaleString()+".";
   $("saveStatus").textContent="";$("saveBtn").disabled=!lb.db||!lb.me;$("over").hidden=false;window.BDA&&BDA.shareScore({score,line:"Level "+level,into:"#over",after:"#overMsg"})}
 
 function burst(x,y,color,n){rings.push({x,y,color,t:1});for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=1+Math.random()*4;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,life:1,color,r:2+Math.random()*3.5,rot:Math.random()*6})}}
@@ -426,9 +426,9 @@ function draw(){
   amb.forEach(a=>{ctx.strokeStyle="rgba(85,85,92,.35)";ctx.lineWidth=1.1;ctx.beginPath();ctx.arc(a.x+Math.sin(a.w)*4,a.y,a.r,0,Math.PI*2);ctx.stroke()});
   ctx.save();
   if(shake)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
-  // tide line
+  // dashed danger line
   ctx.save();ctx.strokeStyle="#c45a8a";ctx.setLineDash([8,7]);ctx.lineDashOffset=RM?0:-now/40;ctx.lineWidth=2.2;ctx.beginPath();ctx.moveTo(0,DEAD_Y);ctx.lineTo(W,DEAD_Y);ctx.stroke();ctx.restore();
-  // sand with sparkle
+  // paper mound with pencil dots
   ctx.fillStyle="#e9e6db";ctx.beginPath();ctx.moveTo(0,H);ctx.quadraticCurveTo(W/2,H-80,W,H);ctx.fill();
   ctx.strokeStyle=PENCIL;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(0,H);ctx.quadraticCurveTo(W/2,H-80,W,H);ctx.stroke();
   ctx.fillStyle="rgba(85,85,92,.45)";for(let i=0;i<26;i++){const sx=30+(i*53)%(W-60),sy=H-6-((i*29)%26);ctx.fillRect(sx,sy,1.6,1.6)}
