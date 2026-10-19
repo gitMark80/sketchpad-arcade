@@ -172,6 +172,17 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .art-tile .tile.miss{background-image:linear-gradient(rgba(196,90,138,.3),rgba(196,90,138,.3)),url(../assets/doodle-keeper/tile.webp)}
 .art-tile .tile.punct{background:none}
 .art-tile .tile::after{bottom:20%;background:var(--pencil)}
+
+/* Mark's pencil for the lives (classes added once each picture loads; the SVG pencil / CSS key stay as fallbacks) */
+.art-pencil .pail{background:url(../assets/doodle-keeper/pencil.webp) center/contain no-repeat}
+.art-pencil .pail use{display:none}
+/* sticky-note keys: the drawn note is the key face, the letter sits on top. hit = note turns green, miss = faded grey note */
+.art-key .key{background:url(../assets/doodle-keeper/key-note.webp) center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;padding-top:5px;
+  filter:drop-shadow(1.5px 2px 0 rgba(85,85,92,.45))}
+.art-key .key::after{display:none}
+.art-key .key:active{box-shadow:none;filter:none}
+.art-key .key.hit{background-color:transparent;border:0;box-shadow:none;color:var(--ink);filter:hue-rotate(62deg) saturate(.65) drop-shadow(1.5px 2px 0 rgba(90,154,106,.7))}
+.art-key .key.miss{background-color:transparent;border:0;color:var(--muted);filter:grayscale(1) opacity(.38)}
 </style>
 </head>
 <body>
@@ -364,6 +375,8 @@ function speckles(g,k,x,y,w,h){const a=speck[k];g.fillStyle=GRAPH;g.globalAlpha*
 /* the house (centre piece) */
 function housePath(g,p){const l=p.x-p.w/2,r=p.x+p.w/2,ry=p.top+34;g.beginPath();g.moveTo(l+2,GY);g.lineTo(l,ry);g.lineTo(l-8,ry+1);g.lineTo(p.x,p.top);g.lineTo(r+8,ry+1);g.lineTo(r,ry);g.lineTo(r-1,GY);g.closePath()}
 function drawCT(g){const p=P.ct;const l=p.x-p.w/2,r=p.x+p.w/2,ry=p.top+34;
+  {const m=happyT>0?'happy':mood;const im=ART['house-'+m]||ART.house;if(im){ // Mark's drawn house, one picture per mood
+    const w=116,h=w*im.height/im.width;g.drawImage(im,p.x-w/2,GY+3-h,w,h);return}}
   g.lineJoin='round';g.lineCap='round';
   // body
   g.fillStyle=PAPER;g.beginPath();g.moveTo(l+2,GY);g.lineTo(l,ry+2);g.lineTo(r,ry+2);g.lineTo(r-1,GY);g.closePath();g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
@@ -389,6 +402,8 @@ function drawCT(g){const p=P.ct;const l=p.x-p.w/2,r=p.x+p.w/2,ry=p.top+34;
 }
 /* picket fence */
 function drawWalls(g){const p=P.walls,x0=p.x-p.w/2,x1=p.x+p.w/2,gl=P.gate.x-P.gate.w/2-4,gr=P.gate.x+P.gate.w/2+4;
+  if(ART.fence){const im=ART.fence,w=70,h=w*im.height/im.width; // one drawn fence section either side of the gate
+    g.drawImage(im,(x0+gl)/2-w/2,GY+3-h,w,h);g.drawImage(im,(gr+x1)/2-w/2,GY+3-h,w,h);return}
   g.lineCap='round';g.lineJoin='round';g.strokeStyle=INK;g.lineWidth=1.6;
   const picket=(x)=>{g.fillStyle=PAPER;g.beginPath();g.moveTo(x-4,GY);g.lineTo(x-4,p.top+6);g.lineTo(x,p.top);g.lineTo(x+4,p.top+6);g.lineTo(x+4,GY);g.closePath();g.fill();g.stroke()};
   for(let x=x0+4;x<=x1-4;x+=12){if(x>gl&&x<gr)continue;picket(x)}
@@ -397,13 +412,18 @@ function drawWalls(g){const p=P.walls,x0=p.x-p.w/2,x1=p.x+p.w/2,gl=P.gate.x-P.ga
   hatch(g,x0,GY-8,gl-x0,7,6,.3);hatch(g,gr,GY-8,x1-gr,7,6,.3);
 }
 function gatePath(g){const p=P.gate,l=p.x-p.w/2,r=p.x+p.w/2;g.beginPath();g.moveTo(l,GY);g.lineTo(l,p.top+p.w/2);g.arc(p.x,p.top+p.w/2,p.w/2,Math.PI,0);g.lineTo(r,GY);g.closePath()}
-function drawGate(g){const p=P.gate;gatePath(g);g.fillStyle=YEL_W;g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
+function drawGate(g){const p=P.gate;
+  if(ART.gate){const im=ART.gate,w=58,h=w*im.height/im.width;g.drawImage(im,p.x-w/2,GY+3-h,w,h);return}
+  gatePath(g);g.fillStyle=YEL_W;g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
   g.save();gatePath(g);g.clip();g.strokeStyle=PENCIL;g.lineWidth=1.1;for(let i=1;i<4;i++){const x=p.x-p.w/2+i*p.w/4;g.beginPath();wline(g,x,p.top+2,x,GY,20+i);g.stroke()}
   g.beginPath();wline(g,p.x-p.w/2,GY-14,p.x+p.w/2,GY-14,31);g.stroke();g.restore();
   g.strokeStyle=INK;g.lineWidth=1.6;g.beginPath();g.arc(p.x+9,p.top+26,2.6,0,7);g.stroke()}
 function drawGateHole(g){const p=P.gate;gatePath(g);g.fillStyle='rgba(46,46,51,.12)';g.fill()}
 /* trees */
-function drawTree(g,k,cx,top,w,base){g.lineJoin='round';g.lineCap='round';
+function drawTree(g,k,cx,top,w,base){
+  if(ART.tree){const im=ART.tree,h=96,tw=h*im.width/im.height;g.save();g.translate(cx,0);if(k==='rt')g.scale(-1,1); // mirrored on the right
+    g.drawImage(im,-tw/2,base+3-h,tw,h);g.restore();return}
+  g.lineJoin='round';g.lineCap='round';
   const r=w/2,cy=top+r*.9;
   // trunk
   g.fillStyle=PAPER;g.beginPath();g.moveTo(cx-r*.28,base);g.lineTo(cx-r*.22,cy+r*.4);g.lineTo(cx+r*.22,cy+r*.4);g.lineTo(cx+r*.28,base);g.closePath();g.fill();g.strokeStyle=INK;g.lineWidth=1.8;g.stroke();
@@ -418,7 +438,12 @@ function drawTree(g,k,cx,top,w,base){g.lineJoin='round';g.lineCap='round';
 function drawLT(g){const p=P.lt;drawTree(g,'lt',p.x,p.top,p.w,GY)}
 function drawRT(g){const p=P.rt;drawTree(g,'rt',p.x,p.top,p.w,GY)}
 /* the pennant on the roof */
+const FLAG_CROP=.855,FLAG_POLE=.197; // pennant art: rows kept (pole without its grass tuft), pole x as a fraction of width
 function drawFlag(g){const ct=P.ct,top=ct.top-11;const px=180;
+  if(ART.pennant){const im=ART.pennant,sh=im.height*FLAG_CROP,h=44,w=h*im.width/sh,base=ct.top+4;
+    const amp=happyT>0?.09:.035,sp=happyT>0?12:5; // the cloth flutters: a small stretch and skew about the pole
+    g.save();g.translate(px,base);g.transform(1+Math.sin(tNow*sp)*amp,Math.sin(tNow*sp+1)*amp*.8,0,1,0,0);
+    g.drawImage(im,0,0,im.width,sh,-w*FLAG_POLE,-h,w,h);g.restore();return}
   g.strokeStyle=INK;g.lineWidth=2.2;g.lineCap='round';g.beginPath();g.moveTo(px,top+9);g.lineTo(px,top-30);g.stroke();
   g.fillStyle=YEL_W;g.beginPath();g.arc(px,top-31,3,0,7);g.fill();g.lineWidth=1.4;g.stroke();
   const amp=happyT>0?5:2.4,sp=happyT>0?12:5,L=32,y0=top-29;
@@ -427,7 +452,11 @@ function drawFlag(g){const ct=P.ct,top=ct.top-11;const px=180;
   g.fillStyle=ORG_W;g.fill();g.strokeStyle=ORG;g.lineWidth=1.2;g.stroke();g.strokeStyle=INK;g.lineWidth=1.4;g.globalAlpha*=.8;g.stroke();g.globalAlpha/=.8;
   g.strokeStyle=INK;g.lineWidth=1.2;g.beginPath();g.arc(px+12,y0+8+Math.sin(tNow*sp-1.9)*amp*.37,3,0,7);g.stroke()}
 /* eraser crumbs left where a piece used to be */
-function crumbs(g,k,cx,w,h){const a=speck[k];g.save();g.lineCap='round';
+const CRUMB_DX={ct:-14,gate:14};
+function crumbs(g,k,cx,w,h){
+  if(ART.crumbs){const im=ART.crumbs,draw=(x,cw)=>{const chh=cw*im.height/im.width;g.drawImage(im,x-cw/2,GY+8-chh*.6,cw,chh)};
+    if(w>120){draw(cx-w*.28,40);draw(cx+w*.28,40)}else draw(cx+(CRUMB_DX[k]||0),Math.min(44,w*.65));return}
+  const a=speck[k];g.save();g.lineCap='round';
   for(let i=0;i<a.length;i+=2){const s=a[i];const x=cx-w/2+s[0]*w,y=GY+2+s[1]*Math.min(h,14)*.6;const len=2+s[2]*5;
     g.strokeStyle=s[2]<.5?PINK:GRAPH;g.lineWidth=1.6;g.globalAlpha=.75;g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+len*.5,y-2.5,x+len,y+.5);g.stroke()}
   g.restore()}
@@ -442,7 +471,9 @@ function drawPiece(g,k,fn,mw,mh){const pc=P[k];const p=ease(pc.p);const a=1-sm(p
       for(let i=0;i<7;i++){const y=pc.top+i*((GY-pc.top)/7)+3,x0=pc.x-mw*.4+(i%2)*8;g.beginPath();g.moveTo(x0,y+3);g.lineTo(x0+mw*.7,y-2);g.stroke()}}
     g.restore()}
   const ma=sm(pc.p,.25,.85);if(ma>0.01&&mw){g.save();g.globalAlpha*=ma;crumbs(g,k,pc.x,mw,mh);g.restore()}}
-function drawFlagPiece(g){const f=P.flag,ct=P.ct;const p=ease(f.p);if(f.p>=1){ // fallen pennant lying on the ground
+function drawFlagPiece(g){const f=P.flag,ct=P.ct;const p=ease(f.p);if(f.p>=1&&ART.pennant){const im=ART.pennant,sh=im.height*FLAG_CROP,h=30,w=h*im.width/sh;
+    g.save();g.translate(196,GY+30);g.rotate(Math.PI/2-.22);g.globalAlpha*=.9;g.drawImage(im,0,0,im.width,sh,-w*FLAG_POLE,-h/2,w,h);g.restore();return}
+  if(f.p>=1){ // fallen pennant lying on the ground
     g.save();g.translate(206,GY+30);g.rotate(-.22);g.globalAlpha*=.9;g.strokeStyle=INK;g.lineWidth=2;g.beginPath();g.moveTo(-14,0);g.lineTo(14,0);g.stroke();
     g.fillStyle=ORG_W;g.strokeStyle=ORG;g.lineWidth=1.2;g.beginPath();g.moveTo(10,0);g.lineTo(2,-7);g.lineTo(-4,0);g.closePath();g.fill();g.stroke();g.restore();return}
   const cp=ease(ct.p);const topY=GY-(GY-(ct.top-11))*(1-.8*cp);
@@ -514,6 +545,9 @@ function drawWave(g,w){const R=Math.max(LW,(cw-OX)/S)+40;let fx;
   const a=w.phase===1?1-Math.max(0,(w.t-.5)/.4):1;g.globalAlpha*=Math.max(0,a);
   // the eraser: a pink block with a dark band, a cheeky face, tilted as it bounces
   const EW=46,EH=24;const ex=fx+rub,ey=GY-h*.55-hop,tilt=w.phase===0?-.25+Math.sin(w.t*20)*.1:Math.sin(w.t*38)*.08;
+  if(ART.eraser){const im=ART.eraser,iw=44,ih=iw*im.height/im.width;
+    if(hop>2){g.fillStyle='rgba(46,46,51,.15)';g.beginPath();g.ellipse(ex,GY-h*.55+ih*.5,EW*.5,4,0,0,7);g.fill()}
+    g.translate(ex,ey);g.rotate(tilt);g.drawImage(im,-iw/2,-ih/2,iw,ih);g.restore();return fx}
   if(hop>2){g.fillStyle='rgba(46,46,51,.15)';g.beginPath();g.ellipse(ex,GY-h*.55+EH*.5+2,EW*.5,4,0,0,7);g.fill()}
   g.translate(ex,ey);g.rotate(tilt);
   g.lineJoin='round';g.lineCap='round';g.fillStyle=PINK_W;g.strokeStyle=INK;g.lineWidth=2;
@@ -563,7 +597,7 @@ function drawMini(){const m=$('mini');const d=Math.min(3,window.devicePixelRatio
   const s=Math.min(w/330,h/200);g.setTransform(d*s,0,0,d*s,d*(w-360*s)/2,d*(h-206*s));
   g.strokeStyle=INK;g.lineWidth=1.6;g.beginPath();wline(g,10,GY+2,350,GY+2,77);g.stroke();drawCastle(g)}
 
-/* ---------- sketched art (the paper tile; everything else is drawn in pencil above) ---------- */
+/* ---------- Mark's drawn art (each piece falls back to the pencil drawing above until its picture loads) ---------- */
 const ART_DIR='../assets/doodle-keeper/';
 const ART={};
 function loadArt(name,cls,cb){const im=new Image();im.decoding='async';im.onload=()=>{ART[name]=im;if(cls)document.documentElement.classList.add(cls);cb&&cb()};im.onerror=()=>{ART[name]=null};im.src=ART_DIR+name+'.webp'}
@@ -684,6 +718,8 @@ fit();addEventListener('resize',fit);try{new ResizeObserver(fit).observe(stage)}
 drawMini();hud();requestAnimationFrame(loop);
 
 loadArt('tile','art-tile');
+['house','house-worried','house-happy','tree','fence','gate','pennant','eraser','crumbs'].forEach(n=>loadArt(n,null,drawMini));
+loadArt('pencil','art-pencil');loadArt('key-note','art-key');
 window.__game={state:()=>({screen,score,level,pieces,maxPieces,pails,revealed:tiles.filter(t=>t.classList.contains('on')).length,answerLength:tiles.length,
   pattern:answer.split('').map(c=>/[A-Z]/.test(c)?(guessed.has(c)?c:'_'):c).join(''),category:cat,guessed:[...guessed].join(''),freePeeks,streak,solved:solvedCount})};
 })();

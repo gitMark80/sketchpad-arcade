@@ -183,13 +183,24 @@ const sfx={
 };
 
 /* ---------- Mark's art ----------
-   Only the pencil "poof" is a picture for now; marbles, cups, the doodle buddy, paper clips, gold stars and the eraser are drawn in code.
-   Drop a sketched webp with one of these names into ../assets/marble-blitz/ and it is used instead of the doodle. */
+   Marbles, the three cup tiers, the buddy (idle + mid-flick), paper clips, gold stars, the crumpled-paper poof and the wooden desk are
+   Mark's drawings from ../assets/marble-blitz/. The code-drawn doodles stay as fallbacks until each image loads. The pink eraser is still code-drawn. */
 const ART={};
-function load(n){const i=new Image();i.decoding='async';i.onload=()=>{if($('hero'))drawHero()};i.onerror=()=>{};i.src='../assets/marble-blitz/'+n+'.webp';ART[n]=i}
-['burst'].forEach(load);
+function load(n){const i=new Image();i.decoding='async';i.onload=()=>{if(n==='desk'&&bgCanvas)buildArt();if($('hero'))drawHero()};i.onerror=()=>{};i.src='../assets/marble-blitz/'+n+'.webp';ART[n]=i}
+['marble','cup-low','cup-mid','cup-high','buddy','buddy-throw','clip','star','poof','desk'].forEach(load);
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
 function sprite(im,cx,cy,w,h,rot){ctx.save();ctx.translate(cx,cy);if(rot)ctx.rotate(rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
+// a cup drawing with its tier colour laid over it as a coloured-pencil wash (cached per tier/colour/size)
+const tintCache=new Map();
+function tintedCup(name,im,c,w,h){
+  const s=vs*dpr,q=c.map(v=>Math.round(v/8)*8),key=name+'|'+q.join(',')+'|'+s.toFixed(2);let cv2=tintCache.get(key);
+  if(!cv2){if(tintCache.size>400)tintCache.clear();cv2=document.createElement('canvas');cv2.width=Math.ceil(w*s);cv2.height=Math.ceil(h*s);
+    const x=cv2.getContext('2d');x.drawImage(im,0,0,cv2.width,cv2.height);x.globalCompositeOperation='source-atop';x.fillStyle=rgb(q,0,.3);x.fillRect(0,0,cv2.width,cv2.height);
+    tintCache.set(key,cv2)}
+  return cv2}
+function deskTile(x,im,X0,Y,W2,h){ // the wooden desk strip, mirror-tiled so the joins never show
+  const w=im.naturalWidth*h/im.naturalHeight;let k=0;
+  for(let X=X0;X<X0+W2;X+=w,k++){x.save();if(k%2){x.translate(X+w,Y);x.scale(-1,1)}else x.translate(X,Y);x.drawImage(im,0,0,w+.5,h);x.restore()}}
 function fitIn(im,maxW,maxH){const k=Math.min(maxW/im.naturalWidth,maxH/im.naturalHeight);return[im.naturalWidth*k,im.naturalHeight*k]}
 let puffs=[],lvMax=1;   // paper poofs from crumpled cups (drawing only); biggest cup on the board this turn
 function drawBall(x,y,rot){const im=art('marble');if(im)sprite(im,x,y,2*R+1,2*R+1,rot||0);else{ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(rot);ctx.drawImage(ballSprite,-R-1,-R-1,2*R+2,2*R+2);ctx.restore()}}
@@ -219,6 +230,8 @@ function buildArt(){
   // a red-ish margin line down the left, like a notebook page
   x.strokeStyle='rgba(196,90,138,.28)';x.lineWidth=1.2;x.beginPath();x.moveTo(14.5,0);x.lineTo(14.5,BL-2);x.stroke();
   // the desk: a darker paper tone with pencil grain seams
+  const desk=art('desk');
+  if(desk){deskTile(x,desk,0,BL,W,H-BL);pencilStub(x,30,H-13);return}
   x.fillStyle='#e4e2d8';x.fillRect(0,BL,W,H-BL);
   x.strokeStyle=PENCIL;x.lineWidth=1;
   for(let i=0;i<5;i++){const y=BL+10+i*11+(i%2)*3;x.globalAlpha=.25+(i%3)*.08;x.beginPath();x.moveTo(-2,y);for(let X=0;X<=W+4;X+=14)x.lineTo(X,y+Math.sin(X*.09+i)*.9);x.stroke()}
@@ -469,12 +482,9 @@ function draw(){
 }
 function drawShore(){
   // the edge of the page: a wobbly ink line, with a dashed pencil line below it marching along the desk
-  const im=art('desk');
-  if(im){const h=40,sw=im.naturalWidth-4,w=sw*h/im.naturalHeight,off=((T*6)%w);
-    ctx.save();ctx.beginPath();ctx.rect(0,BL-24,W,h);ctx.clip();ctx.translate(0,BL-24);
-    for(let x=-off-w;x<W+w;x+=w)ctx.drawImage(im,2,0,sw,im.naturalHeight,x,0,w+.6,h);
-    ctx.restore();
-  }else{
+  // with Mark's wooden desk the strip itself (drawn into the background) is the edge
+  if(art('desk'))return;
+  {
     ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();
     for(let x=0;x<=W;x+=7){const y=BL+Math.sin(x*.07)*1.2+Math.sin(x*.19)*.6;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
     // torn-page shading just above the edge
@@ -543,7 +553,7 @@ function drawCastle(it,x,y){
   ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,h-2,h-3,4.5,0,0,7);ctx.fill();
   if(im){
     if(it.flash){ctx.fillStyle=`rgba(246,243,234,${it.flash*.6})`;ctx.beginPath();ctx.arc(0,0,h+2,0,7);ctx.fill()}
-    const[w,hh]=fitIn(im,BS+4,BS+2);ctx.drawImage(im,-w/2,h-hh+1,w,hh);
+    const nm=k<=1/3?'cup-low':k<=2/3?'cup-mid':'cup-high',[w,hh]=fitIn(im,BS+4,BS+2);ctx.drawImage(tintedCup(nm,im,c,w,hh),-w/2,h-hh+1,w,hh);
   }else{
     // cup body: a trapezoid, wider at the rim, paper fill with a coloured-pencil wash
     const tw=h-2,bw=h-9,top=-h+mh,bot=h-4;
@@ -568,7 +578,7 @@ function drawCastle(it,x,y){
   ctx.restore();
 }
 function drawPuff(p){
-  const im=art('burst'),k=p.t/.55;
+  const im=art('poof'),k=p.t/.55;
   if(!im){ctx.strokeStyle=GRAPH;ctx.globalAlpha=1-k;ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4;ctx.moveTo(p.x+Math.cos(a)*8,p.y+Math.sin(a)*8);ctx.lineTo(p.x+Math.cos(a)*(14+k*22),p.y+Math.sin(a)*(14+k*22))}ctx.stroke();ctx.globalAlpha=1;return}
   ctx.globalAlpha=1-k*k;const s=CELL*(.7+k*1.1);sprite(im,p.x,p.y-k*10,s,s*im.naturalHeight/im.naturalWidth);ctx.globalAlpha=1;
 }
@@ -593,7 +603,9 @@ function drawCrab(){
   const throwing=state==='fire'&&toFire>0,im=art(throwing?'buddy-throw':'buddy')||art('buddy');
   if(im){
     ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(x,FLOOR+30,24,4,0,0,7);ctx.fill();
-    const[cw,ch]=fitIn(im,58,54);sprite(im,x,FLOOR+9,cw,ch,w*.06);
+    // both drawings share one body scale; the scribble body (not the bag / thrown marble) sits over the launch point, feet on the desk
+    const thr=im===art('buddy-throw'),cw=thr?80:58,ch=cw*im.naturalHeight/im.naturalWidth,bx=thr?.31:.35;
+    ctx.save();ctx.translate(x+(.5-bx)*cw,FLOOR+31-ch/2);ctx.rotate(w*.06);ctx.drawImage(im,-cw/2,-ch/2,cw,ch);ctx.restore();
   }else{
   ctx.save();ctx.translate(x,y);
   ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,15,22,4,0,0,7);ctx.fill();
@@ -658,7 +670,7 @@ function drawHero(){
   // a little sketch of the board: ruled paper, a desk edge, a few cups, a dotted shot and the buddy
   x.fillStyle=PAPER;rr(x,0,0,220,110,10);x.fill();
   x.strokeStyle='rgba(47,111,181,.22)';x.lineWidth=1;for(let y=22;y<78;y+=14){x.beginPath();x.moveTo(0,y+.5);x.lineTo(220,y+.5);x.stroke()}
-  x.fillStyle='#e4e2d8';x.fillRect(0,80,220,30);x.strokeStyle=INK;x.lineWidth=1.5;x.beginPath();for(let X=0;X<=220;X+=6){const yy=80+Math.sin(X*.1)*.8;X?x.lineTo(X,yy):x.moveTo(X,yy)}x.stroke();
+  const dk=art('desk');if(dk){x.save();rr(x,0,0,220,110,10);x.clip();deskTile(x,dk,0,80,220,30);x.restore()}else{x.fillStyle='#e4e2d8';x.fillRect(0,80,220,30);x.strokeStyle=INK;x.lineWidth=1.5;x.beginPath();for(let X=0;X<=220;X+=6){const yy=80+Math.sin(X*.1)*.8;X?x.lineTo(X,yy):x.moveTo(X,yy)}x.stroke()}
   x.strokeStyle=INK;x.lineWidth=1.5;rr(x,.75,.75,218.5,108.5,10);x.stroke();
   const demo=[[1,0,3],[2,0,12],[4,0,30],[5,0,60],[0,1,1],[3,1,7],[6,1,95]];
   const main=ctx,lm=lvMax;ctx=x;lvMax=95;

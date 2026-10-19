@@ -313,14 +313,34 @@ let spr={};
 /* Mark's drawings: used when loaded, the code-drawn versions stay as the fallback */
 const ART={};
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
-/* only the plain card face is used from the sketched set; backs, pips, pile and desk are pencil doodles drawn here */
-['card-face'].forEach(n=>{
-  const i=new Image();i.decoding='async';i.onload=()=>{spr={};if(bgC)buildBG()};i.src='../assets/paper-peaks/'+n+'.webp';ART[n]=i});
+/* card-face is the sketched plain face; the rest are Mark's drawings (rank text stays drawn here) */
+['card-face','card-back','card-wild','suit-star','suit-heart','suit-moon','suit-flower','draw-pile','pediment','notepad'].forEach(n=>{
+  const i=new Image();i.decoding='async';i.onload=()=>{spr={};if(bgC)buildBG();if(state==='menu'&&$('mini'))drawMini()};i.src='../assets/paper-peaks/'+n+'.webp';ART[n]=i});
 function artFit(g,im,cx,cy,box){const k=Math.min(box/im.naturalWidth,box/im.naturalHeight),iw=im.naturalWidth*k,ih=im.naturalHeight*k;g.drawImage(im,cx-iw/2,cy-ih/2,iw,ih)}
+/* where the eyes and the top sit on each drawn pip, in units of half the pip's longest side (for the J/Q/K extras) */
+const SUIT_ART={star:{eyes:[-.21,-.02,.27,-.01],top:[0,-.93]},heart:{eyes:[-.24,-.07,.31,-.08],top:[.03,-.55]},
+  moon:{eyes:[.22,0,.6,.03],top:[.08,-.9]},flower:{eyes:[-.17,.05,.23,.05],top:[0,-.94]}};
+function critterArt(g,suit,R,opts){
+  const k=SUITS[suit].k,im=art('suit-'+k);if(!im)return false;
+  opts=opts||{};const Rb=R*1.05,A=SUIT_ART[k];artFit(g,im,0,0,Rb*2);
+  g.save();g.lineJoin='round';g.lineCap='round';
+  const tx=A.top[0]*Rb,ty=A.top[1]*Rb;
+  if(opts.rank===13){g.save();g.translate(tx,ty+R*.06);const cw2=R*.62;g.beginPath();g.moveTo(-cw2/2,0);g.lineTo(-cw2/2,-R*.32);g.lineTo(-cw2/4,-R*.14);g.lineTo(0,-R*.38);g.lineTo(cw2/4,-R*.14);g.lineTo(cw2/2,-R*.32);g.lineTo(cw2/2,0);g.closePath();
+    g.fillStyle='#f3e6b0';g.fill();g.lineWidth=Math.max(.8,R*.06);g.strokeStyle=INK;g.stroke();g.restore()}
+  if(opts.rank===12){g.save();g.translate(tx+R*.3,ty+R*.12);g.lineWidth=Math.max(.7,R*.05);g.strokeStyle=INK;g.fillStyle='#f0d5e2';
+    for(let q=0;q<5;q++){const a=q*Math.PI*2/5;g.beginPath();g.arc(Math.cos(a)*R*.13,Math.sin(a)*R*.13,R*.09,0,7);g.fill();g.stroke()}
+    g.fillStyle='#c99a1a';g.beginPath();g.arc(0,0,R*.07,0,7);g.fill();g.restore()}
+  if(opts.rank===11){const e=A.eyes,x1=e[0]*Rb,y1=e[1]*Rb,x2=e[2]*Rb,y2=e[3]*Rb,er=Math.hypot(x2-x1,y2-y1)*.34;
+    g.strokeStyle=INK;g.lineWidth=Math.max(.8,R*.06);g.beginPath();g.ellipse(x1,y1,er,er*.8,0,0,7);g.moveTo(x2+er,y2);g.ellipse(x2,y2,er,er*.8,0,0,7);
+    g.moveTo(x1+er,y1);g.lineTo(x2-er,y2);g.stroke()}
+  g.restore();return true;
+}
 function cardSprite(id,w,h,back){
   const pw=Math.max(8,Math.round(w*dpr)),key=(back?'b':id)+':'+pw;if(spr[key])return spr[key];
   const ph=Math.round(pw*1.4),c=document.createElement('canvas');c.width=pw;c.height=ph;const g=c.getContext('2d');
   const W=pw,H=ph,r=W*.15,lw=Math.max(1,W*.045);
+  const bi=back?art('card-back'):isWild(id)?art('card-wild'):null;
+  if(bi){g.drawImage(bi,0,0,W,H);return spr[key]=c}
   if(back){
     // an index card seen from behind: paper, pencil cross-hatching, an inner frame and a doodle star
     rrect(g,lw/2,lw/2,W-lw,H-lw,r);g.fillStyle='#efeadd';g.fill();
@@ -348,8 +368,8 @@ function cardSprite(id,w,h,back){
     const tx=W*(rk===10?.07:.11),ty=fs*.9+H*.02;
     g.lineJoin='round';g.lineWidth=fs*.16;g.strokeStyle=PAPER;g.strokeText(RANKS[rk],tx,ty);g.fillStyle=S.c;g.fillText(RANKS[rk],tx,ty);
     // small suit pip at top right, big doodle in the middle
-    g.save();g.translate(W*.78,H*.13);critter(g,suitOf(id),W*.12,{noFace:true});g.restore();
-    g.save();g.translate(W*.52,H*.64);critter(g,suitOf(id),W*(rk===1?.36:.3),{rank:rk});g.restore();
+    g.save();g.translate(W*.78,H*.13);critterArt(g,suitOf(id),W*.12)||critter(g,suitOf(id),W*.12,{noFace:true});g.restore();
+    g.save();g.translate(W*.52,H*.64);critterArt(g,suitOf(id),W*(rk===1?.36:.3),{rank:rk})||critter(g,suitOf(id),W*(rk===1?.36:.3),{rank:rk});g.restore();
   }
   return spr[key]=c;
 }
@@ -371,7 +391,14 @@ function buildBG(){
   for(let x=8,k=0;x<cw;x+=cw/48,k++)if(k%4===0&&k>0)g.fillText(String(k/4),x,2);
   // folded-paper mountains behind each peak
   const {w,h,step,left,top}=Lay;
-  for(let p=0;p<3;p++){
+  const pim=art('pediment');
+  for(let p=0;p<3&&pim;p++){
+    // Mark's folded-paper mountain, apex on the old peak, base on the old base line
+    const cx=left+(1.5+3*p)*step+w/2,base=top+Lay.tabH-h*.12,peak=top-h*.32,hw=step*2.1;
+    g.fillStyle='rgba(46,46,51,.12)';g.beginPath();g.ellipse(cx,base+h*.04,hw*.98,h*.12,0,0,7);g.fill();
+    const ax=(206/421)*2*hw;g.drawImage(pim,cx-ax,peak,hw*2,base-peak);
+  }
+  for(let p=0;p<3&&!pim;p++){
     const cx=left+(1.5+3*p)*step+w/2,base=top+Lay.tabH-h*.12,peak=top-h*.32,hw=step*1.85;
     g.save();g.lineJoin='round';
     g.fillStyle='rgba(46,46,51,.12)';g.beginPath();g.ellipse(cx,base+h*.06,hw*1.02,h*.14,0,0,7);g.fill();
@@ -399,11 +426,19 @@ function buildBG(){
   // the notepad under the face-up pile
   const tx=Lay.fx,ty=Lay.fy;
   g.save();g.translate(tx,ty+Lay.bh*.08);g.rotate(-.05);
-  const nw=Lay.bw*1.5,nh=Lay.bh*1.26;
+  const nw=Lay.bw*1.5,nh=Lay.bh*1.26,npi=art('notepad');
   g.fillStyle='rgba(46,46,51,.18)';rrect(g,-nw/2+3,-nh/2+4,nw,nh,4);g.fill();
+  if(npi){
+    // three-slice: spiral top and page-edge bottom keep their shape, the plain yellow middle stretches
+    const iw=npi.naturalWidth,ih=npi.naturalHeight,k=nw/iw,t0=70,b0=ih-50,th=t0*k,bh2=(ih-b0)*k;
+    g.drawImage(npi,0,0,iw,t0,-nw/2,-nh/2,nw,th+.5);
+    g.drawImage(npi,0,t0,iw,b0-t0,-nw/2,-nh/2+th,nw,nh-th-bh2+.5);
+    g.drawImage(npi,0,b0,iw,ih-b0,-nw/2,nh/2-bh2,nw,bh2);
+  }else{
   g.fillStyle='#f3e6b0';rrect(g,-nw/2,-nh/2,nw,nh,4);g.fill();g.strokeStyle=INK;g.lineWidth=1.6;g.stroke();
   g.strokeStyle='rgba(46,46,51,.3)';g.lineWidth=1;g.beginPath();for(let y=-nh/2+nh*.22;y<nh/2-4;y+=nh*.13){g.moveTo(-nw/2+5,y);g.lineTo(nw/2-5,y)}g.stroke();
   g.strokeStyle=INK;g.lineWidth=1.4;g.beginPath();for(let x=-nw/2+nw*.15;x<nw/2;x+=nw*.14){g.arc(x,-nh/2,nw*.035,Math.PI,0)}g.stroke();
+  }
   g.restore();
   // a few doodles in the corners: paper clip, thumbtack, pencil shavings
   g.save();g.translate(cw*.06,ch*.88);g.rotate(-.5);g.strokeStyle=GRAPH;g.lineWidth=1.6;g.lineCap='round';g.beginPath();
@@ -633,7 +668,15 @@ function drawStock(){
   const k=.5+.5*Math.sin(T*5);
   if(!n){ctx.save();ctx.strokeStyle=PENCIL;ctx.setLineDash([6,5]);ctx.lineWidth=2;rrect(ctx,sx-bw/2,sy-bh/2,bw,bh,bw*.15);ctx.stroke();ctx.restore();
     ctx.fillStyle=GRAPH;ctx.font=`${Math.max(11,bw*.22)}px "Patrick Hand","Comic Sans MS",cursive`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('empty',sx,sy);}
-  const layers=Math.min(n,3);
+  const pile=art('draw-pile');
+  if(pile&&n){
+    // Mark's stack of index cards, fitted inside the pile's tap area and resting on the old card's bottom edge
+    const bx=bw+20,by=bh+24,kf=Math.min(bx/pile.naturalWidth,by/pile.naturalHeight),iw=pile.naturalWidth*kf,ih=pile.naturalHeight*kf,y0=sy+bh/2-ih;
+    ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(sx+iw*.03,sy+bh/2-ih*.02,iw*.5,ih*.09,0,0,7);ctx.fill();
+    ctx.save();if(only||hinted){ctx.shadowColor=`rgba(201,154,26,${.6+.4*k})`;ctx.shadowBlur=(8+8*k)*dpr}
+    ctx.drawImage(pile,sx-iw/2,y0,iw,ih);if(only||hinted)ctx.drawImage(pile,sx-iw/2,y0,iw,ih);ctx.restore();
+  }
+  const layers=pile?0:Math.min(n,3);
   for(let k2=layers-1;k2>=0;k2--){const off=k2*Math.max(1,bw*.025);drawCardAt(0,false,sx-off,sy-off,bw,0,1,1,k2===0&&(only||hinted)?.55+.4*k:0)}
   // count label
   const lbl=only?'Draw! '+n+' left':n+' left',fy=sy+bh/2+Math.max(12,bh*.17);

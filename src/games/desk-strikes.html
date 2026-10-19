@@ -270,6 +270,11 @@ const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)',
 const PINK='#c45a8a',PINKW='#f0d5e2',YEL='#c99a1a',YELW='#f3e6b0',ORA='#d9661a',BLU='#2f6fb5',BLUW='#d6e4f2',GRN='#5a9a6a',FAINT='#c9c6bc';
 const HAND='"Gloria Hallelujah","Comic Sans MS",cursive',HAND2='"Patrick Hand","Comic Sans MS",cursive';
 let best=+store.get('best',0)||0,bestStreak=+store.get('streak',0)||0,muted=!!store.get('muted',false);
+/* Mark's drawn art, loaded from ../assets/desk-strikes/; the code-drawn versions show until each picture arrives */
+const ART={};
+const art=n=>{const im=ART[n];return im&&im.complete&&im.naturalWidth?im:null};
+['eraser','pin','pin-down','bug','pencil-cup','lane'].forEach(n=>{const im=new Image();im.decoding='async';
+  im.onload=()=>{ART[n]=im;if(n==='lane'&&bg)buildBG();if(n==='pin'||n==='eraser')drawMini()};im.src='../assets/desk-strikes/'+n+'.webp'});
 const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 /* ---------- sound (synthesized; starts after a finished tap, which phones require) ---------- */
@@ -331,6 +336,7 @@ const sc=y=>SX/(y+D0);
 const PX=(x,y)=>CX+x*SX/(y+D0);
 const PY=(y,z=0)=>HY+CY/(y+D0)-z*SX/(y+D0);
 const unX=(sx,y)=>(sx-CX)*(y+D0)/SX;
+const unY=Y=>CY/(Y-HY)-D0;
 
 /* ---------- static background: wall, desk, the long wooden ruler lane with two pencils for bumpers ---------- */
 function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
@@ -353,6 +359,12 @@ function longPencil(c,x0,x1){const yA=-20,w=x1-x0,yE=P.PIT-9,yF=P.PIT-14;
   c.save();quad(c,x0,x0+w*.33,yA,yF);c.clip();c.strokeStyle='rgba(201,154,26,.5)';c.lineWidth=.8;for(let y=yA;y<yF;y+=6){c.beginPath();c.moveTo(PX(x0,y),PY(y));c.lineTo(PX(x0+w*.33,y+4),PY(y+4));c.stroke()}c.restore();
   quad(c,x0,x1,yF,yE);c.fillStyle='#dedcd4';c.fill();c.strokeStyle=INK;c.lineWidth=1;c.stroke();
   quad(c,x0,x1,yE,P.PIT);c.fillStyle=PINKW;c.fill();c.stroke()}
+/* the drawn lane (ruler + two pencils), pre-straightened so each row runs linearly across lane x -35..35 (ruler edges at +-21,
+   pencils at +-28.2..33.5). Its rows run evenly from the ruler's far end (PITY) to the bottom of the canvas; each screen row is
+   stretched across the trapezoid at that depth, so it follows the game's own vanishing geometry exactly. */
+function drawLaneArt(c,im){const XR=35,top=PITY,n=Math.ceil((H-top)*dpr),ih=im.height;
+  for(let i=0;i<n;i++){const Y=top+i/dpr,ly=unY(Y+.5/dpr),x0=PX(-XR,ly),x1=PX(XR,ly),sr=Math.min(ih-1,Math.floor((i+.5)/n*ih));
+    c.drawImage(im,0,sr,im.width,1,x0,Y,x1-x0,1.5/dpr)}}
 let HOR=0,SHORE=0,PITY=0;
 function buildBG(){
   bg=document.createElement('canvas');bg.width=cv.width;bg.height=cv.height;const c=bg.getContext('2d');c.scale(dpr,dpr);const R=srand(7);
@@ -374,6 +386,8 @@ function buildBG(){
   for(let i=0;i<14;i++){const y=R()*P.PIT,x=(R()<.5?-1:1)*(34+R()*50),l=6+R()*12;c.beginPath();c.moveTo(PX(x,y),PY(y));c.lineTo(PX(x+1,y+l),PY(y+l));c.stroke()}
   // shadow of the ruler on the desk, then the ruler itself
   quad(c,-P.HW-1.6,P.HW+1.6,-20,P.PIT-.4);c.fillStyle=SHADOW;c.fill();
+  const laneIm=art('lane');
+  if(laneIm)drawLaneArt(c,laneIm);else{
   quad(c,-P.HW,P.HW,-20,P.PIT);c.fillStyle='#f0ece1';c.fill();
   // faint wood grain down the ruler
   c.strokeStyle='rgba(46,46,51,.13)';c.lineWidth=.8;for(let i=0;i<9;i++){const gx=-P.HW+3+R()*(2*P.HW-6),ya=R()*P.HEAD,yb=Math.min(P.PIT,ya+40+R()*120);c.beginPath();c.moveTo(PX(gx,ya),PY(ya));c.lineTo(PX(gx+(R()-.5)*1.5,yb),PY(yb));c.stroke()}
@@ -390,7 +404,7 @@ function buildBG(){
   c.lineWidth=2;c.beginPath();c.moveTo(PX(-P.HW-1,P.PIT),PITY);c.lineTo(PX(P.HW+1,P.PIT),PITY);c.stroke();
   c.strokeStyle=PENCIL;c.lineWidth=.8;for(let x=PX(-P.HW,P.PIT);x<PX(P.HW,P.PIT);x+=4){c.beginPath();c.moveTo(x,PITY-7);c.lineTo(x+3,PITY-1);c.stroke()}
   // two long pencils lying beside the ruler as bumpers
-  longPencil(c,-(P.HW+9.8),-(P.HW+7.2));longPencil(c,P.HW+7.2,P.HW+9.8);
+  longPencil(c,-(P.HW+9.8),-(P.HW+7.2));longPencil(c,P.HW+7.2,P.HW+9.8);}
   // foul line, guide dots and arrows
   quad(c,-P.HW,P.HW,-.7,.7);c.fillStyle=INK;c.fill();
   for(let k=-2;k<=2;k++){const x=k*6,y=22;c.fillStyle=GRAPH;c.beginPath();c.ellipse(PX(x,y),PY(y),.7*sc(y),.35*sc(y),0,0,7);c.fill()}
@@ -405,6 +419,12 @@ function buildBG(){
    Local coords: x runs from the flat base (0) to the eraser end (15), y is across (+-2.4). */
 function drawPinAx(c,bx,by,ax,ay,px,py,face,alpha,lying){
   c.save();c.globalAlpha=alpha==null?1:alpha;c.translate(bx,by);c.transform(ax,ay,px,py,0,0);c.lineJoin='round';c.lineCap='round';
+  const im=lying?art('pin-down'):art('pin');
+  if(im){if(lying){// drawn lying sideways, point at the base end; mirrored so the face stays upright on screen
+      const h=15*im.height/im.width;if(ax<0)c.scale(1,-1);c.drawImage(im,0,-h/2,15,h)}
+    else{// standing: image top (eraser) at the far end of the axis, pencil point at the base
+      const w=15*im.width/im.height;c.transform(0,1,-1,0,15,0);c.drawImage(im,-w/2,0,w,15)}
+    c.restore();return}
   // wooden body with a coloured-pencil yellow wash
   c.fillStyle=YELW;c.beginPath();c.rect(0,-2.4,10.6,4.8);c.fill();
   c.strokeStyle='rgba(201,154,26,.55)';c.lineWidth=.14;for(let x=.6;x<10;x+=1.3){c.beginPath();c.moveTo(x,2.3);c.lineTo(x+1,.4);c.stroke()}
@@ -438,6 +458,8 @@ function drawPin(c,p,t){
 /* the round pink eraser that rolls down the ruler */
 function drawEraser(c,X,Y,R,roll,side,shadowY){
   if(shadowY!=null){c.fillStyle=SHADOW;c.beginPath();c.ellipse(X+R*.15,shadowY,R*1.05,R*.3,0,0,7);c.fill()}
+  const im=art('eraser');
+  if(im){const w=R*2.25,h=w*im.height/im.width;c.save();c.translate(X,Y+R-h/2);c.rotate(roll*.6+side);c.drawImage(im,-w/2,-h/2,w,h);c.restore();return}
   c.save();c.translate(X,Y);
   c.fillStyle=PINKW;c.beginPath();c.arc(0,0,R,0,7);c.fill();
   c.save();c.beginPath();c.arc(0,0,R,0,7);c.clip();c.rotate(roll*.6+side);
@@ -456,6 +478,8 @@ function drawBug(c,cr,t){
   const s=sc(cr.y)*1.55,X=PX(cr.x,cr.y),Yg=PY(cr.y),hop=cr.hop||0,Y=Yg-hop*s,walk=cr.moving?t*16:0,face=Math.sign(cr.vx)||1;
   c.fillStyle=SHADOW;c.beginPath();c.ellipse(X,Yg,4.2*s/(1+hop),1.2*s/(1+hop),0,0,7);c.fill();
   c.save();c.translate(X,Y);if(cr.bonk>0)c.rotate(Math.sin(t*14)*.18);c.scale(face,1);c.lineCap='round';c.lineJoin='round';
+  const bim=art('bug');
+  if(bim){const w=8*s,h=w*bim.height/bim.width,bob=cr.moving?Math.abs(Math.sin(walk*.5))*.25*s:0;c.drawImage(bim,-3.6*s,-h-bob,w,h)}else{
   // legs
   c.strokeStyle=INK;c.lineWidth=Math.max(1,.38*s);
   for(const sd of[-1,1])for(let i=0;i<3;i++){const ph=Math.sin(walk+i*2.1+(sd>0?1:0))*.5*s,bx=sd*(.6+i*.8)*s-.4*s,by=-1.2*s;
@@ -469,13 +493,18 @@ function drawBug(c,cr,t){
   c.fillStyle=INK;const dz=cr.bonk>0?0:.2;c.beginPath();c.arc((2.5+dz)*s,-2.3*s,.26*s,0,7);c.arc((3.3+dz)*s,-2.1*s,.26*s,0,7);c.fill();
   c.lineWidth=Math.max(.8,.22*s);c.beginPath();c.arc(2.9*s,-1.6*s,.5*s,.2,Math.PI-.4);c.stroke();
   c.lineWidth=Math.max(.8,.24*s);for(const k of[-1,1]){const ty=-4.9*s+Math.sin(walk*.5+k)*.2*s;c.beginPath();c.moveTo((2.6+k*.3)*s,-3.1*s);c.quadraticCurveTo((2.8+k*.9)*s,-4.6*s,(3.2+k*1.3)*s,ty);c.stroke();
-    c.beginPath();c.arc((3.2+k*1.3)*s,ty,.3*s,0,7);c.stroke()}
+    c.beginPath();c.arc((3.2+k*1.3)*s,ty,.3*s,0,7);c.stroke()}}
   c.restore();
   if(cr.bonk>0){c.fillStyle=YEL;c.strokeStyle=INK;c.lineWidth=1;for(let i=0;i<3;i++){const a=t*6+i*2.09;star(c,X+Math.cos(a)*3*s,Y-5.6*s+Math.sin(a)*.8*s,.8*s)}}}
 function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const a=i*Math.PI/5-Math.PI/2,q=i%2?r*.45:r;c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q)}c.closePath();c.fill();c.stroke()}
 /* a tall pencil standing in a cup at the far end of the desk; it sways with the draft */
 function drawPencilCup(c,x,y,t,lean){const X=PX(x,y),Y=PY(y),s=sc(y);if(X<-80*s||X>W+80*s)return;const h=36*s,sw=lean*s*6+Math.sin(t*1.3+x)*s*.8;
   c.fillStyle=SHADOW;c.beginPath();c.ellipse(X+6*s,Y,9*s,2*s,0,0,7);c.fill();
+  const im=art('pencil-cup');
+  if(im){// the cup keeps the old cup's footprint (rim 12 wide, 12 up); the pencils above the rim lean with the draft
+    const iw=im.width,ih=im.height,k=12*s/iw,sp=Math.round(ih*.37),Ys=Y-(ih-sp)*k;
+    c.save();c.translate(X,Ys);c.transform(1,0,-sw/h,1,0,0);c.drawImage(im,0,0,iw,sp,-6*s,-sp*k,12*s,sp*k+.5);c.restore();
+    c.drawImage(im,0,sp,iw,ih-sp,X-6*s,Ys,12*s,(ih-sp)*k);return}
   c.save();c.translate(X,Y);c.rotate(Math.atan2(sw,h));c.lineJoin='round';c.lineCap='round';
   const w=2.6*s;
   c.fillStyle=YELW;c.strokeStyle=INK;c.lineWidth=Math.max(1,.5*s);c.beginPath();c.rect(-w,-h,2*w,h-6*s);c.fill();c.stroke();
@@ -678,7 +707,7 @@ function draw(){
   if(b){if(b.on)objs.push({y:b.y,f:()=>{const s=sc(b.y),R=P.BR*s,sink=(b.gut?Math.min(1,(b.y-b.gutY)/12)*2.2:0)+Math.max(0,b.y-P.PIT)*.9,X=PX(b.x,b.y),Y=PY(b.y,P.BR-sink);
       drawEraser(c,X,Y,R,b.roll/P.BR,Math.atan2(b.vx,b.vy)*.6,PY(b.y)+(b.gut?0:0))}})}
   else if(screen==='play'&&(phase==='aim'||phase==='sweep')){const pop=phase==='sweep'?Math.min(1,sweep?sweep.t*2:1):Math.min(1,phaseT*5+.2);
-    objs.push({y:BALL_Y,f:()=>{const s=sc(BALL_Y),R=P.BR*s*pop,bob=Math.sin(T*3)*.4;drawEraser(c,PX(ballX,BALL_Y),PY(BALL_Y,P.BR*pop+bob*.5),R,T*.15,0,PY(BALL_Y))}})}
+    objs.push({y:BALL_Y,f:()=>{const s=sc(BALL_Y),R=P.BR*s*pop,bob=Math.sin(T*3)*.4;drawEraser(c,PX(ballX,BALL_Y),PY(BALL_Y,P.BR*pop+bob*.5),R,Math.sin(T*1.6)*.25,0,PY(BALL_Y))}})}
   objs.sort((a,b)=>b.y-a.y);for(const o of objs)o.f();
   if(sweep){const wy=P.HEAD-30+Math.min(1,sweep.t/.45)*(P.PIT-P.HEAD+40);if(sweep.t<.52)drawWave(c,wy,sweep.t)}
   // breeze streaks

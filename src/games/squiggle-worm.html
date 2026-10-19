@@ -241,15 +241,15 @@ const NAMES=['Noodle','Scribble','Wiggles','Sprinkle','Ziggy','Pebble','Inky','S
 /* ---------- Mark's hand-drawn art; the code-drawn sprites above stay as the fallback while it loads ---------- */
 const ART={};
 function loadArt(n){const i=new Image();i.decoding='async';i.src='../assets/squiggle-worm/'+n+'.webp';ART[n]=i}
-['head-player','body-player','tail-player','head-pink','body-pink','head-lime','body-lime','head-lavender','body-lavender','head-blue','body-blue','plankton','pearl','poof'].forEach(loadArt); // the painted floor tile stays out: the code draws graph paper instead
+['head-player','body-player','head-pink','body-pink','head-green','body-green','head-purple','body-purple','head-blue','body-blue','plankton','pearl','poof','wall-shavings','wall-eraser','wall-clip','floor-tile'].forEach(loadArt);
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
-/* rival eels come in four drawn colours; each bot palette picks the nearest one */
-const ART_REF={pink:[196,90,138],lime:[90,154,106],lavender:[111,74,154],blue:[47,111,181]},ART_COL={pink:'#c45a8a',lime:'#5a9a6a',lavender:'#6f4a9a',blue:'#2f6fb5'};
+/* rival squiggles come in four drawn colours; each bot palette picks the nearest one */
+const ART_REF={pink:[196,90,138],green:[90,154,106],purple:[111,74,154],blue:[47,111,181]},ART_COL={pink:'#c45a8a',green:'#5a9a6a',purple:'#6f4a9a',blue:'#2f6fb5'};
 function nearestArt(c){const h=hex(c);let best='pink',bd=1e9;for(const k in ART_REF){const r=ART_REF[k],d=(h[0]-r[0])**2+(h[1]-r[1])**2+(h[2]-r[2])**2;if(d<bd){bd=d;best=k}}return best}
-/* plankton tinted to each FOODCOLS entry, cached once the drawing has loaded */
+/* the drawn ink dot is stored in grey; tint it to each FOODCOLS entry, cached once the drawing has loaded */
 const PLANK=[];
 function plankSprite(ci){if(PLANK[ci])return PLANK[ci];const im=art('plankton');if(!im)return null;const w=128,h=Math.round(w*im.naturalHeight/im.naturalWidth),c=mkC(w,h),g=c.getContext('2d');
-  g.drawImage(im,0,0,w,h);g.globalCompositeOperation='multiply';g.fillStyle=mix(FOODCOLS[ci],'#ffffff',.42);g.fillRect(0,0,w,h);g.globalCompositeOperation='destination-in';g.drawImage(im,0,0,w,h);PLANK[ci]=c;return c}
+  g.drawImage(im,0,0,w,h);g.globalCompositeOperation='multiply';g.fillStyle=FOODCOLS[ci];g.fillRect(0,0,w,h);g.globalCompositeOperation='destination-in';g.drawImage(im,0,0,w,h);PLANK[ci]=c;return c}
 
 const palCache={};
 function palette(p){const k=p.join();if(!palCache[k]){const isP=p[0]===PLAYER_PAL[0]&&p[1]===PLAYER_PAL[1],a=isP?'player':nearestArt(p[0]);
@@ -263,20 +263,7 @@ const TILE=(()=>{const S=512,c=mkC(S),g=c.getContext('2d');seed=11;
   g.strokeStyle='rgba(47,111,181,.26)';g.lineWidth=2;g.beginPath();for(let k=0;k<S;k+=160){g.moveTo(k+.5,0);g.lineTo(k+.5,S);g.moveTo(0,k+.5);g.lineTo(S,k+.5)}g.stroke();
   for(let i=0;i<40;i++){const x=srnd()*S,y=srnd()*S,r=1+srnd()*1.6;g.fillStyle='rgba(46,46,51,'+(.05+srnd()*.08)+')';g.beginPath();g.arc(x,y,r,0,TAU);g.fill()}
   return c})();
-let TILEPAT=null,FLOORC=null;const FLOOR_T=340; // world size of one repeat of the drawn seabed tile
-/* The drawn seabed has a soft torn edge and its opposite sides don't wrap. Take the opaque middle, then blend it with
-   half-offset copies of itself in narrow bands along the seams (each copy is continuous where the others break). */
-function seamless(img,T){
-  const in_=6,sw=img.naturalWidth-in_*2,sh=img.naturalHeight-in_*2,base=mkC(T),bg=base.getContext('2d');bg.drawImage(img,in_,in_,sw,sh,0,0,T,T);
-  try{
-    const bd=bg.getImageData(0,0,T,T).data,out=mkC(T),og=out.getContext('2d'),od=og.createImageData(T,T),o=od.data,H=T>>1,B=T*.14;
-    const wgt=v=>{const d=Math.min(v,T-v)/B;return d>=1?1:d*d*(3-2*d)};
-    for(let y=0;y<T;y++){const ay=wgt(y),y2=(y+H)%T;for(let x=0;x<T;x++){const ax=wgt(x),x2=(x+H)%T;
-      const wA=ax*ay,wQ=(1-ax)*ay,wR=ax*(1-ay),wS=(1-ax)*(1-ay),iA=(y*T+x)*4,iQ=(y*T+x2)*4,iR=(y2*T+x)*4,iS=(y2*T+x2)*4;
-      for(let c=0;c<3;c++)o[iA+c]=bd[iA+c]*wA+bd[iQ+c]*wQ+bd[iR+c]*wR+bd[iS+c]*wS;o[iA+3]=255}}
-    og.putImageData(od,0,0);return out}
-  catch(e){return base}
-}
+let TILEPAT=null;const FLOOR_K=.5; // Mark's graph-paper tile: a whole 16x16 squares, 64px each in the file = the old 32-unit world squares
 
 /* desk-side doodads: pencil-shaving curls, erasers and paper clips, all pencil on paper */
 function shavingSprite(col){const c=mkC(128),g=c.getContext('2d');g.translate(64,64);g.lineCap='round';g.lineJoin='round';
@@ -304,8 +291,13 @@ function pileSprite(col,kind){const c=mkC(128),g=c.getContext('2d');g.translate(
   return c}
 const CORALS=[pileSprite('#d9661a',0),eraserSprite('#c45a8a'),pileSprite('#c99a1a',2),eraserSprite('#2f6fb5'),pileSprite('#5a9a6a',4),clipSprite()];
 const DECOR_SPR=[shavingSprite('#d9661a'),shavingSprite('#c99a1a'),clipSprite(),clipSprite(),eraserSprite('#c45a8a'),shavingSprite('#5a9a6a'),clipSprite(),shavingSprite('#6f4a9a')];
-const DECOR=[];(()=>{seed=99;for(let i=0;i<220;i++){const a=srnd()*TAU,d=Math.sqrt(srnd())*(R-160);DECOR.push({x:Math.cos(a)*d,y:Math.sin(a)*d,s:DECOR_SPR[Math.floor(srnd()*DECOR_SPR.length)],sz:34+srnd()*36,rot:srnd()*TAU})}})();
-const WALL=[];(()=>{seed=5;for(const ring of[[R+38,64,90],[R+110,80,120],[R+200,95,150]]){const n=Math.floor(TAU*ring[0]/ring[1]);for(let i=0;i<n;i++){const a=i/n*TAU+srnd()*.01,d=ring[0]+srnd()*20;WALL.push({x:Math.cos(a)*d,y:Math.sin(a)*d,s:CORALS[Math.floor(srnd()*CORALS.length)],sz:ring[2]*(.85+srnd()*.35),rot:srnd()*TAU})}}})();
+/* which drawing stands in for each code-drawn heap/doodad */
+const CORAL_ART=['wall-shavings','wall-eraser','wall-shavings','wall-clip','wall-shavings','wall-clip'];
+const DECOR_ART=['wall-shavings','wall-shavings','wall-clip','wall-clip','wall-eraser','wall-shavings','wall-clip','wall-shavings'];
+/* draw a desk bit centred at 0,0 inside an sz box: the drawing (contained, aspect kept) once loaded, else the code sprite */
+function deskBit(spr,an,sz){const im=art(an);if(im){const k=sz/Math.max(im.naturalWidth,im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;ctx.drawImage(im,-w/2,-h/2,w,h)}else ctx.drawImage(spr,-sz/2,-sz/2,sz,sz)}
+const DECOR=[];(()=>{seed=99;for(let i=0;i<220;i++){const a=srnd()*TAU,d=Math.sqrt(srnd())*(R-160);const k=Math.floor(srnd()*DECOR_SPR.length);DECOR.push({x:Math.cos(a)*d,y:Math.sin(a)*d,s:DECOR_SPR[k],an:DECOR_ART[k],sz:34+srnd()*36,rot:srnd()*TAU})}})();
+const WALL=[];(()=>{seed=5;for(const ring of[[R+38,64,90],[R+110,80,120],[R+200,95,150]]){const n=Math.floor(TAU*ring[0]/ring[1]);for(let i=0;i<n;i++){const a=i/n*TAU+srnd()*.01,d=ring[0]+srnd()*20;const k=Math.floor(srnd()*CORALS.length);WALL.push({x:Math.cos(a)*d,y:Math.sin(a)*d,s:CORALS[k],an:CORAL_ART[k],sz:ring[2]*(.85+srnd()*.35),rot:srnd()*TAU})}}})();
 
 /* ---------- spatial hash: every body segment of every eel, rebuilt each frame ---------- */
 const CELL=64,GOFF=R+256,GN=Math.ceil(2*GOFF/CELL),GC=GN*GN;
@@ -603,12 +595,11 @@ function drawBackground(t){
   const hw=W/2/cam.z,hh=H/2/cam.z,x0=cam.x-hw-20,y0=cam.y-hh-20,x1=cam.x+hw+20,y1=cam.y+hh+20;
   const nearEdge=Math.hypot(cam.x,cam.y)+Math.hypot(hw,hh)+40>R-260;
   const ft=art('floor-tile');
-  if(!TILEPAT||TILEPAT.c!==ctx||TILEPAT.img!==ft){let src=TILE;
-    if(ft)src=FLOORC||(FLOORC=seamless(ft,FLOOR_T));
-    TILEPAT={c:ctx,img:ft,p:ctx.createPattern(src,'repeat')}}
+  if(!TILEPAT||TILEPAT.c!==ctx||TILEPAT.img!==ft){const p=ctx.createPattern(ft||TILE,'repeat');if(ft&&p.setTransform)p.setTransform(new DOMMatrix([FLOOR_K,0,0,FLOOR_K,0,0]));
+    TILEPAT={c:ctx,img:ft,p}}
   ctx.fillStyle=TILEPAT.p;ctx.fillRect(x0,y0,x1-x0,y1-y0);
   // doodads scattered across the page: shavings, clips, erasers
-  if(!ft)for(const d of DECOR){if(d.x<x0-60||d.x>x1+60||d.y<y0-60||d.y>y1+60)continue;ctx.save();ctx.translate(d.x,d.y);ctx.rotate(d.rot);ctx.globalAlpha=.6;ctx.drawImage(d.s,-d.sz/2,-d.sz/2,d.sz,d.sz);ctx.restore()}
+  for(const d of DECOR){if(d.x<x0-60||d.x>x1+60||d.y<y0-60||d.y>y1+60)continue;ctx.save();ctx.translate(d.x,d.y);ctx.rotate(d.rot);ctx.globalAlpha=.6;deskBit(d.s,d.an,d.sz);ctx.restore()}
   ctx.globalAlpha=1;
   if(nearEdge){
     // a pencil margin ring toward the edge, then the bare desk outside the page
@@ -622,16 +613,16 @@ function drawBackground(t){
   ctx.strokeStyle='#e4e2d8';ctx.lineWidth=26;ctx.beginPath();ctx.arc(0,0,R+14,0,TAU);ctx.stroke();
   ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,R+2,0,TAU);ctx.stroke();
   if(player&&player.alive&&state==='play'){const dw=R-Math.hypot(player.x,player.y);if(dw<320){ctx.strokeStyle='rgba(217,102,26,'+(.25+.25*Math.sin(t*10))*(1-dw/320)+')';ctx.lineWidth=30;ctx.beginPath();ctx.arc(0,0,R-8,0,TAU);ctx.stroke()}}
-  for(const w of WALL){if(w.x<x0-80||w.x>x1+80||w.y<y0-80||w.y>y1+80)continue;ctx.save();ctx.translate(w.x,w.y);ctx.rotate(w.rot);ctx.drawImage(w.s,-w.sz/2,-w.sz/2,w.sz,w.sz);ctx.restore()}
+  for(const w of WALL){if(w.x<x0-80||w.x>x1+80||w.y<y0-80||w.y>y1+80)continue;ctx.save();ctx.translate(w.x,w.y);ctx.rotate(w.rot);deskBit(w.s,w.an,w.sz);ctx.restore()}
 }
 function drawFood(t){
   const hw=W/2/cam.z+30,hh=H/2/cam.z+30;
   for(const f of food){if(Math.abs(f.x-cam.x)>hw||Math.abs(f.y-cam.y)>hh)continue;
     const grow=Math.min(1,f.age*3),pul=1+Math.sin(t*4+f.ph)*.15,r=f.r*grow*pul;
     const x=f.x+Math.sin(t*1.3+f.ph)*2,y=f.y+Math.cos(t*1.1+f.ph)*2;
-    if(f.pearl){const g=r*3.2;ctx.drawImage(f.pal.glow,x-g,y-g,g*2,g*2);ctx.drawImage(art('pearl')||PEARL,x-r,y-r,r*2,r*2)}
+    if(f.pearl){const g=r*3.2;ctx.drawImage(f.pal.glow,x-g,y-g,g*2,g*2);const pi=art('pearl');if(pi){const c=r*1.3,h=c*pi.naturalHeight/pi.naturalWidth;ctx.drawImage(pi,x-c,y-h,c*2,h*2)}else ctx.drawImage(PEARL,x-r,y-r,r*2,r*2)}
     else{const g=r*2.8;ctx.drawImage(FOODGLOW[f.c],x-g,y-g,g*2,g*2);const pk=plankSprite(f.c);
-      if(pk){const c=r*1.25,h=c*pk.height/pk.width;ctx.drawImage(pk,x-c,y-h,c*2,h*2)}
+      if(pk){const c=r*2.2,h=c*pk.height/pk.width;ctx.drawImage(pk,x-c,y-h,c*2,h*2)}
       else{const c=r*.75;ctx.drawImage(FOODBALL[f.c],x-c,y-c,c*2,c*2)}}
   }
 }
@@ -645,20 +636,17 @@ function drawEel(e,t,cull){
   if(WX.length<n*2)WX=new Float32Array(MAXN*2);const wx=WX;
   for(let i=0;i<n;i++){const a=Math.max(0,i-1),b=Math.min(n-1,i+1);let dx=s[b*2]-s[a*2],dy=s[b*2+1]-s[a*2+1];const d=Math.hypot(dx,dy)||1;
     const w=Math.sin(t*7-i*.55)*e.r*.16*Math.min(1,i/4);wx[i*2]=s[i*2]-dy/d*w;wx[i*2+1]=s[i*2+1]+dx/d*w}
-  const bd=art('body-'+P.art),tl=bd&&P.art==='player'?art('tail-player'):null;
-  // drawn tapered tail: anchored a few beads before the end so its tip lands on the last segment, fat end facing the head
-  if(tl&&n>5){const i=n-1,j=n-4,tx=wx[j*2],ty=wx[j*2+1],a=Math.atan2(ty-wx[i*2+1],tx-wx[i*2]),r=e.r*1.02,h=r*2,w=h*tl.naturalWidth/tl.naturalHeight;
-    if(vis(tx,ty)){ctx.save();ctx.translate(tx,ty);ctx.rotate(a+Math.sin(t*9)*.12);ctx.drawImage(tl,-(w-r),-h/2,w,h);ctx.restore()}}
-  // code-drawn tail fin (fallback while the drawings load)
-  else if(!bd&&n>2){const i=n-1,tx=wx[i*2],ty=wx[i*2+1],a=Math.atan2(ty-wx[(i-1)*2+1],tx-wx[(i-1)*2]),fr=e.r*.9;
+  const bd=art('body-'+P.art);
+  // code-drawn tail fin (fallback while the drawings load; the drawn beads just taper)
+  if(!bd&&n>2){const i=n-1,tx=wx[i*2],ty=wx[i*2+1],a=Math.atan2(ty-wx[(i-1)*2+1],tx-wx[(i-1)*2]),fr=e.r*.9;
     if(vis(tx,ty)){ctx.save();ctx.translate(tx,ty);ctx.rotate(a+Math.sin(t*9)*.25);
       for(const sd of[-1,1]){ctx.fillStyle=P.dark;ctx.beginPath();ctx.ellipse(fr*.55,sd*fr*.42,fr*.78,fr*.42,sd*.55,0,TAU);ctx.fill();
         ctx.fillStyle=rgba(P.col,.3);ctx.beginPath();ctx.ellipse(fr*.55,sd*fr*.42,fr*.64,fr*.3,sd*.55,0,TAU);ctx.fill()}
       ctx.restore()}}
   if(e.boost){ctx.globalAlpha=.5;for(let i=0;i<n;i+=2){const x=wx[i*2],y=wx[i*2+1];if(!vis(x,y))continue;const g=e.r*2.4;ctx.drawImage(P.glow,x-g,y-g,g*2,g*2)}ctx.globalAlpha=1}
-  if(bd){ // drawn body beads, tail to head (they carry their own outline); the last beads hide under the drawn tail
-    const first=tl&&n>5?n-4:n-1;
-    for(let i=first;i>=1;i-=2){const x=wx[i*2],y=wx[i*2+1];if(!vis(x,y))continue;const r=tl?e.r:segR(e,i);ctx.drawImage(bd,x-r,y-r,r*2,r*2)}
+  if(bd){ // Mark's drawn beads, tail to head (they carry their own outline), tapering at the tail
+    const bh=bd.naturalHeight/bd.naturalWidth;
+    for(let i=n-1;i>=1;i-=2){const x=wx[i*2],y=wx[i*2+1];if(!vis(x,y))continue;const r=segR(e,i)*1.08;ctx.drawImage(bd,x-r,y-r*bh,r*2,r*2*bh)}
   }else{ // outline pass, then glossy striped pass, tail to head
     for(let i=n-1;i>=0;i--){const x=wx[i*2],y=wx[i*2+1];if(!vis(x,y))continue;const r=segR(e,i)*1.14;ctx.drawImage(P.o,x-r,y-r,r*2,r*2)}
     for(let i=n-1;i>=1;i--){const x=wx[i*2],y=wx[i*2+1];if(!vis(x,y))continue;const r=segR(e,i);ctx.drawImage(((i+2)/3|0)%2?P.b:P.a,x-r,y-r,r*2,r*2)}}
@@ -667,8 +655,9 @@ function drawEel(e,t,cull){
 function drawHead(e,t){
   const P=e.pal,hr=e.r*1.22,hd=art('head-'+P.art);
   ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.ang);
-  if(hd){ // drawn head faces right; nose sits just past the collision circle, the neck tucks back over the first beads
-    const h=hr*2,w=h*hd.naturalWidth/hd.naturalHeight;ctx.drawImage(hd,hr*1.15-w,-h/2,w,h);ctx.restore();return}
+  if(hd){ // Mark's head is a face seen from the front: keep it upright over the head circle with just a little lean into turns
+    ctx.restore();ctx.save();ctx.translate(e.x,e.y);ctx.rotate(clamp(angDiff(e.want,e.ang),-1,1)*.18+Math.sin(t*3+e.id)*.05);
+    const w=hr*2.1,h=w*hd.naturalHeight/hd.naturalWidth;ctx.drawImage(hd,-w/2,-h/2,w,h);ctx.restore();return}
   ctx.drawImage(P.o,-hr*1.1,-hr*1.1,hr*2.2,hr*2.2);ctx.drawImage(P.a,-hr,-hr,hr*2,hr*2);
   // cheeks + smile
   ctx.fillStyle='rgba(196,90,138,.35)';for(const sd of[-1,1]){ctx.beginPath();ctx.ellipse(hr*.42,sd*hr*.66,hr*.16,hr*.12,0,0,TAU);ctx.fill()}
@@ -695,7 +684,7 @@ function drawLabel(e){
 function drawParts(){
   for(const p of parts){const a=clamp(p.life/p.max*1.6,0,1);ctx.globalAlpha=a;
     if(p.k==='bub'){const r=p.r*(1.4-p.life/p.max*.6);ctx.drawImage(BUBBLE,p.x-r,p.y-r,r*2,r*2)}
-    else if(p.k==='poof'){const im=art('poof');if(!im)continue;const r=p.r*(1.5-p.life/p.max*.7);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.drawImage(im,-r,-r,r*2,r*2);ctx.restore()}
+    else if(p.k==='poof'){const im=art('poof');if(!im)continue;const r=p.r*(1.5-p.life/p.max*.7),h=r*im.naturalHeight/im.naturalWidth;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.rot)*.35);ctx.drawImage(im,-r,-h,r*2,h*2);ctx.restore()}
     else{ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,TAU);ctx.fill()}}
   ctx.globalAlpha=1;
   for(const p of pops){const fs=Math.max(16,24/cam.z*.8)*p.s;ctx.globalAlpha=clamp(p.life*2,0,1);ctx.font=fs+'px "Gloria Hallelujah","Comic Sans MS",cursive';ctx.textAlign='center';ctx.textBaseline='middle';

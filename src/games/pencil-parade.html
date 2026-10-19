@@ -289,11 +289,19 @@ const birdSpr=[[],[]],flySpr=[[],[]];
 for(let d=0;d<2;d++){for(let f=0;f<4;f++){const s=mk(SPR,SPR),c=s.getContext('2d');if(d){c.translate(SPR,0);c.scale(-1,1)}drawBird(c,f,false,false);birdSpr[d].push(s)}
   for(let f=0;f<2;f++){const s=mk(SPR,SPR),c=s.getContext('2d');if(d){c.translate(SPR,0);c.scale(-1,1)}drawBird(c,f,true,true);flySpr[d].push(s)}}
 
-/* ---------- pencil art: gates, ball and ink puddle from ../assets/pencil-parade/; the pencil stubs are drawn above ---------- */
+/* ---------- Mark's pencil art from ../assets/pencil-parade/; the code-drawn versions stay as fallbacks until each image loads ---------- */
 const ART={};
-for(const nm of ['gate-good','gate-bad','beachball','puddle']){const im=new Image();
+for(const nm of ['pencil-a','pencil-b','compass','eraser','crayon','paperclip','sticky-note','hole','bouncy-ball','gate-good','gate-bad','puddle']){const im=new Image();
   im.onload=()=>{if(im.naturalWidth){ART[nm]=im;artReady(nm)}};im.onerror=()=>{};im.src='../assets/pencil-parade/'+nm+'.webp'}
-function artReady(nm){drawMini()}
+/* the walking pencils go into the same 96-box sprite slots as the drawn ones (feet at y=86), so every place that draws birdSpr/flySpr just works */
+const PB=192,PK=PB/SPR;
+function pencilFrame(im,mir,rot,shadow){const s=mk(PB,PB),c=s.getContext('2d'),h=78*PK,w=h*im.naturalWidth/im.naturalHeight;
+  if(mir){c.translate(PB,0);c.scale(-1,1)}
+  if(shadow){c.fillStyle=SHADE;ell(c,48*PK,87*PK,20*PK,4.5*PK);c.fill()}
+  if(rot){c.translate(48*PK,48*PK);c.rotate(rot);c.drawImage(im,-w/2,-h/2,w,h)}else c.drawImage(im,48*PK-w/2,86.5*PK-h,w,h);return s}
+function buildPencils(){const a=ART['pencil-a'],b=ART['pencil-b'];if(!a||!b)return;
+  for(let d=0;d<2;d++){birdSpr[d]=[a,a,b,b].map(im=>pencilFrame(im,d,0,true));flySpr[d]=[pencilFrame(a,d,.5,false),pencilFrame(b,d,-.45,false)]}}
+function artReady(nm){if(nm==='pencil-a'||nm==='pencil-b')buildPencils();drawMini()}
 
 /* ---------- game state ---------- */
 let screen='start',paused=false,helpOpen=false,hiddenPause=false;
@@ -552,10 +560,12 @@ function drawGround(){const c=ctx,yFar=py(ZFAR,0);
 function shadowAt(x,z,rx){const s=sc(z);ctx.fillStyle=SHADE;ell(ctx,px(x,z),py(z,0),rx*RW*s,rx*RW*s*.32);ctx.fill()}
 function drawFlat(o,z){const c=ctx,s=sc(z);
   if(o.t==='puddle'){const X=px(o.x,z),Y=py(z,0),rx=o.rx*RW*s,yA=py(z+o.rz,0),yB=py(z-o.rz,0),ry=(yB-yA)/2,cy=(yA+yB)/2;
-    if(ART.puddle){c.drawImage(ART.puddle,X-rx*1.06,cy-ry*1.1,rx*2.12,ry*2.2);const rp=(time*.5+o.ph)%1;c.strokeStyle=`rgba(47,111,181,${(1-rp)*.6})`;c.lineWidth=Math.max(1,rx*.04);ell(c,X,cy,rx*(.2+.5*rp),ry*(.2+.5*rp));c.stroke();return}
+    if(ART.puddle){c.drawImage(ART.puddle,X-rx*1.12,cy-ry*1.12,rx*2.24,ry*2.24);const rp=(time*.5+o.ph)%1;c.strokeStyle=`rgba(47,111,181,${(1-rp)*.6})`;c.lineWidth=Math.max(1,rx*.04);ell(c,X,cy,rx*(.2+.5*rp),ry*(.2+.5*rp));c.stroke();return}
     c.fillStyle='rgba(47,111,181,.22)';ell(c,X,cy,rx,ry);c.fill();c.strokeStyle=BLUE;c.lineWidth=Math.max(1,rx*.05);c.stroke();
     const rp=(time*.6+o.ph)%1;c.strokeStyle=`rgba(47,111,181,${1-rp})`;ell(c,X+rx*.1,cy,rx*.3+rx*.5*rp,ry*(.3+.5*rp));c.stroke()}
   else if(o.t==='pit'){const z0=z-o.d*.5,z1=z+o.d*.5,y0=py(z0,0),y1=py(z1,0);
+    if(ART.hole){// the dark middle of the drawing (about 80% of it) covers the hit box; the torn rim spills past it
+      const hw=(px(o.x+o.w,z)-px(o.x-o.w,z))/.8,hh=(y0-y1)/.8;c.drawImage(ART.hole,px(o.x,z)-hw/2,(y0+y1)/2-hh/2,hw,hh);return}
     const a=[px(o.x-o.w,z1),y1],b=[px(o.x+o.w,z1),y1],cc=[px(o.x+o.w,z0),y0],d=[px(o.x-o.w,z0),y0];
     // a hole torn out of the page: the desk shows through
     c.fillStyle='#d9d7cf';c.strokeStyle=INK;c.lineWidth=Math.max(1,1.6*s);c.lineJoin='round';
@@ -564,7 +574,11 @@ function drawFlat(o,z){const c=ctx,s=sc(z);
     c.save();c.clip();c.strokeStyle='rgba(85,85,92,.5)';c.lineWidth=1;c.beginPath();const w=b[0]-a[0],h=a[1]-d[1];for(let k=-h;k<w;k+=5*s+2){c.moveTo(d[0]+k,d[1]);c.lineTo(d[0]+k+h,a[1])}c.stroke();c.restore()}
   else if(o.t==='towel'){const z0=z-.35,z1=z+.35,y0=py(z0,0),y1=py(z1,0);
     // a sticky note stuck to the page
-    const xa=o.x-.25,xb=o.x+.25;c.fillStyle=TONES[o.c%2?1:0];c.strokeStyle=INK;c.lineWidth=Math.max(1,1.5*s);
+    const xa=o.x-.25,xb=o.x+.25;
+    if(ART['sticky-note']){// lying flat on the page: squash the square note into the patch (mean of its far and near widths)
+      const im=ART['sticky-note'],mw=((px(xb,z1)-px(xa,z1))+(px(xb,z0)-px(xa,z0)))/2,mx=(px(xa,z1)+px(xb,z1)+px(xa,z0)+px(xb,z0))/4;
+      c.drawImage(im,mx-mw/2,y1,mw,y0-y1);return}
+    c.fillStyle=TONES[o.c%2?1:0];c.strokeStyle=INK;c.lineWidth=Math.max(1,1.5*s);
     c.beginPath();c.moveTo(px(xa,z1),y1);c.lineTo(px(xb,z1),y1);c.lineTo(px(xb,z0),y0);c.lineTo(px(xa,z0),y0);c.closePath();c.fill();c.stroke();
     c.strokeStyle='rgba(85,85,92,.5)';c.lineWidth=1;c.beginPath();for(let k=1;k<4;k++){const zz=z0+(z1-z0)*k/4;c.moveTo(px(xa+.08,zz),py(zz,0));c.lineTo(px(xb-.08-(k===3?.14:0),zz),py(zz,0))}c.stroke()}
   else if(o.t==='finish'){const z0=z-.3,z1=z+.3;
@@ -575,16 +589,21 @@ function drawFlat(o,z){const c=ctx,s=sc(z);
 function drawScen(o,z){const c=ctx,s=sc(z),u=RW*s;c.lineJoin='round';c.lineCap='round';
   if(o.t==='umb'){// a block eraser standing on the page
     const X=px(o.x+.3,z),Y=py(z,0),w=u*.62,h=u*.34,d=u*.14;shadowAt(o.x+.3,z,.36);
+    if(ART.eraser){const im=ART.eraser,bw=w+d,bh=(h+d)*1.1,k=Math.min(bw/im.naturalWidth,bh/im.naturalHeight),iw=im.naturalWidth*k,ih=im.naturalHeight*k;
+      if(o.c%2){c.save();c.translate(X+d/2,0);c.scale(-1,1);c.drawImage(im,-iw/2,Y-ih+u*.02,iw,ih);c.restore()}else c.drawImage(im,X+d/2-iw/2,Y-ih+u*.02,iw,ih);return}
     c.fillStyle=o.c%2?'#efeadd':'#e9e6db';c.strokeStyle=INK;c.lineWidth=Math.max(1,1.6*s);
     wrect(c,X-w/2,Y-h,w,h,1.5*s);c.fill();c.stroke();hatch(c,X-w/2,Y-h*.45,w,h*.45,Math.max(3,5*s),.3);
     c.fillStyle='#e4e2d8';c.beginPath();c.moveTo(X-w/2,Y-h);c.lineTo(X-w/2+d,Y-h-d);c.lineTo(X+w/2+d,Y-h-d);c.lineTo(X+w/2,Y-h);c.closePath();c.fill();c.stroke();
     c.beginPath();c.moveTo(X+w/2,Y-h);c.lineTo(X+w/2+d,Y-h-d);c.lineTo(X+w/2+d,Y-d);c.lineTo(X+w/2,Y);c.closePath();c.fill();c.stroke()}
   else if(o.t==='grass'){// a paper clip lying on the page
-    const X=px(o.x,z),Y=py(z,0),w=u*.1,h=u*.32;c.strokeStyle=GRAPH;c.lineWidth=Math.max(1,1.6*s);c.save();c.translate(X,Y);c.rotate(.25);
+    const X=px(o.x,z),Y=py(z,0),w=u*.1,h=u*.32;
+    if(ART.paperclip){const im=ART.paperclip,ih=u*.42,iw=ih*im.naturalWidth/im.naturalHeight;c.save();c.translate(X,Y-u*.08);c.rotate(.25);c.drawImage(im,-iw/2,-ih/2,iw,ih);c.restore();return}
+    c.strokeStyle=GRAPH;c.lineWidth=Math.max(1,1.6*s);c.save();c.translate(X,Y);c.rotate(.25);
     c.beginPath();c.moveTo(-w,0);c.lineTo(-w,-h*.75);c.arc(0,-h*.75,w,Math.PI,0);c.lineTo(w,h*.1);c.arc(0,h*.1,w,0,Math.PI);c.lineTo(-w*.5,-h*.5);c.moveTo(-w*.5,-h*.5);c.lineTo(-w*.5,h*.1);c.stroke();c.restore()}
   else if(o.t==='palm'){// a tall crayon standing up, leaning a little
     const X=px(o.x,z),Y=py(z,0),w=u*.26,h=u*1.7,tx=X+o.lean*u*.6;shadowAt(o.x+.3,z,.4);
     c.save();c.translate(X,Y);c.rotate(Math.atan2(tx-X,h)*-1);
+    if(ART.crayon){const im=ART.crayon,ih=h*.86,iw=ih*im.naturalWidth/im.naturalHeight;c.drawImage(im,-iw/2,-ih+u*.02,iw,ih);c.restore();return}
     c.fillStyle='#e9e6db';c.strokeStyle=INK;c.lineWidth=Math.max(1,1.8*s);c.beginPath();c.rect(-w/2,-h*.82,w,h*.82);c.fill();c.stroke();
     hatch(c,-w/2,-h*.82,w,h*.82,Math.max(3,7*s),.35);
     c.fillStyle='#f0ece1';c.beginPath();c.rect(-w/2,-h*.6,w,h*.26);c.fill();c.stroke();
@@ -598,12 +617,13 @@ function drawGate(g,z){const c=ctx,s=sc(z);if(z<-D0+.7)return;
   for(let side=0;side<2;side++){const op=g.ops[side],good=isGood(op),x0=side?.04:-1.04,x1=side?1.04:-.04;
     const X0=px(x0,z),X1=px(x1,z),Yb=py(z,0),Yt=py(z,1.02),Ym=py(z,.6),w=X1-X0,u=RW*s;
     const gim=ART[good?'gate-good':'gate-bad'],line=good?BLUE:PURP;
-    if(gim){const h=w*gim.naturalHeight/gim.naturalWidth,T=Yb-h*.99;
-      c.fillStyle=good?'rgba(47,111,181,.12)':'rgba(111,74,154,.12)';c.fillRect(X0+w*.2,T+h*.27,w*.6,h*.7);
-      if(g.used===side){c.fillStyle=`rgba(246,243,234,${Math.max(0,.8-g.fade*2.5)})`;c.fillRect(X0+w*.2,T+h*.27,w*.6,h*.7)}
-      c.fillStyle=SHADE;ell(c,X0+w*.11,Yb,w*.12,w*.03);c.fill();ell(c,X1-w*.11,Yb,w*.12,w*.03);c.fill();
+    if(gim){const h=w*gim.naturalHeight/gim.naturalWidth,T=Yb-h;
+      // Mark's arch: legs fill the outer ~22% each side, the doorway starts ~26% down, the solid top band holds the label
+      c.fillStyle=good?'rgba(47,111,181,.12)':'rgba(111,74,154,.12)';c.fillRect(X0+w*.2,T+h*.26,w*.6,h*.74);
+      if(g.used===side){c.fillStyle=`rgba(246,243,234,${Math.max(0,.8-g.fade*2.5)})`;c.fillRect(X0+w*.2,T+h*.26,w*.6,h*.74)}
+      c.fillStyle=SHADE;ell(c,X0+w*.11,Yb,w*.13,w*.03);c.fill();ell(c,X1-w*.11,Yb,w*.13,w*.03);c.fill();
       c.drawImage(gim,X0,T,w,h);
-      const fs=Math.max(9,h*.3),lx=(X0+X1)/2,ly=T+h*.15;c.font=FONT(fs);c.textAlign='center';c.textBaseline='middle';c.lineJoin='round';
+      const fs=Math.max(9,h*.17),lx=(X0+X1)/2,ly=T+h*.16;c.font=FONT(fs);c.textAlign='center';c.textBaseline='middle';c.lineJoin='round';
       c.lineWidth=Math.max(2.5,fs*.28);c.strokeStyle=PAPER;c.strokeText(opLabel(op),lx,ly);c.fillStyle=line;c.fillText(opLabel(op),lx,ly);continue}
     // fallback: a drawn arch
     c.fillStyle=good?'rgba(47,111,181,.1)':'rgba(111,74,154,.1)';c.fillRect(X0,Ym,w,Yb-Ym);
@@ -616,11 +636,16 @@ function drawGate(g,z){const c=ctx,s=sc(z);if(z<-D0+.7)return;
   c.globalAlpha=1}
 function drawBall(o,z){const c=ctx,s=sc(z),R=o.r*RW*s,X=px(o.x,z),Yg=py(z,0);shadowAt(o.x,z,o.r*1.05);
   const sq=o.sq*.15,rx=R*(1+sq),ry=R*(1-sq),Y=Yg-ry;
-  if(ART.beachball){c.save();c.translate(X,Y);c.scale(1+sq,1-sq);c.rotate(o.rot);c.drawImage(ART.beachball,-R,-R,R*2,R*2);c.restore();return}
+  if(ART['bouncy-ball']){c.save();c.translate(X,Y);c.scale(1+sq,1-sq);c.rotate(o.rot);c.drawImage(ART['bouncy-ball'],-R*1.02,-R*1.02,R*2.04,R*2.04);c.restore();return}
   c.save();c.translate(X,Y);c.scale(1+sq,1-sq);c.rotate(o.rot);c.fillStyle='rgba(196,90,138,.22)';ell(c,0,0,R,R);c.fill();c.strokeStyle=INK;c.lineWidth=Math.max(1,R*.08);c.stroke();
   c.strokeStyle=PINK;c.lineWidth=Math.max(1,R*.06);c.beginPath();c.moveTo(0,-R);c.quadraticCurveTo(R*.5,0,0,R);c.moveTo(0,-R);c.quadraticCurveTo(-R*.5,0,0,R);c.stroke();c.restore()}
 function drawSweep(o,z){const c=ctx,u=RW;shadowAt(o.x,z,.3);
   const ca=Math.cos(o.ang)*o.len,sa=Math.sin(o.ang)*o.len,y=.1;
+  if(ART.compass){// Mark's compass, seen from above, spinning: its hinge and points sit exactly on the two ends of the spinning bar (the hit line).
+    // The length follows the projected bar; the width is not squashed by the perspective so it stays readable when it points down the page.
+    const im=ART.compass,ax=px(o.x+ca,z+sa),ay=py(z+sa,.04),bx=px(o.x-ca,z-sa),by=py(z-sa,.04),dx=ax-bx,dy=ay-by,len=Math.hypot(dx,dy);
+    const wid=o.len*2*RW*sc(z)*im.naturalWidth/im.naturalHeight*.7,dl=Math.max(len,wid*.8);
+    c.save();c.translate((ax+bx)/2,(ay+by)/2);c.rotate(Math.atan2(dy,dx)-Math.PI/2);c.drawImage(im,-wid/2,-dl/2,wid,dl);c.restore();return}
   // a drawing compass spinning on its point: the two legs, far one first
   const ends=[[o.x+ca,z+sa,1],[o.x-ca,z-sa,0]].sort((a,b)=>b[1]-a[1]);
   for(const [ex,ez,pen] of ends){const X0=px(o.x,z),Y0=py(z,y),X1=px(ex,ez),Y1=py(ez,y),w=Math.max(2,.07*u*sc((z+ez)/2));

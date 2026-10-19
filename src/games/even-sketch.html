@@ -54,6 +54,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .tiderow{display:flex;align-items:center;gap:8px;min-width:0}
 .tiderow .lbl{flex:none;font:400 .8rem/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:4px}
 .tiderow .lbl svg{width:18px;height:18px}
+.tiderow .lbl .bellimg{height:24px;width:auto;margin:-3px 0 -3px 0;transform:rotate(-8deg)}
 .bar{flex:1;min-width:0;height:20px;border-radius:var(--wob);background:var(--paper);border:2px solid var(--ink);overflow:hidden;position:relative}
 .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:repeating-linear-gradient(135deg,var(--yellow) 0 2px,var(--yellow-wash) 2px 6px)}
 .bar.low i{background:repeating-linear-gradient(135deg,var(--orange) 0 2px,var(--orange-wash) 2px 6px)}
@@ -153,7 +154,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <div class="stat end"><small>Best</small><b id="bestEl">0</b></div>
     </div>
     <div class="tiderow">
-      <span class="lbl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z" fill="none" stroke="#2e2e33" stroke-width="2" stroke-linejoin="round"/><path d="M10 20a2 2 0 0 0 4 0" fill="none" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/><path d="M12 3v2" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/></svg>Bell</span>
+      <span class="lbl"><img class="bellimg" src="../assets/even-sketch/bell.webp" alt="" aria-hidden="true" onerror="this.remove();document.getElementById('bellSvg').removeAttribute('hidden')"><svg id="bellSvg" hidden viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z" fill="none" stroke="#2e2e33" stroke-width="2" stroke-linejoin="round"/><path d="M10 20a2 2 0 0 0 4 0" fill="none" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/><path d="M12 3v2" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/></svg>Bell</span>
       <div class="bar" id="bar" role="timer" aria-label="Time before the bell rings"><i id="fill"></i><span id="barTxt">1:30 left</span></div>
     </div>
   </div>
@@ -420,8 +421,10 @@ function drawShell(c,t){
   c.fillStyle=INK;for(const s of [-1,1]){c.beginPath();c.ellipse(s*ex,ey-t*.02,t*.03,t*.04,0,0,7);c.fill()}
   c.strokeStyle=INK;c.lineWidth=t*.022;c.beginPath();c.arc(0,ey+t*.03,t*.05,.15*Math.PI,.85*Math.PI);c.stroke();
   c.restore()}
-/* pencil-sketched paper squares; the stars and circles are drawn by the code above (coloured pencil so they read fast) */
-const ART={},ART_FILES={tile:'tile.webp',fixed:'tile-fixed.webp'};let artPending=0,artReady=false;
+/* Mark's drawn art: graph-paper squares and the two pieces. The code-drawn versions above are the fallback. */
+const ART={},ART_FILES={tile:'tile.webp',fixed:'tile-fixed.webp',star:'star.webp',shell:'circle.webp'};let artPending=0,artReady=false;
+/* where the paper square sits inside tile-fixed.webp (220×234): the push-pin pokes out above and to the right */
+const FIX_SQ={x:0,y:19.5,w:211.5,h:213};
 function artDone(){if(--artPending>0)return;artReady=true;spriteCache={};scaledCache={};drawMini()}
 for(const k in ART_FILES){artPending++;const im=new Image();im.decoding='async';
   im.onload=()=>{ART[k]=im.naturalWidth?im:null;artDone()};im.onerror=()=>{ART[k]=null;artDone()};im.src='../assets/even-sketch/'+ART_FILES[k]}
@@ -434,13 +437,15 @@ function scaled(k,w,h){w=Math.max(1,Math.round(w));h=Math.max(1,Math.round(h));c
 /* paints one piece of art into c: tiles fill 0,0..t,t; pieces are centered on 0,0. px = device pixels per unit. Returns false if no image. */
 function artPaint(c,key,t,px){
   if(key==='tile0'||key==='tile1'||key==='tile2'){const k=key==='tile0'?'tile':'fixed',im=ART[k];if(!im)return false;
-    c.drawImage(scaled(k,t*px,t*px),0,0,t,t);
-    /* faint blue graph lines over the paper square */
-    c.save();c.strokeStyle='rgba(47,111,181,.15)';c.lineWidth=1;c.beginPath();
-    for(let q=1;q<4;q++){c.moveTo(t*q/4,t*.08);c.lineTo(t*q/4,t*.92);c.moveTo(t*.08,t*q/4);c.lineTo(t*.92,t*q/4)}c.stroke();c.restore();
+    if(k==='tile')c.drawImage(scaled(k,t*px,t*px),0,0,t,t);
+    else{const fx=t/FIX_SQ.w,fy=t/FIX_SQ.h,w=im.naturalWidth*fx,h=im.naturalHeight*fy;c.drawImage(scaled(k,w*px,h*px),-FIX_SQ.x*fx,-FIX_SQ.y*fy,w,h)}
     if(key==='tile2'){const sx=t*.17,sy=t*.17,s2=t*.1;c.fillStyle=GOLD_WASH;c.strokeStyle=GOLD;c.lineWidth=Math.max(1,t*.02);c.beginPath();
       for(let q=0;q<10;q++){const a=q*Math.PI/5-Math.PI/2,R=q%2?s2*.45:s2;c.lineTo(sx+Math.cos(a)*R,sy+Math.sin(a)*R)}c.closePath();c.fill();c.stroke()}
     return true}
+  if(key==='star'||key==='shell'){const im=ART[key];if(!im)return false;
+    /* contain inside the box the code-drawn piece used (star ≈ .84t, circle ≈ .76t across) */
+    const box=t*(key==='star'?.86:.78),f=box/Math.max(im.naturalWidth,im.naturalHeight),w=im.naturalWidth*f,h=im.naturalHeight*f;
+    c.drawImage(scaled(key,w*px,h*px),-w/2,-h/2+(key==='star'?t*.02:0),w,h);return true}
   return false}
 function sprite(key,t){const id=key+'@'+Math.round(t*dpr);if(spriteCache[id])return spriteCache[id];
   const m=t*.12,cnv=mk((t+2*m)*dpr,(t+2*m)*dpr),c=cnv.getContext('2d');c.scale(dpr,dpr);c.translate(m,m);
@@ -461,7 +466,7 @@ function drawSign(c,x,y,r,type,isBad){
 function drawMini(){const m=$('mini');if(!m||!artReady)return;const W=288,H=58,d=Math.min(window.devicePixelRatio||1,3);m.width=W*d;m.height=H*d;const c=m.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,W,H);
   const row=[0,1,1,0,1,0],t=42,gap=6,x0=(W-(6*t+5*gap))/2,y0=4;
   for(let k=0;k<6;k++){const x=x0+k*(t+gap),tk=k===3?'tile1':'tile0';c.save();c.translate(x,y0);if(!artPaint(c,tk,t,d))drawTile(c,t,k===3?1:0);
-    c.translate(t/2,t/2);if(row[k])drawShell(c,t);else drawStar(c,t);c.restore()}
+    c.translate(t/2,t/2);const pk=row[k]?'shell':'star';if(!artPaint(c,pk,t,d)){if(row[k])drawShell(c,t);else drawStar(c,t)}c.restore()}
   drawSign(c,x0+t+gap/2,y0+t/2,9,1,false);drawSign(c,x0+2*t+gap*1.5,y0+t/2,9,0,false)}
 
 /* ---------- rules check ---------- */
@@ -617,9 +622,12 @@ function draw(now){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,S,S);if(!
     if(winT){const d=(now-winT)/1000-(r+c)*.06;if(d>0&&d<.5)s*=1+Math.sin(d/.5*Math.PI)*.14}
     if(overT){const d=(now-overT)/1000-(n-1-r)*.05;if(d>0&&d<.6)y+=Math.sin(d/.6*Math.PI)*-T*.08}
     blit(ctx,hinted[i]?'tile2':locked[i]?'tile1':'tile0',T,x+(1-s)*0,y,s);
-    if(bad.tiles.has(i)){ctx.fillStyle='rgba(196,90,138,.25)';rr(ctx,x+T*(1-s)/2,y+T*(1-s)/2,T*s,T*s*.93,T*(ART.tile?.15:.12));ctx.fill();ctx.strokeStyle=PINK;ctx.lineWidth=2.5;ctx.stroke()}
+    const isBad=bad.tiles.has(i),bh=ART.tile?1:.93,br=T*(ART.tile?.08:.12);
+    if(isBad){ctx.fillStyle='rgba(196,90,138,.3)';rr(ctx,x+T*(1-s)/2,y+T*(1-s)/2,T*s,T*s*bh,br);ctx.fill()}
     const v=grid[i];if(v>=0){let ps=s;const pt=(now-pop[i])/1000;if(pt<.28)ps*=easeBack(pt/.28)*.9+.1;blit(ctx,v===0?'star':'shell',T*.92,x+T*.04,y+T*.01,ps)}
-    else if(pop[i]&&(now-pop[i])/1000<.2){const pt=(now-pop[i])/1000/.2;ctx.strokeStyle='rgba(85,85,92,'+(.5*(1-pt))+')';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x+T/2,y+T/2,T*.2+T*.3*pt,0,7);ctx.stroke()}}
+    else if(pop[i]&&(now-pop[i])/1000<.2){const pt=(now-pop[i])/1000/.2;ctx.strokeStyle='rgba(85,85,92,'+(.5*(1-pt))+')';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x+T/2,y+T/2,T*.2+T*.3*pt,0,7);ctx.stroke()}
+    /* pink rule-break outline goes on top of the piece so it always reads */
+    if(isBad){ctx.strokeStyle=PINK;ctx.lineWidth=Math.max(2.5,T*.045);rr(ctx,x+T*(1-s)/2,y+T*(1-s)/2,T*s,T*s*bh,br);ctx.stroke()}}
   /* signs between tiles */
   const sr=Math.max(8,Math.min(T*.21,15));
   P.signs.forEach((sg,k)=>{const ra=(sg.a/n)|0,ca=sg.a%n,rb=(sg.b/n)|0,cb=sg.b%n;let x=(tx(ca)+tx(cb))/2+T/2,y=(ty(ra)+ty(rb))/2+T/2-T*.03;
