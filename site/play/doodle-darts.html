@@ -121,8 +121,21 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .shopmsg{font-size:1rem!important;text-align:center;min-height:2.6em}
 .item.shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* hand-drawn sprites: each rule switches on once its picture has loaded (html.s-<name>); until then the pencil CSS/SVG above shows */
+.s-coin .coin,.s-coin .pow .cost i,.s-coin .kc i,.s-coin .item .pr i{background:url(../assets/doodle-darts/coin.webp) center/contain no-repeat;border:0;border-radius:0}
+.s-coin .coin{width:26px;height:26px}
+.s-coin .pow .cost i{width:14px;height:14px}
+.s-coin .kc i{width:22px;height:22px}
+.s-coin .item .pr i{width:13px;height:13px}
+.s-power-slow #powSlow,.s-power-aim #powBig{border-color:transparent;background:url(../assets/doodle-darts/power-slow.webp) center/100% 100% no-repeat border-box}
+.s-power-aim #powBig{background-image:url(../assets/doodle-darts/power-aim.webp)}
+.s-power-slow #powSlow svg,.s-power-aim #powBig svg{display:none}
+.pin .face.pic{width:36px;height:36px;margin-top:-2px;border:0;background:none;box-shadow:none;overflow:visible;border-radius:50%}
+.pin .face.pic img{width:38px;height:38px;max-width:none;filter:drop-shadow(2px 2px 0 rgba(85,85,92,.8))}
+.pin b{position:relative;z-index:1}
+.overface{display:block;width:84px;height:84px;margin:0 auto 6px;filter:drop-shadow(3px 3px 0 rgba(85,85,92,.8))}
 @media (prefers-reduced-motion:reduce){.card{animation:none}.banner{transition:none}.item.shake{animation:none}}
-@media (max-height:660px){#mini{width:70px;height:70px}.rules{font-size:.9rem}.track{height:44px}.pin .face{width:28px;height:28px}.pin .face svg{width:22px;height:22px}}
+@media (max-height:660px){#mini{width:70px;height:70px}.rules{font-size:.9rem}.track{height:44px}.pin .face{width:28px;height:28px}.pin .face svg{width:22px;height:22px}.pin .face.pic{width:31px;height:31px}.pin .face.pic img{width:33px;height:33px}.overface{width:64px;height:64px}}
 </style>
 <style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
 <style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
@@ -193,6 +206,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 
     <div class="cover" id="over" hidden>
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="overTitle">
+        <img class="overface" id="overFace" alt="" hidden>
         <h2 id="overTitle">Out of darts!</h2>
         <p id="overText">You beat Pencil.</p>
         <div class="stats"><div><b id="stScore">0</b><span>score</span></div><div><b id="stBest">0</b><span>best</span></div><div><b id="stBulls">0</b><span>bullseyes</span></div></div>
@@ -221,6 +235,23 @@ const $=s=>document.getElementById(s);
 const reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const GOLD='#c99a1a',GOLDW='#f3e6b0',HAZ='#6f4a9a',HAZW='#e6dcef',GOOD='#5a9a6a';
+
+/* ---------- Mark's hand-drawn sprites. The code drawings below are only fallbacks until these load. ---------- */
+const SPR_DIR='../assets/doodle-darts/',SPR={};
+const FACE_SPR={gull:'friend-pencil',crab:'friend-eraser',fish:'friend-crayon',turtle:'friend-sticky',dolphin:'friend-glue',octo:'friend-ruler',shark:'friend-book',whale:'friend-backpack'};
+const DART_SPR={classic:'dart',feather:'feather',trident:'fork',pop:'pop'};
+function spr(n){const im=SPR[n];return im&&im._ok&&im.naturalWidth>0?im:null}
+// throwable art, pointing up: `icon` = the chunkier small version (shop, darts-left column)
+function dartImg(kind,icon){const k=DART_SPR[kind]||'dart';return icon?(spr('icon-'+k)||spr('dart-'+k)):spr('dart-'+k)}
+['target','bullseye','big-star','blob','blob-poked','coin','power-slow','power-aim'].concat(
+  Object.values(DART_SPR).flatMap(k=>['dart-'+k,'icon-'+k]),Object.values(FACE_SPR)).forEach(n=>{
+  const im=new Image();im.onload=()=>{im._ok=true;document.documentElement.classList.add('s-'+n);spriteLoaded(n)};im.src=SPR_DIR+n+'.webp';SPR[n]=im});
+function spriteLoaded(n){
+  if(n==='target'||n==='bullseye')sprite=null;
+  if(n==='target'||n==='bullseye'||n.startsWith('dart-'))drawMini();
+  if(n.startsWith('icon-')&&!$('shop').hidden)paintShop();
+  if(n.startsWith('friend-')){paintTrack();paintOverFace()}
+}
 
 /* ---------- desk friends to beat (face keys kept from the old names) ---------- */
 const FACES={
@@ -281,7 +312,24 @@ function sandDollar(g,x,y,r){ // gold star sticker bullseye
   g.lineWidth=Math.max(1,r*.07);g.beginPath();g.arc(x,y,r*.82,0,7);g.stroke();
   g.fillStyle='#ffd94a';g.strokeStyle=GOLD;g.lineJoin='round';g.lineWidth=Math.max(1,r*.07);starPts(g,x,y+r*.04,r*.7,r*.3);g.fill();g.stroke();
 }
+// gold star bullseye: Mark's smiling star over the centre circle, or the code sticker
+function drawBull(g,cx,cy,R){
+  const im=spr('bullseye');
+  if(im){const w=R*.42,h=w*im.naturalHeight/im.naturalWidth;g.drawImage(im,cx-w/2,cy-h*.53,w,h);return}
+  g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.arc(cx+R*.02,cy+R*.035,R*BULL*1.02,0,7);g.fill();
+  sandDollar(g,cx,cy,R*BULL);
+}
+// target.webp: ring centre at (229,231.5) px, outer scoring ring edge at 188 px, rim out to ~227 px (1.21R)
+const TGT={cx:229,cy:231.5,r:188};
 function drawTarget(g,cx,cy,R){
+  const im=spr('target');
+  if(im){const k=R/TGT.r,D=R*.1;g.lineJoin='round';
+    g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.ellipse(cx+R*.08,cy+R*.22,R*1.2,R*1.15,0,0,7);g.fill();
+    // a little board thickness under the rim
+    g.fillStyle='#e4e2d8';g.strokeStyle=INK;g.lineWidth=Math.max(1.5,R*.025);g.beginPath();g.arc(cx,cy+D,R*1.19,0,Math.PI);g.lineTo(cx-R*1.19,cy);g.arc(cx,cy,R*1.19,Math.PI,0,true);g.closePath();g.fill();
+    g.save();g.clip();hatch(g,cx,cy+D,R*1.25,Math.max(3,R*.06),GRAPH,.45);g.restore();g.beginPath();g.arc(cx,cy+D,R*1.19,0,Math.PI);g.stroke();
+    g.drawImage(im,cx-TGT.cx*k,cy-TGT.cy*k,im.naturalWidth*k,im.naturalHeight*k);
+    drawBull(g,cx,cy,R);return}
   const D=R*.13; // disc thickness
   const lw=Math.max(1.5,R*.03);g.lineJoin='round';g.lineCap='round';
   // shadow
@@ -302,12 +350,14 @@ function drawTarget(g,cx,cy,R){
     g.strokeStyle=INK;g.lineWidth=lw*.8;wob(g,cx,cy,R*f,f*9);g.stroke()}
   g.fillStyle=PAPER;g.beginPath();g.arc(cx,cy,R*.22,0,7);g.fill();g.strokeStyle=INK;g.lineWidth=lw*.7;g.stroke();
   // gold star bullseye
-  g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.arc(cx+R*.02,cy+R*.035,R*BULL*1.02,0,7);g.fill();
-  sandDollar(g,cx,cy,R*BULL);
+  drawBull(g,cx,cy,R);
   // a short pencil arc for the shine
   g.strokeStyle=PENCIL;g.lineWidth=Math.max(1,R*.02);g.beginPath();g.arc(cx,cy,R*.92,Math.PI*1.08,Math.PI*1.38);g.stroke();
 }
 function drawCoconut(g,cx,cy,R,hp,max){ // big breakable gold star badge
+  const im=spr('big-star');
+  if(im){const w=R*2.75,h=w*im.naturalHeight/im.naturalWidth;
+    g.save();g.shadowColor='rgba(46,46,51,.28)';g.shadowOffsetX=R*.08*dpr;g.shadowOffsetY=R*.16*dpr;g.drawImage(im,cx-w/2,cy-h*.5,w,h);g.restore();return}
   const D=R*.1,lw=Math.max(1.5,R*.035);g.lineJoin='round';g.lineCap='round';
   g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.ellipse(cx+R*.08,cy+R*.2,R*1.04,R*1.0,0,0,7);g.fill();
   // badge thickness
@@ -334,8 +384,11 @@ const BEACHES={
   night:{name:'Night',price:300,img:'bg-night'},
   lagoon:{name:'Jungle',price:500,img:'bg-jungle'}
 };
-function drawShape(g,s,kind){
+// tip at (0,0), body hanging down +y, about s*.95 long
+function drawShape(g,s,kind,icon){
   const L=s*.92,lw=Math.max(1.2,s*.04);g.lineCap='round';g.lineJoin='round';
+  const im=dartImg(kind,icon);
+  if(im){const h=L*1.04,w=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-w/2,0,w,h);return}
   if(kind==='feather'){
     g.strokeStyle=INK;g.lineWidth=lw;g.beginPath();g.moveTo(0,0);g.lineTo(0,L*.22);g.stroke();
     g.fillStyle=PAPER;g.beginPath();g.moveTo(0,L*.2);g.quadraticCurveTo(s*.2,L*.55,s*.04,L*1.02);g.lineTo(-s*.04,L*1.02);g.quadraticCurveTo(-s*.2,L*.55,0,L*.2);g.fill();g.stroke();
@@ -375,10 +428,16 @@ function drawShape(g,s,kind){
   g.strokeStyle=GRAPH;g.lineWidth=Math.max(.6,s*.012);g.beginPath();g.moveTo(-s*.06,L*.84);g.lineTo(-s*.14,L*.96);g.moveTo(s*.06,L*.84);g.lineTo(s*.14,L*.96);g.stroke();
 }
 // tip at (x,y), body leaning down and to the right like a dart stuck in a board
-function drawDart(g,x,y,s,alpha,kind){g.save();g.globalAlpha=alpha==null?1:alpha;g.translate(x,y);g.rotate(-.336);drawShape(g,s,kind||cfg.dart);g.restore()}
+function drawDart(g,x,y,s,alpha,kind,icon){g.save();g.globalAlpha=alpha==null?1:alpha;g.translate(x,y);g.rotate(-.336);drawShape(g,s,kind||cfg.dart,icon);g.restore()}
 // big cartoon dart seen from behind, tip pointing along `ang` (0 = straight up); `s` is its length
 function handDart(g,x,y,s,ang,kind){
-  if((kind||cfg.dart)!=='classic'){dartAt(g,x,y,s*.9,ang);return}
+  kind=kind||cfg.dart;
+  const im=dartImg(kind);
+  if(im){ // Mark's drawings: every throwable held like the classic dart, tip at -s*.62, so the whole thing shows above the field edge
+    g.save();g.translate(x,y);g.rotate(ang);
+    g.fillStyle='rgba(46,46,51,.2)';g.beginPath();g.ellipse(s*.06,s*.42,s*.2,s*.06,0,0,7);g.fill();
+    const h=s*.98,w=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-w/2,-s*.62,w,h);g.restore();return}
+  if(kind!=='classic'){dartAt(g,x,y,s*.9,ang);return}
   g.save();g.translate(x,y);g.rotate(ang);g.lineJoin='round';g.lineCap='round';
   const w=s*.2,lw=Math.max(1.5,s*.018);
   // shadow on the sand
@@ -401,7 +460,7 @@ function handDart(g,x,y,s,ang,kind){
   g.restore();
 }
 // a dart whose tip points along `ang` (radians, 0 = straight up)
-function dartAt(g,x,y,s,ang,alpha){g.save();g.translate(x,y);g.rotate(.34+ang);drawDart(g,0,0,s,alpha);g.restore()}
+function dartAt(g,x,y,s,ang,alpha,icon){g.save();g.translate(x,y);g.rotate(.34+ang);drawDart(g,0,0,s,alpha,undefined,icon);g.restore()}
 function drawMini(){
   const c=$('mini'),d=Math.min(3,window.devicePixelRatio||1),w=c.clientWidth||100;c.width=w*d;c.height=w*d;
   const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);const R=w*.38;
@@ -431,6 +490,11 @@ function maybePuffer(){board.puff=null;if(board.type!=='target'||score<5)return;
 const PUFF_R=.2;
 function drawPuffer(g,x,y,r,now,popped){
   const pulse=popped?1.35:1+(reduced?0:Math.sin(now/260)*.06),R2=r*pulse,lw=Math.max(1.5,R2*.09);
+  const base=spr('blob'),im=popped&&spr('blob-poked')||base;
+  if(im){ // spikes reach ~1.32*R2 like the code blob; the poked art keeps the same pixel scale
+    // the poked drawing's body sits low and a bit left (swirls above it): centre the body, not the picture
+    const k=R2*2.64/(base||im).naturalWidth,w=im.naturalWidth*k,h=im.naturalHeight*k,poke=im!==base;
+    g.drawImage(im,x-w*(poke?.48:.5),y-h*(poke?.62:.5),w,h);return}
   g.save();g.lineJoin='round';g.lineCap='round';
   g.fillStyle=HAZW;g.strokeStyle=HAZ;g.lineWidth=lw*.9;for(let k=0;k<14;k++){const a=k/14*Math.PI*2;g.beginPath();g.moveTo(x+Math.cos(a-.12)*R2*.92,y+Math.sin(a-.12)*R2*.92);g.lineTo(x+Math.cos(a)*R2*1.32,y+Math.sin(a)*R2*1.32);g.lineTo(x+Math.cos(a+.12)*R2*.92,y+Math.sin(a+.12)*R2*.92);g.fill();g.stroke()}
   g.fillStyle=HAZW;g.beginPath();g.arc(x,y,R2,0,7);g.fill();
@@ -532,7 +596,9 @@ function paintTrack(){
   const list=[0,1,2].map(i=>friendAt(friendIdx+i));
   const lo=Math.min(prev,score),hi=list[2][1],w=tr.clientWidth||300,pad=22;
   const pos=v=>pad+(v-lo)/Math.max(1,hi-lo)*(w-2*pad);
-  const mk=(name,val,face,cls)=>{const p=document.createElement('div');p.className='pin '+cls;p.style.left=pos(val)+'px';p.innerHTML='<div class="face">'+FACES[face]+'</div><b>'+val+'</b>';p.title=name;tr.appendChild(p)};
+  const mk=(name,val,face,cls)=>{const p=document.createElement('div');p.className='pin '+cls;p.style.left=pos(val)+'px';
+    const pic=FACE_SPR[face]&&spr(FACE_SPR[face]);
+    p.innerHTML=(pic?'<div class="face pic"><img src="'+pic.src+'" alt=""></div>':'<div class="face">'+FACES[face]+'</div>')+'<b>'+val+'</b>';p.title=name;tr.appendChild(p)};
   list.slice().reverse().forEach(f=>mk(f[0],f[1],f[2],''));
   mk('You',score,'you','me');
   $('fill').style.width=Math.max(0,pos(score)-18)+'px';
@@ -600,12 +666,16 @@ function land(now){
   hitsSinceNut++;paintHud(true);
   explodeBoard(now,'target');busyUntil=now+520;setTimeout(respawn,400);
 }
+let overFriend=null;
+function paintOverFace(){const el=$('overFace'),pic=overFriend&&spr(FACE_SPR[overFriend[2]]);el.hidden=!pic;if(pic){el.src=pic.src;el.alt=overFriend[0]}}
 function gameOver(cause){
   state='over';sfx.over();
   const canKeep=!continued&&cfg.coins>=50;
   const isBest=score>cfg.best;if(isBest)cfg.best=score;persist();
   const beaten=FRIENDS.filter(f=>score>=f[1]).map(f=>f[0]);
-  setTimeout(()=>{
+  // portrait on the card: the last desk friend you beat, or the next one to beat
+  let fi=0;while(score>=friendAt(fi)[1])fi++;overFriend=friendAt(Math.max(0,fi-1));
+  setTimeout(()=>{paintOverFace();
     $('overTitle').textContent=board&&board.puff&&board.puff.popped?'Spiky blob!':'Out of darts!';
     $('overText').textContent=(isBest&&score>0?'New best score! ':'')+(board&&board.puff&&board.puff.popped?'You poked a spiky blob. ':'')+(beaten.length?'You beat '+(beaten.length>1?beaten.slice(0,-1).join(', ')+' and '+beaten[beaten.length-1]:beaten[0])+'.':'Next time, try to beat Pencil at '+FRIENDS[0][1]+'.');
     $('stScore').textContent=score;$('shop').hidden=true;$('stBest').textContent=cfg.best;$('stBulls').textContent=bulls;
@@ -630,7 +700,9 @@ function drawItemPreview(c,kind,key){
   const d=Math.min(3,window.devicePixelRatio||1),w=64;c.width=w*d;c.height=w*d;const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);
   if(kind==='bg'){g.fillStyle='#efeadd';g.fillRect(0,0,w,w);if(photoReady(key))paintPhoto(g,w,w,key,.08)}
   else{g.fillStyle='#efeadd';g.fillRect(0,0,w,w);
-    g.save();g.translate(w*.5,w*.1);g.rotate(.5);drawShape(g,w*.82,key);g.restore()}
+    const im=dartImg(key,true);
+    if(im){const h=w*.86,iw=h*im.naturalWidth/im.naturalHeight;g.save();g.translate(w/2,w/2);g.rotate(.5);g.drawImage(im,-iw/2,-h/2,iw,h);g.restore()}
+    else{g.save();g.translate(w*.5,w*.1);g.rotate(.5);drawShape(g,w*.82,key);g.restore()}}
 }
 function paintShop(){
   $('shopCoins').textContent=cfg.coins;
@@ -696,11 +768,13 @@ function frame(now){
     }
     if(flying){const k=Math.min(1,(now-flying.t0)/flying.dur),e=1-Math.pow(1-k,2);
       const x=flying.from.x+(flying.to.x-flying.from.x)*e,y=flying.from.y+(flying.to.y-flying.from.y)*e;
-      handDart(ctx,x,y,ds*(3.2-2.5*e),Math.atan2(flying.to.x-flying.from.x,flying.from.y-flying.to.y)*.6*(1-e));if(k>=1)land(now)}
+      // a drawn throwable's tip sits .62 of its length above its anchor: ease it down so the tip lands on the scored point
+      const fs=ds*(3.2-2.5*e),tipFix=dartImg(cfg.dart)?fs*.62*e:0;
+      handDart(ctx,x,y+tipFix,fs,Math.atan2(flying.to.x-flying.from.x,flying.from.y-flying.to.y)*.6*(1-e));if(k>=1)land(now)}
     // darts left (lives)
     // paper card behind the darts-left column so it reads over busy backdrop props (lamps, plants, desk)
     ctx.save();ctx.fillStyle='rgba(246,243,234,.88)';ctx.strokeStyle=PENCIL;ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(16,H-170,50,140,[14,20,12,18]);ctx.fill();ctx.stroke();ctx.restore();
-    for(let i=0;i<3;i++){const y=H-58-i*44;dartAt(ctx,40,y,34,.6,i<lives?1:.18)}
+    for(let i=0;i<3;i++){const y=H-58-i*44;dartAt(ctx,40,y,34,.6,i<lives?1:.18,true)}
     falling=falling.filter(f=>f.y<H+60);
     for(const f of falling){f.vy+=.5;f.y+=f.vy;f.x+=f.vx;f.rot+=.15;ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.rot);drawDart(ctx,0,0,ds,.9);ctx.restore()}
     // exploding board pieces
@@ -720,7 +794,8 @@ function frame(now){
     for(const q of shocks){const k=(now-q.t0)/500;ctx.save();ctx.globalAlpha=1-k;ctx.strokeStyle=q.c;ctx.lineWidth=3*(1-k)+1;ctx.beginPath();ctx.arc(q.x,q.y,6+k*R*(q.big?1.8:.9),0,7);ctx.stroke();if(q.big&&k<.35){ctx.globalAlpha=(1-k/.35)*.6;ctx.fillStyle='rgba(246,243,234,1)';ctx.beginPath();ctx.arc(q.x,q.y,R*(.6+k*1.4),0,7);ctx.fill()}ctx.restore()}
     parts=parts.filter(p=>p.life<p.max);
     for(const p of parts){p.life++;p.vy+=p.c==='coin'?.25:.06;p.x+=p.vx;p.y+=p.vy;p.vx*=.97;ctx.globalAlpha=1-p.life/p.max;
-      if(p.c==='coin'){ctx.fillStyle=GOLDW;ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fill();ctx.stroke()}
+      if(p.c==='coin'&&spr('coin')){ctx.drawImage(spr('coin'),p.x-p.s*1.25,p.y-p.s*1.25,p.s*2.5,p.s*2.5)}
+      else if(p.c==='coin'){ctx.fillStyle=GOLDW;ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fill();ctx.stroke()}
       else star(p.x,p.y,p.s*(1-p.life/p.max*.5),p.c)}
     ctx.globalAlpha=1;
     if(flash&&now-flash<300){ctx.fillStyle='rgba(246,243,234,'+(.45*(1-(now-flash)/300))+')';ctx.fillRect(0,0,W,H)}
@@ -745,6 +820,14 @@ if(window.ResizeObserver)new ResizeObserver(onResize).observe(field);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{drawMini();layout()});
 $('bestLine').textContent='Best score: '+(cfg.best||0);
 paintSound();layout();newPath();paintHud();drawMini();requestAnimationFrame(frame);
+// screenshot helpers, only with ?test in the URL
+if(/[?&]test\b/.test(location.search))window.__test={
+  info:()=>({state,score,lives,R:curR(),x:board.x,y:board.y,type:board.type,puff:board.puff}),
+  blob:(dx,dy)=>{board.puff={dx:dx==null?.6:dx,dy:dy==null?-.2:dy,t0:performance.now()}},
+  bigStar:()=>{board.type='coconut';board.hp=board.max=3;sprite=null},
+  setScore:n=>{score=n;paintHud()},
+  throwAt:(dx,dy)=>{const R=curR(),ds=Math.max(26,R*.45);busyUntil=0;flying={t0:performance.now(),dur:150,to:{x:board.x+dx*R,y:board.y+dy*R},from:{x:W/2,y:H-ds*3.2*.48-6}}}
+};
 })();
 </script>
 <script>
