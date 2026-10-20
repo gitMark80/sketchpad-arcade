@@ -78,6 +78,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.puzzle{border-color:var(--green);background:var(--green-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
@@ -175,6 +188,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Tips</h2><ul><li>Start with common vowels like E and A, then try S, T, R and N.</li><li>Think about the clue. A People at school word often ends in TEACHER, and Action words often end in ING or are short and snappy.</li><li>Save Peek for when the doodle still has a few pieces left. It cannot be used on the very last piece unless it is free.</li><li>Long words and phrases have more letters to find, so they are often easier than short ones.</li></ul></section>
 </div>
 <section class="panel about"><h2>About Doodle Keeper</h2><p>Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 family-friendly answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.</p><p>Instead of a timer, your doodle house is the countdown. Each wrong guess brings in a cheeky eraser that rubs one piece into a little pile of crumbs, and later levels start with a smaller doodle. Perfect words build a streak that multiplies your bonus, and three pencils give you a few second chances before the page goes blank.</p></section>
+<aside class="book" aria-label="Sketchpad Arcade Coloring Book">
+<a class="bookcov" href="coloring-book.html"><img class="pg" src="book/pages/doodle-keeper.webp" alt="Doodle Keeper coloring page from the Sketchpad Arcade Coloring Book" width="598" height="800" loading="lazy"></a>
+<div><span class="kicker">Love the drawings?</span><h2>Color Doodle Keeper yourself</h2><p>Doodle Keeper has its own page in the Sketchpad Arcade Coloring Book, along with every other game on the site. 46 designs in all, on big 8.5 × 11-inch pages.</p>
+<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?tag=restlessfaith-20" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="coloring-book.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-parade.html" data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
 <img class="thumb" src="img/pencil-parade.jpg" alt="Pencil Parade" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="squiggle-worm.html" data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
@@ -259,8 +277,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Keeper", "description": "A letter-guessing word game drawn in a kid's sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.<br>As an Amazon Associate I earn from qualifying purchases.</span>
+<ul><li><a href="coloring-book.html">Coloring Book</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

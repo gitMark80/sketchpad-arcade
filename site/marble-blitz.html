@@ -78,6 +78,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.puzzle{border-color:var(--green);background:var(--green-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
@@ -175,6 +188,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Tips</h2><ul><li>Bounce your shot off a side wall to get marbles behind a row of cups, where they rattle around and score lots of hits.</li><li>Grab the paper clips early. More marbles make every turn stronger.</li><li>Clear the cups closest to the desk edge first, especially when they&#x27;re circled in orange.</li><li>Save a pink eraser for a row of big numbers.</li></ul></section>
 </div>
 <section class="panel about"><h2>About Marble Blitz</h2><p>Marble Blitz is a marble-volley game in the brick-breaker tradition, sketched in graphite on ruled paper. Numbered paper cups slide down one row per turn, and your doodle buddy flicks a stream of glass marbles that bounce off the walls and the cups, knocking one off a number with every hit. When a cup reaches zero it crumples into a puff of paper scraps.</p><p>The game is about angles. A shot bounced off a side wall can get your marbles behind a row, where they rattle around and score dozens of hits. Paper clips add marbles, gold stars add points and a pink eraser rubs out a whole row. It ends when a cup slides off the desk, so the cups nearest the edge always come first.</p></section>
+<aside class="book" aria-label="Sketchpad Arcade Coloring Book">
+<a class="bookcov" href="coloring-book.html"><img class="pg" src="book/pages/marble-blitz.webp" alt="Marble Blitz coloring page from the Sketchpad Arcade Coloring Book" width="598" height="800" loading="lazy"></a>
+<div><span class="kicker">Love the drawings?</span><h2>Color Marble Blitz yourself</h2><p>Marble Blitz has its own page in the Sketchpad Arcade Coloring Book, along with every other game on the site. 46 designs in all, on big 8.5 × 11-inch pages.</p>
+<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?tag=restlessfaith-20" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="coloring-book.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-parade.html" data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
 <img class="thumb" src="img/pencil-parade.jpg" alt="Pencil Parade" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="squiggle-worm.html" data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
@@ -259,8 +277,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Marble Blitz", "description": "A bouncy marble-volley game drawn in pencil on a sheet of notebook paper. Rows of numbered paper cups slide down the page one turn at a time, and your little doodle buddy flicks a whole stream of glass marbles to knock them down. Every bump takes one off a cup's number, and at zero it crumples up. Grab paper clips for more marbles, collect gold star stickers for bonus points, and see how many turns you can last before a cup slides off the edge of the desk.", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.<br>As an Amazon Associate I earn from qualifying purchases.</span>
+<ul><li><a href="coloring-book.html">Coloring Book</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

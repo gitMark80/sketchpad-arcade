@@ -78,6 +78,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.puzzle{border-color:var(--green);background:var(--green-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
@@ -175,6 +188,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <section class="panel"><h2>Tips</h2><ul><li>Find the easiest group first. Fewer words left makes the tricky groups easier to spot.</li><li>If a word fits two groups, save it for last and work out which group needs it.</li><li>Some groups are word puzzles, like words that go before BOOK or words that sound like letters.</li><li>Use Shuffle when you feel stuck. Seeing the words in a new order often helps.</li></ul></section>
 </div>
 <section class="panel about"><h2>About Four in a Frame</h2><p>Four in a Frame is a word-grouping puzzle. Sixteen words hide four groups of four; your job is to find the groups. Some are obvious, like animals or colours, and some are sneaky, with words that seem to belong in two groups at once or groups that are really word puzzles in disguise.</p><p>We wrote it for the whole family to play together on one screen, calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give younger players a way in.</p></section>
+<aside class="book" aria-label="Sketchpad Arcade Coloring Book">
+<a class="bookcov" href="coloring-book.html"><img class="pg" src="book/pages/four-in-a-frame.webp" alt="Four in a Frame coloring page from the Sketchpad Arcade Coloring Book" width="598" height="800" loading="lazy"></a>
+<div><span class="kicker">Love the drawings?</span><h2>Color Four in a Frame yourself</h2><p>Four in a Frame has its own page in the Sketchpad Arcade Coloring Book, along with every other game on the site. 46 designs in all, on big 8.5 × 11-inch pages.</p>
+<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?tag=restlessfaith-20" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="coloring-book.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>
 <section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="pencil-parade.html" data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
 <img class="thumb" src="img/pencil-parade.jpg" alt="Pencil Parade" loading="lazy" width="640" height="640">
 <div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="squiggle-worm.html" data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
@@ -259,8 +277,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Four in a Frame", "description": "A word-sorting puzzle for the whole family. Sixteen paper word tiles are pinned to a corkboard, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like fruits and colours, and get sneakier as you go, with words that seem to fit two groups at once.", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
 </main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.<br>As an Amazon Associate I earn from qualifying purchases.</span>
+<ul><li><a href="coloring-book.html">Coloring Book</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

@@ -79,6 +79,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.puzzle{border-color:var(--green);background:var(--green-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
@@ -159,6 +172,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </nav></div>
 <main><div class="wrap">
 <div class="homehead"><h1>Games drawn in a sketchbook</h1><p>Free puzzle and arcade games that look like a kid drew them in pencil. No downloads, no sign-ups, and nothing you wouldn&#x27;t want your kids to see.</p></div>
+<aside class="book" aria-label="Sketchpad Arcade Coloring Book">
+<a class="bookcov" href="coloring-book.html"><img src="book/cover.jpg" alt="Sketchpad Arcade Coloring Book cover" width="620" height="802" loading="lazy"></a>
+<div><span class="kicker">New: the coloring book</span><h2>Sketchpad Arcade Coloring Book</h2><p>46 coloring designs of pencil pals, doodle monsters, paper planes and space adventures from the games, ready for your crayons.</p>
+<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?tag=restlessfaith-20" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="coloring-book.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>
 <div class="chips" role="group" aria-label="Filter games"><button class="chip" type="button" data-f="all" aria-pressed="true">All games</button><button class="chip" type="button" data-f="Arcade" aria-pressed="false">Arcade</button><button class="chip" type="button" data-f="Puzzle" aria-pressed="false">Puzzle</button><button class="chip" type="button" data-f="Word" aria-pressed="false">Word</button></div>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
@@ -302,8 +320,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   }));
 })();
 </script></main>
-<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
-<ul><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.<br>As an Amazon Associate I earn from qualifying purchases.</span>
+<ul><li><a href="coloring-book.html">Coloring Book</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;
