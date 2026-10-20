@@ -110,6 +110,13 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
 .bookpage .hero .cover img{aspect-ratio:auto}
+.bookstrip{display:flex;align-items:center;gap:14px;margin:6px 0 18px;padding:8px 14px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.bookstrip img{display:block;width:44px;height:auto;border:1.5px solid var(--ink);border-radius:3px;transform:rotate(-3deg)}
+.bookstrip p{margin:0;flex:1;line-height:1.35}
+.bookstrip p a{color:var(--ink)}
+.bsbuy{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.bsbuy small{font-size:.8rem;color:var(--muted)}
+@media (max-width:620px){.bookstrip{flex-wrap:wrap;gap:8px 12px;padding:8px 12px}.bookstrip p{flex:1 1 calc(100% - 60px);font-size:.98rem}.bsbuy{width:100%;justify-content:flex-start;padding-left:56px}.bookstrip .btn.small{font-size:.85rem;padding:4px 12px;box-shadow:2px 2px 0 var(--pencil)}}
 .samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
 .samples a{display:block}
 .samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
@@ -240,6 +247,14 @@ def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
 
 SAMPLES = ["paper-plane-dash", "sidewalk-hop", "cookie-drop", "word-workshop", "2048-drop", "pencil-patrol"]
 
+def book_strip():
+    """The slim home-page promo: small cover, one line, one button."""
+    if not BOOK: return ""
+    return f'''<aside class="bookstrip" aria-label="{E(BOOK["title"])}">
+<a href="coloring-book.html"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></a>
+<p><strong>New:</strong> the <a href="coloring-book.html">Sketchpad Arcade Coloring Book</a>. Color the games!</p>
+<span class="bsbuy">{book_link("Get it on Amazon")}<small>(paid link)</small></span></aside>'''
+
 def book_page():
     li = "".join(f"<li>{E(x)}</li>" for x in BOOK["facts"])
     ld = {"@context": "https://schema.org", "@type": "Book", "name": BOOK["title"], "bookFormat": "https://schema.org/Paperback",
@@ -286,7 +301,7 @@ def home(full=True):
         also = f'<div class="also"><p>{E(a["text"])}</p><a class="btn small" href="{E(a["url"])}" rel="noopener">{E(a["cta"])}</a></div>'
     body = f'''<div class="wrap">
 <div class="homehead"><h1>{E(SITE["headline"])}</h1><p>{E(SITE["intro"])}</p></div>
-{book_card()}
+{book_strip()}
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
