@@ -1,5 +1,5 @@
 /* Sketch with Friends: a two-player crossword tile game on an 11x11 sketchbook board.
-   Our own board layout, letter points and tile counts (100 tiles, no blanks). Words come from the kid-safe list in
+   Our own board layout, letter points and tile counts (70 tiles, no blanks). Words come from the kid-safe list in
    /assets/sketch-with-friends/words.txt (made by tools/sketch-with-friends-words.py). The bot builds every legal move
    with a letter tree (anchor squares + cross-checks) and picks a weak, middling or best one for Easy, Medium, Hard.
    Racks are private: pass & play hands the phone over between turns. Online, both racks and the bag are in the saved
@@ -7,7 +7,8 @@
 INFO.botDelay=700;INFO.endDelay=1600;
 const N=11,CEN=60;
 const VAL={a:1,b:4,c:4,d:2,e:1,f:4,g:3,h:3,i:1,j:9,k:5,l:2,m:4,n:2,o:1,p:4,q:10,r:1,s:1,t:1,u:2,v:5,w:4,x:8,y:3,z:10};
-const COUNT={a:9,b:2,c:2,d:4,e:13,f:2,g:3,h:3,i:8,j:1,k:1,l:4,m:2,n:6,o:8,p:2,q:1,r:6,s:5,t:6,u:4,v:2,w:2,x:1,y:2,z:1};
+/* 70 tiles: the 11x11 board fills up fast, so fewer tiles than a big board would use */
+const COUNT={a:5,b:2,c:2,d:3,e:8,f:1,g:2,h:2,i:6,j:1,k:1,l:3,m:2,n:3,o:5,p:2,q:1,r:4,s:4,t:4,u:3,v:1,w:1,x:1,y:2,z:1};
 /* premium squares: one eighth of the board, mirrored to the rest */
 const QUAD={'0,0':'tl','0,3':'tw','0,5':'dl','1,1':'dw','1,4':'dl','2,2':'tl','2,5':'dl','3,3':'dw','4,4':'dl','5,5':'st'};
 const PREM=[...Array(N*N)].map((_,i)=>{const r=Math.floor(i/N),c=i%N,a=Math.min(r,N-1-r),b=Math.min(c,N-1-c);return QUAD[Math.min(a,b)+','+Math.max(a,b)]||''});

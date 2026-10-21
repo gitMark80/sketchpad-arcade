@@ -19,6 +19,7 @@ OUT = Path(__file__).resolve().parent.parent / "src" / "assets" / "sketch-with-f
 # Words a family game should never accept. Each entry blocks the word itself and the word with any ending
 # (so "fart" also blocks "farts", "farted", "farting"). STEM_ANY entries are blocked anywhere inside a word.
 BLOCK = """
+cock cocks crotch booze boozy vodka whiskey whisky beer beers drunk drunken drunkard terrorist terrorists idiot idiotic stupid moron moronic dumb dumber dumbest loser losers ugly uglier ugliest jerk jerks
 ass asses arse arses asshole bastard bitch bitchy bloody bollock bollocks boob boobs booby bugger bum butt butthole
 crap crappy damn damned dammit darn dick dickhead dildo douche dyke fag faggot fart frigging hell hellish horny
 jerkoff jizz knob knockers lesbo nigga negro paki pecker penis piss pissed poop porn porno prick pube pubic pussy

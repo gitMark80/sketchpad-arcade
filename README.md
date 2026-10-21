@@ -84,8 +84,10 @@ Blot Sweeper, Save the Doodle, Doodle Doku and Crayon Code share a puzzle shell 
 
 ## Invite a friend (online, take turns whenever)
 
-Tic-Tac-Doodle, Doodle SOS and Box Doodles have a third mode, **Invite a friend**: it makes a game with a 6-letter code and shares a link (`/<slug>?game=CODE`, which forwards to the play page and shows the cover in link previews). The friend who opens it plays pink; moves sync through Supabase (project `sketchpad-arcade`), each phone checking for the other player's move every few seconds while it's waiting. Games on this device show in **Your Games with Friends** on the home page.
+Tic-Tac-Doodle, Doodle SOS, Box Doodles, Connect Sketch, Sketchers, Guess My Doodle and Sketch with Friends have **Invite a friend**: it makes a game with a 6-letter code and shares a link (`/<slug>?game=CODE`, which forwards to the play page and shows the cover in link previews). The friend who opens it plays pink; moves sync through Supabase (project `sketchpad-arcade`), each phone checking for the other player's move every few seconds while it's waiting. Games on this device show in **Your Games with Friends** on the home page.
 
 - Turn it on per game with `"online": true` in `games.json`; the Supabase URL and publishable key are in `site.online`. Remove `site.online` to switch the feature off everywhere.
 - The database is in `supabase/migrations/`: one locked table, `vs_games`, reached only through the `vs_*` functions, which check each phone's secret id (only its hash is stored) and whose turn it is.
 - A game supports it by defining `GAME.save()` and `GAME.load(state)`; the code is in `tools/versus/online.js`. Paper Boats is left out until its boats can be hidden on the server.
+
+Sketch with Friends checks words against `src/assets/sketch-with-friends/words.txt`, built by `tools/sketch-with-friends-words.py` from the Hunspell en_US dictionary with a family blocklist (add words to `BLOCK` there and rerun).

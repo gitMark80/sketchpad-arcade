@@ -1,7 +1,7 @@
 .stage{justify-content:flex-start;gap:6px}
 .swf{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
 .wb{--n:11;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));grid-template-rows:repeat(var(--n),minmax(0,1fr));gap:2px;padding:4px;
-  width:min(100%,calc(100dvh - 400px),460px);min-width:min(100%,250px);aspect-ratio:1;background:var(--paper-2);border:2px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);touch-action:none}
+  width:min(100%,calc(100dvh - 332px),460px);min-width:min(100%,250px);aspect-ratio:1;background:var(--paper-2);border:2px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);touch-action:none}
 .sq{all:unset;position:relative;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#f6f3ea;border:1px solid rgba(85,85,92,.25);border-radius:3px 2px 4px 2px;cursor:pointer;font:400 clamp(.42rem,1.9vw,.62rem)/1 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.02em;overflow:hidden}
 .sq:focus-visible{outline:3px dashed var(--ink);outline-offset:0;z-index:3}
 .sq.dl{background:#d6e4f2;color:#2f6fb5}
@@ -39,3 +39,4 @@
 @keyframes pen{from{transform:scale(1.4) rotate(-8deg)}to{transform:rotate(-3deg)}}
 @media (max-height:700px){.wbtns button{padding:4px 8px;font-size:.92rem}.wbtns .primary{font-size:1.05rem}.wline{font-size:.95rem;min-height:1.3em}}
 @media (prefers-reduced-motion:reduce){.tile.pend{animation:none}}
+.wrap:has(#onbar:not([hidden])) .wb{width:min(100%,calc(100dvh - 368px),460px)}
