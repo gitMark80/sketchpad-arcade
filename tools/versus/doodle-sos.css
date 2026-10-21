@@ -1,0 +1,16 @@
+.sosb{position:relative;width:min(100%,50dvh,400px);aspect-ratio:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));background:var(--paper);border:2px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);
+  background-image:linear-gradient(var(--faint) 1.5px,transparent 1.5px),linear-gradient(90deg,var(--faint) 1.5px,transparent 1.5px);background-size:calc(100%/6) calc(100%/6);background-position:-1px -1px}
+.sosb .lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.sosb .lines path{fill:none;stroke-width:9;stroke-linecap:round;opacity:.55;stroke-dasharray:300;stroke-dashoffset:300;animation:draw .45s ease-out forwards}
+.sq{all:unset;display:flex;align-items:center;justify-content:center;cursor:pointer;font:400 clamp(1.6rem,8vw,2.4rem)/1 var(--display);color:var(--ink)}
+.sq:focus-visible{outline:3px dashed var(--ink);outline-offset:-5px}
+.sq.c0{color:var(--p0)}.sq.c1{color:var(--p1)}
+.sq.new{animation:pen .3s ease-out}
+.sq:empty:hover{background:rgba(201,154,26,.12)}
+.pickrow{display:flex;align-items:center;gap:12px}
+.pickrow .lbl{font-size:1.15rem;color:var(--muted)}
+.lt{width:64px;height:52px;padding:0;font:400 1.9rem/1 var(--display);border:2px dashed var(--faint);box-shadow:none;background:var(--paper)}
+.lt.on{border:2px solid var(--ink);background:var(--yellow-wash);box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pen{from{transform:scale(1.5) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sq.new{animation:none}.sosb .lines path{animation-duration:.01s}}

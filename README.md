@@ -73,3 +73,7 @@ Clone Beach Day Arcade next to this repo (`../beach-day-arcade`) or set `BDA_REP
 2. `python3 sketchify.py <slug>` (pencil cover and art; add `--inline` if the game embeds base64 images)
 3. Restyle the page and canvas colours per `STYLE.md`
 4. Add the game's entry to `games.json`, run `python3 build.py`, and push.
+
+## Two-player games (Versus)
+
+Tic-Tac-Doodle, Doodle SOS, Box Doodles and Paper Boats are original builds, not Beach Day twins. Each has Play vs Friend (pass & play on one device) and Play vs Bot (Easy, Medium, Hard), and remembers the player's record against the bot on that device. They share one shell: edit `tools/versus/shell.css`, `tools/versus/shell.js` or a game's `tools/versus/<slug>.html/.css/.js`, then run `python3 tools/versus.py` (it rewrites `src/games/<slug>.html`) and `python3 build.py`. Don't hand-edit the generated game files.

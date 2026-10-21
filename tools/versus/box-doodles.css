@@ -1,0 +1,15 @@
+.dots{width:min(100%,54dvh,420px);aspect-ratio:1;display:block;overflow:visible;touch-action:manipulation}
+.dots .dot{fill:var(--ink);pointer-events:none}
+.dots .edge{stroke-width:9;stroke-linecap:round;fill:none}
+.dots .edge.e0{stroke:var(--p0)}.dots .edge.e1{stroke:var(--p1)}
+.dots .edge.last{stroke-width:12}
+.dots .edge.new{stroke-dasharray:110;stroke-dashoffset:110;animation:draw .25s ease-out forwards}
+.dots .ghost{pointer-events:none;stroke:var(--faint);stroke-width:3;stroke-dasharray:3 9;stroke-linecap:round}
+.dots .hit{stroke:transparent;stroke-width:44;cursor:pointer;pointer-events:stroke}
+.dots .hit:hover+.ghost,.dots .hit:focus{stroke:rgba(201,154,26,.35)}
+.dots .hit:focus{outline:none;stroke:rgba(201,154,26,.4)}
+.dots .box{animation:fill .35s ease-out}
+.dots .box text{font:400 46px "Gloria Hallelujah","Comic Sans MS",cursive;text-anchor:middle;dominant-baseline:central;fill:var(--ink)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fill{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dots .edge.new,.dots .box{animation:none;stroke-dashoffset:0}}
