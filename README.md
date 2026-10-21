@@ -77,3 +77,7 @@ Clone Beach Day Arcade next to this repo (`../beach-day-arcade`) or set `BDA_REP
 ## Two-player games (Versus)
 
 Tic-Tac-Doodle, Doodle SOS, Box Doodles and Paper Boats are original builds, not Beach Day twins. Each has Play vs Friend (pass & play on one device) and Play vs Bot (Easy, Medium, Hard), and remembers the player's record against the bot on that device. They share one shell: edit `tools/versus/shell.css`, `tools/versus/shell.js` or a game's `tools/versus/<slug>.html/.css/.js`, then run `python3 tools/versus.py` (it rewrites `src/games/<slug>.html`) and `python3 build.py`. Don't hand-edit the generated game files.
+
+## One-player puzzles
+
+Blot Sweeper, Save the Doodle, Doodle Doku and Crayon Code share a puzzle shell (Easy, Medium and Hard picker, timer, best results saved on the device). Edit `tools/solo/base.css`, `tools/solo/base.js` or a game's `tools/solo/<slug>.html/.css/.js`, then run `python3 tools/solo.py` and `python3 build.py`. Don't hand-edit the generated game files.
