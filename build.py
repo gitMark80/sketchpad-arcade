@@ -101,6 +101,27 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.puzzle{border-color:var(--green);background:var(--green-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.bookbuy{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.bookbuy .cover{align-self:stretch}
+.bookbuy .aff{margin:0!important}
+.bookbuy .btn{white-space:nowrap;width:auto}
+@media (max-width:620px){.bookbuy .btn{font-size:1.05rem;padding:10px 20px}}
+.shelf{margin-top:8px}
+.shelfhead{font-size:clamp(1.9rem,5vw,2.6rem);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 14px;padding-bottom:6px;border-bottom:3px solid var(--ink)}
+.shelf .books{margin-bottom:10px}
+.tag.bk{border-color:var(--orange,#e0893a);background:var(--yellow-wash)}.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
 .btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
@@ -197,13 +218,73 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
 <div class="navr"><a class="sharebtn homebtn" href="{rel}index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
 <button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button>{sister_btn()}</div>
 </nav></div>'''
-    links = [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
-    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.</span>
+    links = ([("coloring-book", "Coloring Book")] if SITE.get("book") else []) + [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
+    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.{"<br>As an Amazon Associate I earn from qualifying purchases." if SITE.get("book") else ""}</span>
 <ul>{"".join(footlink(rel, p, n, active == p) for p, n in links)}</ul></div></footer>'''
     content = f"{nav}\n<main>{body}</main>\n{foot}\n{SHARE_JS}"
     if not full:  # fragment for the claude.ai preview, which supplies its own document shell
         return head + content
     return f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n{head}</head>\n<body>\n{content}\n</body>\n</html>\n'
+
+BOOK = SITE.get("book")
+
+def book_link(label, cls="btn small"):
+    return f'<a class="{cls}" href="{E(BOOK["url"])}" rel="sponsored noopener" target="_blank">{label}</a>'
+
+def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
+    """A promo for the Sketchpad Arcade Coloring Book (paperback on Amazon, affiliate link).
+    On a game's page it shows that game's own coloring page from the book (src/book/pages/<slug>.webp), when there is one."""
+    if not BOOK: return ""
+    own = g and (ROOT / "src" / "book" / "pages" / f'{g["slug"]}.webp').exists()
+    img = (f'<img class="pg" src="{rel}book/pages/{g["slug"]}.webp" alt="{E(g["name"])} coloring page from the {E(BOOK["title"])}" width="598" height="800" loading="lazy">' if own
+           else f'<img src="{rel}book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802" loading="lazy">')
+    pitch = (f'{E(g["name"])} has its own page in the {E(BOOK["title"])}, along with every other game on the site. 46 designs in all, on big 8.5 × 11-inch pages.' if own
+             else E(BOOK["pitch"]))
+    return f'''<aside class="book" aria-label="{E(BOOK["title"])}">
+<a class="bookcov" href="{rel}coloring-book.html">{img}</a>
+<div><span class="kicker">{E(kicker)}</span><h2>{E(heading or BOOK["title"])}</h2><p>{pitch}</p>
+<div class="bookbtns">{book_link("Get it on Amazon")}<a href="{rel}coloring-book.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>'''
+
+SAMPLES = ["paper-plane-dash", "sidewalk-hop", "cookie-drop", "word-workshop", "2048-drop", "pencil-patrol"]
+
+def book_shelf():
+    """Home page Books section: the coloring book as a card the same size as the game cards, linking to its page."""
+    if not BOOK: return ""
+    return f'''<section class="shelf" aria-labelledby="books-head"><h2 class="shelfhead" id="books-head">Books</h2>
+<div class="strip books"><a class="card" href="coloring-book.html" aria-label="{E(BOOK["title"])}" title="{E(BOOK["title"])}">
+<img class="thumb" src="book/thumb.jpg" alt="{E(BOOK["title"])}" width="640" height="640" loading="lazy">
+<div class="body"><span class="tag bk">Book</span></div></a></div></section>'''
+
+def book_page():
+    li = "".join(f"<li>{E(x)}</li>" for x in BOOK["facts"])
+    ld = {"@context": "https://schema.org", "@type": "Book", "name": BOOK["title"], "bookFormat": "https://schema.org/Paperback",
+          "numberOfPages": None, "isbn": "9798163771042", "publisher": {"@type": "Organization", "name": SITE["owner"]},
+          "audience": {"@type": "PeopleAudience", "suggestedMinAge": 6, "suggestedMaxAge": 12}, "url": f'{SITE["url"].rstrip("/")}/coloring-book'}
+    ld = {k: v for k, v in ld.items() if v is not None}
+    body = f'''<div class="wrap bookpage">
+<div class="hero">
+  <div class="bookbuy"><div class="cover"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></div>
+    {book_link("Order the coloring book", "btn")}
+    <p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div>
+  <div class="info">
+    <span class="tag">Paperback</span>
+    <h1>{E(BOOK["title"])}</h1>
+    <p class="lead">Bring the games off the screen and onto the page. {E(BOOK["pitch"])}</p>
+    <ul class="facts">{li}</ul>
+  </div>
+</div>
+<h2 class="sec">A peek inside</h2>
+<div class="samples">{"".join(f'<a href="{x}.html"><img src="book/pages/{x}.webp" alt="{E(BY_SLUG[x]["name"])} coloring page" width="598" height="800" loading="lazy"></a>' for x in SAMPLES)}</div>
+<section class="panel about"><h2>Color it, then play it</h2>
+<p>Every game on Sketchpad Arcade has its own page in the book, in the same A to Z order as the site, plus a few bonus scenes, a game index and a page for testing your colors. Color your favorites, then come back here and play their games for free.</p>
+<p>Grab colored pencils or crayons. If you use markers, slip a spare sheet behind the page to protect the next design.</p>
+<p>{book_link("Order the coloring book", "btn small")}</p></section>
+<section><h2 class="sec">Play the games</h2><div class="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
+</div>
+<script type="application/ld+json">{json.dumps(ld)}</script>'''
+    return page(f'{BOOK["title"]} | {SITE["name"]}', f'{BOOK["title"]}: {BOOK["pitch"]} Paperback on Amazon.', body, "coloring-book", canonical="coloring-book",
+                extra_head=f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/book/share.jpg">\n')
 
 def card(g):
     cls = "tag " + g["genre"].lower()
@@ -221,6 +302,8 @@ def home(full=True):
         also = f'<div class="also"><p>{E(a["text"])}</p><a class="btn small" href="{E(a["url"])}" rel="noopener">{E(a["cta"])}</a></div>'
     body = f'''<div class="wrap">
 <div class="homehead"><h1>{E(SITE["headline"])}</h1><p>{E(SITE["intro"])}</p></div>
+{book_shelf()}
+<section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
@@ -228,6 +311,7 @@ def home(full=True):
 <section class="row" id="row-picks" hidden><h2 class="sec">Our Picks</h2><div class="strip"></div></section>
 {"".join(f'<section class="row" id="row-genre-{E(x.lower())}" hidden><h2 class="sec">{E(x)} Games</h2><div class="strip"></div></section>' for x in genres)}
 <section class="row" id="row-rest"><h2 class="sec" hidden>More Games</h2><div class="grid" id="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
+</section>
 {also}
 {home_outro()}
 </div>
@@ -309,6 +393,7 @@ def detail(g):
   <section class="panel"><h2>{E(g.get("tips_title", "Tips"))}</h2><ul>{li(g["tips"])}</ul></section>
 </div>
 {about}
+{book_card(kicker="Love the drawings?", heading=f"Color {g['name']} yourself", g=g)}
 <section><h2 class="sec">More games</h2><div class="grid">{"".join(card(o) for o in others)}</div></section>
 </div>
 <script type="application/ld+json">{json.dumps(ld)}</script>
@@ -463,6 +548,8 @@ def privacy():
 <p>You do not need an account to play, and we do not ask for your name, email address or other personal details to use the games.</p>
 <h2>Advertising and analytics</h2>
 <p>We may show ads provided by Google AdSense or by game-platform partners to keep the games free. These providers may use cookies or similar technologies to serve and measure ads. Google's use of advertising cookies enables it and its partners to serve ads based on visits to this and other sites. You can manage personalized advertising at <a href="https://www.google.com/settings/ads" rel="noopener">google.com/settings/ads</a>, and you can learn how Google uses information at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>. We may also use basic, aggregated analytics to understand which games people enjoy.</p>
+<h2>Amazon Associates</h2>
+<p>{E(SITE["name"])} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Links to our coloring book on Amazon are affiliate links: as an Amazon Associate I earn from qualifying purchases. Amazon may set cookies when you follow one of these links.</p>
 <h2>Children</h2>
 <p>Our games are made for general audiences, including families. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us and we will delete it.</p>
 <h2>Changes</h2>
@@ -716,6 +803,9 @@ def build():
     (OUT / "contact.html").write_text(contact())
     (OUT / "terms.html").write_text(terms())
     (OUT / "news.html").write_text(news())
+    if BOOK:
+        shutil.copytree(ROOT / "src" / "book", OUT / "book")
+        (OUT / "coloring-book.html").write_text(book_page())
     (OUT / "404.html").write_text(not_found())
     (OUT / "news").mkdir()
     for x in POSTS:
@@ -732,7 +822,7 @@ def build():
     (OUT / "vercel.json").write_text(json.dumps({"cleanUrls": True}, indent=2) + "\n")
     url = SITE.get("url", "").rstrip("/")
     if url:
-        pages = ["", "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
+        pages = ["", "coloring-book", "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
         (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
             "".join(f"  <url><loc>{url}/{p}</loc></url>\n" for p in pages) + "</urlset>\n")
         (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {url}/sitemap.xml\n")
