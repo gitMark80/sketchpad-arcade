@@ -70,6 +70,16 @@ def expand(stem, flags, sfx, pfx):
                     out.add(add + w[len(strip):])
     return out
 
+# Two-letter words we accept (the dictionary also lists abbreviations like "cm" and "ft", so these are hand-picked).
+TWO = set("ah am an as at aw ax be by do eh em en ex go ha he hi ho hm id if in is it la lo ma me mi mo mu my no nu oh oi ok om on or ow ox oy pa pi qi re so ta ti to uh um up us we xi ya ye yo".split())
+# Real words with no vowel (a, e, i, o, u or y); every other vowel-less entry is an abbreviation.
+NOVOWEL = set("brr hmm shh psst nth tsk pfft".split())
+# Abbreviations, roman numerals and slurs that look like words.
+ABBR = set("""abl abr acc adj adv agr alg amt ans arr att aud aug avg avn bal cal cen cir cit civ cyl dat dec deg del dep der dir
+doz dpi dup ecu enc eng enl ert esp est exc exp exr ext fac fec fol fut fwy gov gro hwy hyp ign inc ind inf ins int inv isl jor
+kab kep lii liq loq lur lvi lxi mfg mus nav neg obj obs oct opp ord org rel req res rev rte sci sec sem seq ser sig sym syn
+usu uts bkcy btry cryst dlvy fyrd hgwy phys pkwy synd syst ttys tyg typ typw wkly xci xii xiv xix xvi xxi iii vii xor qto qty yrs
+jew jews jewed jewing gyp gyps gypped yid yids wog wogs goy goys goyim cum cums dago dagos""".split())
 ALLOW = {"butter", "butters", "buttered", "buttering", "heroine", "heroines", "hello", "shell"}
 
 def blocked(w, block):
@@ -93,8 +103,17 @@ def main():
         if not stem or not stem[0].islower():
             continue
         for w in expand(stem, flags, sfx, pfx):
-            if re.fullmatch(r"[a-z]{2,11}", w) and not blocked(w, block):
+            if not re.fullmatch(r"[a-z]{2,11}", w) or blocked(w, block) or w in ABBR:
+                continue
+            if len(w) == 2 and w not in TWO:
+                continue
+            if not re.search(r"[aeiouy]", w) and w not in NOVOWEL:
+                continue
+            if re.fullmatch(r"m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})", w) and w not in {"mix", "dim", "mid", "lid", "mild", "civic", "vivid", "mimic", "dill", "ill", "mill", "mi", "civil", "vim", "dix", "mil"}:
+                continue
+            if True:
                 words.add(w)
+    words |= TWO
     words = sorted(words)
     lines, prev = [], ""
     for w in words:
