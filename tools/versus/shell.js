@@ -9,9 +9,10 @@ const S=(()=>{
   let sound=true;try{sound=localStorage.getItem('sa-sound')!=='off'}catch(e){}
   const S={mode:save.mode,diff:save.diff,turn:0,first:0,scores:[0,0],rounds:[0,0],active:false,busy:false,botTimer:0};
   function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
-  S.names=()=>S.mode==='bot'?['You','Bot']:['Player 1','Player 2'];
+  const online=()=>S.mode==='online'&&typeof ON!=='undefined';
+  S.names=()=>online()?ON.names():S.mode==='bot'?['You','Bot']:['Player 1','Player 2'];
   S.isBot=()=>S.mode==='bot'&&S.turn===1;
-  S.canPlay=()=>S.active&&!S.busy&&!S.isBot();
+  S.canPlay=()=>S.active&&!S.busy&&!S.isBot()&&!(online()&&S.turn!==ON.seat);
   S.rand=n=>Math.floor(Math.random()*n);
   S.pick=a=>a[Math.floor(Math.random()*a.length)];
   /* chance the bot plays its best move instead of a random-ish one */
@@ -35,22 +36,22 @@ const S=(()=>{
   S.wash=p=>p===0?'#d6e4f2':'#f0d5e2';
   S.hud=()=>{const n=S.names();$('n0').textContent=n[0];$('n1').textContent=n[1];const sc=INFO.scoreIsRounds?S.rounds:S.scores;$('s0').textContent=sc[0];$('s1').textContent=sc[1];
     $('p0').classList.toggle('on',S.active&&S.turn===0);$('p1').classList.toggle('on',S.active&&S.turn===1);
-    $('tally').textContent='Rounds won: '+n[0]+' '+S.rounds[0]+' · '+n[1]+' '+S.rounds[1]};
+    $('tally').textContent='Rounds won: '+n[0]+' '+S.rounds[0]+' · '+n[1]+' '+S.rounds[1];$('tally').hidden=online()};
   S.status=(t,who)=>{const e=$('turn');e.textContent=t;e.className='turn'+(who===0||who===1?' t'+who:'')};
-  S.turnText=()=>{const n=S.names();if(S.isBot())return '🤖 Bot is thinking…';return '✏️ '+(S.mode==='bot'?'Your':n[S.turn]+"'s")+' turn'+(INFO.turnHint?INFO.turnHint(S.turn):'')};
+  S.turnText=()=>{if(online())return ON.turnText();const n=S.names();if(S.isBot())return '🤖 Bot is thinking…';return '✏️ '+(S.mode==='bot'?'Your':n[S.turn]+"'s")+' turn'+(INFO.turnHint?INFO.turnHint(S.turn):'')};
   S.addScore=(p,n)=>{S.scores[p]+=n;S.hud()};
-  S.setTurn=(t,quiet)=>{S.turn=t;S.hud();if(!S.active)return;S.status(S.turnText(),t);if(GAME.render)GAME.render();
+  S.setTurn=(t,quiet)=>{S.turn=t;S.hud();if(!S.active)return;if(online()&&!ON.applying)ON.push(t,false);S.status(S.turnText(),t);if(GAME.render)GAME.render();
     clearTimeout(S.botTimer);if(S.isBot()){S.busy=true;S.botTimer=setTimeout(()=>{S.busy=false;if(S.active&&S.isBot())GAME.botMove()},INFO.botDelay||650)}};
   // ---------- rounds ----------
-  function show(id){['start','diff','over','help','pass'].forEach(x=>{const e=$(x);if(e)e.hidden=x!==id})}
+  function show(id){['start','diff','over','help','pass','invite'].forEach(x=>{const e=$(x);if(e)e.hidden=x!==id})}
   S.show=show;
   S.newRound=()=>{clearTimeout(S.botTimer);S.busy=false;S.scores=[0,0];S.active=true;show(null);GAME.reset();const st=S.first;S.first^=1;if(GAME.begin)GAME.begin(st);else S.setTurn(st);};
-  S.end=(winner,msg)=>{if(!S.active)return;S.active=false;clearTimeout(S.botTimer);S.hud();const n=S.names();let head;
-    if(winner===0||winner===1){S.rounds[winner]++;head=S.mode==='bot'?(winner===0?'You win!':'Bot wins'):n[winner]+' wins!'}else head="It's a draw";
+  S.end=(winner,msg)=>{if(!S.active)return;S.active=false;clearTimeout(S.botTimer);if(online()&&!ON.applying)ON.push(S.turn,true,winner,msg);S.hud();const n=S.names();let head;
+    if(winner===0||winner===1){S.rounds[winner]++;head=S.mode==='bot'||online()?(n[winner]==='You'?'You win!':n[winner]+' wins'):n[winner]+' wins!'}else head="It's a draw";
     if(S.mode==='bot'){const d=S.diff;if(winner===0){save.wins[d]++;save.streak++;save.best=Math.max(save.best,save.streak)}else{if(winner===1)save.losses[d]++;if(winner===1)save.streak=0}persist()}
-    S.sfx(winner===-1?'draw':(S.mode==='bot'&&winner===1?'lose':'win'));
+    S.sfx(winner===-1?'draw':((S.mode==='bot'||online())&&n[winner]!=='You'?'lose':'win'));
     S.status(head,winner);S.hud();if(GAME.render)GAME.render();
-    setTimeout(()=>{$('overH').textContent=head;$('overMsg').textContent=msg||'';$('overRec').textContent=S.mode==='bot'?record():'';$('overRec').hidden=S.mode!=='bot';show('over')},INFO.endDelay||1100)};
+    setTimeout(()=>{$('overH').textContent=head;$('overMsg').textContent=msg||'';$('overRec').textContent=S.mode==='bot'?record():'';$('overRec').hidden=S.mode!=='bot';$('again').textContent='Play again';show('over')},INFO.endDelay||1100)};
   function record(){const w=save.wins,d=S.diff;return 'Your wins vs Bot — Easy '+w.easy+' · Medium '+w.medium+' · Hard '+w.hard+(save.best?' · Best streak '+save.best:'')}
   function startRec(){const w=save.wins;const any=w.easy+w.medium+w.hard;$('startRec').textContent=any?record():'Beat the bot to start your record.'}
   function pickMode(m){S.mode=m;save.mode=m;persist();S.rounds=[0,0];S.first=0;if(m==='bot'){show('diff')}else{S.newRound()}}
@@ -59,12 +60,12 @@ const S=(()=>{
   document.querySelectorAll('[data-diff]').forEach(b=>b.onclick=()=>{S.sfx('tap');S.diff=b.dataset.diff;save.diff=S.diff;persist();S.rounds=[0,0];S.first=0;S.newRound()});
   $('diffBack').onclick=()=>show('start');
   $('again').onclick=()=>{S.sfx('tap');S.newRound()};
-  $('overMode').onclick=$('modeb').onclick=()=>{S.active=false;clearTimeout(S.botTimer);startRec();S.status('Pick who to play against');show('start')};
-  $('newr').onclick=()=>{if(!S.mode){show('start');return}S.newRound()};
-  $('helpb').onclick=()=>{S.wasOpen=['start','diff','over','pass'].find(x=>$(x)&&!$(x).hidden)||null;show('help')};
+  $('overMode').onclick=$('modeb').onclick=()=>{if(online())ON.leave();S.mode=null;S.active=false;clearTimeout(S.botTimer);startRec();S.status('Pick who to play against');show('start')};
+  $('newr').onclick=()=>{if(!S.mode||online()){if(online())ON.leave();S.mode=null;S.active=false;startRec();S.status('Pick who to play against');show('start');return}S.newRound()};
+  $('helpb').onclick=()=>{S.wasOpen=['start','diff','over','pass','invite'].find(x=>$(x)&&!$(x).hidden)||null;show('help')};
   $('helpClose').onclick=()=>show(S.wasOpen);
   S.pass=(name,cb)=>{$('passH').textContent='Pass to '+name;$('passGo').textContent="I'm "+name+' — go!';show('pass');$('passGo').onclick=()=>{S.sfx('tap');show(null);cb()}};
   // ---------- boot ----------
-  S.boot=()=>{startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start')};
+  S.boot=()=>{startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start');if(typeof ON!=='undefined'&&ON.ok)ON.start()};
   return S;
 })();

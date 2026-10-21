@@ -37,6 +37,7 @@ def build(slug):
     board = (V / f"{slug}.html").read_text()
     js = (V / f"{slug}.js").read_text()
     shell = (V / "shell.js").read_text()
+    online = (V / "online.js").read_text()
     out = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -72,6 +73,7 @@ def build(slug):
       <div class="modes">
         <button type="button" id="vsFriend"><span class="em">👥</span><b>vs Friend</b><small>Pass &amp; play on this device</small></button>
         <button type="button" id="vsBot"><span class="em">🤖</span><b>vs Bot</b><small>Easy, Medium or Hard</small></button>
+        <button type="button" id="vsInvite"><span class="em">📲</span><b>Invite a friend</b><small>Send a link · take turns whenever</small></button>
       </div>
       <p class="rec" id="startRec"></p>
     </div>
@@ -97,12 +99,21 @@ def build(slug):
       <p>No peeking! Hand it over, then tap below.</p>
       <button class="primary" id="passGo" type="button">Go</button>
     </div>
+    <div class="over" id="invite" hidden>
+      <h2>Invite a friend</h2>
+      <p>Send this link to a friend. They tap it to join as pink. You're blue and you go first.</p>
+      <p class="invlink" id="invLink"></p>
+      <div class="btns"><button class="primary" id="invShare" type="button">📲 Send link</button></div>
+      <button class="link" type="button" id="invGo">Make my first move</button>
+      <p class="rec">Take turns whenever you like. Open the game from the home page any time to see if it's your move.</p>
+    </div>
     <div class="over help" id="help" hidden>
       <h2>How to play</h2>
       <ul class="rules">{rules}</ul>
       <button class="primary" id="helpClose" type="button">Got it</button>
     </div>
   </div>
+  <div class="onbar" id="onbar" hidden><span id="onText"></span><button type="button" id="onShare">📲 Share link</button></div>
   <div class="tally" id="tally"></div>
   <div class="bar">
     <button id="newr" type="button">↻ New round</button>
@@ -114,6 +125,7 @@ def build(slug):
 const INFO={json.dumps(info)};
 {shell}
 {js}
+{online}
 S.boot();
 </script>
 </body>

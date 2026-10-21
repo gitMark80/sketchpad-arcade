@@ -35,7 +35,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://www.sketchpadarcade.com/brand/share-2.jpg">
 <style>[hidden]{display:none!important}</style>
-<style>
+<script>window.SA_ONLINE={"url": "https://wzckjgrrjrborkojymbp.supabase.co", "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l"};</script><style>
 /* Sketchpad Arcade: every page is a sketchbook page. Paper with a faint grain, graphite ink, wobbly hand-drawn borders,
    handwriting fonts, and coloured-pencil accents only where a kid would have reached for one. */
 :root{--paper:#f6f3ea;--paper-2:#efeadd;--ink:#2e2e33;--pencil:#55555c;--muted:#7a7a80;--faint:#c9c6bc;
@@ -187,6 +187,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag bk">Book</span></div></a></div></section>
 <section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games"><button class="chip" type="button" data-f="all" aria-pressed="true">All games</button><button class="chip" type="button" data-f="Arcade" aria-pressed="false">Arcade</button><button class="chip" type="button" data-f="Puzzle" aria-pressed="false">Puzzle</button><button class="chip" type="button" data-f="Versus" aria-pressed="false">Versus</button><button class="chip" type="button" data-f="Word" aria-pressed="false">Word</button></div>
+<section class="row" id="row-mine" hidden><h2 class="sec">Your Games with Friends</h2><div class="strip"></div></section>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
 <section class="row" id="row-recent" hidden><h2 class="sec">Recent Favorites</h2><div class="strip"></div></section>
@@ -341,6 +342,21 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     Object.values(rows).forEach(r=>{if(r.dataset.on)r.hidden=!r.querySelector(".card:not([hidden])")});
     restHead.hidden=!Object.values(rows).some(r=>r.dataset.on)||!grid.querySelector(".card:not([hidden])");
   }
+  // Your Games with Friends: invite-a-friend games saved on this device, newest first, with whose turn it is.
+  (()=>{const O=window.SA_ONLINE;if(!O)return;let mine=[];try{mine=JSON.parse(localStorage.getItem("sa-online-games")||"[]")}catch(e){}
+    if(!mine.length)return;const h={"Content-Type":"application/json",apikey:O.key};if(/^eyJ/.test(O.key))h.Authorization="Bearer "+O.key;
+    fetch(O.url.replace(/[/]$/,"")+"/rest/v1/rpc/vs_list",{method:"POST",headers:h,body:JSON.stringify({p_codes:mine.map(x=>x.code)})})
+    .then(r=>r.ok?r.json():null).catch(()=>null).then(list=>{if(!list)return;const by={};list.forEach(g=>by[g.code]=g);
+      const keep=mine.filter(x=>by[x.code]&&(by[x.code].status!=="done"||Date.now()-new Date(by[x.code].updated_at)<7*864e5));
+      try{localStorage.setItem("sa-online-games",JSON.stringify(keep))}catch(e){}
+      const rank=x=>{const g=by[x.code];return g.status==="done"?2:g.turn===x.seat?0:1};
+      const row=document.getElementById("row-mine"),strip=row.querySelector(".strip");
+      keep.sort((a,b)=>rank(a)-rank(b)).slice(0,ROW_MAX).forEach(x=>{const g=by[x.code];const c=cards.get(x.game);if(!c)return;
+        const t=g.status==="done"?(g.winner===-1?"Draw":g.winner===x.seat?"You won!":"Friend won"):g.turn===x.seat?"Your turn!":g.status==="waiting"?"Waiting for friend":"Friend's turn";
+        const a=document.createElement("a");a.className="card mine";a.href="play/"+x.game+"?game="+x.code;a.title=x.name+": "+t;
+        a.innerHTML='<img class="thumb" src="img/'+x.game+'.jpg" alt="" loading="lazy" width="640" height="640"><div class="body"><span class="tag '+(t==="Your turn!"?"versus":"")+'"></span></div>';
+        a.querySelector(".tag").textContent=t;strip.appendChild(a)});
+      if(strip.children.length){row.hidden=false}})})();
   document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
     filter=b.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));applyFilter();
   }));

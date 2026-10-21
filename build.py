@@ -306,6 +306,7 @@ def home(full=True):
 {book_shelf()}
 <section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
+<section class="row" id="row-mine" hidden><h2 class="sec">Your Games with Friends</h2><div class="strip"></div></section>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
 <section class="row" id="row-recent" hidden><h2 class="sec">Recent Favorites</h2><div class="strip"></div></section>
@@ -354,12 +355,29 @@ def home(full=True):
     Object.values(rows).forEach(r=>{{if(r.dataset.on)r.hidden=!r.querySelector(".card:not([hidden])")}});
     restHead.hidden=!Object.values(rows).some(r=>r.dataset.on)||!grid.querySelector(".card:not([hidden])");
   }}
+  // Your Games with Friends: invite-a-friend games saved on this device, newest first, with whose turn it is.
+  (()=>{{const O=window.SA_ONLINE;if(!O)return;let mine=[];try{{mine=JSON.parse(localStorage.getItem("sa-online-games")||"[]")}}catch(e){{}}
+    if(!mine.length)return;const h={{"Content-Type":"application/json",apikey:O.key}};if(/^eyJ/.test(O.key))h.Authorization="Bearer "+O.key;
+    fetch(O.url.replace(/[/]$/,"")+"/rest/v1/rpc/vs_list",{{method:"POST",headers:h,body:JSON.stringify({{p_codes:mine.map(x=>x.code)}})}})
+    .then(r=>r.ok?r.json():null).catch(()=>null).then(list=>{{if(!list)return;const by={{}};list.forEach(g=>by[g.code]=g);
+      const keep=mine.filter(x=>by[x.code]&&(by[x.code].status!=="done"||Date.now()-new Date(by[x.code].updated_at)<7*864e5));
+      try{{localStorage.setItem("sa-online-games",JSON.stringify(keep))}}catch(e){{}}
+      const rank=x=>{{const g=by[x.code];return g.status==="done"?2:g.turn===x.seat?0:1}};
+      const row=document.getElementById("row-mine"),strip=row.querySelector(".strip");
+      keep.sort((a,b)=>rank(a)-rank(b)).slice(0,ROW_MAX).forEach(x=>{{const g=by[x.code];const c=cards.get(x.game);if(!c)return;
+        const t=g.status==="done"?(g.winner===-1?"Draw":g.winner===x.seat?"You won!":"Friend won"):g.turn===x.seat?"Your turn!":g.status==="waiting"?"Waiting for friend":"Friend's turn";
+        const a=document.createElement("a");a.className="card mine";a.href="play/"+x.game+"?game="+x.code;a.title=x.name+": "+t;
+        a.innerHTML='<img class="thumb" src="img/'+x.game+'.jpg" alt="" loading="lazy" width="640" height="640"><div class="body"><span class="tag '+(t==="Your turn!"?"versus":"")+'"></span></div>';
+        a.querySelector(".tag").textContent=t;strip.appendChild(a)}});
+      if(strip.children.length){{row.hidden=false}}}})}})();
   document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{{
     filter=b.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));applyFilter();
   }}));
 }})();
 </script>'''
-    return page(f'{SITE["name"]}: free family-friendly games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n')
+    return page(f'{SITE["name"]}: free family-friendly games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js())
+
+GAME_LINK_JS = """<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/SLUG?game='+m[1])})();</script>"""
 
 def detail(g):
     others = [o for o in GAMES if o["slug"] != g["slug"]]
@@ -398,7 +416,8 @@ def detail(g):
 <section><h2 class="sec">More games</h2><div class="grid">{"".join(card(o) for o in others)}</div></section>
 </div>
 <script type="application/ld+json">{json.dumps(ld)}</script>
-{count_js(g["slug"], False) if g.get("play_url") else ""}'''
+{count_js(g["slug"], False) if g.get("play_url") else ""}
+{GAME_LINK_JS.replace('SLUG', g['slug']) if g['slug'] in ONLINE_GAMES else ''}'''
     return page(g.get("title") or f'{g["name"]}: play free online | {SITE["name"]}', g["meta"], body, "games", canonical=g["slug"], share=game_share(g),
                 extra_head=(f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/img/{g["slug"]}.jpg">\n' if SITE.get("url") else ""))
 
@@ -758,9 +777,17 @@ def desktop_css(g):
         "body>.app,body>.wrap,body>#app{max-width:none!important}"
         "}</style>")
 
+def online_js():
+    """Invite-a-friend settings (Supabase project URL and public key) from games.json "online". Empty when not set up."""
+    o = SITE.get("online") or {}
+    if not (o.get("url") and o.get("key")): return ""
+    return "<script>window.SA_ONLINE=" + json.dumps({"url": o["url"], "key": o["key"]}) + ";</script>"
+
+ONLINE_GAMES = {g["slug"] for g in GAMES if g.get("online")}
+
 def play_page(g):
     s = (ROOT / "src" / "games" / f'{g["slug"]}.html').read_text()
-    s = s.replace("</head>", PAPER_STYLE + "\n" + BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
+    s = s.replace("</head>", (online_js() if g["slug"] in ONLINE_GAMES else "") + PAPER_STYLE + "\n" + BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
     s = re.sub(r"<h1([^>]*)>(.*?)</h1>", lambda m: f'<div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all {E(SITE["name"])} games" title="Home">{HOME_ICON}</a><h1{m.group(1)}>{m.group(2)}</h1><button class="sa-share" type="button" aria-label="Share {E(g["name"])}" {game_share(g)}>{SHARE_ICON}</button></div>', s, count=1)
     base = SITE.get("url", "https://www.sketchpadarcade.com").rstrip("/")
     host = re.sub(r"^https?://(www\.)?", "", base)

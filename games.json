@@ -45,6 +45,11 @@
         "A game index and a color-testing page",
         "For kids ages 6 to 12 and anyone who loves doodles"
       ]
+    },
+    "online": {
+      "url": "https://wzckjgrrjrborkojymbp.supabase.co",
+      "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l",
+      "note": "Supabase project sketchpad-arcade (invite-a-friend games). The publishable key is meant to be public; the database only allows the vs_* functions."
     }
   },
   "games": [
@@ -236,7 +241,8 @@
       "about": [
         "Tic-Tac-Doodle is tic-tac-toe, the game kids have drawn in the margins of notebooks for generations, redrawn in coloured pencil.",
         "It's a gentle first game against a computer for little ones on Easy, and a real puzzle on Hard, where the bot plays perfectly and the best you can do is a draw."
-      ]
+      ],
+      "online": true
     },
     {
       "slug": "doodle-sos",
@@ -274,7 +280,8 @@
       "about": [
         "SOS has been played on scrap paper for a very long time. It looks simple, but it's a game of setting traps and dodging them.",
         "Our version uses a 6×6 sketchbook grid and draws each SOS in the scorer's coloured pencil, so you can see who earned what at a glance."
-      ]
+      ],
+      "online": true
     },
     {
       "slug": "box-doodles",
@@ -311,7 +318,8 @@
       "about": [
         "Dots and boxes has been a favourite pencil game since the 1800s. It starts slow and calm, and ends with long chains of boxes changing hands.",
         "On Hard, the bot takes every box it can and always gives away as little as possible, so you'll have to plan ahead to beat it."
-      ]
+      ],
+      "online": true
     },
     {
       "slug": "paper-boats",
