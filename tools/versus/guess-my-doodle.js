@@ -135,13 +135,16 @@ function render(){if(!G)return;const n=S.names(),me=S.viewer(),myTurn=S.active&&
   if(G.phase==='draw'){head.innerHTML=`Draw <b>${G.cur.word.toUpperCase()}</b> <span class="stars">${stars(G.cur.tier)}</span> · no letters!`;show(['cvWrap','drawTools']);msg('');tools();sizeCanvas();drawAll(draft||[]);return}
   if(G.phase==='guess'){head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL} · guess the word <span class="stars">${stars(G.cur.tier)}</span>`;show(['cvWrap','guessBox']);msg('');setupGuess();sizeCanvas();replay(decode(G.cur.d))}}
 addEventListener('resize',()=>{if(!G)return;sizeCanvas();if(G.phase==='draw'&&draft)drawAll(draft);else if(G.cur&&G.cur.d&&!replayT)drawAll(decode(G.cur.d))});
+const gdHide=w=>btoa([...w].reverse().map((c,i)=>String.fromCharCode(c.charCodeAt(0)^(7+i%5))).join('')),
+  gdShow=x=>[...atob(x)].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^(7+i%5))).reverse().join('');
 const GAME={
   reset(){stopReplay();G=fresh(0);draft=null;handing=false;resolving=false;viewKey=''},
   begin(st){G=fresh(st);viewKey='';S.setTurn(st)},
   render,
   endHead:()=>'Team score: '+S.scores[0]+'!',
-  save(){const s=JSON.parse(JSON.stringify(G));if(s.phase==='draw'){s.phase='pick';s.cur=null}return s},
+  /* the word being guessed is scrambled in saved games so it isn't readable at a glance in the browser's network tab */
+  save(){const s=JSON.parse(JSON.stringify(G));if(s.phase==='draw'){s.phase='pick';s.cur=null}if(s.cur&&s.cur.word){s.cur.x=gdHide(s.cur.word);delete s.cur.word}return s},
   load(st){stopReplay();resolving=false;handing=false;draft=null;viewKey='';
-    G=Object.assign(fresh(0),JSON.parse(JSON.stringify(st||{})));if(!G.offers||G.offers.length!==3)G.offers=offers(G.used||[]);if(G.phase==='draw')G.phase='pick'},
+    G=Object.assign(fresh(0),JSON.parse(JSON.stringify(st||{})));if(G.cur&&G.cur.x&&!G.cur.word){G.cur.word=gdShow(G.cur.x);delete G.cur.x}if(!G.offers||G.offers.length!==3)G.offers=offers(G.used||[]);if(G.phase==='draw')G.phase='pick'},
   botMove(){}
 };
