@@ -1,6 +1,8 @@
 /* Sketchpad Arcade two-player shell: Play vs Friend (pass & play) or Play vs Bot (Easy / Medium / Hard),
    turn banner, scores, round tally, sound, and the player's record against the bot (saved on this device).
-   A game defines GAME = {reset(), botMove(), render?()} and calls S.setTurn(), S.addScore(), S.end(). */
+   A game defines GAME = {reset(), botMove(), render?()} and calls S.setTurn(), S.addScore(), S.end().
+   Options: INFO.noBot hides vs Bot; GAME.endHead(winner) can replace the end-card title; S.viewer() is the seat
+   whose private things (a hand of tiles, hidden boats) this screen may show. */
 const S=(()=>{
   const $=id=>document.getElementById(id);
   const KEY='sa-vs-'+INFO.slug;
@@ -12,6 +14,7 @@ const S=(()=>{
   const online=()=>S.mode==='online'&&typeof ON!=='undefined';
   S.names=()=>online()?ON.names():S.mode==='bot'?['You','Bot']:['Player 1','Player 2'];
   S.isBot=()=>S.mode==='bot'&&S.turn===1;
+  S.viewer=()=>online()?ON.seat:S.mode==='bot'?0:S.turn;
   S.canPlay=()=>S.active&&!S.busy&&!S.isBot()&&!(online()&&S.turn!==ON.seat);
   S.rand=n=>Math.floor(Math.random()*n);
   S.pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -48,12 +51,13 @@ const S=(()=>{
   S.newRound=()=>{clearTimeout(S.botTimer);S.busy=false;S.scores=[0,0];S.active=true;show(null);GAME.reset();const st=S.first;S.first^=1;if(GAME.begin)GAME.begin(st);else S.setTurn(st);};
   S.end=(winner,msg)=>{if(!S.active)return;S.active=false;clearTimeout(S.botTimer);if(online()&&!ON.applying)ON.push(S.turn,true,winner,msg);S.hud();const n=S.names();let head;
     if(winner===0||winner===1){S.rounds[winner]++;head=S.mode==='bot'||online()?(n[winner]==='You'?'You win!':n[winner]+' wins'):n[winner]+' wins!'}else head="It's a draw";
+    if(GAME.endHead){const h=GAME.endHead(winner);if(h)head=h}
     if(S.mode==='bot'){const d=S.diff;if(winner===0){save.wins[d]++;save.streak++;save.best=Math.max(save.best,save.streak)}else{if(winner===1)save.losses[d]++;if(winner===1)save.streak=0}persist()}
     S.sfx(winner===-1?'draw':((S.mode==='bot'||online())&&n[winner]!=='You'?'lose':'win'));
     S.status(head,winner);S.hud();if(GAME.render)GAME.render();
     setTimeout(()=>{$('overH').textContent=head;$('overMsg').textContent=msg||'';$('overRec').textContent=S.mode==='bot'?record():'';$('overRec').hidden=S.mode!=='bot';$('again').textContent='Play again';show('over')},INFO.endDelay||1100)};
   function record(){const w=save.wins,d=S.diff;return 'Your wins vs Bot — Easy '+w.easy+' · Medium '+w.medium+' · Hard '+w.hard+(save.best?' · Best streak '+save.best:'')}
-  function startRec(){const w=save.wins;const any=w.easy+w.medium+w.hard;$('startRec').textContent=any?record():'Beat the bot to start your record.'}
+  function startRec(){const w=save.wins;const any=w.easy+w.medium+w.hard;$('startRec').textContent=INFO.noBot?'':any?record():'Beat the bot to start your record.'}
   function pickMode(m){S.mode=m;save.mode=m;persist();S.rounds=[0,0];S.first=0;if(m==='bot'){show('diff')}else{S.newRound()}}
   $('vsFriend').onclick=()=>{S.sfx('tap');pickMode('friend')};
   $('vsBot').onclick=()=>{S.sfx('tap');pickMode('bot')};
@@ -66,6 +70,6 @@ const S=(()=>{
   $('helpClose').onclick=()=>show(S.wasOpen);
   S.pass=(name,cb)=>{$('passH').textContent='Pass to '+name;$('passGo').textContent="I'm "+name+' — go!';show('pass');$('passGo').onclick=()=>{S.sfx('tap');show(null);cb()}};
   // ---------- boot ----------
-  S.boot=()=>{startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start');if(typeof ON!=='undefined'&&ON.ok)ON.start()};
+  S.boot=()=>{if(INFO.noBot){const b=$('vsBot');if(b)b.remove()}startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start');if(typeof ON!=='undefined'&&ON.ok)ON.start()};
   return S;
 })();

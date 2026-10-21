@@ -26,6 +26,20 @@ GAMES = {
                   "Take turns tapping a square on the other player's page. A miss is a splash; a hit puts a pencil X on a boat.",
                   "Hit every square of a boat and it floats away. Find all four boats to win.",
                   "Playing a friend on one phone? Each turn the game asks you to pass it over, so nobody peeks."]},
+    "connect-sketch": {"name": "Connect Sketch", "intro": "Drop your crayon counters down the page. Four in a row wins.",
+        "rules": ["Take turns tapping a column to drop a counter. It falls to the lowest empty space.", "Get four of your colour in a row (across, down or corner to corner) to win the round.",
+                  "Fill the whole page with no four in a row and it's a draw.", "Who goes first swaps every round."]},
+    "sketchers": {"name": "Sketchers", "intro": "Checkers on a sketchbook page. Jump your friend's pieces to win.",
+        "rules": ["Tap one of your pieces, then tap a highlighted square to move it diagonally forward.", "Jump over the other player's piece into an empty square to capture it. If you can jump, you must, and keep jumping if you can.",
+                  "Reach the far side and your piece is crowned. Crowned pieces can move backward too.", "Win by capturing every piece or leaving the other player with no moves."]},
+    "guess-my-doodle": {"name": "Guess My Doodle", "intro": "Draw a word for your friend, then guess theirs. Score points together.",
+        "rules": ["On your turn, pick one of three words and draw it. No letters or numbers!", "Your friend watches your drawing appear line by line and taps letters to guess the word.",
+                  "Guess it and you both score: harder words are worth more. Then the guesser becomes the drawer.", "Stuck? Tap Skip to see the word and keep the game going. Ten drawings make a game."]},
+    "sketch-with-friends": {"name": "Sketch with Friends", "intro": "Make words on the board with your letter tiles. Highest score wins.",
+        "rules": ["Drag tiles from your rack onto the board to make a word across or down. The first word must cover the star in the middle.",
+                  "Every new word must join onto words already on the board. Tap Play to score it; tiles you place stay in one line.",
+                  "Each letter has points. Coloured squares double or triple a letter (DL, TL) or the whole word (DW, TW). Use all 7 tiles in one turn for a 35-point bonus.",
+                  "Swap tiles or pass if you're stuck. The game ends when the bag is empty and someone uses their last tile, or after four passes in a row."]},
 }
 
 def build(slug):

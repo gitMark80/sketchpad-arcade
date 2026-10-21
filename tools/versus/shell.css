@@ -73,3 +73,4 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 .invlink{font:400 1rem/1.3 var(--body);color:var(--ink);background:var(--paper-2);border:2px dashed var(--faint);border-radius:var(--wob2);padding:6px 12px;word-break:break-all;max-width:100%}
 .onbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-size:1rem;color:var(--pencil);text-align:center}
 .onbar button{font-size:1rem;padding:5px 12px;background:var(--yellow-wash)}
+.modes:not(:has(#vsBot)) #vsFriend{grid-column:1/-1}
