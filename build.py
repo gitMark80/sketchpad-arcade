@@ -110,13 +110,10 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
 .bookpage .hero .cover img{aspect-ratio:auto}
-.bookstrip{display:flex;align-items:center;gap:24px;margin:6px 0 18px;padding:14px 20px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2)}
-.bookstrip img{display:block;height:300px;width:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
-.bookstrip p{margin:0 0 12px;line-height:1.4;font-size:1.15rem}
-.bookstrip p a{color:var(--ink)}
-.bookstrip .aff{font-size:.85rem;margin:10px 0 0!important}
-@media (max-width:620px){.bookstrip{flex-direction:column;text-align:center;gap:14px}.bsbuy{display:flex;justify-content:center}}
-.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.shelf{margin-top:8px}
+.shelfhead{font-size:clamp(1.9rem,5vw,2.6rem);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 14px;padding-bottom:6px;border-bottom:3px solid var(--ink)}
+.shelf .books{margin-bottom:10px}
+.tag.bk{border-color:var(--orange,#e0893a);background:var(--yellow-wash)}.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
 .samples a{display:block}
 .samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
 @media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
@@ -246,14 +243,13 @@ def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
 
 SAMPLES = ["paper-plane-dash", "sidewalk-hop", "cookie-drop", "word-workshop", "2048-drop", "pencil-patrol"]
 
-def book_strip():
-    """The slim home-page promo: small cover, one line, one button."""
+def book_shelf():
+    """Home page Books section: the coloring book as a card the same size as the game cards, linking to its page."""
     if not BOOK: return ""
-    return f'''<aside class="bookstrip" aria-label="{E(BOOK["title"])}">
-<a href="coloring-book.html"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></a>
-<div><p><strong>New:</strong> the <a href="coloring-book.html">Sketchpad Arcade Coloring Book</a>. Color the games!</p>
-<span class="bsbuy">{book_link("Get it on Amazon")}</span>
-<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>'''
+    return f'''<section class="shelf" aria-labelledby="books-head"><h2 class="shelfhead" id="books-head">Books</h2>
+<div class="strip books"><a class="card" href="coloring-book.html" aria-label="{E(BOOK["title"])}" title="{E(BOOK["title"])}">
+<img class="thumb" src="book/thumb.jpg" alt="{E(BOOK["title"])}" width="640" height="640" loading="lazy">
+<div class="body"><span class="tag bk">Book</span></div></a></div></section>'''
 
 def book_page():
     li = "".join(f"<li>{E(x)}</li>" for x in BOOK["facts"])
@@ -301,7 +297,8 @@ def home(full=True):
         also = f'<div class="also"><p>{E(a["text"])}</p><a class="btn small" href="{E(a["url"])}" rel="noopener">{E(a["cta"])}</a></div>'
     body = f'''<div class="wrap">
 <div class="homehead"><h1>{E(SITE["headline"])}</h1><p>{E(SITE["intro"])}</p></div>
-{book_strip()}
+{book_shelf()}
+<section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
@@ -309,6 +306,7 @@ def home(full=True):
 <section class="row" id="row-picks" hidden><h2 class="sec">Our Picks</h2><div class="strip"></div></section>
 {"".join(f'<section class="row" id="row-genre-{E(x.lower())}" hidden><h2 class="sec">{E(x)} Games</h2><div class="strip"></div></section>' for x in genres)}
 <section class="row" id="row-rest"><h2 class="sec" hidden>More Games</h2><div class="grid" id="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
+</section>
 {also}
 {home_outro()}
 </div>
