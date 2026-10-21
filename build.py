@@ -110,6 +110,11 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
 .bookpage .hero .cover img{aspect-ratio:auto}
+.bookbuy{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.bookbuy .cover{align-self:stretch}
+.bookbuy .aff{margin:0!important}
+.bookbuy .btn{white-space:nowrap;width:auto}
+@media (max-width:620px){.bookbuy .btn{font-size:1.05rem;padding:10px 20px}}
 .shelf{margin-top:8px}
 .shelfhead{font-size:clamp(1.9rem,5vw,2.6rem);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 14px;padding-bottom:6px;border-bottom:3px solid var(--ink)}
 .shelf .books{margin-bottom:10px}
@@ -259,14 +264,14 @@ def book_page():
     ld = {k: v for k, v in ld.items() if v is not None}
     body = f'''<div class="wrap bookpage">
 <div class="hero">
-  <div class="cover"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></div>
+  <div class="bookbuy"><div class="cover"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></div>
+    {book_link("Order the coloring book", "btn")}
+    <p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div>
   <div class="info">
     <span class="tag">Paperback</span>
     <h1>{E(BOOK["title"])}</h1>
     <p class="lead">Bring the games off the screen and onto the page. {E(BOOK["pitch"])}</p>
     <ul class="facts">{li}</ul>
-    <div>{book_link("Get it on Amazon", "btn")}</div>
-    <p class="aff">As an Amazon Associate I earn from qualifying purchases.</p>
   </div>
 </div>
 <h2 class="sec">A peek inside</h2>
