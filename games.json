@@ -49,6 +49,156 @@
   },
   "games": [
     {
+      "slug": "tic-tac-doodle",
+      "name": "Tic-Tac-Doodle",
+      "genre": "Versus",
+      "added": "2026-10-21",
+      "tagline": "Blue X against pink O. Three in a row wins.",
+      "meta": "Play Tic-Tac-Doodle free online: hand-drawn tic-tac-toe on a sketchbook page. Play a friend on one phone or take on the bot on Easy, Medium or Hard. No downloads, no sign-ups.",
+      "lead": "The classic paper-and-pencil game, drawn right on the sketchbook page. Blue X and pink O take turns, and the first to get three in a row wins the round. Pass the phone to a friend, or try to beat the bot. On Hard it never loses, so a draw is a win!",
+      "facts": [
+        "Versus",
+        "Play a friend on one device, or the bot",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: a friend on the same device, or the bot.",
+        "Take turns drawing your mark in an empty square. Blue X is Player 1 (or you), pink O is Player 2 (or the bot).",
+        "Get three in a row across, down or corner to corner to win the round.",
+        "Fill the board with no line of three and it's a draw. Who goes first swaps every round."
+      ],
+      "controls": [
+        "Tap or click a square to draw your mark.",
+        "New round starts a fresh board. Mode lets you switch between a friend and the bot.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Take the middle square if it's free. It's part of four different lines.",
+        "Corners come next: they're part of three lines each.",
+        "Always check if the other player has two in a row before you go, and block it.",
+        "Make two lines at once (a fork) and the other player can only block one."
+      ],
+      "about": [
+        "Tic-Tac-Doodle is tic-tac-toe, the game kids have drawn in the margins of notebooks for generations, redrawn in coloured pencil.",
+        "It's a gentle first game against a computer for little ones on Easy, and a real puzzle on Hard, where the bot plays perfectly and the best you can do is a draw."
+      ]
+    },
+    {
+      "slug": "doodle-sos",
+      "name": "Doodle SOS",
+      "genre": "Versus",
+      "added": "2026-10-21",
+      "tagline": "Write S or O. Spell S-O-S to score and go again.",
+      "meta": "Play Doodle SOS free online: the classic SOS pencil game on a 6x6 grid. Spell S-O-S to score, play a friend on one phone or beat the bot on Easy, Medium or Hard.",
+      "lead": "A pencil-and-paper classic for two. Take turns writing an S or an O in the grid. Finish S-O-S in a line, across, down or corner to corner, and you score a point and go again. When the grid is full, the most SOS lines wins.",
+      "facts": [
+        "Versus",
+        "6×6 grid",
+        "Play a friend on one device, or the bot",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: a friend on the same device, or the bot.",
+        "On your turn, choose S or O with the buttons under the grid, then tap an empty square.",
+        "If your letter finishes S-O-S in any direction, it's drawn through in your colour, you score, and you go again.",
+        "One letter can finish more than one SOS at once for extra points.",
+        "When every square is filled, the player with the most points wins."
+      ],
+      "controls": [
+        "Tap S or O to choose your letter, then tap a square to write it.",
+        "New round clears the grid. Mode switches between a friend and the bot.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Before you write, look for S _ S gaps (write an O) and S O _ gaps (write an S).",
+        "Don't leave an S and an O side by side with a gap: that hands the other player a point.",
+        "Near the end, count the safe squares left. Sometimes the best move is the one that gives nothing away.",
+        "Scoring keeps your turn going, so one good move can set up a chain of points."
+      ],
+      "about": [
+        "SOS has been played on scrap paper for a very long time. It looks simple, but it's a game of setting traps and dodging them.",
+        "Our version uses a 6×6 sketchbook grid and draws each SOS in the scorer's coloured pencil, so you can see who earned what at a glance."
+      ]
+    },
+    {
+      "slug": "box-doodles",
+      "name": "Box Doodles",
+      "genre": "Versus",
+      "added": "2026-10-21",
+      "tagline": "Join the dots. Close a box to claim it and go again.",
+      "meta": "Play Box Doodles free online: the classic dots and boxes game drawn in pencil. Join the dots, claim boxes, and play a friend on one phone or the bot on Easy, Medium or Hard.",
+      "lead": "The dots game from the back of every school notebook. Take turns drawing one line between two dots. Draw the fourth side of a box and it's yours, with your initial in it, and you draw again. When all 25 boxes are claimed, whoever has the most wins.",
+      "facts": [
+        "Versus",
+        "25 boxes, so no ties",
+        "Play a friend on one device, or the bot",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: a friend on the same device, or the bot.",
+        "On your turn, tap the space between two dots that sit next to each other to draw a line.",
+        "Close the fourth side of a box to claim it. You score a point and draw another line.",
+        "When every box has been claimed, the player with the most boxes wins."
+      ],
+      "controls": [
+        "Tap or click between two dots to draw a line. On a keyboard, Tab to a line and press Enter.",
+        "New round starts a fresh page. Mode switches between a friend and the bot.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Avoid drawing the third side of a box. It gives the box away.",
+        "Early on, draw lines that don't touch any box with two sides already.",
+        "Late in the game every move gives something away. Give away the shortest row of boxes you can.",
+        "Taking a box lets you move again, so finish off a chain before you make your next safe move."
+      ],
+      "about": [
+        "Dots and boxes has been a favourite pencil game since the 1800s. It starts slow and calm, and ends with long chains of boxes changing hands.",
+        "On Hard, the bot takes every box it can and always gives away as little as possible, so you'll have to plan ahead to beat it."
+      ]
+    },
+    {
+      "slug": "paper-boats",
+      "name": "Paper Boats",
+      "genre": "Versus",
+      "added": "2026-10-21",
+      "tagline": "Find all four hidden paper boats before they find yours.",
+      "meta": "Play Paper Boats free online: a hide-and-seek boat guessing game on graph paper. Hide your boats, take turns guessing squares, and play a friend on one phone or the bot on Easy, Medium or Hard.",
+      "lead": "A guessing game for two on graph paper. Each player hides four paper boats on their own page. Take turns tapping a square on the other player's page: a miss is a splash, and a hit gets a pencil X. Find every square of a boat and it floats away. Find all four boats first to win.",
+      "facts": [
+        "Versus",
+        "8×8 pages, four boats each",
+        "Play a friend on one device, or the bot",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: a friend on the same device, or the bot.",
+        "Hide your boats: tap Shuffle until you like where they are, then tap Ready. Boats never touch each other.",
+        "Take turns tapping a square on the other player's page. A splash means nothing's there; an X means you hit a boat.",
+        "Hit every square of a boat to find it. The first player to find all four boats wins.",
+        "Playing a friend? The game asks you to pass the phone between turns, so nobody peeks at the other page."
+      ],
+      "controls": [
+        "Tap or click a square on the big page to guess it.",
+        "Your own page and boats are shown small underneath, with the other player's guesses on it.",
+        "New round hides new boats. Mode switches between a friend and the bot.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Spread out your first guesses in a checkerboard pattern. Every boat is at least two squares long, so you'll still find them all.",
+        "After a hit, try the squares next to it. After two hits in a line, keep going along that line.",
+        "Boats never touch, so the squares all around a found boat are always empty. Don't waste guesses there.",
+        "The Boats to find list shows which boats are left. If only the Big boat is left, look for gaps long enough to hold four squares."
+      ],
+      "about": [
+        "Paper Boats is our take on the classic grid guessing game, with folded paper boats on a sketchbook page instead of anything scary. Hits are pencil X's and misses are splashes.",
+        "The bot gets cleverer with each level: on Easy it mostly guesses, on Medium it hunts around its hits, and on Hard it works out where boats could still be hiding."
+      ]
+    },
+    {
       "slug": "pencil-parade",
       "name": "Pencil Parade",
       "genre": "Arcade",
