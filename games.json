@@ -49,6 +49,160 @@
   },
   "games": [
     {
+      "slug": "blot-sweeper",
+      "name": "Blot Sweeper",
+      "genre": "Puzzle",
+      "added": "2026-10-21",
+      "tagline": "Uncover every clean square without touching an ink blot.",
+      "meta": "Play Blot Sweeper free online: a family-friendly minesweeper with ink blots instead of bombs, drawn on a sketchbook page. Easy, Medium and Hard. Works on phone and computer.",
+      "lead": "The classic number-logic puzzle, with ink blots hiding under the paper instead of anything scary. Tap a square to uncover it. Numbers tell you how many blots are touching that square, so you can work out where they are, flag them, and uncover every clean square to win.",
+      "facts": [
+        "Puzzle",
+        "Your first tap is always safe",
+        "Easy, Medium and Hard",
+        "Saves your best on each level"
+      ],
+      "how": [
+        "Pick a level. Easy is 8×8 with 10 blots, Medium is 9×11 with 18, and Hard is 10×13 with 30.",
+        "Tap any square to start. Your first tap is always safe and opens up part of the page.",
+        "Each number shows how many ink blots touch that square, including diagonally.",
+        "Mark squares you know are blots with a flag: switch to Flag, or press and hold a square.",
+        "Uncover every clean square to win. Uncover a blot and the page is ruined."
+      ],
+      "controls": [
+        "Tap a square to uncover it.",
+        "Switch to 🚩 Flag, press and hold, or right-click to put a flag on a square.",
+        "Tap a number when all its blots are flagged to uncover everything around it at once.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Start with the 1s next to corners. They often point to exactly one blot.",
+        "If a 1 touches only one covered square, that square is a blot. Flag it!",
+        "If a number already has all its blots flagged, every other square around it is safe.",
+        "Look for the 1-2-1 pattern along an edge: the blots sit under the two 1s."
+      ],
+      "about": [
+        "Blot Sweeper is our take on minesweeper, the logic puzzle that came with computers for years. We swapped the bombs for ink blots so it's friendly for younger players.",
+        "Every page is random, and your first tap is always safe, so you never lose on a lucky guess."
+      ]
+    },
+    {
+      "slug": "save-the-doodle",
+      "name": "Save the Doodle",
+      "genre": "Word",
+      "added": "2026-10-21",
+      "tagline": "Guess the word before the eraser rubs out the doodle.",
+      "meta": "Play Save the Doodle free online: a family-friendly hangman word game. Guess letters before the eraser rubs out the pencil doodle. Easy, Medium and Hard word lists with clues.",
+      "lead": "A friendly spin on hangman. A hidden word is shown as blanks with a clue, like Animal or Food. Guess one letter at a time. Every wrong letter makes the eraser rub out part of the little pencil doodle, so fill in the word before it's gone!",
+      "facts": [
+        "Word",
+        "A clue for every word",
+        "Easy, Medium and Hard",
+        "Saves your best on each level",
+        "Builds a streak of words in a row"
+      ],
+      "how": [
+        "Pick a level. Easy has short words and 7 tries, Medium has longer words and 6 tries, and Hard has tricky words and 5 tries.",
+        "Read the clue, then tap a letter.",
+        "If the letter is in the word, it's written in every blank where it belongs.",
+        "If it isn't, the eraser rubs out part of the doodle.",
+        "Fill in the whole word to save the doodle and add to your streak."
+      ],
+      "controls": [
+        "Tap a letter, or type it on a keyboard.",
+        "New puzzle gives you a new word.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Start with vowels: A, E, I, O and U.",
+        "Next try common letters like T, N, S, R and L.",
+        "Use the clue! An Animal with three letters and an O in the middle could be DOG or FOX.",
+        "Look at the length. Long words often end in -ING or -ER."
+      ],
+      "about": [
+        "Save the Doodle is hangman without the hanging. Instead of drawing a scary picture, the eraser rubs out a happy doodle, and your job is to save it.",
+        "The word lists are written for kids, grouped into clues like Animal, Food and At school, so younger players have a way in."
+      ]
+    },
+    {
+      "slug": "doodle-doku",
+      "name": "Doodle Doku",
+      "genre": "Puzzle",
+      "added": "2026-10-21",
+      "tagline": "Fill the grid so every row, column and box has 1 to 9.",
+      "meta": "Play Doodle Doku free online: sudoku drawn on a sketchbook page. New puzzles every game with exactly one answer, notes, hints and Easy, Medium and Hard levels.",
+      "lead": "Classic sudoku on a pencil grid. Fill every empty square so each row, each column and each 3×3 box has the numbers 1 to 9 exactly once. Every puzzle is new and has exactly one answer, with notes for your pencil guesses and three hints if you get stuck.",
+      "facts": [
+        "Puzzle",
+        "A new puzzle every game",
+        "Notes and 3 hints per puzzle",
+        "Easy, Medium and Hard",
+        "Saves your best on each level"
+      ],
+      "how": [
+        "Pick a level. Easy starts with about 40 numbers, Medium about 32, and Hard as few as 25.",
+        "Tap an empty square, then tap a number to write it in.",
+        "Each row, column and 3×3 box needs 1 to 9 with no repeats.",
+        "A wrong number turns orange and counts as a mistake. Mistakes never end the game.",
+        "Fill the whole grid to win. Your best time on each level is saved."
+      ],
+      "controls": [
+        "Tap a square, then a number. On a keyboard, use the arrow keys and type 1 to 9.",
+        "Notes lets you pencil in small guesses. Erase clears a square.",
+        "Hint fills in the square you picked (or a random one), three times per puzzle.",
+        "The small number under each button shows how many of that number are still to place."
+      ],
+      "tips": [
+        "Look for a row, column or box that's almost full first.",
+        "Pick a number and scan for where it can go in each box.",
+        "If a square can only take one number, write it in.",
+        "Use notes when two squares in a box share the same two possible numbers."
+      ],
+      "about": [
+        "Doodle Doku is sudoku with a sketchbook look. Every puzzle is made fresh when you start and checked to have exactly one answer.",
+        "We count mistakes but never end the game for them, so it's a good way for kids to learn sudoku at their own pace."
+      ]
+    },
+    {
+      "slug": "crayon-code",
+      "name": "Crayon Code",
+      "genre": "Puzzle",
+      "added": "2026-10-21",
+      "tagline": "Crack the secret row of crayon colours.",
+      "meta": "Play Crayon Code free online: a family-friendly code-breaking puzzle with crayons, like Mastermind. Guess the secret colours using dot clues. Easy, Medium and Hard levels.",
+      "lead": "A code-breaking puzzle with crayons. There's a secret row of colours and you have to work it out. After each guess, dots tell you how close you are: a filled dot for every crayon in the right spot, and an open dot for every right colour in the wrong spot.",
+      "facts": [
+        "Puzzle",
+        "Logic for all ages",
+        "Easy, Medium and Hard",
+        "Saves your best on each level",
+        "Saves your fewest guesses"
+      ],
+      "how": [
+        "Pick a level. Easy is 3 colours from 4 crayons. Medium is 4 colours from 6. Hard is 4 colours from 6, and a colour can be used more than once.",
+        "Tap crayons to fill your row, then tap Check. Tap a filled spot to clear it.",
+        "A filled dot means a crayon is the right colour in the right spot.",
+        "An open dot means that colour is in the code, but in a different spot.",
+        "The dots don't line up with your crayons, so you have to work out which crayon each dot is about. Crack the code before you run out of rows."
+      ],
+      "controls": [
+        "Tap a crayon to add it to the next empty spot.",
+        "Tap a spot in your row to clear it, or tap Clear to start the row again.",
+        "On a keyboard, press 1 to 6 for crayons, Backspace to undo and Enter to check.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Use your first guesses to find out which colours are in the code at all.",
+        "If a guess gets no dots, none of those colours are in the code.",
+        "Keep one crayon in the same spot and move the others to see which dot changes.",
+        "Your fewest guesses on each level is saved. Try to beat it!"
+      ],
+      "about": [
+        "Crayon Code is our version of the classic code-breaking game, often played with pegs, redrawn with a box of crayons.",
+        "It's a great first logic puzzle: Easy is short and simple, and Hard, with repeated colours, will make grown-ups think too."
+      ]
+    },
+    {
       "slug": "tic-tac-doodle",
       "name": "Tic-Tac-Doodle",
       "genre": "Versus",

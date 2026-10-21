@@ -1,0 +1,30 @@
+.stage{gap:8px}
+.cc{display:flex;flex-direction:column;gap:4px;width:min(100%,360px);padding:8px 10px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);box-shadow:3px 3px 0 var(--pencil);
+  background-image:repeating-linear-gradient(0deg,transparent 0 calc(var(--rh) - 1px),rgba(47,111,181,.18) calc(var(--rh) - 1px) var(--rh));--rh:clamp(30px,4.4dvh,40px)}
+.rw{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:8px;height:calc(var(--rh) - 4px);opacity:.35}
+.rw.done,.rw.now{opacity:1}
+.rw.now{background:rgba(243,230,176,.6);border-radius:8px}
+.rw .n{font:400 .95rem/1 var(--body);color:var(--muted);text-align:right}
+.slots{display:flex;gap:8px;justify-content:center}
+.slots .slot,.secret .slot{all:unset;box-sizing:border-box;width:calc(var(--rh) - 8px);aspect-ratio:1;border:2px dashed var(--faint);border-radius:50% 45% 55% 40%;cursor:default}
+.rw.now .slot{border-color:var(--pencil);cursor:pointer}
+.slot.f{border:2px solid var(--ink)}
+.slot:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+.pegs{display:grid;grid-template-columns:repeat(2,10px);gap:3px;width:26px}
+.peg{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--faint)}
+.peg.b{background:var(--ink);border-color:var(--ink)}
+.peg.w{background:var(--paper);border-color:var(--ink)}
+.palette{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.cr{all:unset;cursor:pointer;width:clamp(40px,12vw,52px);height:clamp(60px,9dvh,84px);display:flex;justify-content:center}
+.cr svg{width:100%;height:100%;overflow:visible}
+.cr:active svg{transform:translateY(3px)}
+.cr:disabled{opacity:.25;cursor:default}
+.cr:focus-visible{outline:3px dashed var(--ink);outline-offset:2px;border-radius:6px}
+.ccbar{display:flex;gap:10px}
+.ccbar .primary{font-size:1.3rem;padding:8px 22px}
+.secret{display:flex;gap:8px;min-height:0}
+.secret .slot{border:2px solid var(--ink);width:34px}
+.slot.ink,.peg.ink{animation:pen .3s ease-out both}
+@keyframes pen{from{transform:scale(1.6);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.slot.ink,.peg.ink{animation:none}}
+.rw.done .peg:not(.b):not(.w){opacity:.3}

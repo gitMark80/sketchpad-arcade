@@ -16,7 +16,7 @@ body{background-color:var(--paper);color:var(--ink);font-family:var(--body);disp
 header{display:flex;align-items:center;justify-content:space-between;gap:10px}
 h1{flex:1;min-width:0;font-family:var(--display);font-weight:400;font-size:clamp(1.05rem,6.2vw,1.6rem);margin:0;color:var(--ink);letter-spacing:.04em;text-transform:uppercase;transform:rotate(-1.5deg);transform-origin:left center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 button{font-family:var(--body);font-weight:400;font-size:1.05rem;white-space:nowrap;border:2px solid var(--ink);border-radius:var(--wob);padding:8px 14px;cursor:pointer;background:var(--paper);color:var(--ink);box-shadow:2px 2px 0 var(--pencil)}
-button:nth-child(2){border-radius:var(--wob2)}
+.bar button:nth-child(2),.btns button:nth-child(2),.tools button:nth-child(2){border-radius:var(--wob2)}
 button:active{transform:translate(2px,2px);box-shadow:none}
 button:disabled{opacity:.4;cursor:default}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
