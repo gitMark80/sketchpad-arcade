@@ -18,7 +18,7 @@ function draw(){g('edges').innerHTML='';ED.forEach((p,i)=>{if(p<0)return;const e
     hits[i][0].style.display='none';hits[i][1].style.display='none'})}
 function claim(b,p){BX[b]=p;const r=Math.floor(b/NB),c=b%NB;const grp=mk('g',{class:'box'});
   grp.appendChild(mk('rect',{x:c*SP+6,y:r*SP+6,width:SP-12,height:SP-12,fill:`url(#h${p})`,rx:6}));
-  const t=mk('text',{x:c*SP+SP/2,y:r*SP+SP/2});t.textContent=S.mode==='bot'?(p?'B':'Y'):(p?'2':'1');grp.appendChild(t);g('boxes').appendChild(grp)}
+  const t=mk('text',{x:c*SP+SP/2,y:r*SP+SP/2});t.textContent=S.mode==='friend'?(p?'2':'1'):S.names()[p][0];grp.appendChild(t);g('boxes').appendChild(grp)}
 function play(i){const p=S.turn;const got=E_[i].b.filter(b=>sides(ED,b)===3);ED[i]=p;last=i;draw();got.forEach(b=>claim(b,p));
   if(got.length){S.addScore(p,got.length);S.sfx('score')}else S.sfx(S.isBot()?'bot':'tap');
   if(BX.every(v=>v>=0)){const[a,b]=S.scores;S.end(a>b?0:1,`${a} boxes to ${b}.`);return}
@@ -28,7 +28,9 @@ const free=()=>ED.map((v,i)=>v<0?i:-1).filter(i=>i>=0);
 const safe=i=>E_[i].b.every(b=>sides(ED,b)<2);
 /* boxes the opponent could grab in a row after we draw edge i (greedy chain count) */
 function giveaway(i){const ed=ED.slice();ed[i]=9;let n=0,go=true;while(go){go=false;for(let j=0;j<ed.length;j++)if(ed[j]<0&&closes(ed,j)){n+=closes(ed,j);ed[j]=9;go=true}}return n}
-const GAME={reset(){ED.fill(-1);BX.fill(-1);last=-1;g('boxes').innerHTML='';g('edges').innerHTML='';hits.forEach(([h,gh])=>{h.style.display='';gh.style.display=''})},
+const GAME={save:()=>({E:ED.slice(),B:BX.slice(),last}),
+  load(st){const e=st.E||[];if(!e.some(v=>v>=0)&&ED.some(v=>v>=0))GAME.reset();ED=e.length?e.slice():ED;last=st.last==null?-1:st.last;draw();(st.B||[]).forEach((p,b)=>{if(p>=0&&BX[b]<0)claim(b,p)})},
+  reset(){ED.fill(-1);BX.fill(-1);last=-1;g('boxes').innerHTML='';g('edges').innerHTML='';hits.forEach(([h,gh])=>{h.style.display='';gh.style.display=''})},
   botMove(){const f=free();const cl=f.filter(i=>closes(ED,i));const sf=f.filter(safe);let m;
     if(S.diff==='easy'){m=cl.length&&Math.random()<.5?S.pick(cl):S.pick(f)}
     else if(S.diff==='medium'){m=cl.length&&Math.random()<.85?S.pick(cl):sf.length&&Math.random()<.8?S.pick(sf):S.pick(f)}

@@ -81,3 +81,11 @@ Tic-Tac-Doodle, Doodle SOS, Box Doodles and Paper Boats are original builds, not
 ## One-player puzzles
 
 Blot Sweeper, Save the Doodle, Doodle Doku and Crayon Code share a puzzle shell (Easy, Medium and Hard picker, timer, best results saved on the device). Edit `tools/solo/base.css`, `tools/solo/base.js` or a game's `tools/solo/<slug>.html/.css/.js`, then run `python3 tools/solo.py` and `python3 build.py`. Don't hand-edit the generated game files.
+
+## Invite a friend (online, take turns whenever)
+
+Tic-Tac-Doodle, Doodle SOS and Box Doodles have a third mode, **Invite a friend**: it makes a game with a 6-letter code and shares a link (`/<slug>?game=CODE`, which forwards to the play page and shows the cover in link previews). The friend who opens it plays pink; moves sync through Supabase (project `sketchpad-arcade`), each phone checking for the other player's move every few seconds while it's waiting. Games on this device show in **Your Games with Friends** on the home page.
+
+- Turn it on per game with `"online": true` in `games.json`; the Supabase URL and publishable key are in `site.online`. Remove `site.online` to switch the feature off everywhere.
+- The database is in `supabase/migrations/`: one locked table, `vs_games`, reached only through the `vs_*` functions, which check each phone's secret id (only its hash is stored) and whose turn it is.
+- A game supports it by defining `GAME.save()` and `GAME.load(state)`; the code is in `tools/versus/online.js`. Paper Boats is left out until its boats can be hidden on the server.

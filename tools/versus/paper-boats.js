@@ -1,7 +1,7 @@
 /* Paper Boats (8x8, boats of 4, 3, 3 and 2). One shot a turn. Players hide boats with Shuffle, then Ready.
    vs Friend: the game asks to pass the phone between turns. Bots: Easy shoots about at random,
    Medium hunts around its hits, Hard also works out where boats can still fit. */
-INFO.botDelay=800;INFO.endDelay=1500;
+INFO.botDelay=800;INFO.online=false;INFO.endDelay=1500;
 const W=8,LENS=[4,3,3,2],NAMES={4:'Big boat',3:'Boat',2:'Little boat'};
 const $=id=>document.getElementById(id);
 let fleets=[[],[]],shots=[[],[]],phase='setup',setupP=0,viewer=0,lastShot=[-1,-1];

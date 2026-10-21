@@ -78,6 +78,13 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 @media (max-width:440px){h1{font-size:clamp(.95rem,4.6vw,1.2rem);letter-spacing:.01em}}
 @media (max-height:700px){.wrap{gap:6px}.turn{font-size:1rem;min-height:1.9em}.pl b{font-size:1.15rem}.bar button{padding:5px 9px}}
 @media (prefers-reduced-motion:reduce){.pop{animation-duration:.01s}.pl{transition:none}}
+.modes #vsInvite{grid-column:1/-1;flex-direction:row;justify-content:center;gap:10px;background:var(--yellow-wash);border-radius:var(--wob);padding:10px 8px;text-align:left}
+.modes #vsInvite .em{font-size:1.6rem}
+.modes #vsInvite b{display:block}
+.modes #vsInvite small{display:block}
+.invlink{font:400 1rem/1.3 var(--body);color:var(--ink);background:var(--paper-2);border:2px dashed var(--faint);border-radius:var(--wob2);padding:6px 12px;word-break:break-all;max-width:100%}
+.onbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-size:1rem;color:var(--pencil);text-align:center}
+.onbar button{font-size:1rem;padding:5px 12px;background:var(--yellow-wash)}
 
 .board{position:relative;width:min(100%,52dvh,400px);aspect-ratio:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr))}
 .board .grid,.board .win{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
@@ -94,7 +101,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 @media (prefers-reduced-motion:reduce){.cell path,.board .win path{animation-duration:.01s}}
 
 </style>
-<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
+<script>window.SA_ONLINE={"url": "https://wzckjgrrjrborkojymbp.supabase.co", "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l"};</script><style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
 <style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>
 <style>
 .bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
@@ -140,6 +147,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
       <div class="modes">
         <button type="button" id="vsFriend"><span class="em">👥</span><b>vs Friend</b><small>Pass &amp; play on this device</small></button>
         <button type="button" id="vsBot"><span class="em">🤖</span><b>vs Bot</b><small>Easy, Medium or Hard</small></button>
+        <button type="button" id="vsInvite"><span class="em">📲</span><b>Invite a friend</b><small>Send a link · take turns whenever</small></button>
       </div>
       <p class="rec" id="startRec"></p>
     </div>
@@ -165,12 +173,21 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
       <p>No peeking! Hand it over, then tap below.</p>
       <button class="primary" id="passGo" type="button">Go</button>
     </div>
+    <div class="over" id="invite" hidden>
+      <h2>Invite a friend</h2>
+      <p>Send this link to a friend. They tap it to join as pink. You're blue and you go first.</p>
+      <p class="invlink" id="invLink"></p>
+      <div class="btns"><button class="primary" id="invShare" type="button">📲 Send link</button></div>
+      <button class="link" type="button" id="invGo">Make my first move</button>
+      <p class="rec">Take turns whenever you like. Open the game from the home page any time to see if it's your move.</p>
+    </div>
     <div class="over help" id="help" hidden>
       <h2>How to play</h2>
       <ul class="rules"><li>Take turns drawing your mark in an empty square.</li><li>Get three in a row (across, down or corner to corner) to win the round.</li><li>Fill the board with no line of three and it&#x27;s a draw.</li><li>Who goes first swaps every round.</li></ul>
       <button class="primary" id="helpClose" type="button">Got it</button>
     </div>
   </div>
+  <div class="onbar" id="onbar" hidden><span id="onText"></span><button type="button" id="onShare">📲 Share link</button></div>
   <div class="tally" id="tally"></div>
   <div class="bar">
     <button id="newr" type="button">↻ New round</button>
@@ -191,9 +208,10 @@ const S=(()=>{
   let sound=true;try{sound=localStorage.getItem('sa-sound')!=='off'}catch(e){}
   const S={mode:save.mode,diff:save.diff,turn:0,first:0,scores:[0,0],rounds:[0,0],active:false,busy:false,botTimer:0};
   function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
-  S.names=()=>S.mode==='bot'?['You','Bot']:['Player 1','Player 2'];
+  const online=()=>S.mode==='online'&&typeof ON!=='undefined';
+  S.names=()=>online()?ON.names():S.mode==='bot'?['You','Bot']:['Player 1','Player 2'];
   S.isBot=()=>S.mode==='bot'&&S.turn===1;
-  S.canPlay=()=>S.active&&!S.busy&&!S.isBot();
+  S.canPlay=()=>S.active&&!S.busy&&!S.isBot()&&!(online()&&S.turn!==ON.seat);
   S.rand=n=>Math.floor(Math.random()*n);
   S.pick=a=>a[Math.floor(Math.random()*a.length)];
   /* chance the bot plays its best move instead of a random-ish one */
@@ -217,22 +235,22 @@ const S=(()=>{
   S.wash=p=>p===0?'#d6e4f2':'#f0d5e2';
   S.hud=()=>{const n=S.names();$('n0').textContent=n[0];$('n1').textContent=n[1];const sc=INFO.scoreIsRounds?S.rounds:S.scores;$('s0').textContent=sc[0];$('s1').textContent=sc[1];
     $('p0').classList.toggle('on',S.active&&S.turn===0);$('p1').classList.toggle('on',S.active&&S.turn===1);
-    $('tally').textContent='Rounds won: '+n[0]+' '+S.rounds[0]+' · '+n[1]+' '+S.rounds[1]};
+    $('tally').textContent='Rounds won: '+n[0]+' '+S.rounds[0]+' · '+n[1]+' '+S.rounds[1];$('tally').hidden=online()};
   S.status=(t,who)=>{const e=$('turn');e.textContent=t;e.className='turn'+(who===0||who===1?' t'+who:'')};
-  S.turnText=()=>{const n=S.names();if(S.isBot())return '🤖 Bot is thinking…';return '✏️ '+(S.mode==='bot'?'Your':n[S.turn]+"'s")+' turn'+(INFO.turnHint?INFO.turnHint(S.turn):'')};
+  S.turnText=()=>{if(online())return ON.turnText();const n=S.names();if(S.isBot())return '🤖 Bot is thinking…';return '✏️ '+(S.mode==='bot'?'Your':n[S.turn]+"'s")+' turn'+(INFO.turnHint?INFO.turnHint(S.turn):'')};
   S.addScore=(p,n)=>{S.scores[p]+=n;S.hud()};
-  S.setTurn=(t,quiet)=>{S.turn=t;S.hud();if(!S.active)return;S.status(S.turnText(),t);if(GAME.render)GAME.render();
+  S.setTurn=(t,quiet)=>{S.turn=t;S.hud();if(!S.active)return;if(online()&&!ON.applying)ON.push(t,false);S.status(S.turnText(),t);if(GAME.render)GAME.render();
     clearTimeout(S.botTimer);if(S.isBot()){S.busy=true;S.botTimer=setTimeout(()=>{S.busy=false;if(S.active&&S.isBot())GAME.botMove()},INFO.botDelay||650)}};
   // ---------- rounds ----------
-  function show(id){['start','diff','over','help','pass'].forEach(x=>{const e=$(x);if(e)e.hidden=x!==id})}
+  function show(id){['start','diff','over','help','pass','invite'].forEach(x=>{const e=$(x);if(e)e.hidden=x!==id})}
   S.show=show;
   S.newRound=()=>{clearTimeout(S.botTimer);S.busy=false;S.scores=[0,0];S.active=true;show(null);GAME.reset();const st=S.first;S.first^=1;if(GAME.begin)GAME.begin(st);else S.setTurn(st);};
-  S.end=(winner,msg)=>{if(!S.active)return;S.active=false;clearTimeout(S.botTimer);S.hud();const n=S.names();let head;
-    if(winner===0||winner===1){S.rounds[winner]++;head=S.mode==='bot'?(winner===0?'You win!':'Bot wins'):n[winner]+' wins!'}else head="It's a draw";
+  S.end=(winner,msg)=>{if(!S.active)return;S.active=false;clearTimeout(S.botTimer);if(online()&&!ON.applying)ON.push(S.turn,true,winner,msg);S.hud();const n=S.names();let head;
+    if(winner===0||winner===1){S.rounds[winner]++;head=S.mode==='bot'||online()?(n[winner]==='You'?'You win!':n[winner]+' wins'):n[winner]+' wins!'}else head="It's a draw";
     if(S.mode==='bot'){const d=S.diff;if(winner===0){save.wins[d]++;save.streak++;save.best=Math.max(save.best,save.streak)}else{if(winner===1)save.losses[d]++;if(winner===1)save.streak=0}persist()}
-    S.sfx(winner===-1?'draw':(S.mode==='bot'&&winner===1?'lose':'win'));
+    S.sfx(winner===-1?'draw':((S.mode==='bot'||online())&&n[winner]!=='You'?'lose':'win'));
     S.status(head,winner);S.hud();if(GAME.render)GAME.render();
-    setTimeout(()=>{$('overH').textContent=head;$('overMsg').textContent=msg||'';$('overRec').textContent=S.mode==='bot'?record():'';$('overRec').hidden=S.mode!=='bot';show('over')},INFO.endDelay||1100)};
+    setTimeout(()=>{$('overH').textContent=head;$('overMsg').textContent=msg||'';$('overRec').textContent=S.mode==='bot'?record():'';$('overRec').hidden=S.mode!=='bot';$('again').textContent='Play again';show('over')},INFO.endDelay||1100)};
   function record(){const w=save.wins,d=S.diff;return 'Your wins vs Bot — Easy '+w.easy+' · Medium '+w.medium+' · Hard '+w.hard+(save.best?' · Best streak '+save.best:'')}
   function startRec(){const w=save.wins;const any=w.easy+w.medium+w.hard;$('startRec').textContent=any?record():'Beat the bot to start your record.'}
   function pickMode(m){S.mode=m;save.mode=m;persist();S.rounds=[0,0];S.first=0;if(m==='bot'){show('diff')}else{S.newRound()}}
@@ -241,13 +259,13 @@ const S=(()=>{
   document.querySelectorAll('[data-diff]').forEach(b=>b.onclick=()=>{S.sfx('tap');S.diff=b.dataset.diff;save.diff=S.diff;persist();S.rounds=[0,0];S.first=0;S.newRound()});
   $('diffBack').onclick=()=>show('start');
   $('again').onclick=()=>{S.sfx('tap');S.newRound()};
-  $('overMode').onclick=$('modeb').onclick=()=>{S.active=false;clearTimeout(S.botTimer);startRec();S.status('Pick who to play against');show('start')};
-  $('newr').onclick=()=>{if(!S.mode){show('start');return}S.newRound()};
-  $('helpb').onclick=()=>{S.wasOpen=['start','diff','over','pass'].find(x=>$(x)&&!$(x).hidden)||null;show('help')};
+  $('overMode').onclick=$('modeb').onclick=()=>{if(online())ON.leave();S.mode=null;S.active=false;clearTimeout(S.botTimer);startRec();S.status('Pick who to play against');show('start')};
+  $('newr').onclick=()=>{if(!S.mode||online()){if(online())ON.leave();S.mode=null;S.active=false;startRec();S.status('Pick who to play against');show('start');return}S.newRound()};
+  $('helpb').onclick=()=>{S.wasOpen=['start','diff','over','pass','invite'].find(x=>$(x)&&!$(x).hidden)||null;show('help')};
   $('helpClose').onclick=()=>show(S.wasOpen);
   S.pass=(name,cb)=>{$('passH').textContent='Pass to '+name;$('passGo').textContent="I'm "+name+' — go!';show('pass');$('passGo').onclick=()=>{S.sfx('tap');show(null);cb()}};
   // ---------- boot ----------
-  S.boot=()=>{startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start')};
+  S.boot=()=>{startRec();S.hud();S.status('Pick who to play against');GAME.reset();if(GAME.render)GAME.render();show('start');if(typeof ON!=='undefined'&&ON.ok)ON.start()};
   return S;
 })();
 
@@ -262,22 +280,107 @@ function winner(b){for(const l of LINES){const[a,c,d]=l;if(b[a]>=0&&b[a]===b[c]&
 function mark(p){const w=()=>(Math.random()*6-3).toFixed(1);
   return p===0?`<svg class="x" viewBox="0 0 100 100"><path d="M${15+ +w()} ${15+ +w()} C40 38 62 60 ${85+ +w()} ${86+ +w()}"/><path d="M${84+ +w()} ${15+ +w()} C60 40 40 62 ${16+ +w()} ${85+ +w()}"/></svg>`
   :`<svg class="o" viewBox="0 0 100 100"><path d="M52 14 C78 12 90 34 87 54 C84 78 62 90 44 86 C22 82 11 62 15 42 C18 26 32 15 56 17"/></svg>`}
-function place(i){const p=S.turn;B[i]=p;cells[i].innerHTML=mark(p);cells[i].setAttribute('aria-label','Square '+(i+1)+': '+(p?'O':'X'));S.sfx(S.isBot()?'bot':'tap');
-  const w=winner(B);if(w){if(w.p>=0){const[a,,c]=w.l,[x1,y1]=CEN(a),[x2,y2]=CEN(c);const dx=(x2-x1)*.18,dy=(y2-y1)*.18;
-      document.getElementById('winline').innerHTML=`<path stroke="${S.col(w.p)}" d="M${x1-dx} ${y1-dy} L${x2+dx} ${y2+dy}"/>`;w.l.forEach(k=>cells[k].classList.add('hot'));
-      S.end(w.p,'Three in a row!')}else S.end(-1,'Nobody got three in a row.');return}
+function drawMark(i,p){B[i]=p;cells[i].innerHTML=mark(p);cells[i].setAttribute('aria-label','Square '+(i+1)+': '+(p?'O':'X'))}
+function winLine(w){const[a,,c]=w.l,[x1,y1]=CEN(a),[x2,y2]=CEN(c);const dx=(x2-x1)*.18,dy=(y2-y1)*.18;
+  document.getElementById('winline').innerHTML=`<path stroke="${S.col(w.p)}" d="M${x1-dx} ${y1-dy} L${x2+dx} ${y2+dy}"/>`;w.l.forEach(k=>cells[k].classList.add('hot'))}
+function place(i){const p=S.turn;drawMark(i,p);S.sfx(S.isBot()?'bot':'tap');
+  const w=winner(B);if(w){if(w.p>=0){winLine(w);S.end(w.p,'Three in a row!')}else S.end(-1,'Nobody got three in a row.');return}
   S.setTurn(1-p)}
 function tap(i){if(!S.canPlay()||B[i]>=0)return;place(i)}
 function mm(b,p,me,depth){const w=winner(b);if(w)return w.p===-1?0:(w.p===me?10-depth:depth-10);let best=p===me?-99:99;
   for(let i=0;i<9;i++)if(b[i]<0){b[i]=p;const v=mm(b,1-p,me,depth+1);b[i]=-1;best=p===me?Math.max(best,v):Math.min(best,v)}return best}
 function bestMoves(){const me=S.turn;let best=-99,out=[];for(let i=0;i<9;i++)if(B[i]<0){B[i]=me;const v=mm(B,1-me,me,1);B[i]=-1;if(v>best){best=v;out=[i]}else if(v===best)out.push(i)}return out}
 function findLine(p){for(const l of LINES){const v=l.map(k=>B[k]);if(v.filter(x=>x===p).length===2&&v.includes(-1))return l[v.indexOf(-1)]}return -1}
-const GAME={reset(){B.fill(-1);cells.forEach(c=>{c.innerHTML='';c.classList.remove('hot');c.setAttribute('aria-label','Square')});document.getElementById('winline').innerHTML=''},
+const GAME={save:()=>({B:B.slice()}),
+  load(st){const nb=st.B||Array(9).fill(-1);if(nb.every(v=>v<0)&&B.some(v=>v>=0))GAME.reset();nb.forEach((v,i)=>{if(v>=0&&B[i]!==v)drawMark(i,v)});const w=winner(B);if(w&&w.p>=0&&!document.getElementById('winline').innerHTML)winLine(w)},
+  reset(){B.fill(-1);cells.forEach(c=>{c.innerHTML='';c.classList.remove('hot');c.setAttribute('aria-label','Square')});document.getElementById('winline').innerHTML=''},
   botMove(){const free=B.map((v,i)=>v<0?i:-1).filter(i=>i>=0);let m=-1;
     if(S.diff==='hard')m=S.pick(bestMoves());
     else if(S.diff==='medium'){m=findLine(1);if(m<0)m=findLine(0);if(m<0&&Math.random()<.5)m=S.pick(bestMoves());if(m<0)m=B[4]<0&&Math.random()<.5?4:S.pick(free)}
     else{m=Math.random()<.3?findLine(1):-1;if(m<0)m=S.pick(free)}
     place(m)}};
+
+/* Invite a friend: play by text, taking turns whenever. Only switched on when the site has a Supabase project
+   (window.SA_ONLINE = {url, key}, written by build.py) and the game hasn't opted out (INFO.online === false).
+   A game that supports it defines GAME.save() -> plain object and GAME.load(obj) (redraw to match, no sounds).
+   The inviter is seat 0 (blue) and moves first; the friend who opens the link is seat 1 (pink).
+   No accounts: this device has one random secret id (kept in localStorage); the server only keeps its hash. */
+const ON=(()=>{
+  const $=id=>document.getElementById(id);
+  const CFG=window.SA_ONLINE,ok=!!(CFG&&CFG.url&&CFG.key&&INFO.online!==false&&GAME.save&&GAME.load);
+  const ON={ok,code:null,seat:-1,version:0,status:null,applying:false,pollT:0,since:0};
+  if(!ok){const b=$('vsInvite');if(b)b.remove();return ON}
+  // ---------- device id and this device's game list ----------
+  function id(){let t='';try{t=localStorage.getItem('sa-online-id')||''}catch(e){}
+    if(t.length<20){const a=new Uint8Array(18);crypto.getRandomValues(a);t=[...a].map(x=>x.toString(16).padStart(2,'0')).join('');try{localStorage.setItem('sa-online-id',t)}catch(e){}}return t}
+  function remember(code,seat){try{let l=JSON.parse(localStorage.getItem('sa-online-games')||'[]');l=l.filter(x=>x.code!==code);
+    l.unshift({code,game:INFO.slug,name:INFO.name,seat,t:Date.now()});localStorage.setItem('sa-online-games',JSON.stringify(l.slice(0,30)))}catch(e){}}
+  // ---------- server ----------
+  async function rpc(fn,args){const h={'Content-Type':'application/json',apikey:CFG.key};if(/^eyJ/.test(CFG.key))h.Authorization='Bearer '+CFG.key;
+    const r=await fetch(CFG.url.replace(/\/$/,'')+'/rest/v1/rpc/'+fn,{method:'POST',headers:h,body:JSON.stringify(args)});
+    const j=await r.json().catch(()=>null);if(!r.ok)throw new Error((j&&(j.message||j.hint))||('Error '+r.status));return j}
+  const link=code=>{const base=(window.BDA_GAME&&BDA_GAME.url)||location.origin+'/'+INFO.slug;return base+'?game='+code};
+  // ---------- names, turns ----------
+  const me=()=>ON.seat,them=()=>1-ON.seat;
+  ON.names=()=>ON.seat===1?['Friend','You']:['You','Friend'];
+  ON.turnText=()=>{if(S.turn===me())return '✏️ Your turn'+(INFO.turnHint?INFO.turnHint(S.turn):'');
+    return ON.status==='waiting'?'📲 Waiting for your friend to open the link':'⏳ Waiting for your friend…'};
+  // ---------- applying a saved game ----------
+  function apply(g,fresh){ON.version=g.version;ON.status=g.status;ON.code=g.code;const st=g.state||{};
+    ON.applying=true;try{
+      if(fresh){S.active=true;S.scores=[0,0];S.show(null);GAME.reset()}
+      GAME.load(st.g||{});S.scores=(st.scores||[0,0]).slice();
+      if(g.status==='done'){if(S.active){S.turn=g.turn;S.end(g.winner,st.msg||'')}}
+      else{S.active=true;S.setTurn(g.turn)}
+      S.hud();bar()}finally{ON.applying=false}
+    poll()}
+  // ---------- saving my move ----------
+  ON.push=async(turn,done,winner,msg)=>{if(ON.applying)return;S.busy=true;bar('Sending…');
+    const state={g:GAME.save(),scores:S.scores,msg:msg||''};
+    try{const g=await rpc('vs_move',{p_code:ON.code,p_token:id(),p_version:ON.version,p_state:state,p_turn:turn,p_status:done?'done':'playing',p_winner:done?winner:null});
+      ON.version=g.version;ON.status=g.status;S.busy=false;remember(ON.code,ON.seat);
+      if(!done){S.status(ON.turnText(),turn);bar(null,true)}else bar();poll()}
+    catch(e){S.busy=false;bar("Couldn't send that move. Getting the latest game…");sync(true)}};
+  // ---------- checking for the other player's move ----------
+  async function sync(force){if(!ON.code)return;try{const g=await rpc('vs_get',{p_code:ON.code});if(!g)return;
+      if(force||g.version!==ON.version||g.status!==ON.status){const was=ON.version;apply(g);if(g.version!==was&&!force)S.sfx('bot')}}catch(e){}}
+  function poll(){clearTimeout(ON.pollT);if(!ON.code||ON.status==='done'||S.turn===me()&&ON.status!=='waiting'||document.hidden)return;
+    if(!ON.since)ON.since=Date.now();const quiet=Date.now()-ON.since;ON.pollT=setTimeout(async()=>{await sync();poll()},quiet<120000?3000:quiet<600000?8000:20000)}
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ON.code){ON.since=Date.now();sync()}});
+  addEventListener('focus',()=>{if(ON.code)sync()});
+  // ---------- the share strip under the board ----------
+  function bar(text,nudge){let el=$('onbar');if(!el)return;
+    if(!ON.code||S.mode!=='online'){el.hidden=true;return}el.hidden=false;
+    const myTurn=S.turn===me()&&ON.status!=='done';
+    $('onText').textContent=text||(ON.status==='done'?'Game over · code '+ON.code:ON.status==='waiting'?'Send your friend the link · code '+ON.code:(myTurn?'Your move · code ':"Friend's move · code ")+ON.code);
+    $('onShare').textContent=nudge||(!myTurn&&ON.status!=='done')?'📲 Tell your friend':'📲 Share link';
+    $('onShare').hidden=ON.status==='done'}
+  async function share(){const url=link(ON.code);const text=ON.status==='waiting'?`Play ${INFO.name} with me on ${(window.BDA_GAME&&BDA_GAME.site)||'Sketchpad Arcade'}!`:`Your turn in ${INFO.name}!`;
+    try{if(navigator.share){await navigator.share({title:INFO.name,text,url});return}}catch(e){if(e&&e.name==='AbortError')return}
+    try{await navigator.clipboard.writeText(text+' '+url);S.pop('Link copied!')}catch(e){prompt('Copy this link:',url)}}
+  // ---------- starting and joining ----------
+  async function create(){S.mode='online';S.sfx('tap');S.show(null);S.status('Making your game…');
+    try{S.scores=[0,0];GAME.reset();const st={g:GAME.save(),scores:[0,0],msg:''};
+      const g=await rpc('vs_create',{p_game:INFO.slug,p_state:st,p_token:id()});ON.seat=0;remember(g.code,0);
+      history.replaceState(null,'',location.pathname+'?game='+g.code);ON.since=Date.now();apply(g,true);showInvite()}
+    catch(e){S.status("Couldn't start an online game. Check your connection.");S.show('start')}}
+  function showInvite(){$('invLink').textContent=link(ON.code).replace(/^https?:\/\//,'');S.show('invite')}
+  async function join(code){S.mode='online';S.show(null);S.status('Opening your game…');
+    try{const g=await rpc('vs_join',{p_code:code,p_token:id()});
+      if(!g){S.status('That game link has expired.');history.replaceState(null,'',location.pathname);S.show('start');return}
+      if(g.game!==INFO.slug){location.replace('/play/'+g.game+'?game='+g.code);return}
+      if(g.seat<0){S.mode=null;S.status('That game already has two players.');history.replaceState(null,'',location.pathname);S.show('start');return}
+      ON.seat=g.seat;remember(g.code,g.seat);ON.since=Date.now();apply(g,true);
+      if(g.status!=='done'&&g.seat===1&&g.version===0)S.pop("You're pink!",S.col(1))}
+    catch(e){S.status("Couldn't open that game. Check your connection and try again.");S.mode=null;S.show('start')}}
+  ON.leave=()=>{ON.code=null;ON.status=null;clearTimeout(ON.pollT);history.replaceState(null,'',location.pathname);bar()};
+  $('vsInvite').onclick=create;
+  $('onShare').onclick=share;$('invShare').onclick=share;
+  $('invGo').onclick=()=>{S.sfx('tap');S.show(null)};
+  $('again').addEventListener('click',e=>{if(S.mode==='online'){e.stopImmediatePropagation();create()}},true);
+  ON.start=()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m){join(m[1].toUpperCase());return true}return false};
+  return ON;
+})();
 
 S.boot();
 </script>
