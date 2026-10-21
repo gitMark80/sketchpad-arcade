@@ -1,0 +1,23 @@
+    <div class="gd" id="gd">
+      <div class="gdhead" id="gdHead"></div>
+      <div class="pick" id="pick" hidden></div>
+      <div class="cvwrap" id="cvWrap" hidden><canvas id="cv" aria-label="Drawing page"></canvas><div class="cvmsg" id="cvMsg" hidden></div></div>
+      <div class="dtools" id="drawTools" hidden>
+        <div class="pal" id="pal" role="radiogroup" aria-label="Pencil colour"></div>
+        <div class="drow">
+          <button type="button" id="sizeB" aria-label="Pencil size">✏️ Thin</button>
+          <button type="button" id="undoB">↩ Undo</button>
+          <button type="button" id="clearB">🧽 Clear</button>
+          <button type="button" class="send" id="sendB" disabled>Send ➜</button>
+        </div>
+      </div>
+      <div class="gbox" id="guessBox" hidden>
+        <div class="slots" id="slots" aria-live="polite"></div>
+        <div class="tiles" id="tiles"></div>
+        <div class="grow">
+          <button type="button" id="replayB">▶ Watch again</button>
+          <button type="button" id="skipB">🙈 Skip</button>
+        </div>
+      </div>
+      <div class="wbox" id="waitBox" hidden></div>
+    </div>
