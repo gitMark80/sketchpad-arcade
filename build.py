@@ -792,8 +792,11 @@ def online_js():
 
 ONLINE_GAMES = {g["slug"] for g in GAMES if g.get("online")}
 
+PLAYER_JS = "<script>\n" + (ROOT / "src" / "player.js").read_text().replace("</", "<\\/") + "</script>"
+
 def play_page(g):
     s = (ROOT / "src" / "games" / f'{g["slug"]}.html').read_text()
+    s = s.replace("<head>", "<head>\n" + PLAYER_JS, 1)  # sound + profile layer, before the game's own script
     s = s.replace("</head>", (online_js() if g["slug"] in ONLINE_GAMES else "") + PAPER_STYLE + "\n" + BACK_CSS + "\n" + SHARE_CSS + "\n" + desktop_css(g) + "\n" + ANALYTICS + "</head>", 1)
     s = re.sub(r"<h1([^>]*)>(.*?)</h1>", lambda m: f'<div class="sa-head"><a class="sa-back sa-homeic" href="../" aria-label="Home: all {E(SITE["name"])} games" title="Home">{HOME_ICON}</a><h1{m.group(1)}>{m.group(2)}</h1><button class="sa-share" type="button" aria-label="Share {E(g["name"])}" {game_share(g)}>{SHARE_ICON}</button></div>', s, count=1)
     base = SITE.get("url", "https://www.sketchpadarcade.com").rstrip("/")
