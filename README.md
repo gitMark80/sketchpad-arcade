@@ -35,6 +35,7 @@ Every game started as a pencil-styled twin of a [Beach Day Arcade](https://githu
 | Gem Cove (`gem-cove`) | Chibi Chib (`chibi-chib`) |
 | Word Plop (`word-plop`) | Word Scribble (`word-scribble`) |
 | Pearl Patrol (`pearl-patrol`) | Pencil Patrol (`pencil-patrol`) |
+| Conga Cove (`conga-cove`) | Conga Doodle (`conga-doodle`) |
 | Tide Jars (`tide-jars`) | Ink Jars (`ink-jars`) |
 | Shell Scramble (`shell-scramble`) | Letter Scramble (`letter-scramble`) |
 | Castle Keeper (`castle-keeper`) | Doodle Keeper (`doodle-keeper`) |
