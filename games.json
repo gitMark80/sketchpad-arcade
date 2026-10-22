@@ -54,6 +54,44 @@
   },
   "games": [
     {
+      "slug": "conga-doodle",
+      "name": "Conga Doodle",
+      "genre": "Puzzle",
+      "added": "2026-10-22",
+      "tagline": "Shoot doodle balls into a rolling conga line and match three before it reaches the ink bottle.",
+      "meta": "Play Conga Doodle free online: a pencil-sketch marble shooter. Spin a stubby pencil to shoot doodle balls into a winding conga line, match three to pop them, and clear six sketchbook tracks before the line reaches the ink bottle.",
+      "lead": "A conga line of doodle balls is rolling along a pencil-drawn track toward an ink bottle, led by one with googly eyes. A stubby No. 2 pencil sits in the middle of the page and spins to shoot balls wherever you aim. Land a ball next to two or more of the same colour and they pop. When a gap closes with matching colours on both sides, the line snaps back together for a combo. Clear every ball to win the level, then take on a new track with faster lines and more colours.",
+      "facts": [
+        "Puzzle",
+        "6 tracks that keep getting faster",
+        "Phone, tablet and computer",
+        "Saves your best score and level"
+      ],
+      "how": [
+        "Tap or click where you want to aim and the pencil shoots the ball on its tip. On a phone, hold your finger down to see a dotted aim line, then let go.",
+        "Land a ball so it makes a group of 3 or more of the same colour and the whole group pops. Every colour has its own little drawing, so you can tell them apart.",
+        "When a group pops and the balls on both sides of the gap match, the front of the line rolls back to meet them. If that makes another group of 3, it pops too, for a combo worth double, triple and more.",
+        "Tap the pencil to swap the ball on its tip with the spare one. You only get colours that are still on the track.",
+        "Balls with a dashed ring are power-ups: Slow Motion, an Undo Roll that rolls the line backward, or a Starburst that pops everything nearby.",
+        "Pop every ball to clear the level. If the line reaches the ink bottle you lose one of your 3 lives and try that track again."
+      ],
+      "controls": [
+        "Phone or tablet: tap to shoot, or hold and drag to aim, then let go. Tap the pencil to swap balls.",
+        "Computer: move the mouse to aim and click to shoot. Right-click or press the down arrow to swap, Space to shoot, Escape to pause.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Aim for the back of the line first. Pops near the front give the line less room to snap back.",
+        "Set up combos: pop a group so the colours on both sides of the gap match.",
+        "Save the Starburst for when the line is close to the ink bottle.",
+        "Swap balls when the one on your tip doesn't match anything nearby."
+      ],
+      "about": [
+        "Conga Doodle is the sketchbook twin of Beach Day Arcade's Conga Cove, a marble-shooter puzzle, redrawn in pencil with doodle balls, a stubby pencil for a shooter and an ink bottle at the end of the track.",
+        "Every track is hand-made and loops with faster lines and more colours, so there's always a harder page to turn to."
+      ]
+    },
+    {
       "slug": "guess-my-doodle",
       "name": "Guess My Doodle",
       "genre": "Versus",

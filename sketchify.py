@@ -68,6 +68,7 @@ RENAMED = {
     "sea-glass": "space-glass",
     "gem-cove": "chibi-chib",
     "word-plop": "word-scribble",
+    "conga-cove": "conga-doodle",
 }
 SLUG = RENAMED.get(SRC_SLUG, SRC_SLUG)
 SRC = BDA / "src/assets" / SRC_SLUG
