@@ -1,21 +1,19 @@
-.c4{width:min(100%,calc((100dvh - 290px) * 728 / 714),440px);display:flex;justify-content:center}
+.c4{width:min(100%,calc((100dvh - 290px) * 870 / 850),440px);display:flex;justify-content:center}
 .c4svg{width:100%;height:auto;display:block;overflow:visible;touch-action:manipulation;user-select:none}
-.c4svg .frame{fill:#e9e6db}
-.c4svg .frame-line{fill:none;stroke:var(--ink);stroke-width:6;stroke-linejoin:round}
-.c4svg .legs{stroke:var(--ink);stroke-width:6;stroke-linecap:round}
-.c4svg .rim{fill:none;stroke:var(--pencil);stroke-width:3}
-.c4svg .hatch{stroke:var(--pencil);stroke-width:1.6;opacity:.35}
-.c4svg .pc circle.d{stroke:var(--ink);stroke-width:4}
-.c4svg .pc .ring{fill:none;stroke-width:3;opacity:.8}
+.c4svg .frame{pointer-events:none}
+.c4svg #pieces image{pointer-events:none}
 .c4svg .pc.drop{animation:c4drop var(--t,.4s) cubic-bezier(.45,0,.9,.5) both}
 .c4svg .pc.drop>g{animation:c4bounce .22s ease-out var(--t,.4s) both}
-.c4svg .dot{fill:var(--ink)}
+.c4svg .dot{fill:var(--ink);stroke:#f6f3ea;stroke-width:3}
 .c4svg .col{fill:transparent;cursor:pointer}
 .c4svg .col:focus{outline:none}
 .c4svg .col:focus-visible{stroke:var(--ink);stroke-width:4;stroke-dasharray:10 8}
 .c4svg #win path{fill:none;stroke-width:16;stroke-linecap:round;opacity:.8;stroke-dasharray:700;stroke-dashoffset:700;animation:c4line .5s ease-out .35s forwards}
 .c4svg #win circle{fill:none;stroke:var(--ink);stroke-width:6}
+.c4svg #win image{transform-box:fill-box;transform-origin:center;animation:c4spark .5s cubic-bezier(.3,1.6,.5,1) both;pointer-events:none}
+.c4deco{display:block;height:clamp(56px,11dvh,92px);width:auto;margin:-4px auto 0;transform:rotate(4deg)}
+@keyframes c4spark{from{transform:scale(0) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
 @keyframes c4drop{from{transform:translateY(var(--d))}to{transform:none}}
 @keyframes c4bounce{0%{transform:translateY(0)}40%{transform:translateY(-14px)}100%{transform:translateY(0)}}
 @keyframes c4line{to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.c4svg .pc.drop,.c4svg .pc.drop>g{animation:none}.c4svg #win path{animation:none;stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.c4svg .pc.drop,.c4svg .pc.drop>g,.c4svg #win image{animation:none}.c4svg #win path{animation:none;stroke-dashoffset:0}}

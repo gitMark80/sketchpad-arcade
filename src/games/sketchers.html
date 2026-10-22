@@ -88,13 +88,14 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 
 .ck{position:relative;width:min(100%,50dvh,420px);aspect-ratio:1;border:3px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);overflow:hidden;background:var(--paper);touch-action:manipulation}
 .ck .sqs{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr))}
-.ck .sq{all:unset;box-sizing:border-box;position:relative;display:block;background:var(--paper)}
-.ck .sq.d{cursor:pointer;background-color:#e4e2d8;background-image:repeating-linear-gradient(135deg,transparent 0 4px,rgba(85,85,92,.2) 4px 5px)}
+.ck .sq{all:unset;box-sizing:border-box;position:relative;display:block;background-color:var(--paper);background-image:var(--tint,linear-gradient(transparent,transparent)),var(--art,none);background-size:100% 100%;background-repeat:no-repeat}
+.ck .sq.d{cursor:pointer;background-color:#e4e2d8}
+.ck:not(.art) .sq.d{background-image:var(--tint,linear-gradient(transparent,transparent)),repeating-linear-gradient(135deg,transparent 0 4px,rgba(85,85,92,.2) 4px 5px)}
 .ck .sq.d:focus-visible{outline:3px dashed var(--ink);outline-offset:-4px}
-.ck .sq.last{background-color:#efe2ad}
-.ck .sq.sel{background-color:var(--yellow-wash);box-shadow:inset 0 0 0 3px var(--yellow)}
-.ck .sq.dest::after{content:"";position:absolute;inset:30%;border:3px dotted rgba(46,46,51,.6);border-radius:50% 45% 55% 40%}
-.ck .sq.dest.cap::after{border-color:var(--orange);inset:24%}
+.ck .sq.last{background-color:#efe2ad;--tint:linear-gradient(rgba(243,214,110,.5),rgba(243,214,110,.5))}
+.ck .sq.sel{background-color:var(--yellow-wash);--tint:linear-gradient(rgba(243,230,176,.75),rgba(243,230,176,.75));box-shadow:inset 0 0 0 3px var(--yellow)}
+.ck .sq.dest::after{content:"";position:absolute;inset:28%;border:3px dotted var(--ink);background:rgba(246,243,234,.7);border-radius:50% 45% 55% 40%}
+.ck .sq.dest.cap::after{border-color:var(--orange);background:rgba(240,201,168,.75);inset:22%}
 .ck .pcs{position:absolute;inset:0;pointer-events:none}
 .pc{position:absolute;width:12.5%;height:12.5%;display:flex;align-items:center;justify-content:center;transition:left .28s ease-in-out,top .28s ease-in-out,transform .15s}
 .pc i{position:relative;width:76%;height:76%;border-radius:50% 47% 52% 48%;border:2.5px solid var(--ink);box-shadow:1.5px 2.5px 0 rgba(46,46,51,.35),inset 0 0 0 3px var(--w),inset 0 0 0 5.5px var(--c);
@@ -111,6 +112,18 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 @keyframes must{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 @keyframes scr{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.pc{transition:none}.pc.must i{animation:none}}
+.ck.art .pc i{width:86%;height:86%;border:none;border-radius:0;box-shadow:none;background:var(--img) center/contain no-repeat;filter:drop-shadow(1.5px 2.5px 0 rgba(46,46,51,.28))}
+.ck.art .pc.p0 i{--img:url(../assets/sketchers/blue.webp)}
+.ck.art .pc.p1 i{--img:url(../assets/sketchers/pink.webp)}
+.ck.art .pc.p0.k i{--img:url(../assets/sketchers/blueking.webp);width:92%;height:92%}
+.ck.art .pc.p1.k i{--img:url(../assets/sketchers/pinkking.webp);width:92%;height:92%}
+.ck.art .pc i svg{display:none}
+.ck.art .pc.up i{box-shadow:none;filter:drop-shadow(3px 6px 0 rgba(46,46,51,.3))}
+.pc .puff{position:absolute;inset:-6%;width:112%;height:112%;object-fit:contain;z-index:2;animation:puff .55s ease-out forwards}
+.pc .cpop{position:absolute;left:18%;top:-38%;width:64%;z-index:4;animation:cpop 1.1s ease-out forwards;pointer-events:none}
+@keyframes puff{0%{transform:scale(.3);opacity:0}35%{transform:scale(1.05);opacity:1}100%{transform:scale(1.15);opacity:.9}}
+@keyframes cpop{0%{transform:translateY(40%) scale(.3);opacity:0}30%{transform:translateY(0) scale(1.15);opacity:1}75%{opacity:1}100%{transform:translateY(-20%) scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pc .puff,.pc .cpop{animation-duration:.01s}}
 
 </style>
 </head>
@@ -317,11 +330,21 @@ function chooseBot(b,p){const ms=genMoves(b,p);if(ms.length===1)return ms[0];
   if(S.diff==='medium')return Math.random()<.15?S.pick(ms):searchBest(b,p,3,ms,matOnly,200);
   return searchBest(b,p,10,ms,evalFor,350)}
 // ---------- drawing ----------
+/* Mark's hand-drawn art: pieces, kings, crown, capture puff and board squares. Each square gets one of four
+   rotated/flipped copies of the square drawing so the board doesn't look stamped. Falls back to CSS if art fails. */
+const ART_DIR='../assets/sketchers/',ART={ok:false};
+(()=>{const names=['blue','pink','blueking','pinkking','crown','puff','dark','light'];let left=names.length,bad=false;const img={};
+  names.forEach(n=>{const im=new Image();im.onload=()=>{if(--left===0&&!bad)ready()};im.onerror=()=>{bad=true};im.src=ART_DIR+n+'.webp';img[n]=im});
+  function variants(im){const out=[];for(let k=0;k<4;k++){const c=document.createElement('canvas');const s=Math.max(im.naturalWidth,im.naturalHeight);c.width=c.height=s;const x=c.getContext('2d');
+      x.translate(s/2,s/2);x.rotate(k*Math.PI/2);if(k&1)x.scale(-1,1);x.drawImage(im,-s/2,-s/2,s,s);out.push('url('+c.toDataURL('image/webp',.85)+')')}return out}
+  function ready(){let dv,lv;try{dv=variants(img.dark);lv=variants(img.light)}catch(e){dv=[`url(${ART_DIR}dark.webp)`];lv=[`url(${ART_DIR}light.webp)`]}
+    sqs.forEach((b,i)=>{const d=((i>>3)+(i&7))%2,h=(i*7+(i>>3)*3)%4;b.style.setProperty('--art',(d?dv:lv)[h%(d?dv:lv).length])});
+    ART.ok=true;document.getElementById('board').classList.add('art')}})();
 const flip=()=>S.mode==='online'&&S.viewer()===1;
 function pos(i){let[r,c]=RC(i);if(flip()){r=7-r;c=7-c}return{left:(c*12.5)+'%',top:(r*12.5)+'%'}}
 const CROWN='<svg viewBox="0 0 40 40"><path d="M8 28 L6 13 L14 20 L20 9 L26 20 L34 13 L32 28 Z" fill="#f3e6b0" stroke="#2e2e33" stroke-width="3" stroke-linejoin="round"/><path d="M9 32 L31 32" stroke="#2e2e33" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="8" r="2.5" fill="#c99a1a"/></svg>';
 const SCRIBBLE='<svg class="scr" viewBox="0 0 40 40"><path d="M6 12 L34 8 L8 20 L33 17 L7 29 L32 27 L10 35"/></svg>';
-function makePiece(i){const v=B[i],id=nextId++;const el=document.createElement('div');el.className='pc p'+own(v);el.innerHTML='<i>'+(isK(v)?CROWN:'')+'</i>';
+function makePiece(i){const v=B[i],id=nextId++;const el=document.createElement('div');el.className='pc p'+own(v)+(isK(v)?' k':'');el.innerHTML='<i>'+(isK(v)?CROWN:'')+'</i>';
   Object.assign(el.style,pos(i));pcEl.appendChild(el);pieces[id]=el;PID[i]=id}
 const sqs=[...Array(64)].map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='sq'+(((i>>3)+(i&7))%2?' d':'');b.tabIndex=((i>>3)+(i&7))%2?0:-1;
   b.onclick=()=>tap(i);sqEl.appendChild(b);return b});
@@ -337,10 +360,10 @@ function marks(){const myTurn=S.canPlay()&&!anim;const ms=myTurn?genMoves(B,S.tu
 // ---------- moving ----------
 function hop(a,b,capSq){const id=PID[a];const el=pieces[id];PID[b]=id;PID[a]=0;B[b]=B[a];B[a]=EMPTY;if(el)Object.assign(el.style,pos(b));
   if(capSq!=null&&B[capSq]){const cid=PID[capSq];const ce=pieces[cid];B[capSq]=EMPTY;PID[capSq]=0;delete pieces[cid];
-    if(ce){ce.insertAdjacentHTML('beforeend',SCRIBBLE);ce.classList.add('gone');setTimeout(()=>ce.remove(),700)}}}
+    if(ce){ce.insertAdjacentHTML('beforeend',ART.ok?'<img class="puff" alt="" src="'+ART_DIR+'puff.webp">':SCRIBBLE);ce.classList.add('gone');setTimeout(()=>ce.remove(),700)}}}
 function mid(a,b){const[r1,c1]=RC(a),[r2,c2]=RC(b);return Math.abs(r1-r2)===2?((r1+r2)/2)*8+(c1+c2)/2:null}
 function finish(m){const p=S.turn,t=m.path[m.path.length-1];let crowned=false;const v=B[t];
-  if(!isK(v)&&(t>>3)===crownRow(v)){B[t]=v===BM?BK:PK;crowned=true;const el=pieces[PID[t]];if(el)el.querySelector('i').innerHTML=CROWN;S.pop('Crowned!',S.col(p));S.sfx('score')}
+  if(!isK(v)&&(t>>3)===crownRow(v)){B[t]=v===BM?BK:PK;crowned=true;const el=pieces[PID[t]];if(el){el.classList.add('k');el.querySelector('i').innerHTML=CROWN;if(ART.ok){const c=document.createElement('img');c.className='cpop';c.alt='';c.src=ART_DIR+'crown.webp';el.appendChild(c);setTimeout(()=>c.remove(),1200)}}S.pop('Crowned!',S.col(p));S.sfx('score')}
   qm=(m.caps.length||crowned)?0:qm+1;last=m.path.slice();sel=-1;cands=null;path=[];
   const opp=1-p,oppMoves=genMoves(B,opp);let left=0;for(let i=0;i<64;i++)if(own(B[i])===opp)left++;
   if(!left){marks();S.end(p,'Every piece captured!');return}

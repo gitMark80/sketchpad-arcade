@@ -4,29 +4,29 @@
   width:min(100%,calc(100dvh - 332px),460px);min-width:min(100%,250px);aspect-ratio:1;background:var(--paper-2);border:2px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);touch-action:none}
 .sq{all:unset;position:relative;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#f6f3ea;border:1px solid rgba(85,85,92,.25);border-radius:3px 2px 4px 2px;cursor:pointer;font:400 clamp(.42rem,1.9vw,.62rem)/1 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.02em;overflow:hidden}
 .sq:focus-visible{outline:3px dashed var(--ink);outline-offset:0;z-index:3}
-.sq.dl{background:#d6e4f2;color:#2f6fb5}
-.sq.tl{background:#c9daef;color:#2f6fb5;background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(47,111,181,.18) 3px 4px)}
-.sq.dw{background:#f0d5e2;color:#c45a8a}
-.sq.tw{background:#f0c9a8;color:#d9661a;background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(217,102,26,.18) 3px 4px)}
-.sq.st{background:#f3e6b0;color:#c99a1a;font-size:clamp(.9rem,4vw,1.2rem)}
+.sq.dl{background:url(../assets/sketch-with-friends/dl.webp) center/100% 100% no-repeat;border-color:transparent;color:#1f4f86}
+.sq.tl{background:url(../assets/sketch-with-friends/tl.webp) center/100% 100% no-repeat;border-color:transparent;color:#fff;text-shadow:0 0 2px #1f3f6e,0 0 3px #1f3f6e}
+.sq.dw{background:url(../assets/sketch-with-friends/dw.webp) center/100% 100% no-repeat;border-color:transparent;color:#7a2a52}
+.sq.tw{background:url(../assets/sketch-with-friends/tw.webp) center/100% 100% no-repeat;border-color:transparent;color:#fff;text-shadow:0 0 2px #8a3a0a,0 0 3px #8a3a0a}
+.sq.st{background:url(../assets/sketch-with-friends/start.webp) center/100% 100% no-repeat;border-color:transparent;color:transparent;font-size:clamp(.9rem,4vw,1.2rem)}
 .sq.drop{outline:3px solid var(--yellow);outline-offset:-3px}
-.tile{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#fffdf6;border:1.5px solid var(--ink);border-radius:3px 4px 2px 4px/4px 2px 4px 3px;box-shadow:1px 1px 0 var(--pencil);
+.tile{position:absolute;inset:-1px;display:flex;align-items:center;justify-content:center;background:url(../assets/sketch-with-friends/tile.webp) center/100% 100% no-repeat;border:0;border-radius:3px;
   font:400 clamp(.95rem,4.6vw,1.45rem)/1 var(--display);color:var(--ink);text-transform:uppercase}
-.tile i{position:absolute;right:2px;bottom:0;font:400 clamp(.42rem,1.8vw,.6rem)/1 var(--body);font-style:normal;color:var(--pencil)}
-.tile.o0{background:#f3f7fb}.tile.o1{background:#fbf3f7}
-.tile.last{background:#f3e6b0;box-shadow:inset 0 -3px 0 rgba(46,46,51,.45),1px 1px 0 var(--pencil)}
-.tile.pend{background:#f3e6b0;border-color:var(--yellow);border-width:2px;transform:rotate(-3deg);animation:pen .2s ease-out}
-.tile.pend.bad{border-color:var(--orange);background:#f0c9a8}
+.tile i{position:absolute;right:3px;bottom:1px;font:400 clamp(.42rem,1.8vw,.6rem)/1 var(--body);font-style:normal;color:var(--pencil)}
+.tile.o0{background-image:linear-gradient(rgba(214,228,242,.45),rgba(214,228,242,.45)),url(../assets/sketch-with-friends/tile.webp)}.tile.o1{background-image:linear-gradient(rgba(240,213,226,.45),rgba(240,213,226,.45)),url(../assets/sketch-with-friends/tile.webp)}
+.tile.last{background:url(../assets/sketch-with-friends/tileglow.webp) center/150% 135% no-repeat;box-shadow:inset 0 -3px 0 rgba(46,46,51,.4)}
+.tile.pend{background:url(../assets/sketch-with-friends/tileglow.webp) center/150% 135% no-repeat;transform:rotate(-3deg);animation:pen .2s ease-out;z-index:2}
+.tile.pend.bad{background-image:linear-gradient(rgba(240,201,168,.6),rgba(240,201,168,.6)),url(../assets/sketch-with-friends/tile.webp);background-size:100% 100%;color:#a3410a}
 .wline{min-height:1.5em;font:400 1.05rem/1.25 var(--body);color:var(--pencil);text-align:center;max-width:100%;padding:0 4px}
 .wline b{font:400 1.1rem/1 var(--display);color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
 .wline .ok{color:var(--green)}.wline .no{color:var(--orange)}
-.rack{display:flex;gap:5px;justify-content:center;min-height:clamp(42px,6.2dvh,54px);padding:4px 8px;background:#e9e2cf;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:2px 2px 0 var(--pencil)}
-.rk{all:unset;position:relative;box-sizing:border-box;width:clamp(36px,10.5vw,46px);height:clamp(36px,5.6dvh,46px);display:flex;align-items:center;justify-content:center;background:#fffdf6;border:2px solid var(--ink);border-radius:4px 6px 3px 5px/5px 3px 6px 4px;box-shadow:2px 2px 0 var(--pencil);
-  font:400 clamp(1.2rem,5.5vw,1.6rem)/1 var(--display);text-transform:uppercase;cursor:grab;touch-action:none}
+.rack{display:flex;gap:5px;justify-content:center;min-height:clamp(42px,6.2dvh,54px);padding:2px 14px 12px;background:url(../assets/sketch-with-friends/rack.webp) center bottom/100% 62% no-repeat;width:min(100%,400px);box-sizing:border-box}
+.rk{all:unset;position:relative;box-sizing:border-box;width:clamp(36px,10.5vw,46px);height:clamp(36px,5.6dvh,46px);display:flex;align-items:center;justify-content:center;background:url(../assets/sketch-with-friends/tile.webp) center/100% 100% no-repeat;border:0;border-radius:4px;filter:drop-shadow(1px 2px 0 rgba(85,85,92,.5));
+  font:400 clamp(1.2rem,5.5vw,1.6rem)/1 var(--display);color:var(--ink);text-transform:uppercase;cursor:grab;touch-action:none}
 .rk:nth-child(even){transform:rotate(1.5deg)}.rk:nth-child(odd){transform:rotate(-1deg)}
 .rk i{position:absolute;right:3px;bottom:1px;font:400 .62rem/1 var(--body);font-style:normal;color:var(--pencil)}
-.rk.sel{background:#f3e6b0;transform:translateY(-5px) rotate(-3deg);box-shadow:3px 5px 0 var(--pencil)}
-.rk.swap{background:#dcebdd;border-color:var(--green);transform:translateY(-5px)}
+.rk.sel{background-image:url(../assets/sketch-with-friends/tileglow.webp);background-size:150% 135%;transform:translateY(-6px) rotate(-3deg);filter:drop-shadow(2px 5px 0 rgba(85,85,92,.5))}
+.rk.swap{background-image:linear-gradient(rgba(220,235,221,.7),rgba(220,235,221,.7)),url(../assets/sketch-with-friends/tile.webp);transform:translateY(-6px);outline:2px solid var(--green);outline-offset:-2px}
 .rk.gone{visibility:hidden}
 .rk:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
 .rack.hide .rk{visibility:hidden}
@@ -35,8 +35,16 @@
 .wbtns button{font-size:.98rem;padding:6px 9px}
 .wbtns .primary{font-size:1.2rem;padding:6px 16px}
 .wbtns button:disabled{opacity:.4}
-.ghost{position:fixed;z-index:50;pointer-events:none;width:44px;height:44px;margin:-26px 0 0 -22px;display:flex;align-items:center;justify-content:center;background:#f3e6b0;border:2px solid var(--ink);border-radius:5px;box-shadow:4px 6px 0 rgba(46,46,51,.35);font:400 1.6rem/1 var(--display);text-transform:uppercase;transform:rotate(-6deg)}
+.ghost{position:fixed;z-index:50;pointer-events:none;width:44px;height:44px;margin:-26px 0 0 -22px;display:flex;align-items:center;justify-content:center;background:#f3e6b0;border:2px solid var(--ink);border-radius:5px;box-shadow:4px 6px 0 rgba(46,46,51,.35);font:400 1.6rem/1 var(--display);text-transform:uppercase;transform:rotate(-6deg);background:url(../assets/sketch-with-friends/tileglow.webp) center/150% 135% no-repeat;border:0;box-shadow:none;filter:drop-shadow(3px 5px 0 rgba(46,46,51,.35))}
 @keyframes pen{from{transform:scale(1.4) rotate(-8deg)}to{transform:rotate(-3deg)}}
 @media (max-height:700px){.wbtns button{padding:4px 8px;font-size:.92rem}.wbtns .primary{font-size:1.05rem}.wline{font-size:.95rem;min-height:1.3em}}
 @media (prefers-reduced-motion:reduce){.tile.pend{animation:none}}
 .wrap:has(#onbar:not([hidden])) .wb{width:min(100%,calc(100dvh - 368px),460px)}
+/* Mark's art: bag icon, bingo cheer, end-card mascot */
+.bagc{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.bagc img{width:20px;height:auto;vertical-align:middle}
+.cheer{position:absolute;right:4%;bottom:18%;width:min(32%,130px);z-index:16;pointer-events:none;animation:cheer 1.8s ease-out forwards}
+@keyframes cheer{0%{opacity:0;transform:translateY(30px) scale(.6) rotate(-8deg)}20%{opacity:1;transform:translateY(0) scale(1.05) rotate(4deg)}35%{transform:scale(1) rotate(-3deg)}80%{opacity:1}100%{opacity:0;transform:translateY(-10px) rotate(0)}}
+#over::before{content:"";display:block;width:min(34%,120px);aspect-ratio:365/372;background:url(../assets/sketch-with-friends/mascot.webp) center/contain no-repeat;flex:none}
+@media (max-height:700px){#over::before{width:min(26%,88px)}}
+@media (prefers-reduced-motion:reduce){.cheer{animation-duration:.01s}}

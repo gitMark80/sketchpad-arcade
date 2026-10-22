@@ -11,21 +11,20 @@ const LINES=[];for(let r=0;r<H;r++)for(let c=0;c<W;c++)for(const[dr,dc]of[[0,1],
 const LINES_AT=[...Array(W*H)].map(()=>[]);LINES.forEach(l=>l.forEach(i=>LINES_AT[i].push(l)));
 let B=Array(W*H).fill(-1),last=-1,winL=null,hover=3;
 // ---------- drawing ----------
-for(let r=0;r<H;r++)for(let c=0;c<W;c++){const w=()=>(Math.random()*3-1.5).toFixed(1);
-  mk('circle',{cx:CX(c)+ +w(),cy:CY(r)+ +w(),r:38},$('holeg'));
-  mk('circle',{class:'rim',cx:CX(c),cy:CY(r),r:39},$('rims'))}
-/* a few pencil hatch strokes on the frame, between holes */
-for(let r=0;r<=H;r++)for(let c=0;c<=W;c++){if((r+c)%2)continue;const x=c*100,y=r*100;mk('path',{class:'hatch',d:`M${x-8} ${y+6} L${x+6} ${y-8} M${x-3} ${y+11} L${x+11} ${y-3}`},$('rims'))}
+/* Mark's hand-drawn art: the frame (holes see-through) sits over the counters, so counters drop in behind it */
+const ART='../assets/connect-sketch/',PIECE=[ART+'blue.webp',ART+'pink.webp'];
+[...PIECE,ART+'frame.webp',ART+'sparkle.webp',ART+'mascot.webp'].forEach(u=>{const i=new Image();i.src=u});
+/* little pencil mascot on the start and end cards */
+['start','over'].forEach(id=>{const o=$(id),h=o&&o.querySelector('h2');if(!h)return;const m=document.createElement('img');m.className='c4deco';m.src=ART+'mascot.webp';m.alt='';h.before(m)});
 function disc(p,x,y,cls){const g=mk('g',{class:'pc '+(cls||'')});const inner=mk('g',{},g);
-  mk('circle',{class:'d',cx:x,cy:y,r:37,fill:p?'url(#hp)':'url(#hb)'},inner);
-  mk('circle',{class:'ring',cx:x,cy:y,r:24,stroke:S.col(p)},inner);return g}
+  mk('image',{href:PIECE[p],x:x-43,y:y-43,width:86,height:86},inner);return g}
 const colsG=$('cols');
-const colEls=[...Array(W)].map((_,c)=>{const e=mk('rect',{class:'col',x:c*100,y:-96,width:100,height:696,tabindex:0,role:'button','aria-label':'Column '+(c+1)},colsG);
+const colEls=[...Array(W)].map((_,c)=>{const e=mk('rect',{class:'col',x:c*100,y:-130,width:100,height:850,tabindex:0,role:'button','aria-label':'Column '+(c+1)},colsG);
   e.addEventListener('click',()=>tap(c));e.addEventListener('pointerenter',()=>{hover=c;ghost()});
   e.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();tap(c)}});e.addEventListener('focus',()=>{hover=c;ghost()});return e});
 $('c4svg').addEventListener('pointerleave',()=>{$('ghost').setAttribute('opacity',0)});
 function ghost(){const g=$('ghost');g.innerHTML='';if(!S.canPlay()||colTop(B,hover)<0||!matchMedia('(hover:hover)').matches){g.setAttribute('opacity',0);return}
-  g.appendChild(disc(S.turn,CX(hover),-48));g.setAttribute('opacity',.45)}
+  g.appendChild(disc(S.turn,CX(hover),-82));g.setAttribute('opacity',.45)}
 addEventListener('keydown',e=>{if(!S.active||e.ctrlKey||e.metaKey||e.altKey)return;if(document.querySelector('.over:not([hidden])'))return;
   if(/^[1-7]$/.test(e.key)){tap(+e.key-1);return}
   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();hover=Math.max(0,Math.min(W-1,hover+(e.key==='ArrowLeft'?-1:1)));colEls[hover].focus()}});
@@ -36,8 +35,9 @@ function drawPiece(i,p,anim){const r=Math.floor(i/W),c=i%W;const g=disc(p,CX(c),
 function markLast(){document.querySelectorAll('#pieces .dot').forEach(d=>d.remove());if(last<0)return;
   const r=Math.floor(last/W),c=last%W;mk('circle',{class:'dot',cx:CX(c),cy:CY(r),r:7},$('pieces').querySelector(`[data-i="${last}"]>g`)||$('pieces'))}
 function drawWin(l,p){const g=$('win');g.innerHTML='';const[a,,,d]=l;const x1=CX(a%W),y1=CY(Math.floor(a/W)),x2=CX(d%W),y2=CY(Math.floor(d/W));
-  const ex=(x2-x1)*.12,ey=(y2-y1)*.12;l.forEach(i=>mk("circle",{cx:CX(i%W),cy:CY(Math.floor(i/W)),r:41},g));
-  mk('path',{d:`M${x1-ex} ${y1-ey} L${x2+ex} ${y2+ey}`,stroke:S.col(p)},g)}
+  const ex=(x2-x1)*.12,ey=(y2-y1)*.12;l.forEach(i=>mk("circle",{cx:CX(i%W),cy:CY(Math.floor(i/W)),r:38},g));
+  mk('path',{d:`M${x1-ex} ${y1-ey} L${x2+ex} ${y2+ey}`,stroke:S.col(p)},g);
+  l.forEach((i,k)=>{const im=mk('image',{href:ART+'sparkle.webp',x:CX(i%W)+4,y:CY(Math.floor(i/W))-62,width:58,height:49},g);im.style.animationDelay=(.55+k*.1)+'s'})}
 function lineAt(b,i){const p=b[i];for(const l of LINES_AT[i])if(l.every(k=>b[k]===p))return l;return null}
 function updateLabels(){colEls.forEach((e,c)=>{const n=H-1-colTop(B,c);e.setAttribute('aria-label',`Column ${c+1}: `+(colTop(B,c)<0?'full':n+' counter'+(n===1?'':'s')))})}
 // ---------- play ----------

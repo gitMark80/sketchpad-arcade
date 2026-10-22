@@ -50,11 +50,21 @@ function chooseBot(b,p){const ms=genMoves(b,p);if(ms.length===1)return ms[0];
   if(S.diff==='medium')return Math.random()<.15?S.pick(ms):searchBest(b,p,3,ms,matOnly,200);
   return searchBest(b,p,10,ms,evalFor,350)}
 // ---------- drawing ----------
+/* Mark's hand-drawn art: pieces, kings, crown, capture puff and board squares. Each square gets one of four
+   rotated/flipped copies of the square drawing so the board doesn't look stamped. Falls back to CSS if art fails. */
+const ART_DIR='../assets/sketchers/',ART={ok:false};
+(()=>{const names=['blue','pink','blueking','pinkking','crown','puff','dark','light'];let left=names.length,bad=false;const img={};
+  names.forEach(n=>{const im=new Image();im.onload=()=>{if(--left===0&&!bad)ready()};im.onerror=()=>{bad=true};im.src=ART_DIR+n+'.webp';img[n]=im});
+  function variants(im){const out=[];for(let k=0;k<4;k++){const c=document.createElement('canvas');const s=Math.max(im.naturalWidth,im.naturalHeight);c.width=c.height=s;const x=c.getContext('2d');
+      x.translate(s/2,s/2);x.rotate(k*Math.PI/2);if(k&1)x.scale(-1,1);x.drawImage(im,-s/2,-s/2,s,s);out.push('url('+c.toDataURL('image/webp',.85)+')')}return out}
+  function ready(){let dv,lv;try{dv=variants(img.dark);lv=variants(img.light)}catch(e){dv=[`url(${ART_DIR}dark.webp)`];lv=[`url(${ART_DIR}light.webp)`]}
+    sqs.forEach((b,i)=>{const d=((i>>3)+(i&7))%2,h=(i*7+(i>>3)*3)%4;b.style.setProperty('--art',(d?dv:lv)[h%(d?dv:lv).length])});
+    ART.ok=true;document.getElementById('board').classList.add('art')}})();
 const flip=()=>S.mode==='online'&&S.viewer()===1;
 function pos(i){let[r,c]=RC(i);if(flip()){r=7-r;c=7-c}return{left:(c*12.5)+'%',top:(r*12.5)+'%'}}
 const CROWN='<svg viewBox="0 0 40 40"><path d="M8 28 L6 13 L14 20 L20 9 L26 20 L34 13 L32 28 Z" fill="#f3e6b0" stroke="#2e2e33" stroke-width="3" stroke-linejoin="round"/><path d="M9 32 L31 32" stroke="#2e2e33" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="8" r="2.5" fill="#c99a1a"/></svg>';
 const SCRIBBLE='<svg class="scr" viewBox="0 0 40 40"><path d="M6 12 L34 8 L8 20 L33 17 L7 29 L32 27 L10 35"/></svg>';
-function makePiece(i){const v=B[i],id=nextId++;const el=document.createElement('div');el.className='pc p'+own(v);el.innerHTML='<i>'+(isK(v)?CROWN:'')+'</i>';
+function makePiece(i){const v=B[i],id=nextId++;const el=document.createElement('div');el.className='pc p'+own(v)+(isK(v)?' k':'');el.innerHTML='<i>'+(isK(v)?CROWN:'')+'</i>';
   Object.assign(el.style,pos(i));pcEl.appendChild(el);pieces[id]=el;PID[i]=id}
 const sqs=[...Array(64)].map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='sq'+(((i>>3)+(i&7))%2?' d':'');b.tabIndex=((i>>3)+(i&7))%2?0:-1;
   b.onclick=()=>tap(i);sqEl.appendChild(b);return b});
@@ -70,10 +80,10 @@ function marks(){const myTurn=S.canPlay()&&!anim;const ms=myTurn?genMoves(B,S.tu
 // ---------- moving ----------
 function hop(a,b,capSq){const id=PID[a];const el=pieces[id];PID[b]=id;PID[a]=0;B[b]=B[a];B[a]=EMPTY;if(el)Object.assign(el.style,pos(b));
   if(capSq!=null&&B[capSq]){const cid=PID[capSq];const ce=pieces[cid];B[capSq]=EMPTY;PID[capSq]=0;delete pieces[cid];
-    if(ce){ce.insertAdjacentHTML('beforeend',SCRIBBLE);ce.classList.add('gone');setTimeout(()=>ce.remove(),700)}}}
+    if(ce){ce.insertAdjacentHTML('beforeend',ART.ok?'<img class="puff" alt="" src="'+ART_DIR+'puff.webp">':SCRIBBLE);ce.classList.add('gone');setTimeout(()=>ce.remove(),700)}}}
 function mid(a,b){const[r1,c1]=RC(a),[r2,c2]=RC(b);return Math.abs(r1-r2)===2?((r1+r2)/2)*8+(c1+c2)/2:null}
 function finish(m){const p=S.turn,t=m.path[m.path.length-1];let crowned=false;const v=B[t];
-  if(!isK(v)&&(t>>3)===crownRow(v)){B[t]=v===BM?BK:PK;crowned=true;const el=pieces[PID[t]];if(el)el.querySelector('i').innerHTML=CROWN;S.pop('Crowned!',S.col(p));S.sfx('score')}
+  if(!isK(v)&&(t>>3)===crownRow(v)){B[t]=v===BM?BK:PK;crowned=true;const el=pieces[PID[t]];if(el){el.classList.add('k');el.querySelector('i').innerHTML=CROWN;if(ART.ok){const c=document.createElement('img');c.className='cpop';c.alt='';c.src=ART_DIR+'crown.webp';el.appendChild(c);setTimeout(()=>c.remove(),1200)}}S.pop('Crowned!',S.col(p));S.sfx('score')}
   qm=(m.caps.length||crowned)?0:qm+1;last=m.path.slice();sel=-1;cands=null;path=[];
   const opp=1-p,oppMoves=genMoves(B,opp);let left=0;for(let i=0;i<64;i++)if(own(B[i])===opp)left++;
   if(!left){marks();S.end(p,'Every piece captured!');return}
