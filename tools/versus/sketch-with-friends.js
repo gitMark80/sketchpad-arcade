@@ -66,7 +66,7 @@ function finishPasses(){S.scores[0]-=rackVal(0);S.scores[1]-=rackVal(1);const[a,
   S.end(a>b?0:b>a?1:-1,`Four turns in a row with no word, so the game is over. Leftover tiles were taken off. Final score ${a} to ${b}.`)}
 function commit(pl,ev){const p=S.turn;pl.forEach(x=>{B[x.i]=x.l;O[x.i]=p;const j=R[p].indexOf(x.l);if(j>=0)R[p].splice(j,1)});
   draw(p);LAST=pl.map(x=>x.i);LM={p,t:`played ${ev.main.toUpperCase()} for ${ev.score}`};PASSES=0;pend=[];sel=-1;
-  S.addScore(p,ev.score);S.sfx('score');S.pop(ev.bingo?'All 7! +'+ev.score:'+'+ev.score,S.col(p));
+  S.addScore(p,ev.score);S.sfx('score');S.pop(ev.bingo?'All 7! +'+ev.score:'+'+ev.score,S.col(p));if(ev.bingo)cheer();
   if(!R[p].length&&!BAG.length){render();finishOut(p);return}nextTurn()}
 function doSwap(p,letters){letters.forEach(l=>{const j=R[p].indexOf(l);R[p].splice(j,1)});BAG.push(...letters);shuffle(BAG);draw(p);
   LM={p,t:`swapped ${letters.length} tile${letters.length>1?'s':''}`};PASSES++;S.sfx('tap');if(PASSES>=4){render();finishPasses();return}nextTurn()}
@@ -96,6 +96,10 @@ addEventListener('pointerup',dragEnd);addEventListener('pointercancel',()=>{if(d
 /* ---------- drawing ---------- */
 const boardEl=$w('board');
 const cells=[...Array(N*N)].map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='sq '+PREM[i];b.dataset.i=i;b.onclick=()=>cellTap(i);boardEl.appendChild(b);return b});
+/* Mark's hand-drawn art (src/assets/sketch-with-friends/) */
+const ART='../assets/sketch-with-friends/';
+['tile','tileglow','dl','tl','dw','tw','start','rack','bag','mascot'].forEach(n=>{const im=new Image();im.src=ART+n+'.webp'});
+function cheer(){const st=document.getElementById('stage');if(!st)return;const m=document.createElement('img');m.className='cheer';m.src=ART+'mascot.webp';m.alt='';st.appendChild(m);setTimeout(()=>m.remove(),1800)}
 const tileHTML=(l,cls)=>`<span class="tile ${cls}">${l}<i>${VAL[l]}</i></span>`;
 function render(){const ev=pend.length?evaluate(pend):null,badSet=ev&&!ev.ok?new Set(pend.map(p=>p.i)):null,last=new Set(LAST);
   cells.forEach((c,i)=>{const p=pend.find(x=>x.i===i);let h='';
@@ -112,7 +116,8 @@ function render(){const ev=pend.length?evaluate(pend):null,badSet=ev&&!ev.ok?new
   if(swapMode)line.textContent='Tap the tiles to swap, then tap Swap.';
   else if(ev){if(ev.ok)line.innerHTML=`<b>${ev.main}</b> <span class="ok">✓ ${ev.score} point${ev.score===1?'':'s'}</span>`+(ev.words.length>1?` <span>(${ev.words.length} words)</span>`:'');
     else if(ev.words)line.innerHTML=`<b>${ev.main}</b> <span class="no">✗ ${ev.err}</span>`;else line.innerHTML=`<span class="no">${ev.err}</span>`}
-  else{const t=LM?`${nm(LM.p)} ${LM.t}`:(S.active?'First word must cover the ★':'');line.textContent=t+(S.active?(t?' · ':'')+'Bag: '+BAG.length:'')}
+  else{const t=LM?`${nm(LM.p)} ${LM.t}`:(S.active?'First word must cover the ★':'');line.textContent=t+(S.active&&t?' · ':'');
+    if(S.active){const bg=document.createElement('span');bg.className='bagc';bg.innerHTML='<img src="'+ART+'bag.webp" alt="">';bg.append('Bag: '+BAG.length);line.appendChild(bg)}}
   const can=mine();$w('wMix').textContent=pend.length?'↩ Recall':'🔀 Shuffle';$w('wMix').disabled=!can;
   $w('wSwap').textContent=swapMode?'✕ Cancel':'♻ Swap';$w('wSwap').disabled=!can||(!swapMode&&!BAG.length);
   $w('wPass').textContent=passArm?'Sure?':'Pass';$w('wPass').disabled=!can||swapMode;

@@ -28,7 +28,14 @@ GD_WORDS[2]=[...new Set(GD_WORDS[2])].filter(w=>w.length<=10);
 const GD_PTS=[10,20,30],GD_TOTAL=10,GD_MAXPTS=3000;
 const GD_COLS=[['Black','#2e2e33'],['Red','#c84a3a'],['Orange','#d9661a'],['Yellow','#d4a51c'],['Green','#5a9a6a'],['Blue','#2f6fb5'],['Purple','#6f4a9a']];
 const $g=id=>document.getElementById(id);
-const stars=t=>'★'.repeat(t+1);
+const GD_ART='../assets/guess-my-doodle/';
+['draw','cheer','skip','think','star','tile','confetti'].forEach(n=>{const i=new Image();i.src=GD_ART+n+'.webp'});
+const stars=t=>`<span class="stars" aria-label="${t+1} star${t?'s':''}">`+`<img src="${GD_ART}star.webp" alt="">`.repeat(t+1)+'</span>';
+const mascot=(n,cls)=>`<img class="gdm ${cls||''}" src="${GD_ART}${n}.webp" alt="">`;
+/* a quick celebration (or skip) over the page: mascot plus, for a right guess, a burst of pencil-shaving confetti */
+function gdFx(kind){const st=$g('stage'),old=st.querySelector('.gdfx');if(old)old.remove();const d=document.createElement('div');d.className='gdfx '+kind;
+  d.innerHTML=(kind==='cheer'?`<img class="conf" src="${GD_ART}confetti.webp" alt="">`:'')+`<img class="who" src="${GD_ART}${kind}.webp" alt="">`;
+  st.appendChild(d);setTimeout(()=>d.remove(),kind==='cheer'?1500:2100)}
 let G=null,draft=null,penCol=0,penSize=0,handing=false,viewKey='',replayT=0,guessFill=[],tilesNow=[],resolving=false;
 function fresh(first){return{round:0,drawer:first||0,phase:'pick',offers:offers([]),used:[],cur:null,hist:[]}}
 function offers(used){return GD_WORDS.map(list=>{const pool=list.filter(w=>!used.includes(w));return S.pick(pool.length?pool:list)})}
@@ -83,7 +90,7 @@ function send(){const me=S.turn,other=1-me;G.cur.d=encode(draft);G.phase='guess'
   if(S.mode==='friend'){handing=true;viewKey='';render();S.status('Pass to '+S.names()[other],other);S.pass(S.names()[other],()=>{handing=false;viewKey='';S.setTurn(other)})}
   else S.setTurn(other)}
 function finishGuess(solved){if(resolving)return;resolving=true;S.busy=true;const c=G.cur,pts=solved?GD_PTS[c.tier]:0;
-  if(solved){S.addScore(0,pts);S.addScore(1,pts);S.sfx('score');S.pop('Got it! +'+pts,S.col(S.turn))}else S.sfx('miss');
+  if(solved){S.addScore(0,pts);S.addScore(1,pts);S.sfx('score');gdFx('cheer');S.pop('Got it! +'+pts,S.col(S.turn))}else{S.sfx('miss');gdFx('skip')}
   G.hist.push({word:c.word,tier:c.tier,by:c.by,ok:solved,pts});G.used.push(c.word);G.round++;
   setTimeout(()=>{resolving=false;S.busy=false;stopReplay();
     if(G.round>=GD_TOTAL){G.phase='pick';G.cur=c;S.end(-1,summary());return}
@@ -123,17 +130,17 @@ function render(){if(!G)return;const n=S.names(),me=S.viewer(),myTurn=S.active&&
   if(handing){head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL}`;show(['cvWrap']);sizeCanvas();clearCv();msg('Sent! Pass the phone so they can guess.');return}
   if(!myTurn){/* online: the other player is acting */
     head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL}`;show(['cvWrap','waitBox']);sizeCanvas();const wb=$g('waitBox');
-    if(G.phase==='guess'&&G.cur&&G.cur.by===me){drawAll(decode(G.cur.d));msg('');wb.innerHTML=`Your friend is guessing your <b>${G.cur.word.toUpperCase()}</b> ${stars(G.cur.tier)}`}
+    if(G.phase==='guess'&&G.cur&&G.cur.by===me){drawAll(decode(G.cur.d));msg('');wb.innerHTML=mascot('think')+`<span>Your friend is guessing your <b>${G.cur.word.toUpperCase()}</b> ${stars(G.cur.tier)}</span>`}
     else{clearCv();const h=G.hist[G.hist.length-1];msg(G.round===0&&S.mode==='online'&&typeof ON!=='undefined'&&ON.status==='waiting'?'Waiting for your friend to join…':'✏️ Your friend is picking a word to draw…');
-      wb.textContent=lastLine()}
+      wb.innerHTML=mascot('think');const t=document.createElement('span');t.textContent=lastLine();wb.appendChild(t)}
     return}
   if(G.phase==='pick'){head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL} · ${S.mode==='online'?'your':n[S.turn]+"'s"} turn to draw`;show(['pick']);msg('');
-    const pk=$g('pick');pk.innerHTML='';const p=document.createElement('p');p.textContent='Pick a word to draw:';pk.appendChild(p);
-    G.offers.forEach((w,t)=>{const b=document.createElement('button');b.type='button';b.className='t'+t;b.innerHTML=`<span></span><span class="stars">${stars(t)}</span><small>+${GD_PTS[t]}</small>`;
+    const pk=$g('pick');pk.innerHTML=mascot('draw','pickm');const p=document.createElement('p');p.textContent='Pick a word to draw:';pk.appendChild(p);
+    G.offers.forEach((w,t)=>{const b=document.createElement('button');b.type='button';b.className='t'+t;b.innerHTML=`<span></span>${stars(t)}<small>+${GD_PTS[t]}</small>`;
       b.firstChild.textContent=w;b.onclick=()=>pickWord(t);pk.appendChild(b)});
     const ll=lastLine();if(ll){const q=document.createElement('p');q.className='last';q.textContent=ll;pk.appendChild(q)}return}
-  if(G.phase==='draw'){head.innerHTML=`Draw <b>${G.cur.word.toUpperCase()}</b> <span class="stars">${stars(G.cur.tier)}</span> · no letters!`;show(['cvWrap','drawTools']);msg('');tools();sizeCanvas();drawAll(draft||[]);return}
-  if(G.phase==='guess'){head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL} · guess the word <span class="stars">${stars(G.cur.tier)}</span>`;show(['cvWrap','guessBox']);msg('');setupGuess();sizeCanvas();replay(decode(G.cur.d))}}
+  if(G.phase==='draw'){head.innerHTML=`Draw <b>${G.cur.word.toUpperCase()}</b> ${stars(G.cur.tier)} · no letters!`;show(['cvWrap','drawTools']);msg('');tools();sizeCanvas();drawAll(draft||[]);return}
+  if(G.phase==='guess'){head.innerHTML=`Drawing <b>${num}</b> of ${GD_TOTAL} · guess the word ${stars(G.cur.tier)}`;show(['cvWrap','guessBox']);msg('');setupGuess();sizeCanvas();replay(decode(G.cur.d))}}
 addEventListener('resize',()=>{if(!G)return;sizeCanvas();if(G.phase==='draw'&&draft)drawAll(draft);else if(G.cur&&G.cur.d&&!replayT)drawAll(decode(G.cur.d))});
 const gdHide=w=>btoa([...w].reverse().map((c,i)=>String.fromCharCode(c.charCodeAt(0)^(7+i%5))).join('')),
   gdShow=x=>[...atob(x)].map((c,i)=>String.fromCharCode(c.charCodeAt(0)^(7+i%5))).reverse().join('');
