@@ -2,6 +2,24 @@
   "_comment": "News posts for /news. Newest first. body is a list of paragraphs; a paragraph starting with '## ' is a heading. Link games with {{slug}}.",
   "posts": [
     {
+      "slug": "versus-games",
+      "title": "Seven games for two: the Versus tab",
+      "date": "2026-10-22",
+      "summary": "Tic-tac-toe, SOS, dots and boxes, paper boats, four in a row, checkers and draw-and-guess, all for two players. Pass one phone, play the bot, or invite a friend by text.",
+      "body": [
+        "Sketchpad Arcade has had a Versus tab for about a day, and it already holds seven games. They are the games kids have always played on the back page of a notebook when the lesson ran long, and they are the first games on the site built from scratch rather than traced from a Beach Day Arcade twin.",
+        "## The notebook classics",
+        "{{tic-tac-doodle}} is tic-tac-toe, blue X against pink O. {{doodle-sos}} is SOS on a 6×6 grid: finish S-O-S in a line and you score and go again, and one letter can finish two lines at once. {{box-doodles}} is dots and boxes, 25 boxes so there are no ties, and the part where the long chains start changing hands is as tense as ever. {{paper-boats}} is the hide-and-seek grid game with four folded paper boats on an 8×8 page, where a miss is a splash and a hit is a pencil X.",
+        "## Three more this week",
+        "{{connect-sketch}} drops coloured-pencil counters down a hand-drawn frame until somebody lines up four. {{sketchers}} is checkers, with crowned pieces and a Hard bot that looks several moves ahead. {{guess-my-doodle}} is the odd one out: you draw a word on the page, your friend watches it appear line by line and guesses, then draws one for you. It is a team game, so the score belongs to both of you.",
+        "## Three ways to play",
+        "Every Versus game has Play vs Friend, which means passing one phone back and forth. Paper Boats even asks you to hand it over between turns so nobody peeks at the other page. Every game except Guess My Doodle also has a bot on Easy, Medium and Hard, and the game remembers your record against it on your device. Easy is for little ones having their first go against a computer. Hard is a real opponent: the Tic-Tac-Doodle bot never loses, so a draw counts as a win, and the Box Doodles bot gives away as little as it can.",
+        "The third way is new. Tap Invite a friend and the game makes a six-letter code and a link you can text to someone. They open it and play pink, you play blue, and you take turns whenever you like, an hour or a day apart. There are no accounts, no names and no chat, and only the person you sent the link to can see the game. Your open games sit in Your Games with Friends on the home page so you can see whose turn it is. It works in six of the seven games; Paper Boats sits it out for now, because we have not yet found a way to keep each player's boats hidden from the other phone.",
+        "## And one for the Word tab",
+        "{{sketch-with-friends}} arrived in the same batch. It is a crossword tile game on a sketchbook page, with seven paper letter tiles each, double and triple squares, a bot on three levels and Invite a friend. It lives under Word rather than Versus, but it is very much a game for two, and its word list is checked so nothing rude ever lands on the board."
+      ]
+    },
+    {
       "slug": "pencil-patrol",
       "title": "Pencil Patrol: Stubby versus the erasers",
       "date": "2026-10-14",
