@@ -142,7 +142,7 @@ function mkPts(ax,ay,bx,by,len){
 function pegPos(p,t){if(!p.rail)return[p.x,p.y];const r=p.rail,u=.5-.5*Math.cos(2*Math.PI*(t/r[2]+(r[3]||0)));return[p.x+(r[0]-p.x)*u,p.y+(r[1]-p.y)*u]}
 function init(L){
   const [tx,ty]=L.cookie;
-  const S={t:0,f:0,state:'play',why:'',got:0,idle:0,ev:[],
+  const S={t:0,f:0,state:'play',why:'',got:0,idle:0,bb:null,ev:[],
     cookie:{x:tx,y:ty,px:tx,py:ty},bub:-1,spin:0,ang:0,
     pegs:[],ropes:[],
     bubbles:(L.bubbles||[]).map(b=>({x:b[0],y:b[1],used:false})),
@@ -203,7 +203,7 @@ function step(S){
       T.x=b.x+nx*R;T.y=b.y+ny*R;
       if(vn<0){vx-=1.65*vn*nx;vy-=1.65*vn*ny}
       const out=vx*nx+vy*ny,minOut=6;if(out<minOut){vx+=(minOut-out)*nx;vy+=(minOut-out)*ny}
-      T.px=T.x-vx;T.py=T.y-vy;if(S.f-b.hit>8)S.ev.push({t:'bounce',i,x:b.x,y:b.y});b.hit=S.f;
+      T.px=T.x-vx;T.py=T.y-vy;if(S.f-b.hit>8){S.ev.push({t:'bounce',i,x:b.x,y:b.y});if(S.bb&&S.bb.i===i&&Math.abs(T.x-S.bb.x)<3)S.bb.n++;else S.bb={i,x:T.x,n:1}}b.hit=S.f;
       if(S.bub>=0){S.bub=-1;S.ev.push({t:'pop',x:T.x,y:T.y})}}
     for(const r of S.ropes)for(let k=1;k<r.pts.length;k++){const p=r.pts[k],ex=p.x-b.x,ey=p.y-b.y,e=hyp(ex,ey);if(e<b.r+3){p.x=b.x+ex/(e||1)*(b.r+3);p.y=b.y+ey/(e||1)*(b.r+3)}}
   }
@@ -224,7 +224,9 @@ function step(S){
   // lost
   let why='';
   if(T.y>H+30)why='sea';else if(T.y<-40)why='sky';else if(T.x<-50||T.x>W+50)why='side';
-  if(!why&&!attached(S)&&S.bub<0){const sp=hyp(T.x-T.px,T.y-T.py);S.idle=sp<.15?S.idle+1:0;if(S.idle>90)why='stuck'}
+  if(attached(S)||S.bub>=0)S.bb=null;
+  if(!why&&!attached(S)&&S.bub<0){const sp=hyp(T.x-T.px,T.y-T.py);S.idle=sp<.15?S.idle+1:0;if(S.idle>90)why='stuck';
+    if(S.bb&&S.bb.n>=5)why='stuck'} // bouncing straight up and down on the same spot of a ball never settles, so that counts as stuck too
   if(why){S.state='fail';S.why=why;S.ev.push({t:'fail',why})}
 }
 /* player actions */
@@ -275,6 +277,14 @@ const LEVELS=[
 {"name":"Bubble Clip","cookie":[120,470],"bubbles":[[120,470]],"rings":[[180,250,80]],"doodle":[300,545],"stars":[[168,333],[235,311],[257,378]]},
 {"name":"Desk Party","cookie":[120,130],"ropes":[[40,60],[200,60]],"balls":[[250,330,30]],"rings":[[120,330,80]],"doodle":[110,545],"stars":[[117,227],[114,373],[113,445]]},
 {"name":"Windy Swing","cookie":[180,180],"ropes":[[60,60],[300,60,null,[300,200,2.6]]],"fans":[[330,420,200]],"bubbles":[[120,420]],"doodle":[60,545],"stars":[[27,241],[132,336],[87,402]]},
+{"name":"Pendulum Pair","cookie":[300,130],"ropes":[[120,60],[300,60]],"doodle":[80,545],"stars":[[257,227],[128,276],[38,351]]},
+{"name":"Fan Swing","cookie":[180,250],"ropes":[[180,90]],"fans":[[330,250,180]],"doodle":[60,545],"stars":[[135,259],[69,221],[227,253]]},
+{"name":"Rail Ball","cookie":[180,170],"ropes":[[60,70,null,[300,70,4]]],"balls":[[80,420,30]],"doodle":[300,545],"stars":[[195,226],[152,316],[166,435]]},
+{"name":"Bubble Bounce","cookie":[40,140],"ropes":[[120,60]],"bubbles":[[191,378]],"balls":[[229,488,30]],"doodle":[90,545],"stars":[[183,170],[187,248],[189,330]]},
+{"name":"Breeze Clip","cookie":[60,200],"ropes":[[60,80]],"fans":[[30,330,0]],"rings":[[230,240,75]],"balls":[[300,420,28]],"doodle":[180,545],"stars":[[60,246],[80,349],[127,411]]},
+{"name":"Double Bubble","cookie":[300,130],"ropes":[[300,60]],"bubbles":[[330,310],[174,206]],"fans":[[330,323,180]],"doodle":[48,545],"stars":[[300,219],[247,337],[154,415]]},
+{"name":"Clip Steps","cookie":[40,120],"ropes":[[40,50]],"rings":[[108,272,75],[250,385,75]],"doodle":[320,545],"stars":[[40,229],[70,365],[186,437]]},
+{"name":"Crumb Trail","cookie":[180,110],"ropes":[[60,50],[300,50]],"balls":[[90,330,28]],"bubbles":[[270,330]],"fans":[[330,470,200]],"rings":[[180,440,70]],"doodle":[60,545],"stars":[[156,150],[95,196],[25,345]]},
 {"name":"Grand Finale","cookie":[60,120],"ropes":[[60,40],[180,40]],"rings":[[290,250,75]],"bubbles":[[200,400]],"fans":[[30,300,0]],"balls":[[150,250,26]],"doodle":[300,545],"stars":[[293,182],[293,327],[250,388]]}
 ];
 /*LEVELS-END*/
