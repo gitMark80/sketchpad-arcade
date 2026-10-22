@@ -1,0 +1,25 @@
+.ck{position:relative;width:min(100%,50dvh,420px);aspect-ratio:1;border:3px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);overflow:hidden;background:var(--paper);touch-action:manipulation}
+.ck .sqs{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr))}
+.ck .sq{all:unset;box-sizing:border-box;position:relative;display:block;background:var(--paper)}
+.ck .sq.d{cursor:pointer;background-color:#e4e2d8;background-image:repeating-linear-gradient(135deg,transparent 0 4px,rgba(85,85,92,.2) 4px 5px)}
+.ck .sq.d:focus-visible{outline:3px dashed var(--ink);outline-offset:-4px}
+.ck .sq.last{background-color:#efe2ad}
+.ck .sq.sel{background-color:var(--yellow-wash);box-shadow:inset 0 0 0 3px var(--yellow)}
+.ck .sq.dest::after{content:"";position:absolute;inset:30%;border:3px dotted rgba(46,46,51,.6);border-radius:50% 45% 55% 40%}
+.ck .sq.dest.cap::after{border-color:var(--orange);inset:24%}
+.ck .pcs{position:absolute;inset:0;pointer-events:none}
+.pc{position:absolute;width:12.5%;height:12.5%;display:flex;align-items:center;justify-content:center;transition:left .28s ease-in-out,top .28s ease-in-out,transform .15s}
+.pc i{position:relative;width:76%;height:76%;border-radius:50% 47% 52% 48%;border:2.5px solid var(--ink);box-shadow:1.5px 2.5px 0 rgba(46,46,51,.35),inset 0 0 0 3px var(--w),inset 0 0 0 5.5px var(--c);
+  background:repeating-linear-gradient(45deg,var(--h) 0 1.6px,transparent 1.6px 4.5px),var(--w)}
+.pc.p0{--c:#2f6fb5;--w:#d6e4f2;--h:rgba(47,111,181,.32)}
+.pc.p1{--c:#c45a8a;--w:#f0d5e2;--h:rgba(196,90,138,.32)}
+.pc svg{position:absolute;inset:14%;width:72%;height:72%;overflow:visible}
+.pc.up{transform:translateY(-7%) scale(1.1);z-index:3}
+.pc.up i{box-shadow:3px 6px 0 rgba(46,46,51,.3),inset 0 0 0 3px var(--w),inset 0 0 0 5.5px var(--c)}
+.pc.must i{animation:must 1.1s ease-in-out infinite}
+.pc.gone{opacity:0;transition:opacity .5s .15s}
+.pc .scr{position:absolute;inset:4%;width:92%;height:92%;z-index:2}
+.pc .scr path{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-dasharray:260;stroke-dashoffset:260;animation:scr .3s ease-out forwards}
+@keyframes must{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes scr{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.pc{transition:none}.pc.must i{animation:none}}

@@ -54,6 +54,162 @@
   },
   "games": [
     {
+      "slug": "guess-my-doodle",
+      "name": "Guess My Doodle",
+      "genre": "Versus",
+      "added": "2026-10-22",
+      "online": true,
+      "tagline": "Draw a word for your friend, then guess theirs.",
+      "meta": "Play Guess My Doodle free online: a family-friendly draw-and-guess game. Draw a word, send it to a friend by text, and guess their doodles. Score points together. No sign-ups.",
+      "lead": "A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.",
+      "facts": [
+        "Versus",
+        "Play together as a team",
+        "Invite a friend by text and take turns whenever",
+        "Or pass one phone back and forth"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, or pass one phone back and forth.",
+        "On your turn, choose one of three words. Harder words are worth more.",
+        "Draw it with the coloured pencils. No letters or numbers allowed!",
+        "Your friend watches your drawing replay and taps letters to spell the word.",
+        "Guess it and you both score. Then it's the guesser's turn to draw. Ten drawings make a game."
+      ],
+      "controls": [
+        "Draw with your finger or mouse. Undo takes back your last line, and Clear starts over.",
+        "Tap letters to fill the blanks, and tap a filled letter to take it back.",
+        "Skip shows the word if you're stuck.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Draw the biggest, simplest shape first. A sun is just a circle with lines.",
+        "Add one clue that makes it different: a cat needs whiskers, a dog needs a wagging tail.",
+        "Colour helps. A green circle and a red circle say very different things!",
+        "Guessing? Count the blanks, then try the letters that look most likely."
+      ],
+      "about": [
+        "Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is kid-friendly and easy to draw, from cat and pizza to volcano and lighthouse.",
+        "There are no accounts, names or chat. Only the friend you send the link to can see your drawings."
+      ]
+    },
+    {
+      "slug": "sketch-with-friends",
+      "name": "Sketch with Friends",
+      "genre": "Word",
+      "added": "2026-10-22",
+      "online": true,
+      "tagline": "Make words on the board with your letter tiles. Highest score wins.",
+      "meta": "Play Sketch with Friends free online: a family-friendly word tile game. Build words on the board, play a friend by text or on one phone, or take on the bot. Kid-safe word list.",
+      "lead": "A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.",
+      "facts": [
+        "Word",
+        "Versus",
+        "Invite a friend by text and take turns whenever",
+        "Easy, Medium and Hard bots",
+        "Kid-safe word list"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
+        "Tap a tile in your rack, then tap a square on the board to place it. Make one word across or down.",
+        "The first word has to cover the star in the middle. After that, every word must join onto a word already on the board.",
+        "Tap Play to score. Letters have points, and coloured squares double or triple a letter or the whole word. Use all seven tiles for a 35-point bonus.",
+        "The game ends when the bag is empty and someone uses their last tile. Highest score wins."
+      ],
+      "controls": [
+        "Tap a tile then a square, or drag a tile onto the board.",
+        "Tap a tile you just placed to take it back. Recall takes them all back, and Shuffle mixes your rack.",
+        "Swap trades tiles for new ones, and Pass skips your turn.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Look for the coloured squares. A word on a triple-word square can be worth a lot!",
+        "Short words that cross a big word's letters can score both ways.",
+        "Keep a mix of vowels and consonants. Swap if your rack is all one kind.",
+        "High-point letters like Q, Z and X are worth the most on a double or triple letter square."
+      ],
+      "about": [
+        "Sketch with Friends is our take on the classic crossword tile game, drawn as paper tiles on a sketchbook page.",
+        "The word list is checked to keep out rude words, so it's safe for the whole family."
+      ]
+    },
+    {
+      "slug": "sketchers",
+      "name": "Sketchers",
+      "genre": "Versus",
+      "added": "2026-10-22",
+      "online": true,
+      "tagline": "Checkers on a sketchbook page. Jump your friend's pieces to win.",
+      "meta": "Play Sketchers free online: classic checkers drawn in coloured pencil. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+      "lead": "Classic checkers, drawn in coloured pencil. Move your pieces diagonally, jump over the other player's pieces to capture them, and reach the far side to get crowned. Capture every piece, or leave your friend with no moves, to win.",
+      "facts": [
+        "Versus",
+        "Invite a friend by text and take turns whenever",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
+        "Tap one of your pieces, then tap a highlighted square to move it one step diagonally forward.",
+        "Jump over the other player's piece into an empty square behind it to capture it. If you can jump, you have to, and you keep jumping while you can.",
+        "Reach the far side and your piece is crowned. Crowned pieces can move backward too.",
+        "Win by capturing every piece or leaving the other player with no moves."
+      ],
+      "controls": [
+        "Tap a piece to pick it up, then tap where to move.",
+        "Pieces that must jump wiggle so you can spot them.",
+        "New round starts a fresh board. Mode switches who you play.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Keep your back row filled for as long as you can. It stops the other player getting crowned.",
+        "Move pieces in pairs so they protect each other from jumps.",
+        "Try to trade pieces when you're ahead.",
+        "Crown a piece as soon as you safely can. Kings are powerful!"
+      ],
+      "about": [
+        "Sketchers is checkers, one of the oldest board games in the world, redrawn on a sketchbook page.",
+        "On Hard, the bot looks several moves ahead, so you'll need to think carefully to beat it."
+      ]
+    },
+    {
+      "slug": "connect-sketch",
+      "name": "Connect Sketch",
+      "genre": "Versus",
+      "added": "2026-10-22",
+      "online": true,
+      "tagline": "Drop your counters down the page. Four in a row wins.",
+      "meta": "Play Connect Sketch free online: drop-in four in a row drawn in coloured pencil. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+      "lead": "Drop coloured-pencil counters into a hand-drawn frame and be the first to line up four in a row: across, down or corner to corner. It's quick to learn and great to play with a friend, by text or on one phone.",
+      "facts": [
+        "Versus",
+        "Invite a friend by text and take turns whenever",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
+        "Tap a column to drop your counter. It falls to the lowest empty space.",
+        "Get four of your colour in a row across, down or corner to corner to win the round.",
+        "Fill the whole frame with no four in a row and it's a draw. Who goes first swaps every round."
+      ],
+      "controls": [
+        "Tap anywhere in a column to drop a counter.",
+        "On a keyboard, press 1 to 7.",
+        "New round starts a fresh frame. Mode switches who you play.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "The middle column is the strongest. Start there.",
+        "Before every move, check if the other player has three in a row with a gap. Block it!",
+        "Try to make two threats at once. They can only block one.",
+        "Watch out for diagonals. They're the easiest to miss."
+      ],
+      "about": [
+        "Connect Sketch is a classic four-in-a-row drop game, drawn on a sketchbook page with coloured-pencil counters.",
+        "On Hard, the bot looks ahead several moves and almost never misses a threat."
+      ]
+    },
+    {
       "slug": "blot-sweeper",
       "name": "Blot Sweeper",
       "genre": "Puzzle",

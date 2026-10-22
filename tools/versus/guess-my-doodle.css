@@ -1,0 +1,44 @@
+#tally{display:none}
+.stage{justify-content:flex-start}
+.gd{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;flex:1;min-height:0}
+.gdhead{font:400 1.05rem/1.2 var(--display);color:var(--pencil);text-align:center;min-height:1.2em}
+.gdhead b{font-weight:400;color:var(--ink)}
+.gdhead .stars{color:var(--yellow);letter-spacing:.05em}
+/* word choice */
+.pick{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin:auto 0}
+.pick p{margin:0;text-align:center;color:var(--pencil);font-size:1.1rem}
+.pick button{display:flex;align-items:center;gap:12px;padding:14px 18px;text-align:left;font:400 1.6rem/1 var(--display);text-transform:uppercase;letter-spacing:.03em;border-radius:var(--wob)}
+.pick button:nth-of-type(2){border-radius:var(--wob2)}
+.pick button .stars{color:var(--yellow);font-size:1.2rem;letter-spacing:.05em}
+.pick button small{margin-left:auto;font:400 1rem/1 var(--body);text-transform:none;color:var(--muted)}
+.pick button.t0{background:var(--green-wash)}.pick button.t1{background:var(--yellow-wash)}.pick button.t2{background:#f0c9a8}
+.pick .last{font-size:1rem;color:var(--muted)}
+/* drawing page */
+.cvwrap{position:relative;flex:none;background:#fff;border:2px solid var(--ink);border-radius:8px 14px 10px 16px/14px 8px 16px 10px;box-shadow:3px 3px 0 var(--pencil);overflow:hidden;
+  background-image:linear-gradient(rgba(47,111,181,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.09) 1px,transparent 1px);background-size:20px 20px}
+.cvwrap canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.cvmsg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font:400 1.25rem/1.35 var(--display);color:var(--muted);pointer-events:none}
+.dtools{display:flex;flex-direction:column;gap:6px;width:100%;max-width:400px}
+.pal{display:flex;justify-content:center;gap:6px}
+.pal button{width:38px;height:38px;padding:0;border-radius:50% 45% 55% 40%;box-shadow:2px 2px 0 var(--pencil);border:2px solid var(--ink)}
+.pal button.on{transform:translateY(-4px) rotate(-6deg);box-shadow:3px 5px 0 var(--pencil);outline:3px solid var(--yellow-wash);outline-offset:1px}
+.drow,.grow{display:flex;gap:6px;justify-content:center}
+.drow button,.grow button{font-size:1rem;padding:7px 10px}
+.drow .send{background:var(--yellow-wash);font:400 1.15rem/1 var(--display);text-transform:uppercase;padding:7px 14px;box-shadow:3px 3px 0 var(--pencil)}
+/* guessing */
+.gbox{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%}
+.slots{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.slots button{width:clamp(26px,8.4vw,36px);height:clamp(34px,10vw,42px);padding:0;font:400 1.5rem/1 var(--display);text-transform:uppercase;border:none;border-bottom:3px solid var(--ink);border-radius:0;box-shadow:none;background:transparent}
+.slots button.f{background:var(--yellow-wash);border:2px solid var(--ink);border-bottom-width:3px;border-radius:6px 4px 7px 4px}
+.slots.bad{animation:shake .45s}
+.slots.good button{background:var(--green-wash);border-color:var(--green);color:var(--green)}
+.slots.reveal button{color:var(--orange)}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;width:100%;max-width:330px}
+.tiles button{height:clamp(36px,5.6dvh,46px);padding:0;font:400 1.45rem/1 var(--display);text-transform:uppercase}
+.tiles button:nth-child(odd){border-radius:var(--wob2)}
+.tiles button.used{visibility:hidden}
+.wbox{text-align:center;color:var(--pencil);font-size:1.12rem;line-height:1.35;max-width:32ch}
+.wbox b{font-family:var(--display);font-weight:400;color:var(--ink)}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@media (max-height:700px){.gd{gap:5px}.pal button{width:32px;height:32px}.drow button,.grow button{padding:5px 8px;font-size:.95rem}.pick button{padding:10px 14px;font-size:1.35rem}}
+@media (prefers-reduced-motion:reduce){.slots.bad{animation:none}}
