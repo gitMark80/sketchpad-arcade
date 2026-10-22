@@ -483,6 +483,13 @@ function scan(){document.querySelectorAll('.sa-endhome').forEach(h=>{const p=h.p
 let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class','style','open']});
 addEventListener('load',scan);setTimeout(scan,600)})();
 </script>
+<script>
+/* AdSense on play pages: the loader is only added once the first end screen appears (the Home button next to
+   'Play again' is the signal), so no anchor, vignette or in-page ad can show while a game is being played.
+   Skipped during reel recordings. Which formats run (vignette on page change, anchor, in-page) is set per site
+   in the AdSense dashboard under Auto ads. */
+(()=>{if(window.name==='bda-reel')return;let done=false;function load(){if(done)return;done=true;const s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599';document.head.appendChild(s)}const o=new MutationObserver(()=>{if(document.querySelector('.sa-endhome')){o.disconnect();load()}});o.observe(document.body,{subtree:true,childList:true});})();
+</script>
 <script>window.BDA_GAME={"slug": "connect-sketch", "name": "Connect Sketch", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/connect-sketch", "short": "sketchpadarcade.com/connect-sketch"};</script>
 <script>(()=>{const s="connect-sketch";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
 <script>
