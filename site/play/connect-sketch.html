@@ -87,27 +87,25 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 .onbar button{font-size:1rem;padding:5px 12px;background:var(--yellow-wash)}
 .modes:not(:has(#vsBot)) #vsFriend{grid-column:1/-1}
 
-.c4{width:min(100%,calc((100dvh - 290px) * 728 / 714),440px);display:flex;justify-content:center}
+.c4{width:min(100%,calc((100dvh - 290px) * 870 / 850),440px);display:flex;justify-content:center}
 .c4svg{width:100%;height:auto;display:block;overflow:visible;touch-action:manipulation;user-select:none}
-.c4svg .frame{fill:#e9e6db}
-.c4svg .frame-line{fill:none;stroke:var(--ink);stroke-width:6;stroke-linejoin:round}
-.c4svg .legs{stroke:var(--ink);stroke-width:6;stroke-linecap:round}
-.c4svg .rim{fill:none;stroke:var(--pencil);stroke-width:3}
-.c4svg .hatch{stroke:var(--pencil);stroke-width:1.6;opacity:.35}
-.c4svg .pc circle.d{stroke:var(--ink);stroke-width:4}
-.c4svg .pc .ring{fill:none;stroke-width:3;opacity:.8}
+.c4svg .frame{pointer-events:none}
+.c4svg #pieces image{pointer-events:none}
 .c4svg .pc.drop{animation:c4drop var(--t,.4s) cubic-bezier(.45,0,.9,.5) both}
 .c4svg .pc.drop>g{animation:c4bounce .22s ease-out var(--t,.4s) both}
-.c4svg .dot{fill:var(--ink)}
+.c4svg .dot{fill:var(--ink);stroke:#f6f3ea;stroke-width:3}
 .c4svg .col{fill:transparent;cursor:pointer}
 .c4svg .col:focus{outline:none}
 .c4svg .col:focus-visible{stroke:var(--ink);stroke-width:4;stroke-dasharray:10 8}
 .c4svg #win path{fill:none;stroke-width:16;stroke-linecap:round;opacity:.8;stroke-dasharray:700;stroke-dashoffset:700;animation:c4line .5s ease-out .35s forwards}
 .c4svg #win circle{fill:none;stroke:var(--ink);stroke-width:6}
+.c4svg #win image{transform-box:fill-box;transform-origin:center;animation:c4spark .5s cubic-bezier(.3,1.6,.5,1) both;pointer-events:none}
+.c4deco{display:block;height:clamp(56px,11dvh,92px);width:auto;margin:-4px auto 0;transform:rotate(4deg)}
+@keyframes c4spark{from{transform:scale(0) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
 @keyframes c4drop{from{transform:translateY(var(--d))}to{transform:none}}
 @keyframes c4bounce{0%{transform:translateY(0)}40%{transform:translateY(-14px)}100%{transform:translateY(0)}}
 @keyframes c4line{to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.c4svg .pc.drop,.c4svg .pc.drop>g{animation:none}.c4svg #win path{animation:none;stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.c4svg .pc.drop,.c4svg .pc.drop>g,.c4svg #win image{animation:none}.c4svg #win path{animation:none;stroke-dashoffset:0}}
 
 </style>
 <script>window.SA_ONLINE={"url": "https://wzckjgrrjrborkojymbp.supabase.co", "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l"};</script><style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
@@ -145,18 +143,10 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
   <div class="turn" id="turn" aria-live="polite"></div>
   <div class="stage" id="stage">
     <div class="c4" id="c4">
-      <svg class="c4svg" id="c4svg" viewBox="-14 -96 728 714" role="grid" aria-label="Connect Sketch board, 7 columns">
-        <defs>
-          <pattern id="hb" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="#d6e4f2"/><line x1="0" y1="0" x2="0" y2="9" stroke="#2f6fb5" stroke-width="3.2" opacity=".6"/></pattern>
-          <pattern id="hp" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="9" height="9" fill="#f0d5e2"/><line x1="0" y1="0" x2="0" y2="9" stroke="#c45a8a" stroke-width="3.2" opacity=".6"/></pattern>
-          <mask id="holes"><rect x="-20" y="-20" width="740" height="640" fill="#fff"/><g id="holeg" fill="#000"></g></mask>
-        </defs>
+      <svg class="c4svg" id="c4svg" viewBox="-84 -130 870 850" role="grid" aria-label="Connect Sketch board, 7 columns">
         <g id="ghost" opacity="0"></g>
         <g id="pieces"></g>
-        <path class="frame" mask="url(#holes)" d="M-4 2 C150 -6 420 6 704 -2 L706 600 C460 607 200 596 -6 603 Z"/>
-        <g id="rims"></g>
-        <path class="frame-line" d="M-4 2 C150 -6 420 6 704 -2 L706 600 C460 607 200 596 -6 603 Z"/>
-        <path class="legs" d="M20 600 L8 614 M680 600 L694 614"/>
+        <image class="frame" href="../assets/connect-sketch/frame.webp" x="-81.36" y="-38.26" width="859.5" height="757.1" preserveAspectRatio="none"/>
         <g id="win"></g>
         <g id="cols"></g>
       </svg>
@@ -308,21 +298,20 @@ const LINES=[];for(let r=0;r<H;r++)for(let c=0;c<W;c++)for(const[dr,dc]of[[0,1],
 const LINES_AT=[...Array(W*H)].map(()=>[]);LINES.forEach(l=>l.forEach(i=>LINES_AT[i].push(l)));
 let B=Array(W*H).fill(-1),last=-1,winL=null,hover=3;
 // ---------- drawing ----------
-for(let r=0;r<H;r++)for(let c=0;c<W;c++){const w=()=>(Math.random()*3-1.5).toFixed(1);
-  mk('circle',{cx:CX(c)+ +w(),cy:CY(r)+ +w(),r:38},$('holeg'));
-  mk('circle',{class:'rim',cx:CX(c),cy:CY(r),r:39},$('rims'))}
-/* a few pencil hatch strokes on the frame, between holes */
-for(let r=0;r<=H;r++)for(let c=0;c<=W;c++){if((r+c)%2)continue;const x=c*100,y=r*100;mk('path',{class:'hatch',d:`M${x-8} ${y+6} L${x+6} ${y-8} M${x-3} ${y+11} L${x+11} ${y-3}`},$('rims'))}
+/* Mark's hand-drawn art: the frame (holes see-through) sits over the counters, so counters drop in behind it */
+const ART='../assets/connect-sketch/',PIECE=[ART+'blue.webp',ART+'pink.webp'];
+[...PIECE,ART+'frame.webp',ART+'sparkle.webp',ART+'mascot.webp'].forEach(u=>{const i=new Image();i.src=u});
+/* little pencil mascot on the start and end cards */
+['start','over'].forEach(id=>{const o=$(id),h=o&&o.querySelector('h2');if(!h)return;const m=document.createElement('img');m.className='c4deco';m.src=ART+'mascot.webp';m.alt='';h.before(m)});
 function disc(p,x,y,cls){const g=mk('g',{class:'pc '+(cls||'')});const inner=mk('g',{},g);
-  mk('circle',{class:'d',cx:x,cy:y,r:37,fill:p?'url(#hp)':'url(#hb)'},inner);
-  mk('circle',{class:'ring',cx:x,cy:y,r:24,stroke:S.col(p)},inner);return g}
+  mk('image',{href:PIECE[p],x:x-43,y:y-43,width:86,height:86},inner);return g}
 const colsG=$('cols');
-const colEls=[...Array(W)].map((_,c)=>{const e=mk('rect',{class:'col',x:c*100,y:-96,width:100,height:696,tabindex:0,role:'button','aria-label':'Column '+(c+1)},colsG);
+const colEls=[...Array(W)].map((_,c)=>{const e=mk('rect',{class:'col',x:c*100,y:-130,width:100,height:850,tabindex:0,role:'button','aria-label':'Column '+(c+1)},colsG);
   e.addEventListener('click',()=>tap(c));e.addEventListener('pointerenter',()=>{hover=c;ghost()});
   e.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();tap(c)}});e.addEventListener('focus',()=>{hover=c;ghost()});return e});
 $('c4svg').addEventListener('pointerleave',()=>{$('ghost').setAttribute('opacity',0)});
 function ghost(){const g=$('ghost');g.innerHTML='';if(!S.canPlay()||colTop(B,hover)<0||!matchMedia('(hover:hover)').matches){g.setAttribute('opacity',0);return}
-  g.appendChild(disc(S.turn,CX(hover),-48));g.setAttribute('opacity',.45)}
+  g.appendChild(disc(S.turn,CX(hover),-82));g.setAttribute('opacity',.45)}
 addEventListener('keydown',e=>{if(!S.active||e.ctrlKey||e.metaKey||e.altKey)return;if(document.querySelector('.over:not([hidden])'))return;
   if(/^[1-7]$/.test(e.key)){tap(+e.key-1);return}
   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();hover=Math.max(0,Math.min(W-1,hover+(e.key==='ArrowLeft'?-1:1)));colEls[hover].focus()}});
@@ -333,8 +322,9 @@ function drawPiece(i,p,anim){const r=Math.floor(i/W),c=i%W;const g=disc(p,CX(c),
 function markLast(){document.querySelectorAll('#pieces .dot').forEach(d=>d.remove());if(last<0)return;
   const r=Math.floor(last/W),c=last%W;mk('circle',{class:'dot',cx:CX(c),cy:CY(r),r:7},$('pieces').querySelector(`[data-i="${last}"]>g`)||$('pieces'))}
 function drawWin(l,p){const g=$('win');g.innerHTML='';const[a,,,d]=l;const x1=CX(a%W),y1=CY(Math.floor(a/W)),x2=CX(d%W),y2=CY(Math.floor(d/W));
-  const ex=(x2-x1)*.12,ey=(y2-y1)*.12;l.forEach(i=>mk("circle",{cx:CX(i%W),cy:CY(Math.floor(i/W)),r:41},g));
-  mk('path',{d:`M${x1-ex} ${y1-ey} L${x2+ex} ${y2+ey}`,stroke:S.col(p)},g)}
+  const ex=(x2-x1)*.12,ey=(y2-y1)*.12;l.forEach(i=>mk("circle",{cx:CX(i%W),cy:CY(Math.floor(i/W)),r:38},g));
+  mk('path',{d:`M${x1-ex} ${y1-ey} L${x2+ex} ${y2+ey}`,stroke:S.col(p)},g);
+  l.forEach((i,k)=>{const im=mk('image',{href:ART+'sparkle.webp',x:CX(i%W)+4,y:CY(Math.floor(i/W))-62,width:58,height:49},g);im.style.animationDelay=(.55+k*.1)+'s'})}
 function lineAt(b,i){const p=b[i];for(const l of LINES_AT[i])if(l.every(k=>b[k]===p))return l;return null}
 function updateLabels(){colEls.forEach((e,c)=>{const n=H-1-colTop(B,c);e.setAttribute('aria-label',`Column ${c+1}: `+(colTop(B,c)<0?'full':n+' counter'+(n===1?'':'s')))})}
 // ---------- play ----------
