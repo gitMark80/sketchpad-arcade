@@ -33,19 +33,54 @@
       "short": "Beach Day",
       "url": "https://www.beachdayarcade.com"
     },
-    "book": {
-      "title": "Sketchpad Arcade Coloring Book",
-      "url": "https://www.amazon.com/dp/B0HNMJD1JT?&linkCode=ll2&tag=restlessfaith-20&linkId=be37a1e69c49f3c92631bc62ce335bd0&language=en_US&gaOptInStatus=true&ref_=as_li_ss_tl",
-      "pitch": "46 coloring designs of pencil pals, doodle monsters, paper planes and space adventures from the games, ready for your crayons.",
-      "facts": [
-        "46 coloring designs inspired by Sketchpad Arcade",
-        "A blank back behind every design, so markers won't spoil the next page",
-        "Large 8.5 × 11-inch pages with room to color",
-        "Simple character pictures and more detailed scenes",
-        "A game index and a color-testing page",
-        "For kids ages 6 to 12 and anyone who loves doodles"
-      ]
-    },
+    "books": [
+      {
+        "slug": "coloring-book-2",
+        "dir": "book2",
+        "short": "Coloring Book",
+        "title": "Sketchpad Arcade Coloring Book",
+        "url": "https://www.amazon.com/dp/B0HNXS3LCR?linkCode=ml1&tag=restlessfaith-20&linkId=7f08d1b8373538fdeab2ecd550f8e60a&gaOptInStatus=true",
+        "pitch": "45 more game illustrations, from caped kids to cookie-loving doodles, with black outlines and room for your own colors.",
+        "facts": [
+          "45 different game illustrations from Sketchpad Arcade",
+          "Black outlines with room for your own colors",
+          "Single-sided designs with blank backs, so markers won't spoil the next page",
+          "Large 8.5 × 11-inch pages",
+          "96 pages",
+          "For kids ages 6 to 12 and anyone who loves doodles"
+        ],
+        "samples": [
+          "shoe-string-swing",
+          "chibi-chib",
+          "eraser-gulp"
+        ]
+      },
+      {
+        "title": "Sketchpad Arcade Coloring Book Jr.",
+        "url": "https://www.amazon.com/dp/B0HNMJD1JT?&linkCode=ll2&tag=restlessfaith-20&linkId=be37a1e69c49f3c92631bc62ce335bd0&language=en_US&gaOptInStatus=true&ref_=as_li_ss_tl",
+        "pitch": "46 coloring designs of pencil pals, doodle monsters, paper planes and space adventures from the games, ready for your crayons.",
+        "facts": [
+          "46 coloring designs inspired by Sketchpad Arcade",
+          "A blank back behind every design, so markers won't spoil the next page",
+          "Large 8.5 × 11-inch pages with room to color",
+          "Simple character pictures and more detailed scenes",
+          "A game index and a color-testing page",
+          "For kids ages 6 to 12 and anyone who loves doodles"
+        ],
+        "slug": "coloring-book",
+        "dir": "book",
+        "short": "Coloring Book Jr.",
+        "isbn": "9798163771042",
+        "samples": [
+          "paper-plane-dash",
+          "sidewalk-hop",
+          "cookie-drop",
+          "word-workshop",
+          "2048-drop",
+          "pencil-patrol"
+        ]
+      }
+    ],
     "online": {
       "url": "https://wzckjgrrjrborkojymbp.supabase.co",
       "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l",
