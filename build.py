@@ -219,73 +219,88 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
 <div class="navr"><a class="sharebtn homebtn" href="{rel}index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
 <button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button>{sister_btn()}</div>
 </nav></div>'''
-    links = ([("coloring-book", "Coloring Book")] if SITE.get("book") else []) + [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
-    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.{"<br>As an Amazon Associate I earn from qualifying purchases." if SITE.get("book") else ""}</span>
+    links = [(b["slug"], b["short"]) for b in BOOKS] + [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
+    foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.{"<br>As an Amazon Associate I earn from qualifying purchases." if BOOKS else ""}</span>
 <ul>{"".join(footlink(rel, p, n, active == p) for p, n in links)}</ul></div></footer>'''
     content = f"{nav}\n<main>{body}</main>\n{foot}\n{SHARE_JS}"
     if not full:  # fragment for the claude.ai preview, which supplies its own document shell
         return head + content
     return f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n{head}</head>\n<body>\n{content}\n</body>\n</html>\n'
 
-BOOK = SITE.get("book")
+BOOKS = SITE.get("books") or ([SITE["book"] | {"slug": "coloring-book", "dir": "book", "short": "Coloring Book"}] if SITE.get("book") else [])
+BOOK = BOOKS[0] if BOOKS else None  # the first book is the one promoted when a game has no page of its own
 
-def book_link(label, cls="btn small"):
-    return f'<a class="{cls}" href="{E(BOOK["url"])}" rel="sponsored noopener" target="_blank">{label}</a>'
+def book_link(label, b=None, cls="btn small"):
+    b = b or BOOK
+    return f'<a class="{cls}" href="{E(b["url"])}" rel="sponsored noopener" target="_blank">{label}</a>'
+
+def book_with_page(g):
+    """The book that has this game's own coloring page (src/<dir>/pages/<slug>.webp), or None."""
+    for b in BOOKS:
+        if (ROOT / "src" / b["dir"] / "pages" / f'{g["slug"]}.webp').exists(): return b
+    return None
 
 def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
-    """A promo for the Sketchpad Arcade Coloring Book (paperback on Amazon, affiliate link).
-    On a game's page it shows that game's own coloring page from the book (src/book/pages/<slug>.webp), when there is one."""
-    if not BOOK: return ""
-    own = g and (ROOT / "src" / "book" / "pages" / f'{g["slug"]}.webp').exists()
-    img = (f'<img class="pg" src="{rel}book/pages/{g["slug"]}.webp" alt="{E(g["name"])} coloring page from the {E(BOOK["title"])}" width="598" height="800" loading="lazy">' if own
-           else f'<img src="{rel}book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802" loading="lazy">')
-    pitch = (f'{E(g["name"])} has its own page in the {E(BOOK["title"])}, along with every other game on the site. 46 designs in all, on big 8.5 × 11-inch pages.' if own
-             else E(BOOK["pitch"]))
-    return f'''<aside class="book" aria-label="{E(BOOK["title"])}">
-<a class="bookcov" href="{rel}coloring-book.html">{img}</a>
-<div><span class="kicker">{E(kicker)}</span><h2>{E(heading or BOOK["title"])}</h2><p>{pitch}</p>
-<div class="bookbtns">{book_link("Get it on Amazon")}<a href="{rel}coloring-book.html">See inside</a></div>
-<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div></aside>'''
-
-SAMPLES = ["paper-plane-dash", "sidewalk-hop", "cookie-drop", "word-workshop", "2048-drop", "pencil-patrol"]
+    """A promo for a Sketchpad Arcade coloring book (paperback on Amazon, affiliate link).
+    On a game's page it shows that game's own coloring page from whichever book has one."""
+    if not BOOKS: return ""
+    b = (g and book_with_page(g)) or BOOK
+    own = bool(g) and b is book_with_page(g)
+    img = (f'<img class="pg" src="{rel}{b["dir"]}/pages/{g["slug"]}.webp" alt="{E(g["name"])} coloring page from the {E(b["title"])}" width="598" height="800" loading="lazy">' if own
+           else f'<img src="{rel}{b["dir"]}/cover.jpg" alt="{E(b["title"])} cover" width="620" height="802" loading="lazy">')
+    pitch = (f'{E(g["name"])} has its own page in the {E(b["title"])}, along with lots of other games from the site, on big 8.5 × 11-inch pages.' if own
+             else E(b["pitch"]))
+    return f'''<aside class="book" aria-label="{E(b["title"])}">
+<a class="bookcov" href="{rel}{b["slug"]}.html">{img}</a>
+<div><span class="kicker">{E(kicker)}</span><h2>{E(heading or b["title"])}</h2><p>{pitch}</p>
+<div class="bookbtns">{book_link("Get it on Amazon", b)}<a href="{rel}{b["slug"]}.html">See inside</a></div>
+<p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div>
+</aside>'''
 
 def book_shelf():
-    """Home page Books section: the coloring book as a card the same size as the game cards, linking to its page."""
-    if not BOOK: return ""
+    """Home page Books section: each coloring book as a card the same size as the game cards, linking to its page."""
+    if not BOOKS: return ""
+    cards = "".join(f'''<a class="card" href="{b["slug"]}.html" aria-label="{E(b["title"])}" title="{E(b["title"])}">
+<img class="thumb" src="{b["dir"]}/thumb.jpg" alt="{E(b["title"])}" width="640" height="640" loading="lazy">
+<div class="body"><span class="tag bk">Book</span></div></a>''' for b in BOOKS)
     return f'''<section class="shelf" aria-labelledby="books-head"><h2 class="shelfhead" id="books-head">Books</h2>
-<div class="strip books"><a class="card" href="coloring-book.html" aria-label="{E(BOOK["title"])}" title="{E(BOOK["title"])}">
-<img class="thumb" src="book/thumb.jpg" alt="{E(BOOK["title"])}" width="640" height="640" loading="lazy">
-<div class="body"><span class="tag bk">Book</span></div></a></div></section>'''
+<div class="strip books">{cards}</div></section>'''
 
-def book_page():
-    li = "".join(f"<li>{E(x)}</li>" for x in BOOK["facts"])
-    ld = {"@context": "https://schema.org", "@type": "Book", "name": BOOK["title"], "bookFormat": "https://schema.org/Paperback",
-          "numberOfPages": None, "isbn": "9798163771042", "publisher": {"@type": "Organization", "name": SITE["owner"]},
-          "audience": {"@type": "PeopleAudience", "suggestedMinAge": 6, "suggestedMaxAge": 12}, "url": f'{SITE["url"].rstrip("/")}/coloring-book'}
+def book_page(b):
+    li = "".join(f"<li>{E(x)}</li>" for x in b["facts"])
+    others = [o for o in BOOKS if o is not b]
+    ld = {"@context": "https://schema.org", "@type": "Book", "name": b["title"], "bookFormat": "https://schema.org/Paperback",
+          "isbn": b.get("isbn"), "publisher": {"@type": "Organization", "name": SITE["owner"]},
+          "audience": {"@type": "PeopleAudience", "suggestedMinAge": 6, "suggestedMaxAge": 12}, "url": f'{SITE["url"].rstrip("/")}/{b["slug"]}'}
     ld = {k: v for k, v in ld.items() if v is not None}
+    samples = [x for x in b.get("samples", []) if x in BY_SLUG]
+    more = "".join(f'''<aside class="book" aria-label="{E(o["title"])}"><a class="bookcov" href="{o["slug"]}.html"><img src="{o["dir"]}/cover.jpg" alt="{E(o["title"])} cover" width="620" height="802" loading="lazy"></a>
+<div><span class="kicker">Also in the series</span><h2>{E(o["title"])}</h2><p>{E(o["pitch"])}</p>
+<div class="bookbtns">{book_link("Get it on Amazon", o)}<a href="{o["slug"]}.html">See inside</a></div></div></aside>''' for o in others)
     body = f'''<div class="wrap bookpage">
 <div class="hero">
-  <div class="bookbuy"><div class="cover"><img src="book/cover.jpg" alt="{E(BOOK["title"])} cover" width="620" height="802"></div>
-    {book_link("Order the coloring book", "btn")}
+  <div class="bookbuy"><div class="cover"><img src="{b["dir"]}/cover.jpg" alt="{E(b["title"])} cover" width="620" height="802"></div>
+    {book_link("Order the coloring book", b, "btn")}
     <p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div>
   <div class="info">
     <span class="tag">Paperback</span>
-    <h1>{E(BOOK["title"])}</h1>
-    <p class="lead">Bring the games off the screen and onto the page. {E(BOOK["pitch"])}</p>
+    <h1>{E(b["title"])}</h1>
+    <p class="lead">Bring the games off the screen and onto the page. {E(b["pitch"])}</p>
     <ul class="facts">{li}</ul>
   </div>
 </div>
 <h2 class="sec">A peek inside</h2>
-<div class="samples">{"".join(f'<a href="{x}.html"><img src="book/pages/{x}.webp" alt="{E(BY_SLUG[x]["name"])} coloring page" width="598" height="800" loading="lazy"></a>' for x in SAMPLES)}</div>
+<div class="samples">{"".join(f'<a href="{x}.html"><img src="{b["dir"]}/pages/{x}.webp" alt="{E(BY_SLUG[x]["name"])} coloring page" width="598" height="800" loading="lazy"></a>' for x in samples)}</div>
 <section class="panel about"><h2>Color it, then play it</h2>
-<p>Every game on Sketchpad Arcade has its own page in the book, in the same A to Z order as the site, plus a few bonus scenes, a game index and a page for testing your colors. Color your favorites, then come back here and play their games for free.</p>
+<p>Every design in the book comes from a game on Sketchpad Arcade. Color your favorites, then come back here and play their games for free.</p>
 <p>Grab colored pencils or crayons. If you use markers, slip a spare sheet behind the page to protect the next design.</p>
-<p>{book_link("Order the coloring book", "btn small")}</p></section>
+<p>{book_link("Order the coloring book", b, "btn small")}</p></section>
+{more}
 <section><h2 class="sec">Play the games</h2><div class="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
 </div>
 <script type="application/ld+json">{json.dumps(ld)}</script>'''
-    return page(f'{BOOK["title"]} | {SITE["name"]}', f'{BOOK["title"]}: {BOOK["pitch"]} Paperback on Amazon.', body, "coloring-book", canonical="coloring-book",
-                extra_head=f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/book/share.jpg">\n')
+    return page(f'{b["title"]} | {SITE["name"]}', f'{b["title"]}: {b["pitch"]} Paperback on Amazon.', body, b["slug"], canonical=b["slug"],
+                extra_head=f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/{b["dir"]}/share.jpg">\n')
 
 def card(g):
     cls = "tag " + g["genre"].lower()
@@ -838,9 +853,9 @@ def build():
     (OUT / "contact.html").write_text(contact())
     (OUT / "terms.html").write_text(terms())
     (OUT / "news.html").write_text(news())
-    if BOOK:
-        shutil.copytree(ROOT / "src" / "book", OUT / "book")
-        (OUT / "coloring-book.html").write_text(book_page())
+    for b in BOOKS:
+        shutil.copytree(ROOT / "src" / b["dir"], OUT / b["dir"])
+        (OUT / f'{b["slug"]}.html').write_text(book_page(b))
     (OUT / "404.html").write_text(not_found())
     (OUT / "news").mkdir()
     for x in POSTS:
@@ -857,7 +872,7 @@ def build():
     (OUT / "vercel.json").write_text(json.dumps({"cleanUrls": True}, indent=2) + "\n")
     url = SITE.get("url", "").rstrip("/")
     if url:
-        pages = ["", "coloring-book", "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
+        pages = ["", *[b["slug"] for b in BOOKS], "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
         (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
             "".join(f"  <url><loc>{url}/{p}</loc></url>\n" for p in pages) + "</urlset>\n")
         (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {url}/sitemap.xml\n")
