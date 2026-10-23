@@ -48,6 +48,14 @@ main{padding:16px}
 .spark .chart{height:50px}
 .note{font-size:12px;color:var(--muted);margin:4px 2px 20px}
 .msg{padding:30px 10px;text-align:center;color:var(--muted)}
+.eng{overflow-x:auto;margin:0 -14px;padding:0 14px}
+.eng table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px;font-variant-numeric:tabular-nums}
+.eng th{font:600 11px var(--body);color:var(--muted);text-align:right;padding:4px 6px;white-space:nowrap;cursor:pointer}
+.eng th:first-child,.eng td:first-child{text-align:left;position:sticky;left:0;background:var(--card)}
+.eng td{padding:6px;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
+.eng td:first-child{font-weight:600;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.eng td.z{color:var(--line)}
+.eng th.on{color:var(--ink)}
 @media (max-width:420px){.tile b{font-size:20px}.tiles{gap:6px}.tile{padding:9px}}
 </style>
 </head>
@@ -75,6 +83,16 @@ main{padding:16px}
 <h2 id="list-h">Most played</h2>
 <div id="list"><div class="msg">Loading…</div></div>
 </div>
+<div class="card">
+<h2>Engagement, last 30 days</h2>
+<div class="tiles" style="margin-bottom:10px">
+<div class="tile"><b id="e-ret">–</b><span>returning visitors</span></div>
+<div class="tile"><b id="e-book">–</b><span>book page views</span></div>
+<div class="tile"><b id="e-amz">–</b><span>Amazon clicks</span></div>
+</div>
+<div class="eng" id="eng"><div class="msg">Loading…</div></div>
+</div>
+<p class="note">Engagement counts are anonymous tallies, nothing about who played. <b>Views</b>: game page opened (once a day per browser). <b>Started</b>: first tap or key press in the game. <b>Finished</b>: the game's end screen appeared. <b>Replays</b>: Play Again pressed. <b>Came back</b>: someone who had played this game on an earlier day played it again (once a day). <b>Next</b>: a related or Up Next game picked from it. <b>Amazon</b>: an Amazon link clicked after playing it. Tap a column to sort.</p>
 <p class="note">A play is one person opening a game on a given day, so refreshing or replaying the same game that day doesn't add more. Days run on UTC time (they roll over at 7pm Central). New games show a per-day average since they were added, so you can compare them fairly. Tap a game for its daily trend.</p>
 </main>
 <script>
@@ -132,6 +150,23 @@ function render() {
   }));
 }
 
+let engSort = "repeat";
+function renderEng() {
+  const ev = data.events; if (!ev) { $("eng").innerHTML = '<div class="msg">Engagement counting starts once this version is live.</div>'; return; }
+  const R = e => (ev[e] && ev[e].recent) || {}, sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+  $("e-ret").textContent = fmt(R("return")._site || 0);
+  $("e-book").textContent = fmt(sum(R("book_view")));
+  $("e-amz").textContent = fmt(sum(R("amazon")));
+  const cols = [["view", "Views"], ["start", "Started"], ["complete", "Finished"], ["restart", "Replays"], ["repeat", "Came back"], ["related", "Next"], ["amazon_via", "Amazon"]];
+  const rows = GAMES.map(g => ({ g, v: Object.fromEntries(cols.map(([k]) => [k, R(k)[g.slug] || 0])) }))
+    .filter(r => cols.some(([k]) => r.v[k])).sort((a, b) => b.v[engSort] - a.v[engSort] || b.v.start - a.v.start);
+  if (!rows.length) { $("eng").innerHTML = '<div class="msg">No engagement counted yet.</div>'; return; }
+  const cell = n => `<td${n ? "" : ' class="z"'}>${fmt(n)}</td>`;
+  $("eng").innerHTML = `<table><thead><tr><th>Game</th>${cols.map(([k, l]) => `<th data-k="${k}"${k === engSort ? ' class="on"' : ""}>${l}</th>`).join("")}<th>Finish %</th></tr></thead><tbody>` +
+    rows.map(r => `<tr><td title="${r.g.name}">${r.g.name}</td>${cols.map(([k]) => cell(r.v[k])).join("")}<td>${r.v.start ? Math.round(100 * r.v.complete / r.v.start) + "%" : "–"}</td></tr>`).join("") + "</tbody></table>";
+  document.querySelectorAll("#eng th[data-k]").forEach(th => th.addEventListener("click", () => { engSort = th.dataset.k; renderEng(); }));
+}
+
 document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x === b));
   range = b.dataset.r;
@@ -149,6 +184,7 @@ fetch("/api/stats", {cache: "no-store"}).then(r => r.ok ? r.json() : Promise.rej
   bars($("daily"), d.days.map(x => x.total), true);
   $("ax0").textContent = short(d.days[0].date);
   render();
+  renderEng();
 }).catch(e => {
   $("updated").textContent = "Couldn't load stats";
   $("list").innerHTML = `<div class="msg">${e === 503 ? "The play counter isn't connected. In Vercel, add Storage → Upstash Redis to this project." : "Couldn't reach the stats right now. Try again in a minute."}</div>`;

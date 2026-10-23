@@ -32,8 +32,34 @@
 <meta property="og:title" content="Sketch Sprint: play free online | Sketchpad Arcade">
 <meta property="og:description" content="Play Sketch Sprint free online. A fast endless runner drawn in pencil. Pick Francis, Clare, George, Joan or one of four more kids and race a path that turns sharp corners through downtown, a backyard, the park, a creek and the woods. Swipe to turn, jump gaps, slide under nets and grab gold stars. Works on phone and computer.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sketchpad Arcade">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sketch Sprint: play free online | Sketchpad Arcade">
+<meta name="twitter:description" content="Play Sketch Sprint free online. A fast endless runner drawn in pencil. Pick Francis, Clare, George, Joan or one of four more kids and race a path that turns sharp corners through downtown, a backyard, the park, a creek and the woods. Swipe to turn, jump gaps, slide under nets and grab gold stars. Works on phone and computer.">
+<meta name="twitter:image" content="https://www.sketchpadarcade.com/img/sketch-sprint.jpg">
 <meta property="og:image" content="https://www.sketchpadarcade.com/img/sketch-sprint.jpg">
+<meta property="og:image:width" content="640">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Sketch Sprint cover art">
+<script>window.ARC={"page": "game", "slug": "sketch-sprint"};</script>
+<script defer src="/arcade.js?v=35bbae47"></script>
+<style>
+.arc-next{display:flex;flex-direction:column;align-items:center;gap:6px;margin:8px auto 0;max-width:100%;pointer-events:auto;position:relative;z-index:5}
+.arc-up{display:flex;align-items:center;gap:8px;max-width:100%;padding:5px 12px 5px 5px;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px dashed #55555c;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;font:400 1.05rem/1.1 "Patrick Hand","Comic Sans MS",cursive;text-align:left}
+.arc-up img{width:40px;height:40px;flex:none;border:2px solid #2e2e33;border-radius:8px;object-fit:cover;background:#efeadd}
+.arc-up span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.arc-up small{display:block;font-size:.8rem;color:#7a7a80;text-transform:uppercase;letter-spacing:.06em}
+.arc-bk{font:400 .95rem/1.2 "Patrick Hand","Comic Sans MS",cursive;color:#55555c;text-decoration:underline wavy #c99a1a;text-underline-offset:3px;text-align:center}
+.arc-pause{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;cursor:pointer;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c}
+.arc-pause svg{width:16px;height:16px}.arc-pause:active{transform:translate(2px,2px);box-shadow:none}.arc-pause[hidden]{display:none!important}
+.arc-veil{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.82)}
+.arc-card{width:100%;max-width:320px;text-align:center;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c;font-family:"Patrick Hand","Comic Sans MS",cursive}
+.arc-card h2{margin:0 0 6px;font:400 2rem/1.1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;transform:rotate(-1.5deg)}
+.arc-rot{display:none;margin:0 0 6px;color:#55555c;font-size:1.1rem}html.arc-sideways .arc-rot{display:block}html.arc-sideways .arc-go{opacity:.45}
+.arc-go{appearance:none;cursor:pointer;width:100%;margin-top:6px;padding:10px;font:400 1.6rem/1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;color:#2e2e33;background:#f3e6b0;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:4px 4px 0 #55555c}
+.arc-more{display:inline-block;margin-top:12px;color:#2e2e33;font-size:1.1rem}
+.arc-go:focus-visible,.arc-more:focus-visible,.arc-pause:focus-visible,.arc-up:focus-visible,.arc-bk:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
 <style>
 /* Sketchpad Arcade: every page is a sketchbook page. Paper with a faint grain, graphite ink, wobbly hand-drawn borders,
    handwriting fonts, and coloured-pencil accents only where a kid would have reached for one. */
@@ -79,6 +105,8 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.also.twin{margin:0 0 28px}
+.allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
 .book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
 .book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
@@ -174,20 +202,20 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </head>
 <body>
 <div class="top"><nav class="wrap nav" aria-label="Main">
-<a class="logo" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/><path d="M24 10l6 6" stroke-width="1.6"/></svg><span>Sketchpad Arcade</span></a>
-<div class="navr"><a class="sharebtn homebtn" href="index.html" aria-current="page"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg><span>Home</span></a>
+<a class="logo" href="/"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/><path d="M24 10l6 6" stroke-width="1.6"/></svg><span>Sketchpad Arcade</span></a>
+<div class="navr"><a class="sharebtn homebtn" href="/" aria-current="page"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg><span>Home</span></a>
 <button class="sharebtn" type="button" data-share-url="https://www.sketchpadarcade.com/sketch-sprint" data-share-title="Sketch Sprint" data-share-text="Play Sketch Sprint free on Sketchpad Arcade! Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg><span>Share</span></button><a class="sharebtn sisterbtn" href="https://www.beachdayarcade.com" title="Play the same games at Beach Day Arcade" aria-label="Visit Beach Day Arcade"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16.5" cy="7" r="3"/><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 19.5c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg><span>Beach Day</span></a></div>
 </nav></div>
 <main><div class="wrap">
-<div class="crumbs"><a href="index.html">All games</a> / Arcade</div>
+<div class="crumbs"><a href="/">All games</a> / Arcade</div>
 <div class="hero">
-  <div class="cover"><img src="img/sketch-sprint.jpg" alt="Sketch Sprint gameplay" width="640" height="640"><a class="btn" href="play/sketch-sprint.html">Play now</a></div>
+  <div class="cover"><img src="img/sketch-sprint.jpg" alt="Sketch Sprint cover art" width="640" height="640" fetchpriority="high"><a class="btn" href="/play/sketch-sprint">Play now</a></div>
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Sketch Sprint</h1>
     <p class="lead">A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.</p>
     <ul class="facts"><li>Arcade</li><li>Endless running with corners</li><li>8 runners to unlock</li><li>Waves with score multipliers</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="play/sketch-sprint.html">Play Sketch Sprint</a></div>
+    <div><a class="btn" href="/play/sketch-sprint">Play Sketch Sprint</a></div>
   </div>
 </div>
 <!-- Ad slot: paste an AdSense display unit here once the site is approved -->
@@ -198,122 +226,37 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <section class="panel about"><h2>About Sketch Sprint</h2><p>Sketch Sprint is the game that started Sketchpad Arcade. It began as a request to redraw a runner from our sister site to look like a ten-year-old had sketched it in a notebook, and the result was so much fun that we built a whole site around the idea. It is a fast endless runner with hard 90-degree corners through downtown, the backyard, the park, a creek and the woods.</p><p>Stars carry over between runs and unlock new runners, so there is always something to work toward. Power-ups like the paper plane, magnet, bubble and skateboard change how each run feels, and every 500 meters a new wave arrives, faster and worth more. The eight kids, the scenery and the power-ups are all our own pencil art.</p></section>
 <aside class="book" aria-label="Sketchpad Arcade Coloring Book Jr.">
-<a class="bookcov" href="coloring-book.html"><img class="pg" src="book/pages/sketch-sprint.webp" alt="Sketch Sprint coloring page from the Sketchpad Arcade Coloring Book Jr." width="598" height="800" loading="lazy"></a>
-<div><span class="kicker">Love the drawings?</span><h2>Color Sketch Sprint yourself</h2><p>Sketch Sprint has its own page in the Sketchpad Arcade Coloring Book Jr., along with lots of other games from the site, on big 8.5 × 11-inch pages.</p>
-<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?&amp;linkCode=ll2&amp;tag=restlessfaith-20&amp;linkId=be37a1e69c49f3c92631bc62ce335bd0&amp;language=en_US&amp;gaOptInStatus=true&amp;ref_=as_li_ss_tl" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="coloring-book.html">See inside</a></div>
+<a class="bookcov" href="/coloring-book"><img class="pg" src="book/pages/sketch-sprint.webp" alt="Sketch Sprint coloring page from the Sketchpad Arcade Coloring Book Jr." width="598" height="800" loading="lazy"></a>
+<div><span class="kicker">Sketchpad Arcade Coloring Books</span><h2>Color Sketch Sprint yourself</h2><p>Love the games? Bring your favorite characters to life with the Sketchpad Arcade Coloring Books! Sketch Sprint has its own page in the Sketchpad Arcade Coloring Book Jr., along with lots of other games from the site, on big 8.5 × 11-inch pages.</p>
+<div class="bookbtns"><a class="btn small" href="https://www.amazon.com/dp/B0HNMJD1JT?&amp;linkCode=ll2&amp;tag=restlessfaith-20&amp;linkId=be37a1e69c49f3c92631bc62ce335bd0&amp;language=en_US&amp;gaOptInStatus=true&amp;ref_=as_li_ss_tl" rel="sponsored noopener" target="_blank">Get it on Amazon</a><a href="/coloring-book">See inside</a></div>
 <p class="aff">As an Amazon Associate I earn from qualifying purchases.</p></div>
 </aside>
-<section><h2 class="sec">More games</h2><div class="grid"><a class="card" href="guess-my-doodle.html" data-slug="guess-my-doodle" data-added="2026-10-22" data-genre="Versus" aria-label="Guess My Doodle, Versus game" title="Guess My Doodle">
-<img class="thumb" src="img/guess-my-doodle.jpg" alt="Guess My Doodle" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="sketch-with-friends.html" data-slug="sketch-with-friends" data-added="2026-10-22" data-genre="Word" aria-label="Sketch with Friends, Word game" title="Sketch with Friends">
-<img class="thumb" src="img/sketch-with-friends.jpg" alt="Sketch with Friends" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="sketchers.html" data-slug="sketchers" data-added="2026-10-22" data-genre="Versus" aria-label="Sketchers, Versus game" title="Sketchers">
-<img class="thumb" src="img/sketchers.jpg" alt="Sketchers" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="connect-sketch.html" data-slug="connect-sketch" data-added="2026-10-22" data-genre="Versus" aria-label="Connect Sketch, Versus game" title="Connect Sketch">
-<img class="thumb" src="img/connect-sketch.jpg" alt="Connect Sketch" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="blot-sweeper.html" data-slug="blot-sweeper" data-added="2026-10-21" data-genre="Puzzle" aria-label="Blot Sweeper, Puzzle game" title="Blot Sweeper">
-<img class="thumb" src="img/blot-sweeper.jpg" alt="Blot Sweeper" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="save-the-doodle.html" data-slug="save-the-doodle" data-added="2026-10-21" data-genre="Word" aria-label="Save the Doodle, Word game" title="Save the Doodle">
-<img class="thumb" src="img/save-the-doodle.jpg" alt="Save the Doodle" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="doodle-doku.html" data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
-<img class="thumb" src="img/doodle-doku.jpg" alt="Doodle Doku" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="crayon-code.html" data-slug="crayon-code" data-added="2026-10-21" data-genre="Puzzle" aria-label="Crayon Code, Puzzle game" title="Crayon Code">
-<img class="thumb" src="img/crayon-code.jpg" alt="Crayon Code" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="tic-tac-doodle.html" data-slug="tic-tac-doodle" data-added="2026-10-21" data-genre="Versus" aria-label="Tic-Tac-Doodle, Versus game" title="Tic-Tac-Doodle">
-<img class="thumb" src="img/tic-tac-doodle.jpg" alt="Tic-Tac-Doodle" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="doodle-sos.html" data-slug="doodle-sos" data-added="2026-10-21" data-genre="Versus" aria-label="Doodle SOS, Versus game" title="Doodle SOS">
-<img class="thumb" src="img/doodle-sos.jpg" alt="Doodle SOS" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="box-doodles.html" data-slug="box-doodles" data-added="2026-10-21" data-genre="Versus" aria-label="Box Doodles, Versus game" title="Box Doodles">
-<img class="thumb" src="img/box-doodles.jpg" alt="Box Doodles" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="paper-boats.html" data-slug="paper-boats" data-added="2026-10-21" data-genre="Versus" aria-label="Paper Boats, Versus game" title="Paper Boats">
-<img class="thumb" src="img/paper-boats.jpg" alt="Paper Boats" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="pencil-parade.html" data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
-<img class="thumb" src="img/pencil-parade.jpg" alt="Pencil Parade" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="squiggle-worm.html" data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
-<img class="thumb" src="img/squiggle-worm.jpg" alt="Squiggle Worm" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="cookie-drop.html" data-slug="cookie-drop" data-added="2026-10-18" data-genre="Puzzle" aria-label="Cookie Drop, Puzzle game" title="Cookie Drop">
-<img class="thumb" src="img/cookie-drop.jpg" alt="Cookie Drop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="desk-strikes.html" data-slug="desk-strikes" data-added="2026-10-18" data-genre="Arcade" aria-label="Desk Strikes, Arcade game" title="Desk Strikes">
-<img class="thumb" src="img/desk-strikes.jpg" alt="Desk Strikes" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="marble-blitz.html" data-slug="marble-blitz" data-added="2026-10-18" data-genre="Arcade" aria-label="Marble Blitz, Arcade game" title="Marble Blitz">
-<img class="thumb" src="img/marble-blitz.jpg" alt="Marble Blitz" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-peaks.html" data-slug="paper-peaks" data-added="2026-10-18" data-genre="Puzzle" aria-label="Paper Peaks, Puzzle game" title="Paper Peaks">
-<img class="thumb" src="img/paper-peaks.jpg" alt="Paper Peaks" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="even-sketch.html" data-slug="even-sketch" data-added="2026-10-18" data-genre="Puzzle" aria-label="Even Sketch, Puzzle game" title="Even Sketch">
-<img class="thumb" src="img/even-sketch.jpg" alt="Even Sketch" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="doodle-keeper.html" data-slug="doodle-keeper" data-added="2026-10-18" data-genre="Word" aria-label="Doodle Keeper, Word game" title="Doodle Keeper">
-<img class="thumb" src="img/doodle-keeper.jpg" alt="Doodle Keeper" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="letter-scramble.html" data-slug="letter-scramble" data-added="2026-10-18" data-genre="Word" aria-label="Letter Scramble, Word game" title="Letter Scramble">
-<img class="thumb" src="img/letter-scramble.jpg" alt="Letter Scramble" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="ink-jars.html" data-slug="ink-jars" data-added="2026-10-18" data-genre="Puzzle" aria-label="Ink Jars, Puzzle game" title="Ink Jars">
-<img class="thumb" src="img/ink-jars.jpg" alt="Ink Jars" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="pencil-patrol.html" data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
-<img class="thumb" src="img/pencil-patrol.jpg" alt="Pencil Patrol" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-plane-dash.html" data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
-<img class="thumb" src="img/paper-plane-dash.jpg" alt="Paper Plane Dash" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="margin-merge.html" data-slug="margin-merge" data-added="2026-10-08" data-genre="Puzzle" aria-label="Margin Merge, Puzzle game" title="Margin Merge">
-<img class="thumb" src="img/margin-merge.jpg" alt="Margin Merge" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="2048-drop.html" data-slug="2048-drop" data-added="2026-10-08" data-genre="Puzzle" aria-label="2048 DROP, Puzzle game" title="2048 DROP">
-<img class="thumb" src="img/2048-drop.jpg" alt="2048 DROP" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="shoe-string-swing.html" data-slug="shoe-string-swing" data-added="2026-10-08" data-genre="Arcade" aria-label="Shoe String Swing, Arcade game" title="Shoe String Swing">
-<img class="thumb" src="img/shoe-string-swing.jpg" alt="Shoe String Swing" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="note-quest.html" data-slug="note-quest" data-added="2026-10-08" data-genre="Word" aria-label="Note Quest, Word game" title="Note Quest">
-<img class="thumb" src="img/note-quest.jpg" alt="Note Quest" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="eraser-gulp.html" data-slug="eraser-gulp" data-added="2026-10-08" data-genre="Arcade" aria-label="Eraser Gulp, Arcade game" title="Eraser Gulp">
-<img class="thumb" src="img/eraser-gulp.jpg" alt="Eraser Gulp" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="sidewalk-hop.html" data-slug="sidewalk-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Sidewalk Hop, Arcade game" title="Sidewalk Hop">
-<img class="thumb" src="img/sidewalk-hop.jpg" alt="Sidewalk Hop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="paper-gates.html" data-slug="paper-gates" data-added="2026-10-08" data-genre="Puzzle" aria-label="Paper Gates, Puzzle game" title="Paper Gates">
-<img class="thumb" src="img/paper-gates.jpg" alt="Paper Gates" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="doodle-stacks.html" data-slug="doodle-stacks" data-added="2026-10-08" data-genre="Puzzle" aria-label="Doodle Stacks, Puzzle game" title="Doodle Stacks">
-<img class="thumb" src="img/doodle-stacks.jpg" alt="Doodle Stacks" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="scribble-slice.html" data-slug="scribble-slice" data-added="2026-10-08" data-genre="Arcade" aria-label="Scribble Slice, Arcade game" title="Scribble Slice">
-<img class="thumb" src="img/scribble-slice.jpg" alt="Scribble Slice" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="sketch-search.html" data-slug="sketch-search" data-added="2026-10-08" data-genre="Word" aria-label="Sketch Search, Word game" title="Sketch Search">
-<img class="thumb" src="img/sketch-search.jpg" alt="Sketch Search" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="pencil-putt.html" data-slug="pencil-putt" data-added="2026-10-08" data-genre="Arcade" aria-label="Pencil Putt, Arcade game" title="Pencil Putt">
-<img class="thumb" src="img/pencil-putt.jpg" alt="Pencil Putt" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="letter-links.html" data-slug="letter-links" data-added="2026-10-08" data-genre="Word" aria-label="Letter Links, Word game" title="Letter Links">
-<img class="thumb" src="img/letter-links.jpg" alt="Letter Links" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="doodle-drop.html" data-slug="doodle-drop" data-added="2026-10-08" data-genre="Arcade" aria-label="Doodle Drop, Arcade game" title="Doodle Drop">
-<img class="thumb" src="img/doodle-drop.jpg" alt="Doodle Drop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="pencil-plunk.html" data-slug="pencil-plunk" data-added="2026-10-08" data-genre="Puzzle" aria-label="Pencil Plunk, Puzzle game" title="Pencil Plunk">
-<img class="thumb" src="img/pencil-plunk.jpg" alt="Pencil Plunk" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="draw-brawl.html" data-slug="draw-brawl" data-added="2026-10-08" data-genre="Arcade" aria-label="Draw Brawl, Arcade game" title="Draw Brawl">
-<img class="thumb" src="img/draw-brawl.jpg" alt="Draw Brawl" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="doodle-darts.html" data-slug="doodle-darts" data-added="2026-10-08" data-genre="Arcade" aria-label="Doodle Darts, Arcade game" title="Doodle Darts">
-<img class="thumb" src="img/doodle-darts.jpg" alt="Doodle Darts" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="word-workshop.html" data-slug="word-workshop" data-added="2026-10-08" data-genre="Word" aria-label="Word Workshop, Word game" title="Word Workshop">
-<img class="thumb" src="img/word-workshop.jpg" alt="Word Workshop" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="bubble-doodle.html" data-slug="bubble-doodle" data-added="2026-10-08" data-genre="Arcade" aria-label="Bubble Doodle, Arcade game" title="Bubble Doodle">
-<img class="thumb" src="img/bubble-doodle.jpg" alt="Bubble Doodle" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="four-in-a-frame.html" data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
-<img class="thumb" src="img/four-in-a-frame.jpg" alt="Four in a Frame" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="margin-match.html" data-slug="margin-match" data-added="2026-10-08" data-genre="Puzzle" aria-label="Margin Match, Puzzle game" title="Margin Match">
-<img class="thumb" src="img/margin-match.jpg" alt="Margin Match" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="no-2-pencil.html" data-slug="no-2-pencil" data-added="2026-10-09" data-genre="Puzzle" aria-label="No. 2 Pencil, Puzzle game" title="No. 2 Pencil">
-<img class="thumb" src="img/no-2-pencil.jpg" alt="No. 2 Pencil" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="scribble-blocks.html" data-slug="scribble-blocks" data-added="2026-10-09" data-genre="Puzzle" aria-label="Scribble Blocks, Puzzle game" title="Scribble Blocks">
-<img class="thumb" src="img/scribble-blocks.jpg" alt="Scribble Blocks" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="drop-swap.html" data-slug="drop-swap" data-added="2026-10-09" data-genre="Puzzle" aria-label="Drop Swap, Puzzle game" title="Drop Swap">
-<img class="thumb" src="img/drop-swap.jpg" alt="Drop Swap" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="pencil-path.html" data-slug="pencil-path" data-added="2026-10-09" data-genre="Puzzle" aria-label="Pencil Path, Puzzle game" title="Pencil Path">
-<img class="thumb" src="img/pencil-path.jpg" alt="Pencil Path" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="space-blaster.html" data-slug="space-blaster" data-added="2026-10-09" data-genre="Arcade" aria-label="Space Blaster, Arcade game" title="Space Blaster">
-<img class="thumb" src="img/space-blaster.jpg" alt="Space Blaster" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="space-glass.html" data-slug="space-glass" data-added="2026-10-09" data-genre="Puzzle" aria-label="Space Glass, Puzzle game" title="Space Glass">
-<img class="thumb" src="img/space-glass.jpg" alt="Space Glass" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="chibi-chib.html" data-slug="chibi-chib" data-added="2026-10-09" data-genre="Puzzle" aria-label="Chibi Chib, Puzzle game" title="Chibi Chib">
-<img class="thumb" src="img/chibi-chib.jpg" alt="Chibi Chib" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag puzzle">Puzzle</span></div></a><a class="card" href="word-scribble.html" data-slug="word-scribble" data-added="2026-10-09" data-genre="Word" aria-label="Word Scribble, Word game" title="Word Scribble">
-<img class="thumb" src="img/word-scribble.jpg" alt="Word Scribble" loading="lazy" width="640" height="640">
-<div class="body"><span class="tag word">Word</span></div></a></div></section>
+<aside class="also twin"><p>Like Sketch Sprint? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/seaside-sprint" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
+<section><h2 class="sec">If you like Sketch Sprint, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
+<img class="thumb" src="img/t/paper-plane-dash.webp" alt="Paper Plane Dash" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/doodle-drop" data-arc-rel data-slug="doodle-drop" data-added="2026-10-08" data-genre="Arcade" aria-label="Doodle Drop, Arcade game" title="Doodle Drop">
+<img class="thumb" src="img/t/doodle-drop.webp" alt="Doodle Drop" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/pencil-putt" data-arc-rel data-slug="pencil-putt" data-added="2026-10-08" data-genre="Arcade" aria-label="Pencil Putt, Arcade game" title="Pencil Putt">
+<img class="thumb" src="img/t/pencil-putt.webp" alt="Pencil Putt" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/sidewalk-hop" data-arc-rel data-slug="sidewalk-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Sidewalk Hop, Arcade game" title="Sidewalk Hop">
+<img class="thumb" src="img/t/sidewalk-hop.webp" alt="Sidewalk Hop" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/scribble-slice" data-arc-rel data-slug="scribble-slice" data-added="2026-10-08" data-genre="Arcade" aria-label="Scribble Slice, Arcade game" title="Scribble Slice">
+<img class="thumb" src="img/t/scribble-slice.webp" alt="Scribble Slice" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/pencil-parade" data-arc-rel data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
+<img class="thumb" src="img/t/pencil-parade.webp" alt="Pencil Parade" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/squiggle-worm" data-arc-rel data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
+<img class="thumb" src="img/t/squiggle-worm.webp" alt="Squiggle Worm" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/desk-strikes" data-arc-rel data-slug="desk-strikes" data-added="2026-10-18" data-genre="Arcade" aria-label="Desk Strikes, Arcade game" title="Desk Strikes">
+<img class="thumb" src="img/t/desk-strikes.webp" alt="Desk Strikes" loading="lazy" decoding="async" width="400" height="400">
+<div class="body"><span class="tag arcade">Arcade</span></div></a></div>
+<p class="allgames"><a class="btn small" href="/#games-head">See all 53 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch Sprint", "description": "A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch Sprint", "description": "A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.", "url": "https://www.sketchpadarcade.com/sketch-sprint", "image": "https://www.sketchpadarcade.com/img/sketch-sprint.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Sketch Sprint", "item": "https://www.sketchpadarcade.com/sketch-sprint"}]}</script>
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.<br>As an Amazon Associate I earn from qualifying purchases.</span>
-<ul><li><a href="coloring-book-2.html">Coloring Book</a></li><li><a href="coloring-book.html">Coloring Book Jr.</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li></ul></div></footer>
+<ul><li><a href="/coloring-book-2">Coloring Book</a></li><li><a href="/coloring-book">Coloring Book Jr.</a></li><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;

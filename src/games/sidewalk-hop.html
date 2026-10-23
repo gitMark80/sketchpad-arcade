@@ -541,8 +541,9 @@ function draw(t){
 }
 
 /* ---------- loop ---------- */
-let last=0,tt=0;
+let last=0,tt=0,held=false;
 function frame(now){
+  if(held){last=now;requestAnimationFrame(frame);return}
   const dt=Math.min(.05,(now-last)/1000||0);last=now;tt+=dt;
   if(running)step(dt);else{deadT+=dt;for(let i=Math.max(0,Math.floor(camY)-2);i<Math.min(rows.length,Math.floor(camY)+40);i++){const r=rows[i];if(r.things)for(const t of r.things)t.x+=r.speed*dt*(deathKind==='bonk'?0:1)}}
   // camera keeps the kid in the lower third and never scrolls back
@@ -567,6 +568,8 @@ function mini(t){const sv=ctx;ctx=mc;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0
   const hop=Math.abs(Math.sin(t*3));drawKid(120,150-hop*40,140,Math.PI,hop<.15?.8:0,t,'',hop>.2);ctx=sv}
 (function ml(n){if(!$('start').hidden)mini(n/1000);requestAnimationFrame(ml)})(0);
 
+/* Pause hooks for the site's Pause button, app-switch auto-pause and resume (src/arcade.js) */
+window.SA_PAUSE={playing:()=>!!running&&!held,pause(){held=true},resume(){held=false}};
 resize();reset();requestAnimationFrame(frame);
 window.__ch={get state(){return{running,score:score(),row:kid.row,x:kid.x,maxRow,shells,deathKind,hopT:kid.hopT}},move,rows:()=>rows.slice(0,kid.row+6).map(r=>({type:r.type,props:r.props?r.props.map(p=>p.c):[],speed:r.speed||0,things:r.things?thingsAt(r).map(s=>[s.x0,s.x1]):[]}))};
 })();
