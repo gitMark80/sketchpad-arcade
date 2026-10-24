@@ -56,6 +56,12 @@ main{padding:16px}
 .eng td:first-child{font-weight:600;max-width:150px;overflow:hidden;text-overflow:ellipsis}
 .eng td.z{color:var(--line)}
 .eng th.on{color:var(--ink)}
+.src table{min-width:420px}
+#amz table{min-width:0}
+.chart.vis div{background:var(--coral);opacity:.75}
+.chart.vis div.today{opacity:1;background:var(--sun)}
+.opt{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin:6px 0 2px;cursor:pointer}
+.opt input{width:20px;height:20px;margin-top:1px;flex:none}
 @media (max-width:420px){.tile b{font-size:20px}.tiles{gap:6px}.tile{padding:9px}}
 </style>
 </head>
@@ -74,17 +80,29 @@ main{padding:16px}
 <div class="tile"><b id="t-avg">–</b><span>plays per day</span></div>
 <div class="tile"><b id="t-top" class="top">–</b><span>top game</span></div>
 </div>
+<div class="tiles">
+<div class="tile"><b id="t-visits">–</b><span id="t-visits-l">visits</span></div>
+<div class="tile"><b id="t-ret">–</b><span>returning visits</span></div>
+<div class="tile"><b id="t-ppv">–</b><span>plays per visit</span></div>
+</div>
 <div class="card">
 <h2>Plays per day (last 30 days)</h2>
 <div class="chart" id="daily"></div>
 <div class="axis"><span id="ax0"></span><span>today</span></div>
+<h2 style="margin-top:16px">Visits per day</h2>
+<div class="chart vis" id="dailyv" style="height:70px"></div>
+<div class="axis"><span id="ax1"></span><span>today</span></div>
+</div>
+<div class="card">
+<h2 id="src-h">Where players come from</h2>
+<div class="eng src" id="src"><div class="msg">Loading…</div></div>
 </div>
 <div class="card">
 <h2 id="list-h">Most played</h2>
 <div id="list"><div class="msg">Loading…</div></div>
 </div>
 <div class="card">
-<h2>Engagement, last 30 days</h2>
+<h2 id="eng-h">Engagement, last 30 days</h2>
 <div class="tiles" style="margin-bottom:10px">
 <div class="tile"><b id="e-ret">–</b><span>returning visitors</span></div>
 <div class="tile"><b id="e-book">–</b><span>book page views</span></div>
@@ -92,7 +110,16 @@ main{padding:16px}
 </div>
 <div class="eng" id="eng"><div class="msg">Loading…</div></div>
 </div>
+<div class="card">
+<h2 id="amz-h">Amazon clicks by page</h2>
+<div class="eng" id="amz"><div class="msg">Loading…</div></div>
+</div>
+<div class="card">
+<h2>This device</h2>
+<label class="opt"><input type="checkbox" id="nocount"> Don't count my visits or plays on this device (turn this on on your own phone and computer)</label>
+</div>
 <p class="note">Engagement counts are anonymous tallies, nothing about who played. <b>Views</b>: game page opened (once a day per browser). <b>Started</b>: first tap or key press in the game. <b>Finished</b>: the game's end screen appeared. <b>Replays</b>: Play Again pressed. <b>Came back</b>: someone who had played this game on an earlier day played it again (once a day). <b>Next</b>: a related or Up Next game picked from it. <b>Amazon</b>: an Amazon link clicked after playing it. Tap a column to sort.</p>
+<p class="note"><b>Where players come from</b> is where each browser's <b>first</b> visit came from (a YouTube link, a Pinterest pin, Google…), so someone who found you on YouTube and comes back later still counts as YouTube. A visit is one browser on one day. Links you post can carry <b>?s=yt</b>, <b>?s=pin</b>, <b>?s=fb</b>, <b>?s=ig</b> or <b>?s=tt</b> to make sure they're credited. Source counting started on the day this version went live.</p>
 <p class="note">A play is one person opening a game on a given day, so refreshing or replaying the same game that day doesn't add more. Days run on UTC time (they roll over at 7pm Central). New games show a per-day average since they were added, so you can compare them fairly. Tap a game for its daily trend.</p>
 </main>
 <script>
@@ -150,10 +177,44 @@ function render() {
   }));
 }
 
+const RANGE_KEY = { "1": "d1", "7": "d7", "30": "recent", all: "all" };
+const RANGE_TEXT = { "1": "today", "7": "last 7 days", "30": "last 30 days", all: "all time" };
+const SRC_NAMES = { youtube: "YouTube", pinterest: "Pinterest", facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok", x: "X", reddit: "Reddit", google: "Google", bing: "Bing", search: "Other search", sister: "Sister sites", amazon: "Amazon", email: "Email", direct: "Direct", other: "Other" };
+const sumOf = o => Object.values(o || {}).reduce((a, b) => a + b, 0);
+// events for the selected range (older payloads only had all + recent)
+const RG = e => { const x = data.events && data.events[e]; if (!x) return {}; return x[RANGE_KEY[range]] || (range === "all" ? x.all : x.recent) || {}; };
+
+function renderSources() {
+  if (!data.events || !data.events.visit) { $("src").innerHTML = '<div class="msg">Source counting starts once this version is live.</div>'; return; }
+  const V = RG("visit"), Ret = RG("return_src"), P = RG("play_src"), Am = RG("amazon_src");
+  $("t-visits").textContent = fmt(sumOf(V));
+  $("t-visits-l").textContent = range === "1" ? "visits today" : range === "all" ? "visits all time" : `visits, ${RANGE_TEXT[range]}`;
+  $("t-ret").textContent = fmt(sumOf(Ret));
+  $("t-ppv").textContent = sumOf(V) ? (sumOf(P) / sumOf(V)).toFixed(1) : "–";
+  $("src-h").textContent = `Where players come from, ${RANGE_TEXT[range]}`;
+  const rows = Object.keys(SRC_NAMES).map(k => ({ k, v: V[k] || 0, r: Ret[k] || 0, p: P[k] || 0, a: Am[k] || 0 }))
+    .filter(x => x.v || x.p || x.a || x.r).sort((a, b) => b.v - a.v || b.p - a.p);
+  if (!rows.length) { $("src").innerHTML = '<div class="msg">No visits counted for this range yet.</div>'; return; }
+  const cell = n => `<td${n ? "" : ' class="z"'}>${fmt(n)}</td>`;
+  $("src").innerHTML = `<table><thead><tr><th>Source</th><th>Visits</th><th>Returning</th><th>Plays</th><th>Plays / visit</th><th>Amazon</th></tr></thead><tbody>` +
+    rows.map(x => `<tr><td>${SRC_NAMES[x.k]}</td>${cell(x.v)}${cell(x.r)}${cell(x.p)}<td>${x.v ? (x.p / x.v).toFixed(1) : "–"}</td>${cell(x.a)}</tr>`).join("") + "</tbody></table>";
+}
+
+function renderAmazon() {
+  const A = RG("amazon");
+  $("amz-h").textContent = `Amazon clicks by page, ${RANGE_TEXT[range]}`;
+  const name = k => (byslug[k] && byslug[k].name) || ({ home: "Home page", _site: "Site", other: "Other pages", game: "Game pages", book: "Book pages", play: "Play pages" })[k] || k.replace(/-/g, " ");
+  const rows = Object.entries(A).filter(([, n]) => n).sort((a, b) => b[1] - a[1]);
+  if (!rows.length) { $("amz").innerHTML = '<div class="msg">No Amazon clicks for this range yet.</div>'; return; }
+  $("amz").innerHTML = `<table><thead><tr><th>Page</th><th>Clicks</th></tr></thead><tbody>` +
+    rows.map(([k, n]) => `<tr><td>${name(k)}</td><td>${fmt(n)}</td></tr>`).join("") + "</tbody></table>";
+}
+
 let engSort = "repeat";
 function renderEng() {
   const ev = data.events; if (!ev) { $("eng").innerHTML = '<div class="msg">Engagement counting starts once this version is live.</div>'; return; }
-  const R = e => (ev[e] && ev[e].recent) || {}, sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+  const R = RG, sum = sumOf;
+  $("eng-h").textContent = `Engagement, ${RANGE_TEXT[range]}`;
   $("e-ret").textContent = fmt(R("return")._site || 0);
   $("e-book").textContent = fmt(sum(R("book_view")));
   $("e-amz").textContent = fmt(sum(R("amazon")));
@@ -171,20 +232,27 @@ document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click
   document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x === b));
   range = b.dataset.r;
   try { localStorage.setItem("bda.stats.range", range); } catch (e) {}
-  if (data) render();
+  if (data) { render(); renderEng(); renderSources(); renderAmazon(); }
 }));
 try {
   const saved = localStorage.getItem("bda.stats.range");
   if (saved) { range = saved; document.querySelectorAll(".tabs button").forEach(x => x.classList.toggle("on", x.dataset.r === saved)); }
 } catch (e) {}
 
+const box = $("nocount");
+try { box.checked = localStorage.getItem("arc-nocount") === "1"; } catch (e) { box.disabled = true; }
+box.addEventListener("change", () => { try { box.checked ? localStorage.setItem("arc-nocount", "1") : localStorage.removeItem("arc-nocount"); } catch (e) {} });
+
 fetch("/api/stats", {cache: "no-store"}).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(d => {
   data = d;
   $("updated").textContent = "Updated " + new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}) + " · pull down to refresh";
   bars($("daily"), d.days.map(x => x.total), true);
-  $("ax0").textContent = short(d.days[0].date);
+  bars($("dailyv"), d.days.map(x => x.visits || 0), true);
+  $("ax0").textContent = $("ax1").textContent = short(d.days[0].date);
   render();
   renderEng();
+  renderSources();
+  renderAmazon();
 }).catch(e => {
   $("updated").textContent = "Couldn't load stats";
   $("list").innerHTML = `<div class="msg">${e === 503 ? "The play counter isn't connected. In Vercel, add Storage → Upstash Redis to this project." : "Couldn't reach the stats right now. Try again in a minute."}</div>`;

@@ -3,14 +3,18 @@
 // Events (sent by src/arcade.js): view (game page, once a day per browser), start, complete, restart, repeat (played this
 // game on an earlier day), related (clicked a related game), twin (clicked through to the sister site's version),
 // book_view, amazon (Amazon link clicked on this page), amazon_via (Amazon clicked after playing this game), return (_site).
-import { ready, pipeline, RECENT_DAYS, EVENTS, evAll, evDay } from "./_redis.js";
+// Source events (visit, return_src, play_src, amazon_src) are counted under the first-visit source (youtube, pinterest…).
+import { ready, pipeline, RECENT_DAYS, EVENTS, evAll, evDay, SOURCES, SOURCE_EVENTS } from "./_redis.js";
 import { SLUGS, PAGES } from "./_slugs.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
-  const e = String(req.query.e || ""), g = String(req.query.g || "");
+  const e = String(req.query.e || "");
+  let g = String(req.query.g || "");
   if (!EVENTS.includes(e)) return res.status(400).json({ error: "unknown event" });
-  if (!SLUGS.includes(g) && !PAGES.includes(g)) return res.status(400).json({ error: "unknown page" });
+  if (SOURCE_EVENTS.includes(e)) {
+    if (!SOURCES.includes(g)) g = "other"; // odd utm_source tags are counted as "other"
+  } else if (!SLUGS.includes(g) && !PAGES.includes(g)) return res.status(400).json({ error: "unknown page" });
   if (!ready) return res.status(503).json({ error: "counter not connected" });
   const day = evDay(e, new Date());
   try {
