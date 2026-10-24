@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://www.sketchpadarcade.com/</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/coloring-book-2</loc><image:image><image:loc>https://www.sketchpadarcade.com/book2/cover.jpg</image:loc></image:image></url>
-  <url><loc>https://www.sketchpadarcade.com/coloring-book</loc><image:image><image:loc>https://www.sketchpadarcade.com/book/cover.jpg</image:loc></image:image></url>
   <url><loc>https://www.sketchpadarcade.com/about</loc></url>
   <url><loc>https://www.sketchpadarcade.com/news</loc></url>
   <url><loc>https://www.sketchpadarcade.com/contact</loc></url>

@@ -454,7 +454,7 @@ def home(full=True):
   }}));
 }})();
 </script>'''
-    return page(f'{SITE["name"]}: free family-friendly games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js(), arc={"page": "home"})
+    return page(f'{SITE["name"]}: free hand-drawn browser games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js(), arc={"page": "home"})
 
 GAME_LINK_JS = """<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/SLUG?game='+m[1])})();</script>"""
 
@@ -538,9 +538,9 @@ def home_outro():
     sis = SITE.get("sister", {})
     return f"""<section class="prose homeabout">
 <h2>What is {E(SITE["name"])}?</h2>
-<p>{E(SITE["name"])} is a collection of {n} free, original browser games drawn to look like a page from a kid's sketchbook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
+<p>{E(SITE["name"])} is a collection of {n} free, original browser games hand-drawn in pencil like the back pages of a notebook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
 <p>The games fall into {len(genres)} groups: {", ".join(E(x) for x in genres)}. Arcade games are the quick ones about timing and reflexes, puzzle games are about thinking a few moves ahead, and word games are about spelling, guessing and sorting. Each game has its own page with a short guide on how to play, the controls, a few tips and a note on how it was made, so you can see what a game is like before you press play.</p>
-<p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own. We are a family studio, and the first question about every game is whether we would want our own kids playing it: no violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
+<p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own: sudoku, minesweeper, code-breaking and two-player games you play with a friend by text. The first question about every game is whether we would keep playing it after the first five minutes, and every game stays clean: no gore, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
 <h2>Latest from the studio</h2>
 <ul class="newslist">{news}</ul>
 <p><a href="news.html">All news and updates</a></p>
@@ -551,24 +551,24 @@ def about():
     sis = SITE.get("sister", {})
     body = f"""<div class="wrap prose">
 <h1>About {E(SITE["name"])}</h1>
-<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn to look like a page from a kid's sketchbook: dark pencil outlines on paper, with bright coloured pencil inside. They are built to be quick to pick up, pleasant to look at and clean enough for the whole family. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
+<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn like a doodle in the back of a notebook: dark pencil outlines on paper, with coloured pencil inside. They are built for a five-minute break between classes or a long evening with a puzzle, and to be pleasant to look at while you do it. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
 <h2>Who makes it</h2>
-<p>{E(SITE["name"])} is run by a dad of four who has worked as a graphic designer for twenty years and makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if a ten-year-old had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
+<p>{E(SITE["name"])} is run by a graphic designer of twenty years who makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if someone had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
 <h2>What you can expect</h2>
 <ul><li>Games that run in your browser on a phone, tablet or computer, with nothing to install.</li>
 <li>No accounts or sign-ups. Your progress and best scores are saved on your own device.</li>
-<li>No violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers.</li>
+<li>Clean games: no gore, no gambling mechanics and no chat with strangers.</li>
 <li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
 <li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
 <li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
 <h2>How a game gets here</h2>
-<p>New games start on a private preview where we play them, usually with the kids, for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
+<p>New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
 <h2>Ads</h2>
-<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never inside the games themselves and never ads that would be out of place on a family site. Our <a href="privacy.html">privacy policy</a> explains what that means for you.</p>
+<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never while you are in the middle of a game. Our <a href="privacy.html">privacy policy</a> explains what that means for you.</p>
 <h2>Contact</h2>
 <p>{E(SITE["contact_text"])} There is more on the <a href="contact.html">contact page</a>.</p>
 </div>"""
-    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}: who makes these free, family-friendly sketchbook games, the rules every game follows and how to get in touch.', body, "about", canonical="about")
+    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}: who makes these free hand-drawn sketchbook games, the rules every game follows and how to get in touch.', body, "about", canonical="about")
 
 def contact():
     email = SITE.get("contact_email", "hello@sketchpadarcade.com")
@@ -579,15 +579,15 @@ def contact():
 <h2>Found a bug?</h2>
 <p>Tell us which game, what device and browser you were using, and what happened. A screenshot or a short screen recording helps a lot. We usually fix game-breaking bugs within a few days.</p>
 <h2>Have an idea for a game?</h2>
-<p>We would love to hear it. Most of the games on the site started as a one-line idea, and some of the best ones were suggested by players and by our own kids.</p>
-<h2>Parents and teachers</h2>
-<p>If you have a question about whether a game is suitable for your child or classroom, or you spotted something you think should not be on a family site, please let us know and we will look into it right away.</p>
+<p>We would love to hear it. Most of the games on the site started as a one-line idea, and some of the best ones were suggested by players.</p>
+<h2>Something not right?</h2>
+<p>If you spotted something on the site you think should not be here, please let us know and we will look into it right away.</p>
 <h2>Business and press</h2>
 <p>For partnership, licensing, press or advertising questions, use the same address with a short note about what you have in mind. {E(SITE["name"])} is owned by {E(SITE["owner"])}, {E(SITE.get("location", "Pensacola, Florida"))}.</p>
 <h2>Elsewhere</h2>
 <p>The painted, full-colour originals of most of these games live at <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and we post short gameplay clips on YouTube at <a href="https://www.youtube.com/@BeachDayArcade" rel="noopener">@BeachDayArcade</a>.</p>
 </div>"""
-    return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas, parent questions or business inquiries.', body, "contact", canonical="contact")
+    return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas or business inquiries.', body, "contact", canonical="contact")
 
 def terms():
     body = f"""<div class="wrap prose">
@@ -651,6 +651,9 @@ def not_found():
 </div>"""
     return page(f'Page not found | {SITE["name"]}', "That page could not be found.", body, extra_head='<meta name="robots" content="noindex">\n')
 
+AMAZON_PRIVACY = f"""<h2>Amazon Associates</h2>
+<p>{E(SITE["name"])} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Links to our books on Amazon are affiliate links: as an Amazon Associate I earn from qualifying purchases. Amazon may set cookies when you follow one of these links.</p>"""
+
 def privacy():
     body = f'''<div class="wrap prose">
 <h1>Privacy policy</h1>
@@ -662,10 +665,9 @@ def privacy():
 <p>You do not need an account to play, and we do not ask for your name, email address or other personal details to use the games.</p>
 <h2>Advertising and analytics</h2>
 <p>We may show ads provided by Google AdSense or by game-platform partners to keep the games free. These providers may use cookies or similar technologies to serve and measure ads. Google's use of advertising cookies enables it and its partners to serve ads based on visits to this and other sites. You can manage personalized advertising at <a href="https://www.google.com/settings/ads" rel="noopener">google.com/settings/ads</a>, and you can learn how Google uses information at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>. To see which games people enjoy, we count activity such as a game page being opened or a game being started, finished or replayed, and links to our books being followed. These are anonymous totals per game: they contain no name, account, cookie or ID, and are not linked to you or your device. We also use Vercel Web Analytics, which counts page visits without cookies.</p>
-<h2>Amazon Associates</h2>
-<p>{E(SITE["name"])} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Links to our coloring book on Amazon are affiliate links: as an Amazon Associate I earn from qualifying purchases. Amazon may set cookies when you follow one of these links.</p>
+{AMAZON_PRIVACY if BOOKS else ""}
 <h2>Children</h2>
-<p>Our games are made for general audiences, including families. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us and we will delete it.</p>
+<p>{E(SITE["name"])} is made for a general audience of teens and adults and is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us and we will delete it. For younger players, our sister site <a href="{E(SITE.get("sister", {}).get("url", "#"))}" rel="noopener">{E(SITE.get("sister", {}).get("name", "Beach Day Arcade"))}</a> is made for families.</p>
 <h2>Changes</h2>
 <p>We may update this policy from time to time. The date at the top shows when it last changed.</p>
 <h2>Contact</h2>
@@ -850,7 +852,7 @@ def share_attrs(url, title, text):
     return f'data-share-url="{E(url)}" data-share-title="{E(title)}" data-share-text="{E(text)}"'
 
 def site_share():
-    return share_attrs(SITE.get('url', '').rstrip('/') + '/', SITE['name'], f'{SITE["name"]}: free, family-friendly games drawn like a kid\'s sketchbook, right in your browser.')
+    return share_attrs(SITE.get('url', '').rstrip('/') + '/', SITE['name'], f'{SITE["name"]}: free hand-drawn pencil-and-paper games, right in your browser.')
 
 def game_share(g):
     base = SITE.get("url", "").rstrip("/")

@@ -5,23 +5,24 @@
     "location": "Pensacola, Florida",
     "url": "https://www.sketchpadarcade.com",
     "headline": "Games drawn in a sketchbook",
-    "intro": "Free puzzle and arcade games that look like a kid drew them in pencil. No downloads, no sign-ups, and nothing you wouldn't want your kids to see.",
-    "description": "Free, family-friendly browser games drawn in a hand-sketched pencil style. Play on a phone, tablet or computer with no downloads and no sign-ups.",
+    "intro": "Free pencil-and-paper games for the back of your notebook: sudoku, minesweeper, word puzzles, quick arcade runs and two-player games you play with a friend by text. No downloads, no sign-ups.",
+    "description": "Free hand-drawn browser games: sudoku, minesweeper, 2048, word puzzles and two-player games you can play with a friend by text. Sketched in pencil, played on any phone or laptop, no sign-ups.",
     "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
     "contact_email": "hello@sketchpadarcade.com",
     "policy_date": "October 23, 2026",
     "terms_date": "October 15, 2026",
     "paper": "grid",
     "picks": [
+      "doodle-doku",
+      "blot-sweeper",
+      "crayon-code",
+      "2048-drop",
+      "four-in-a-frame",
+      "sketch-with-friends",
+      "connect-sketch",
+      "note-quest",
       "paper-plane-dash",
-      "margin-merge",
-      "sketch-sprint",
-      "doodle-drop",
-      "pencil-putt",
-      "pencil-plunk",
-      "letter-links",
-      "sidewalk-hop",
-      "scribble-slice"
+      "margin-merge"
     ],
     "also": {
       "text": "Like these in full colour? The painted originals live at Beach Day Arcade.",
@@ -33,54 +34,6 @@
       "short": "Beach Day",
       "url": "https://www.beachdayarcade.com"
     },
-    "books": [
-      {
-        "slug": "coloring-book-2",
-        "dir": "book2",
-        "short": "Coloring Book",
-        "title": "Sketchpad Arcade Coloring Book",
-        "url": "https://www.amazon.com/dp/B0HNXS3LCR?linkCode=ml1&tag=restlessfaith-20&linkId=7f08d1b8373538fdeab2ecd550f8e60a&gaOptInStatus=true",
-        "pitch": "45 more game illustrations, from caped kids to cookie-loving doodles, with black outlines and room for your own colors.",
-        "facts": [
-          "45 different game illustrations from Sketchpad Arcade",
-          "Black outlines with room for your own colors",
-          "Single-sided designs with blank backs, so markers won't spoil the next page",
-          "Large 8.5 × 11-inch pages",
-          "96 pages",
-          "For kids ages 6 to 12 and anyone who loves doodles"
-        ],
-        "samples": [
-          "shoe-string-swing",
-          "chibi-chib",
-          "eraser-gulp"
-        ]
-      },
-      {
-        "title": "Sketchpad Arcade Coloring Book Jr.",
-        "url": "https://www.amazon.com/dp/B0HNMJD1JT?&linkCode=ll2&tag=restlessfaith-20&linkId=be37a1e69c49f3c92631bc62ce335bd0&language=en_US&gaOptInStatus=true&ref_=as_li_ss_tl",
-        "pitch": "46 coloring designs of pencil pals, doodle monsters, paper planes and space adventures from the games, ready for your crayons.",
-        "facts": [
-          "46 coloring designs inspired by Sketchpad Arcade",
-          "A blank back behind every design, so markers won't spoil the next page",
-          "Large 8.5 × 11-inch pages with room to color",
-          "Simple character pictures and more detailed scenes",
-          "A game index and a color-testing page",
-          "For kids ages 6 to 12 and anyone who loves doodles"
-        ],
-        "slug": "coloring-book",
-        "dir": "book",
-        "short": "Coloring Book Jr.",
-        "isbn": "9798163771042",
-        "samples": [
-          "paper-plane-dash",
-          "sidewalk-hop",
-          "cookie-drop",
-          "word-workshop",
-          "2048-drop",
-          "pencil-patrol"
-        ]
-      }
-    ],
     "online": {
       "url": "https://wzckjgrrjrborkojymbp.supabase.co",
       "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l",
@@ -95,7 +48,7 @@
       "added": "2026-10-22",
       "online": true,
       "tagline": "Draw a word for your friend, then guess theirs.",
-      "meta": "Play Guess My Doodle free online: a family-friendly draw-and-guess game. Draw a word, send it to a friend by text, and guess their doodles. Score points together. No sign-ups.",
+      "meta": "Play Guess My Doodle free online: a draw-and-guess game for your group chat. Draw a word, send it to a friend by text, and guess their doodles. Score points together. No sign-ups.",
       "lead": "A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.",
       "facts": [
         "Versus",
@@ -123,7 +76,7 @@
         "Guessing? Count the blanks, then try the letters that look most likely."
       ],
       "about": [
-        "Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is kid-friendly and easy to draw, from cat and pizza to volcano and lighthouse.",
+        "Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is quick to draw and fun to get wrong, from cat and pizza to volcano and lighthouse.",
         "There are no accounts, names or chat. Only the friend you send the link to can see your drawings."
       ]
     },
@@ -134,14 +87,14 @@
       "added": "2026-10-22",
       "online": true,
       "tagline": "Make words on the board with your letter tiles. Highest score wins.",
-      "meta": "Play Sketch with Friends free online: a family-friendly word tile game. Build words on the board, play a friend by text or on one phone, or take on the bot. Kid-safe word list.",
+      "meta": "Play Sketch with Friends free online: a word tile game. Build words on the board, play a friend by text or on one phone, or take on the bot. Clean word list.",
       "lead": "A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.",
       "facts": [
         "Word",
         "Versus",
         "Invite a friend by text and take turns whenever",
         "Easy, Medium and Hard bots",
-        "Kid-safe word list"
+        "Clean word list"
       ],
       "how": [
         "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
@@ -164,7 +117,7 @@
       ],
       "about": [
         "Sketch with Friends is our take on the classic crossword tile game, drawn as paper tiles on a sketchbook page.",
-        "The word list is checked to keep out rude words, so it's safe for the whole family."
+        "The word list is checked to keep out rude words, so it's safe to play anywhere, even in class."
       ]
     },
     {
@@ -250,7 +203,7 @@
       "genre": "Puzzle",
       "added": "2026-10-21",
       "tagline": "Uncover every clean square without touching an ink blot.",
-      "meta": "Play Blot Sweeper free online: a family-friendly minesweeper with ink blots instead of bombs, drawn on a sketchbook page. Easy, Medium and Hard. Works on phone and computer.",
+      "meta": "Play Blot Sweeper free online: a hand-drawn minesweeper with ink blots instead of bombs, drawn on a sketchbook page. Easy, Medium and Hard. Works on phone and computer.",
       "lead": "The classic number-logic puzzle, with ink blots hiding under the paper instead of anything scary. Tap a square to uncover it. Numbers tell you how many blots are touching that square, so you can work out where they are, flag them, and uncover every clean square to win.",
       "facts": [
         "Puzzle",
@@ -278,7 +231,7 @@
         "Look for the 1-2-1 pattern along an edge: the blots sit under the two 1s."
       ],
       "about": [
-        "Blot Sweeper is our take on minesweeper, the logic puzzle that came with computers for years. We swapped the bombs for ink blots so it's friendly for younger players.",
+        "Blot Sweeper is our take on minesweeper, the logic puzzle that came with computers for years. We swapped the bombs for ink blots, because a notebook doesn't explode, it just gets messy.",
         "Every page is random, and your first tap is always safe, so you never lose on a lucky guess."
       ]
     },
@@ -288,7 +241,7 @@
       "genre": "Word",
       "added": "2026-10-21",
       "tagline": "Guess the word before the eraser rubs out the doodle.",
-      "meta": "Play Save the Doodle free online: a family-friendly hangman word game. Guess letters before the eraser rubs out the pencil doodle. Easy, Medium and Hard word lists with clues.",
+      "meta": "Play Save the Doodle free online: a hangman word game. Guess letters before the eraser rubs out the pencil doodle. Easy, Medium and Hard word lists with clues.",
       "lead": "A friendly spin on hangman. A hidden word is shown as blanks with a clue, like Animal or Food. Guess one letter at a time. Every wrong letter makes the eraser rub out part of the little pencil doodle, so fill in the word before it's gone!",
       "facts": [
         "Word",
@@ -317,7 +270,7 @@
       ],
       "about": [
         "Save the Doodle is hangman without the hanging. Instead of drawing a scary picture, the eraser rubs out a happy doodle, and your job is to save it.",
-        "The word lists are written for kids, grouped into clues like Animal, Food and At school, so younger players have a way in."
+        "The words are grouped into clues like Animal, Food and At school, so every guess starts with a hint."
       ]
     },
     {
@@ -356,7 +309,7 @@
       ],
       "about": [
         "Doodle Doku is sudoku with a sketchbook look. Every puzzle is made fresh when you start and checked to have exactly one answer.",
-        "We count mistakes but never end the game for them, so it's a good way for kids to learn sudoku at their own pace."
+        "We count mistakes but never end the game for them, so you can learn a hard grid at your own pace or just play it relaxed."
       ]
     },
     {
@@ -365,7 +318,7 @@
       "genre": "Puzzle",
       "added": "2026-10-21",
       "tagline": "Crack the secret row of crayon colours.",
-      "meta": "Play Crayon Code free online: a family-friendly code-breaking puzzle with crayons, like Mastermind. Guess the secret colours using dot clues. Easy, Medium and Hard levels.",
+      "meta": "Play Crayon Code free online: a code-breaking puzzle with crayons, like Mastermind. Guess the secret colours using dot clues. Easy, Medium and Hard levels.",
       "lead": "A code-breaking puzzle with crayons. There's a secret row of colours and you have to work it out. After each guess, dots tell you how close you are: a filled dot for every crayon in the right spot, and an open dot for every right colour in the wrong spot.",
       "facts": [
         "Puzzle",
@@ -430,7 +383,7 @@
         "Make two lines at once (a fork) and the other player can only block one."
       ],
       "about": [
-        "Tic-Tac-Doodle is tic-tac-toe, the game kids have drawn in the margins of notebooks for generations, redrawn in coloured pencil.",
+        "Tic-Tac-Doodle is tic-tac-toe, the game everyone has drawn in the margins of a notebook during a long lecture, redrawn in coloured pencil.",
         "It's a gentle first game against a computer for little ones on Easy, and a real puzzle on Hard, where the bot plays perfectly and the best you can do is a draw."
       ],
       "online": true
@@ -842,8 +795,8 @@
       "added": "2026-10-18",
       "twin": "castle-keeper",
       "tagline": "Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page.",
-      "meta": "Play Doodle Keeper free online. Guess hidden words letter by letter from a clue, and keep your pencil-drawn doodle house on the page as a cheeky eraser rubs out a piece with every miss. Over 900 family-friendly words. Works on phone and computer.",
-      "lead": "A letter-guessing word game drawn in a kid's sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.",
+      "meta": "Play Doodle Keeper free online. Guess hidden words letter by letter from a clue, and keep your pencil-drawn doodle house on the page as a cheeky eraser rubs out a piece with every miss. Over 900 words. Works on phone and computer.",
+      "lead": "A letter-guessing word game drawn in a sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.",
       "facts": [
         "Word game",
         "Endless levels, one word each",
@@ -871,7 +824,7 @@
         "Long words and phrases have more letters to find, so they are often easier than short ones."
       ],
       "about": [
-        "Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 family-friendly answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.",
+        "Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.",
         "Instead of a timer, your doodle house is the countdown. Each wrong guess brings in a cheeky eraser that rubs one piece into a little pile of crumbs, and later levels start with a smaller doodle. Perfect words build a streak that multiplies your bonus, and three pencils give you a few second chances before the page goes blank."
       ]
     },
@@ -912,7 +865,7 @@
       ],
       "about": [
         "Letter Scramble is a timed word search on a four-by-four tray of paper letter tiles, each one a little torn notebook square with a pencil letter on it. Swipe across touching tiles, including diagonals, to spell words of three letters or more. Longer words are worth far more than short ones, and any word through the gold-star sticker tile scores double.",
-        "Each page gives you 80 seconds to hit a target score, and the target climbs with every page you turn. The word list is family-friendly and checked for real words. It is a quick, repeatable game that rewards vocabulary and a good eye for endings like S, ED and ING."
+        "Each page gives you 80 seconds to hit a target score, and the target climbs with every page you turn. The word list is checked for real words. It is a quick, repeatable game that rewards vocabulary and a good eye for endings like S, ED and ING."
       ]
     },
     {
@@ -1090,7 +1043,7 @@
         "drop-swap"
       ],
       "meta": "Play 2048 DROP free online. Drop numbered balls into a pencil-sketched jar on a school desk, combine matching numbers and work your way toward 2048 before the jar fills. Works on phone and computer.",
-      "lead": "Number merging, drawn by hand. A pencil-sketched glass jar sits on a school desk among rulers and crumpled paper, and every numbered ball is coloured in like a page from a kid's sketchbook. Slide the dropper, let a ball fall, and when two of the same number touch they squash into one worth double. Chain the merges, keep the pile under the dashed red line at the neck, and see how far past 2048 you can go.",
+      "lead": "Number merging, drawn by hand. A pencil-sketched glass jar sits on a school desk among rulers and crumpled paper, and every numbered ball is coloured in like a doodle in the back of a notebook. Slide the dropper, let a ball fall, and when two of the same number touch they squash into one worth double. Chain the merges, keep the pile under the dashed red line at the neck, and see how far past 2048 you can go.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -1120,7 +1073,7 @@
       ],
       "about": [
         "2048 DROP is the sketchbook version of a number-merging physics game: numbered balls fall into a jar drawn on a school desk, roll into place and squash together when two of the same value touch. Every drop shifts the whole pile, so it plays more like stacking than sliding tiles.",
-        "Each ball from 2 to 4096 has its own coloured-pencil shade, so you can read the pile at a glance. Your best score, today's best and lifetime stats stay on your device, with no account needed. The 2048 DROP jar is also one of the pages in the Sketchpad Arcade Coloring Book Jr."
+        "Each ball from 2 to 4096 has its own coloured-pencil shade, so you can read the pile at a glance. Your best score, today's best and lifetime stats stay on your device, with no account needed."
       ]
     },
     {
@@ -1196,8 +1149,8 @@
         "Save your hint for when you're down to your last couple of tries."
       ],
       "about": [
-        "Note Quest is a word-guessing game in the style of the daily word puzzles many families play together, drawn in pencil. Each note hides a secret word; type a guess and the letters light up to show which are right and in place, right but in the wrong spot, or not in the word at all.",
-        "Unlike a once-a-day puzzle, Note Quest keeps going. Words start at four letters and grow to six, and you have a limited supply of tries to spend on wrong guesses. The word list is family-friendly, and all the words are ones you would actually use."
+        "Note Quest is a word-guessing game in the style of the daily word puzzles everyone compares scores on, drawn in pencil. Each note hides a secret word; type a guess and the letters light up to show which are right and in place, right but in the wrong spot, or not in the word at all.",
+        "Unlike a once-a-day puzzle, Note Quest keeps going. Words start at four letters and grow to six, and you have a limited supply of tries to spend on wrong guesses. All the words are ones you would actually use."
       ]
     },
     {
@@ -1236,7 +1189,7 @@
       ],
       "about": [
         "Eraser Gulp is an eat-and-grow arcade game drawn in pencil. You start small enough to gulp the littlest things on the page, and every bite makes you a little bigger, until you can swallow things many times your starting size. Fill the size meter before the clock runs out to move on to a bigger, busier page.",
-        "It is silly in the best way. The moment you finally get big enough for the thing that has been in your way all level is the whole point, and younger players in particular seem to love it. The banner that tells you when a new kind of thing fits is worth watching."
+        "It is silly in the best way. The moment you finally get big enough for the thing that has been in your way all level is the whole point. The banner that tells you when a new kind of thing fits is worth watching."
       ]
     },
     {
@@ -1440,7 +1393,7 @@
       ],
       "about": [
         "Sketch Search is a word search with a theme on every board and a list of words hidden in a grid of letter tiles. Drag from the first letter of a word to the last and it lights up and gets crossed off. Find every word before the timer runs out to move to the next board.",
-        "Boards start small with words running left to right and grow into larger grids with words hidden diagonally and backwards. It is a relaxed game that still gives you a reason to hurry, and the themed lists make it a nice one to play with kids who are learning to spell."
+        "Boards start small with words running left to right and grow into larger grids with words hidden diagonally and backwards. It is a relaxed game that still gives you a reason to hurry, and the themed lists make it a good one to wind down with."
       ]
     },
     {
@@ -1532,7 +1485,7 @@
       "added": "2026-10-08",
       "twin": "seaside-sprint",
       "tagline": "Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide.",
-      "meta": "Play Sketch Sprint free online. A fast endless runner drawn in pencil. Pick Francis, Clare, George, Joan or one of four more kids and race a path that turns sharp corners through downtown, a backyard, the park, a creek and the woods. Swipe to turn, jump gaps, slide under nets and grab gold stars. Works on phone and computer.",
+      "meta": "Play Sketch Sprint free online. A fast endless runner drawn in pencil. Pick Francis, Clare, George, Joan or one of four more runners and race a path that turns sharp corners through downtown, a backyard, the park, a creek and the woods. Swipe to turn, jump gaps, slide under nets and grab gold stars. Works on phone and computer.",
       "lead": "A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.",
       "facts": [
         "Arcade",
@@ -1564,7 +1517,7 @@
         "A magnet pulls stars to you, and a bubble saves you from one bump."
       ],
       "about": [
-        "Sketch Sprint is the game that started Sketchpad Arcade. It began as a request to redraw a runner from our sister site to look like a ten-year-old had sketched it in a notebook, and the result was so much fun that we built a whole site around the idea. It is a fast endless runner with hard 90-degree corners through downtown, the backyard, the park, a creek and the woods.",
+        "Sketch Sprint is the game that started Sketchpad Arcade. It began as a request to redraw a runner from our sister site to look like it had been sketched in the back of a notebook, and the result was so much fun that we built a whole site around the idea. It is a fast endless runner with hard 90-degree corners through downtown, the backyard, the park, a creek and the woods.",
         "Stars carry over between runs and unlock new runners, so there is always something to work toward. Power-ups like the paper plane, magnet, bubble and skateboard change how each run feels, and every 500 meters a new wave arrives, faster and worth more. The eight kids, the scenery and the power-ups are all our own pencil art."
       ]
     },
@@ -1687,7 +1640,7 @@
       ],
       "about": [
         "Draw Brawl is a two-minute backyard arena where you and three computer rivals compete for the same gold stars. You pick Max, Ruby or Leo, scoop stars and carry them home to your own cardboard fort, where they are banked and safe. Get splatted by a rival on the way and you drop what you are carrying.",
-        "Every 25 seconds the sprinklers soak the outer lanes, so the shortest route is not always the safest one. The rivals are tuned to feel like other players rather than a rigged clock, and the kids, the forts and the paint-splat arena are our own pencil art."
+        "Every 25 seconds the sprinklers soak the outer lanes, so the shortest route is not always the safest one. The rivals are tuned to feel like other players rather than a rigged clock, and the characters, the forts and the paint-splat arena are our own pencil art."
       ]
     },
     {
@@ -1763,7 +1716,7 @@
       ],
       "about": [
         "Word Workshop is a letter-wheel crossword game. Each level gives you a handful of letters on a wheel and a small crossword above it; drag across letters to spell words, and the ones in the puzzle drop into place. Any real word you find counts, so extra words still earn points.",
-        "We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device, and the word list is family-friendly."
+        "We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device."
       ]
     },
     {
@@ -1799,7 +1752,7 @@
         "Watch the new-row counter and clear the lowest rows first."
       ],
       "about": [
-        "Bubble Doodle is Sketchpad Arcade's bubble shooter. The dotted aim line shows exactly where your shot will land, including after a bounce off the wall, which makes the game friendly for younger players while still rewarding the tricky bank shots older players like to set up.",
+        "Bubble Doodle is Sketchpad Arcade's bubble shooter. The dotted aim line shows exactly where your shot will land, including after a bounce off the wall, which makes it easy to pick up while still rewarding the tricky bank shots that make it worth playing.",
         "Popping a group of three or more clears it, but the real points come from the bubbles left hanging underneath, which drop away in a cascade. The rows creep down a little at a time, so there is always a reason to plan two or three shots ahead."
       ]
     },
@@ -1811,7 +1764,7 @@
       "twin": "four-by-sea",
       "tagline": "Sort sixteen words into four secret groups of four.",
       "meta": "Play Four in a Frame free online. Sort sixteen word tiles on a corkboard into four secret groups of four. Play a new Daily Puzzle every day, or pick Beginner, Intermediate or Advanced. Works on phone and computer.",
-      "lead": "A word-sorting puzzle for the whole family. Sixteen paper word tiles are pinned to a corkboard, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like fruits and colours, and get sneakier as you go, with words that seem to fit two groups at once.",
+      "lead": "A word-sorting puzzle in the style of the daily connections games. Sixteen paper word tiles are pinned to a corkboard, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like fruits and colours, and get sneakier as you go, with words that seem to fit two groups at once.",
       "facts": [
         "Word",
         "New Daily Puzzle every day",
@@ -1841,7 +1794,7 @@
       ],
       "about": [
         "Four in a Frame is a word-grouping puzzle. Sixteen words hide four groups of four; your job is to find the groups. Some are obvious, like animals or colours, and some are sneaky, with words that seem to belong in two groups at once or groups that are really word puzzles in disguise.",
-        "We wrote it for the whole family to play together on one screen, calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give younger players a way in."
+        "It works on your own or passed around a table with friends calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give you a way in."
       ]
     },
     {
@@ -2178,7 +2131,7 @@
       ],
       "about": [
         "Word Scribble mixes two things we love, merge games and word games, in a single pencil box. Letters fall in colour-coded groups that each spell a hidden word, and matching letters that touch merge into a bigger letter worth more points. You clear space by swiping across nearby letters to spell words.",
-        "The tension comes from the fill line. Spell enough words and the level clears; let the box fill and the game ends. It rewards both vocabulary and a sharp eye for where the next letter will land, and the word list is family-friendly."
+        "The tension comes from the fill line. Spell enough words and the level clears; let the box fill and the game ends. It rewards both vocabulary and a sharp eye for where the next letter will land."
       ]
     }
   ]
