@@ -842,7 +842,7 @@ def count_js(slug, on_load):
     """Counts a play: once per game per browser per day, so refreshes don't inflate the ranking.
     on_load=True counts when the play page opens; False counts clicks on [data-count] links
     (for games hosted on their own domain, like Gull Run: Evo)."""
-    fn = ("(()=>{const s=%s;function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);"
+    fn = ("(()=>{const s=%s;function count(){if(window.name==='bda-reel')return;try{if(localStorage.getItem('arc-nocount')==='1')return;const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);"
           "if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}"
           "try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}" % json.dumps(slug))
     fn += "count();" if on_load else "document.querySelectorAll('[data-count]').forEach(a=>a.addEventListener('click',count));"

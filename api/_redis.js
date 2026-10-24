@@ -28,6 +28,11 @@ export const dayKey = (d) => `${PREFIX}plays:day:${d.toISOString().slice(0, 10)}
 export const RECENT_DAYS = 30;
 
 // Engagement events (api/event.js), anonymous tallies per game or page: <prefix>ev:<event>:all and <prefix>ev:<event>:day:<date>
-export const EVENTS = ["view", "start", "complete", "restart", "repeat", "related", "twin", "book_view", "amazon", "amazon_via", "return"];
+export const EVENTS = ["view", "start", "complete", "restart", "repeat", "related", "twin", "book_view", "amazon", "amazon_via", "return",
+  "visit", "return_src", "play_src", "amazon_src"];
+
+// Source events are counted under where the browser's first visit came from (src/arcade.js), not under a game.
+export const SOURCES = ["youtube", "pinterest", "facebook", "instagram", "tiktok", "x", "reddit", "google", "bing", "search", "sister", "amazon", "email", "direct", "other"];
+export const SOURCE_EVENTS = ["visit", "return_src", "play_src", "amazon_src"];
 export const evAll = (e) => `${PREFIX}ev:${e}:all`;
 export const evDay = (e, d) => `${PREFIX}ev:${e}:day:${d.toISOString().slice(0, 10)}`;

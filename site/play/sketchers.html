@@ -164,7 +164,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 .arc-go:focus-visible,.arc-more:focus-visible,.arc-pause:focus-visible,.arc-up:focus-visible,.arc-bk:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
 </style>
 <script>window.ARC={"page": "play", "slug": "sketchers", "name": "Sketchers", "portrait": false, "next": [{"slug": "connect-sketch", "name": "Connect Sketch"}, {"slug": "guess-my-doodle", "name": "Guess My Doodle"}, {"slug": "tic-tac-doodle", "name": "Tic-Tac-Doodle"}], "book": null};</script>
-<script defer src="/arcade.js?v=35bbae47"></script>
+<script defer src="/arcade.js?v=4368f950"></script>
 </head>
 <body>
 <div class="wrap">
@@ -539,7 +539,7 @@ addEventListener('load',scan);setTimeout(scan,600)})();
 (()=>{if(window.name==='bda-reel')return;let done=false;function load(){if(done)return;done=true;const s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599';document.head.appendChild(s)}const o=new MutationObserver(()=>{if(document.querySelector('.sa-endhome')){o.disconnect();load()}});o.observe(document.body,{subtree:true,childList:true});})();
 </script>
 <script>window.BDA_GAME={"slug": "sketchers", "name": "Sketchers", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/sketchers", "short": "sketchpadarcade.com/sketchers"};</script>
-<script>(()=>{const s="sketchers";function count(){if(window.name==='bda-reel')return;try{const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
+<script>(()=>{const s="sketchers";function count(){if(window.name==='bda-reel')return;try{if(localStorage.getItem('arc-nocount')==='1')return;const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>
 <script>
 (()=>{
   let sheet,toastEl,tt;

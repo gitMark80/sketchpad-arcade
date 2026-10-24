@@ -103,6 +103,8 @@ Sketch with Friends checks words against `src/assets/sketch-with-friends/words.t
 - **Portrait-only games**: `"portrait": true` in `games.json` pauses the game with a "turn your phone upright" note when a phone is held sideways.
 - **Sister-site links**: `"twin"` in `games.json` is the same game's slug on Beach Day Arcade; the game page links to it.
 - **Engagement counts**: anonymous tallies per game and day (`POST /api/event`, stored next to the play counts): page views, starts, finishes, replays, repeat players, related-game clicks, sister-site clicks, book page views and Amazon clicks. No IDs, cookies or IP addresses. They show in the Engagement table on `/stats`.
+- **Where players come from**: each browser remembers the source of its first visit (`arc-src`: youtube, pinterest, google, direct…, from `?s=yt|pin|fb|ig|tt`, `utm_source` or the referrer). `/stats` shows visits, returning visits, plays, plays per visit and Amazon clicks per source (events `visit`, `return_src`, `play_src`, `amazon_src`, keyed by source). Engagement tables follow the Today / 7 days / 30 days / All time tabs.
+- **Don't count me**: the switch at the bottom of `/stats` sets `arc-nocount` on that device; `arcade.js` and the play counter then skip it.
 - **Card thumbnails**: `build.py` makes 400px WebP copies of the covers in `src/img/t/` (needs Pillow; they are committed so builds without it still work).
 - **Share kit**: `/share-kit` (unlisted) has every game's Facebook, Pinterest and YouTube text ready to copy, and `/social.json` has the same data. Nothing is posted automatically.
 - Internal links use clean URLs (`/cookie-drop`, not `cookie-drop.html`), so Vercel serves them without a redirect.

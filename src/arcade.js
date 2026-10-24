@@ -3,7 +3,9 @@
      ARC = {page: "home"|"game"|"play"|"book"|"other", slug, name, site, next: [{slug,name}], book: {slug,title}|null, portrait: bool}
    What it does, with no accounts and nothing personal leaving the device:
    - Counts events for the /stats page: anonymous tallies per game, per day (POST /api/event). The only things stored
-     on the device are dates and game slugs in localStorage, used so a refresh or a second visit the same day isn't counted twice.
+     on the device are dates and game slugs in localStorage, used so a refresh or a second visit the same day isn't counted twice,
+     and the coarse source of the browser's first visit ("youtube", "pinterest", "google"…) so /stats can show where players
+     come from. Nothing is counted inside Reel Studio, or on a device where "Don't count my visits" was switched on at /stats.
    - Remembers recently played games on this device and shows them on the home page (Keep Playing).
    - On play pages: an Up Next link (and, where the site has one, a coloring-book link) under the game's own end screen,
      a Pause button, auto-pause when the player switches apps, and a "turn your phone upright" note for portrait-only games
@@ -13,23 +15,54 @@
   const get = (k, d) => { try { const v = ls.getItem(k); return v == null ? d : JSON.parse(v) } catch (e) { return d } };
   const set = (k, v) => { try { ls.setItem(k, JSON.stringify(v)) } catch (e) { } };
   const reel = window.name === 'bda-reel';
+  let mute = false; try { mute = ls.getItem('arc-nocount') === '1' } catch (e) { }
+
+  /* ---------- where this browser's first visit came from ---------- */
+  // ?s=yt (or utm_source) on our own links wins; otherwise the referrer. Kept on the device as "arc-src".
+  const TAGS = { yt: 'youtube', fb: 'facebook', ig: 'instagram', tt: 'tiktok', pin: 'pinterest', em: 'email', x: 'x' };
+  function sourceNow() {
+    let p = null; try { p = new URLSearchParams(location.search) } catch (e) { }
+    let t = p && (p.get('s') || p.get('utm_source'));
+    if (t) { t = String(t).toLowerCase().slice(0, 24); return TAGS[t] || t.replace(/[^a-z0-9_-]/g, '') || 'other' }
+    let h = ''; try { h = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : '' } catch (e) { }
+    if (!h || h === location.hostname) return 'direct';
+    const is = re => re.test(h);
+    if (is(/(^|\.)(youtube\.com|youtu\.be)$/)) return 'youtube';
+    if (is(/(^|\.)(pinterest\.[a-z.]+|pin\.it)$/)) return 'pinterest';
+    if (is(/(^|\.)(facebook\.com|fb\.com|fb\.me)$/)) return 'facebook';
+    if (is(/(^|\.)instagram\.com$/)) return 'instagram';
+    if (is(/(^|\.)tiktok\.com$/)) return 'tiktok';
+    if (is(/(^|\.)(t\.co|x\.com|twitter\.com)$/)) return 'x';
+    if (is(/(^|\.)reddit\.com$/)) return 'reddit';
+    if (is(/(^|\.)google\./)) return 'google';
+    if (is(/(^|\.)bing\.com$/)) return 'bing';
+    if (is(/duckduckgo|yahoo|ecosia|brave|search/)) return 'search';
+    if (is(/(^|\.)(beachdayarcade|sketchpadarcade|gullrunevo|restless)\./)) return 'sister';
+    if (is(/amazon\./)) return 'amazon';
+    return 'other';
+  }
+  let src = get('arc-src'); if (!src) { src = sourceNow(); set('arc-src', src) }
 
   /* ---------- anonymous event tallies ---------- */
   function ev(e, g, once) {
-    if (reel || !g) return;
+    if (reel || mute || !g) return;
     if (once) { const k = 'arc-ev-' + e + '-' + g; if (get(k) === today) return; set(k, today) }
     const u = '/api/event?e=' + encodeURIComponent(e) + '&g=' + encodeURIComponent(g);
     try { if (navigator.sendBeacon && navigator.sendBeacon(u)) return } catch (x) { }
     try { fetch(u, { method: 'POST', keepalive: true }).catch(() => { }) } catch (x) { }
   }
   window.ARC_EV = ev;
-  // a returning visitor: this browser has been here on an earlier day
-  (() => { const d = get('arc-day'); if (d && d !== today) ev('return', '_site', true); if (d !== today) set('arc-day', today) })();
+  // a visit (once a day per browser), by first source; and a returning visitor: this browser has been here on an earlier day
+  (() => {
+    const d = get('arc-day');
+    if (d !== today) { ev('visit', src); if (d) { ev('return', '_site'); ev('return_src', src) } set('arc-day', today) }
+  })();
   // outbound Amazon clicks, credited to this page and to the last game played this visit
   document.addEventListener('click', e => {
     const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
     if (/(^|\.)amazon\.[a-z.]+|amzn\.to/i.test(a.hostname || '')) {
       ev('amazon', A.slug || A.page || 'home');
+      ev('amazon_src', src);
       let via = null; try { via = sessionStorage.getItem('arc-last') } catch (x) { }
       if (via) ev('amazon_via', via);
     } else if (a.hasAttribute('data-arc-rel')) ev('related', A.slug || 'home');
@@ -43,6 +76,8 @@
 
   /* ---------- play pages ---------- */
   const slug = A.slug;
+  // a play by source, once per game per day (matching the play counter in build.py)
+  if (get('arc-ps-' + slug) !== today) { set('arc-ps-' + slug, today); ev('play_src', src) }
   try { sessionStorage.setItem('arc-last', slug) } catch (x) { }
   // recently played (newest first) and repeat players: someone who played this game on an earlier day
   const seen = get('arc-seen-' + slug);
