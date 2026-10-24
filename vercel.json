@@ -3,6 +3,16 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/coloring-book",
+      "destination": "https://www.beachdayarcade.com/coloring-book",
+      "permanent": true
+    },
+    {
+      "source": "/coloring-book-2",
+      "destination": "https://www.beachdayarcade.com/coloring-book-2",
+      "permanent": true
+    },
+    {
       "source": "/seaside-sprint",
       "destination": "/sketch-sprint",
       "permanent": true

@@ -333,7 +333,7 @@ $('soundBtn').addEventListener('click',()=>{muted=!muted;store.set('muted',muted
 /* ---------- game state ---------- */
 let bodies=[],parts=[],floaters=[],state='menu',score=0,shown=0,best=Scores.stats.best,highest=0,merges=0;
 let cur=1,nxt=1,after=1,aimX=W/2,cooldown=0,dangerT=0,warnAt=0,shake=0,T=0,chain=0,chainT=0,startedAt=0,milestones=new Set(),continued=false,firstRun=true,flash=0;
-let paused=false,pops=[];
+let paused=false,held=false,pops=[];
 
 function newGame(isReplay){
   bodies=[];parts=[];floaters=[];pops=[];score=0;shown=0;highest=0;merges=0;dangerT=0;shake=0;chain=0;chainT=0;cooldown=.25;continued=false;flash=0;
@@ -496,7 +496,7 @@ function draw(){
 
 /* ---------- loop (pauses when the tab is hidden) ---------- */
 let last=0,raf=0;
-function frame(ts){raf=requestAnimationFrame(frame);if(paused)return;const dt=Math.min(.033,(ts-last)/1000||0);last=ts;update(dt);draw()}
+function frame(ts){raf=requestAnimationFrame(frame);if(paused||held){last=ts;return}const dt=Math.min(.033,(ts-last)/1000||0);last=ts;update(dt);draw()}
 document.addEventListener('visibilitychange',()=>{paused=document.hidden;last=performance.now();
   if(ac){try{document.hidden?ac.suspend():ac.resume()}catch(e){}}});
 
@@ -546,6 +546,9 @@ function paintStart(){
   const lad=$('ladder');lad.innerHTML='';[1,2,3,4,5,6,7,8,9,10,11].forEach(t=>{const c=document.createElement('canvas');lad.appendChild(c);const d=Math.min(3,window.devicePixelRatio||1);c.width=c.height=30*d;
     const sp=ballSprite(t,radius(t),1.5);c.getContext('2d').drawImage(sp,0,0,c.width,c.height)});
 }
+
+/* Pause hooks for the site's Pause button, app-switch auto-pause and resume (src/arcade.js) */
+window.SA_PAUSE={playing:()=>state==='play'&&!held,pause(){held=true},resume(){held=false;last=performance.now()}};
 
 /* test hooks for automated checks (harmless in play) */
 window.__drop2048={get state(){return{state,score,highest,bodies:bodies.length,dangerT,merges,cur}},

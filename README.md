@@ -91,3 +91,18 @@ Tic-Tac-Doodle, Doodle SOS, Box Doodles, Connect Sketch, Sketchers, Guess My Doo
 - A game supports it by defining `GAME.save()` and `GAME.load(state)`; the code is in `tools/versus/online.js`. Paper Boats is left out until its boats can be hidden on the server.
 
 Sketch with Friends checks words against `src/assets/sketch-with-friends/words.txt`, built by `tools/sketch-with-friends-words.py` from the Hunspell en_US dictionary with a family blocklist (add words to `BLOCK` there and rerun).
+
+## Retention, pause and engagement counts (`src/arcade.js`)
+
+`src/arcade.js` is shared by Sketchpad Arcade and Beach Day Arcade (keep the two copies identical). `build.py` serves it as `/arcade.js` on every page with a small `window.ARC` config.
+
+- **Keep Playing**: the last games played on this device (localStorage `arc-recent`) show as the first row on the home page.
+- **Up Next**: under a game's end screen, next to the Home button, a link to its first related game and a line linking to the coloring book that has that game's page.
+- **Related games**: each game page lists 8 related games (its `related` list in `games.json`, then the same genre, then the site's picks) and a "See all games" button, instead of every game on the site.
+- **Pause**: games that define `window.SA_PAUSE = {playing(), pause(), resume()}` get a Pause button in the header and pause automatically when the player switches apps, with a Keep Playing card to resume. 2048 Drop, Cookie Drop and Sidewalk Hop have it so far.
+- **Portrait-only games**: `"portrait": true` in `games.json` pauses the game with a "turn your phone upright" note when a phone is held sideways.
+- **Sister-site links**: `"twin"` in `games.json` is the same game's slug on Beach Day Arcade; the game page links to it.
+- **Engagement counts**: anonymous tallies per game and day (`POST /api/event`, stored next to the play counts): page views, starts, finishes, replays, repeat players, related-game clicks, sister-site clicks, book page views and Amazon clicks. No IDs, cookies or IP addresses. They show in the Engagement table on `/stats`.
+- **Card thumbnails**: `build.py` makes 400px WebP copies of the covers in `src/img/t/` (needs Pillow; they are committed so builds without it still work).
+- **Share kit**: `/share-kit` (unlisted) has every game's Facebook, Pinterest and YouTube text ready to copy, and `/social.json` has the same data. Nothing is posted automatically.
+- Internal links use clean URLs (`/cookie-drop`, not `cookie-drop.html`), so Vercel serves them without a redirect.

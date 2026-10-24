@@ -1,66 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://www.sketchpadarcade.com/</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/coloring-book-2</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/coloring-book</loc></url>
   <url><loc>https://www.sketchpadarcade.com/about</loc></url>
   <url><loc>https://www.sketchpadarcade.com/news</loc></url>
   <url><loc>https://www.sketchpadarcade.com/contact</loc></url>
   <url><loc>https://www.sketchpadarcade.com/privacy</loc></url>
   <url><loc>https://www.sketchpadarcade.com/terms</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/guess-my-doodle</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/sketch-with-friends</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/sketchers</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/connect-sketch</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/blot-sweeper</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/save-the-doodle</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-doku</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/crayon-code</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/tic-tac-doodle</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-sos</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/box-doodles</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/paper-boats</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/pencil-parade</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/squiggle-worm</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/cookie-drop</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/desk-strikes</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/marble-blitz</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/paper-peaks</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/even-sketch</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-keeper</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/letter-scramble</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/ink-jars</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/pencil-patrol</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/paper-plane-dash</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/margin-merge</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/2048-drop</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/shoe-string-swing</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/note-quest</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/eraser-gulp</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/sidewalk-hop</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/paper-gates</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-stacks</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/scribble-slice</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/sketch-search</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/pencil-putt</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/letter-links</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/sketch-sprint</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-drop</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/pencil-plunk</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/draw-brawl</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/doodle-darts</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/word-workshop</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/bubble-doodle</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/four-in-a-frame</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/margin-match</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/no-2-pencil</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/scribble-blocks</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/drop-swap</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/pencil-path</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/space-blaster</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/space-glass</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/chibi-chib</loc></url>
-  <url><loc>https://www.sketchpadarcade.com/word-scribble</loc></url>
+  <url><loc>https://www.sketchpadarcade.com/guess-my-doodle</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/guess-my-doodle.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/sketch-with-friends</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/sketch-with-friends.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/sketchers</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/sketchers.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/connect-sketch</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/connect-sketch.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/blot-sweeper</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/blot-sweeper.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/save-the-doodle</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/save-the-doodle.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-doku</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-doku.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/crayon-code</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/crayon-code.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/tic-tac-doodle</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/tic-tac-doodle.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-sos</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-sos.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/box-doodles</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/box-doodles.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/paper-boats</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/paper-boats.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/pencil-parade</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/pencil-parade.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/squiggle-worm</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/squiggle-worm.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/cookie-drop</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/cookie-drop.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/desk-strikes</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/desk-strikes.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/marble-blitz</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/marble-blitz.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/paper-peaks</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/paper-peaks.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/even-sketch</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/even-sketch.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-keeper</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-keeper.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/letter-scramble</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/letter-scramble.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/ink-jars</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/ink-jars.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/pencil-patrol</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/pencil-patrol.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/paper-plane-dash</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/paper-plane-dash.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/margin-merge</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/margin-merge.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/2048-drop</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/2048-drop.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/shoe-string-swing</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/shoe-string-swing.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/note-quest</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/note-quest.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/eraser-gulp</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/eraser-gulp.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/sidewalk-hop</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/sidewalk-hop.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/paper-gates</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/paper-gates.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-stacks</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-stacks.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/scribble-slice</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/scribble-slice.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/sketch-search</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/sketch-search.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/pencil-putt</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/pencil-putt.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/letter-links</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/letter-links.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/sketch-sprint</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/sketch-sprint.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-drop</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-drop.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/pencil-plunk</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/pencil-plunk.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/draw-brawl</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/draw-brawl.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/doodle-darts</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/doodle-darts.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/word-workshop</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/word-workshop.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/bubble-doodle</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/bubble-doodle.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/four-in-a-frame</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/four-in-a-frame.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/margin-match</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/margin-match.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/no-2-pencil</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/no-2-pencil.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/scribble-blocks</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/scribble-blocks.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/drop-swap</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/drop-swap.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/pencil-path</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/pencil-path.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/space-blaster</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/space-blaster.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/space-glass</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/space-glass.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/chibi-chib</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/chibi-chib.jpg</image:loc></image:image></url>
+  <url><loc>https://www.sketchpadarcade.com/word-scribble</loc><image:image><image:loc>https://www.sketchpadarcade.com/img/word-scribble.jpg</image:loc></image:image></url>
   <url><loc>https://www.sketchpadarcade.com/news/versus-games</loc></url>
   <url><loc>https://www.sketchpadarcade.com/news/pencil-patrol</loc></url>
   <url><loc>https://www.sketchpadarcade.com/news/paper-plane-dash</loc></url>

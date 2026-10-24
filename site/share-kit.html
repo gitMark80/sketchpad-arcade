@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Share kit | Sketchpad Arcade</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.sketchpadarcade.com/brand/icon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="https://www.sketchpadarcade.com/brand/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="https://www.sketchpadarcade.com/brand/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#f6f3ea">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599" crossorigin="anonymous"></script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+.bda-sheet{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(46,46,51,.45);padding:16px;font-family:"Patrick Hand","Comic Sans MS",cursive}
+@media (min-width:600px){.bda-sheet{align-items:center}}
+.bda-sheet[hidden]{display:none!important}
+.bda-card{width:100%;max-width:380px;background:#f6f3ea;color:#2e2e33;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c}
+.bda-card h2{margin:0 0 4px;font:400 1.3rem/1.2 "Gloria Hallelujah","Comic Sans MS",cursive;color:#2e2e33}
+.bda-card .u{margin:0 0 12px;font-size:.9rem;color:#7a7a80;overflow-wrap:anywhere}
+.bda-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.bda-opts a,.bda-opts button{appearance:none;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#2e2e33;text-decoration:none;font:400 .85rem "Patrick Hand","Comic Sans MS",cursive;padding:4px 0;border-radius:12px}
+.bda-opts i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:2px solid #2e2e33;font:800 1.05rem system-ui,sans-serif;font-style:normal;color:#fff}
+.bda-opts a:focus-visible,.bda-opts button:focus-visible,.bda-x:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+.bda-x{appearance:none;border:2px solid #2e2e33;margin-top:12px;width:100%;padding:8px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;background:#f6f3ea;color:#2e2e33;font:400 1.05rem "Patrick Hand","Comic Sans MS",cursive;cursor:pointer}
+.bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bda-toast[hidden]{display:none!important}
+</style>
+<meta name="description" content="Post text for every game.">
+<meta property="og:title" content="Share kit | Sketchpad Arcade">
+<meta property="og:description" content="Post text for every game.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sketchpad Arcade">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Share kit | Sketchpad Arcade">
+<meta name="twitter:description" content="Post text for every game.">
+<meta name="twitter:image" content="https://www.sketchpadarcade.com/brand/share-2.jpg">
+<meta property="og:image" content="https://www.sketchpadarcade.com/brand/share-2.jpg">
+<meta name="robots" content="noindex">
+<script>window.ARC={"page": "other"};</script>
+<script defer src="/arcade.js?v=35bbae47"></script>
+<style>
+.arc-next{display:flex;flex-direction:column;align-items:center;gap:6px;margin:8px auto 0;max-width:100%;pointer-events:auto;position:relative;z-index:5}
+.arc-up{display:flex;align-items:center;gap:8px;max-width:100%;padding:5px 12px 5px 5px;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px dashed #55555c;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;font:400 1.05rem/1.1 "Patrick Hand","Comic Sans MS",cursive;text-align:left}
+.arc-up img{width:40px;height:40px;flex:none;border:2px solid #2e2e33;border-radius:8px;object-fit:cover;background:#efeadd}
+.arc-up span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.arc-up small{display:block;font-size:.8rem;color:#7a7a80;text-transform:uppercase;letter-spacing:.06em}
+.arc-bk{font:400 .95rem/1.2 "Patrick Hand","Comic Sans MS",cursive;color:#55555c;text-decoration:underline wavy #c99a1a;text-underline-offset:3px;text-align:center}
+.arc-pause{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;cursor:pointer;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c}
+.arc-pause svg{width:16px;height:16px}.arc-pause:active{transform:translate(2px,2px);box-shadow:none}.arc-pause[hidden]{display:none!important}
+.arc-veil{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.82)}
+.arc-card{width:100%;max-width:320px;text-align:center;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c;font-family:"Patrick Hand","Comic Sans MS",cursive}
+.arc-card h2{margin:0 0 6px;font:400 2rem/1.1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;transform:rotate(-1.5deg)}
+.arc-rot{display:none;margin:0 0 6px;color:#55555c;font-size:1.1rem}html.arc-sideways .arc-rot{display:block}html.arc-sideways .arc-go{opacity:.45}
+.arc-go{appearance:none;cursor:pointer;width:100%;margin-top:6px;padding:10px;font:400 1.6rem/1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;color:#2e2e33;background:#f3e6b0;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:4px 4px 0 #55555c}
+.arc-more{display:inline-block;margin-top:12px;color:#2e2e33;font-size:1.1rem}
+.arc-go:focus-visible,.arc-more:focus-visible,.arc-pause:focus-visible,.arc-up:focus-visible,.arc-bk:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>
+<style>
+/* Sketchpad Arcade: every page is a sketchbook page. Paper with a faint grain, graphite ink, wobbly hand-drawn borders,
+   handwriting fonts, and coloured-pencil accents only where a kid would have reached for one. */
+:root{--paper:#f6f3ea;--paper-2:#efeadd;--ink:#2e2e33;--pencil:#55555c;--muted:#7a7a80;--faint:#c9c6bc;
+--yellow:#c99a1a;--yellow-wash:#f3e6b0;--orange:#d9661a;--blue:#2f6fb5;--blue-wash:#d6e4f2;--green:#5a9a6a;--green-wash:#dcebdd;--pink:#c45a8a;--pink-wash:#f0d5e2;
+--display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;--body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
+--wob:255px 15px 225px 15px/15px 225px 15px 255px;--wob2:15px 255px 15px 225px/225px 15px 255px 15px;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);color:var(--ink);font-family:var(--body);font-size:19px;line-height:1.45;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px}
+.top{border-bottom:2px solid var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-size:1.5rem;line-height:1;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);transform:rotate(-1.5deg);white-space:nowrap}
+.logo svg{width:34px;height:34px;flex:none}
+.homehead{display:grid;gap:4px;padding-block:22px 6px;text-align:center}
+.homehead h1{font-size:clamp(2.2rem,7vw,4rem);line-height:1.05;text-transform:uppercase;letter-spacing:.04em;transform:rotate(-1.5deg)}
+.homehead p{margin:6px auto 0;max-width:46ch;color:var(--pencil);font-size:1.15rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.nav a.link{text-decoration:none;padding:8px 12px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0}
+.chips{display:flex;gap:10px;justify-content:center;padding-block:14px 22px;flex-wrap:wrap}
+.chip{appearance:none;cursor:pointer;font-family:var(--body);font-size:1.1rem;line-height:1;padding:9px 18px;border:2px dashed var(--pencil);border-radius:var(--wob);white-space:nowrap;background:var(--paper);color:var(--ink);transition:transform .12s}
+.chip:hover{transform:translateY(-1px)}
+.chip[aria-pressed="true"]{border-style:solid;border-color:var(--ink);background:var(--yellow-wash);box-shadow:2px 2px 0 var(--pencil)}
+@media (max-width:520px){.chips{gap:7px}.chip{flex:1;min-width:0;font-size:1rem;padding:8px 6px}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.card{display:flex;flex-direction:column;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);overflow:hidden;text-decoration:none;box-shadow:3px 3px 0 var(--pencil);transition:transform .15s,box-shadow .15s}
+.card:nth-child(2n){border-radius:var(--wob2)}
+.card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
+.card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
+.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card h3{font-size:1.35rem}
+.card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
+.tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
+.tag.arcade{border-color:var(--blue);background:var(--blue-wash)}
+.tag.word{border-color:var(--yellow);background:var(--yellow-wash)}
+.tag.puzzle{border-color:var(--green);background:var(--green-wash)}
+.tag.versus{border-color:var(--pink);background:var(--pink-wash)}
+.also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
+.also p{margin:0}
+.also.twin{margin:0 0 28px}
+.allgames{display:flex;justify-content:center;margin:22px 0 0}
+.book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
+.book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
+.book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
+.book h2{font-size:1.6rem;margin:4px 0 6px;text-transform:uppercase;letter-spacing:.03em}
+.book p{margin:0 0 12px;max-width:56ch;line-height:1.45}
+.book .kicker{font-family:var(--display);color:var(--pencil);font-size:1rem;letter-spacing:.04em;text-transform:uppercase}
+.bookbtns{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.aff{font-size:.85rem;color:var(--muted);margin:10px 0 0!important}
+.bookpage .hero .cover img{aspect-ratio:auto}
+.bookbuy{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.bookbuy .cover{align-self:stretch}
+.bookbuy .aff{margin:0!important}
+.bookbuy .btn{white-space:nowrap;width:auto}
+@media (max-width:620px){.bookbuy .btn{font-size:1.05rem;padding:10px 20px}}
+.shelf{margin-top:8px}
+.shelfhead{font-size:clamp(1.9rem,5vw,2.6rem);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 14px;padding-bottom:6px;border-bottom:3px solid var(--ink)}
+.shelf .books{margin-bottom:10px}
+.tag.bk{border-color:var(--orange,#e0893a);background:var(--yellow-wash)}.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:8px 0 28px}
+.samples a{display:block}
+.samples img{width:100%;height:auto;background:#fff;border:2px solid var(--ink);border-radius:var(--wob2);box-shadow:3px 3px 0 var(--pencil)}
+@media (max-width:620px){.book{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:14px}.book h2{font-size:1.25rem}.book p{font-size:.98rem}.samples{gap:8px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:var(--yellow-wash);border:2px solid var(--ink);border-radius:var(--wob2);padding:10px 28px;box-shadow:4px 4px 0 var(--pencil);transition:transform .1s}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pencil)}
+.btn.small{font-size:1rem;padding:7px 16px;box-shadow:3px 3px 0 var(--pencil)}
+.crumbs{font-size:1rem;color:var(--muted);padding-block:18px 8px}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;align-items:center;padding-block:8px 28px}
+.cover{position:relative;border:2px solid var(--ink);border-radius:var(--wob);overflow:hidden;box-shadow:5px 5px 0 var(--pencil);background:var(--paper-2)}
+.cover img{aspect-ratio:1;width:100%;height:auto;object-fit:cover}
+.cover .btn{position:absolute;left:50%;bottom:22px;transform:translateX(-50%)}
+.cover .btn:active{transform:translate(calc(-50% + 3px),3px)}
+.info{display:flex;flex-direction:column;gap:14px;min-width:0}
+.info h1{font-size:clamp(2.2rem,5vw,3.2rem);text-transform:uppercase;letter-spacing:.03em}
+.lead{margin:0;font-size:1.15rem;color:var(--pencil);max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.facts li{background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);padding:4px 12px;font-size:.95rem;color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding-block:8px 28px}
+.panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
+.panel:nth-child(2n){border-radius:var(--wob)}
+.panel.about{margin:0 0 28px}
+.panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
+.panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
+.panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
+.panel li{max-width:65ch}
+.prose{max-width:68ch;padding-block:24px 40px}
+.prose h1{font-size:2.4rem;margin-bottom:14px;text-transform:uppercase}
+.prose h2{font-size:1.5rem;margin:28px 0 8px}
+.prose p,.prose li{color:var(--ink)}
+.prose p{line-height:1.6}
+.prose .date{font-size:.95rem;color:var(--muted);margin-top:-6px}
+.homeabout{max-width:72ch;margin:8px auto 0;padding-block:28px 10px;border-top:2px dashed var(--line,#c9c4b4)}
+.homeabout h2{font-size:1.5rem;margin:24px 0 8px}
+.homeabout h2:first-child{margin-top:0}
+.newslist,.newsindex{list-style:none;margin:0;padding:0}
+.newslist li{margin:0 0 8px}
+.newslist .date{font-size:.9rem;color:var(--muted);margin-left:6px}
+.newsindex li{margin:0 0 26px}
+.newsindex h2{margin:0 0 4px}
+.newsindex h2 a{text-decoration:none}.newsindex h2 a:hover{text-decoration:underline}
+.newsindex p{margin:0 0 4px}
+.backlink{margin-top:32px}
+section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;letter-spacing:.03em}
+footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
+footer a{color:var(--ink)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
+footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+@media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
+@media (max-width:360px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+.navr{display:flex;align-items:center;gap:8px}
+.sharebtn{appearance:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:var(--body);font-size:1.1rem;line-height:1;padding:8px 14px 8px 12px;border:2px solid var(--ink);border-radius:var(--wob);background:var(--paper);color:var(--ink);box-shadow:2px 2px 0 var(--pencil);transition:transform .12s}
+.sharebtn:active{transform:translate(2px,2px);box-shadow:none}
+.homebtn{text-decoration:none;background:var(--yellow-wash);border-radius:var(--wob2)}
+.sharebtn svg{flex:none;width:18px;height:18px}
+@media (max-width:720px){.nav{flex-wrap:nowrap!important}}
+@media (max-width:460px){.nav{gap:6px}.navr{gap:4px}.logo{font-size:1.15rem}.logo svg{width:26px;height:26px}.sharebtn{font-size:1rem;padding:7px 10px 7px 9px;gap:5px}}
+@media (max-width:379px){.sharebtn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.sharebtn{padding:8px}}
+.btn.share{background:var(--paper);cursor:pointer}
+.btnrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+/* Home rows: sideways-scrolling strips above the full grid */
+.row{margin-bottom:22px}
+.row>h2.sec{margin:6px 0 12px;font-size:1.6rem}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:200px;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;
+  margin-inline:-16px;padding:4px 16px 18px;scrollbar-width:thin;scrollbar-color:var(--faint) transparent}
+.strip .card{scroll-snap-align:start}
+@media (max-width:720px){.strip{grid-auto-columns:40%;gap:12px}.row>h2.sec{font-size:1.35rem}}
+@media (max-width:360px){.strip{grid-auto-columns:62%}}
+.sisterbtn{text-decoration:none;background:linear-gradient(180deg,#bfeaff 0%,#5ab9ea 55%,#2f8fd0 100%);color:#06324f;border:2px solid #2e2e33;border-radius:999px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;font-size:.95rem}@media (max-width:680px){.navr .sharebtn:not(.homebtn):not(.sisterbtn) span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.navr .sharebtn:not(.homebtn):not(.sisterbtn){padding:8px}}
+@media (max-width:680px){.logo{gap:6px;font-size:1rem!important;letter-spacing:.02em}.logo svg{width:22px!important;height:22px!important}.navr .sisterbtn{font-size:.85rem;padding:6px 9px;white-space:nowrap}.navr .homebtn{padding:7px 9px}}@media (max-width:680px){.logo span{white-space:normal;line-height:1;max-width:5.5em}}
+@media (max-width:420px){.nav{gap:4px}.navr{gap:3px}.navr .sisterbtn{padding:5px 7px;gap:4px}.navr .homebtn{padding:6px 8px;gap:4px}.logo svg{width:18px!important;height:18px!important}}
+</style>
+<style>html body{background-color:#f6f3ea!important;background-image:linear-gradient(rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.14) 1px,transparent 1px),linear-gradient(rgba(47,111,181,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,181,.10) 1px,transparent 1px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")!important;background-size:120px 120px,120px 120px,24px 24px,24px 24px,160px 160px!important;background-position:-1px -1px!important;background-attachment:local!important}</style>
+</head>
+<body>
+<div class="top"><nav class="wrap nav" aria-label="Main">
+<a class="logo" href="/"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#2e2e33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32l3-9L27 7l6 6-16 16z"/><path d="M11 23l6 6"/><path d="M27 7l6 6"/><path d="M8 32l9-3"/><path d="M24 10l6 6" stroke-width="1.6"/></svg><span>Sketchpad Arcade</span></a>
+<div class="navr"><a class="sharebtn homebtn" href="/"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg><span>Home</span></a>
+<button class="sharebtn" type="button" data-share-url="https://www.sketchpadarcade.com/" data-share-title="Sketchpad Arcade" data-share-text="Sketchpad Arcade: free hand-drawn pencil-and-paper games, right in your browser."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg><span>Share</span></button><a class="sharebtn sisterbtn" href="https://www.beachdayarcade.com" title="Play the same games at Beach Day Arcade" aria-label="Visit Beach Day Arcade"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16.5" cy="7" r="3"/><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 19.5c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg><span>Beach Day</span></a></div>
+</nav></div>
+<main><div class="wrap prose" style="max-width:900px"><h1>Share kit</h1>
+<p>Post text for every game, made from the game pages. Tap a button to copy it, then paste it into Facebook, Pinterest or YouTube. The same data is at <a href="social.json">/social.json</a>. Nothing here posts anything for you.</p>
+<section class="panel kit" id="guess-my-doodle"><img src="img/t/guess-my-doodle.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Guess My Doodle</h2><p class="u">https://www.sketchpadarcade.com/guess-my-doodle</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Draw a word for your friend, then guess theirs. Play Guess My Doodle free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/guess-my-doodle">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Guess My Doodle: free versus game
+Draw a word for your friend, then guess theirs. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #GuessMyDoodle #twoplayergames #browsergames
+https://www.sketchpadarcade.com/guess-my-doodle">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Guess My Doodle | free versus game on Sketchpad Arcade
+
+Draw a word for your friend, then guess theirs.
+
+Play Guess My Doodle free: https://www.sketchpadarcade.com/guess-my-doodle
+More games: https://www.sketchpadarcade.com/
+
+A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.
+
+#SketchpadArcade #GuessMyDoodle #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/guess-my-doodle.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="sketch-with-friends"><img src="img/t/sketch-with-friends.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Sketch with Friends</h2><p class="u">https://www.sketchpadarcade.com/sketch-with-friends</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Make words on the board with your letter tiles. Highest score wins. Play Sketch with Friends free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/sketch-with-friends">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Sketch with Friends: free word game
+Make words on the board with your letter tiles. Highest score wins. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SketchWithFriends #wordgames #browsergames
+https://www.sketchpadarcade.com/sketch-with-friends">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Sketch with Friends | free word game on Sketchpad Arcade
+
+Make words on the board with your letter tiles. Highest score wins.
+
+Play Sketch with Friends free: https://www.sketchpadarcade.com/sketch-with-friends
+More games: https://www.sketchpadarcade.com/
+
+A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.
+
+#SketchpadArcade #SketchWithFriends #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/sketch-with-friends.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="sketchers"><img src="img/t/sketchers.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Sketchers</h2><p class="u">https://www.sketchpadarcade.com/sketchers</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Checkers on a sketchbook page. Jump your friend&#x27;s pieces to win. Play Sketchers free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/sketchers">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Sketchers: free versus game
+Checkers on a sketchbook page. Jump your friend&#x27;s pieces to win. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #Sketchers #twoplayergames #browsergames
+https://www.sketchpadarcade.com/sketchers">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Sketchers | free versus game on Sketchpad Arcade
+
+Checkers on a sketchbook page. Jump your friend&#x27;s pieces to win.
+
+Play Sketchers free: https://www.sketchpadarcade.com/sketchers
+More games: https://www.sketchpadarcade.com/
+
+Classic checkers, drawn in coloured pencil. Move your pieces diagonally, jump over the other player&#x27;s pieces to capture them, and reach the far side to get crowned. Capture every piece, or leave your friend with no moves, to win.
+
+#SketchpadArcade #Sketchers #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/sketchers.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="connect-sketch"><img src="img/t/connect-sketch.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Connect Sketch</h2><p class="u">https://www.sketchpadarcade.com/connect-sketch</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drop your counters down the page. Four in a row wins. Play Connect Sketch free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/connect-sketch">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Connect Sketch: free versus game
+Drop your counters down the page. Four in a row wins. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #ConnectSketch #twoplayergames #browsergames
+https://www.sketchpadarcade.com/connect-sketch">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Connect Sketch | free versus game on Sketchpad Arcade
+
+Drop your counters down the page. Four in a row wins.
+
+Play Connect Sketch free: https://www.sketchpadarcade.com/connect-sketch
+More games: https://www.sketchpadarcade.com/
+
+Drop coloured-pencil counters into a hand-drawn frame and be the first to line up four in a row: across, down or corner to corner. It&#x27;s quick to learn and great to play with a friend, by text or on one phone.
+
+#SketchpadArcade #ConnectSketch #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/connect-sketch.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="blot-sweeper"><img src="img/t/blot-sweeper.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Blot Sweeper</h2><p class="u">https://www.sketchpadarcade.com/blot-sweeper</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Uncover every clean square without touching an ink blot. Play Blot Sweeper free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/blot-sweeper">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Blot Sweeper: free puzzle game
+Uncover every clean square without touching an ink blot. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #BlotSweeper #puzzlegames #browsergames
+https://www.sketchpadarcade.com/blot-sweeper">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Blot Sweeper | free puzzle game on Sketchpad Arcade
+
+Uncover every clean square without touching an ink blot.
+
+Play Blot Sweeper free: https://www.sketchpadarcade.com/blot-sweeper
+More games: https://www.sketchpadarcade.com/
+
+The classic number-logic puzzle, with ink blots hiding under the paper instead of anything scary. Tap a square to uncover it. Numbers tell you how many blots are touching that square, so you can work out where they are, flag them, and uncover every clean square to win.
+
+#SketchpadArcade #BlotSweeper #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/blot-sweeper.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="save-the-doodle"><img src="img/t/save-the-doodle.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Save the Doodle</h2><p class="u">https://www.sketchpadarcade.com/save-the-doodle</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Guess the word before the eraser rubs out the doodle. Play Save the Doodle free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/save-the-doodle">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Save the Doodle: free word game
+Guess the word before the eraser rubs out the doodle. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SaveTheDoodle #wordgames #browsergames
+https://www.sketchpadarcade.com/save-the-doodle">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Save the Doodle | free word game on Sketchpad Arcade
+
+Guess the word before the eraser rubs out the doodle.
+
+Play Save the Doodle free: https://www.sketchpadarcade.com/save-the-doodle
+More games: https://www.sketchpadarcade.com/
+
+A friendly spin on hangman. A hidden word is shown as blanks with a clue, like Animal or Food. Guess one letter at a time. Every wrong letter makes the eraser rub out part of the little pencil doodle, so fill in the word before it&#x27;s gone!
+
+#SketchpadArcade #SaveTheDoodle #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/save-the-doodle.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-doku"><img src="img/t/doodle-doku.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle Doku</h2><p class="u">https://www.sketchpadarcade.com/doodle-doku</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Fill the grid so every row, column and box has 1 to 9. Play Doodle Doku free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-doku">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle Doku: free puzzle game
+Fill the grid so every row, column and box has 1 to 9. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleDoku #puzzlegames #browsergames
+https://www.sketchpadarcade.com/doodle-doku">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle Doku | free puzzle game on Sketchpad Arcade
+
+Fill the grid so every row, column and box has 1 to 9.
+
+Play Doodle Doku free: https://www.sketchpadarcade.com/doodle-doku
+More games: https://www.sketchpadarcade.com/
+
+Classic sudoku on a pencil grid. Fill every empty square so each row, each column and each 3×3 box has the numbers 1 to 9 exactly once. Every puzzle is new and has exactly one answer, with notes for your pencil guesses and three hints if you get stuck.
+
+#SketchpadArcade #DoodleDoku #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-doku.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="crayon-code"><img src="img/t/crayon-code.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Crayon Code</h2><p class="u">https://www.sketchpadarcade.com/crayon-code</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Crack the secret row of crayon colours. Play Crayon Code free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/crayon-code">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Crayon Code: free puzzle game
+Crack the secret row of crayon colours. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #CrayonCode #puzzlegames #browsergames
+https://www.sketchpadarcade.com/crayon-code">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Crayon Code | free puzzle game on Sketchpad Arcade
+
+Crack the secret row of crayon colours.
+
+Play Crayon Code free: https://www.sketchpadarcade.com/crayon-code
+More games: https://www.sketchpadarcade.com/
+
+A code-breaking puzzle with crayons. There&#x27;s a secret row of colours and you have to work it out. After each guess, dots tell you how close you are: a filled dot for every crayon in the right spot, and an open dot for every right colour in the wrong spot.
+
+#SketchpadArcade #CrayonCode #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/crayon-code.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="tic-tac-doodle"><img src="img/t/tic-tac-doodle.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Tic-Tac-Doodle</h2><p class="u">https://www.sketchpadarcade.com/tic-tac-doodle</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Blue X against pink O. Three in a row wins. Play Tic-Tac-Doodle free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/tic-tac-doodle">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Tic-Tac-Doodle: free versus game
+Blue X against pink O. Three in a row wins. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #TicTacDoodle #twoplayergames #browsergames
+https://www.sketchpadarcade.com/tic-tac-doodle">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Tic-Tac-Doodle | free versus game on Sketchpad Arcade
+
+Blue X against pink O. Three in a row wins.
+
+Play Tic-Tac-Doodle free: https://www.sketchpadarcade.com/tic-tac-doodle
+More games: https://www.sketchpadarcade.com/
+
+The classic paper-and-pencil game, drawn right on the sketchbook page. Blue X and pink O take turns, and the first to get three in a row wins the round. Pass the phone to a friend, or try to beat the bot. On Hard it never loses, so a draw is a win!
+
+#SketchpadArcade #TicTacDoodle #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/tic-tac-doodle.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-sos"><img src="img/t/doodle-sos.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle SOS</h2><p class="u">https://www.sketchpadarcade.com/doodle-sos</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Write S or O. Spell S-O-S to score and go again. Play Doodle SOS free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-sos">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle SOS: free versus game
+Write S or O. Spell S-O-S to score and go again. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleSos #twoplayergames #browsergames
+https://www.sketchpadarcade.com/doodle-sos">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle SOS | free versus game on Sketchpad Arcade
+
+Write S or O. Spell S-O-S to score and go again.
+
+Play Doodle SOS free: https://www.sketchpadarcade.com/doodle-sos
+More games: https://www.sketchpadarcade.com/
+
+A pencil-and-paper classic for two. Take turns writing an S or an O in the grid. Finish S-O-S in a line, across, down or corner to corner, and you score a point and go again. When the grid is full, the most SOS lines wins.
+
+#SketchpadArcade #DoodleSos #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-sos.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="box-doodles"><img src="img/t/box-doodles.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Box Doodles</h2><p class="u">https://www.sketchpadarcade.com/box-doodles</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Join the dots. Close a box to claim it and go again. Play Box Doodles free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/box-doodles">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Box Doodles: free versus game
+Join the dots. Close a box to claim it and go again. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #BoxDoodles #twoplayergames #browsergames
+https://www.sketchpadarcade.com/box-doodles">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Box Doodles | free versus game on Sketchpad Arcade
+
+Join the dots. Close a box to claim it and go again.
+
+Play Box Doodles free: https://www.sketchpadarcade.com/box-doodles
+More games: https://www.sketchpadarcade.com/
+
+The dots game from the back of every school notebook. Take turns drawing one line between two dots. Draw the fourth side of a box and it&#x27;s yours, with your initial in it, and you draw again. When all 25 boxes are claimed, whoever has the most wins.
+
+#SketchpadArcade #BoxDoodles #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/box-doodles.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="paper-boats"><img src="img/t/paper-boats.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Paper Boats</h2><p class="u">https://www.sketchpadarcade.com/paper-boats</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Find all four hidden paper boats before they find yours. Play Paper Boats free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/paper-boats">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Paper Boats: free versus game
+Find all four hidden paper boats before they find yours. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PaperBoats #twoplayergames #browsergames
+https://www.sketchpadarcade.com/paper-boats">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Paper Boats | free versus game on Sketchpad Arcade
+
+Find all four hidden paper boats before they find yours.
+
+Play Paper Boats free: https://www.sketchpadarcade.com/paper-boats
+More games: https://www.sketchpadarcade.com/
+
+A guessing game for two on graph paper. Each player hides four paper boats on their own page. Take turns tapping a square on the other player&#x27;s page: a miss is a splash, and a hit gets a pencil X. Find every square of a boat and it floats away. Find all four boats first to win.
+
+#SketchpadArcade #PaperBoats #twoplayergames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/paper-boats.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="pencil-parade"><img src="img/t/pencil-parade.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Pencil Parade</h2><p class="u">https://www.sketchpadarcade.com/pencil-parade</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus. Play Pencil Parade free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-parade">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Pencil Parade: free arcade game
+Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilParade #arcadegames #browsergames
+https://www.sketchpadarcade.com/pencil-parade">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Pencil Parade | free arcade game on Sketchpad Arcade
+
+Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus.
+
+Play Pencil Parade free: https://www.sketchpadarcade.com/pencil-parade
+More games: https://www.sketchpadarcade.com/
+
+A pencil-sketch runner where your score is a parade of little pencil stubs with smiley faces. Drag left and right to steer the whole parade down a long sheet of lined paper, through gates that add, multiply, subtract or halve your pencils. Dodge rolling bouncy balls, ink puddles, torn holes and spinning compasses along the way. At the end of each level the parade climbs a stack of books, and the higher it gets, the bigger the bonus.
+
+#SketchpadArcade #PencilParade #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/pencil-parade.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="squiggle-worm"><img src="img/t/squiggle-worm.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Squiggle Worm</h2><p class="u">https://www.sketchpadarcade.com/squiggle-worm</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest. Play Squiggle Worm free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/squiggle-worm">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Squiggle Worm: free arcade game
+Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SquiggleWorm #arcadegames #browsergames
+https://www.sketchpadarcade.com/squiggle-worm">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Squiggle Worm | free arcade game on Sketchpad Arcade
+
+Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest.
+
+Play Squiggle Worm free: https://www.sketchpadarcade.com/squiggle-worm
+More games: https://www.sketchpadarcade.com/
+
+A wiggly arcade game doodled on a page of graph paper. You steer a happy striped squiggle worm across the squares, gobbling glowing ink dots to grow longer and longer. Other coloured-pencil squiggles roam the page too. If one bumps its nose into your body, it goes poof into a puff of pencil scribbles and leaves a trail of ink blots for you to eat. Can you become the longest squiggle on the page?
+
+#SketchpadArcade #SquiggleWorm #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/squiggle-worm.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="cookie-drop"><img src="img/t/cookie-drop.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Cookie Drop</h2><p class="u">https://www.sketchpadarcade.com/cookie-drop</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Snip the strings and swing a chocolate-chip cookie down to Doodle, the hungry doodle monster. Play Cookie Drop free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/cookie-drop">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Cookie Drop: free puzzle game
+Snip the strings and swing a chocolate-chip cookie down to Doodle, the hungry doodle monster. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #CookieDrop #puzzlegames #browsergames
+https://www.sketchpadarcade.com/cookie-drop">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Cookie Drop | free puzzle game on Sketchpad Arcade
+
+Snip the strings and swing a chocolate-chip cookie down to Doodle, the hungry doodle monster.
+
+Play Cookie Drop free: https://www.sketchpadarcade.com/cookie-drop
+More games: https://www.sketchpadarcade.com/
+
+A string-snipping puzzle drawn in pencil on a corkboard. A chocolate-chip cookie hangs from strings tied to thumbtacks, and Doodle the doodle monster is waiting at the bottom with his mouth open. Swipe across a string to snip it and the cookie swings and drops. Time your snips so it lands right in Doodle&#x27;s mouth, and swing it through the gold stars on the way for up to 3 stars. Bubbles, bouncy balls, paper-clip hooks and puffing party blowers join in as you go.
+
+#SketchpadArcade #CookieDrop #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/cookie-drop.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="desk-strikes"><img src="img/t/desk-strikes.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Desk Strikes</h2><p class="u">https://www.sketchpadarcade.com/desk-strikes</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs. Play Desk Strikes free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/desk-strikes">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Desk Strikes: free arcade game
+Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DeskStrikes #arcadegames #browsergames
+https://www.sketchpadarcade.com/desk-strikes">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Desk Strikes | free arcade game on Sketchpad Arcade
+
+Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs.
+
+Play Desk Strikes free: https://www.sketchpadarcade.com/desk-strikes
+More games: https://www.sketchpadarcade.com/
+
+Ten-pin bowling on a school desk. Swipe up from the eraser to roll it along a long wooden ruler toward ten cheerful pencil stubs with little smiley faces, with a pencil cup and sticky notes doodled behind them. The direction of your swipe aims the eraser, a faster flick rolls it harder, and a bend in your swipe makes it curve. Pencils scatter, tumble into each other and drop off the end of the ruler, and a full 10-frame scoresheet keeps track of every strike and spare. From frame 4 a window draft nudges the eraser, and from frame 7 a friendly doodle bug wanders across the ruler.
+
+#SketchpadArcade #DeskStrikes #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/desk-strikes.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="marble-blitz"><img src="img/t/marble-blitz.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Marble Blitz</h2><p class="u">https://www.sketchpadarcade.com/marble-blitz</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk. Play Marble Blitz free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/marble-blitz">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Marble Blitz: free arcade game
+Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #MarbleBlitz #arcadegames #browsergames
+https://www.sketchpadarcade.com/marble-blitz">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Marble Blitz | free arcade game on Sketchpad Arcade
+
+Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk.
+
+Play Marble Blitz free: https://www.sketchpadarcade.com/marble-blitz
+More games: https://www.sketchpadarcade.com/
+
+A bouncy marble-volley game drawn in pencil on a sheet of notebook paper. Rows of numbered paper cups slide down the page one turn at a time, and your little doodle buddy flicks a whole stream of glass marbles to knock them down. Every bump takes one off a cup&#x27;s number, and at zero it crumples up. Grab paper clips for more marbles, collect gold star stickers for bonus points, and see how many turns you can last before a cup slides off the edge of the desk.
+
+#SketchpadArcade #MarbleBlitz #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/marble-blitz.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="paper-peaks"><img src="img/t/paper-peaks.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Paper Peaks</h2><p class="u">https://www.sketchpadarcade.com/paper-peaks</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Clear three folded-paper peaks of doodle cards by playing one higher or one lower. Play Paper Peaks free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/paper-peaks">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Paper Peaks: free puzzle game
+Clear three folded-paper peaks of doodle cards by playing one higher or one lower. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PaperPeaks #puzzlegames #browsergames
+https://www.sketchpadarcade.com/paper-peaks">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Paper Peaks | free puzzle game on Sketchpad Arcade
+
+Clear three folded-paper peaks of doodle cards by playing one higher or one lower.
+
+Play Paper Peaks free: https://www.sketchpadarcade.com/paper-peaks
+More games: https://www.sketchpadarcade.com/
+
+A cheerful card puzzle drawn on a school desk. Three folded-paper mountains are stacked with hand-doodled index cards, and you clear them by tapping any face-up card one higher or one lower than the card on the notepad. Keep a run going for bigger and bigger points, and when nothing fits, flip a new card from the draw pile. Each level hands out fewer wild doodle stars and a shorter draw pile, so plan your runs.
+
+#SketchpadArcade #PaperPeaks #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/paper-peaks.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="even-sketch"><img src="img/t/even-sketch.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Even Sketch</h2><p class="u">https://www.sketchpadarcade.com/even-sketch</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings. Play Even Sketch free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/even-sketch">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Even Sketch: free puzzle game
+Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #EvenSketch #puzzlegames #browsergames
+https://www.sketchpadarcade.com/even-sketch">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Even Sketch | free puzzle game on Sketchpad Arcade
+
+Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.
+
+Play Even Sketch free: https://www.sketchpadarcade.com/even-sketch
+More games: https://www.sketchpadarcade.com/
+
+A calm little logic puzzle drawn on a sheet of graph paper. Tap a square to draw a smiling orange star, tap again for a blue circle. Every row and column needs as many stars as circles, you can never have three of the same side by side, and the little = and × badges between squares tell you which pairs match and which are opposite. Each puzzle has exactly one answer, so careful thinking always wins. Finish the page before the bell timer fills up and the next sheet is waiting.
+
+#SketchpadArcade #EvenSketch #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/even-sketch.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-keeper"><img src="img/t/doodle-keeper.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle Keeper</h2><p class="u">https://www.sketchpadarcade.com/doodle-keeper</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page. Play Doodle Keeper free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-keeper">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle Keeper: free word game
+Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleKeeper #wordgames #browsergames
+https://www.sketchpadarcade.com/doodle-keeper">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle Keeper | free word game on Sketchpad Arcade
+
+Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page.
+
+Play Doodle Keeper free: https://www.sketchpadarcade.com/doodle-keeper
+More games: https://www.sketchpadarcade.com/
+
+A letter-guessing word game drawn in a sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.
+
+#SketchpadArcade #DoodleKeeper #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-keeper.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="letter-scramble"><img src="img/t/letter-scramble.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Letter Scramble</h2><p class="u">https://www.sketchpadarcade.com/letter-scramble</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out. Play Letter Scramble free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/letter-scramble">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Letter Scramble: free word game
+Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #LetterScramble #wordgames #browsergames
+https://www.sketchpadarcade.com/letter-scramble">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Letter Scramble | free word game on Sketchpad Arcade
+
+Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out.
+
+Play Letter Scramble free: https://www.sketchpadarcade.com/letter-scramble
+More games: https://www.sketchpadarcade.com/
+
+A fast word search on a desk tray of 16 torn-notebook letter tiles. Swipe from tile to tile, even corner to corner, to spell words of three letters or more. Longer words score much more, and any word that uses the gold-star tile scores double. Reach the target score before the 80-second timer runs out and the next page comes with a bigger target.
+
+#SketchpadArcade #LetterScramble #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/letter-scramble.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="ink-jars"><img src="img/t/ink-jars.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Ink Jars</h2><p class="u">https://www.sketchpadarcade.com/ink-jars</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Pour layers of colored ink between glass jars until every jar holds one color. Play Ink Jars free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/ink-jars">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Ink Jars: free puzzle game
+Pour layers of colored ink between glass jars until every jar holds one color. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #InkJars #puzzlegames #browsergames
+https://www.sketchpadarcade.com/ink-jars">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Ink Jars | free puzzle game on Sketchpad Arcade
+
+Pour layers of colored ink between glass jars until every jar holds one color.
+
+Play Ink Jars free: https://www.sketchpadarcade.com/ink-jars
+More games: https://www.sketchpadarcade.com/
+
+A calm pouring puzzle on a pencil-sketched desk. Glass ink jars sit on a sheet of paper, each one filled with mixed layers of colored ink. Tap a jar to lift it and tap another to pour. Ink only pours onto the same color or into an empty jar. Fill a jar with one color and it gets a cork with a happy sparkle. Every level is checked by a solver, so it can always be sorted.
+
+#SketchpadArcade #InkJars #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/ink-jars.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="pencil-patrol"><img src="img/t/pencil-patrol.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Pencil Patrol</h2><p class="u">https://www.sketchpadarcade.com/pencil-patrol</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Scribble through a notebook-page maze collecting pencil dots while silly erasers chase you. Play Pencil Patrol free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-patrol">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Pencil Patrol: free arcade game
+Scribble through a notebook-page maze collecting pencil dots while silly erasers chase you. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilPatrol #arcadegames #browsergames
+https://www.sketchpadarcade.com/pencil-patrol">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Pencil Patrol | free arcade game on Sketchpad Arcade
+
+Scribble through a notebook-page maze collecting pencil dots while silly erasers chase you.
+
+Play Pencil Patrol free: https://www.sketchpadarcade.com/pencil-patrol
+More games: https://www.sketchpadarcade.com/
+
+A maze chase drawn on a notebook page. Stubby the stubby little pencil scribbles through coloured-pencil mazes collecting pencil dots, while four googly-eyed erasers wander around trying to rub him out. Each eraser has its own way of moving, so you can learn to dodge them. Grab a gold star sticker and the erasers go pale and wobbly, and for a few seconds Stubby can bonk them back into the pencil case for bonus points. Clear every dot to turn to the next page, where everything moves a little faster.
+
+#SketchpadArcade #PencilPatrol #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/pencil-patrol.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="paper-plane-dash"><img src="img/t/paper-plane-dash.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Paper Plane Dash</h2><p class="u">https://www.sketchpadarcade.com/paper-plane-dash</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Fly a paper airplane round the inside of a paper tube: dodge the junk, grab the stars, thread the ring gaps. 10 real folds to unlock. Play Paper Plane Dash free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/paper-plane-dash">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Paper Plane Dash: free arcade game
+Fly a paper airplane round the inside of a paper tube: dodge the junk, grab the stars, thread the ring gaps. 10 real folds to unlock. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PaperPlaneDash #arcadegames #browsergames
+https://www.sketchpadarcade.com/paper-plane-dash">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Paper Plane Dash | free arcade game on Sketchpad Arcade
+
+Fly a paper airplane round the inside of a paper tube: dodge the junk, grab the stars, thread the ring gaps. 10 real folds to unlock.
+
+Play Paper Plane Dash free: https://www.sketchpadarcade.com/paper-plane-dash
+More games: https://www.sketchpadarcade.com/
+
+A fast tube-flying dash drawn in pencil on black construction paper. Your paper airplane flies down a round tube on its own, and you touch or drag on the side of the tube you want to be on: the plane flies round to it the short way, up the sides, over the top and back down, keeping its belly to the wall the whole way. The junk sits on the inside of the tube: crumpled paper balls in every construction-paper colour, erasers, pencil stubs, two-spot-wide rulers and inky blots. Fly round them, fly through the stars, and when a paper ring comes down the tube, get into its gap to fly through for 50 points. Every ten stars start Dart Mode, when your plane fires paper darts that pop everything straight ahead. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, each faster than the last, and the stars you collect unlock nine more planes, all real folds: the Basic Glider, Bulldog Dart, Nakamura Lock, Harrier, Hammerhead, Flying Wing, Canard, Stunt Plane and the blue-and-gold Delta Wing.
+
+#SketchpadArcade #PaperPlaneDash #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/paper-plane-dash.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="margin-merge"><img src="img/t/margin-merge.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Margin Merge</h2><p class="u">https://www.sketchpadarcade.com/margin-merge</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle. Play Margin Merge free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/margin-merge">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Margin Merge: free puzzle game
+Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #MarginMerge #puzzlegames #browsergames
+https://www.sketchpadarcade.com/margin-merge">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Margin Merge | free puzzle game on Sketchpad Arcade
+
+Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle.
+
+Play Margin Merge free: https://www.sketchpadarcade.com/margin-merge
+More games: https://www.sketchpadarcade.com/
+
+A relaxing merge puzzle in a glass jar drawn on notebook paper. Drop doodle balls from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny Dot all the way to a big gold Super Doodle, but don&#x27;t let the jar overflow.
+
+#SketchpadArcade #MarginMerge #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/margin-merge.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="2048-drop"><img src="img/t/2048-drop.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>2048 DROP</h2><p class="u">https://www.sketchpadarcade.com/2048-drop</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drop numbers, merge matching balls and work your way to 2048. Play 2048 DROP free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/2048-drop">Facebook post</button>
+<button class="btn small share" type="button" data-copy="2048 DROP: free puzzle game
+Drop numbers, merge matching balls and work your way to 2048. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #2048Drop #puzzlegames #browsergames
+https://www.sketchpadarcade.com/2048-drop">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="2048 DROP | free puzzle game on Sketchpad Arcade
+
+Drop numbers, merge matching balls and work your way to 2048.
+
+Play 2048 DROP free: https://www.sketchpadarcade.com/2048-drop
+More games: https://www.sketchpadarcade.com/
+
+Number merging, drawn by hand. A pencil-sketched glass jar sits on a school desk among rulers and crumpled paper, and every numbered ball is coloured in like a doodle in the back of a notebook. Slide the dropper, let a ball fall, and when two of the same number touch they squash into one worth double. Chain the merges, keep the pile under the dashed red line at the neck, and see how far past 2048 you can go.
+
+#SketchpadArcade #2048Drop #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/2048-drop.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="shoe-string-swing"><img src="img/t/shoe-string-swing.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Shoe String Swing</h2><p class="u">https://www.sketchpadarcade.com/shoe-string-swing</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Lasso push-pins with a shoestring and swing a caped kid through the city, the mountains, the farm and beyond. Play Shoe String Swing free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/shoe-string-swing">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Shoe String Swing: free arcade game
+Lasso push-pins with a shoestring and swing a caped kid through the city, the mountains, the farm and beyond. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #ShoeStringSwing #arcadegames #browsergames
+https://www.sketchpadarcade.com/shoe-string-swing">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Shoe String Swing | free arcade game on Sketchpad Arcade
+
+Lasso push-pins with a shoestring and swing a caped kid through the city, the mountains, the farm and beyond.
+
+Play Shoe String Swing free: https://www.sketchpadarcade.com/shoe-string-swing
+More games: https://www.sketchpadarcade.com/
+
+A one-button swinging game starring a caped kid in a mask and a very long shoestring. Hold to lasso the nearest push-pin, swing down and up, then let go to fling forward. Every 1000 meters the scenery changes, from the city to the city at night with a flashlight, then the beach, the snowy mountains and the farm. Catch the next pin before you tumble to the ground, collect stars along the way and see how far you can go.
+
+#SketchpadArcade #ShoeStringSwing #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/shoe-string-swing.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="note-quest"><img src="img/t/note-quest.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Note Quest</h2><p class="u">https://www.sketchpadarcade.com/note-quest</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Guess the secret word in each note in six tries, with colour clues after every guess. Play Note Quest free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/note-quest">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Note Quest: free word game
+Guess the secret word in each note in six tries, with colour clues after every guess. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #NoteQuest #wordgames #browsergames
+https://www.sketchpadarcade.com/note-quest">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Note Quest | free word game on Sketchpad Arcade
+
+Guess the secret word in each note in six tries, with colour clues after every guess.
+
+Play Note Quest free: https://www.sketchpadarcade.com/note-quest
+More games: https://www.sketchpadarcade.com/
+
+A friendly word-guessing game in a sunny classroom. Every note passed your way hides a secret word. Type a guess and the letters light up to show which ones are right. Solve note after note as the words grow from 4 letters to 6, and see how many you can find before you run out of gold stars.
+
+#SketchpadArcade #NoteQuest #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/note-quest.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="eraser-gulp"><img src="img/t/eraser-gulp.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Eraser Gulp</h2><p class="u">https://www.sketchpadarcade.com/eraser-gulp</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Steer a hungry little eraser and gulp up the desk to grow. Play Eraser Gulp free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/eraser-gulp">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Eraser Gulp: free arcade game
+Steer a hungry little eraser and gulp up the desk to grow. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #EraserGulp #arcadegames #browsergames
+https://www.sketchpadarcade.com/eraser-gulp">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Eraser Gulp | free arcade game on Sketchpad Arcade
+
+Steer a hungry little eraser and gulp up the desk to grow.
+
+Play Eraser Gulp free: https://www.sketchpadarcade.com/eraser-gulp
+More games: https://www.sketchpadarcade.com/
+
+A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and gold stars, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.
+
+#SketchpadArcade #EraserGulp #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/eraser-gulp.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="sidewalk-hop"><img src="img/t/sidewalk-hop.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Sidewalk Hop</h2><p class="u">https://www.sketchpadarcade.com/sidewalk-hop</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Hop a kid across busy streets and a creek before the rain catches up. Play Sidewalk Hop free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/sidewalk-hop">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Sidewalk Hop: free arcade game
+Hop a kid across busy streets and a creek before the rain catches up. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SidewalkHop #arcadegames #browsergames
+https://www.sketchpadarcade.com/sidewalk-hop">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Sidewalk Hop | free arcade game on Sketchpad Arcade
+
+Hop a kid across busy streets and a creek before the rain catches up.
+
+Play Sidewalk Hop free: https://www.sketchpadarcade.com/sidewalk-hop
+More games: https://www.sketchpadarcade.com/
+
+An endless hopping game starring Milo, a curly-haired kid with a red backpack. Hop forward one step at a time, dodge the cars, ice-cream vans and bikes on the streets, and ride logs, planks and crates across the creek. Keep moving, because a rainstorm is chasing you up the street.
+
+#SketchpadArcade #SidewalkHop #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/sidewalk-hop.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="paper-gates"><img src="img/t/paper-gates.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Paper Gates</h2><p class="u">https://www.sketchpadarcade.com/paper-gates</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Slide patterned blocks out through the gates that match their colour. Play Paper Gates free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/paper-gates">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Paper Gates: free puzzle game
+Slide patterned blocks out through the gates that match their colour. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PaperGates #puzzlegames #browsergames
+https://www.sketchpadarcade.com/paper-gates">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Paper Gates | free puzzle game on Sketchpad Arcade
+
+Slide patterned blocks out through the gates that match their colour.
+
+Play Paper Gates free: https://www.sketchpadarcade.com/paper-gates
+More games: https://www.sketchpadarcade.com/
+
+A sliding block puzzle on a sheet of graph paper. The board is packed with cute blocks in bright coloured pencil, each with its own pattern, and the edges have matching gates. Drag each block around the others and slide it into its gate to send it zooming off the page. Clear the whole board before time runs out.
+
+#SketchpadArcade #PaperGates #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/paper-gates.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-stacks"><img src="img/t/doodle-stacks.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle Stacks</h2><p class="u">https://www.sketchpadarcade.com/doodle-stacks</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Stack coloured-pencil discs by colour and pop them in tens. Play Doodle Stacks free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-stacks">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle Stacks: free puzzle game
+Stack coloured-pencil discs by colour and pop them in tens. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleStacks #puzzlegames #browsergames
+https://www.sketchpadarcade.com/doodle-stacks">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle Stacks | free puzzle game on Sketchpad Arcade
+
+Stack coloured-pencil discs by colour and pop them in tens.
+
+Play Doodle Stacks free: https://www.sketchpadarcade.com/doodle-stacks
+More games: https://www.sketchpadarcade.com/
+
+A colour sorting puzzle on a little hexagon board drawn on paper. Three stacks of coloured-pencil discs wait in the wooden tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one disc at a time. Get 10 or more of one colour on top and they pop in a burst of points. Pop enough discs to finish the level, but don&#x27;t let the board fill up. Every level adds a new colour, and later ones have rocks in the way.
+
+#SketchpadArcade #DoodleStacks #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-stacks.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="scribble-slice"><img src="img/t/scribble-slice.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Scribble Slice</h2><p class="u">https://www.sketchpadarcade.com/scribble-slice</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Swipe to slice the juicy fruit that leaps up over the cutting board. Play Scribble Slice free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/scribble-slice">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Scribble Slice: free arcade game
+Swipe to slice the juicy fruit that leaps up over the cutting board. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #ScribbleSlice #arcadegames #browsergames
+https://www.sketchpadarcade.com/scribble-slice">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Scribble Slice | free arcade game on Sketchpad Arcade
+
+Swipe to slice the juicy fruit that leaps up over the cutting board.
+
+Play Scribble Slice free: https://www.sketchpadarcade.com/scribble-slice
+More games: https://www.sketchpadarcade.com/
+
+A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the inky black bombs. The fruit comes faster and in bigger bunches the longer you last.
+
+#SketchpadArcade #ScribbleSlice #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/scribble-slice.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="sketch-search"><img src="img/t/sketch-search.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Sketch Search</h2><p class="u">https://www.sketchpadarcade.com/sketch-search</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Find the hidden words in a board of graph-paper letter tiles. Play Sketch Search free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/sketch-search">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Sketch Search: free word game
+Find the hidden words in a board of graph-paper letter tiles. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SketchSearch #wordgames #browsergames
+https://www.sketchpadarcade.com/sketch-search">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Sketch Search | free word game on Sketchpad Arcade
+
+Find the hidden words in a board of graph-paper letter tiles.
+
+Play Sketch Search free: https://www.sketchpadarcade.com/sketch-search
+More games: https://www.sketchpadarcade.com/
+
+A cheerful word search on a notebook page. Every level has a theme, like Pets, Art Class or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.
+
+#SketchpadArcade #SketchSearch #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/sketch-search.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="pencil-putt"><img src="img/t/pencil-putt.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Pencil Putt</h2><p class="u">https://www.sketchpadarcade.com/pencil-putt</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Pull back, aim and putt your way round a mini golf course on a school desk. Play Pencil Putt free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-putt">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Pencil Putt: free arcade game
+Pull back, aim and putt your way round a mini golf course on a school desk. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilPutt #arcadegames #browsergames
+https://www.sketchpadarcade.com/pencil-putt">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Pencil Putt | free arcade game on Sketchpad Arcade
+
+Pull back, aim and putt your way round a mini golf course on a school desk.
+
+Play Pencil Putt free: https://www.sketchpadarcade.com/pencil-putt
+More games: https://www.sketchpadarcade.com/
+
+A mini golf game on a wooden school desk, seen from above. Each hole is a patch of green on the desktop, with ruler walls, pencil sharpeners and thumbtacks all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for pencil shavings, spilled ink, pushy blue arrows, bouncy balls, a busy wind-up mouse, a spinning coffee mug and a sliding tape gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.
+
+#SketchpadArcade #PencilPutt #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/pencil-putt.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="letter-links"><img src="img/t/letter-links.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Letter Links</h2><p class="u">https://www.sketchpadarcade.com/letter-links</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties. Play Letter Links free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/letter-links">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Letter Links: free word game
+Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #LetterLinks #wordgames #browsergames
+https://www.sketchpadarcade.com/letter-links">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Letter Links | free word game on Sketchpad Arcade
+
+Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties.
+
+Play Letter Links free: https://www.sketchpadarcade.com/letter-links
+More games: https://www.sketchpadarcade.com/
+
+Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.
+
+#SketchpadArcade #LetterLinks #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/letter-links.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="sketch-sprint"><img src="img/t/sketch-sprint.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Sketch Sprint</h2><p class="u">https://www.sketchpadarcade.com/sketch-sprint</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide. Play Sketch Sprint free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/sketch-sprint">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Sketch Sprint: free arcade game
+Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SketchSprint #arcadegames #browsergames
+https://www.sketchpadarcade.com/sketch-sprint">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Sketch Sprint | free arcade game on Sketchpad Arcade
+
+Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide.
+
+Play Sketch Sprint free: https://www.sketchpadarcade.com/sketch-sprint
+More games: https://www.sketchpadarcade.com/
+
+A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.
+
+#SketchpadArcade #SketchSprint #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/sketch-sprint.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-drop"><img src="img/t/doodle-drop.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle Drop</h2><p class="u">https://www.sketchpadarcade.com/doodle-drop</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Spin a giant pencil and drop a bouncy striped ball down to the finish platform. Play Doodle Drop free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-drop">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle Drop: free arcade game
+Spin a giant pencil and drop a bouncy striped ball down to the finish platform. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleDrop #arcadegames #browsergames
+https://www.sketchpadarcade.com/doodle-drop">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle Drop | free arcade game on Sketchpad Arcade
+
+Spin a giant pencil and drop a bouncy striped ball down to the finish platform.
+
+Play Doodle Drop free: https://www.sketchpadarcade.com/doodle-drop
+More games: https://www.sketchpadarcade.com/
+
+A bouncy striped ball sits at the top of a giant pencil, and the only way down is through the gaps in the paper rings around it. Drag to spin the pencil, drop through ring after ring, and steer clear of the spiky pink scribbles and sliding ink blots. Fall through three in a row and your ball glows with a rainbow that smashes right through the next ring.
+
+#SketchpadArcade #DoodleDrop #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-drop.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="pencil-plunk"><img src="img/t/pencil-plunk.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Pencil Plunk</h2><p class="u">https://www.sketchpadarcade.com/pencil-plunk</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups. Play Pencil Plunk free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-plunk">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Pencil Plunk: free puzzle game
+Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilPlunk #puzzlegames #browsergames
+https://www.sketchpadarcade.com/pencil-plunk">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Pencil Plunk | free puzzle game on Sketchpad Arcade
+
+Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups.
+
+Play Pencil Plunk free: https://www.sketchpadarcade.com/pencil-plunk
+More games: https://www.sketchpadarcade.com/
+
+A pin-pulling puzzle on a corkboard. Popsicle sticks are pinned to the board with bright thumbtacks. Tap a tack that no stick is lying on and it pops out and flies into the paper cup of its color. Tacks with no cup wait in the pencil case, so plan ahead before it fills up. Pull the last tack from a stick and it plunks onto the desk, while a little gold star buddy cheers you on.
+
+#SketchpadArcade #PencilPlunk #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/pencil-plunk.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="draw-brawl"><img src="img/t/draw-brawl.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Draw Brawl</h2><p class="u">https://www.sketchpadarcade.com/draw-brawl</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Grab gold stars, fill your fort and dodge the sprinklers against three computer rivals in a backyard brawl. Play Draw Brawl free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/draw-brawl">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Draw Brawl: free arcade game
+Grab gold stars, fill your fort and dodge the sprinklers against three computer rivals in a backyard brawl. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DrawBrawl #arcadegames #browsergames
+https://www.sketchpadarcade.com/draw-brawl">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Draw Brawl | free arcade game on Sketchpad Arcade
+
+Grab gold stars, fill your fort and dodge the sprinklers against three computer rivals in a backyard brawl.
+
+Play Draw Brawl free: https://www.sketchpadarcade.com/draw-brawl
+More games: https://www.sketchpadarcade.com/
+
+A backyard arena full of cardboard boxes, crates and paint splats where everyone wants the same stars. Choose Max, Ruby or Leo, scoop up gold stars and carry them home to your own fort before a rival splats you. Every 25 seconds the sprinklers soak the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.
+
+#SketchpadArcade #DrawBrawl #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/draw-brawl.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="doodle-darts"><img src="img/t/doodle-darts.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Doodle Darts</h2><p class="u">https://www.sketchpadarcade.com/doodle-darts</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Tap at just the right moment to blast the target and nail the gold bullseye. Play Doodle Darts free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-darts">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Doodle Darts: free arcade game
+Tap at just the right moment to blast the target and nail the gold bullseye. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleDarts #arcadegames #browsergames
+https://www.sketchpadarcade.com/doodle-darts">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Doodle Darts | free arcade game on Sketchpad Arcade
+
+Tap at just the right moment to blast the target and nail the gold bullseye.
+
+Play Doodle Darts free: https://www.sketchpadarcade.com/doodle-darts
+More games: https://www.sketchpadarcade.com/
+
+A fast one-tap darts game drawn in pencil on a sketchbook page. Your aim drifts left, right, up and down over a sketched dartboard. Tap at the right moment and your dart smashes the target to pieces, then a new one pops up somewhere else. Hit the gold star for a bullseye, build combos, and see how many doodled desk friends you can beat.
+
+#SketchpadArcade #DoodleDarts #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/doodle-darts.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="word-workshop"><img src="img/t/word-workshop.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Word Workshop</h2><p class="u">https://www.sketchpadarcade.com/word-workshop</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drag across the letters to spell words and fill a sketchbook crossword. Play Word Workshop free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/word-workshop">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Word Workshop: free word game
+Drag across the letters to spell words and fill a sketchbook crossword. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #WordWorkshop #wordgames #browsergames
+https://www.sketchpadarcade.com/word-workshop">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Word Workshop | free word game on Sketchpad Arcade
+
+Drag across the letters to spell words and fill a sketchbook crossword.
+
+Play Word Workshop free: https://www.sketchpadarcade.com/word-workshop
+More games: https://www.sketchpadarcade.com/
+
+A relaxing word puzzle drawn in pencil on a sketchbook page. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words earn big rewards.
+
+#SketchpadArcade #WordWorkshop #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/word-workshop.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="bubble-doodle"><img src="img/t/bubble-doodle.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Bubble Doodle</h2><p class="u">https://www.sketchpadarcade.com/bubble-doodle</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Aim, bounce and pop bubbles before they reach the dashed line. Play Bubble Doodle free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/bubble-doodle">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Bubble Doodle: free arcade game
+Aim, bounce and pop bubbles before they reach the dashed line. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #BubbleDoodle #arcadegames #browsergames
+https://www.sketchpadarcade.com/bubble-doodle">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Bubble Doodle | free arcade game on Sketchpad Arcade
+
+Aim, bounce and pop bubbles before they reach the dashed line.
+
+Play Bubble Doodle free: https://www.sketchpadarcade.com/bubble-doodle
+More games: https://www.sketchpadarcade.com/
+
+A bubble shooter drawn in coloured pencil, with a dotted aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the dashed line.
+
+#SketchpadArcade #BubbleDoodle #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/bubble-doodle.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="four-in-a-frame"><img src="img/t/four-in-a-frame.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Four in a Frame</h2><p class="u">https://www.sketchpadarcade.com/four-in-a-frame</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Sort sixteen words into four secret groups of four. Play Four in a Frame free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/four-in-a-frame">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Four in a Frame: free word game
+Sort sixteen words into four secret groups of four. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #FourInAFrame #wordgames #browsergames
+https://www.sketchpadarcade.com/four-in-a-frame">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Four in a Frame | free word game on Sketchpad Arcade
+
+Sort sixteen words into four secret groups of four.
+
+Play Four in a Frame free: https://www.sketchpadarcade.com/four-in-a-frame
+More games: https://www.sketchpadarcade.com/
+
+A word-sorting puzzle in the style of the daily connections games. Sixteen paper word tiles are pinned to a corkboard, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like fruits and colours, and get sneakier as you go, with words that seem to fit two groups at once.
+
+#SketchpadArcade #FourInAFrame #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/four-in-a-frame.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="margin-match"><img src="img/t/margin-match.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Margin Match</h2><p class="u">https://www.sketchpadarcade.com/margin-match</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Tap doodle tiles off the pile and collect three of a kind in your tray. Play Margin Match free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/margin-match">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Margin Match: free puzzle game
+Tap doodle tiles off the pile and collect three of a kind in your tray. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #MarginMatch #puzzlegames #browsergames
+https://www.sketchpadarcade.com/margin-match">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Margin Match | free puzzle game on Sketchpad Arcade
+
+Tap doodle tiles off the pile and collect three of a kind in your tray.
+
+Play Margin Match free: https://www.sketchpadarcade.com/margin-match
+More games: https://www.sketchpadarcade.com/
+
+A cheerful tile-matching puzzle piled high with sketchbook doodles. Tap a tile and it hops into your tray. Collect three of the same, like three pencils or three paperclips, and they clear away. Clear the whole pile to win the level, but don&#x27;t let your 7-spot tray fill up.
+
+#SketchpadArcade #MarginMatch #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/margin-match.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="no-2-pencil"><img src="img/t/no-2-pencil.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>No. 2 Pencil</h2><p class="u">https://www.sketchpadarcade.com/no-2-pencil</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Link matching classroom doodles before the timer runs out. Play No. 2 Pencil free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/no-2-pencil">Facebook post</button>
+<button class="btn small share" type="button" data-copy="No. 2 Pencil: free puzzle game
+Link matching classroom doodles before the timer runs out. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #No2Pencil #puzzlegames #browsergames
+https://www.sketchpadarcade.com/no-2-pencil">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="No. 2 Pencil | free puzzle game on Sketchpad Arcade
+
+Link matching classroom doodles before the timer runs out.
+
+Play No. 2 Pencil free: https://www.sketchpadarcade.com/no-2-pencil
+More games: https://www.sketchpadarcade.com/
+
+A tile-matching puzzle drawn in plain No. 2 pencil. Every tile is a classroom doodle, like an apple, a globe, a school bus or a trophy, and it colours in when you tap it. Connect two matching tiles with a path of no more than two turns and clear the whole desk before the timer runs out.
+
+#SketchpadArcade #No2Pencil #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/no-2-pencil.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="scribble-blocks"><img src="img/t/scribble-blocks.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Scribble Blocks</h2><p class="u">https://www.sketchpadarcade.com/scribble-blocks</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drag shapes onto the board and clear rows and columns. Play Scribble Blocks free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/scribble-blocks">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Scribble Blocks: free puzzle game
+Drag shapes onto the board and clear rows and columns. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #ScribbleBlocks #puzzlegames #browsergames
+https://www.sketchpadarcade.com/scribble-blocks">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Scribble Blocks | free puzzle game on Sketchpad Arcade
+
+Drag shapes onto the board and clear rows and columns.
+
+Play Scribble Blocks free: https://www.sketchpadarcade.com/scribble-blocks
+More games: https://www.sketchpadarcade.com/
+
+A relaxing block puzzle with bright coloured-pencil pieces outlined in black. Place shapes on an 8x8 grid, fill a row or column to rub it out and chain clears together for big combos. Gold star blocks are worth bonus points.
+
+#SketchpadArcade #ScribbleBlocks #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/scribble-blocks.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="drop-swap"><img src="img/t/drop-swap.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Drop Swap</h2><p class="u">https://www.sketchpadarcade.com/drop-swap</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Swap classroom doodles, match three and clear the scribbles. Play Drop Swap free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/drop-swap">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Drop Swap: free puzzle game
+Swap classroom doodles, match three and clear the scribbles. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DropSwap #puzzlegames #browsergames
+https://www.sketchpadarcade.com/drop-swap">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Drop Swap | free puzzle game on Sketchpad Arcade
+
+Swap classroom doodles, match three and clear the scribbles.
+
+Play Drop Swap free: https://www.sketchpadarcade.com/drop-swap
+More games: https://www.sketchpadarcade.com/
+
+A bright match-3 puzzle with 30 levels, drawn in coloured pencil. Swap neighboring tiles to line up three or more apples, pencils, books, backpacks, crayons or star stickers. Each level has its own goal and a limited number of moves, and your stars decorate your classroom.
+
+#SketchpadArcade #DropSwap #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/drop-swap.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="pencil-path"><img src="img/t/pencil-path.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Pencil Path</h2><p class="u">https://www.sketchpadarcade.com/pencil-path</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Tap pencils to send them off the notepad, one clear path at a time. Play Pencil Path free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-path">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Pencil Path: free puzzle game
+Tap pencils to send them off the notepad, one clear path at a time. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilPath #puzzlegames #browsergames
+https://www.sketchpadarcade.com/pencil-path">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Pencil Path | free puzzle game on Sketchpad Arcade
+
+Tap pencils to send them off the notepad, one clear path at a time.
+
+Play Pencil Path free: https://www.sketchpadarcade.com/pencil-path
+More games: https://www.sketchpadarcade.com/
+
+A calm logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so tap the ones with a clear path off the page first and open the way for the rest. Bump into another pencil and you lose a heart.
+
+#SketchpadArcade #PencilPath #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/pencil-path.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="space-blaster"><img src="img/t/space-blaster.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Space Blaster</h2><p class="u">https://www.sketchpadarcade.com/space-blaster</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Fly a little rocket and blast the UFOs swooping down from space. Play Space Blaster free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/space-blaster">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Space Blaster: free arcade game
+Fly a little rocket and blast the UFOs swooping down from space. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SpaceBlaster #arcadegames #browsergames
+https://www.sketchpadarcade.com/space-blaster">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Space Blaster | free arcade game on Sketchpad Arcade
+
+Fly a little rocket and blast the UFOs swooping down from space.
+
+Play Space Blaster free: https://www.sketchpadarcade.com/space-blaster
+More games: https://www.sketchpadarcade.com/
+
+A retro arcade shooter drawn on grid paper. UFOs of every shape and size, from tiny scouts to a shielded mothership, line up in formation and swoop down at your little rocket. Fire rapid laser bolts to zap them, dodge their alien goo, and see how many levels you can clear.
+
+#SketchpadArcade #SpaceBlaster #arcadegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/space-blaster.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="space-glass"><img src="img/t/space-glass.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Space Glass</h2><p class="u">https://www.sketchpadarcade.com/space-glass</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Colour space pictures by number, one pencil colour at a time. Play Space Glass free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/space-glass">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Space Glass: free puzzle game
+Colour space pictures by number, one pencil colour at a time. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #SpaceGlass #puzzlegames #browsergames
+https://www.sketchpadarcade.com/space-glass">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Space Glass | free puzzle game on Sketchpad Arcade
+
+Colour space pictures by number, one pencil colour at a time.
+
+Play Space Glass free: https://www.sketchpadarcade.com/space-glass
+More games: https://www.sketchpadarcade.com/
+
+A relaxing color-by-number puzzle on a sheet of grid paper. Each level is a detailed pixel picture from outer space, like a rocket, an astronaut, a UFO, a ringed planet or a galaxy. Pick a numbered color, then tap or drag across the matching squares and zoom in for the small details.
+
+#SketchpadArcade #SpaceGlass #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/space-glass.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="chibi-chib"><img src="img/t/chibi-chib.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Chibi Chib</h2><p class="u">https://www.sketchpadarcade.com/chibi-chib</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Pick up scrambled gems and put each colour back to rebuild cute chibi animals. Play Chibi Chib free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/chibi-chib">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Chibi Chib: free puzzle game
+Pick up scrambled gems and put each colour back to rebuild cute chibi animals. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #ChibiChib #puzzlegames #browsergames
+https://www.sketchpadarcade.com/chibi-chib">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Chibi Chib | free puzzle game on Sketchpad Arcade
+
+Pick up scrambled gems and put each colour back to rebuild cute chibi animals.
+
+Play Chibi Chib free: https://www.sketchpadarcade.com/chibi-chib
+More games: https://www.sketchpadarcade.com/
+
+A calm, colourful sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour. Each square shows the colour it wants, so zoom in, pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.
+
+#SketchpadArcade #ChibiChib #puzzlegames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/chibi-chib.jpg" download>Cover image</a></div></div></section><section class="panel kit" id="word-scribble"><img src="img/t/word-scribble.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>Word Scribble</h2><p class="u">https://www.sketchpadarcade.com/word-scribble</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="Drop letter bubbles into a pencil box, merge matching letters and swipe to spell words. Play Word Scribble free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/word-scribble">Facebook post</button>
+<button class="btn small share" type="button" data-copy="Word Scribble: free word game
+Drop letter bubbles into a pencil box, merge matching letters and swipe to spell words. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #WordScribble #wordgames #browsergames
+https://www.sketchpadarcade.com/word-scribble">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="Word Scribble | free word game on Sketchpad Arcade
+
+Drop letter bubbles into a pencil box, merge matching letters and swipe to spell words.
+
+Play Word Scribble free: https://www.sketchpadarcade.com/word-scribble
+More games: https://www.sketchpadarcade.com/
+
+A merge game and a word game in one pencil box. Letters drop in color-coded sets that each spell a hidden word, and when two of the same letter touch they merge into a bigger letter worth more points. Swipe across nearby bubbles to spell words, which pops them and makes room for more. Spell enough words to clear the level before the box fills up.
+
+#SketchpadArcade #WordScribble #wordgames #browsergames #familygames">YouTube text</button>
+<a class="btn small share" href="img/word-scribble.jpg" download>Cover image</a></div></div></section></div>
+<style>.kit{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start;margin:0 0 16px}.kit img{border:2px solid var(--ink);border-radius:10px}.kit h2{margin:0 0 2px}.kit .u{margin:0 0 10px;color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}.kit .btnrow{gap:8px}</style>
+<script>document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;let ok=false;try{await navigator.clipboard.writeText(b.dataset.copy);ok=true}catch(x){}const t=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=t,1400)});</script></main>
+<footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
+<ul><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
+<script>
+(()=>{
+  let sheet,toastEl,tt;
+  const enc=encodeURIComponent;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='bda-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2200)}
+  async function copy(url){try{await navigator.clipboard.writeText(url);toast('Link copied')}catch(e){
+    const ta=document.createElement('textarea');ta.value=url;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?'Link copied':'Copy this link: '+url)}}
+  function openSheet(d){
+    if(!sheet){sheet=document.createElement('div');sheet.className='bda-sheet';sheet.hidden=true;sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-label','Share');
+      sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet)sheet.hidden=true});document.body.appendChild(sheet)}
+    const msg=d.text+' '+d.url;
+    sheet.innerHTML='<div class="bda-card"><h2></h2><p class="u"></p><div class="bda-opts">'+
+      '<button type="button" data-a="copy"><i style="background:#0fa3b8">&#128279;</i>Copy link</button>'+
+      '<a href="https://www.facebook.com/sharer/sharer.php?u='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#1877f2">f</i>Facebook</a>'+
+      '<a href="https://twitter.com/intent/tweet?text='+enc(d.text)+'&url='+enc(d.url)+'" target="_blank" rel="noopener"><i style="background:#111">X</i>X</a>'+
+      '<a href="https://wa.me/?text='+enc(msg)+'" target="_blank" rel="noopener"><i style="background:#25d366">W</i>WhatsApp</a>'+
+      '<a href="mailto:?subject='+enc(d.title)+'&body='+enc(msg)+'"><i style="background:#ff6f59">@</i>Email</a>'+
+      '</div><button type="button" class="bda-x">Close</button></div>';
+    sheet.querySelector('h2').textContent='Share '+d.title;sheet.querySelector('.u').textContent=d.url;
+    sheet.querySelector('[data-a=copy]').onclick=()=>{copy(d.url);sheet.hidden=true};
+    sheet.querySelector('.bda-x').onclick=()=>sheet.hidden=true;
+    sheet.hidden=false;sheet.querySelector('[data-a=copy]').focus();
+  }
+  async function share(el){
+    const d={url:el.dataset.shareUrl,title:el.dataset.shareTitle,text:el.dataset.shareText};
+    try{if(window.va)window.va('event',{name:'Share',data:{page:d.title}})}catch(e){}
+    const touch=matchMedia('(pointer:coarse)').matches;
+    if(navigator.share&&touch){try{await navigator.share({title:d.title,text:d.text,url:d.url});return}catch(e){if(e&&e.name==='AbortError')return}}
+    openSheet(d);
+  }
+  document.addEventListener('click',e=>{const el=e.target.closest('[data-share-url]');if(el){e.preventDefault();share(el)}});
+})();
+</script>
+</body>
+</html>

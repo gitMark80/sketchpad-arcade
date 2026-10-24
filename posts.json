@@ -7,7 +7,7 @@
       "date": "2026-10-22",
       "summary": "Tic-tac-toe, SOS, dots and boxes, paper boats, four in a row, checkers and draw-and-guess, all for two players. Pass one phone, play the bot, or invite a friend by text.",
       "body": [
-        "Sketchpad Arcade has had a Versus tab for about a day, and it already holds seven games. They are the games kids have always played on the back page of a notebook when the lesson ran long, and they are the first games on the site built from scratch rather than traced from a Beach Day Arcade twin.",
+        "Sketchpad Arcade has had a Versus tab for about a day, and it already holds seven games. They are the games everyone has played on the back page of a notebook when the lecture ran long, and they are the first games on the site built from scratch rather than traced from a Beach Day Arcade twin.",
         "## The notebook classics",
         "{{tic-tac-doodle}} is tic-tac-toe, blue X against pink O. {{doodle-sos}} is SOS on a 6×6 grid: finish S-O-S in a line and you score and go again, and one letter can finish two lines at once. {{box-doodles}} is dots and boxes, 25 boxes so there are no ties, and the part where the long chains start changing hands is as tense as ever. {{paper-boats}} is the hide-and-seek grid game with four folded paper boats on an 8×8 page, where a miss is a splash and a hit is a pencil X.",
         "## Three more this week",
@@ -65,14 +65,14 @@
       "slug": "sketch-sprint",
       "title": "Sketch Sprint, the game that started the site",
       "date": "2026-10-09",
-      "summary": "It began as a request to redraw a boardwalk runner like a ten-year-old's sketchbook. It ended up as a whole second site.",
+      "summary": "It began as a request to redraw a boardwalk runner like a sketchbook doodle. It ended up as a whole second site.",
       "body": [
-        "Sketchpad Arcade exists because of one request: take our sister site's boardwalk runner and make it look like a ten-year-old drew it in pencil in a sketchbook. We did, and the result was {{sketch-sprint}}.",
+        "Sketchpad Arcade exists because of one request: take our sister site's boardwalk runner and make it look like someone drew it in pencil in the back of a sketchbook. We did, and the result was {{sketch-sprint}}.",
         "## What a sketch twin is",
-        "A sketch twin is the same game underneath, with every piece of art redrawn in pencil. Same corners, same power-ups, same unlockable runners, but the path twists through downtown, the backyard, the park, a creek and the woods instead of the beach, and the eight runners are kids with backpacks instead of beach animals. Fixes on one side reach the other, which keeps both games honest.",
+        "A sketch twin is the same game underneath, with every piece of art redrawn in pencil. Same corners, same power-ups, same unlockable runners, but the path twists through downtown, the backyard, the park, a creek and the woods instead of the beach, and the eight runners are hand-drawn characters with backpacks instead of beach animals. Fixes on one side reach the other, which keeps both games honest.",
         "## Why a second site",
         "We thought about offering the sketch look as a toggle inside each game and decided against it. The sketch versions have their own names and their own mood, and they deserve a home where everything matches, right down to the hand-drawn buttons and the graph-paper background. Keeping the sites separate also keeps each one simple: Beach Day Arcade stays bright and painted, and Sketchpad Arcade stays pencil and paper.",
-        "Sketch Sprint is still the game we show people first. Swipe the way the arrow points to take each corner, jump the logs, slide under the nets, and collect stars to unlock the rest of the kids."
+        "Sketch Sprint is still the game we show people first. Swipe the way the arrow points to take each corner, jump the logs, slide under the nets, and collect stars to unlock the rest of the runners."
       ]
     },
     {
@@ -81,15 +81,15 @@
       "date": "2026-10-08",
       "summary": "The short list of rules every game on the site has to follow before it goes live.",
       "body": [
-        "Sketchpad Arcade is run by a dad of four, and the first question about any game is whether we would be happy with our own kids playing it. That turns into a short list of rules, and every game on the site has to pass all of them.",
+        "Sketchpad Arcade is a two-person-sized studio, and the first question about any game is whether we would actually keep playing it after the first five minutes. That turns into a short list of rules, and every game on the site has to pass all of them.",
         "## The rules",
-        "Family-friendly, always. No violence beyond a cartoon bonk, nothing scary, and nothing you would not want on the screen with a six-year-old next to you.",
+        "Clean, always. No gore, no gambling mechanics and nothing you would not want on your screen in a library or a lecture hall.",
         "No gambling mechanics. No loot boxes, no spinning wheels, no fake currencies you buy with real money. Progress is earned by playing.",
         "Nothing to install and nobody to sign up. Every game runs in the browser, and your scores and progress are saved on your own device, not on our servers.",
         "Original work. We happily borrow mechanics, because a bubble shooter is a bubble shooter, but every character, drawing and word list on the site is ours. We never use another game's name, art or text.",
-        "Drawn by hand. The whole site is meant to look like a page from a kid's sketchbook, so every game's art is pencil on paper, with dark outlines and coloured-pencil inside.",
+        "Drawn by hand. The whole site is meant to look like a page from a sketchbook, so every game's art is pencil on paper, with dark outlines and coloured-pencil inside.",
         "## How a game gets here",
-        "New games start on a private preview where we play them, usually with the kids, for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. The games you see in the New This Week row are the survivors.",
+        "New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. The games you see in the New This Week row are the survivors.",
         "If you think something on the site breaks one of these rules, tell us from the contact page. We would rather hear about it than not."
       ]
     },
@@ -97,15 +97,15 @@
       "slug": "welcome",
       "title": "Welcome to Sketchpad Arcade",
       "date": "2026-10-08",
-      "summary": "Free browser games drawn like a page from a kid's sketchbook, from a family studio in Pensacola, Florida. What the site is and why we made it.",
+      "summary": "Free browser games drawn like a page from a sketchbook, from a small studio in Pensacola, Florida. What the site is and why we made it.",
       "body": [
-        "Sketchpad Arcade is a collection of free games you can play in your browser on a phone, tablet or computer, and every one of them is drawn to look like a kid sketched it in pencil. There is nothing to download, no account to make and nothing on the site we would not want our own kids to see. It is made by Restless Faith Media, a small independent studio in Pensacola, Florida.",
+        "Sketchpad Arcade is a collection of free games you can play in your browser on a phone, tablet or computer, and every one of them is drawn in pencil, like a doodle in the back of a notebook. There is nothing to download and no account to make. It is made by Restless Faith Media, a small independent studio in Pensacola, Florida.",
         "## Why we built it",
-        "We already ran Beach Day Arcade, a site of bright, painted beach games. Then we tried redrawing one of them in pencil, as if a ten-year-old had copied it into a sketchbook, and we liked it so much we wanted a whole site that looked that way. Sketchpad Arcade is that site: the same kind of quick, clean, family-friendly games, on graph paper and lined notebook pages, with dark pencil outlines and coloured-pencil inside.",
+        "We already ran Beach Day Arcade, a site of bright, painted beach games. Then we tried redrawing one of them in pencil, as if someone had copied it into a sketchbook, and we liked it so much we wanted a whole site that looked that way. Sketchpad Arcade is that site: the same kind of quick, clean games, on graph paper and lined notebook pages, with dark pencil outlines and coloured-pencil inside.",
         "## What is here",
         "The site opened with sketch twins of the Beach Day games, like {{sketch-sprint}}, {{doodle-drop}}, {{draw-brawl}} and {{margin-merge}}, and has started adding games of its own, beginning with {{paper-plane-dash}}. Every game has its own page with a short guide on how to play, the controls, a few tips and a bit about how it was made.",
         "## What to expect",
-        "Family-friendly, always. Hand-drawn art and characters. Progress saved on your device, not ours. And a site that keeps getting a little better every week. If you have an idea for a game, or you found a bug, the contact page is the place to tell us."
+        "Clean, always. Hand-drawn art and characters. Progress saved on your device, not ours. And a site that keeps getting a little better every week. If you have an idea for a game, or you found a bug, the contact page is the place to tell us."
       ]
     }
   ]

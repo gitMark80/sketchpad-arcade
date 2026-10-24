@@ -26,3 +26,8 @@ export const PREFIX = "sketch:";
 export const ALL_KEY = `${PREFIX}plays:all`;
 export const dayKey = (d) => `${PREFIX}plays:day:${d.toISOString().slice(0, 10)}`;
 export const RECENT_DAYS = 30;
+
+// Engagement events (api/event.js), anonymous tallies per game or page: <prefix>ev:<event>:all and <prefix>ev:<event>:day:<date>
+export const EVENTS = ["view", "start", "complete", "restart", "repeat", "related", "twin", "book_view", "amazon", "amazon_via", "return"];
+export const evAll = (e) => `${PREFIX}ev:${e}:all`;
+export const evDay = (e, d) => `${PREFIX}ev:${e}:day:${d.toISOString().slice(0, 10)}`;

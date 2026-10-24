@@ -55,6 +55,51 @@ E = html.escape
 ADSENSE_CLIENT = "ca-pub-6837573645630599"
 ADSENSE = f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n'
 ANALYTICS = '<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>\n<script defer src="/_vercel/insights/script.js"></script>\n'
+# src/arcade.js (shared with Beach Day Arcade): recently played, Up Next, pause, anonymous engagement tallies.
+# Served as /arcade.js with a content hash so browsers cache it between pages.
+import hashlib
+ARC_SRC = (ROOT / "src" / "arcade.js").read_text()
+ARC_VER = hashlib.sha1(ARC_SRC.encode()).hexdigest()[:8]
+ARC_CSS = """<style>
+.arc-next{display:flex;flex-direction:column;align-items:center;gap:6px;margin:8px auto 0;max-width:100%;pointer-events:auto;position:relative;z-index:5}
+.arc-up{display:flex;align-items:center;gap:8px;max-width:100%;padding:5px 12px 5px 5px;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px dashed #55555c;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;font:400 1.05rem/1.1 "Patrick Hand","Comic Sans MS",cursive;text-align:left}
+.arc-up img{width:40px;height:40px;flex:none;border:2px solid #2e2e33;border-radius:8px;object-fit:cover;background:#efeadd}
+.arc-up span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.arc-up small{display:block;font-size:.8rem;color:#7a7a80;text-transform:uppercase;letter-spacing:.06em}
+.arc-bk{font:400 .95rem/1.2 "Patrick Hand","Comic Sans MS",cursive;color:#55555c;text-decoration:underline wavy #c99a1a;text-underline-offset:3px;text-align:center}
+.arc-pause{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;cursor:pointer;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c}
+.arc-pause svg{width:16px;height:16px}.arc-pause:active{transform:translate(2px,2px);box-shadow:none}.arc-pause[hidden]{display:none!important}
+.arc-veil{position:fixed;inset:0;z-index:10050;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.82)}
+.arc-card{width:100%;max-width:320px;text-align:center;background:#f6f3ea;border:2px solid #2e2e33;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:18px 16px 14px;box-shadow:4px 4px 0 #55555c;font-family:"Patrick Hand","Comic Sans MS",cursive}
+.arc-card h2{margin:0 0 6px;font:400 2rem/1.1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;transform:rotate(-1.5deg)}
+.arc-rot{display:none;margin:0 0 6px;color:#55555c;font-size:1.1rem}html.arc-sideways .arc-rot{display:block}html.arc-sideways .arc-go{opacity:.45}
+.arc-go{appearance:none;cursor:pointer;width:100%;margin-top:6px;padding:10px;font:400 1.6rem/1 "Gloria Hallelujah","Comic Sans MS",cursive;text-transform:uppercase;color:#2e2e33;background:#f3e6b0;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:4px 4px 0 #55555c}
+.arc-more{display:inline-block;margin-top:12px;color:#2e2e33;font-size:1.1rem}
+.arc-go:focus-visible,.arc-more:focus-visible,.arc-pause:focus-visible,.arc-up:focus-visible,.arc-bk:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}
+</style>"""
+
+def arc_tag(cfg):
+    """The page's ARC config plus the shared script (see src/arcade.js)."""
+    return "<script>window.ARC=" + json.dumps(cfg, ensure_ascii=False).replace("</", "<\\/") + f';</script>\n<script defer src="/arcade.js?v={ARC_VER}"></script>\n'
+
+def clean_links(h):
+    """Internal links point straight at the clean URL Vercel serves (/2048-drop), not at 2048-drop.html, which Vercel
+    answers with a 308 redirect first. ../ and index.html resolve to the site root."""
+    def sub(m):
+        path = m.group(2)
+        path = "" if path in ("index", "../index", "") else path
+        return f'href="/{path}{m.group(3) or ""}{m.group(4) or ""}"'
+    h = re.sub(r'href="((?:\.\./)*)((?:[a-z0-9_-]+/)*[a-z0-9_-]+)\.html(\?[^"#]*)?(#[^"]*)?"', lambda m: sub(m) if not m.group(2).startswith("http") else m.group(0), h)
+    return h.replace('href="../"', 'href="/"').replace("href='../'", "href='/'")
+
+def related(g, n=8):
+    """Games to suggest from this one: its own related list, then the same genre (picks first), then the site's picks."""
+    order = list(g.get("related", [])) + [x for x in SITE.get("picks", []) if BY_SLUG.get(x, {}).get("genre") == g["genre"]] + \
+        [x["slug"] for x in GAMES if x["genre"] == g["genre"]] + list(SITE.get("picks", [])) + [x["slug"] for x in GAMES]
+    out = []
+    for x in order:
+        if x != g["slug"] and x in BY_SLUG and x not in out and not BY_SLUG[x].get("play_url"): out.append(x)
+    return [BY_SLUG[x] for x in out[:n]]
+
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">'
 
 CSS = """
@@ -102,6 +147,8 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+.also.twin{margin:0 0 28px}
+.allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
 .book .bookcov img.pg{background:#fff;transform:rotate(1.5deg)}
 .book .bookcov img{display:block;width:100%;height:auto;border:2px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--pencil);transform:rotate(-2deg)}
@@ -203,7 +250,7 @@ def footlink(rel, p, name, current):
     cur = ' aria-current="page"' if current else ""
     return f'<li><a href="{rel}{p}.html"{cur}>{name}</a></li>'
 
-def page(title, desc, body, active="", full=True, canonical=None, extra_head="", share=None, rel=""):
+def page(title, desc, body, active="", full=True, canonical=None, extra_head="", share=None, rel="", arc=None):
     """rel is the path back to the site root from this page ("" at the root, "../" inside news/)."""
     share = share or site_share()
     t = E(title)
@@ -212,7 +259,11 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
     icons = f'<link rel="icon" type="image/png" sizes="32x32" href="{base}/brand/icon-32.png?v=2">\n<link rel="icon" type="image/png" sizes="192x192" href="{base}/brand/icon-192.png?v=2">\n<link rel="apple-touch-icon" href="{base}/brand/apple-touch-icon.png?v=2">\n<meta name="theme-color" content="#f6f3ea">\n'
     if "og:image" not in extra_head:
         extra_head = f'<meta property="og:image" content="{base}/brand/share-2.jpg">\n' + extra_head
-    extra_head = '<meta name="twitter:card" content="summary_large_image">\n' + extra_head
+    img = re.search(r'og:image" content="([^"]+)"', extra_head).group(1)
+    extra_head = (f'<meta property="og:type" content="website">\n<meta property="og:site_name" content="{E(SITE["name"])}">\n'
+                  f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="{E(title)}">\n'
+                  f'<meta name="twitter:description" content="{E(desc)}">\n<meta name="twitter:image" content="{img}">\n' + extra_head)
+    extra_head += arc_tag(arc or {"page": "other"}) + ARC_CSS + "\n"
     head = f'<title>{t}</title>\n{canon}{icons}{ADSENSE}{ANALYTICS}{SHARE_CSS}\n<meta name="description" content="{E(desc)}">\n<meta property="og:title" content="{t}">\n<meta property="og:description" content="{E(desc)}">\n{FONTS}\n{extra_head}<style>{CSS}</style>\n{PAPER_STYLE}\n'
     nav = f'''<div class="top"><nav class="wrap nav" aria-label="Main">
 <a class="logo" href="{rel}index.html">{LOGO_SVG}<span>{E(SITE["name"])}</span></a>
@@ -224,8 +275,8 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
 <ul>{"".join(footlink(rel, p, n, active == p) for p, n in links)}</ul></div></footer>'''
     content = f"{nav}\n<main>{body}</main>\n{foot}\n{SHARE_JS}"
     if not full:  # fragment for the claude.ai preview, which supplies its own document shell
-        return head + content
-    return f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n{head}</head>\n<body>\n{content}\n</body>\n</html>\n'
+        return clean_links(head + content)
+    return clean_links(f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n{head}</head>\n<body>\n{content}\n</body>\n</html>\n')
 
 BOOKS = SITE.get("books") or ([SITE["book"] | {"slug": "coloring-book", "dir": "book", "short": "Coloring Book"}] if SITE.get("book") else [])
 BOOK = BOOKS[0] if BOOKS else None  # the first book is the one promoted when a game has no page of its own
@@ -240,6 +291,8 @@ def book_with_page(g):
         if (ROOT / "src" / b["dir"] / "pages" / f'{g["slug"]}.webp').exists(): return b
     return None
 
+BOOK_CTA = "Love the games? Bring your favorite characters to life with the Sketchpad Arcade Coloring Books!"
+
 def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
     """A promo for a Sketchpad Arcade coloring book (paperback on Amazon, affiliate link).
     On a game's page it shows that game's own coloring page from whichever book has one."""
@@ -250,6 +303,7 @@ def book_card(rel="", kicker="New: the coloring book", heading=None, g=None):
            else f'<img src="{rel}{b["dir"]}/cover.jpg" alt="{E(b["title"])} cover" width="620" height="802" loading="lazy">')
     pitch = (f'{E(g["name"])} has its own page in the {E(b["title"])}, along with lots of other games from the site, on big 8.5 × 11-inch pages.' if own
              else E(b["pitch"]))
+    if g: pitch = f'{E(BOOK_CTA)} {pitch}'
     return f'''<aside class="book" aria-label="{E(b["title"])}">
 <a class="bookcov" href="{rel}{b["slug"]}.html">{img}</a>
 <div><span class="kicker">{E(kicker)}</span><h2>{E(heading or b["title"])}</h2><p>{pitch}</p>
@@ -261,10 +315,16 @@ def book_shelf():
     """Home page Books section: each coloring book as a card the same size as the game cards, linking to its page."""
     if not BOOKS: return ""
     cards = "".join(f'''<a class="card" href="{b["slug"]}.html" aria-label="{E(b["title"])}" title="{E(b["title"])}">
-<img class="thumb" src="{b["dir"]}/thumb.jpg" alt="{E(b["title"])}" width="640" height="640" loading="lazy">
+<img class="thumb" src="img/t/book-{b["slug"]}.webp" alt="{E(b["title"])}" width="400" height="400" loading="lazy" decoding="async">
 <div class="body"><span class="tag bk">Book</span></div></a>''' for b in BOOKS)
     return f'''<section class="shelf" aria-labelledby="books-head"><h2 class="shelfhead" id="books-head">Books</h2>
 <div class="strip books">{cards}</div></section>'''
+
+def in_book(b):
+    """Games with a page in this book: the samples first, then the rest A to Z."""
+    pages = sorted(p.stem for p in (ROOT / "src" / b["dir"] / "pages").glob("*.webp")) if (ROOT / "src" / b["dir"] / "pages").exists() else []
+    order = [x for x in b.get("samples", []) if x in BY_SLUG] + [x for x in pages if x in BY_SLUG and x not in b.get("samples", [])]
+    return [BY_SLUG[x] for x in order] or sorted(GAMES, key=lambda g: g["name"].lower())
 
 def book_page(b):
     li = "".join(f"<li>{E(x)}</li>" for x in b["facts"])
@@ -272,6 +332,8 @@ def book_page(b):
     ld = {"@context": "https://schema.org", "@type": "Book", "name": b["title"], "bookFormat": "https://schema.org/Paperback",
           "isbn": b.get("isbn"), "publisher": {"@type": "Organization", "name": SITE["owner"]},
           "audience": {"@type": "PeopleAudience", "suggestedMinAge": 6, "suggestedMaxAge": 12}, "url": f'{SITE["url"].rstrip("/")}/{b["slug"]}'}
+    ld["image"] = f'{SITE["url"].rstrip("/")}/{b["dir"]}/cover.jpg'
+    ld["offers"] = {"@type": "Offer", "url": b["url"].split("?")[0], "availability": "https://schema.org/InStock"}
     ld = {k: v for k, v in ld.items() if v is not None}
     samples = [x for x in b.get("samples", []) if x in BY_SLUG]
     more = "".join(f'''<aside class="book" aria-label="{E(o["title"])}"><a class="bookcov" href="{o["slug"]}.html"><img src="{o["dir"]}/cover.jpg" alt="{E(o["title"])} cover" width="620" height="802" loading="lazy"></a>
@@ -285,7 +347,7 @@ def book_page(b):
   <div class="info">
     <span class="tag">Paperback</span>
     <h1>{E(b["title"])}</h1>
-    <p class="lead">Bring the games off the screen and onto the page. {E(b["pitch"])}</p>
+    <p class="lead"><b>{E(BOOK_CTA)}</b> {E(b["pitch"])}</p>
     <ul class="facts">{li}</ul>
   </div>
 </div>
@@ -296,16 +358,17 @@ def book_page(b):
 <p>Grab colored pencils or crayons. If you use markers, slip a spare sheet behind the page to protect the next design.</p>
 <p>{book_link("Order the coloring book", b, "btn small")}</p></section>
 {more}
-<section><h2 class="sec">Play the games</h2><div class="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
+<section><h2 class="sec">Play the games in this book</h2><div class="grid">{"".join(card(g, " data-arc-rel") for g in in_book(b)[:12])}</div>
+<p class="allgames"><a class="btn small" href="index.html#games-head">See all {len(GAMES)} games</a></p></section>
 </div>
 <script type="application/ld+json">{json.dumps(ld)}</script>'''
     return page(f'{b["title"]} | {SITE["name"]}', f'{b["title"]}: {b["pitch"]} Paperback on Amazon.', body, b["slug"], canonical=b["slug"],
-                extra_head=f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/{b["dir"]}/share.jpg">\n')
+                extra_head=f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/{b["dir"]}/share.jpg">\n', arc={"page": "book", "slug": b["slug"]})
 
-def card(g):
+def card(g, attrs=""):
     cls = "tag " + g["genre"].lower()
-    return f'''<a class="card" href="{g["slug"]}.html" data-slug="{E(g["slug"])}" data-added="{E(g["added"])}" data-genre="{E(g["genre"])}" aria-label="{E(g["name"])}, {E(g["genre"])} game" title="{E(g["name"])}">
-<img class="thumb" src="img/{g["slug"]}.jpg" alt="{E(g["name"])}" loading="lazy" width="640" height="640">
+    return f'''<a class="card" href="{g["slug"]}.html"{attrs} data-slug="{E(g["slug"])}" data-added="{E(g["added"])}" data-genre="{E(g["genre"])}" aria-label="{E(g["name"])}, {E(g["genre"])} game" title="{E(g["name"])}">
+<img class="thumb" src="img/t/{g["slug"]}.webp" alt="{E(g["name"])}" loading="lazy" decoding="async" width="400" height="400">
 <div class="body"><span class="{cls}">{E(g["genre"])}</span></div></a>'''
 
 def home(full=True):
@@ -321,6 +384,7 @@ def home(full=True):
 {book_shelf()}
 <section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
+<section class="row" id="row-keep" hidden><h2 class="sec">Keep Playing</h2><div class="strip"></div></section>
 <section class="row" id="row-mine" hidden><h2 class="sec">Your Games with Friends</h2><div class="strip"></div></section>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
 <section class="row" id="row-all" hidden><h2 class="sec">All-Time Favorites</h2><div class="strip"></div></section>
@@ -382,7 +446,7 @@ def home(full=True):
       keep.sort((a,b)=>rank(a)-rank(b)).slice(0,ROW_MAX).forEach(x=>{{const g=by[x.code];const c=cards.get(x.game);if(!c)return;
         const t=g.status==="done"?(g.winner===-1?"Draw":g.winner===x.seat?"You won!":"Friend won"):g.turn===x.seat?"Your turn!":g.status==="waiting"?"Waiting for friend":"Friend's turn";
         const a=document.createElement("a");a.className="card mine";a.href="play/"+x.game+"?game="+x.code;a.title=x.name+": "+t;
-        a.innerHTML='<img class="thumb" src="img/'+x.game+'.jpg" alt="" loading="lazy" width="640" height="640"><div class="body"><span class="tag '+(t==="Your turn!"?"versus":"")+'"></span></div>';
+        a.innerHTML='<img class="thumb" src="img/t/'+x.game+'.webp" alt="" loading="lazy" width="400" height="400"><div class="body"><span class="tag '+(t==="Your turn!"?"versus":"")+'"></span></div>';
         a.querySelector(".tag").textContent=t;strip.appendChild(a)}});
       if(strip.children.length){{row.hidden=false}}}})}})();
   document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{{
@@ -390,19 +454,29 @@ def home(full=True):
   }}));
 }})();
 </script>'''
-    return page(f'{SITE["name"]}: free family-friendly games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js())
+    return page(f'{SITE["name"]}: free hand-drawn browser games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js(), arc={"page": "home"})
 
 GAME_LINK_JS = """<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/SLUG?game='+m[1])})();</script>"""
 
+def twin_panel(g):
+    """A link to the same game on the sister site (games.json "twin" holds its slug there)."""
+    sis = SITE.get("sister")
+    if not (sis and g.get("twin")): return ""
+    return (f'<aside class="also twin"><p>Like {E(g["name"])}? Play the painted, full-colour version at {E(sis["name"])}.</p>'
+            f'<a class="btn small" href="{E(sis["url"].rstrip("/"))}/{E(g["twin"])}" rel="noopener" data-arc-twin>Play it at {E(sis["short"])}</a></aside>')
+
 def detail(g):
-    others = [o for o in GAMES if o["slug"] != g["slug"]]
-    if g.get("related"):  # optional: games to list first under "More games"
-        first = [o for s in g["related"] for o in others if o["slug"] == s]
-        others = first + [o for o in others if o not in first]
-    ld = {"@context": "https://schema.org", "@type": "VideoGame", "name": g["name"], "description": g["lead"],
-          "genre": g["genre"], "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer",
+    others = related(g)
+    base = SITE["url"].rstrip("/")
+    versus = g["genre"].lower() == "versus"
+    ld = {"@context": "https://schema.org", "@type": "VideoGame", "name": g["name"], "description": g["lead"], "url": f'{base}/{g["slug"]}',
+          "image": f'{base}/img/{g["slug"]}.jpg', "genre": g["genre"], "gamePlatform": ["Web browser", "Mobile web"],
+          "playMode": ["MultiPlayer", "SinglePlayer"] if versus else "SinglePlayer", "inLanguage": "en",
           "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": True,
-          "publisher": {"@type": "Organization", "name": SITE["owner"]}}
+          "publisher": {"@type": "Organization", "name": SITE["owner"], "url": base}}
+    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Games", "item": base + "/"},
+        {"@type": "ListItem", "position": 2, "name": g["name"], "item": f'{base}/{g["slug"]}'}]}
     li = lambda xs: "".join(f"<li>{E(x)}</li>" for x in xs)
     play = E(g["play_url"]) if g.get("play_url") else f'play/{g["slug"]}.html'
     ext = ' rel="noopener" data-count' if g.get("play_url") else ""
@@ -411,7 +485,7 @@ def detail(g):
     body = f'''<div class="wrap">
 <div class="crumbs"><a href="index.html">All games</a> / {E(g["genre"])}</div>
 <div class="hero">
-  <div class="cover"><img src="img/{g["slug"]}.jpg" alt="{E(g["name"])} gameplay" width="640" height="640"><a class="btn" href="{play}"{ext}>Play now</a></div>
+  <div class="cover"><img src="img/{g["slug"]}.jpg" alt="{E(g["name"])} cover art" width="640" height="640" fetchpriority="high"><a class="btn" href="{play}"{ext}>Play now</a></div>
   <div class="info">
     <span class="tag {g["genre"].lower()}">{E(g["genre"])}</span>
     <h1>{E(g["name"])}</h1>
@@ -427,14 +501,19 @@ def detail(g):
   <section class="panel"><h2>{E(g.get("tips_title", "Tips"))}</h2><ul>{li(g["tips"])}</ul></section>
 </div>
 {about}
-{book_card(kicker="Love the drawings?", heading=f"Color {g['name']} yourself", g=g)}
-<section><h2 class="sec">More games</h2><div class="grid">{"".join(card(o) for o in others)}</div></section>
+{book_card(kicker="Sketchpad Arcade Coloring Books", heading=f"Color {g['name']} yourself", g=g)}
+{twin_panel(g)}
+<section><h2 class="sec">If you like {E(g["name"])}, try these</h2><div class="grid">{"".join(card(o, " data-arc-rel") for o in others)}</div>
+<p class="allgames"><a class="btn small" href="index.html#games-head">See all {len(GAMES)} games</a></p></section>
 </div>
 <script type="application/ld+json">{json.dumps(ld)}</script>
+<script type="application/ld+json">{json.dumps(crumbs)}</script>
 {count_js(g["slug"], False) if g.get("play_url") else ""}
 {GAME_LINK_JS.replace('SLUG', g['slug']) if g['slug'] in ONLINE_GAMES else ''}'''
     return page(g.get("title") or f'{g["name"]}: play free online | {SITE["name"]}', g["meta"], body, "games", canonical=g["slug"], share=game_share(g),
-                extra_head=(f'<meta property="og:image" content="{SITE["url"].rstrip("/")}/img/{g["slug"]}.jpg">\n' if SITE.get("url") else ""))
+                extra_head=(f'<meta property="og:image" content="{base}/img/{g["slug"]}.jpg">\n<meta property="og:image:width" content="640">\n'
+                            f'<meta property="og:image:height" content="640">\n<meta property="og:image:alt" content="{E(g["name"])} cover art">\n'),
+                arc={"page": "game", "slug": g["slug"]})
 
 POSTS = json.loads((ROOT / "posts.json").read_text())["posts"] if (ROOT / "posts.json").exists() else []
 POSTS.sort(key=lambda x: x["date"], reverse=True)
@@ -459,9 +538,9 @@ def home_outro():
     sis = SITE.get("sister", {})
     return f"""<section class="prose homeabout">
 <h2>What is {E(SITE["name"])}?</h2>
-<p>{E(SITE["name"])} is a collection of {n} free, original browser games drawn to look like a page from a kid's sketchbook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
+<p>{E(SITE["name"])} is a collection of {n} free, original browser games hand-drawn in pencil like the back pages of a notebook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
 <p>The games fall into {len(genres)} groups: {", ".join(E(x) for x in genres)}. Arcade games are the quick ones about timing and reflexes, puzzle games are about thinking a few moves ahead, and word games are about spelling, guessing and sorting. Each game has its own page with a short guide on how to play, the controls, a few tips and a note on how it was made, so you can see what a game is like before you press play.</p>
-<p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own. We are a family studio, and the first question about every game is whether we would want our own kids playing it: no violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
+<p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own: sudoku, minesweeper, code-breaking and two-player games you play with a friend by text. The first question about every game is whether we would keep playing it after the first five minutes, and every game stays clean: no gore, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
 <h2>Latest from the studio</h2>
 <ul class="newslist">{news}</ul>
 <p><a href="news.html">All news and updates</a></p>
@@ -472,24 +551,24 @@ def about():
     sis = SITE.get("sister", {})
     body = f"""<div class="wrap prose">
 <h1>About {E(SITE["name"])}</h1>
-<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn to look like a page from a kid's sketchbook: dark pencil outlines on paper, with bright coloured pencil inside. They are built to be quick to pick up, pleasant to look at and clean enough for the whole family. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
+<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn like a doodle in the back of a notebook: dark pencil outlines on paper, with coloured pencil inside. They are built for a five-minute break between classes or a long evening with a puzzle, and to be pleasant to look at while you do it. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
 <h2>Who makes it</h2>
-<p>{E(SITE["name"])} is run by a dad of four who has worked as a graphic designer for twenty years and makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if a ten-year-old had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
+<p>{E(SITE["name"])} is run by a graphic designer of twenty years who makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if someone had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
 <h2>What you can expect</h2>
 <ul><li>Games that run in your browser on a phone, tablet or computer, with nothing to install.</li>
 <li>No accounts or sign-ups. Your progress and best scores are saved on your own device.</li>
-<li>No violence beyond a cartoon bonk, nothing scary, no gambling mechanics and no chat with strangers.</li>
+<li>Clean games: no gore, no gambling mechanics and no chat with strangers.</li>
 <li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
 <li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
 <li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
 <h2>How a game gets here</h2>
-<p>New games start on a private preview where we play them, usually with the kids, for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
+<p>New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
 <h2>Ads</h2>
-<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never inside the games themselves and never ads that would be out of place on a family site. Our <a href="privacy.html">privacy policy</a> explains what that means for you.</p>
+<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never while you are in the middle of a game. Our <a href="privacy.html">privacy policy</a> explains what that means for you.</p>
 <h2>Contact</h2>
 <p>{E(SITE["contact_text"])} There is more on the <a href="contact.html">contact page</a>.</p>
 </div>"""
-    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}: who makes these free, family-friendly sketchbook games, the rules every game follows and how to get in touch.', body, "about", canonical="about")
+    return page(f'About | {SITE["name"]}', f'About {SITE["name"]}: who makes these free hand-drawn sketchbook games, the rules every game follows and how to get in touch.', body, "about", canonical="about")
 
 def contact():
     email = SITE.get("contact_email", "hello@sketchpadarcade.com")
@@ -500,15 +579,15 @@ def contact():
 <h2>Found a bug?</h2>
 <p>Tell us which game, what device and browser you were using, and what happened. A screenshot or a short screen recording helps a lot. We usually fix game-breaking bugs within a few days.</p>
 <h2>Have an idea for a game?</h2>
-<p>We would love to hear it. Most of the games on the site started as a one-line idea, and some of the best ones were suggested by players and by our own kids.</p>
-<h2>Parents and teachers</h2>
-<p>If you have a question about whether a game is suitable for your child or classroom, or you spotted something you think should not be on a family site, please let us know and we will look into it right away.</p>
+<p>We would love to hear it. Most of the games on the site started as a one-line idea, and some of the best ones were suggested by players.</p>
+<h2>Something not right?</h2>
+<p>If you spotted something on the site you think should not be here, please let us know and we will look into it right away.</p>
 <h2>Business and press</h2>
 <p>For partnership, licensing, press or advertising questions, use the same address with a short note about what you have in mind. {E(SITE["name"])} is owned by {E(SITE["owner"])}, {E(SITE.get("location", "Pensacola, Florida"))}.</p>
 <h2>Elsewhere</h2>
 <p>The painted, full-colour originals of most of these games live at <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and we post short gameplay clips on YouTube at <a href="https://www.youtube.com/@BeachDayArcade" rel="noopener">@BeachDayArcade</a>.</p>
 </div>"""
-    return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas, parent questions or business inquiries.', body, "contact", canonical="contact")
+    return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas or business inquiries.', body, "contact", canonical="contact")
 
 def terms():
     body = f"""<div class="wrap prose">
@@ -572,21 +651,23 @@ def not_found():
 </div>"""
     return page(f'Page not found | {SITE["name"]}', "That page could not be found.", body, extra_head='<meta name="robots" content="noindex">\n')
 
+AMAZON_PRIVACY = f"""<h2>Amazon Associates</h2>
+<p>{E(SITE["name"])} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Links to our books on Amazon are affiliate links: as an Amazon Associate I earn from qualifying purchases. Amazon may set cookies when you follow one of these links.</p>"""
+
 def privacy():
     body = f'''<div class="wrap prose">
 <h1>Privacy policy</h1>
 <p><strong>Last updated:</strong> {E(SITE["policy_date"])}</p>
 <p>This policy explains what information {E(SITE["name"])} ("we") collects when you visit this site and play our games.</p>
 <h2>Information stored on your device</h2>
-<p>Our games save settings and progress, such as your best score, current level and sound preference, in your browser's local storage. This information stays on your device. We do not receive it, and you can clear it at any time by clearing your browser's site data.</p>
+<p>Our games save settings and progress, such as your best score, current level and sound preference, in your browser's local storage, along with the games you played most recently so the home page can show them in a Keep Playing row. This information stays on your device. We do not receive it, and you can clear it at any time by clearing your browser's site data.</p>
 <h2>Accounts</h2>
 <p>You do not need an account to play, and we do not ask for your name, email address or other personal details to use the games.</p>
 <h2>Advertising and analytics</h2>
-<p>We may show ads provided by Google AdSense or by game-platform partners to keep the games free. These providers may use cookies or similar technologies to serve and measure ads. Google's use of advertising cookies enables it and its partners to serve ads based on visits to this and other sites. You can manage personalized advertising at <a href="https://www.google.com/settings/ads" rel="noopener">google.com/settings/ads</a>, and you can learn how Google uses information at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>. We may also use basic, aggregated analytics to understand which games people enjoy.</p>
-<h2>Amazon Associates</h2>
-<p>{E(SITE["name"])} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Links to our coloring book on Amazon are affiliate links: as an Amazon Associate I earn from qualifying purchases. Amazon may set cookies when you follow one of these links.</p>
+<p>We may show ads provided by Google AdSense or by game-platform partners to keep the games free. These providers may use cookies or similar technologies to serve and measure ads. Google's use of advertising cookies enables it and its partners to serve ads based on visits to this and other sites. You can manage personalized advertising at <a href="https://www.google.com/settings/ads" rel="noopener">google.com/settings/ads</a>, and you can learn how Google uses information at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>. To see which games people enjoy, we count activity such as a game page being opened or a game being started, finished or replayed, and links to our books being followed. These are anonymous totals per game: they contain no name, account, cookie or ID, and are not linked to you or your device. We also use Vercel Web Analytics, which counts page visits without cookies.</p>
+{AMAZON_PRIVACY if BOOKS else ""}
 <h2>Children</h2>
-<p>Our games are made for general audiences, including families. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us and we will delete it.</p>
+<p>{E(SITE["name"])} is made for a general audience of teens and adults and is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us and we will delete it. For younger players, our sister site <a href="{E(SITE.get("sister", {}).get("url", "#"))}" rel="noopener">{E(SITE.get("sister", {}).get("name", "Beach Day Arcade"))}</a> is made for families.</p>
 <h2>Changes</h2>
 <p>We may update this policy from time to time. The date at the top shows when it last changed.</p>
 <h2>Contact</h2>
@@ -771,7 +852,7 @@ def share_attrs(url, title, text):
     return f'data-share-url="{E(url)}" data-share-title="{E(title)}" data-share-text="{E(text)}"'
 
 def site_share():
-    return share_attrs(SITE.get('url', '').rstrip('/') + '/', SITE['name'], f'{SITE["name"]}: free, family-friendly games drawn like a kid\'s sketchbook, right in your browser.')
+    return share_attrs(SITE.get('url', '').rstrip('/') + '/', SITE['name'], f'{SITE["name"]}: free hand-drawn pencil-and-paper games, right in your browser.')
 
 def game_share(g):
     base = SITE.get("url", "").rstrip("/")
@@ -816,7 +897,12 @@ def play_page(g):
     game = json.dumps({"slug": g["slug"], "name": g["name"], "site": SITE["name"], "url": f'{base}/{g["slug"]}', "short": f'{host}/{g["slug"]}'})
     s = s.replace("</body>", END_HOME_JS + "\n" + PLAY_ADS_JS + "\n" + f"<script>window.BDA_GAME={game};</script>\n" + count_js(g["slug"], True) + "\n" + SHARE_JS + "\n" + SCORE_SHARE + "\n" + FIT_TITLE_JS + "\n</body>", 1)
     s = s.replace("<title>", f'<meta name="robots" content="noindex">\n<title>', 1)
-    return s
+    nb = book_with_page(g) or BOOK
+    cfg = {"page": "play", "slug": g["slug"], "name": g["name"], "portrait": bool(g.get("portrait")),
+           "next": [{"slug": o["slug"], "name": o["name"]} for o in related(g, 3)],
+           "book": {"slug": nb["slug"], "title": nb["title"]} if nb else None}
+    s = s.replace("</head>", ARC_CSS + "\n" + arc_tag(cfg) + "</head>", 1)
+    return clean_links(s)
 
 def reel_page():
     """Reel Studio (/reel): frames a live game on a sketchbook page for phone screen recordings. Unlisted and noindex.
@@ -839,6 +925,53 @@ def stats_page():
     games = [{"slug": g["slug"], "name": g["name"], "genre": g.get("genre", ""), "added": g.get("added", "")} for g in GAMES]
     data = json.dumps(games, ensure_ascii=False).replace("</", "<\\/")
     return (ROOT / "src" / "stats.html").read_text().replace("/*STATS_GAMES*/null", data, 1)
+
+def thumbs():
+    """Small WebP copies of the square covers for game cards (400px, a fraction of the 640px JPG), kept in src/img/t/
+    so they only get redrawn when a cover changes. Needs Pillow; without it the cards fall back to copies of the JPGs."""
+    t = ROOT / "src" / "img" / "t"; t.mkdir(exist_ok=True)
+    srcs = [(g["slug"], ROOT / "src" / "img" / f'{g["slug"]}.jpg') for g in GAMES] + [(f'book-{b["slug"]}', ROOT / "src" / b["dir"] / "thumb.jpg") for b in BOOKS]
+    for name, src in srcs:
+        dst = t / f"{name}.webp"
+        if not dst.exists() or dst.stat().st_mtime < src.stat().st_mtime:
+            try:
+                from PIL import Image
+                im = Image.open(src).convert("RGB"); im.thumbnail((400, 400), Image.LANCZOS); im.save(dst, "WEBP", quality=80, method=6)
+            except ImportError:
+                shutil.copy(src, dst)
+    shutil.copytree(t, OUT / "img" / "t", dirs_exist_ok=True)
+
+def social_data():
+    """One record per game for social posts (Facebook, Pinterest, YouTube), all from games.json. Published at /social.json
+    and shown on /share-kit, so a post never has to be written from scratch. Nothing is posted anywhere automatically."""
+    base = SITE["url"].rstrip("/")
+    tags = {"Arcade": "#arcadegames", "Puzzle": "#puzzlegames", "Word": "#wordgames", "Versus": "#twoplayergames"}
+    out = []
+    for g in GAMES:
+        url = f'{base}/{g["slug"]}'
+        hashtags = ["#" + re.sub(r"[^A-Za-z0-9]", "", SITE["name"]), "#" + re.sub(r"[^A-Za-z0-9]", "", g["name"].title()), tags.get(g["genre"], "#freegames"), "#browsergames", "#familygames"]
+        out.append({"slug": g["slug"], "name": g["name"], "genre": g["genre"], "url": url, "image": f'{base}/img/{g["slug"]}.jpg',
+            "tagline": g["tagline"], "description": g["meta"], "hashtags": hashtags,
+            "facebook": f'{g["tagline"]} Play {g["name"]} free on {SITE["name"]}, no downloads or sign-ups: {url}',
+            "pinterest": {"title": f'{g["name"]}: free {g["genre"].lower()} game', "description": f'{g["tagline"]} Free to play in your browser on {SITE["name"]}. ' + " ".join(hashtags[:4]), "link": url, "image": f'{base}/img/{g["slug"]}.jpg'},
+            "youtube": {"title": f'{g["name"]} | free {g["genre"].lower()} game on {SITE["name"]}',
+                        "description": f'{g["tagline"]}\n\nPlay {g["name"]} free: {url}\nMore games: {base}/\n\n{g["lead"]}\n\n' + " ".join(hashtags)}})
+    return out
+
+def share_kit():
+    """/share-kit (unlisted, noindex): every game's post text ready to copy, built from social_data()."""
+    rows = "".join(f'''<section class="panel kit" id="{E(x["slug"])}"><img src="img/t/{E(x["slug"])}.webp" alt="" width="96" height="96" loading="lazy">
+<div><h2>{E(x["name"])}</h2><p class="u">{E(x["url"])}</p><div class="btnrow">
+<button class="btn small share" type="button" data-copy="{E(x["facebook"])}">Facebook post</button>
+<button class="btn small share" type="button" data-copy="{E(x["pinterest"]["title"] + chr(10) + x["pinterest"]["description"] + chr(10) + x["url"])}">Pinterest pin</button>
+<button class="btn small share" type="button" data-copy="{E(x["youtube"]["title"] + chr(10) + chr(10) + x["youtube"]["description"])}">YouTube text</button>
+<a class="btn small share" href="img/{E(x["slug"])}.jpg" download>Cover image</a></div></div></section>''' for x in social_data())
+    body = f'''<div class="wrap prose" style="max-width:900px"><h1>Share kit</h1>
+<p>Post text for every game, made from the game pages. Tap a button to copy it, then paste it into Facebook, Pinterest or YouTube. The same data is at <a href="social.json">/social.json</a>. Nothing here posts anything for you.</p>
+{rows}</div>
+<style>.kit{{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start;margin:0 0 16px}}.kit img{{border:2px solid var(--ink);border-radius:10px}}.kit h2{{margin:0 0 2px}}.kit .u{{margin:0 0 10px;color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}}.kit .btnrow{{gap:8px}}</style>
+<script>document.addEventListener('click',async e=>{{const b=e.target.closest('[data-copy]');if(!b)return;let ok=false;try{{await navigator.clipboard.writeText(b.dataset.copy);ok=true}}catch(x){{}}const t=b.textContent;b.textContent=ok?'Copied!':'Copy failed';setTimeout(()=>b.textContent=t,1400)}});</script>'''
+    return page(f'Share kit | {SITE["name"]}', "Post text for every game.", body, extra_head='<meta name="robots" content="noindex">\n')
 
 def build():
     if OUT.exists(): shutil.rmtree(OUT)
@@ -863,6 +996,10 @@ def build():
     (OUT / "reel.html").write_text(reel_page())
     (OUT / "stats.html").write_text(stats_page())
     (OUT / "reel.webmanifest").write_text(json.dumps(REEL_MANIFEST, indent=2) + "\n")
+    (OUT / "arcade.js").write_text(ARC_SRC)
+    thumbs()
+    (OUT / "share-kit.html").write_text(share_kit())
+    (OUT / "social.json").write_text(json.dumps(social_data(), indent=1, ensure_ascii=False) + "\n")
     for g in GAMES:
         (OUT / f'{g["slug"]}.html').write_text(detail(g))
         if not g.get("play_url"):  # games hosted on their own domain link out instead
@@ -873,13 +1010,15 @@ def build():
     url = SITE.get("url", "").rstrip("/")
     if url:
         pages = ["", *[b["slug"] for b in BOOKS], "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
-        (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-            "".join(f"  <url><loc>{url}/{p}</loc></url>\n" for p in pages) + "</urlset>\n")
+        img = {g["slug"]: f'{url}/img/{g["slug"]}.jpg' for g in GAMES} | {b["slug"]: f'{url}/{b["dir"]}/cover.jpg' for b in BOOKS}
+        (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
+            "".join(f"  <url><loc>{url}/{p}</loc>" + (f"<image:image><image:loc>{img[p]}</image:loc></image:image>" if p in img else "") + "</url>\n" for p in pages) + "</urlset>\n")
         (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {url}/sitemap.xml\n")
     else:
         (OUT / "robots.txt").write_text("User-agent: *\nAllow: /\n")
     # the play counter only accepts games that are on the site
-    (ROOT / "api" / "_slugs.js").write_text("// Written by build.py. Games the play counter accepts.\nexport const SLUGS = " + json.dumps([g["slug"] for g in GAMES]) + ";\n")
+    (ROOT / "api" / "_slugs.js").write_text("// Written by build.py. Games the play counter accepts, and the other pages the event counter accepts.\nexport const SLUGS = " + json.dumps([g["slug"] for g in GAMES]) + ";\n"
+        + "export const PAGES = " + json.dumps(["_site", "home", "other", *[b["slug"] for b in BOOKS]]) + ";\n")
     print("built", len(GAMES), "games into", OUT)
 
 if __name__ == "__main__":

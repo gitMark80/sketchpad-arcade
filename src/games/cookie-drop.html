@@ -826,6 +826,8 @@ window.__test={
   act(a,i){if(!S||state!=='play')return false;return a==='cut'?Core.cut(S,i):a==='pop'?Core.pop(S):Core.puff(S,i)}
 };
 
+/* Pause hooks for the site's Pause button, app-switch auto-pause and resume (src/arcade.js). 'paused' is the same state the level picker uses. */
+window.SA_PAUSE={playing:()=>state==='play',pause(){if(state==='play')state='paused'},resume(){if(state==='paused'&&$('overlay').hidden)state='play'}};
 fit();startCard();requestAnimationFrame(t=>{last=t;frame(t)});
 })();
 </script>
