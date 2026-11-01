@@ -1196,7 +1196,7 @@ function flat(name,rx,rz,y,scl=1){const S=SPR[name];const p=proj(rx,y,rz);if(rz+
 function drawOb(o){
   const z=o.z-dist,k=KIND[o.kind],seg=segAt(o.z);ctx.globalAlpha=fade(z);
   if(o.bop){ctx.globalAlpha*=Math.max(0,1-o.bop/2.4);const q=pc(o.z,o.x+o.bx,seg);spr(o.kind,q[0],q[1],o.by,1,o.br);ctx.globalAlpha=1;return}
-  const sq=pc(o.z+o.depth*.5,o.x,seg);shadow(sq[0],sq[1],o.hw*1.15,0,.22);
+  if(k.type==='high'){const sq=pc(o.z+o.depth*.5,o.x,seg);shadow(sq[0],sq[1],o.hw*1.15,0,.22)} // only the overhead obstacles cast a shadow; walls, logs, carts etc. sit on the ground
   if(k.box&&!hasImg(o.kind)){const [y0,y1,side,top]=k.box,x0=o.x-o.hw,x1=o.x+o.hw,zf=o.z+o.depth;
     const c=[pc(o.z,x0,seg),pc(o.z,x1,seg),pc(zf,x1,seg),pc(zf,x0,seg)];
     for(let i=0;i<4;i++){const a=c[i],b=c[(i+1)%4];const nx=b[1]-a[1],nz2=-(b[0]-a[0]);const mx=(a[0]+b[0])/2,mz=(a[1]+b[1])/2+CB;if(nx*mx+nz2*mz>=0)continue;
