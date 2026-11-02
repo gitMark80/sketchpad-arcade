@@ -252,8 +252,12 @@ const S=(()=>{
 INFO.botDelay=700;INFO.endDelay=1400;
 INFO.turnHint=t=>{const n=left(GROUP[t]);return(n?' · '+n+' left':' · sink the 8!')+(P.bih?' · ball in hand':'')};
 const $=id=>document.getElementById(id);
-const TW=380,TH=720,RAIL=22,R=11.5,OW=TW+2*RAIL,OH=TH+2*RAIL,GROUP=['b','p'];
-const POCKETS=[{x:-3,y:-3,r:25},{x:TW+3,y:-3,r:25},{x:-7,y:TH/2,r:22},{x:TW+7,y:TH/2,r:22},{x:-3,y:TH+3,r:25},{x:TW+3,y:TH+3,r:25}];
+/* The table is Mark's drawing (assets/pencil-pool/table.webp, 376x707 in the sheet): the felt is the play area, scaled so it is TW wide. */
+const ART={w:376,h:707,fx:36,fy:38,fw:302,fh:628},ASC=380/ART.fw;
+const TW=380,TH=Math.round(ART.fh*ASC),R=13,RL=ART.fx*ASC,RT=ART.fy*ASC,OW=ART.w*ASC,OH=ART.h*ASC,GROUP=['b','p'];
+const POCKETS=[{x:2,y:-1,r:26},{x:TW-6,y:-2,r:26},{x:-5,y:384,r:23},{x:TW,y:382,r:23},{x:2,y:TH-4,r:26},{x:TW-5,y:TH-4,r:26}];
+const IMG={};['cue','blue','pink','eight','pencil','table'].forEach(n=>{const i=new Image();i.onload=()=>{IMG[n]=i;sprites={};bg=null;draw()};i.src='../assets/pencil-pool/'+n+'.webp'});
+const IK={c:'cue',b:'blue',p:'pink','8':'eight'};
 const COL={b:'#2f6fb5',p:'#c45a8a'},WASH={b:'#d6e4f2',p:'#f0d5e2'};
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c';
 const MAXV=1300,DT=1/240,DECEL=190,CUSH=.72,REST=.95;
@@ -356,8 +360,8 @@ function botMove(){if(!S.active||P.moving)return;if(P.bih)botPlace();
 function fit(){const box=$('pool').getBoundingClientRect();const w=Math.max(120,Math.floor(box.width)),h=Math.max(120,Math.floor(box.height));dpr=Math.min(2,window.devicePixelRatio||1);
   if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
   const land=w>h*1.05;const tw=land?OH:OW,th=land?OW:OH;const s=Math.min(w/tw,h/th);view={s,ox:(w-tw*s)/2,oy:(h-th*s)/2,land,w,h};bg=null;sprites={};draw()}
-function applyT(){ctx.setTransform(dpr,0,0,dpr,0,0);if(view.land){ctx.translate(view.ox,view.oy+OW*view.s);ctx.scale(view.s,view.s);ctx.rotate(-Math.PI/2)}else{ctx.translate(view.ox,view.oy);ctx.scale(view.s,view.s)}ctx.translate(RAIL,RAIL)}
-function toTable(px,py){const{s,ox,oy,land}=view;return land?{x:(oy+OW*s-py)/s-RAIL,y:(px-ox)/s-RAIL}:{x:(px-ox)/s-RAIL,y:(py-oy)/s-RAIL}}
+function applyT(){ctx.setTransform(dpr,0,0,dpr,0,0);if(view.land){ctx.translate(view.ox,view.oy+OW*view.s);ctx.scale(view.s,view.s);ctx.rotate(-Math.PI/2)}else{ctx.translate(view.ox,view.oy);ctx.scale(view.s,view.s)}ctx.translate(RL,RT)}
+function toTable(px,py){const{s,ox,oy,land}=view;return land?{x:(oy+OW*s-py)/s-RL,y:(px-ox)/s-RT}:{x:(px-ox)/s-RL,y:(py-oy)/s-RT}}
 new ResizeObserver(fit).observe($('pool'));window.addEventListener('orientationchange',()=>setTimeout(fit,200));
 // ---------- drawing ----------
 function hatch(x,y,w,h,col,gap,alpha){ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.strokeStyle=col;ctx.globalAlpha=alpha;ctx.lineWidth=1.1;ctx.beginPath();
@@ -367,11 +371,12 @@ function wobbleRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y+1);ctx.lineTo(x+
 function drawTable(){/* cached: rails, felt, pockets */
   if(bg&&bg.width===cv.width&&bg.height===cv.height)return;bg=document.createElement('canvas');bg.width=cv.width;bg.height=cv.height;const c2=bg.getContext('2d');
   const paint=()=>{
-    ctx.clearRect(-RAIL-5,-RAIL-5,OW+10,OH+10);
+    ctx.clearRect(-RL-5,-RT-5,OW+10,OH+10);
+    if(IMG.table){ctx.drawImage(IMG.table,-RL,-RT,OW,OH);ctx.save();ctx.setLineDash([5,7]);ctx.strokeStyle=PAPER;ctx.globalAlpha=.55;ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(4,TH*.75);ctx.lineTo(TW-4,TH*.75);ctx.stroke();ctx.restore();return}
     // rails: paper wood with pencil grain
-    ctx.fillStyle='#e9e2cf';wobbleRect(-RAIL,-RAIL,OW,OH,16);ctx.fill();ctx.lineWidth=2.2;ctx.strokeStyle=INK;ctx.stroke();
-    ctx.save();wobbleRect(-RAIL,-RAIL,OW,OH,16);ctx.clip();ctx.strokeStyle=GRAPH;ctx.globalAlpha=.35;ctx.lineWidth=1;
-    for(let i=0;i<40;i++){const y=-RAIL+((i*97)%OH),x0=-RAIL+((i*53)%60);ctx.beginPath();ctx.moveTo(x0,y);ctx.bezierCurveTo(x0+90,y+4,x0+200,y-5,x0+OW,y+2);ctx.stroke()}
+    ctx.fillStyle='#e9e2cf';wobbleRect(-RL,-RT,OW,OH,16);ctx.fill();ctx.lineWidth=2.2;ctx.strokeStyle=INK;ctx.stroke();
+    ctx.save();wobbleRect(-RL,-RT,OW,OH,16);ctx.clip();ctx.strokeStyle=GRAPH;ctx.globalAlpha=.35;ctx.lineWidth=1;
+    for(let i=0;i<40;i++){const y=-RT+((i*97)%OH),x0=-RL+((i*53)%60);ctx.beginPath();ctx.moveTo(x0,y);ctx.bezierCurveTo(x0+90,y+4,x0+200,y-5,x0+OW,y+2);ctx.stroke()}
     ctx.restore();
     // felt: green coloured pencil
     ctx.fillStyle='#dcebdd';wobbleRect(0,0,TW,TH,6);ctx.fill();hatch(0,0,TW,TH,'#5a9a6a',7,.3);
@@ -390,6 +395,7 @@ function drawTable(){/* cached: rails, felt, pockets */
   const real=ctx;ctx=c2;applyT();paint();ctx=real;}
 function sprite(k){const key=k+'@'+(view.s*dpr).toFixed(2);if(sprites[key])return sprites[key];const sc=view.s*dpr,n=Math.ceil((R+3)*2*sc),c=document.createElement('canvas');c.width=c.height=n;const g=c.getContext('2d');
   g.translate(n/2,n/2);g.scale(sc,sc);
+  if(IMG[IK[k]]){const d=2*R+2.5;g.drawImage(IMG[IK[k]],-d/2,-d/2,d,d);sprites[key]=c;return c}
   g.fillStyle=k==='8'?INK:PAPER;g.beginPath();g.ellipse(0,0,R,R*.97,.3,0,7);g.fill();
   if(k==='b'||k==='p'){g.save();g.beginPath();g.arc(0,0,R-1,0,7);g.clip();g.fillStyle=WASH[k];g.fillRect(-R,-R,2*R,2*R);g.strokeStyle=COL[k];g.globalAlpha=.75;g.lineWidth=1.3;g.beginPath();
     for(let d=-2*R;d<2*R;d+=3.2){g.moveTo(d,-R);g.lineTo(d+2*R,R)}g.stroke();g.restore()}
@@ -402,6 +408,7 @@ function drawBall(b){const sp=sprite(b.k),w=sp.width/(view.s*dpr);ctx.fillStyle=
   if(view.land&&b.k==='8'){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.PI/2);ctx.drawImage(sp,-w/2,-w/2,w,w);ctx.restore()}else ctx.drawImage(sp,b.x-w/2,b.y-w/2,w,w)}
 function drawPencil(c,dir,power){/* the cue is a No. 2 pencil, pulled back from the cue ball */
   const back=R+6+power*46,len=150;ctx.save();ctx.translate(c.x,c.y);ctx.rotate(dir+Math.PI);ctx.translate(back,0);
+  if(IMG.pencil){const h=len*IMG.pencil.height/IMG.pencil.width;ctx.drawImage(IMG.pencil,0,-h/2,len,h);ctx.restore();return}
   // tip
   ctx.fillStyle='#e9d9b2';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(16,-5);ctx.lineTo(16,5);ctx.closePath();ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.stroke();
   ctx.fillStyle=INK;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(5,-1.6);ctx.lineTo(5,1.6);ctx.closePath();ctx.fill();
@@ -418,7 +425,7 @@ function drawAim(c,dir,power){const dx=Math.cos(dir),dy=Math.sin(dir);
   let tMin=Infinity,hitB=null;for(const b of P.balls){if(b.in||b===c)continue;const ox=b.x-c.x,oy=b.y-c.y,p=ox*dx+oy*dy;if(p<=0)continue;const d2=ox*ox+oy*oy-p*p;if(d2>4*R*R)continue;const t=p-Math.sqrt(4*R*R-d2);if(t>0&&t<tMin){tMin=t;hitB=b}}
   const tx=dx>0?(TW-R-c.x)/dx:dx<0?(R-c.x)/dx:Infinity,ty=dy>0?(TH-R-c.y)/dy:dy<0?(R-c.y)/dy:Infinity;const tWall=Math.min(tx,ty);if(tWall<tMin){tMin=tWall;hitB=null}
   const gx=c.x+dx*tMin,gy=c.y+dy*tMin;
-  ctx.save();ctx.setLineDash([6,6]);ctx.strokeStyle=INK;ctx.globalAlpha=.75;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(c.x+dx*R,c.y+dy*R);ctx.lineTo(gx,gy);ctx.stroke();
+  ctx.save();ctx.setLineDash([6,6]);ctx.strokeStyle=IMG.table?PAPER:INK;ctx.globalAlpha=.9;ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(c.x+dx*R,c.y+dy*R);ctx.lineTo(gx,gy);ctx.stroke();
   ctx.setLineDash([3,4]);ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
   if(hitB){const nx=(hitB.x-gx)/(2*R),ny=(hitB.y-gy)/(2*R),dot=nx*dx+ny*dy,L=40+60*Math.max(0,dot);ctx.setLineDash([4,5]);ctx.strokeStyle=COL[hitB.k]||INK;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(hitB.x,hitB.y);ctx.lineTo(hitB.x+nx*L,hitB.y+ny*L);ctx.stroke()}
   ctx.restore();
