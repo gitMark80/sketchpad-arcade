@@ -391,8 +391,8 @@ function draw(){if(!cw)return;pitchBg();
   // aim
   if(drag&&drag.len>0){const b=bodies[drag.i];const[x,y]=toScreen(b.x,b.y);const pw=Math.min(1,drag.len/MAXPULL);const dir=flip()?-1:1;
     const ax=-drag.dx*dir,ay=-drag.dy*dir;const al=Math.hypot(ax,ay)||1;const ux=ax/al,uy=ay/al;
-    cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLineDash([3,6]);cx.beginPath();cx.moveTo(x+ux*b.r*sc,y+uy*b.r*sc);cx.lineTo(x+ux*(b.r*sc+pw*70),y+uy*(b.r*sc+pw*70));cx.stroke();
-    cx.setLineDash([]);cx.strokeStyle='rgba(46,46,51,.45)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-ux*pw*MAXPULL*sc,y-uy*pw*MAXPULL*sc);cx.stroke();
+    cx.save();cx.strokeStyle=ART.ok?'#f6f3ea':'#2e2e33';cx.lineWidth=2.5;cx.setLineDash([3,6]);cx.beginPath();cx.moveTo(x+ux*b.r*sc,y+uy*b.r*sc);cx.lineTo(x+ux*(b.r*sc+pw*70),y+uy*(b.r*sc+pw*70));cx.stroke();
+    cx.setLineDash([]);cx.strokeStyle=ART.ok?'rgba(246,243,234,.6)':'rgba(46,46,51,.45)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-ux*pw*MAXPULL*sc,y-uy*pw*MAXPULL*sc);cx.stroke();
     // power meter
     const mx=x-ux*pw*MAXPULL*sc,my=y-uy*pw*MAXPULL*sc;
     if(ART.ok){const d=(9+pw*10);cx.drawImage(ART.dot,mx-d/2,my-d/2,d,d)}else{cx.fillStyle=pw>.75?'#d9661a':'#c99a1a';cx.beginPath();cx.arc(mx,my,4+pw*5,0,7);cx.fill();cx.strokeStyle='#2e2e33';cx.stroke()}cx.restore()}}
