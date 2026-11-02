@@ -109,6 +109,10 @@ def tiles(path):
         if name in ('sandtrap', 'water'):
             # non-directional scribble: wrap-blend the edges so the repeat is seamless
             tile = wrap_blend(cell.crop((0, 0, min(w+60, lim), min(h+60, lim))), 60)
+        if name == 'slope':
+            tile = knockout(tile, 30)  # chevrons only, drawn over the green
+            a = np.asarray(tile).astype(float); a[...,:3] = a[...,:3]*.35 + 255*.65  # lighten so they read on dark green
+            tile = Image.fromarray(a.astype(np.uint8))
         tile = tile.resize((1024, round(tile.height*1024/tile.width)), Image.LANCZOS) if tile.width > 1024 else tile
         tile.save(os.path.join(OUT, name+'.webp'), quality=88, method=6)
         print(name, (w,h), 'edge diff %.1f/%.1f' % (dw, dh), '->', tile.size)

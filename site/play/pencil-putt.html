@@ -684,7 +684,7 @@ function drawDeco(d){
   ctx.restore();
 }
 /* the putting green: a pale green wash with two sets of green coloured-pencil cross-hatching, clipped to the green */
-const GRN={wash:'#dff0d8',h1:'rgba(76,175,80,.62)',h2:'rgba(46,125,50,.42)'};
+const GRN={wash:'#2e7d4f',h1:'rgba(76,175,80,.62)',h2:'rgba(46,125,50,.42)'}; // dark solid green (Mark, Nov 2 2026); h1/h2 only used by the unused hatch
 function greenHatch(x0,y0,x1,y1,sp1,sp2,lw){
   const w=x1-x0,h=y1-y0;ctx.lineCap='round';
   ctx.strokeStyle=GRN.h1;ctx.lineWidth=lw;ctx.beginPath();
@@ -697,12 +697,12 @@ function drawTurf(h,t){
   ctx.save();ctx.translate(2,4);polyPath(h.poly);ctx.fillStyle='rgba(46,46,51,.2)';ctx.fill();ctx.restore();
   polyPath(h.poly);ctx.fillStyle=GRN.wash;ctx.fill();
   ctx.save();polyPath(h.poly);ctx.clip();
-  const tp=pat('turf',110);if(tp){ctx.fillStyle=tp;ctx.fillRect(0,0,WW,WH)}else greenHatch(0,0,WW,WH,5.5,7.5,.9); // turf.webp (Mark's green tile) when present, else code-drawn hatch
+  const tp=pat('turf',110);if(tp){ctx.fillStyle=tp;ctx.fillRect(0,0,WW,WH)} // solid dark green; a turf.webp tile replaces it when present
   // zones
   for(const z of h.force){shapePath(z.s);
     const zk=z.kind==='tide'?'tide':'slope';
     if(ok(zk)){const s=z.s,ang=Math.atan2(z.fy,z.fx),cx=(s.x0+s.x1)/2,cy=(s.y0+s.y1)/2,sz=zk==='tide'?70:80,sp=zk==='tide'?40:14;
-      ctx.save();shapePath(s);ctx.clip();ctx.translate(cx,cy);ctx.rotate(zk==='tide'?ang:ang+Math.PI/2); // chevrons on the slope tile point the way the ball gets pushedctx.translate(zk==='tide'?(t*sp)%sz:0,zk==='tide'?0:(-(t*sp)%sz));if(zk==='slope'){ctx.fillStyle=GRN.wash;ctx.fillRect(-400,-400,800,800);ctx.globalCompositeOperation='multiply'} // slopes are part of the green: pencil chevrons over the green wash
+      ctx.save();shapePath(s);ctx.clip();ctx.translate(cx,cy);ctx.rotate(zk==='tide'?ang:ang+Math.PI/2); // chevrons on the slope tile point the way the ball gets pushedctx.translate(zk==='tide'?(t*sp)%sz:0,zk==='tide'?0:(-(t*sp)%sz));// slope tile is transparent chevrons drawn straight onto the green
       ctx.fillStyle=pat(zk,sz);ctx.fillRect(-400,-400,800,800);ctx.restore();
       ctx.strokeStyle=zk==='tide'?'#2f6fb5':INK;ctx.lineWidth=1.5;ctx.setLineDash([4,4]);shapePath(z.s);ctx.stroke();ctx.setLineDash([]);continue}
     if(z.kind==='tide'){ctx.fillStyle='rgba(47,111,181,.22)';ctx.fill();
@@ -967,8 +967,7 @@ function mini(t){const sv=ctx;ctx=mc;mc.setTransform(1,0,0,1,0,0);mc.clearRect(0
   const P=[[30,40],[140,40],[160,60],[160,100],[140,112],[30,112],[12,95],[12,58]];
   ctx.save();ctx.translate(2,4);polyPath(P);ctx.fillStyle='rgba(46,46,51,.15)';ctx.fill();ctx.restore();
   polyPath(P);ctx.fillStyle=GRN.wash;ctx.fill();
-  ctx.save();polyPath(P);ctx.clip();greenHatch(0,30,180,120,5,7,.8);ctx.restore();
-  ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.lineJoin='round';polyPath(P);ctx.stroke();ctx.lineWidth=4;ctx.strokeStyle='#e4e2d8';polyPath(P);ctx.stroke();
+    ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.lineJoin='round';polyPath(P);ctx.stroke();ctx.lineWidth=4;ctx.strokeStyle='#e4e2d8';polyPath(P);ctx.stroke();
   const fake={cup:[128,78]};drawCup(fake,t);
   const k=(t*.45)%1.6,u=Math.min(1,k/1.1),e=1-(1-u)*(1-u),bx=38+(128-38)*e,by=86+(78-86)*e;
   if(k<1.1)drawBall(bx,by,1);
