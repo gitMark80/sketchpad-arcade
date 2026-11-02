@@ -60,6 +60,13 @@ function resize(){const r=wrap.getBoundingClientRect();const aw=Math.max(120,r.w
 new ResizeObserver(resize).observe(wrap);addEventListener('resize',resize);
 const toScreen=(x,y)=>flip()?[ox+(W-x)*sc,oy+(H-y)*sc]:[ox+x*sc,oy+y*sc];
 const toWorld=(px,py)=>{const x=(px-ox)/sc,y=(py-oy)/sc;return flip()?[W-x,H-y]:[x,y]};
+/* Mark's hand-drawn art in src/assets/doodle-kick/ (pitch, players, goalies, ball, goals, goal burst, kick lines,
+   power dot). The canvas falls back to drawing everything itself until every picture has loaded. */
+const ART_DIR='../assets/doodle-kick/',ART={ok:false};
+(()=>{const names=['pitch','blue','pink','bluegk','pinkgk','ball','bluegoal','pinkgoal','burst','kick','dot'];let left=names.length,bad=false;
+  names.forEach(n=>{const im=new Image();im.onload=()=>{if(--left===0&&!bad){ART.ok=true;draw()}};im.onerror=()=>{bad=true};im.src=ART_DIR+n+'.webp';ART[n]=im})})();
+const PITCH_M=.75;   // cream margin round the pitch picture, in pitch units
+let goalPos=null,kickFx=null;
 /* wobbly hand-drawn line */
 function wob(x1,y1,x2,y2,a){cx.beginPath();const n=Math.max(2,Math.round(Math.hypot(x2-x1,y2-y1)/22));cx.moveTo(x1,y1);
   for(let i=1;i<=n;i++){const t=i/n;const jx=(Math.sin(i*7.3+x1+a)*.8),jy=(Math.cos(i*5.1+y1+a)*.8);cx.lineTo(x1+(x2-x1)*t+(i<n?jx:0),y1+(y2-y1)*t+(i<n?jy:0))}cx.stroke()}
@@ -68,6 +75,10 @@ function hatch(x,y,w,h,col,gap,ang){cx.save();cx.beginPath();cx.rect(x,y,w,h);cx
   cx.beginPath();for(let d=-L;d<L;d+=gap){cx.moveTo(d,-L);cx.lineTo(d+L*.08,L)}cx.stroke();cx.restore()}
 function pitchBg(){const ink='#2e2e33';
   cx.fillStyle='#f6f3ea';cx.fillRect(0,0,cw,ch);
+  if(ART.ok){cx.drawImage(ART.pitch,ox-PITCH_M*sc,oy-PITCH_M*sc,(W+2*PITCH_M)*sc,(H+2*PITCH_M)*sc);
+    for(const side of[0,1]){const top=(side===1)!==flip();const im=side===0?ART.bluegoal:ART.pinkgoal;const gw=(GW+2*RPOST+2.6)*sc,gh=gw*im.naturalHeight/im.naturalWidth;
+      cx.save();cx.translate(ox+50*sc,top?oy:oy+H*sc);if(!top)cx.scale(1,-1);cx.drawImage(im,-gw/2,-gh+1.5*sc,gw,gh);cx.restore()}
+    if(goalFlash>0){cx.fillStyle='rgba(243,230,176,'+(goalFlash*.35)+')';cx.fillRect(0,0,cw,ch)}return}
   // grass: coloured pencil hatching in mowed stripes
   const [fx0,fy0]=[ox,oy],fw=W*sc,fh=H*sc;const stripes=8;
   for(let i=0;i<stripes;i++){const y=fy0+fh*i/stripes,h=fh/stripes;cx.fillStyle=i%2?'#dfe9d6':'#e6eedc';cx.fillRect(fx0,y,fw,h);
@@ -101,22 +112,29 @@ function pitchBg(){const ink='#2e2e33';
     for(const px of[gx,gx+gw]){const py=top?oy:oy+H*sc;cx.fillStyle='#f6f3ea';cx.beginPath();cx.arc(px,py,RPOST*sc+1,0,7);cx.fill();cx.stroke()}}
   if(goalFlash>0){cx.fillStyle='rgba(243,230,176,'+(goalFlash*.35)+')';cx.fillRect(0,0,cw,ch)}}
 function star(x,y,r){cx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;cx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}cx.closePath()}
-function drawPiece(b,hl){const[x,y]=toScreen(b.x,b.y),r=b.r*sc;const col=b.p===0?'#2f6fb5':'#c45a8a',wash=b.p===0?'#d6e4f2':'#f0d5e2';
+function ring(x,y,r){cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLineDash([5,5]);cx.lineDashOffset=-performance.now()/40;cx.beginPath();cx.arc(x,y,r+5,0,7);cx.stroke();cx.restore()}
+function drawPiece(b,hl,gk){const[x,y]=toScreen(b.x,b.y),r=b.r*sc;const col=b.p===0?'#2f6fb5':'#c45a8a',wash=b.p===0?'#d6e4f2':'#f0d5e2';
   // shadow
   cx.fillStyle='rgba(46,46,51,.22)';cx.beginPath();cx.arc(x+2,y+3,r,0,7);cx.fill();
+  if(ART.ok){const im=ART[(b.p===0?'blue':'pink')+(gk?'gk':'')];const d=r*2.12;cx.drawImage(im,x-d/2,y-d/2,d,d);if(hl)ring(x,y,r);return}
   cx.save();wobCircle(x,y,r);cx.clip();cx.fillStyle=wash;cx.fillRect(x-r,y-r,2*r,2*r);hatch(x-r,y-r,2*r,2*r,col,3.2,b.p?.75:-.75);cx.restore();
   cx.strokeStyle='#2e2e33';cx.lineWidth=2.2;wobCircle(x,y,r);cx.stroke();
   cx.fillStyle='#f6f3ea';star(x,y,r*.5);cx.fill();cx.strokeStyle='#2e2e33';cx.lineWidth=1.4;cx.stroke();
-  if(hl){cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLineDash([5,5]);cx.lineDashOffset=-performance.now()/40;cx.beginPath();cx.arc(x,y,r+5,0,7);cx.stroke();cx.restore()}}
+  if(hl)ring(x,y,r)}
 function drawBall(){const b=ball();const[x,y]=toScreen(b.x,b.y),r=b.r*sc;
   cx.fillStyle='rgba(46,46,51,.22)';cx.beginPath();cx.arc(x+1.5,y+2.5,r,0,7);cx.fill();
+  if(ART.ok){const d=r*2.15;cx.save();cx.translate(x,y);cx.rotate((b.x+b.y)*.1);cx.drawImage(ART.ball,-d/2,-d/2,d,d);cx.restore();return}
   cx.fillStyle='#fbfaf5';wobCircle(x,y,r);cx.fill();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.stroke();
   // pentagon patch and spokes
   const a0=(b.x+b.y)*.3;cx.fillStyle='#2e2e33';cx.beginPath();for(let i=0;i<5;i++){const a=a0+i*Math.PI*2/5;cx.lineTo(x+Math.cos(a)*r*.42,y+Math.sin(a)*r*.42)}cx.closePath();cx.fill();
   cx.lineWidth=1.2;cx.beginPath();for(let i=0;i<5;i++){const a=a0+i*Math.PI*2/5;cx.moveTo(x+Math.cos(a)*r*.42,y+Math.sin(a)*r*.42);cx.lineTo(x+Math.cos(a)*r*.95,y+Math.sin(a)*r*.95)}cx.stroke()}
 function draw(){if(!cw)return;pitchBg();
   const mine=S.active&&S.canPlay()&&!anim&&!replaying?S.turn:-1;
-  bodies.forEach((b,i)=>{if(b.p>=0)drawPiece(b,b.p===mine&&(!drag||drag.i===i))});drawBall();
+  if(kickFx&&ART.ok){kickFx.t-=1/60;if(kickFx.t<=0)kickFx=null;else{const[x,y]=toScreen(kickFx.x,kickFx.y);const a=Math.atan2(kickFx.vy,kickFx.vx)+(flip()?Math.PI:0);const im=ART.kick;const w=14*sc,h=w*im.naturalHeight/im.naturalWidth;
+    cx.save();cx.globalAlpha=Math.min(1,kickFx.t*2.5);cx.translate(x,y);cx.rotate(a);cx.drawImage(im,-w-RP*sc*.6,-h/2,w,h);cx.restore()}}
+  bodies.forEach((b,i)=>{if(b.p>=0)drawPiece(b,b.p===mine&&(!drag||drag.i===i),i===0||i===5)});drawBall();
+  if(goalFlash>0&&goalPos&&ART.ok){const[x,y]=toScreen(goalPos[0],goalPos[1]);const k=1.25-goalFlash*.5;const im=ART.burst;const w=34*sc*k,h=w*im.naturalHeight/im.naturalWidth;
+    cx.save();cx.globalAlpha=Math.min(1,goalFlash*1.6);cx.drawImage(im,x-w/2,y-h/2,w,h);cx.restore()}
   // sparks
   spark=spark.filter(s=>(s.t-=1/60)>0);for(const s of spark){const[x,y]=toScreen(s.x,s.y);cx.strokeStyle='rgba(46,46,51,'+(s.t*2)+')';cx.lineWidth=1.5;cx.beginPath();for(let k=0;k<5;k++){const a=k*1.26+s.x;const rr=(1-s.t)*14+3;cx.moveTo(x+Math.cos(a)*rr*.5,y+Math.sin(a)*rr*.5);cx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}cx.stroke()}
   // aim
@@ -125,13 +143,14 @@ function draw(){if(!cw)return;pitchBg();
     cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLineDash([3,6]);cx.beginPath();cx.moveTo(x+ux*b.r*sc,y+uy*b.r*sc);cx.lineTo(x+ux*(b.r*sc+pw*70),y+uy*(b.r*sc+pw*70));cx.stroke();
     cx.setLineDash([]);cx.strokeStyle='rgba(46,46,51,.45)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-ux*pw*MAXPULL*sc,y-uy*pw*MAXPULL*sc);cx.stroke();
     // power meter
-    const mx=x-ux*pw*MAXPULL*sc,my=y-uy*pw*MAXPULL*sc;cx.fillStyle=pw>.75?'#d9661a':'#c99a1a';cx.beginPath();cx.arc(mx,my,4+pw*5,0,7);cx.fill();cx.strokeStyle='#2e2e33';cx.stroke();cx.restore()}}
-function loop(){draw();if(anim||spark.length||drag||goalFlash>0){if(goalFlash>0)goalFlash-=.03;requestAnimationFrame(loop)}else{raf=false}}
+    const mx=x-ux*pw*MAXPULL*sc,my=y-uy*pw*MAXPULL*sc;
+    if(ART.ok){const d=(9+pw*10);cx.drawImage(ART.dot,mx-d/2,my-d/2,d,d)}else{cx.fillStyle=pw>.75?'#d9661a':'#c99a1a';cx.beginPath();cx.arc(mx,my,4+pw*5,0,7);cx.fill();cx.strokeStyle='#2e2e33';cx.stroke()}cx.restore()}}
+function loop(){draw();if(anim||spark.length||drag||goalFlash>0||kickFx){if(goalFlash>0)goalFlash-=.03;requestAnimationFrame(loop)}else{raf=false}}
 let raf=false;function wake(){if(!raf){raf=true;requestAnimationFrame(loop)}}
 // ---------- playing a shot ----------
 const fx=(k,a,b,v)=>{if(k==='ball'){const bb=a.p===-1?a:b;spark.push({x:bb.x,y:bb.y,t:.5});if(v>25)S.sfx('bot')}else if(k==='hit'&&v>30)S.sfx('bot')};
 let acc=0,lastT=0,steps=0;
-function shoot(i,vx,vy,cb){bodies[i].vx=vx;bodies[i].vy=vy;anim=true;steps=0;settledCb=cb;lastT=performance.now();acc=0;cv.classList.add('busy');S.hud();requestAnimationFrame(tick);wake()}
+function shoot(i,vx,vy,cb){kickFx={x:bodies[i].x,y:bodies[i].y,vx,vy,t:.55};bodies[i].vx=vx;bodies[i].vy=vy;anim=true;steps=0;settledCb=cb;lastT=performance.now();acc=0;cv.classList.add('busy');S.hud();requestAnimationFrame(tick);wake()}
 function tick(t){if(!anim)return;acc+=Math.min(.05,(t-lastT)/1000);lastT=t;let res=-1;
   while(acc>=DT&&anim){acc-=DT;res=step(bodies,fx);steps++;if(res>=0||res===-2||steps>1500){anim=false;break}}
   if(!anim){bodies.forEach(b=>{b.vx=b.vy=0});cv.classList.remove('busy');const cb=settledCb;settledCb=null;if(cb)cb(res>=0?res:-1);return}
@@ -139,7 +158,7 @@ function tick(t){if(!anim)return;acc+=Math.min(.05,(t-lastT)/1000);lastT=t;let r
 function afterShot(goal){const shooter=S.turn;lastShot.final=bodies.map(b=>[+b.x.toFixed(2),+b.y.toFixed(2)]);lastShot.goal=goal;
   if(goal>=0){scored(goal,shooter);return}
   S.setTurn(1-shooter);draw()}
-function scored(goal,shooter){const own=goal!==shooter;S.busy=true;S.addScore(goal,1);goalFlash=1;wake();S.sfx('score');
+function scored(goal,shooter){const own=goal!==shooter;goalPos=[ball().x,Math.max(-GD/2,Math.min(H+GD/2,ball().y))];S.busy=true;S.addScore(goal,1);goalFlash=1;wake();S.sfx('score');
   S.pop(own?'Own goal!':'GOAL!',S.col(goal));
   const n=S.names();setTimeout(()=>{S.busy=false;if(!S.active)return;
     if(S.scores[goal]>=GOALS){bodies=formation();lastShot.final=bodies.map(b=>[b.x,b.y]);S.end(goal,(n[goal]==='You'?'You':n[goal])+' scored '+GOALS+' first!');draw();return}
@@ -194,7 +213,7 @@ const GAME={
     if(sh&&sh.id&&sh.by!==S.viewer()&&sh.id!==shotId&&sh.before&&sh.final){
       // replay the friend's flick, then snap to where the server says everything ended
       shotId=sh.id;lastShot=sh;anim=false;setP(sh.before);replaying=true;cv.classList.add('busy');draw();
-      shoot(sh.i,sh.vx,sh.vy,goal=>{replaying=false;if(goal>=0){goalFlash=1;wake();S.sfx('score');S.pop(goal===sh.by?'GOAL!':'Own goal!',S.col(goal))}
+      shoot(sh.i,sh.vx,sh.vy,goal=>{replaying=false;if(goal>=0){goalPos=[ball().x,Math.max(-GD/2,Math.min(H+GD/2,ball().y))];goalFlash=1;wake();S.sfx('score');S.pop(goal===sh.by?'GOAL!':'Own goal!',S.col(goal))}
         setTimeout(()=>{setP(sh.final);draw();S.hud();S.status(S.turnText(),S.turn)},goal>=0?700:0)});
       return}
     if(sh&&sh.id){shotId=Math.max(shotId,sh.id);lastShot=sh}
