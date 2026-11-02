@@ -90,7 +90,7 @@
       "online": true,
       "tagline": "Flick soccer on a sketchbook page. First to three goals wins.",
       "meta": "Play Doodle Kick free online: turn-based flick soccer drawn in pencil. Drag a player back and let go to kick. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
-      "lead": "Turn-based flick soccer, drawn in pencil. Each side has five players and there's one ball. Drag one of your players back like a pool cue and let it go: it skids across the page, knocks the ball about and everything bounces off the lines, the posts and each other. Score in the far goal; first to three wins.",
+      "lead": "Turn-based flick soccer, drawn in pencil. Each side has five players and there's one ball. Drag one of your players back like a pool cue and let it go: it skids across the page, knocks the ball about and everything bounces off the lines, the posts, the nets and each other. Score in the far goal; first to three wins, and every match starts in a new line-up.",
       "facts": [
         "Versus",
         "Invite a friend by text and take turns whenever",
@@ -100,9 +100,9 @@
       "how": [
         "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
         "On your turn, drag one of your five players back and let go to flick it. The further you pull, the harder the kick. A dotted line shows where it will go.",
-        "Everything slides and bounces until it stops, then it's the other side's turn.",
+        "Everything slides and bounces until it stops, then it's the other side's turn. Players can skid into the back of the net and bounce back out.",
         "Knock the ball into the far goal to score. Score in your own goal and the point goes to the other side. After a goal, the side that let it in kicks off.",
-        "First to three goals wins."
+        "First to three goals wins. Each match starts in a different line-up: three formations, then round again."
       ],
       "controls": [
         "Drag any of your players back, then let go to flick. Pull back only a little for a gentle nudge.",
@@ -112,7 +112,7 @@
       ],
       "tips": [
         "Hit the ball off-centre to curl it around a defender.",
-        "Don't leave your goalie out of the box: a loose ball in front of an empty net is an easy goal.",
+        "Keep one player back in front of your goal: a loose ball in front of an empty net is an easy goal.",
         "Use a player as a wall: park one in front of your goal before you go for a long shot.",
         "Bounce shots off the side lines when the straight path is blocked."
       ],
