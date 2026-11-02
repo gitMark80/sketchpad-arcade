@@ -868,17 +868,36 @@ PLAY_ADS_JS = ("<script>\n/* AdSense on play pages: the loader is only added onc
 
 BACK_CSS = '<style>.sa-endhome{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:8px auto 0;padding:7px 16px;font:400 1.1rem/1 "Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;text-decoration:none;color:#2e2e33;background:#f6f3ea;border:2px solid #2e2e33;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;box-shadow:2px 2px 0 #55555c;pointer-events:auto;position:relative;z-index:5}.sa-endhome svg{width:17px;height:17px}.sa-endhome:active{transform:translate(1px,2px)}.sa-homeic svg{width:19px;height:19px}.sa-head{position:relative;z-index:30}.sa-share{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;cursor:pointer;background:#f3e6b0;color:#2e2e33;border:2px solid #2e2e33;box-shadow:2px 2px 0 #55555c}.sa-share:active{transform:translate(2px,2px);box-shadow:none}.sa-share svg{width:18px;height:18px}.sa-share:focus-visible,.sa-back:focus-visible{outline:3px solid #2e2e33;outline-offset:2px}.sa-head{min-width:0}.sa-head h1{min-width:0;white-space:nowrap;overflow:hidden}.sa-back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:15px 255px 15px 225px/225px 15px 255px 15px;border:2px solid #2e2e33;background:#f6f3ea;color:#2e2e33;font:400 22px/1 "Patrick Hand","Comic Sans MS",cursive;text-decoration:none;box-shadow:2px 2px 0 #55555c}.sa-head{display:flex;align-items:center;gap:8px;min-width:0}</style>'
 
+# Games that are portrait-shaped by nature (boards, grids, word games): on desktop they get a 4:3 stage with the
+# content column capped, instead of the full 16:9 stage, so the HUD bars are not stretched across a tiny board.
+MEDIUM_STAGE = {"guess-my-doodle", "sketch-with-friends", "sketchers", "connect-sketch", "blot-sweeper", "save-the-doodle",
+    "doodle-doku", "crayon-code", "tic-tac-doodle", "doodle-sos", "box-doodles", "paper-boats", "marble-blitz", "even-sketch",
+    "letter-scramble", "paper-plane-dash", "margin-merge", "note-quest", "letter-links", "bubble-doodle", "no-2-pencil",
+    "scribble-blocks", "drop-swap", "pencil-path", "space-blaster", "space-glass", "word-scribble", "paper-gates"}
+
+# Per-game extras inside the desktop media query, for layouts that size themselves from the width.
+DESKTOP_EXTRA = {
+    "drop-swap": "body>.app .boardwrap{width:min(100%,calc(100dvh - 290px))!important;margin:0 auto}",
+}
+
 def desktop_css(g):
-    """Desktop only (mouse + wide window): the game becomes a full-height 9:16 stage in the middle of the screen,
-    and the sides show the game's own cover art, softly blurred. Phones and tablets never match this, so mobile is untouched."""
+    """Desktop only (mouse + wide window): the game fills a stage in the middle of the screen, full height, with the sides
+    showing the game's own cover art softly blurred. Three stage shapes, picked per game ("stage" in games.json overrides):
+    wide (16:9, the content fills it), medium (4:3, content column capped at 720px) and tall (the old 9:16 phone shape).
+    Phones and tablets never match this media query, so mobile is untouched."""
     img = f'../img/{g["slug"]}.jpg'
+    stage = g.get("stage") or ("medium" if g["slug"] in MEDIUM_STAGE else "wide")
+    ratio = {"tall": "9/16", "medium": "4/3", "wide": "16/9"}[stage]
+    width = f"min(100vw,calc(100vh*{ratio}));width:min(100vw,calc(100dvh*{ratio}))"
+    col = {"tall": "max-width:none!important", "medium": "max-width:720px!important;width:100%", "wide": "max-width:none!important;width:100%"}[stage]
     return ("<style>@media (hover:hover) and (pointer:fine) and (min-aspect-ratio:3/4) and (min-width:700px){"
         "html{background:#e9e5d8!important;height:100%;overflow:hidden}"
         f"html::before{{content:'';position:fixed;inset:-60px;z-index:-1;background:#e9e5d8 url({img}) center/cover no-repeat;filter:blur(30px) opacity(.5)}}"
-        "body{width:min(100vw,calc(100vh*9/16));width:min(100vw,calc(100dvh*9/16));height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;"
+        f"body{{width:{width};height:100vh;height:100dvh;margin:0 auto!important;position:relative;overflow:hidden;"
         "transform:translateZ(0);box-shadow:0 0 0 2px #2e2e33,8px 8px 0 #55555c}"
-        "body>.app,body>.wrap,body>#app{max-width:none!important}"
-        "}</style>")
+        f"body>.app,body>.wrap,body>#app{{{col}}}"
+        + DESKTOP_EXTRA.get(g["slug"], "")
+        + "}</style>")
 
 def online_js():
     """Invite-a-friend settings (Supabase project URL and public key) from games.json "online". Empty when not set up."""
