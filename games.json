@@ -42,6 +42,45 @@
   },
   "games": [
     {
+      "slug": "doodle-kick",
+      "name": "Doodle Kick",
+      "genre": "Versus",
+      "added": "2026-11-02",
+      "online": true,
+      "tagline": "Flick soccer on a sketchbook page. First to three goals wins.",
+      "meta": "Play Doodle Kick free online: turn-based flick soccer drawn in pencil. Drag a player back and let go to kick. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+      "lead": "Turn-based flick soccer, drawn in pencil. Each side has five players and there's one ball. Drag one of your players back like a pool cue and let it go: it skids across the page, knocks the ball about and everything bounces off the lines, the posts and each other. Score in the far goal; first to three wins.",
+      "facts": [
+        "Versus",
+        "Invite a friend by text and take turns whenever",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
+        "On your turn, drag one of your five players back and let go to flick it. The further you pull, the harder the kick. A dotted line shows where it will go.",
+        "Everything slides and bounces until it stops, then it's the other side's turn.",
+        "Knock the ball into the far goal to score. Score in your own goal and the point goes to the other side. After a goal, the side that let it in kicks off.",
+        "First to three goals wins."
+      ],
+      "controls": [
+        "Drag any of your players back, then let go to flick. Pull back only a little for a gentle nudge.",
+        "Your players have a dashed ring round them when it's your turn.",
+        "New round starts a fresh match. Mode switches who you play.",
+        "The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Hit the ball off-centre to curl it around a defender.",
+        "Don't leave your goalie out of the box: a loose ball in front of an empty net is an easy goal.",
+        "Use a player as a wall: park one in front of your goal before you go for a long shot.",
+        "Bounce shots off the side lines when the straight path is blocked."
+      ],
+      "about": [
+        "Doodle Kick is a pool-style soccer game: instead of running about, you flick your players across the page and let the ball bounce.",
+        "On Hard, the bot tries over a hundred different flicks before it picks one, so you'll need clever angles to beat it."
+      ]
+    },
+    {
       "slug": "guess-my-doodle",
       "name": "Guess My Doodle",
       "genre": "Versus",

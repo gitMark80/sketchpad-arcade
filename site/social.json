@@ -1,5 +1,32 @@
 [
  {
+  "slug": "doodle-kick",
+  "name": "Doodle Kick",
+  "genre": "Versus",
+  "url": "https://www.sketchpadarcade.com/doodle-kick",
+  "image": "https://www.sketchpadarcade.com/img/doodle-kick.jpg",
+  "tagline": "Flick soccer on a sketchbook page. First to three goals wins.",
+  "description": "Play Doodle Kick free online: turn-based flick soccer drawn in pencil. Drag a player back and let go to kick. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+  "hashtags": [
+   "#SketchpadArcade",
+   "#DoodleKick",
+   "#twoplayergames",
+   "#browsergames",
+   "#familygames"
+  ],
+  "facebook": "Flick soccer on a sketchbook page. First to three goals wins. Play Doodle Kick free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/doodle-kick",
+  "pinterest": {
+   "title": "Doodle Kick: free versus game",
+   "description": "Flick soccer on a sketchbook page. First to three goals wins. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #DoodleKick #twoplayergames #browsergames",
+   "link": "https://www.sketchpadarcade.com/doodle-kick",
+   "image": "https://www.sketchpadarcade.com/img/doodle-kick.jpg"
+  },
+  "youtube": {
+   "title": "Doodle Kick | free versus game on Sketchpad Arcade",
+   "description": "Flick soccer on a sketchbook page. First to three goals wins.\n\nPlay Doodle Kick free: https://www.sketchpadarcade.com/doodle-kick\nMore games: https://www.sketchpadarcade.com/\n\nTurn-based flick soccer, drawn in pencil. Each side has five players and there's one ball. Drag one of your players back like a pool cue and let it go: it skids across the page, knocks the ball about and everything bounces off the lines, the posts and each other. Score in the far goal; first to three wins.\n\n#SketchpadArcade #DoodleKick #twoplayergames #browsergames #familygames"
+  }
+ },
+ {
   "slug": "guess-my-doodle",
   "name": "Guess My Doodle",
   "genre": "Versus",
