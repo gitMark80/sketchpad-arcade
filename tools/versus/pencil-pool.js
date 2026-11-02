@@ -36,7 +36,7 @@ function rack(){const kinds=[];for(let i=0;i<7;i++)kinds.push('b','p');for(let i
 // ---------- physics (pure: works on any ball list, so the bot can try shots) ----------
 function step(balls,ev){let moving=false;
   for(const b of balls){if(b.in)continue;const sp=Math.hypot(b.vx,b.vy);if(sp<=0)continue;
-    const ns=Math.max(0,sp-DECEL*DT)*(1-.12*DT);if(ns<3){b.vx=b.vy=0;continue}b.vx*=ns/sp;b.vy*=ns/sp;b.x+=b.vx*DT;b.y+=b.vy*DT;moving=true;
+    const ns=Math.max(0,sp-DECEL*DT)*(1-.12*DT);if(ns<3){b.vx=b.vy=0;continue}b.vx*=ns/sp;b.vy*=ns/sp;b.x+=b.vx*DT;b.y+=b.vy*DT;b.rot=(b.rot||0)+ns*DT/R*(b.spinDir||1);moving=true;
     /* pockets */
     for(const p of POCKETS){if(Math.hypot(b.x-p.x,b.y-p.y)<p.r){b.in=true;b.vx=b.vy=0;b.x=p.x;b.y=p.y;if(ev){ev.potted.push(b.k);if(b.k==='c')ev.cueIn=true}break}}
     if(b.in)continue;
@@ -49,10 +49,10 @@ function step(balls,ev){let moving=false;
   for(let i=0;i<balls.length;i++){const a=balls[i];if(a.in)continue;for(let j=i+1;j<balls.length;j++){const b=balls[j];if(b.in)continue;
     const dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy;if(d2>=4*R*R||d2===0)continue;const d=Math.sqrt(d2),nx=dx/d,ny=dy/d,ov=(2*R-d)/2;
     a.x-=nx*ov;a.y-=ny*ov;b.x+=nx*ov;b.y+=ny*ov;const rv=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;if(rv<=0)continue;
-    const imp=rv*(1+REST)/2;a.vx-=imp*nx;a.vy-=imp*ny;b.vx+=imp*nx;b.vy+=imp*ny;moving=true;
+    const imp=rv*(1+REST)/2;a.vx-=imp*nx;a.vy-=imp*ny;b.vx+=imp*nx;b.vy+=imp*ny;moving=true;a.spinDir=(a.vx*ny-a.vy*nx)>0?1:-1;b.spinDir=(b.vx*ny-b.vy*nx)>0?-1:1;
     if(ev){if(ev.first===null){const o=a.k==='c'?b:b.k==='c'?a:null;if(o)ev.first=o.k}ev.hits++;if(ev.onHit)ev.onHit(rv)}}}
   return moving}
-function shootBalls(balls,dir,power){const c=balls.find(b=>b.k==='c'),v=MAXV*(.08+.92*power);c.vx=Math.cos(dir)*v;c.vy=Math.sin(dir)*v}
+function shootBalls(balls,dir,power){const c=balls.find(b=>b.k==='c'),v=MAXV*(.08+.92*power);c.vx=Math.cos(dir)*v;c.vy=Math.sin(dir)*v;c.spinDir=1}
 function simulate(dir,power){const balls=P.balls.map(b=>({...b})),ev={first:null,potted:[],cueIn:false,hits:0};shootBalls(balls,dir,power);
   for(let i=0;i<4000;i++){if(!step(balls,ev))break}return{balls,ev}}
 // ---------- rules ----------
@@ -158,7 +158,7 @@ function sprite(k){const key=k+'@'+(view.s*dpr).toFixed(2);if(sprites[key])retur
   g.strokeStyle=GRAPH;g.globalAlpha=.5;g.lineWidth=1.2;g.beginPath();g.arc(-2.5,-2.5,R*.55,3.4,4.6);g.stroke();
   sprites[key]=c;return c}
 function drawBall(b){const sp=sprite(b.k),w=sp.width/(view.s*dpr);ctx.fillStyle='rgba(46,46,51,.22)';ctx.beginPath();ctx.ellipse(b.x+2,b.y+3,R,R*.8,0,0,7);ctx.fill();
-  if(view.land&&b.k==='8'){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.PI/2);ctx.drawImage(sp,-w/2,-w/2,w,w);ctx.restore()}else ctx.drawImage(sp,b.x-w/2,b.y-w/2,w,w)}
+  const rot=(b.rot||0)+(view.land&&b.k==='8'?Math.PI/2:0);if(rot){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(rot);ctx.drawImage(sp,-w/2,-w/2,w,w);ctx.restore()}else ctx.drawImage(sp,b.x-w/2,b.y-w/2,w,w)}
 function drawPencil(c,dir,power){/* the cue is a No. 2 pencil, pulled back from the cue ball */
   const back=R+6+power*46,len=150;ctx.save();ctx.translate(c.x,c.y);ctx.rotate(dir+Math.PI);ctx.translate(back,0);
   if(IMG.pencil){const h=len*IMG.pencil.height/IMG.pencil.width;ctx.drawImage(IMG.pencil,0,-h/2,len,h);ctx.restore();return}
@@ -178,9 +178,12 @@ function drawAim(c,dir,power){const dx=Math.cos(dir),dy=Math.sin(dir);
   let tMin=Infinity,hitB=null;for(const b of P.balls){if(b.in||b===c)continue;const ox=b.x-c.x,oy=b.y-c.y,p=ox*dx+oy*dy;if(p<=0)continue;const d2=ox*ox+oy*oy-p*p;if(d2>4*R*R)continue;const t=p-Math.sqrt(4*R*R-d2);if(t>0&&t<tMin){tMin=t;hitB=b}}
   const tx=dx>0?(TW-R-c.x)/dx:dx<0?(R-c.x)/dx:Infinity,ty=dy>0?(TH-R-c.y)/dy:dy<0?(R-c.y)/dy:Infinity;const tWall=Math.min(tx,ty);if(tWall<tMin){tMin=tWall;hitB=null}
   const gx=c.x+dx*tMin,gy=c.y+dy*tMin;
-  ctx.save();ctx.setLineDash([6,6]);ctx.strokeStyle=INK;ctx.globalAlpha=.8;ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(c.x+dx*R,c.y+dy*R);ctx.lineTo(gx,gy);ctx.stroke();
-  ctx.setLineDash([3,4]);ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
-  if(hitB){const nx=(hitB.x-gx)/(2*R),ny=(hitB.y-gy)/(2*R),dot=nx*dx+ny*dy,L=40+60*Math.max(0,dot);ctx.setLineDash([4,5]);ctx.strokeStyle=COL[hitB.k]||INK;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(hitB.x,hitB.y);ctx.lineTo(hitB.x+nx*L,hitB.y+ny*L);ctx.stroke()}
+  ctx.save();ctx.lineCap='round';ctx.strokeStyle='rgba(255,255,255,.22)';ctx.lineWidth=R*1.7;ctx.beginPath();ctx.moveTo(c.x,c.y);ctx.lineTo(gx,gy);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.38)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(c.x+dx*R,c.y+dy*R);ctx.lineTo(gx,gy);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.3)';ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.fill();ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1.5;ctx.stroke();
+  if(hitB){const nx=(hitB.x-gx)/(2*R),ny=(hitB.y-gy)/(2*R),dot=nx*dx+ny*dy,L=45+70*Math.max(0,dot);
+    const gr=ctx.createLinearGradient(hitB.x,hitB.y,hitB.x+nx*L,hitB.y+ny*L);gr.addColorStop(0,'rgba(255,255,255,.45)');gr.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=gr;ctx.beginPath();ctx.moveTo(hitB.x-ny*R*.9,hitB.y+nx*R*.9);ctx.lineTo(hitB.x+ny*R*.9,hitB.y-nx*R*.9);ctx.lineTo(hitB.x+nx*L+ny*R*.4,hitB.y+ny*L-nx*R*.4);ctx.lineTo(hitB.x+nx*L-ny*R*.4,hitB.y+ny*L+nx*R*.4);ctx.closePath();ctx.fill()}
   ctx.restore();
   drawPencil(c,dir,power)}
 function drawPower(power){/* power bar in screen space, along the bottom (or right) edge */
