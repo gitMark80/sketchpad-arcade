@@ -20,7 +20,7 @@ const FORMS=[
   [[50,146],[50,124],[28,108],[72,108],[50,92]],  // diamond
   [[50,146],[20,118],[50,126],[80,118],[50,96]]]; // 1-3-1
 let fi=0,matchNo=0;
-function formation(){const f=[];const add=(p,x,y)=>f.push({x,y,vx:0,vy:0,r:RP,m:MP,p});
+function formation(){const f=[];const add=(p,x,y)=>f.push({x,y,vx:0,vy:0,r:RP,m:MP,p,a:0});
   for(const[x,y]of FORMS[fi])add(0,x,y);
   for(const[x,y]of FORMS[fi])add(1,100-x,160-y);
   f.push({x:50,y:80,vx:0,vy:0,r:RB,m:MB,p:-1});return f}
@@ -28,11 +28,11 @@ let bodies=formation(),anim=false,replaying=false,drag=null,lastShot=null,shotId
 const ball=()=>bodies[10];
 const flip=()=>S.mode==='online'&&S.viewer()===1;
 // ---------- physics ----------
-function clone(bs){return bs.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,r:b.r,m:b.m,p:b.p}))}
+function clone(bs){return bs.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,r:b.r,m:b.m,p:b.p,a:0}))}
 const POSTS=[[50-GW/2,0],[50+GW/2,0],[50-GW/2,H],[50+GW/2,H]];
 /* one fixed step; returns the scoring player (0/1) when the ball crosses a goal line, -1 otherwise, or -2 if nothing moved */
 function step(bs,fx){let moving=false,goal=-1;
-  for(const b of bs){if(!b.vx&&!b.vy)continue;b.x+=b.vx*DT;b.y+=b.vy*DT;b.vx*=DRAG;b.vy*=DRAG;
+  for(const b of bs){if(!b.vx&&!b.vy)continue;b.x+=b.vx*DT;b.y+=b.vy*DT;b.vx*=DRAG;b.vy*=DRAG;if(b.p>=0)b.a=(b.a||0)+Math.hypot(b.vx,b.vy)*DT/b.r*.55*(b.vx<0?-1:1);
     if(Math.hypot(b.vx,b.vy)<STOPV){b.vx=b.vy=0}else moving=true}
   // walls
   for(const b of bs){const inMouth=Math.abs(b.x-50)<GW/2-b.r*.2;
@@ -121,10 +121,10 @@ function ring(x,y,r){cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLin
 function drawPiece(b,hl){const[x,y]=toScreen(b.x,b.y),r=b.r*sc;const col=b.p===0?'#2f6fb5':'#c45a8a',wash=b.p===0?'#d6e4f2':'#f0d5e2';
   // shadow
   cx.fillStyle='rgba(46,46,51,.22)';cx.beginPath();cx.arc(x+2,y+3,r,0,7);cx.fill();
-  if(ART.ok){const im=ART[b.p===0?'blue':'pink'];const d=r*2.12;cx.drawImage(im,x-d/2,y-d/2,d,d);if(hl)ring(x,y,r);return}
+  if(ART.ok){const im=ART[b.p===0?'blue':'pink'];const d=r*2.12;cx.save();cx.translate(x,y);cx.rotate(b.a||0);cx.drawImage(im,-d/2,-d/2,d,d);cx.restore();if(hl)ring(x,y,r);return}
   cx.save();wobCircle(x,y,r);cx.clip();cx.fillStyle=wash;cx.fillRect(x-r,y-r,2*r,2*r);hatch(x-r,y-r,2*r,2*r,col,3.2,b.p?.75:-.75);cx.restore();
   cx.strokeStyle='#2e2e33';cx.lineWidth=2.2;wobCircle(x,y,r);cx.stroke();
-  cx.fillStyle='#f6f3ea';star(x,y,r*.5);cx.fill();cx.strokeStyle='#2e2e33';cx.lineWidth=1.4;cx.stroke();
+  cx.save();cx.translate(x,y);cx.rotate(b.a||0);cx.fillStyle='#f6f3ea';star(0,0,r*.5);cx.fill();cx.strokeStyle='#2e2e33';cx.lineWidth=1.4;cx.stroke();cx.restore();
   if(hl)ring(x,y,r)}
 function drawBall(){const b=ball();const[x,y]=toScreen(b.x,b.y),r=b.r*sc;
   cx.fillStyle='rgba(46,46,51,.22)';cx.beginPath();cx.arc(x+1.5,y+2.5,r,0,7);cx.fill();
@@ -145,8 +145,8 @@ function draw(){if(!cw)return;pitchBg();
   // aim
   if(drag&&drag.len>0){const b=bodies[drag.i];const[x,y]=toScreen(b.x,b.y);const pw=Math.min(1,drag.len/MAXPULL);const dir=flip()?-1:1;
     const ax=-drag.dx*dir,ay=-drag.dy*dir;const al=Math.hypot(ax,ay)||1;const ux=ax/al,uy=ay/al;
-    cx.save();cx.strokeStyle='#2e2e33';cx.lineWidth=2;cx.setLineDash([3,6]);cx.beginPath();cx.moveTo(x+ux*b.r*sc,y+uy*b.r*sc);cx.lineTo(x+ux*(b.r*sc+pw*70),y+uy*(b.r*sc+pw*70));cx.stroke();
-    cx.setLineDash([]);cx.strokeStyle='rgba(46,46,51,.45)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-ux*pw*MAXPULL*sc,y-uy*pw*MAXPULL*sc);cx.stroke();
+    cx.save();cx.strokeStyle=ART.ok?'#f6f3ea':'#2e2e33';cx.lineWidth=2.5;cx.setLineDash([3,6]);cx.beginPath();cx.moveTo(x+ux*b.r*sc,y+uy*b.r*sc);cx.lineTo(x+ux*(b.r*sc+pw*70),y+uy*(b.r*sc+pw*70));cx.stroke();
+    cx.setLineDash([]);cx.strokeStyle=ART.ok?'rgba(246,243,234,.6)':'rgba(46,46,51,.45)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x-ux*pw*MAXPULL*sc,y-uy*pw*MAXPULL*sc);cx.stroke();
     // power meter
     const mx=x-ux*pw*MAXPULL*sc,my=y-uy*pw*MAXPULL*sc;
     if(ART.ok){const d=(9+pw*10);cx.drawImage(ART.dot,mx-d/2,my-d/2,d,d)}else{cx.fillStyle=pw>.75?'#d9661a':'#c99a1a';cx.beginPath();cx.arc(mx,my,4+pw*5,0,7);cx.fill();cx.strokeStyle='#2e2e33';cx.stroke()}cx.restore()}}
