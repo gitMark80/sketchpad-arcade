@@ -195,7 +195,8 @@ let raf=0;function tick(go){cancelAnimationFrame(raf);const loop=()=>{if(P.movin
   draw();if(P.moving||P.bih||P.aim||P.kb.on)raf=requestAnimationFrame(loop)};if(go||P.moving||P.bih)raf=requestAnimationFrame(loop);else draw()}
 // ---------- input ----------
 let ptr=null;
-function aimFrom(t){const c=cue();const dx=t.x-c.x,dy=t.y-c.y,d=Math.hypot(dx,dy);if(d<4)return;P.aim={dir:Math.atan2(dy,dx),power:Math.min(1,Math.max(0,(d-R-14)/240))}}
+/* slingshot aim: pull back from the cue ball; the pencil sits under your finger and the ball goes the other way */
+function aimFrom(t){const c=cue();const dx=c.x-t.x,dy=c.y-t.y,d=Math.hypot(dx,dy);if(d<4)return;P.aim={dir:Math.atan2(dy,dx),power:Math.min(1,Math.max(0,(d-R-14)/240))}}
 cv.addEventListener('pointerdown',e=>{if(!S.canPlay()||P.moving||S.isBot())return;e.preventDefault();cv.setPointerCapture(e.pointerId);ptr=e.pointerId;const t=toTable(e.offsetX,e.offsetY),c=cue();P.kb.on=false;
   if(P.bih&&dist(t,c)<R*3.2){P.drag={ox:c.x-t.x,oy:c.y-t.y};P.aim=null}else{P.drag=null;aimFrom(t)}tick(true)});
 cv.addEventListener('pointermove',e=>{if(ptr!==e.pointerId)return;const t=toTable(e.offsetX,e.offsetY);

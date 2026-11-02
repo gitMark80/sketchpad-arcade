@@ -59,14 +59,14 @@
       ],
       "how": [
         "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
-        "Touch the page to aim. The pencil points where your finger is, and the dotted line shows where the cue ball will go.",
-        "Pull your finger further from the cue ball for more power (watch the bar), then let go to shoot.",
+        "Touch the page behind the cue ball and pull back, like a slingshot. The pencil follows your finger, and the dotted line shows where the cue ball will go.",
+        "Pull further back for more power (watch the bar), then let go to shoot.",
         "Sink one of your colour and you shoot again. Sink all seven, then the 8 ball, to win the round.",
         "Scratch the cue ball, hit the wrong colour first or hit nothing and it's a foul: the other player can drag the cue ball anywhere before shooting.",
         "Sink the 8 too early, or scratch while sinking it, and you lose the round."
       ],
       "controls": [
-        "Drag anywhere on the table to aim and set power, then let go to shoot.",
+        "Drag back from the cue ball to aim and set power, then let go to shoot.",
         "Ball in hand? Drag the cue ball to where you want it, then aim.",
         "On a keyboard, the arrow keys aim (hold Shift for fine aim) and set power, and Space shoots.",
         "New round racks the balls again. Mode switches who you play. The Sound button turns sound on or off."
