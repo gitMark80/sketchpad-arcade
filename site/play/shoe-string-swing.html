@@ -569,6 +569,7 @@ function drawSun(t,alpha){
 }
 function drawNightSky(t,alpha){
   ctx.save();ctx.globalAlpha=alpha;
+  if(paintedSky('night')){ctx.restore();return}
   // a soft graphite wash over the paper with light hatching
   ctx.fillStyle='rgba(46,46,51,.13)';ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(46,46,51,.08)';ctx.lineWidth=1;ctx.beginPath();for(let x=-H;x<W;x+=7){ctx.moveTo(x,H);ctx.lineTo(x+H,0)}ctx.stroke();
@@ -824,7 +825,16 @@ function buildSkyTile(w,h){
   x.globalCompositeOperation='source-over';
   return c;
 }
+// Mark's coloured-pencil skies (day and night), looped left to right with slow parallax, sat on the ground line.
+const SKYIMG={};['day','night'].forEach(n=>{const im=new Image();im.onload=()=>{SKYIMG[n]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/sky-'+n+'.webp'});
+function paintedSky(n){
+  const im=SKYIMG[n];if(!im)return false;
+  const g=wy(SEA),h=g+2,w=Math.max(W,im.width*(h/im.height)),off=((camX*.05*S)%w+w)%w;
+  for(let x=-off;x<W;x+=w)ctx.drawImage(im,x,0,w+1,h);
+  return true;
+}
 function drawBlueSky(){
+  if(paintedSky('day'))return;
   const g=wy(SEA),h=Math.max(40,Math.ceil(g)),w=Math.ceil(W),key=w+'x'+h+'@'+DPR;
   if(skyKey!==key){skyTile=buildSkyTile(w,h);skyKey=key}
   const off=((camX*.05*S)%w+w)%w;
