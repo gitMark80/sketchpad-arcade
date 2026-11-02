@@ -656,6 +656,7 @@ const SCENE_DRAW={
 function groundCity(t){
   const g=wy(SEA),p=camX*S;
   for(let i=Math.floor(camX/150)-1;i<Math.floor((camX+W/S)/150)+2;i++){if(hash(i,3)<.45)continue;const x=(i*150+hash(i,5)*80)*S-p,r=(14+hash(i,9)*8)*S;
+    if(prop(ctx,['bush-a','bush-b','bush-c'][Math.floor(hash(i,11)*3)],x,g,r*2.1,0,0,.47))continue;
     pfill(ctx,cc=>{cc.arc(x-r*.8,g-r*.35,r*.75,Math.PI*.9,Math.PI*1.9);cc.arc(x,g-r*.7,r,Math.PI*1.1,Math.PI*1.95);cc.arc(x+r*.8,g-r*.35,r*.75,Math.PI*1.2,Math.PI*2.1);cc.lineTo(x+r*1.5,g);cc.lineTo(x-r*1.5,g);cc.closePath()},BUSH,[x-r*1.6,g-r*1.8,r*3.2,r*1.8],4,2,{a:.7,wash:.4})}
   const sw=24*S;
   ctx.fillStyle='#ebe7dc';ctx.fillRect(0,g,W,sw);
@@ -788,6 +789,10 @@ function buildSkyTile(w,h){
 }
 // Mark's coloured-pencil skies (day and night), looped left to right with slow parallax, sat on the ground line.
 const SKYIMG={};['day','night'].forEach(n=>{const im=new Image();im.onload=()=>{SKYIMG[n]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/sky-'+n+'.webp'});
+// Mark's coloured-pencil props: sidewalk bushes, the basketball, smiling stars and red balloons.
+const PROP={};['bush-a','bush-b','bush-c','ball','star','star-wink','balloon','balloon-tilt'].forEach(n=>{const im=new Image();im.onload=()=>{PROP[n]=im;if(!running)draw(0)};im.src='/assets/shoe-string-swing/'+n+'.webp'});
+// draw a prop centred at (x,y) with the given height; ox/oy shift the anchor (fractions of width/height from the centre)
+function prop(c,n,x,y,h,rot,ox,oy){const im=PROP[n];if(!im)return false;const w=h*im.width/im.height;c.save();c.translate(x,y);if(rot)c.rotate(rot);c.drawImage(im,-w*(.5+(ox||0)),-h*(.5+(oy||0)),w,h);c.restore();return true}
 function paintedSky(n){
   const im=SKYIMG[n];if(!im)return false;
   const g=wy(SEA),h=g+2,w=Math.max(W,im.width*(h/im.height)),off=((camX*.05*S)%w+w)%w;
@@ -826,7 +831,8 @@ function drawGround(t){
   GROUND_DRAW[sceneOf(m.a).id](t);
   if(m.f>0)withLayer(m.f,()=>{GROUND_DRAW[sceneOf(m.b).id](t)});
 }
-function drawStar(c,x,y,r,rot,lw){
+function drawStar(c,x,y,r,rot,lw,face){
+  if(c===ctx&&prop(c,face?'star-wink':'star',x,y,r*2.1,rot))return;
   pfill(c,cc=>starPath(cc,x,y,r,rot),STAR,[x-r,y-r,r*2,r*2],Math.max(3,r*.25),lw||2.5,{a:.75,wash:.42});
   c.save();c.translate(x,y);c.rotate(rot);c.fillStyle=OUT;c.beginPath();c.arc(-r*.2,-r*.05,r*.09,0,7);c.arc(r*.2,-r*.05,r*.09,0,7);c.fill();
   c.strokeStyle=OUT;c.lineWidth=Math.max(1.4,r*.09);c.beginPath();c.arc(0,r*.08,r*.2,.3,Math.PI-.3);c.stroke();c.restore();
@@ -848,6 +854,8 @@ function drawAnchor(a,isTarget,t){
     pfill(ctx,cc=>cc.arc(x,y,r*1.08,0,7),BLUE,[x-r*1.1,y-r*1.1,r*2.2,r*2.2],4.5,2.5,{a:.45,wash:.14});
     ctx.strokeStyle=OUT;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(x,y,r*.72,-2.5,-1.3);ctx.stroke();
     ctx.strokeStyle=PINK;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r*.82,.3,1.1);ctx.stroke();
+  }else if(a.type==='bob'&&PROP[a.ph%2<1?'balloon':'balloon-tilt']){ // Mark's red balloon, string end at the grab point
+    prop(ctx,a.ph%2<1?'balloon':'balloon-tilt',x,y,r*3.2,0,a.ph%2<1?0:.1,.42);ctx.fillStyle=OUT;ctx.beginPath();ctx.arc(x,y,2.4,0,7);ctx.fill();
   }else if(a.type==='bob'){ // a pink balloon tied at the grab point, bobbing up and down
     const by=y-r*1.05;
     ctx.strokeStyle=OUT;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(x,by+r*.95);ctx.quadraticCurveTo(x+3,y-r*.2,x,y);ctx.stroke();
@@ -865,6 +873,7 @@ function drawBall(b,t){ // an orange bouncy ball resting on the sidewalk
   const y=wy(SEA)-r*.55+Math.sin(t*2+b.x)*3*S;
   ctx.save();ctx.translate(x,y);ctx.scale(1+b.squash*.25,1-b.squash*.25);
   ctx.fillStyle='rgba(46,46,51,.2)';ctx.beginPath();ctx.ellipse(0,r*.75,r*.9,r*.18,0,0,7);ctx.fill();
+  if(prop(ctx,'ball',0,0,r*2,Math.sin(t*2+b.x)*.1)){ctx.restore();return}
   pfill(ctx,cc=>cc.arc(0,0,r,0,7),BALL,[-r,-r,r*2,r*2],4,2.8,{a:.75,wash:.45});
   ctx.strokeStyle=OUT;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-r,0);ctx.quadraticCurveTo(0,r*.25,r,0);ctx.moveTo(0,-r);ctx.quadraticCurveTo(-r*.25,0,0,r);
   ctx.moveTo(-r*.7,-r*.7);ctx.quadraticCurveTo(-r*.25,-r*.1,-r*.7,r*.7);ctx.moveTo(r*.7,-r*.7);ctx.quadraticCurveTo(r*.25,-r*.1,r*.7,r*.7);ctx.stroke();
@@ -900,7 +909,7 @@ function draw(t){
   drawBg(t);
   const tg=running&&o.att<0?target():-1;
   for(let i=0;i<anchors.length;i++)drawAnchor(anchors[i],i===tg,t);
-  for(const s of stars){if(s.got)continue;const x=wx(s.x);if(x<-30||x>W+30)continue;drawStar(ctx,x,wy(s.y)+Math.sin(t*3+s.ph)*4*S,15*S,Math.sin(t*2+s.ph)*.3)}
+  for(const s of stars){if(s.got)continue;const x=wx(s.x);if(x<-30||x>W+30)continue;drawStar(ctx,x,wy(s.y)+Math.sin(t*3+s.ph)*4*S,15*S,Math.sin(t*2+s.ph)*.3,2.5,s.ph%2<1)}
   drawGround(t);
   for(const b of balls)drawBall(b,t);
   drawNight(t);
