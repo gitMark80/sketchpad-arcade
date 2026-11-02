@@ -40,6 +40,12 @@ GAMES = {
                   "Every new word must join onto words already on the board. Tap Play to score it; tiles you place stay in one line.",
                   "Each letter has points. Coloured squares double or triple a letter (DL, TL) or the whole word (DW, TW). Use all 7 tiles in one turn for a 35-point bonus.",
                   "Swap tiles or pass if you're stuck. The game ends when the bag is empty and someone uses their last tile, or after four passes in a row."]},
+    "pencil-pool": {"name": "Pencil Pool", "intro": "8-ball with a No. 2 pencil for a cue. Sink your colour, then the 8.",
+        "rules": ["Blue sinks the blue balls and pink sinks the pink ones. Sink all seven of yours, then the 8 ball, to win.",
+                  "Touch the page to aim: the pencil points where your finger is. Pull your finger further from the cue ball for more power, then let go to shoot.",
+                  "Sink one of your balls and you shoot again. Miss, and it's the other player's turn.",
+                  "Scratching the cue ball, hitting the wrong colour first or hitting nothing is a foul: the other player gets ball in hand and can drag the cue ball anywhere.",
+                  "Sink the 8 before your colour is gone, or scratch while sinking it, and you lose the round."]},
 }
 
 def build(slug):

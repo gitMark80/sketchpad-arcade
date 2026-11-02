@@ -1,5 +1,32 @@
 [
  {
+  "slug": "pencil-pool",
+  "name": "Pencil Pool",
+  "genre": "Versus",
+  "url": "https://www.sketchpadarcade.com/pencil-pool",
+  "image": "https://www.sketchpadarcade.com/img/pencil-pool.jpg",
+  "tagline": "8-ball on a sketchbook page, with a No. 2 pencil for a cue.",
+  "description": "Play Pencil Pool free online: 8-ball pool drawn in coloured pencil. Sink your colour, then the 8. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+  "hashtags": [
+   "#SketchpadArcade",
+   "#PencilPool",
+   "#twoplayergames",
+   "#browsergames",
+   "#familygames"
+  ],
+  "facebook": "8-ball on a sketchbook page, with a No. 2 pencil for a cue. Play Pencil Pool free on Sketchpad Arcade, no downloads or sign-ups: https://www.sketchpadarcade.com/pencil-pool",
+  "pinterest": {
+   "title": "Pencil Pool: free versus game",
+   "description": "8-ball on a sketchbook page, with a No. 2 pencil for a cue. Free to play in your browser on Sketchpad Arcade. #SketchpadArcade #PencilPool #twoplayergames #browsergames",
+   "link": "https://www.sketchpadarcade.com/pencil-pool",
+   "image": "https://www.sketchpadarcade.com/img/pencil-pool.jpg"
+  },
+  "youtube": {
+   "title": "Pencil Pool | free versus game on Sketchpad Arcade",
+   "description": "8-ball on a sketchbook page, with a No. 2 pencil for a cue.\n\nPlay Pencil Pool free: https://www.sketchpadarcade.com/pencil-pool\nMore games: https://www.sketchpadarcade.com/\n\nPool, drawn in coloured pencil. Blue sinks the blue balls and pink sinks the pink ones, then whoever clears their colour first goes for the 8. Aim with a No. 2 pencil, pull back for power and let go. Sink a ball and you shoot again; scratch, and your friend gets ball in hand.\n\n#SketchpadArcade #PencilPool #twoplayergames #browsergames #familygames"
+  }
+ },
+ {
   "slug": "guess-my-doodle",
   "name": "Guess My Doodle",
   "genre": "Versus",

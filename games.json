@@ -42,6 +42,47 @@
   },
   "games": [
     {
+      "slug": "pencil-pool",
+      "name": "Pencil Pool",
+      "genre": "Versus",
+      "added": "2026-11-02",
+      "online": true,
+      "tagline": "8-ball on a sketchbook page, with a No. 2 pencil for a cue.",
+      "meta": "Play Pencil Pool free online: 8-ball pool drawn in coloured pencil. Sink your colour, then the 8. Play a friend by text or on one phone, or take on the bot on Easy, Medium or Hard.",
+      "lead": "Pool, drawn in coloured pencil. Blue sinks the blue balls and pink sinks the pink ones, then whoever clears their colour first goes for the 8. Aim with a No. 2 pencil, pull back for power and let go. Sink a ball and you shoot again; scratch, and your friend gets ball in hand.",
+      "facts": [
+        "Versus",
+        "8-ball rules, kept simple",
+        "Invite a friend by text and take turns whenever",
+        "Easy, Medium and Hard bots",
+        "Saves your record against the bot"
+      ],
+      "how": [
+        "Pick who to play: invite a friend by text, pass one phone, or play the bot.",
+        "Touch the page to aim. The pencil points where your finger is, and the dotted line shows where the cue ball will go.",
+        "Pull your finger further from the cue ball for more power (watch the bar), then let go to shoot.",
+        "Sink one of your colour and you shoot again. Sink all seven, then the 8 ball, to win the round.",
+        "Scratch the cue ball, hit the wrong colour first or hit nothing and it's a foul: the other player can drag the cue ball anywhere before shooting.",
+        "Sink the 8 too early, or scratch while sinking it, and you lose the round."
+      ],
+      "controls": [
+        "Drag anywhere on the table to aim and set power, then let go to shoot.",
+        "Ball in hand? Drag the cue ball to where you want it, then aim.",
+        "On a keyboard, the arrow keys aim (hold Shift for fine aim) and set power, and Space shoots.",
+        "New round racks the balls again. Mode switches who you play. The Sound button turns sound on or off."
+      ],
+      "tips": [
+        "Imagine a ghost ball touching your target on the far side from the pocket, and send the cue ball there. The dotted circle shows it.",
+        "Gentle shots are easier to control. Full power sends balls bouncing all over the page.",
+        "Leave the cue ball with a good next shot, not just a pot.",
+        "With ball in hand, line up a straight shot into a corner pocket."
+      ],
+      "about": [
+        "Pencil Pool is 8-ball pool redrawn in a sketchbook, with coloured-pencil balls and a pencil for a cue.",
+        "The bot tries out shots with the same physics you play with. On Hard it rarely misses, so Easy is the one to learn on."
+      ]
+    },
+    {
       "slug": "guess-my-doodle",
       "name": "Guess My Doodle",
       "genre": "Versus",
