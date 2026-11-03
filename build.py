@@ -127,6 +127,7 @@ img{max-width:100%;display:block}
 .nav a.link{text-decoration:none;padding:8px 12px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
 h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0}
+.genrelinks{margin:.2rem 0 .9rem;color:var(--muted);font-size:.95rem}.genrelinks a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin:0 .35rem}
 .chips{display:flex;gap:10px;justify-content:center;padding-block:14px 22px;flex-wrap:wrap}
 .chip{appearance:none;cursor:pointer;font-family:var(--body);font-size:1.1rem;line-height:1;padding:9px 18px;border:2px dashed var(--pencil);border-radius:var(--wob);white-space:nowrap;background:var(--paper);color:var(--ink);transition:transform .12s}
 .chip:hover{transform:translateY(-1px)}
@@ -270,7 +271,7 @@ def page(title, desc, body, active="", full=True, canonical=None, extra_head="",
 <div class="navr"><a class="sharebtn homebtn" href="{rel}index.html"{' aria-current="page"' if active=="games" else ""}>{HOME_ICON}<span>Home</span></a>
 <button class="sharebtn" type="button" {share}>{SHARE_ICON}<span>Share</span></button>{sister_btn()}</div>
 </nav></div>'''
-    links = [(b["slug"], b["short"]) for b in BOOKS] + [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
+    links = [(x["slug"], f"{k} games") for k, x in GENRE_PAGES.items() if any(g["genre"] == k for g in GAMES)] + [(b["slug"], b["short"]) for b in BOOKS] + [("about", "About"), ("news", "News"), ("contact", "Contact"), ("privacy", "Privacy"), ("terms", "Terms")]
     foot = f'''<footer><div class="wrap"><span>© 2026 {E(SITE["owner"])}. {E(SITE.get("location", ""))}<br>Free games, no downloads.{"<br>As an Amazon Associate I earn from qualifying purchases." if BOOKS else ""}</span>
 <ul>{"".join(footlink(rel, p, n, active == p) for p, n in links)}</ul></div></footer>'''
     content = f"{nav}\n<main>{body}</main>\n{foot}\n{SHARE_JS}"
@@ -371,6 +372,49 @@ def card(g, attrs=""):
 <img class="thumb" src="img/t/{g["slug"]}.webp" alt="{E(g["name"])}" loading="lazy" decoding="async" width="400" height="400">
 <div class="body"><span class="{cls}">{E(g["genre"])}</span></div></a>'''
 
+# Static genre pages (/puzzle-games, /word-games, ...): one indexable page per genre with real text, for searches
+# like "free word games" that the JavaScript-filtered home page can't rank for.
+GENRE_PAGES = {
+    "Puzzle": {"slug": "puzzle-games", "title": "Free Online Puzzle Games, Hand-Drawn in Pencil",
+               "meta": "Free online puzzle games drawn in pencil: sudoku, minesweeper, match-3, block puzzles, logic grids and sorting games. Play in your browser, no downloads.",
+               "intro": ["Puzzle games are the ones about thinking a few moves ahead. Every game here is drawn by hand on a sketchbook page and plays in your browser on a phone, tablet or computer, with nothing to install and no account to make.",
+                         "You'll find classics redrawn in pencil, like sudoku, minesweeper, Mastermind and Tri Peaks solitaire, next to block puzzles, match-3 games, ink-sorting and tile-matching games. Most save your progress on your own device, so you can pick up where you left off."]},
+    "Word": {"slug": "word-games", "title": "Free Online Word Games for Kids and Grown-Ups",
+             "meta": "Free online word games drawn in pencil: word searches, crosswords, hangman, Wordle-style guessing, connections puzzles and letter games. No downloads, no sign-ups.",
+             "intro": ["Word games are about spelling, guessing and sorting. Each one is drawn by hand on a notebook page and plays in your browser, with clean word lists that are fine for the whole family.",
+                       "There are word searches with new themes every round, crossword and letter-link games, hangman and secret-word guessing, a daily connections puzzle, and a word tile board game you can play with a friend by text."]},
+    "Arcade": {"slug": "arcade-games", "title": "Free Online Arcade Games, Hand-Drawn in Pencil",
+               "meta": "Free online arcade games drawn in pencil: endless runners, bubble shooters, mini golf, bowling, fruit slicing and more. Quick to learn, play in your browser.",
+               "intro": ["Arcade games are the quick ones about timing and reflexes: a round takes a minute or two, and the fun is in beating your own best. Every game is hand-drawn and plays in your browser on a phone or computer.",
+                         "Run, swing, slice, bowl and putt your way across a school desk and a sketchbook, with endless runners, a bubble shooter, mini golf, desk bowling, a snake game, a space shooter and a swinging superhero."]},
+    "Versus": {"slug": "versus-games", "title": "Free Two-Player Games to Play with a Friend Online",
+               "meta": "Free two-player games drawn in pencil: checkers, four in a row, tic-tac-toe, dots and boxes, pool, flick soccer and more. Play a friend by text, on one phone or against the bot.",
+               "intro": ["Versus games are the ones you play against someone. Invite a friend by text and take turns whenever you like, pass one phone back and forth, or play the computer on Easy, Medium or Hard.",
+                         "The set covers the games you'd scribble on paper in class, like tic-tac-toe, dots and boxes, SOS and a battleship-style boat hunt, plus checkers, four in a row, 8-ball pool, flick soccer and a draw-and-guess game for your group chat."]},
+}
+
+def genre_page(genre):
+    gp = GENRE_PAGES[genre]
+    games = sorted((g for g in GAMES if g["genre"] == genre), key=lambda g: g["name"].lower())
+    base = SITE["url"].rstrip("/")
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": gp["title"], "description": gp["meta"], "url": f'{base}/{gp["slug"]}',
+          "isPartOf": {"@type": "WebSite", "name": SITE["name"], "url": base + "/"},
+          "mainEntity": {"@type": "ItemList", "numberOfItems": len(games), "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "name": g["name"], "url": f'{base}/{g["slug"]}'} for i, g in enumerate(games)]}}
+    others = "".join(f'<a class="btn small" href="{x["slug"]}.html">{E(k)} games</a> ' for k, x in GENRE_PAGES.items() if k != genre and any(g["genre"] == k for g in GAMES))
+    body = f'''<div class="wrap">
+<div class="crumbs"><a href="index.html">All games</a> / {E(genre)}</div>
+<div class="homehead"><h1>{E(gp["title"])}</h1>{"".join(f"<p>{E(x)}</p>" for x in gp["intro"])}</div>
+<section class="shelf"><h2 class="sec">{len(games)} {E(genre.lower())} games</h2><div class="grid">{"".join(card(g) for g in games)}</div></section>
+<section class="prose"><h2>More kinds of games</h2><p>{others}<a class="btn small" href="index.html#games-head">All {len(GAMES)} games</a></p></section>
+</div>
+<script type="application/ld+json">{json.dumps(ld)}</script>'''
+    return page(f'{gp["title"]} | {SITE["name"]}', gp["meta"], body, "games", canonical=gp["slug"], arc={"page": "genre", "slug": gp["slug"]})
+
+def genre_links(rel=""):
+    """Plain links to the genre pages, so crawlers (and people without JavaScript) can reach them from the home page."""
+    return '<p class="genrelinks">Browse: ' + " · ".join(f'<a href="{rel}{x["slug"]}.html">{E(k)} games</a>' for k, x in GENRE_PAGES.items() if any(g["genre"] == k for g in GAMES)) + "</p>"
+
 def home(full=True):
     genres = sorted({g["genre"] for g in GAMES})
     chips = '<button class="chip" type="button" data-f="all" aria-pressed="true">All games</button>' + "".join(
@@ -384,6 +428,7 @@ def home(full=True):
 {book_shelf()}
 <section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games">{chips}</div>
+{genre_links()}
 <section class="row" id="row-keep" hidden><h2 class="sec">Keep Playing</h2><div class="strip"></div></section>
 <section class="row" id="row-mine" hidden><h2 class="sec">Your Games with Friends</h2><div class="strip"></div></section>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
@@ -454,7 +499,13 @@ def home(full=True):
   }}));
 }})();
 </script>'''
-    return page(f'{SITE["name"]}: free hand-drawn browser games', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js(), arc={"page": "home"})
+    base = SITE["url"].rstrip("/")
+    site_ld = [{"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": base + "/", "description": SITE["description"], "inLanguage": "en",
+                "publisher": {"@type": "Organization", "name": SITE["owner"], "url": base + "/", "logo": f"{base}/brand/icon-192.png"}},
+               {"@context": "https://schema.org", "@type": "Organization", "name": SITE["name"], "legalName": SITE["owner"], "url": base + "/", "logo": f"{base}/brand/icon-192.png",
+                "address": {"@type": "PostalAddress", "addressLocality": "Pensacola", "addressRegion": "FL", "addressCountry": "US"}}]
+    body += "".join(f'<script type="application/ld+json">{json.dumps(x)}</script>' for x in site_ld)
+    return page(f'{SITE["name"]}: Free Online Games Drawn in Pencil', SITE["description"], body, "games", full, canonical="", extra_head='<style>[hidden]{display:none!important}</style>\n' + online_js(), arc={"page": "home"})
 
 GAME_LINK_JS = """<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/SLUG?game='+m[1])})();</script>"""
 
@@ -476,14 +527,15 @@ def detail(g):
           "publisher": {"@type": "Organization", "name": SITE["owner"], "url": base}}
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Games", "item": base + "/"},
-        {"@type": "ListItem", "position": 2, "name": g["name"], "item": f'{base}/{g["slug"]}'}]}
+        {"@type": "ListItem", "position": 2, "name": f'{g["genre"]} games', "item": f'{base}/{GENRE_PAGES[g["genre"]]["slug"]}'},
+        {"@type": "ListItem", "position": 3, "name": g["name"], "item": f'{base}/{g["slug"]}'}]}
     li = lambda xs: "".join(f"<li>{E(x)}</li>" for x in xs)
     play = E(g["play_url"]) if g.get("play_url") else f'play/{g["slug"]}.html'
     ext = ' rel="noopener" data-count' if g.get("play_url") else ""
     controls = f'<section class="panel"><h2>Controls</h2><ul>{li(g["controls"])}</ul></section>' if g.get("controls") else ""
     about = f'<section class="panel about"><h2>About {E(g["name"])}</h2>{"".join(f"<p>{E(x)}</p>" for x in g["about"])}</section>' if g.get("about") else ""
     body = f'''<div class="wrap">
-<div class="crumbs"><a href="index.html">All games</a> / {E(g["genre"])}</div>
+<div class="crumbs"><a href="index.html">All games</a> / <a href="{GENRE_PAGES[g["genre"]]["slug"]}.html">{E(g["genre"])} games</a></div>
 <div class="hero">
   <div class="cover"><img src="img/{g["slug"]}.jpg" alt="{E(g["name"])} cover art" width="640" height="640" fetchpriority="high"><a class="btn" href="{play}"{ext}>Play now</a></div>
   <div class="info">
@@ -1001,6 +1053,8 @@ def build():
     shutil.copy(ROOT / "src" / "brand" / "icon-32.png", OUT / "favicon.png")
     (OUT / "index.html").write_text(home())
     (OUT / "about.html").write_text(about())
+    for k, x in GENRE_PAGES.items():
+        if any(g["genre"] == k for g in GAMES): (OUT / f'{x["slug"]}.html').write_text(genre_page(k))
     (OUT / "privacy.html").write_text(privacy())
     (OUT / "contact.html").write_text(contact())
     (OUT / "terms.html").write_text(terms())
@@ -1028,7 +1082,7 @@ def build():
     (OUT / "vercel.json").write_text(json.dumps({"cleanUrls": True}, indent=2) + "\n")
     url = SITE.get("url", "").rstrip("/")
     if url:
-        pages = ["", *[b["slug"] for b in BOOKS], "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
+        pages = ["", *[x["slug"] for k, x in GENRE_PAGES.items() if any(g["genre"] == k for g in GAMES)], *[b["slug"] for b in BOOKS], "about", "news", "contact", "privacy", "terms"] + [g["slug"] for g in GAMES] + [f'news/{x["slug"]}' for x in POSTS]
         img = {g["slug"]: f'{url}/img/{g["slug"]}.jpg' for g in GAMES} | {b["slug"]: f'{url}/{b["dir"]}/cover.jpg' for b in BOOKS}
         (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
             "".join(f"  <url><loc>{url}/{p}</loc>" + (f"<image:image><image:loc>{img[p]}</image:loc></image:image>" if p in img else "") + "</url>\n" for p in pages) + "</urlset>\n")
