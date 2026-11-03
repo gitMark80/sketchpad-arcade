@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sketchpad Arcade: free hand-drawn browser games</title>
+<title>Sketchpad Arcade: Free Online Games Drawn in Pencil</title>
 <link rel="canonical" href="https://www.sketchpadarcade.com/">
 <meta property="og:url" content="https://www.sketchpadarcade.com/">
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.sketchpadarcade.com/brand/icon-32.png?v=2">
@@ -28,15 +28,15 @@
 .bda-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:10000;background:#2e2e33;color:#f6f3ea;font:400 1rem "Patrick Hand","Comic Sans MS",cursive;padding:10px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 .bda-toast[hidden]{display:none!important}
 </style>
-<meta name="description" content="Free hand-drawn browser games: sudoku, minesweeper, 2048, word puzzles and two-player games you can play with a friend by text. Sketched in pencil, played on any phone or laptop, no sign-ups.">
-<meta property="og:title" content="Sketchpad Arcade: free hand-drawn browser games">
-<meta property="og:description" content="Free hand-drawn browser games: sudoku, minesweeper, 2048, word puzzles and two-player games you can play with a friend by text. Sketched in pencil, played on any phone or laptop, no sign-ups.">
+<meta name="description" content="Free online games drawn in pencil: sudoku, minesweeper, word puzzles, arcade runs and two-player games to play with a friend by text. No downloads, no sign-ups.">
+<meta property="og:title" content="Sketchpad Arcade: Free Online Games Drawn in Pencil">
+<meta property="og:description" content="Free online games drawn in pencil: sudoku, minesweeper, word puzzles, arcade runs and two-player games to play with a friend by text. No downloads, no sign-ups.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sketchpad Arcade">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sketchpad Arcade: free hand-drawn browser games">
-<meta name="twitter:description" content="Free hand-drawn browser games: sudoku, minesweeper, 2048, word puzzles and two-player games you can play with a friend by text. Sketched in pencil, played on any phone or laptop, no sign-ups.">
+<meta name="twitter:title" content="Sketchpad Arcade: Free Online Games Drawn in Pencil">
+<meta name="twitter:description" content="Free online games drawn in pencil: sudoku, minesweeper, word puzzles, arcade runs and two-player games to play with a friend by text. No downloads, no sign-ups.">
 <meta name="twitter:image" content="https://www.sketchpadarcade.com/brand/share-2.jpg">
 <meta property="og:image" content="https://www.sketchpadarcade.com/brand/share-2.jpg">
 <style>[hidden]{display:none!important}</style>
@@ -83,6 +83,7 @@ img{max-width:100%;display:block}
 .nav a.link{text-decoration:none;padding:8px 12px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
 h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0}
+.genrelinks{margin:.2rem 0 .9rem;color:var(--muted);font-size:.95rem}.genrelinks a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin:0 .35rem}
 .chips{display:flex;gap:10px;justify-content:center;padding-block:14px 22px;flex-wrap:wrap}
 .chip{appearance:none;cursor:pointer;font-family:var(--body);font-size:1.1rem;line-height:1;padding:9px 18px;border:2px dashed var(--pencil);border-radius:var(--wob);white-space:nowrap;background:var(--paper);color:var(--ink);transition:transform .12s}
 .chip:hover{transform:translateY(-1px)}
@@ -209,6 +210,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 
 <section class="shelf" aria-labelledby="games-head"><h2 class="shelfhead" id="games-head">Games</h2>
 <div class="chips" role="group" aria-label="Filter games"><button class="chip" type="button" data-f="all" aria-pressed="true">All games</button><button class="chip" type="button" data-f="Arcade" aria-pressed="false">Arcade</button><button class="chip" type="button" data-f="Puzzle" aria-pressed="false">Puzzle</button><button class="chip" type="button" data-f="Versus" aria-pressed="false">Versus</button><button class="chip" type="button" data-f="Word" aria-pressed="false">Word</button></div>
+<p class="genrelinks">Browse: <a href="/puzzle-games">Puzzle games</a> · <a href="/word-games">Word games</a> · <a href="/arcade-games">Arcade games</a> · <a href="/versus-games">Versus games</a></p>
 <section class="row" id="row-keep" hidden><h2 class="sec">Keep Playing</h2><div class="strip"></div></section>
 <section class="row" id="row-mine" hidden><h2 class="sec">Your Games with Friends</h2><div class="strip"></div></section>
 <section class="row" id="row-new" hidden><h2 class="sec">New This Week</h2><div class="strip"></div></section>
@@ -396,9 +398,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     filter=b.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));applyFilter();
   }));
 })();
-</script></main>
+</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/", "description": "Free online games drawn in pencil: sudoku, minesweeper, word puzzles, arcade runs and two-player games to play with a friend by text. No downloads, no sign-ups.", "inLanguage": "en", "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com/", "logo": "https://www.sketchpadarcade.com/brand/icon-192.png"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Sketchpad Arcade", "legalName": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com/", "logo": "https://www.sketchpadarcade.com/brand/icon-192.png", "address": {"@type": "PostalAddress", "addressLocality": "Pensacola", "addressRegion": "FL", "addressCountry": "US"}}</script></main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
-<ul><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
+<ul><li><a href="/puzzle-games">Puzzle games</a></li><li><a href="/word-games">Word games</a></li><li><a href="/arcade-games">Arcade games</a></li><li><a href="/versus-games">Versus games</a></li><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
 <script>
 (()=>{
   let sheet,toastEl,tt;
