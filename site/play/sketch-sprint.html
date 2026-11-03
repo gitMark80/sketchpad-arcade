@@ -1235,7 +1235,7 @@ function flat(name,rx,rz,y,scl=1){const S=SPR[name];const p=proj(rx,y,rz);if(rz+
 function drawOb(o){
   const z=o.z-dist,k=KIND[o.kind],seg=segAt(o.z);ctx.globalAlpha=fade(z);
   if(o.bop){ctx.globalAlpha*=Math.max(0,1-o.bop/2.4);const q=pc(o.z,o.x+o.bx,seg);spr(o.kind,q[0],q[1],o.by,1,o.br);ctx.globalAlpha=1;return}
-  const sq=pc(o.z+o.depth*.5,o.x,seg);shadow(sq[0],sq[1],o.hw*1.15,0,.22);
+  if(k.type==='high'){const sq=pc(o.z+o.depth*.5,o.x,seg);shadow(sq[0],sq[1],o.hw*1.15,0,.22)} // only the overhead obstacles cast a shadow; walls, logs, carts etc. sit on the ground
   if(k.box&&!hasImg(o.kind)){const [y0,y1,side,top]=k.box,x0=o.x-o.hw,x1=o.x+o.hw,zf=o.z+o.depth;
     const c=[pc(o.z,x0,seg),pc(o.z,x1,seg),pc(zf,x1,seg),pc(zf,x0,seg)];
     for(let i=0;i<4;i++){const a=c[i],b=c[(i+1)%4];const nx=b[1]-a[1],nz2=-(b[0]-a[0]);const mx=(a[0]+b[0])/2,mz=(a[1]+b[1])/2+CB;if(nx*mx+nz2*mz>=0)continue;
@@ -1422,8 +1422,8 @@ function drawImgChar(id,c,fx,fy,p,o){
 }
 function drawChar(id,c,fx,fy,p,o){if(hasImg(id+'-run')||hasImg(id+'-run-1'))drawImgChar(id,c,fx,fy,p,o);else DRAW[id](c,fx,fy,p,o)}
 function boardRock(){return Math.sin(T*2.2)*.025}
-/* On a skateboard power-up the runner hops onto the board they picked, in the skating stance from Mark's
-   coloured runner sheet (seen from behind), with the deck foreshortened as it points down the path. */
+/* Unused: PICKIMG[id] is the round menu portrait, not a skating stance, so this read as a face badge hovering over a flattened board.
+   Kept in case back-view skater art is drawn later; the boost now draws the runner's -surf sprite. */
 function drawSkater(id,fp,p){
   const K=PICKIMG[id],B=PICKIMG['board-'+boardId];
   const bw=.9*p,bh=bw*B.naturalHeight/B.naturalWidth*.34,kh=1.36*p,kw=kh*K.naturalWidth/K.naturalHeight;
@@ -1458,7 +1458,7 @@ function drawRunner(){
   else if(dying&&hasDown){// the first beat of a crash: standing, tipping back
     const k=Math.min(1,deadT/.18);ctx.save();ctx.translate(fp[0],fp[1]);ctx.scale(1,1-.35*k);ctx.translate(-fp[0],-fp[1]);
     drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:0,sq:0,slide:0,air:false,tumble:0,dir:1,wob:0});ctx.restore()}
-  else if(!blink&&P.boostT>0&&PICKIMG[C.id]&&PICKIMG['board-'+boardId])drawSkater(C.id,fp,p);
+  // (the skateboard power-up uses each runner's painted SURF pose, via drawChar below; drawSkater stacked the menu portrait on the top-down board picture)
   else if(!blink)drawChar(C.id,ctx,fp[0],fp[1],p,{t:P.ph,lean:P.lean,slide:slideOn?1:0,slideIn:T-slideT0,rise:slideOn||P.air?null:T-slideT1,air:P.air,vy:P.vy,surf:P.boostT>0,tumble:P.tumble,dir:P.x>0?-1:1,wob:P.boostT>0?0:P.wobT,sq:P.boostT>0?0:P.sq});
   if(P.shieldT>0){const S=SPR.pipBubble,bp=proj(rx,P.y+(P.slideT>0?.35:.68),0),w=S.w*p*(1+.03*Math.sin(T*6)),a=P.shieldT<2.5?(.5+.5*Math.sin(T*18)):1;
     ctx.globalAlpha=a;ctx.drawImage(S.c,bp[0]-w/2,bp[1]-w/2,w,w);ctx.globalAlpha=1}
