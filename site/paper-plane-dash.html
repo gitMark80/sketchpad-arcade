@@ -96,7 +96,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .card:nth-child(2n){border-radius:var(--wob2)}
 .card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
 .card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
-.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .card h3{font-size:1.35rem}
 .card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
 .tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
@@ -106,6 +106,25 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+/* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
+.card .body .tag{align-self:flex-start}
+.card .body h3{margin:0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.card .body p{margin:0;font-size:.92rem;line-height:1.35;color:var(--pencil)}
+.strip .card .body h3{font-size:1.05rem}
+.strip .card .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.editor-guide{margin:24px 0 30px;padding:22px 24px;background:var(--paper-2);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.editor-guide h2{font-family:var(--display);font-size:1.8rem;margin:0 0 10px}
+.editor-guide>p{margin:0 0 16px;line-height:1.45;color:var(--pencil);max-width:82ch}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.guide-card{padding:14px 15px;background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);box-shadow:2px 2px 0 var(--faint)}
+.guide-card:nth-child(2n){border-radius:var(--wob2)}
+.guide-card h3{font-size:1.15rem;margin:0 0 8px}
+.guide-card p{margin:0;font-size:1rem;color:var(--ink);line-height:1.5}
+.guide-card a,.editor-guide a{color:#225a94;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.editor-guide .guide-more{margin:16px 0 0;color:var(--ink)}
+@media(max-width:720px){.card .body{padding:9px 10px 12px}.guide-card{padding:12px}.editor-guide{padding:17px 15px}}
+
 .also.twin{margin:0 0 28px}
 .allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
@@ -230,21 +249,21 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 
 <section><h2 class="sec">If you like Paper Plane Dash, try these</h2><div class="grid"><a class="card" href="/pencil-parade" data-arc-rel data-slug="pencil-parade" data-added="2026-10-18" data-genre="Arcade" aria-label="Pencil Parade, Arcade game" title="Pencil Parade">
 <img class="thumb" src="img/t/pencil-parade.webp" alt="Pencil Parade" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/squiggle-worm" data-arc-rel data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Pencil Parade</h3><p>Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus.</p></div></a><a class="card" href="/squiggle-worm" data-arc-rel data-slug="squiggle-worm" data-added="2026-10-18" data-genre="Arcade" aria-label="Squiggle Worm, Arcade game" title="Squiggle Worm">
 <img class="thumb" src="img/t/squiggle-worm.webp" alt="Squiggle Worm" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/desk-strikes" data-arc-rel data-slug="desk-strikes" data-added="2026-10-18" data-genre="Arcade" aria-label="Desk Strikes, Arcade game" title="Desk Strikes">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Squiggle Worm</h3><p>Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest.</p></div></a><a class="card" href="/desk-strikes" data-arc-rel data-slug="desk-strikes" data-added="2026-10-18" data-genre="Arcade" aria-label="Desk Strikes, Arcade game" title="Desk Strikes">
 <img class="thumb" src="img/t/desk-strikes.webp" alt="Desk Strikes" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/marble-blitz" data-arc-rel data-slug="marble-blitz" data-added="2026-10-18" data-genre="Arcade" aria-label="Marble Blitz, Arcade game" title="Marble Blitz">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Desk Strikes</h3><p>Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs.</p></div></a><a class="card" href="/marble-blitz" data-arc-rel data-slug="marble-blitz" data-added="2026-10-18" data-genre="Arcade" aria-label="Marble Blitz, Arcade game" title="Marble Blitz">
 <img class="thumb" src="img/t/marble-blitz.webp" alt="Marble Blitz" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/pencil-patrol" data-arc-rel data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Marble Blitz</h3><p>Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk.</p></div></a><a class="card" href="/pencil-patrol" data-arc-rel data-slug="pencil-patrol" data-added="2026-10-14" data-genre="Arcade" aria-label="Pencil Patrol, Arcade game" title="Pencil Patrol">
 <img class="thumb" src="img/t/pencil-patrol.webp" alt="Pencil Patrol" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/shoe-string-swing" data-arc-rel data-slug="shoe-string-swing" data-added="2026-10-08" data-genre="Arcade" aria-label="Shoe String Swing, Arcade game" title="Shoe String Swing">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Pencil Patrol</h3><p>Scribble through a notebook-page maze collecting pencil dots while silly erasers chase you.</p></div></a><a class="card" href="/shoe-string-swing" data-arc-rel data-slug="shoe-string-swing" data-added="2026-10-08" data-genre="Arcade" aria-label="Shoe String Swing, Arcade game" title="Shoe String Swing">
 <img class="thumb" src="img/t/shoe-string-swing.webp" alt="Shoe String Swing" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/eraser-gulp" data-arc-rel data-slug="eraser-gulp" data-added="2026-10-08" data-genre="Arcade" aria-label="Eraser Gulp, Arcade game" title="Eraser Gulp">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Shoe String Swing</h3><p>Lasso push-pins with a shoestring and swing a caped kid through the city, the mountains, the farm and beyond.</p></div></a><a class="card" href="/eraser-gulp" data-arc-rel data-slug="eraser-gulp" data-added="2026-10-08" data-genre="Arcade" aria-label="Eraser Gulp, Arcade game" title="Eraser Gulp">
 <img class="thumb" src="img/t/eraser-gulp.webp" alt="Eraser Gulp" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a><a class="card" href="/sidewalk-hop" data-arc-rel data-slug="sidewalk-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Sidewalk Hop, Arcade game" title="Sidewalk Hop">
+<div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a><a class="card" href="/sidewalk-hop" data-arc-rel data-slug="sidewalk-hop" data-added="2026-10-08" data-genre="Arcade" aria-label="Sidewalk Hop, Arcade game" title="Sidewalk Hop">
 <img class="thumb" src="img/t/sidewalk-hop.webp" alt="Sidewalk Hop" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag arcade">Arcade</span></div></a></div>
+<div class="body"><span class="tag arcade">Arcade</span><h3>Sidewalk Hop</h3><p>Hop a kid across busy streets and a creek before the rain catches up.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Plane Dash", "description": "A fast tube-flying dash drawn in pencil on black construction paper. Your paper airplane flies down a round tube on its own, and you touch or drag on the side of the tube you want to be on: the plane flies round to it the short way, up the sides, over the top and back down, keeping its belly to the wall the whole way. The junk sits on the inside of the tube: crumpled paper balls in every construction-paper colour, erasers, pencil stubs, two-spot-wide rulers and inky blots. Fly round them, fly through the stars, and when a paper ring comes down the tube, get into its gap to fly through for 50 points. Every ten stars start Dart Mode, when your plane fires paper darts that pop everything straight ahead. Catch a magnet to pull stars in, a shield for one free bump, a boost to smash straight through, or a x2 for double points. Every 600 metres turns to a new sector page, each faster than the last, and the stars you collect unlock nine more planes, all real folds: the Basic Glider, Bulldog Dart, Nakamura Lock, Harrier, Hammerhead, Flying Wing, Canard, Stunt Plane and the blue-and-gold Delta Wing.", "url": "https://www.sketchpadarcade.com/paper-plane-dash", "image": "https://www.sketchpadarcade.com/img/paper-plane-dash.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
