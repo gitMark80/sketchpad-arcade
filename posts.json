@@ -2,6 +2,33 @@
   "_comment": "News posts for /news. Newest first. body is a list of paragraphs; a paragraph starting with '## ' is a heading. Link games with {{slug}}.",
   "posts": [
     {
+      "slug": "november-update",
+      "title": "New this month: pool, flick soccer and four pencil classics",
+      "date": "2026-11-10",
+      "summary": "Pencil Pool and Doodle Kick join the Versus tab, sudoku, minesweeper, code-breaking and hangman get the sketchbook treatment, and every game now plays wide on a desktop. 55 games and counting.",
+      "body": [
+        "A lot has landed on Sketchpad Arcade since the Versus tab opened. There are 55 games on the site now, two of the newest are the most ambitious two-player games we have made, and a handful of older games have been redrawn from the ground up. Here is everything that changed, in one place.",
+        "## Pencil Pool",
+        "{{pencil-pool}} is 8-ball on a sketchbook page, with a No. 2 pencil for a cue. One player sinks the blue balls and the other sinks the pink ones, and whoever clears their colour first goes for the 8. Aiming works like a slingshot: touch the page behind the cue ball, pull back and let go. A soft band and a ghost ball show where the cue ball is headed, and a power bar fills the further you pull.",
+        "The rules are 8-ball, kept simple. Sink one of yours and you shoot again. Scratch, hit the wrong colour first or hit nothing at all and it is a foul, which gives the other player ball in hand anywhere on the table. Sink the 8 too early and you lose the round. Potted balls drop into the pocket rather than vanishing, which turned out to matter more than we expected: it is the difference between a diagram of pool and a game of it.",
+        "## Doodle Kick",
+        "{{doodle-kick}} is turn-based flick soccer. Each side has five players and there is one ball. Drag one of your players back like a pool cue, let go, and it skids across the pitch, knocks the ball about and bounces off the lines, the posts, the nets and everybody else. First to three goals wins. Every match starts in a different line-up, so the opening move that worked last time will not be there next time.",
+        "Both games have the three ways to play that the rest of the Versus tab has. Pass one phone back and forth, take on a bot on Easy, Medium or Hard, or tap Invite a friend and text them a link. Invited games have no accounts and no clock. You take your shot, they take theirs an hour or a day later, and Your Games with Friends on the home page shows whose turn it is.",
+        "## Four classics for one player",
+        "Not every pencil-and-paper game needs two people. Four solo classics arrived alongside the Versus games, and they are the ones to open when you have ten quiet minutes to yourself.",
+        "{{doodle-doku}} is sudoku on a pencil grid. Every puzzle is new and has exactly one answer, there is a notes mode for pencilling in your guesses, and you get three hints if you are properly stuck. {{blot-sweeper}} is the number-logic game you know from old office computers, with ink blots under the paper instead of mines. Your first tap is always safe, so you never lose before you have had a chance to think.",
+        "{{crayon-code}} is the code-breaking game. There is a secret row of crayon colours, and after each guess you get a filled dot for every crayon in the right spot and an open dot for every right colour in the wrong one. {{save-the-doodle}} is a gentler take on hangman: each wrong letter makes an eraser rub out part of a little pencil doodle, and every word comes with a clue. All four have Easy, Medium and Hard, and all four remember your best on each level.",
+        "## Old games, new drawings",
+        "{{pencil-putt}} got the biggest makeover. Its 36 holes are now laid out on a hand-drawn wooden school desk, with ruler walls, eraser posts, pencil shavings and spilled ink all drawn by hand, and dark solid greens so the ball and the cup are easy to read at a glance.",
+        "{{shoe-string-swing}} picked up some colour. The rest of the game is still graphite, but the hero now wears a red mask and cape over a blue shirt, the stars are yellow and the sky is shaded in blue coloured pencil. It is the first game on the site to mix colour and pencil this way.",
+        "Every cover on the site has been redrawn too. Each one is now a page from the same spiral-bound sketchbook, with the binding down the left side and looser, rougher pencil lines than before. Scroll the home page and it reads like flipping through one book.",
+        "## Wide on a desktop",
+        "Until this month every game played in a phone-shaped column, even on a big monitor. Now the games stretch out to use a wide screen on a laptop or desktop, and still fit a phone exactly as they did. Nothing changes about how you play. There is simply more page to play on.",
+        "## What is next",
+        "More two-player games are on the drawing board, along with new art for the games that are still wearing their first sketches. If there is a notebook game you played in the back row that we have missed, the contact page is open and we read everything."
+      ]
+    },
+    {
       "slug": "versus-games",
       "title": "Seven games for two: the Versus tab",
       "date": "2026-10-22",
