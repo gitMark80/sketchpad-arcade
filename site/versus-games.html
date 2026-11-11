@@ -93,7 +93,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .card:nth-child(2n){border-radius:var(--wob2)}
 .card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
 .card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
-.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .card h3{font-size:1.35rem}
 .card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
 .tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
@@ -103,6 +103,25 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+/* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
+.card .body .tag{align-self:flex-start}
+.card .body h3{margin:0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.card .body p{margin:0;font-size:.92rem;line-height:1.35;color:var(--pencil)}
+.strip .card .body h3{font-size:1.05rem}
+.strip .card .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.editor-guide{margin:24px 0 30px;padding:22px 24px;background:var(--paper-2);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.editor-guide h2{font-family:var(--display);font-size:1.8rem;margin:0 0 10px}
+.editor-guide>p{margin:0 0 16px;line-height:1.45;color:var(--pencil);max-width:82ch}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.guide-card{padding:14px 15px;background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);box-shadow:2px 2px 0 var(--faint)}
+.guide-card:nth-child(2n){border-radius:var(--wob2)}
+.guide-card h3{font-size:1.15rem;margin:0 0 8px}
+.guide-card p{margin:0;font-size:1rem;color:var(--ink);line-height:1.5}
+.guide-card a,.editor-guide a{color:#225a94;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.editor-guide .guide-more{margin:16px 0 0;color:var(--ink)}
+@media(max-width:720px){.card .body{padding:9px 10px 12px}.guide-card{padding:12px}.editor-guide{padding:17px 15px}}
+
 .also.twin{margin:0 0 28px}
 .allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
@@ -207,25 +226,26 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <main><div class="wrap">
 <div class="crumbs"><a href="/">All games</a> / Versus</div>
 <div class="homehead"><h1>Free Two-Player Games to Play with a Friend Online</h1><p>Versus games are the ones you play against someone. Invite a friend by text and take turns whenever you like, pass one phone back and forth, or play the computer on Easy, Medium or Hard.</p><p>The set covers the games you&#x27;d scribble on paper in class, like tic-tac-toe, dots and boxes, SOS and a battleship-style boat hunt, plus checkers, four in a row, 8-ball pool, flick soccer and a draw-and-guess game for your group chat.</p></div>
+<section class="editor-guide" aria-labelledby="choose-versus"><h2 id="choose-versus">Play against a friend—or the computer</h2><p>These games use familiar notebook challenges and add interactive turns. Read each game page for its supported play modes before starting.</p><div class="guide-grid"><article class="guide-card"><h3>Draw a line and claim it</h3><p><a href="/box-doodles">Box Doodles</a> asks you to claim squares by drawing their fourth sides. <a href="/doodle-sos">Doodle SOS</a> rewards completing S-O-S across the paper grid.</p></article><article class="guide-card"><h3>Play a classic match</h3><p><a href="/sketchers">Sketchers</a> is pencil checkers, <a href="/connect-sketch">Connect Sketch</a> is four in a row, and <a href="/pencil-pool">Pencil Pool</a> uses a pencil cue in a colored-ball 8-ball match.</p></article><article class="guide-card"><h3>Draw or flick your way to a win</h3><p><a href="/guess-my-doodle">Guess My Doodle</a> sends a drawing for someone else to solve. <a href="/doodle-kick">Doodle Kick</a> is turn-based flick soccer; first to three goals wins.</p></article></div><p class="guide-more">Read our <a href="/news/versus-games">guide to playing together</a> or explore the <a href="/news/which-sketchpad-game">game chooser</a>.</p></section>
 <section class="shelf"><h2 class="sec">9 versus games</h2><div class="grid"><a class="card" href="/box-doodles" data-slug="box-doodles" data-added="2026-10-21" data-genre="Versus" aria-label="Box Doodles, Versus game" title="Box Doodles">
 <img class="thumb" src="img/t/box-doodles.webp" alt="Box Doodles" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/connect-sketch" data-slug="connect-sketch" data-added="2026-10-22" data-genre="Versus" aria-label="Connect Sketch, Versus game" title="Connect Sketch">
+<div class="body"><span class="tag versus">Versus</span><h3>Box Doodles</h3><p>Join the dots. Close a box to claim it and go again.</p></div></a><a class="card" href="/connect-sketch" data-slug="connect-sketch" data-added="2026-10-22" data-genre="Versus" aria-label="Connect Sketch, Versus game" title="Connect Sketch">
 <img class="thumb" src="img/t/connect-sketch.webp" alt="Connect Sketch" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/doodle-kick" data-slug="doodle-kick" data-added="2026-11-02" data-genre="Versus" aria-label="Doodle Kick, Versus game" title="Doodle Kick">
+<div class="body"><span class="tag versus">Versus</span><h3>Connect Sketch</h3><p>Drop your counters down the page. Four in a row wins.</p></div></a><a class="card" href="/doodle-kick" data-slug="doodle-kick" data-added="2026-11-02" data-genre="Versus" aria-label="Doodle Kick, Versus game" title="Doodle Kick">
 <img class="thumb" src="img/t/doodle-kick.webp" alt="Doodle Kick" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/doodle-sos" data-slug="doodle-sos" data-added="2026-10-21" data-genre="Versus" aria-label="Doodle SOS, Versus game" title="Doodle SOS">
+<div class="body"><span class="tag versus">Versus</span><h3>Doodle Kick</h3><p>Flick soccer on a sketchbook page. First to three goals wins.</p></div></a><a class="card" href="/doodle-sos" data-slug="doodle-sos" data-added="2026-10-21" data-genre="Versus" aria-label="Doodle SOS, Versus game" title="Doodle SOS">
 <img class="thumb" src="img/t/doodle-sos.webp" alt="Doodle SOS" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/guess-my-doodle" data-slug="guess-my-doodle" data-added="2026-10-22" data-genre="Versus" aria-label="Guess My Doodle, Versus game" title="Guess My Doodle">
+<div class="body"><span class="tag versus">Versus</span><h3>Doodle SOS</h3><p>Write S or O. Spell S-O-S to score and go again.</p></div></a><a class="card" href="/guess-my-doodle" data-slug="guess-my-doodle" data-added="2026-10-22" data-genre="Versus" aria-label="Guess My Doodle, Versus game" title="Guess My Doodle">
 <img class="thumb" src="img/t/guess-my-doodle.webp" alt="Guess My Doodle" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/paper-boats" data-slug="paper-boats" data-added="2026-10-21" data-genre="Versus" aria-label="Paper Boats, Versus game" title="Paper Boats">
+<div class="body"><span class="tag versus">Versus</span><h3>Guess My Doodle</h3><p>Draw a word for your friend, then guess theirs.</p></div></a><a class="card" href="/paper-boats" data-slug="paper-boats" data-added="2026-10-21" data-genre="Versus" aria-label="Paper Boats, Versus game" title="Paper Boats">
 <img class="thumb" src="img/t/paper-boats.webp" alt="Paper Boats" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/pencil-pool" data-slug="pencil-pool" data-added="2026-11-02" data-genre="Versus" aria-label="Pencil Pool, Versus game" title="Pencil Pool">
+<div class="body"><span class="tag versus">Versus</span><h3>Paper Boats</h3><p>Find all four hidden paper boats before they find yours.</p></div></a><a class="card" href="/pencil-pool" data-slug="pencil-pool" data-added="2026-11-02" data-genre="Versus" aria-label="Pencil Pool, Versus game" title="Pencil Pool">
 <img class="thumb" src="img/t/pencil-pool.webp" alt="Pencil Pool" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/sketchers" data-slug="sketchers" data-added="2026-10-22" data-genre="Versus" aria-label="Sketchers, Versus game" title="Sketchers">
+<div class="body"><span class="tag versus">Versus</span><h3>Pencil Pool</h3><p>8-ball on a sketchbook page, with a No. 2 pencil for a cue.</p></div></a><a class="card" href="/sketchers" data-slug="sketchers" data-added="2026-10-22" data-genre="Versus" aria-label="Sketchers, Versus game" title="Sketchers">
 <img class="thumb" src="img/t/sketchers.webp" alt="Sketchers" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a><a class="card" href="/tic-tac-doodle" data-slug="tic-tac-doodle" data-added="2026-10-21" data-genre="Versus" aria-label="Tic-Tac-Doodle, Versus game" title="Tic-Tac-Doodle">
+<div class="body"><span class="tag versus">Versus</span><h3>Sketchers</h3><p>Checkers on a sketchbook page. Jump your friend&#x27;s pieces to win.</p></div></a><a class="card" href="/tic-tac-doodle" data-slug="tic-tac-doodle" data-added="2026-10-21" data-genre="Versus" aria-label="Tic-Tac-Doodle, Versus game" title="Tic-Tac-Doodle">
 <img class="thumb" src="img/t/tic-tac-doodle.webp" alt="Tic-Tac-Doodle" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag versus">Versus</span></div></a></div></section>
+<div class="body"><span class="tag versus">Versus</span><h3>Tic-Tac-Doodle</h3><p>Blue X against pink O. Three in a row wins.</p></div></a></div></section>
 <section class="prose"><h2>More kinds of games</h2><p><a class="btn small" href="/puzzle-games">Puzzle games</a> <a class="btn small" href="/word-games">Word games</a> <a class="btn small" href="/arcade-games">Arcade games</a> <a class="btn small" href="/#games-head">All 55 games</a></p></section>
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Free Two-Player Games to Play with a Friend Online", "description": "Free two-player games drawn in pencil: checkers, four in a row, tic-tac-toe, dots and boxes, pool, flick soccer and more. Play a friend by text, on one phone or against the bot.", "url": "https://www.sketchpadarcade.com/versus-games", "isPartOf": {"@type": "WebSite", "name": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/"}, "mainEntity": {"@type": "ItemList", "numberOfItems": 9, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Box Doodles", "url": "https://www.sketchpadarcade.com/box-doodles"}, {"@type": "ListItem", "position": 2, "name": "Connect Sketch", "url": "https://www.sketchpadarcade.com/connect-sketch"}, {"@type": "ListItem", "position": 3, "name": "Doodle Kick", "url": "https://www.sketchpadarcade.com/doodle-kick"}, {"@type": "ListItem", "position": 4, "name": "Doodle SOS", "url": "https://www.sketchpadarcade.com/doodle-sos"}, {"@type": "ListItem", "position": 5, "name": "Guess My Doodle", "url": "https://www.sketchpadarcade.com/guess-my-doodle"}, {"@type": "ListItem", "position": 6, "name": "Paper Boats", "url": "https://www.sketchpadarcade.com/paper-boats"}, {"@type": "ListItem", "position": 7, "name": "Pencil Pool", "url": "https://www.sketchpadarcade.com/pencil-pool"}, {"@type": "ListItem", "position": 8, "name": "Sketchers", "url": "https://www.sketchpadarcade.com/sketchers"}, {"@type": "ListItem", "position": 9, "name": "Tic-Tac-Doodle", "url": "https://www.sketchpadarcade.com/tic-tac-doodle"}]}}</script></main>

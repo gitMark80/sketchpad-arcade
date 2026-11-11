@@ -93,7 +93,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .card:nth-child(2n){border-radius:var(--wob2)}
 .card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
 .card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
-.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .card h3{font-size:1.35rem}
 .card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
 .tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
@@ -103,6 +103,25 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+/* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
+.card .body .tag{align-self:flex-start}
+.card .body h3{margin:0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.card .body p{margin:0;font-size:.92rem;line-height:1.35;color:var(--pencil)}
+.strip .card .body h3{font-size:1.05rem}
+.strip .card .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.editor-guide{margin:24px 0 30px;padding:22px 24px;background:var(--paper-2);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.editor-guide h2{font-family:var(--display);font-size:1.8rem;margin:0 0 10px}
+.editor-guide>p{margin:0 0 16px;line-height:1.45;color:var(--pencil);max-width:82ch}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.guide-card{padding:14px 15px;background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);box-shadow:2px 2px 0 var(--faint)}
+.guide-card:nth-child(2n){border-radius:var(--wob2)}
+.guide-card h3{font-size:1.15rem;margin:0 0 8px}
+.guide-card p{margin:0;font-size:1rem;color:var(--ink);line-height:1.5}
+.guide-card a,.editor-guide a{color:#225a94;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.editor-guide .guide-more{margin:16px 0 0;color:var(--ink)}
+@media(max-width:720px){.card .body{padding:9px 10px 12px}.guide-card{padding:12px}.editor-guide{padding:17px 15px}}
+
 .also.twin{margin:0 0 28px}
 .allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
@@ -216,6 +235,8 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
 <li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
 <li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
+<h2>Find your kind of game</h2>
+<p>For quiet concentration, start with <a href="/doodle-doku">Doodle Doku</a> or <a href="/ink-jars">Ink Jars</a>. For fast reflexes, try <a href="/sketch-sprint">Sketch Sprint</a> or <a href="/pencil-patrol">Pencil Patrol</a>. To take turns with someone, visit <a href="/versus-games">Versus Games</a>. Our <a href="/news/which-sketchpad-game">game chooser</a> offers more suggestions, and every game page explains how to play before opening the game.</p>
 <h2>How a game gets here</h2>
 <p>New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="/news">news page</a>.</p>
 <h2>Ads</h2>
