@@ -1,5 +1,5 @@
 {
-  "_note": "Post text for Reel Studio (/reel). {name} = game name, {url} = sketchpadarcade.com/<slug>, {hook} = the hook. Each post mixes one line, one CTA, one comment and a rotating hashtag set, and the page avoids repeats until a game's list runs out.",
+  "_note": "Post text for Reel Studio (/reel). {name} = game name, {url} = sketchpadarcade.com/<slug>, {hook} = the hook. Each post mixes one line, one CTA, one comment and a rotating hashtag set, and the page avoids repeats until a game's list runs out. _tags feeds two boxes: YouTube hashtags (the same words without #, separated by commas) and Instagram hashtags (five at most: game name, core, two from the genre, one general).",
   "_titles": [
     "{hook} | {name}",
     "{name}: {hook}",
@@ -13,7 +13,7 @@
     "👉 Try it free at {url} (link in bio)",
     "✏️ Free to play, no sign-up: {url} (link in bio)",
     "📱 Plays right in your phone's browser: {url} (link in bio)",
-    "📓 Free, family friendly, no app needed: {url} (link in bio)",
+    "📓 Free, no app needed: {url} (link in bio)",
     "🔗 Play it free at {url} (link in bio)",
     "✨ No download, no sign-up, just play: {url} (link in bio)",
     "✏️ Free on Sketchpad Arcade: {url} (link in bio)"
@@ -62,11 +62,18 @@
       "#CasualGaming",
       "#ArcadeFun"
     ],
+    "Versus": [
+      "#TwoPlayerGames",
+      "#PlayWithFriends",
+      "#VersusGame",
+      "#GameNight",
+      "#TurnBased",
+      "#BoardGames"
+    ],
     "general": [
       "#FreeGames",
       "#BrowserGames",
       "#MobileGames",
-      "#FamilyFriendly",
       "#CasualGames",
       "#Satisfying",
       "#PencilDrawing",
@@ -76,7 +83,8 @@
       "#NoDownload",
       "#HTML5Games",
       "#PlayFree",
-      "#KidFriendly"
+      "#IndieGames",
+      "#CozyGames"
     ]
   },
   "margin-merge": {

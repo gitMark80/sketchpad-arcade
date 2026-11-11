@@ -233,9 +233,11 @@ details b,.homescreen b{font-weight:400;color:var(--orange)}
 
 <div id="post" hidden><div class="in" role="dialog" aria-modal="true" aria-labelledby="posth">
   <h2 id="posth">Post text</h2>
-  <p class="sub">Paste these when you post. Tap any text to edit it first. On Instagram, links in captions aren't clickable, so the caption also says "link in bio".</p>
+  <p class="sub">Paste these when you post. Tap any text to edit it first. The caption has no hashtags: add the YouTube list or the Instagram five after it. On Instagram, links in captions aren't clickable, so the caption also says "link in bio".</p>
   <div class="pbox"><header><b>Title</b><button type="button" class="copy" data-k="title">Copy</button></header><textarea id="p-title" rows="1"></textarea></div>
-  <div class="pbox"><header><b>Caption / description</b><button type="button" class="copy" data-k="desc">Copy</button></header><textarea id="p-desc" rows="7"></textarea></div>
+  <div class="pbox"><header><b>Caption / description</b><button type="button" class="copy" data-k="desc">Copy</button></header><textarea id="p-desc" rows="5"></textarea></div>
+  <div class="pbox"><header><b>YouTube hashtags</b><button type="button" class="copy" data-k="yt">Copy</button></header><textarea id="p-yt" rows="2"></textarea></div>
+  <div class="pbox"><header><b>Instagram hashtags (5)</b><button type="button" class="copy" data-k="ig">Copy</button></header><textarea id="p-ig" rows="2"></textarea></div>
   <div class="pbox"><header><b>First comment</b><button type="button" class="copy" data-k="comment">Copy</button></header><textarea id="p-comment" rows="2"></textarea></div>
   <div class="acts"><button type="button" id="p-new">New version</button><button type="button" id="p-close" class="all">Done</button></div>
 </div></div>
@@ -253,7 +255,7 @@ details b,.homescreen b{font-weight:400;color:var(--orange)}
     <h2><i>2</i>Pick a hook</h2>
     <div class="hooks" id="hooks"></div>
     <p class="hint">Wrap a word in *stars* to highlight it.</p>
-    <button type="button" class="postlink" id="postprev">See the title, caption and first comment ›</button>
+    <button type="button" class="postlink" id="postprev">See the title, caption, hashtags and first comment ›</button>
 
     <h2><i>3</i>Style</h2>
     <div class="row"><span>Layout</span><div class="seg" id="layout"><button type="button" data-v="framed">Taped on the page</button><button type="button" data-v="full">Full screen</button></div></div>
@@ -420,7 +422,7 @@ function toSetup(){state='setup';clearTimeout(timer);bar.hidden=true;tip.hidden=
   setup.hidden=false;cta.hidden=false;paint()}
 $('#load').onclick=()=>{const changed=!game.src||!game.src.includes('/play/'+S.slug);toStage(changed)};
 
-/* ---- post text: title, caption and first comment, written from the game, the hook and src/reel-copy.json.
+/* ---- post text: title, caption, YouTube and Instagram hashtags and first comment, written from the game, the hook and src/reel-copy.json.
    Each piece is picked at random from what this game hasn't used yet; a piece counts as used once you copy it. ---- */
 const C=D.copy||{};
 const plain=t=>t.replace(/\*/g,'').trim();
@@ -445,20 +447,24 @@ function buildPost(){
   const g=G(),P=pools(g),prev=cur&&cur.slug===g.slug?cur:{};
   const pick={t:pickFresh(g.slug,'t',P.t,prev.t),l:pickFresh(g.slug,'l',P.l,prev.l),a:pickFresh(g.slug,'a',P.a,prev.a),c:pickFresh(g.slug,'c',P.c,prev.c)};
   const T=C._tags||{};
-  const tags=[...new Set([tagify(g.name),...(T.core||['#SketchpadArcade']),...shuffle(T[g.genre]||[]).slice(0,4),...shuffle(T.general||[]).slice(0,5)])];
-  cur={slug:g.slug,...pick,tags};
+  // YouTube gets the long list (as comma-separated keywords); Instagram allows five hashtags in a caption
+  const core=[tagify(g.name),...(T.core||['#SketchpadArcade'])],genre=shuffle(T[g.genre]||[]),gen=shuffle(T.general||[]);
+  const tags=[...new Set([...core,...genre.slice(0,4),...gen.slice(0,5)])];
+  const ig=[...new Set([...core,...genre.slice(0,2),...gen])].slice(0,5);
+  cur={slug:g.slug,...pick,tags,ig};
 }
 function postText(){
   const g=G(),P=pools(g),h=plain(hookText()),url='sketchpadarcade.com/'+g.slug;
   const fill=t=>t.replace(/\{hook\}/g,h).replace(/\{name\}/g,g.name).replace(/\{url\}/g,url);
-  return {title:fill(P.t[cur.t]),desc:`${h}\n\n${fill(P.l[cur.l])}\n${fill(P.a[cur.a])}\n\n${cur.tags.join(' ')}`,comment:fill(P.c[cur.c])};
+  return {title:fill(P.t[cur.t]),desc:`${h}\n\n${fill(P.l[cur.l])}\n${fill(P.a[cur.a])}`,
+    yt:cur.tags.map(t=>t.replace(/^#/,'')).join(', '),ig:cur.ig.join(' '),comment:fill(P.c[cur.c])};
 }
 function markUsed(){
   if(!cur)return;const u=USED[cur.slug]=USED[cur.slug]||{};const P=pools(G());
   for(const k of ['t','l','a','c']){u[k]=u[k]||[];if(!u[k].includes(cur[k]))u[k].push(cur[k]);if(u[k].length>=P[k].length)u[k]=[cur[k]]}
   saveUsed();
 }
-const pf={title:$('#p-title'),desc:$('#p-desc'),comment:$('#p-comment')};
+const pf={title:$('#p-title'),desc:$('#p-desc'),yt:$('#p-yt'),ig:$('#p-ig'),comment:$('#p-comment')};
 function fillPost(fresh){if(fresh||!cur||cur.slug!==G().slug)buildPost();const t=postText();for(const k in pf)pf[k].value=t[k];
   document.querySelectorAll('#post .copy').forEach(b=>{b.textContent='Copy';b.classList.remove('done')})}
 function openPost(){fillPost(!cur||cur.slug!==G().slug||cur.hook!==hookText());cur.hook=hookText();$('#post').hidden=false}
