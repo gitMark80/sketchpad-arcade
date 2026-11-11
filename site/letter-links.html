@@ -96,7 +96,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .card:nth-child(2n){border-radius:var(--wob2)}
 .card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
 .card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
-.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .card h3{font-size:1.35rem}
 .card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
 .tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
@@ -106,6 +106,25 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+/* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
+.card .body .tag{align-self:flex-start}
+.card .body h3{margin:0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.card .body p{margin:0;font-size:.92rem;line-height:1.35;color:var(--pencil)}
+.strip .card .body h3{font-size:1.05rem}
+.strip .card .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.editor-guide{margin:24px 0 30px;padding:22px 24px;background:var(--paper-2);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.editor-guide h2{font-family:var(--display);font-size:1.8rem;margin:0 0 10px}
+.editor-guide>p{margin:0 0 16px;line-height:1.45;color:var(--pencil);max-width:82ch}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.guide-card{padding:14px 15px;background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);box-shadow:2px 2px 0 var(--faint)}
+.guide-card:nth-child(2n){border-radius:var(--wob2)}
+.guide-card h3{font-size:1.15rem;margin:0 0 8px}
+.guide-card p{margin:0;font-size:1rem;color:var(--ink);line-height:1.5}
+.guide-card a,.editor-guide a{color:#225a94;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.editor-guide .guide-more{margin:16px 0 0;color:var(--ink)}
+@media(max-width:720px){.card .body{padding:9px 10px 12px}.guide-card{padding:12px}.editor-guide{padding:17px 15px}}
+
 .also.twin{margin:0 0 28px}
 .allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
@@ -230,21 +249,21 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <aside class="also twin"><p>Like Letter Links? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/letter-lagoon" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Letter Links, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
 <img class="thumb" src="img/t/four-in-a-frame.webp" alt="Four in a Frame" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/sketch-with-friends" data-arc-rel data-slug="sketch-with-friends" data-added="2026-10-22" data-genre="Word" aria-label="Sketch with Friends, Word game" title="Sketch with Friends">
+<div class="body"><span class="tag word">Word</span><h3>Four in a Frame</h3><p>Sort sixteen words into four secret groups of four.</p></div></a><a class="card" href="/sketch-with-friends" data-arc-rel data-slug="sketch-with-friends" data-added="2026-10-22" data-genre="Word" aria-label="Sketch with Friends, Word game" title="Sketch with Friends">
 <img class="thumb" src="img/t/sketch-with-friends.webp" alt="Sketch with Friends" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/note-quest" data-arc-rel data-slug="note-quest" data-added="2026-10-08" data-genre="Word" aria-label="Note Quest, Word game" title="Note Quest">
+<div class="body"><span class="tag word">Word</span><h3>Sketch with Friends</h3><p>Make words on the board with your letter tiles. Highest score wins.</p></div></a><a class="card" href="/note-quest" data-arc-rel data-slug="note-quest" data-added="2026-10-08" data-genre="Word" aria-label="Note Quest, Word game" title="Note Quest">
 <img class="thumb" src="img/t/note-quest.webp" alt="Note Quest" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/save-the-doodle" data-arc-rel data-slug="save-the-doodle" data-added="2026-10-21" data-genre="Word" aria-label="Save the Doodle, Word game" title="Save the Doodle">
+<div class="body"><span class="tag word">Word</span><h3>Note Quest</h3><p>Guess the secret word in each note in six tries, with colour clues after every guess.</p></div></a><a class="card" href="/save-the-doodle" data-arc-rel data-slug="save-the-doodle" data-added="2026-10-21" data-genre="Word" aria-label="Save the Doodle, Word game" title="Save the Doodle">
 <img class="thumb" src="img/t/save-the-doodle.webp" alt="Save the Doodle" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/doodle-keeper" data-arc-rel data-slug="doodle-keeper" data-added="2026-10-18" data-genre="Word" aria-label="Doodle Keeper, Word game" title="Doodle Keeper">
+<div class="body"><span class="tag word">Word</span><h3>Save the Doodle</h3><p>Guess the word before the eraser rubs out the doodle.</p></div></a><a class="card" href="/doodle-keeper" data-arc-rel data-slug="doodle-keeper" data-added="2026-10-18" data-genre="Word" aria-label="Doodle Keeper, Word game" title="Doodle Keeper">
 <img class="thumb" src="img/t/doodle-keeper.webp" alt="Doodle Keeper" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/letter-scramble" data-arc-rel data-slug="letter-scramble" data-added="2026-10-18" data-genre="Word" aria-label="Letter Scramble, Word game" title="Letter Scramble">
+<div class="body"><span class="tag word">Word</span><h3>Doodle Keeper</h3><p>Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page.</p></div></a><a class="card" href="/letter-scramble" data-arc-rel data-slug="letter-scramble" data-added="2026-10-18" data-genre="Word" aria-label="Letter Scramble, Word game" title="Letter Scramble">
 <img class="thumb" src="img/t/letter-scramble.webp" alt="Letter Scramble" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/sketch-search" data-arc-rel data-slug="sketch-search" data-added="2026-10-08" data-genre="Word" aria-label="Sketch Search, Word game" title="Sketch Search">
+<div class="body"><span class="tag word">Word</span><h3>Letter Scramble</h3><p>Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out.</p></div></a><a class="card" href="/sketch-search" data-arc-rel data-slug="sketch-search" data-added="2026-10-08" data-genre="Word" aria-label="Sketch Search, Word game" title="Sketch Search">
 <img class="thumb" src="img/t/sketch-search.webp" alt="Sketch Search" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a><a class="card" href="/word-workshop" data-arc-rel data-slug="word-workshop" data-added="2026-10-08" data-genre="Word" aria-label="Word Workshop, Word game" title="Word Workshop">
+<div class="body"><span class="tag word">Word</span><h3>Sketch Search</h3><p>Find the hidden words in a board of graph-paper letter tiles.</p></div></a><a class="card" href="/word-workshop" data-arc-rel data-slug="word-workshop" data-added="2026-10-08" data-genre="Word" aria-label="Word Workshop, Word game" title="Word Workshop">
 <img class="thumb" src="img/t/word-workshop.webp" alt="Word Workshop" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="tag word">Word</span></div></a></div>
+<div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Letter Links", "description": "Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.", "url": "https://www.sketchpadarcade.com/letter-links", "image": "https://www.sketchpadarcade.com/img/letter-links.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
