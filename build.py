@@ -138,7 +138,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .card:nth-child(2n){border-radius:var(--wob2)}
 .card:hover{transform:translate(-2px,-2px) rotate(-.6deg);box-shadow:5px 5px 0 var(--pencil)}
 .card .thumb{aspect-ratio:1;width:100%;height:auto;object-fit:cover;background:var(--paper-2);border-bottom:2px solid var(--ink)}
-.card .body{padding:8px 12px 10px;display:flex;justify-content:center;min-width:0}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .card h3{font-size:1.35rem}
 .card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.4}
 .tag{align-self:center;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border:2px solid var(--pink);border-radius:var(--wob);background:var(--pink-wash);color:var(--ink)}
@@ -148,6 +148,26 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
+/* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
+.card .body .tag{align-self:flex-start}
+.card .body h3{margin:0;font-size:1.15rem;line-height:1.25;color:var(--ink)}
+.card .body p{margin:0;font-size:.92rem;line-height:1.35;color:var(--pencil)}
+.strip .card .body h3{font-size:1.05rem}
+.strip .card .body p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.editor-guide{margin:24px 0 30px;padding:22px 24px;background:var(--paper-2);border:2px dashed var(--pencil);border-radius:var(--wob2)}
+.editor-guide h2{font-family:var(--display);font-size:1.8rem;margin:0 0 10px}
+.editor-guide>p{margin:0 0 16px;line-height:1.45;color:var(--pencil);max-width:82ch}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.guide-card{padding:14px 15px;background:var(--paper);border:2px solid var(--pencil);border-radius:var(--wob);box-shadow:2px 2px 0 var(--faint)}
+.guide-card:nth-child(2n){border-radius:var(--wob2)}
+.guide-card h3{font-size:1.15rem;margin:0 0 8px}
+.guide-card p{margin:0;font-size:1rem;color:var(--ink);line-height:1.5}
+.guide-card a,.editor-guide a{color:#225a94;text-decoration:underline;text-underline-offset:3px;font-weight:600}
+.editor-guide .guide-more{margin:16px 0 0;color:var(--ink)}
+@media(max-width:720px){.card .body{padding:9px 10px 12px}.guide-card{padding:12px}.editor-guide{padding:17px 15px}}
+
 .also.twin{margin:0 0 28px}
 .allgames{display:flex;justify-content:center;margin:22px 0 0}
 .book{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;margin:8px 0 26px;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:18px 22px;box-shadow:4px 4px 0 var(--pencil)}
@@ -370,7 +390,7 @@ def card(g, attrs=""):
     cls = "tag " + g["genre"].lower()
     return f'''<a class="card" href="{g["slug"]}.html"{attrs} data-slug="{E(g["slug"])}" data-added="{E(g["added"])}" data-genre="{E(g["genre"])}" aria-label="{E(g["name"])}, {E(g["genre"])} game" title="{E(g["name"])}">
 <img class="thumb" src="img/t/{g["slug"]}.webp" alt="{E(g["name"])}" loading="lazy" decoding="async" width="400" height="400">
-<div class="body"><span class="{cls}">{E(g["genre"])}</span></div></a>'''
+<div class="body"><span class="{cls}">{E(g["genre"])}</span><h3>{E(g["name"])}</h3><p>{E(g["tagline"])}</p></div></a>'''
 
 # Static genre pages (/puzzle-games, /word-games, ...): one indexable page per genre with real text, for searches
 # like "free word games" that the JavaScript-filtered home page can't rank for.
@@ -393,6 +413,13 @@ GENRE_PAGES = {
                          "The set covers the games you'd scribble on paper in class, like tic-tac-toe, dots and boxes, SOS and a battleship-style boat hunt, plus checkers, four in a row, 8-ball pool, flick soccer and a draw-and-guess game for your group chat."]},
 }
 
+GENRE_GUIDES = {
+  "Puzzle": "<section class=\"editor-guide\" aria-labelledby=\"choose-puzzle\"><h2 id=\"choose-puzzle\">Which puzzle should you try first?</h2><p>Start with the kind of thinking you enjoy. These aren't just pictures of puzzles: every game has a playable board and its own rules.</p><div class=\"guide-grid\"><article class=\"guide-card\"><h3>Number and deduction puzzles</h3><p><a href=\"/doodle-doku\">Doodle Doku</a> has classic 9×9 Sudoku with pencil notes. In <a href=\"/blot-sweeper\">Blot Sweeper</a>, use the numbers to identify hidden ink blots before opening safe squares.</p></article><article class=\"guide-card\"><h3>Sort, pour and plan</h3><p><a href=\"/ink-jars\">Ink Jars</a> rewards keeping an empty jar available while sorting colors. <a href=\"/paper-gates\">Paper Gates</a> asks you to clear a path for blocks to reach their matching exits.</p></article><article class=\"guide-card\"><h3>Short, satisfying rounds</h3><p>Try <a href=\"/scribble-blocks\">Scribble Blocks</a> to fit shapes into lines, or <a href=\"/margin-merge\">Margin Merge</a> to combine matching doodles without overflowing the jar.</p></article></div><p class=\"guide-more\">For more ways to think through a tricky board, read <a href=\"/news/pencil-puzzle-strategies\">five pencil-and-paper puzzle strategies</a>.</p></section>",
+  "Word": "<section class=\"editor-guide\" aria-labelledby=\"choose-word\"><h2 id=\"choose-word\">Find a word game that fits your mood</h2><p>Choose between untimed searching, logic clues, letter chains and a competitive word board.</p><div class=\"guide-grid\"><article class=\"guide-card\"><h3>Relax with letters</h3><p><a href=\"/sketch-search\">Sketch Search</a> hides words in a graph-paper grid. <a href=\"/word-workshop\">Word Workshop</a> uses a letter wheel to fill in a crossword, with bonus points for extra words.</p></article><article class=\"guide-card\"><h3>Follow clues and connections</h3><p><a href=\"/save-the-doodle\">Save the Doodle</a> asks for letters before an eraser finishes its work. In <a href=\"/four-in-a-frame\">Four in a Frame</a>, sort sixteen words into four secret groups.</p></article><article class=\"guide-card\"><h3>Play a longer challenge</h3><p><a href=\"/letter-links\">Letter Links</a> turns twelve letters into linked words. <a href=\"/sketch-with-friends\">Sketch with Friends</a> lets two players build crossing words using paper letter tiles.</p></article></div><p class=\"guide-more\">Not sure which to play? Read <a href=\"/news/which-sketchpad-game\">our game-picking guide</a>.</p></section>",
+  "Arcade": "<section class=\"editor-guide\" aria-labelledby=\"choose-arcade\"><h2 id=\"choose-arcade\">Pick a quick sketchbook challenge</h2><p>Arcade games are about timing, movement and improving your own best run. Find the style that suits you.</p><div class=\"guide-grid\"><article class=\"guide-card\"><h3>Steady hands and good timing</h3><p><a href=\"/doodle-darts\">Doodle Darts</a> rewards a well-timed throw. <a href=\"/pencil-putt\">Pencil Putt</a> lets you line up bank shots around desk objects across its mini-golf holes.</p></article><article class=\"guide-card\"><h3>Move, dodge and collect</h3><p><a href=\"/sketch-sprint\">Sketch Sprint</a> asks you to turn, jump and slide along a changing path. <a href=\"/pencil-patrol\">Pencil Patrol</a> is a maze chase between a stubby pencil and four erasers.</p></article><article class=\"guide-card\"><h3>Try unusual controls</h3><p><a href=\"/paper-plane-dash\">Paper Plane Dash</a> flies around the inside of a paper tube. <a href=\"/shoe-string-swing\">Shoe String Swing</a> uses a lasso to carry a caped character through different scenes.</p></article></div><p class=\"guide-more\">See <a href=\"/news/which-sketchpad-game\">which sketchbook game suits your next break</a>.</p></section>",
+  "Versus": "<section class=\"editor-guide\" aria-labelledby=\"choose-versus\"><h2 id=\"choose-versus\">Play against a friend—or the computer</h2><p>These games use familiar notebook challenges and add interactive turns. Read each game page for its supported play modes before starting.</p><div class=\"guide-grid\"><article class=\"guide-card\"><h3>Draw a line and claim it</h3><p><a href=\"/box-doodles\">Box Doodles</a> asks you to claim squares by drawing their fourth sides. <a href=\"/doodle-sos\">Doodle SOS</a> rewards completing S-O-S across the paper grid.</p></article><article class=\"guide-card\"><h3>Play a classic match</h3><p><a href=\"/sketchers\">Sketchers</a> is pencil checkers, <a href=\"/connect-sketch\">Connect Sketch</a> is four in a row, and <a href=\"/pencil-pool\">Pencil Pool</a> uses a pencil cue in a colored-ball 8-ball match.</p></article><article class=\"guide-card\"><h3>Draw or flick your way to a win</h3><p><a href=\"/guess-my-doodle\">Guess My Doodle</a> sends a drawing for someone else to solve. <a href=\"/doodle-kick\">Doodle Kick</a> is turn-based flick soccer; first to three goals wins.</p></article></div><p class=\"guide-more\">Read our <a href=\"/news/versus-games\">guide to playing together</a> or explore the <a href=\"/news/which-sketchpad-game\">game chooser</a>.</p></section>"
+}
+
 def genre_page(genre):
     gp = GENRE_PAGES[genre]
     games = sorted((g for g in GAMES if g["genre"] == genre), key=lambda g: g["name"].lower())
@@ -405,6 +432,7 @@ def genre_page(genre):
     body = f'''<div class="wrap">
 <div class="crumbs"><a href="index.html">All games</a> / {E(genre)}</div>
 <div class="homehead"><h1>{E(gp["title"])}</h1>{"".join(f"<p>{E(x)}</p>" for x in gp["intro"])}</div>
+{GENRE_GUIDES.get(genre, "")}
 <section class="shelf"><h2 class="sec">{len(games)} {E(genre.lower())} games</h2><div class="grid">{"".join(card(g) for g in games)}</div></section>
 <section class="prose"><h2>More kinds of games</h2><p>{others}<a class="btn small" href="index.html#games-head">All {len(GAMES)} games</a></p></section>
 </div>
@@ -439,6 +467,7 @@ def home(full=True):
 <section class="row" id="row-rest"><h2 class="sec" hidden>More Games</h2><div class="grid" id="grid">{"".join(card(g) for g in sorted(GAMES, key=lambda g: g["name"].lower()))}</div></section>
 </section>
 {also}
+<section class="editor-guide" aria-labelledby="pick-a-game"><h2 id="pick-a-game">Not sure which doodle to play?</h2><p>The notebook is full of different games. Start with a mood, then open a game page for the rules and controls.</p><div class="guide-grid"><article class="guide-card"><h3>Think for a while</h3><p>Use pencil notes in <a href="/doodle-doku">Doodle Doku</a> or uncover safe squares in <a href="/blot-sweeper">Blot Sweeper</a>.</p></article><article class="guide-card"><h3>Take a quick turn</h3><p>Try a precision shot in <a href="/doodle-darts">Doodle Darts</a> or a mini-golf hole in <a href="/pencil-putt">Pencil Putt</a>.</p></article><article class="guide-card"><h3>Play with someone</h3><p>Close boxes in <a href="/box-doodles">Box Doodles</a> or draw something to guess in <a href="/guess-my-doodle">Guess My Doodle</a>.</p></article><article class="guide-card"><h3>Work with words</h3><p>Search the graph-paper grid in <a href="/sketch-search">Sketch Search</a> or try a word chain in <a href="/letter-links">Letter Links</a>.</p></article></div><p class="guide-more">Read the <a href="/news/which-sketchpad-game">full guide to choosing your next game</a> or explore <a href="/puzzle-games">puzzles</a>, <a href="/word-games">word games</a>, <a href="/arcade-games">arcade games</a> and <a href="/versus-games">versus games</a>.</p></section>
 {home_outro()}
 </div>
 <script>
@@ -593,6 +622,8 @@ def home_outro():
 <p>{E(SITE["name"])} is a collection of {n} free, original browser games hand-drawn in pencil like the back pages of a notebook, made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Everything here is built to be played in a browser on a phone, tablet or computer, with nothing to install and no account to make. Your scores and progress are saved on your own device.</p>
 <p>The games fall into {len(genres)} groups: {", ".join(E(x) for x in genres)}. Arcade games are the quick ones about timing and reflexes, puzzle games are about thinking a few moves ahead, and word games are about spelling, guessing and sorting. Each game has its own page with a short guide on how to play, the controls, a few tips and a note on how it was made, so you can see what a game is like before you press play.</p>
 <p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own: sudoku, minesweeper, code-breaking and two-player games you play with a friend by text. The first question about every game is whether we would keep playing it after the first five minutes, and every game stays clean: no gore, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
+<h2>Why Sketchpad looks like a notebook</h2>
+<p>Our game covers are meant to look like pages from a well-used sketchbook: graphite construction strokes, textured coloured-pencil shading, a warm cream page and a hand-lettered title. The play pieces keep the same pencil character without putting a spiral notebook edge over the game board. For a bright, painted seaside look, our sister site <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a> offers a different atmosphere. This site also has notebook originals such as Doodle Doku, Blot Sweeper and games for two players.</p>
 <h2>Latest from the studio</h2>
 <ul class="newslist">{news}</ul>
 <p><a href="news.html">All news and updates</a></p>
@@ -613,6 +644,8 @@ def about():
 <li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
 <li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
 <li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
+<h2>Find your kind of game</h2>
+<p>For quiet concentration, start with <a href="/doodle-doku">Doodle Doku</a> or <a href="/ink-jars">Ink Jars</a>. For fast reflexes, try <a href="/sketch-sprint">Sketch Sprint</a> or <a href="/pencil-patrol">Pencil Patrol</a>. To take turns with someone, visit <a href="/versus-games">Versus Games</a>. Our <a href="/news/which-sketchpad-game">game chooser</a> offers more suggestions, and every game page explains how to play before opening the game.</p>
 <h2>How a game gets here</h2>
 <p>New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="news.html">news page</a>.</p>
 <h2>Ads</h2>

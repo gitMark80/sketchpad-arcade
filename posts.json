@@ -2,6 +2,52 @@
   "_comment": "News posts for /news. Newest first. body is a list of paragraphs; a paragraph starting with '## ' is a heading. Link games with {{slug}}.",
   "posts": [
     {
+      "slug": "which-sketchpad-game",
+      "title": "Which Sketchpad Arcade game should you play next?",
+      "date": "2026-11-10",
+      "summary": "A practical guide to picking a pencil-drawn puzzle, word challenge, arcade run or two-player game that matches your mood.",
+      "body": [
+        "Sketchpad Arcade looks like a familiar notebook, but the pages do very different things. Some games ask you to make careful pencil marks. Others turn a quick flick or swipe into a high-score challenge. And the Versus games bring back the little games people play with a friend on paper. If you have five minutes—or a whole evening—here is how to pick a game that fits.",
+        "## If you want to think without rushing",
+        "Start with {{doodle-doku}}, a 9×9 Sudoku grid with three difficulty levels. The goal is to give every row, column and 3×3 box the digits 1 through 9 without repeats. Its Notes control is useful when you want to record possible answers rather than guess. For a different kind of deduction, {{blot-sweeper}} turns minesweeper logic into an ink-blot hunt. A number shows how many blots touch a square, including diagonally; use that information to identify safe squares before opening them.",
+        "If sorting is more your style, try {{ink-jars}}. You can pour ink onto a matching color or into an empty jar, and you win by filling jars with one color each. It's more about preserving room for the next pour than tapping quickly. {{paper-gates}} gives you a different spatial puzzle: slide blocks around one another until each reaches a gate of the right color and size.",
+        "## If you want a quick challenge with movement",
+        "{{doodle-darts}} is a good short choice when you want to test your timing. For something you can improve shot by shot, try {{pencil-putt}}: pull back to set the strength of your putt, then use the ruler walls and desk objects to your advantage. A soft, well-placed shot is often better than full power.",
+        "Want more motion? {{sketch-sprint}} is a runner with sharp left and right turns, jumps, slides and eight unlockable characters. {{paper-plane-dash}} moves around the inside of a tube made from construction paper, and collecting stars unlocks more plane designs. Both reward looking ahead rather than reacting at the last possible moment.",
+        "## If you enjoy patterns in words",
+        "{{sketch-search}} is the relaxed choice: find themed hidden words among letters printed on graph paper. {{word-workshop}} asks you to connect letters in a wheel to fill a crossword; other valid words can earn bonuses. For more reasoning, {{four-in-a-frame}} has sixteen words hiding four groups of four. Try identifying the most obvious group first, then use what's left to uncover the trickier relationships.",
+        "{{letter-links}} is the one to try if you like word chains. Every new word begins with the last letter of the previous word, and each letter you use around the path turns gold. Pay attention to your ending letter: finishing a word with a common letter often gives you more options for the next one.",
+        "## If you would rather play with a friend",
+        "The <a href=\"/versus-games\">Versus section</a> gathers games that can be shared rather than just scored alone. In {{box-doodles}}, you draw the fourth side of a box to claim it and take another turn. In {{pencil-pool}}, pull a No. 2 pencil back like a cue, aim at the balls and try to clear your color. {{doodle-kick}} is flick soccer: drag a player back and let go to send it skidding toward the ball. {{guess-my-doodle}} is a draw-and-guess game where one person makes a picture and the other tries to recognize it.",
+        "Check each game page for its available play modes. Some can be played on the same device, some against a computer and some by sharing a link with a friend. You never need to guess what the controls are; the How to Play section spells them out.",
+        "## What makes this arcade different?",
+        "Sketchpad Arcade leans into the paper-and-pencil feeling. The covers use warm sketchbook pages, rough graphite linework, handwritten titles and lightly layered colored-pencil marks. That visual language gives the games a connected feel even when a puzzle and an arcade run play very differently. The sister site, Beach Day Arcade, presents many related ideas in colorful seaside scenes instead.",
+        "Still unsure? Try one game from each category—Puzzle, Arcade, Word and Versus—and see which one makes you want another round. Every title on Sketchpad Arcade opens a game page with instructions, tips and a Play button."
+      ]
+    },
+    {
+      "slug": "pencil-puzzle-strategies",
+      "title": "Five pencil-and-paper strategies for tricky Sketchpad puzzles",
+      "date": "2026-11-10",
+      "summary": "Useful moves for Doodle Doku, Blot Sweeper, Crayon Code, Ink Jars and Paper Gates when a puzzle seems stuck.",
+      "body": [
+        "Sometimes the next move isn't difficult because the game is fast; it is difficult because several choices look equally good. The best fix is often to change the question you're asking about the board. Here are five approaches that work in actual Sketchpad Arcade games, with examples you can try immediately.",
+        "## 1. Use notes before you commit in Doodle Doku",
+        "{{doodle-doku}} follows the standard Sudoku rule: every row, column and 3×3 box needs the digits 1 through 9 exactly once. If you are looking at an empty square and two numbers seem possible, don't guess yet. Turn on Notes and pencil in the candidates. Now look across the same row and down its column. When another number is placed elsewhere, it may eliminate one candidate. An easier first win is to find a nearly complete row or box where only one number is missing.",
+        "## 2. Read the neighbors in Blot Sweeper",
+        "{{blot-sweeper}} uses ink blots hidden beneath squares. A revealed number tells you how many blots touch that square, including diagonally. If a 1 touches only one still-covered square, that square must be a blot; flag it. If a revealed 2 already has two confirmed blots beside it, the other covered neighbors are safe. Try reading a group of adjacent numbered squares together instead of treating each number as a separate clue. The first opening is safe, so use the information it reveals before racing to tap elsewhere.",
+        "## 3. Change only one thing in Crayon Code",
+        "In {{crayon-code}}, a hidden arrangement of crayons is waiting to be guessed. Feedback dots tell you how many colors are correct and in the correct position, or correct but in a different position. Once a guess gives you useful feedback, do not rearrange every crayon. Keep one known part of your guess fixed and move the others. That way a change in feedback is easier to interpret. On the harder level, colors can repeat, so avoid assuming each crayon appears only once.",
+        "## 4. Keep an empty space for Ink Jars",
+        "{{ink-jars}} lets you pour the top color of one jar onto a matching color or into an empty jar. A jar filled with a single color gets corked and is finished. The easy mistake is to use every empty jar too early. Instead, find two jars with matching top colors and combine them where possible. Keeping one jar open as temporary storage gives you more options when a buried color needs to come to the top. Look at what is under the layer you are pouring, not just the color you are moving.",
+        "## 5. Clear the right block first in Paper Gates",
+        "In {{paper-gates}}, blocks slide through gaps and leave by gates matching their color. The board is crowded, and blocks can't pass through one another. Look for a block that already has a path to a matching gate: removing it can create the space that makes two more moves possible. Check gate width as well as color. A narrow gate won't take a wider block, even when the pencil colors match. Work backwards from the gates and ask which piece must leave first.",
+        "## A useful habit across all five",
+        "Before each move, ask: What will this open up? A Sudoku note removes uncertainty; a Blot Sweeper flag makes nearby squares safer to judge; a Crayon Code test rules out possibilities; an Ink Jars pour creates space; a Paper Gates move clears an exit. Those are different games, but the same habit works in all of them: use the current move to improve the next decision.",
+        "If you prefer something less demanding, start with {{sketch-search}} or a short round of {{pencil-putt}}. For another set of recommendations arranged by mood, read our <a href=\"/news/which-sketchpad-game\">guide to choosing a Sketchpad game</a>."
+      ]
+    },
+    {
       "slug": "versus-games",
       "title": "Seven games for two: the Versus tab",
       "date": "2026-10-22",
