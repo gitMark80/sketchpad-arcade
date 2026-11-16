@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* 2048 Drop Sketch: 2048 DROP redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly borders; each number keeps one
-   coloured-pencil hue for its ball (pale wash, pencil ring, ink outline) so the values can still be told apart at a glance. */
+   colored-pencil hue for its ball (pale wash, pencil ring, ink outline) so the values can still be told apart at a glance. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -195,7 +195,7 @@ const G=1750,SUB=8,ITER=3;
 const MAX_T=17;
 function radius(t){return [0,17,21,26,31,37,43,49,55,61,67,74,80,86][t]||92}
 function valueOf(t){return 2**t}
-// coloured-pencil line colours, one per value: 2 blue, 4 green, 8 yellow, 16 orange, 32 brick, 64 pink, 128 purple, 256 blue, 512 teal, 1024 brick, 2048 gold, then graphite
+// colored-pencil line colors, one per value: 2 blue, 4 green, 8 yellow, 16 orange, 32 brick, 64 pink, 128 purple, 256 blue, 512 teal, 1024 brick, 2048 gold, then graphite
 const COLORS=['#2e2e33','#2f6fb5','#5a9a6a','#c99a1a','#d9661a','#8a3b3b','#c45a8a','#6f4a9a','#2f6fb5','#3d7a8a','#8a3b3b','#c99a1a','#55555c','#2e2e33','#2e2e33','#2e2e33','#2e2e33','#2e2e33'];
 function hexa(h,a){const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
 const SPAWN=[[1,44],[2,30],[3,18],[4,8]];   // 2,4,8,16 — bigger numbers only come from merging
@@ -221,12 +221,12 @@ let fitT=0;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(fit
 
 function mix(h,amt){const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=amt>0?255:0,a=Math.abs(amt);return `rgb(${r+(t-r)*a|0},${g+(t-g)*a|0},${b+(t-b)*a|0})`}
 function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255}
-// A coloured-pencil numbered ball, drawn once per value and size: pale wash, hatching, pencil ring, ink outline. Higher values get extra rings, gold gets a heavier wash.
+// A colored-pencil numbered ball, drawn once per value and size: pale wash, hatching, pencil ring, ink outline. Higher values get extra rings, gold gets a heavier wash.
 function makeSprite(t,R,scale){
   const pad=Math.ceil(R*.18)+3,s=Math.ceil((R*2+pad*2)*scale),c=document.createElement('canvas');c.width=c.height=s;
   const x=c.getContext('2d');x.scale(scale,scale);const cx=R+pad,cy=R+pad,col=COLORS[Math.min(t,COLORS.length-1)];
   const gold=t===11,dark=t>=12;
-  // paper under a wash of the pencil colour
+  // paper under a wash of the pencil color
   x.fillStyle=PAPER;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();
   x.fillStyle=hexa(col,gold?.4:dark?.18:.22);x.beginPath();x.arc(cx,cy,R,0,7);x.fill();
   // diagonal hatch shading toward the lower right

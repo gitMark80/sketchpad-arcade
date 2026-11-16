@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* No. 2 Pencil: an Onet-style link game on a school notebook page. Tiles are paper cards with classroom icons drawn in plain
-   graphite; a tile you touch gets coloured in (vivid cross-hatched coloured pencil, dark outline), and cleared pairs pop in colour
+   graphite; a tile you touch gets colored in (vivid cross-hatched colored pencil, dark outline), and cleared pairs pop in color
    along the link line. Icons are Mark's drawings packed by tools/no2-pencil-sheets.py; the page comes from tools/classroom-icons-art.py (../assets/no-2-pencil/).
    Layout: header, timer, board canvas, tool row. */
 :root{
@@ -87,7 +87,7 @@ button.secondary{background:var(--paper);box-shadow:2px 2px 0 var(--pencil);font
       <div class="card">
         <h2 id="overTitle">No. 2 Pencil</h2>
         <div class="stars" id="overStars" hidden></div>
-        <p id="overMsg">Tap a tile to colour it in, then tap its match to clear the pair. They link if a path with up to two turns joins them, even around the edge.</p>
+        <p id="overMsg">Tap a tile to color it in, then tap its match to clear the pair. They link if a path with up to two turns joins them, even around the edge.</p>
         <div class="btns">
           <button class="primary" id="overPrimary" type="button">Play</button>
           <button class="secondary" id="overSecondary" type="button" hidden></button>
@@ -118,7 +118,7 @@ const W=400;let H=560;
 // eraser, ruler, paintbrush, notebook, globe, chalkboard, calculator, school bus, alarm clock, lunchbox, paint palette, pencil cup,
 // sticky note, magnifying glass, ABC block, trophy), Mark's hand-drawn icons packed by tools/no2-pencil-sheets.py
 const SHEET={g:new Image(),c:new Image()},CELL=192;SHEET.g.src="../assets/no-2-pencil/icons-graphite.webp";SHEET.c.src="../assets/no-2-pencil/icons-color.webp";
-// each icon's main pencil colour: the link line and sparkles of a cleared pair
+// each icon's main pencil color: the link line and sparkles of a cleared pair
 const MAIN=["#f2c230","#e0453a","#3a7bd5","#8e5bc9","#e0453a","#f2c230","#2fa7a0","#3a7bd5","#e86aa6","#f2c230","#9b6a3c","#4caf50",
   "#4fb3e8","#4caf50","#9aa0a6","#f2c230","#e0453a","#f08a24","#9b6a3c","#2fa7a0","#f2c230","#8e5bc9","#e0453a","#d99a12"];
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
@@ -218,7 +218,7 @@ function drawRock(x){
 function buildCache(){{const c=document.createElement("canvas");c.width=Math.ceil(cw*S);c.height=Math.ceil(ch*S);const x=c.getContext("2d");x.scale(S,S);drawRock(x);rockImg=c}
 const mk=sh=>ICONS.map(k=>{const c=document.createElement("canvas");c.width=Math.ceil(cw*S);c.height=Math.ceil(ch*S);const x=c.getContext("2d");x.scale(S,S);drawTileFace(x,k,sh);return c});
 cache=mk(SHEET.g);cacheC=mk(SHEET.c)}
-// colour-in wipe: a growing triangle from the top-left corner with a zigzag pencil edge
+// color-in wipe: a growing triangle from the top-left corner with a zigzag pencil edge
 function wipe(x0,y0,e){ctx.beginPath();ctx.moveTo(x0,y0);const n=9;for(let i=0;i<=n;i++){const u=i/n,o=i%2?3.5:-3.5;ctx.lineTo(x0+e*(1-u)+o,y0+e*u+o)}ctx.closePath()}
 function fit(){const st=$("stage"),sc=Math.min(st.clientWidth/W,st.clientHeight/H),dpr=window.devicePixelRatio||1;S=sc*dpr;
   cv.style.width=W*sc+"px";cv.style.height=H*sc+"px";cv.width=Math.round(W*S);cv.height=Math.round(H*S);ctx.setTransform(S,0,0,S,0,0);if(cw)buildCache()}
@@ -334,7 +334,7 @@ function lose(){
 }
 function menu(){
   level=saved;newLevel();state="menu";
-  showOver({title:"No. 2 Pencil",msg:"Tap a tile to colour it in, then tap its match to clear the pair. They link if a path with up to two turns joins them, even around the edge. Clear the desk before time runs out.",
+  showOver({title:"No. 2 Pencil",msg:"Tap a tile to color it in, then tap its match to clear the pair. They link if a path with up to two turns joins them, even around the edge. Clear the desk before time runs out.",
     primary:saved>1?`Continue level ${saved}`:"Play",onPrimary:()=>{level=saved;score=0;startLevel()},
     secondary:saved>1?"Start from level 1":null,onSecondary:()=>{level=1;score=0;startLevel()}});
 }

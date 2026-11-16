@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Scribble Slice, sketchbook edition: the same portrait column (title row, HUD, the beach playfield) drawn in pencil on cream paper.
-   The fruit, splats, urchins, gold starfruit and beach ball are coloured-pencil sprites with bold ink outlines (tools/scribble-slice-colorize.py). */
+   The fruit, splats, urchins, gold starfruit and beach ball are colored-pencil sprites with bold ink outlines (tools/scribble-slice-colorize.py). */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -261,7 +261,7 @@ const IMG={};
 ['urchin','urchin-b','ball','beach','spray','splat-red','splat-yellow','splat-orange','splat-green','drop-red','drop-yellow','drop-orange','drop-green'].forEach(k=>IMG[k]=0);
 Object.keys(IMG).forEach(k=>{const im=new Image();im.src='../assets/scribble-slice/'+k+'.webp';IMG[k]=im});
 const iok=k=>IMG[k]&&IMG[k].complete&&IMG[k].naturalWidth>0;
-// juice colour -> splat / droplet art
+// juice color -> splat / droplet art
 const JUICE={'#ff4d6d':'red','#ffd84a':'yellow','#ffe26a':'yellow','#fff2a8':'yellow','#ffd23f':'yellow','#ffa62b':'orange','#ff9a1f':'orange','#8fd14f':'green'};
 const ASZ={banana:1.5,pineapple:1.12};
 function sprite(c,k,w,ay){const im=IMG[k],h=w*im.naturalHeight/im.naturalWidth;c.drawImage(im,-w/2,-h*(ay==null?.5:ay),w,h)}

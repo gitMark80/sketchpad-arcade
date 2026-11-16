@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Paper Gates: a sliding-block puzzle on a sketchbook page. Graph-paper board in a pencil-shaded frame, wobbly borders;
-   each block colour has its own bright coloured-pencil hue AND pattern (blocks must match their gate), everything else is pencil. */
+   each block color has its own bright colored-pencil hue AND pattern (blocks must match their gate), everything else is pencil. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -131,7 +131,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Gates</h1><button class="sa-share" type="button" aria-label="Share Paper Gates" data-share-url="https://www.sketchpadarcade.com/paper-gates" data-share-title="Paper Gates" data-share-text="Play Paper Gates free on Sketchpad Arcade! Slide patterned blocks out through the gates that match their colour."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Paper Gates</h1><button class="sa-share" type="button" aria-label="Share Paper Gates" data-share-url="https://www.sketchpadarcade.com/paper-gates" data-share-title="Paper Gates" data-share-text="Play Paper Gates free on Sketchpad Arcade! Slide patterned blocks out through the gates that match their color."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
   <div class="hud">
@@ -141,7 +141,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   </div>
   <div class="strip"><span class="lv" id="lvEl">Level 1</span><div class="tbar" aria-label="Time left"><i id="tFill"></i><span id="tText">0:00</span></div><span class="left" id="leftEl">0 left</span></div>
   <div class="field" id="field">
-    <canvas id="cv" aria-label="A paper board with smiling blocks. Drag each block out through the gate with the same colour and pattern."></canvas>
+    <canvas id="cv" aria-label="A paper board with smiling blocks. Drag each block out through the gate with the same color and pattern."></canvas>
     <div class="banner" id="banner" role="status" aria-live="polite"></div>
     <div class="cover" id="start">
       <div class="card">
@@ -149,7 +149,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <h2>Paper Gates</h2>
         <ul class="rules">
           <li><b>1</b><span><strong>Drag</strong> the blocks around the board. They slide around each other but can't overlap.</span></li>
-          <li><b>2</b><span>Slide a block into the <strong>gate with the same colour and pattern</strong> on the edge and it zooms off the page.</span></li>
+          <li><b>2</b><span>Slide a block into the <strong>gate with the same color and pattern</strong> on the edge and it zooms off the page.</span></li>
           <li><b>3</b><span>A block only fits if it's no wider than its gate. Clear every block before time runs out!</span></li>
           <li><b>4</b><span>Run out of time and you lose a heart. Lose all 3 and the game is over. Levels get bigger as you go.</span></li>
         </ul>
@@ -248,8 +248,8 @@ const sfx={
   click(){tone(900,.04,'square',.03)}
 };
 
-/* ---------- colours & shapes ---------- */
-/* bright coloured pencil: one colour and one pattern per kind, shared by the blocks and their gate */
+/* ---------- colors & shapes ---------- */
+/* bright colored pencil: one color and one pattern per kind, shared by the blocks and their gate */
 const COL=[
   {n:'red',   col:'#e0453a',pat:'dots'},
   {n:'blue',  col:'#3a7bd5',pat:'stripes'},
@@ -327,7 +327,7 @@ function generate(){
       const occ=occGrid(blocks);if(!fits(b,b.x,b.y,occ))continue;
       // a block that is already sitting in its gate is no fun
       if(exitGate(b,b.x,b.y))continue;
-      // keep same-coloured blocks apart at the start so each one reads as its own piece
+      // keep same-colored blocks apart at the start so each one reads as its own piece
       if(b.cells.some(([cx,cy])=>[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>{const X=b.x+cx+dx,Y=b.y+cy+dy;if(X<0||Y<0||X>=BW||Y>=BH)return false;const o=occ[Y*BW+X];return o>=0&&blocks[o].c===b.c})))continue;
       if(!canEscape(b,blocks.concat([b])))continue;
       blocks.push(b);filled+=sh.length;
@@ -431,22 +431,22 @@ function timerHud(){const p=Math.max(0,timeLeft/timeMax);const f=$('tFill');f.st
 let bannerT=0;
 function showBanner(t,sub){const b=$('banner');b.innerHTML=t+(sub?'<small>'+sub+'</small>':'');b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),1300)}
 
-/* ---------- drawing: coloured pencil on paper ----------
-   Every block colour has its own pattern too (dots, stripes, grid, waves, zigzags, stars), and its gate wears the same
-   colour and pattern, so a block and its gate match by colour and by pattern. Black ink outlines, pale wash, bright cross-hatching. */
+/* ---------- drawing: colored pencil on paper ----------
+   Every block color has its own pattern too (dots, stripes, grid, waves, zigzags, stars), and its gate wears the same
+   color and pattern, so a block and its gate match by color and by pattern. Black ink outlines, pale wash, bright cross-hatching. */
 const OUT='#1f1f22';
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function rrP(x,y,w,h,r){ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function hx(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
 function mix(h,k){const a=hx(h),b=[250,248,241];return'rgb('+a.map((v,i)=>Math.round(b[i]+(v-b[i])*k)).join(',')+')'}
 function dark(h,k){return'rgb('+hx(h).map(v=>Math.round(v*(1-(k==null?.25:k)))).join(',')+')'}
-// bright coloured-pencil cross-hatching over a box (call inside a clip): one set in the colour, a second set a shade darker
+// bright colored-pencil cross-hatching over a box (call inside a clip): one set in the color, a second set a shade darker
 function hatch(col,x,y,w,h,sp,lw){
   ctx.lineCap='round';ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.beginPath();for(let s=-h;s<w;s+=sp){ctx.moveTo(x+s,y+h);ctx.lineTo(x+s+h,y)}ctx.stroke();
   ctx.strokeStyle=dark(col,.22);ctx.beginPath();for(let s=sp*.5;s<w+h;s+=sp*1.35){ctx.moveTo(x+s,y+h);ctx.lineTo(x+s-h,y)}ctx.stroke();
 }
 function starP(x,y,r){for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;ctx.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q)}ctx.closePath()}
-// the colour's pattern, anchored at (ax,ay) so it travels with the block; u = size of one board cell
+// the color's pattern, anchored at (ax,ay) so it travels with the block; u = size of one board cell
 function pattern(kind,col,ax,ay,x,y,w,h,u){
   const pc=dark(col,.42);ctx.strokeStyle=pc;ctx.fillStyle=pc;ctx.lineCap='round';ctx.lineJoin='round';
   const x0=x-((x-ax)%u+u)%u-u,y0=y-((y-ay)%u+u)%u-u,x1=x+w+u,y1=y+h+u;
@@ -457,7 +457,7 @@ function pattern(kind,col,ax,ay,x,y,w,h,u){
   else if(kind==='zigzag'){const s=u/3.2,q=u/6;ctx.lineWidth=u*.055;ctx.beginPath();for(let yy=y0;yy<y1;yy+=s){ctx.moveTo(x0,yy);for(let xx=x0,i=0;xx<=x1;xx+=q,i++)ctx.lineTo(xx,yy+(i%2?-1:1)*u*.055)}ctx.stroke()}
   else if(kind==='stars'){const s=u/2;for(let yy=y0,r=0;yy<y1;yy+=s,r++)for(let xx=x0+(r%2?s/2:0);xx<x1;xx+=s){ctx.beginPath();starP(xx+s*.25,yy+s*.25,u*.13);ctx.fill()}}
 }
-// fill the current path (already built by mk) in colour + pattern, then ink the outline; bx.. = bounding box, (ax,ay) pattern anchor
+// fill the current path (already built by mk) in color + pattern, then ink the outline; bx.. = bounding box, (ax,ay) pattern anchor
 function paint(mk,c,bx,by,bw,bh,ax,ay,u,ol){
   ctx.save();ctx.beginPath();mk();ctx.fillStyle=mix(c.col,.3);ctx.fill();ctx.clip();
   ctx.globalAlpha*=.85;hatch(c.col,bx,by,bw,bh,Math.max(3,u*.075),Math.max(1,u*.024));ctx.globalAlpha/=.85;
@@ -482,7 +482,7 @@ function drawBoard(t){
   ctx.strokeStyle='rgba(60,60,66,.3)';ctx.lineWidth=1.3;ctx.beginPath();
   for(let x=1;x<BW;x++){ctx.moveTo(OX+x*CS,OY);ctx.lineTo(OX+x*CS,OY+bh)}for(let y=1;y<BH;y++){ctx.moveTo(OX,OY+y*CS);ctx.lineTo(OX+bw,OY+y*CS)}ctx.stroke();
   ctx.strokeStyle=OUT;ctx.lineWidth=2.5;ctx.strokeRect(OX,OY,bw,bh);
-  // gates: a doorway cut through the frame, filled with the colour and pattern of the blocks that leave through it
+  // gates: a doorway cut through the frame, filled with the color and pattern of the blocks that leave through it
   for(const g of gates){const c=COL[g.c];
     ctx.save();
     const cx=g.side==='left'?OX-m/2:g.side==='right'?OX+bw+m/2:OX+(g.s+g.len/2)*CS;

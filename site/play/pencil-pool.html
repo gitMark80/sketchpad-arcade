@@ -153,7 +153,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
 
     <div class="over" id="start">
       <h2>Pencil Pool</h2>
-      <p>8-ball with a No. 2 pencil for a cue. Sink your colour, then the 8.</p>
+      <p>8-ball with a No. 2 pencil for a cue. Sink your color, then the 8.</p>
       <p>Who do you want to play against?</p>
       <div class="modes">
         <button type="button" id="vsFriend"><span class="em">👥</span><b>vs Friend</b><small>Pass &amp; play on this device</small></button>
@@ -194,7 +194,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
     </div>
     <div class="over help" id="help" hidden>
       <h2>How to play</h2>
-      <ul class="rules"><li>Blue sinks the blue balls and pink sinks the pink ones. Sink all seven of yours, then the 8 ball, to win.</li><li>Touch the page and pull back from the cue ball, like a slingshot: the pencil follows your finger. Pull further back for more power, then let go to shoot.</li><li>Sink one of your balls and you shoot again. Miss, and it&#x27;s the other player&#x27;s turn.</li><li>Scratching the cue ball, hitting the wrong colour first or hitting nothing is a foul: the other player gets ball in hand and can drag the cue ball anywhere.</li><li>Sink the 8 before your colour is gone, or scratch while sinking it, and you lose the round.</li></ul>
+      <ul class="rules"><li>Blue sinks the blue balls and pink sinks the pink ones. Sink all seven of yours, then the 8 ball, to win.</li><li>Touch the page and pull back from the cue ball, like a slingshot: the pencil follows your finger. Pull further back for more power, then let go to shoot.</li><li>Sink one of your balls and you shoot again. Miss, and it&#x27;s the other player&#x27;s turn.</li><li>Scratching the cue ball, hitting the wrong color first or hitting nothing is a foul: the other player gets ball in hand and can drag the cue ball anywhere.</li><li>Sink the 8 before your color is gone, or scratch while sinking it, and you lose the round.</li></ul>
       <button class="primary" id="helpClose" type="button">Got it</button>
     </div>
   </div>
@@ -316,7 +316,7 @@ function rack(){const kinds=[];for(let i=0;i<7;i++)kinds.push('b','p');for(let i
   const balls=[],ax=TW/2,ay=TH*.25,dy=R*Math.sqrt(3)+.6;let n=0;
   for(let row=0;row<5;row++)for(let i=0;i<=row;i++){const x=ax+(i-row/2)*(2*R+.6),y=ay-row*dy;let k;
     if(row===2&&i===1)k='8';else k=kinds[n++];balls.push({x,y,vx:0,vy:0,k,in:false})}
-  /* the back row's two corners should be one of each colour */
+  /* the back row's two corners should be one of each color */
   const c1=balls[10],c2=balls[14];if(c1.k===c2.k){const o=balls.find(b=>b.k!==c1.k&&b.k!=='8'&&b!==c1&&b!==c2);if(o){const t=o.k;o.k=c2.k;c2.k=t}}
   balls.push({x:TW/2,y:TH*.75,vx:0,vy:0,k:'c',in:false});return balls}
 // ---------- physics (pure: works on any ball list, so the bot can try shots) ----------
@@ -423,7 +423,7 @@ function drawTable(){/* cached: rails, felt, pockets */
     ctx.save();wobbleRect(-RL,-RT,OW,OH,16);ctx.clip();ctx.strokeStyle=GRAPH;ctx.globalAlpha=.35;ctx.lineWidth=1;
     for(let i=0;i<40;i++){const y=-RT+((i*97)%OH),x0=-RL+((i*53)%60);ctx.beginPath();ctx.moveTo(x0,y);ctx.bezierCurveTo(x0+90,y+4,x0+200,y-5,x0+OW,y+2);ctx.stroke()}
     ctx.restore();
-    // felt: green coloured pencil
+    // felt: green colored pencil
     ctx.fillStyle='#dcebdd';wobbleRect(0,0,TW,TH,6);ctx.fill();hatch(0,0,TW,TH,'#5a9a6a',7,.3);
     ctx.save();ctx.beginPath();ctx.rect(0,0,TW,TH);ctx.clip();ctx.strokeStyle='#5a9a6a';ctx.globalAlpha=.16;ctx.lineWidth=1.1;ctx.beginPath();for(let d=-TH;d<TW+TH;d+=13){ctx.moveTo(d,0);ctx.lineTo(d-TH,TH)}ctx.stroke();ctx.restore();
     ctx.lineWidth=2.2;ctx.strokeStyle=INK;wobbleRect(0,0,TW,TH,6);ctx.stroke();

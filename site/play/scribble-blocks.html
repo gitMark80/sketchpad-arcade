@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Layout: one portrait playfield — HUD strip, 8x8 board, three-piece tray. Scribble Blocks: a pencil sketchbook page, graph-paper board, coloured-pencil blocks. */
+/* Layout: one portrait playfield — HUD strip, 8x8 board, three-piece tray. Scribble Blocks: a pencil sketchbook page, graph-paper board, colored-pencil blocks. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -101,7 +101,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
     <canvas id="c"></canvas>
     <div class="over" id="start">
       <h2>Scribble Blocks</h2>
-      <p>Drag the coloured-pencil shapes onto the grid. Fill a whole row or column to rub it out.</p>
+      <p>Drag the colored-pencil shapes onto the grid. Fill a whole row or column to rub it out.</p>
       <p>Gold stars are worth +25. The game ends when none of your shapes fit.</p>
       <button class="primary" id="play" type="button">Play</button>
     </div>
@@ -140,7 +140,7 @@ return {tone,noise,setMuted,bindButton,get muted(){return muted}}})();
 const S=window.SFX,PENTA=[523,587,659,784,880,1047,1175,1319,1568,1760,2093];
 const N=8,W=400,H=600,CELL=46,BX=(W-CELL*N)/2,BY=12,TRAY_Y=BY+CELL*N+28,TCELL=22,LIFT=70;
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)',OUTLINE='#1f1f22';
-/* vivid coloured pencils, one hue per block colour: red, orange, yellow, green, blue, purple, pink */
+/* vivid colored pencils, one hue per block color: red, orange, yellow, green, blue, purple, pink */
 const COLORS=["#e0453a","#f08a24","#f2c230","#4caf50","#3a7bd5","#8e5bc9","#e86aa6"];
 const SHAPES=[
  [[0,0]],[[0,0],[1,0]],[[0,0],[0,1]],[[0,0],[1,0],[2,0]],[[0,0],[0,1],[0,2]],
@@ -213,7 +213,7 @@ function trayOrigin(p,i){const r=slotRect(i),[sw,sh]=size(p.cells.map(c=>[c.x,c.
 function mix(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;
   const t=amt>0?255:0,a=Math.abs(amt);r=r+(t-r)*a|0;g=g+(t-g)*a|0;b=b+(t-b)*a|0;return `rgb(${r},${g},${b})`}
 function wash(hex,a=.24){const n=parseInt(hex.slice(1),16),P=[246,243,234],c=[n>>16,(n>>8)&255,n&255].map((v,i)=>P[i]+(v-P[i])*a|0);return `rgb(${c[0]},${c[1]},${c[2]})`}
-/* One coloured-pencil block: saturated wash, two sets of diagonal hatching (second a shade darker),
+/* One colored-pencil block: saturated wash, two sets of diagonal hatching (second a shade darker),
    a thick dark ink outline and a small paper "scribble" highlight. Bonus cells carry a gold star doodle. */
 function hatchCell(bx,by,w,color,s,alpha){
   const st=Math.max(2.2,s*.11),lw=Math.max(.9,s*.035);

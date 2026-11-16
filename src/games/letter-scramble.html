@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Letter Scramble, sketchbook edition: one portrait column. Title row (sound), a HUD card (score, timer, best + page target bar), the live
-   word preview, the 4x4 tray of torn paper letter tiles on a desk, then a strip of found-word chips. Pencil on cream paper; coloured pencil
+   word preview, the 4x4 tray of torn paper letter tiles on a desk, then a strip of found-word chips. Pencil on cream paper; colored pencil
    only for the highlighter swipe, the gold-star tile and the right/wrong word states. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -490,7 +490,7 @@ function drawShell(i,sel,k){
   const edge=sel?(k==='ok'?GREEN:k==='dup'?GOLD:k==='no'?GRAPH:INK):INK;
   ctx.save();ctx.translate(x,y);ctx.rotate(tilt);
   const ti=img(gold?'tile-star':TILE_IMG[colors[i]]);
-  if(ti){/* Mark's drawn tile: shadow, picture, then a coloured outline / wash when selected */
+  if(ti){/* Mark's drawn tile: shadow, picture, then a colored outline / wash when selected */
     ctx.fillStyle='rgba(46,46,51,.2)';torn(ctx,-w/2+w*.05,-h/2+h*.07,w,h,i);ctx.fill();
     ctx.drawImage(ti,-w/2,-h/2,w,h);
     if(sel){ctx.globalAlpha=.45;ctx.fillStyle=fill;ctx.fillRect(-w/2,-h/2,w,h);ctx.globalAlpha=1;ctx.lineJoin='round';ctx.lineWidth=Math.max(2.5,w*.05);ctx.strokeStyle=edge;ctx.strokeRect(-w/2+1,-h/2+1,w-2,h-2)}

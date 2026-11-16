@@ -44,7 +44,7 @@ def knockout(im, tol=38):
     alpha = np.where(outside, 0, 255).astype(np.uint8)
     alpha = Image.fromarray(alpha).filter(ImageFilter.GaussianBlur(0.8))
     al = np.asarray(alpha).astype(float) / 255
-    # un-premultiply-ish: pull edge pixels away from paper colour so halos don't show
+    # un-premultiply-ish: pull edge pixels away from paper color so halos don't show
     rgb = a.astype(float)
     rgb = np.where(al[...,None] > 0, (rgb - paper * (1 - al[...,None])) / np.maximum(al[...,None], .05), rgb)
     rgb = np.clip(rgb, 0, 255).astype(np.uint8)

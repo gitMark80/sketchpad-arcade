@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Builds the Space Glass colour-by-number pictures and writes them into src/games/space-glass.html.
+"""Builds the Space Glass color-by-number pictures and writes them into src/games/space-glass.html.
 
 Each picture is drawn from simple shapes (circles, ellipses, polygons) on a grid of cells, then every cell takes the
-colour that covers most of it. The result is written as ASCII rows (one letter per colour, '.' = empty) between the
+color that covers most of it. The result is written as ASCII rows (one letter per color, '.' = empty) between the
 `/*PICTURES*/` and `/*END PICTURES*/` markers in the game, so the pictures stay easy to read and hand-edit.
 
     python3 tools/space-glass-pictures.py            # rewrite the pictures in the game
     python3 tools/space-glass-pictures.py --print    # just print them
 
-Letters (colours are set in the game's BASE table): R red, O orange, Y yellow, L lime, G green, T teal, S sky, B blue,
+Letters (colors are set in the game's BASE table): R red, O orange, Y yellow, L lime, G green, T teal, S sky, B blue,
 I indigo, U purple, P pink, N brown, A grey, D dark grey, K black, W white, C peach.
 """
 import sys, math, re
@@ -380,7 +380,7 @@ if __name__ == "__main__":
     for name, rows in pics:
         cells = sum(ch != "." for r in rows for ch in r)
         cols = sorted(set("".join(rows)) - {"."})
-        print(f"{name}: {max(map(len, rows))}x{len(rows)} grid, {cells} squares, {len(cols)} colours {''.join(cols)}", file=sys.stderr)
+        print(f"{name}: {max(map(len, rows))}x{len(rows)} grid, {cells} squares, {len(cols)} colors {''.join(cols)}", file=sys.stderr)
         if "--print" in sys.argv:
             print("\n".join(rows), file=sys.stderr)
     if "--print" not in sys.argv:

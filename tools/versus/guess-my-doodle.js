@@ -2,7 +2,7 @@
    words, draws it, and sends it; the guesser watches it redraw line by line and spells the word with letter tiles.
    A right guess scores the word's points for both players. The guesser then draws next. Ten drawings make a game.
    Saved game (for online play): {round, drawer, phase:'pick'|'guess', offers, used, cur:{word,tier,by,d}, hist} where
-   d is the drawing: [[colour, size, gap, base64 points]...], each point being x, y (0-255) and a time step (10 ms). */
+   d is the drawing: [[color, size, gap, base64 points]...], each point being x, y (0-255) and a time step (10 ms). */
 INFO.noBot=true;INFO.endDelay=1600;
 const GD_WORDS=[
  /* easy: 10 points */

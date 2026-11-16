@@ -34,7 +34,7 @@ def graphite(im):
     a = np.asarray(im).astype(np.float32)
     rgb, al = a[:, :, :3], a[:, :, 3:]
     lum = rgb @ np.array([0.299, 0.587, 0.114], np.float32)
-    # dark ink outlines stay dark; colour fills fade towards paper like light pencil shading
+    # dark ink outlines stay dark; color fills fade towards paper like light pencil shading
     t = np.clip((lum - 55) / 70, 0, 1)
     g = lum * (1 - t) + (lum + (255 - lum) * 0.28) * t
     out = np.stack([g - 2, g - 1, g + 3], -1)

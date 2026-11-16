@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Pencil Putt art, drawn in code to match Mark's coloured-pencil sprite sheets
-(bold sketchy ink outlines, dense back-and-forth coloured-pencil scribble fills,
+"""Pencil Putt art, drawn in code to match Mark's colored-pencil sprite sheets
+(bold sketchy ink outlines, dense back-and-forth colored-pencil scribble fills,
 darker scribble on the shaded side, big friendly faces).
 
 School-desk mini golf: rulers for walls, pink-eraser corner posts, crumpled paper
@@ -56,11 +56,11 @@ function path(P,closed){const p=new Path2D(),n=P.length;const m=(a,b)=>[(a[0]+b[
 function bbox(P){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const[x,y]of P){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y)}return{x0,y0,x1,y1,w:x1-x0,h:y1-y0,cx:(x0+x1)/2,cy:(y0+y1)/2}}
 
 /* ---------- pencil work ---------- */
-// a back-and-forth run of coloured-pencil strokes
+// a back-and-forth run of colored-pencil strokes
 function run(x,y,ang,len,n,gap,w,col,al){ctx.strokeStyle=col;ctx.globalAlpha=al;ctx.lineWidth=w;ctx.lineCap=ctx.lineJoin='round';
   const c=Math.cos(ang),s=Math.sin(ang),px=-s,py=c;let X=x-c*len/2,Y=y-s*len/2,d=1;ctx.beginPath();ctx.moveTo(X,Y);
   for(let i=0;i<n;i++){const L=len*rr(.75,1.12);const g=gap*rr(.6,1.4);X+=c*L*d+px*g;Y+=s*L*d+py*g;ctx.lineTo(X+rr(-.5,.5)*w,Y+rr(-.5,.5)*w);d=-d}ctx.stroke();ctx.globalAlpha=1}
-// fill a shape with coloured pencil: pale wash, dense scribble, darker scribble on the shaded (lower right) side
+// fill a shape with colored pencil: pale wash, dense scribble, darker scribble on the shaded (lower right) side
 function pencil(P,col,o){o=o||{};const b=bbox(P),p=path(P,true);ctx.save();ctx.clip(p);
   ctx.fillStyle=light(col,o.wash==null?.6:o.wash);ctx.fill(p);
   const w=(o.w||1.25)*U,gap=w*(o.gap||1.25),cell=Math.max(12*U,Math.min(b.w,b.h)*.32),ang=o.ang==null?-1.0:o.ang;
@@ -208,13 +208,13 @@ confetti(W,H){const cs=[COL.red,COL.yellow,COL.blue,COL.green,COL.purple,COL.pin
     if(k===0)shape(dens([[-14,-7],[14,-7],[14,7],[-14,7]],true,5),c,{wash:.3,shade:0,hi:0},2.6);
     else if(k===1)shape(circ(0,0,9,9,16),c,{wash:.3,shade:0,hi:0},2.6);
     else{ctx.strokeStyle=INK;ctx.lineWidth=9;ctx.lineCap='round';const S=[[-16,0],[-8,-8],[0,0],[8,8],[16,0]];ctx.stroke(path(S,false));ctx.strokeStyle=c;ctx.lineWidth=4.5;ctx.stroke(path(S,false))}ctx.restore()}},
-sandtrap(W,H){ // pencil shavings and graphite dust on pale wood-coloured paper
+sandtrap(W,H){ // pencil shavings and graphite dust on pale wood-colored paper
   ctx.fillStyle='#f1e4c8';ctx.fillRect(0,0,W,H);
   const items=[];for(let i=0;i<46;i++){const s=Math.floor(rr(1,1e9));items.push({x:rr(0,W),y:rr(0,H),r:60,s,f(){run(0,0,-.9+rr(-.3,.3),rr(60,110),9,3,1.4,pick(['#d9b77e','#e2c58f','#cfa76a']),.4)}})}
   for(let i=0;i<34;i++){const s=Math.floor(rr(1,1e9)),c=pick([COL.yellow,COL.yellow,COL.red,COL.blue,COL.green,COL.orange]);items.push({x:rr(0,W),y:rr(0,H),r:40,s,f(){shaving(0,0,rr(14,22),rr(0,TAU),c)}})}
   for(let i=0;i<120;i++){const s=Math.floor(rr(1,1e9));items.push({x:rr(0,W),y:rr(0,H),r:6,s,f(){ctx.fillStyle='rgba(60,60,68,.45)';ctx.beginPath();ctx.arc(0,0,rr(1.2,3),0,TAU);ctx.fill()}})}
   tile(W,H,items)},
-water(W,H){ // blue ink puddle: blue coloured-pencil scribble with ripple strokes
+water(W,H){ // blue ink puddle: blue colored-pencil scribble with ripple strokes
   ctx.fillStyle=light(COL.blue,.62);ctx.fillRect(0,0,W,H);const items=[];
   for(let i=0;i<70;i++){const s=Math.floor(rr(1,1e9));items.push({x:rr(0,W),y:rr(0,H),r:80,s,f(){run(0,0,-.35+rr(-.2,.2),rr(70,120),12,3.2,2,pick([COL.blue,light(COL.blue,.15),dark(COL.blue,.1)]),.35)}})}
   for(let i=0;i<16;i++){const s=Math.floor(rr(1,1e9));items.push({x:rr(0,W),y:rr(0,H),r:60,s,f(){const P=[];for(let k=0;k<=8;k++)P.push([-50+k*12.5,Math.sin(k*1.1)*7]);ink(P,false,3,dark(COL.blue,.35))}})}
@@ -231,7 +231,7 @@ slope(W,H){ // drawn with 'multiply' over the green: white paper with dark-green
     ink(dens([[-40,22],[0,-18],[40,22]],false,6),false,6,'#2f6d38')}})}
   for(let i=0;i<40;i++){const s=Math.floor(rr(1,1e9));items.push({x:rr(0,W),y:rr(0,H),r:60,s,f(){run(0,0,-1+rr(-.2,.2),rr(50,80),8,4,1.4,'#7fae84',.22)}})}
   tile(W,H,items)},
-beach(W,H){ // the desk page behind the course: grid paper with coloured doodles around the edges
+beach(W,H){ // the desk page behind the course: grid paper with colored doodles around the edges
   ctx.fillStyle='#f7f3e8';ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(120,160,200,.32)';ctx.lineWidth=1.6;for(let x=10;x<W;x+=36){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=10;y<H;y+=36){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
   ctx.save();ctx.globalAlpha=.7;

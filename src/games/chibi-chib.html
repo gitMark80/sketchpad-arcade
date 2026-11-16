@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Layout: one portrait column. Title row, a slim HUD (level, picture, coins, sound), then one canvas holding the zoomable scrambled picture and the holding tray (rows of 16), with a booster dock below. Cards sit over the canvas.
-   Look: Chibi Chib, a 10-year-old's sketchbook page. Paper, graphite and wobbly borders; each gem colour stays its own colored-pencil hue. */
+   Look: Chibi Chib, a 10-year-old's sketchbook page. Paper, graphite and wobbly borders; each gem color stays its own colored-pencil hue. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -106,8 +106,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
         <h2>Chibi Chib</h2>
         <canvas class="pic" id="startPic" width="160" height="160" aria-hidden="true"></canvas>
         <ul class="rules">
-          <li><b>1</b><span>Every chibi is a picture of tiny squares, and every gem starts on a square of the wrong colour. Tap a gem to pick it up along with its same-colour neighbours.</span></li>
-          <li><b>2</b><span>Each open square shows its colour with a little dot. Tap a square with the same dot to set the gems there, or tap the tray to stash them. You can also tap a colour in the tray, then a matching square.</span></li>
+          <li><b>1</b><span>Every chibi is a picture of tiny squares, and every gem starts on a square of the wrong color. Tap a gem to pick it up along with its same-color neighbours.</span></li>
+          <li><b>2</b><span>Each open square shows its color with a little dot. Tap a square with the same dot to set the gems there, or tap the tray to stash them. You can also tap a color in the tray, then a matching square.</span></li>
           <li><b>3</b><span>The chibis are detailed, so pinch or use + to zoom in close. If the tray is full and nothing can be placed, the level is over.</span></li>
         </ul>
         <button class="btn" id="playBtn" type="button">Play level 1</button>
@@ -165,8 +165,8 @@ function track(name,data){try{if(typeof window.va==='function')window.va('event'
 
 /* ---------------- pictures ---------------- */
 /* Chibi Chib pictures, made by tools/chibi-chib-pictures.py (drawn big with shapes, then cut down to a grid of squares).
-   One character per square ("." = not part of the picture, a.. = index into that picture's colours). Levels get bigger as you go. */
-/* brighter, more saturated pencil colours for the gems and squares (the picture script writes the softer base palette) */
+   One character per square ("." = not part of the picture, a.. = index into that picture's colors). Levels get bigger as you go. */
+/* brighter, more saturated pencil colors for the gems and squares (the picture script writes the softer base palette) */
 const VIVID={'#e0453a':'#f2362b','#f08a24':'#ff8a12','#f2c230':'#ffcf1a','#8bc34a':'#86d12b','#4caf50':'#22b04b','#2fa7a0':'#10b3a6','#4fb3e8':'#2fb5ff','#3a7bd5':'#2d6bf0','#8e5bc9':'#9b4dff','#e86aa6':'#ff4fa3','#9b6a3c':'#a5571f','#9aa0a6':'#9aa4b0','#2b2b2f':'#1f1f24','#fbfaf6':'#ffffff','#f2c9a5':'#ffc493'};
 const LEVELS=[
 /*PICS-BEGIN*/
@@ -231,7 +231,7 @@ const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 function pencilHex(h){const c=rgb(h),m=(c[0]+c[1]+c[2])/3,P=[246,243,234];
   return '#'+c.map((v,i)=>{let x=v+(m-v)*.2;x=x+(P[i]-x)*.08;return Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')}).join('')}
 const gemCache=new Map();
-/* Mark's hand-drawn gems: one image per colour, keyed by both the original palette hex and its vivid twin; the code-drawn gem stands in until each loads */
+/* Mark's hand-drawn gems: one image per color, keyed by both the original palette hex and its vivid twin; the code-drawn gem stands in until each loads */
 const GEM_NAMES={red:['#e0453a','#f2362b'],orange:['#f08a24','#ff8a12'],yellow:['#f2c230','#ffcf1a'],lime:['#8bc34a','#86d12b'],green:['#4caf50','#22b04b'],teal:['#2fa7a0','#10b3a6'],sky:['#4fb3e8','#2fb5ff'],blue:['#3a7bd5','#2d6bf0'],purple:['#8e5bc9','#9b4dff'],pink:['#e86aa6','#ff4fa3'],brown:['#9b6a3c','#a5571f'],grey:['#9aa0a6','#9aa4b0'],black:['#2b2b2f','#1f1f24'],white:['#fbfaf6','#ffffff'],peach:['#f2c9a5','#ffc493']};
 const gemImg={};
 for(const[name,hexes]of Object.entries(GEM_NAMES)){const im=new Image();im.decoding='async';
@@ -240,10 +240,10 @@ function gemSprite(hex,s){const key=hex+'|'+Math.round(s*dpr);if(gemCache.has(ke
   const px=Math.max(4,Math.round(s*dpr)),c=document.createElement('canvas');c.width=c.height=px;const g=c.getContext('2d');
   const im=gemImg[String(hex).toLowerCase()];
   if(im){const k=px/Math.max(im.naturalWidth,im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;g.imageSmoothingQuality='high';g.drawImage(im,(px-w)/2,(px-h)/2,w,h);gemCache.set(key,c);return c}
-  // a pencil-drawn octagon gem: coloured-pencil fill, darker-lead hatching, the table and facet lines drawn in, outlined in a dark lead
+  // a pencil-drawn octagon gem: colored-pencil fill, darker-lead hatching, the table and facet lines drawn in, outlined in a dark lead
   const oct=(m,k)=>{const a=m,b=px-m,q=(px-2*m)*k;return[[a+q,a],[b-q,a],[b,a+q],[b,b-q],[b-q,b],[a+q,b],[a,b-q],[a,a+q]]};
   const path=pts=>{g.beginPath();pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath()};
-  // vivid faceted gem: solid colour, cross-hatched in a darker lead (lighter lead on the black gem), facet lines, dark black outline
+  // vivid faceted gem: solid color, cross-hatched in a darker lead (lighter lead on the black gem), facet lines, dark black outline
   const small=px<18,lw=small?Math.max(.6,px*.055):px*.075,O=oct(lw/2,.27),T=oct(px*.3,.29),isDark=lum(hex)<.3,dark=isDark?'rgba(255,255,255,.2)':mix(hex,INK,.3);
   path(O);g.fillStyle=hex;g.fill();
   if(px>9){g.save();path(O);g.clip();g.strokeStyle=dark;g.globalAlpha=isDark?1:small?.18:.32;g.lineWidth=Math.max(.5,px*.03);const st=Math.max(2.4,px*.14);g.beginPath();
@@ -252,7 +252,7 @@ function gemSprite(hex,s){const key=hex+'|'+Math.round(s*dpr);if(gemCache.has(ke
     path(T);g.fillStyle=isDark?mix(hex,PAPER,.12):mix(hex,'#ffffff',.22);g.fill();g.strokeStyle=isDark?'rgba(255,255,255,.55)':mix(hex,INK,.55);g.lineWidth=Math.max(.5,px*.035);g.stroke();
     g.beginPath();for(let k=0;k<8;k++){g.moveTo(O[k][0],O[k][1]);g.lineTo(T[k][0],T[k][1])}g.stroke();
     g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=Math.max(.6,px*.05);g.beginPath();g.moveTo(T[0][0]+px*.03,T[0][1]+px*.07);g.lineTo(T[7][0]+px*.07,T[7][1]+px*.03);g.stroke()}
-  // tiny gems (whole picture in view) get a dark-lead outline in their own hue so the colours still read; close up it is solid black
+  // tiny gems (whole picture in view) get a dark-lead outline in their own hue so the colors still read; close up it is solid black
   path(O);g.strokeStyle=small&&!isDark?mix(hex,'#1d1d21',.6):'#1d1d21';g.lineWidth=lw;g.stroke();
   gemCache.set(key,c);return c}
 
@@ -280,7 +280,7 @@ function clampView(){if(!L||!lv)return;view.z=Math.max(1,Math.min(7,view.z));con
 function zoomAt(f,px,py){const z0=view.z,z1=Math.max(1,Math.min(7,z0*f)),k=z1/z0;view.tx=px-(px-view.tx)*k;view.ty=py-(py-view.ty)*k;view.z=z1;clampView()}
 
 /* ---------------- level state ---------------- */
-// lv.cells holds each spot's target colour (-1 = not part of the picture); cur holds the gem sitting there now (-1 = empty)
+// lv.cells holds each spot's target color (-1 = not part of the picture); cur holds the gem sitting there now (-1 = empty)
 let lv=null,cur=null,tray=[],trayCap=32,flights=[],parts=[],pops=new Map(),phase='menu',hint=null,boostersUsed=0,shake=0,shine=0,levelStart=0,rowsBought=0,undoStack=[],moves=0,GROUP=16;
 function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return((s>>>0)%1e6)/1e6}}
 const isWrong=(i,a=cur)=>a[i]>=0&&a[i]!==lv.cells[i];
@@ -304,10 +304,10 @@ function setupLevel(){
   phase='play';levelStart=performance.now();
   $('lvlNo').textContent='Level '+levelNo;$('picName').textContent=lv.name;layout();resetView();paintCoins();dirty=true;
 }
-// Scramble. 1) Cut the picture into patches of 16 squares that all want the same colour, and swap colours between them
-// (lifting one leaves 16 holes of one colour, and another patch carries exactly that colour).
-// 2) The scraps left over are cut into compact mixed patches and dealt a shifted run of the remaining colours.
-// Nearly every gem starts on a square of another colour; a tap lifts the whole patch it was dealt in.
+// Scramble. 1) Cut the picture into patches of 16 squares that all want the same color, and swap colors between them
+// (lifting one leaves 16 holes of one color, and another patch carries exactly that color).
+// 2) The scraps left over are cut into compact mixed patches and dealt a shifted run of the remaining colors.
+// Nearly every gem starts on a square of another color; a tap lifts the whole patch it was dealt in.
 function scramble(seed){
   const R=rng(seed),n=lv.n,T=lv.cells;cur=new Int16Array(T.length).fill(-1);pid=new Int32Array(T.length).fill(-1);
   const owner=pid,patches=[];
@@ -318,24 +318,24 @@ function scramble(seed){
     return b};
   const freeSame=j=>nb(j).filter(m=>T[m]===T[j]&&owner[m]<0).length,freeAny=j=>nb(j).filter(m=>owner[m]<0).length;
   let order=[];T.forEach((c,i)=>{if(c>=0)order.push(i)});order.sort((a,b)=>freeSame(a)-freeSame(b)||R()-.5);
-  // 1) single-colour patches of 16
+  // 1) single-color patches of 16
   for(const s of order){if(owner[s]>=0)continue;const id=patches.length,b=grow(s,GROUP,id,true);if(b.length<GROUP){b.forEach(j=>owner[j]=-1);continue}patches.push({cells:b,t:T[s]})}
   // 2) the scraps become compact mixed patches
   order=order.filter(i=>owner[i]<0).sort((a,b)=>freeAny(a)-freeAny(b)||R()-.5);
   for(const s of order){if(owner[s]>=0)continue;const id=patches.length,b=grow(s,GROUP,id,false);patches.push({cells:b,mixed:true})}
-  // 3) hand out colours, most plentiful colour first: each fills whole patches that don't contain it,
-  //    so a patch is one colour (only one patch per colour gets split) and nothing lands on its own colour
+  // 3) hand out colors, most plentiful color first: each fills whole patches that don't contain it,
+  //    so a patch is one color (only one patch per color gets split) and nothing lands on its own color
   const supply=new Map();T.forEach(c=>{if(c>=0)supply.set(c,(supply.get(c)||0)+1)});
   patches.forEach(p=>{p.forbid=new Set(p.cells.map(j=>T[j]));p.left=p.cells.slice().sort((a,b)=>a-b)});
   const cells=[];patches.forEach(p=>{if(p.mixed)cells.push(...p.cells)});
   for(const c of [...supply.keys()].sort((a,b)=>supply.get(b)-supply.get(a))){let need=supply.get(c);
     const cand=patches.filter(p=>p.left.length&&!p.forbid.has(c)).sort((a,b)=>(b.left.length===b.cells.length)-(a.left.length===a.cells.length)||b.left.length-a.left.length||R()-.5);
     for(const p of cand){if(!need)break;const k=Math.min(need,p.left.length);p.left.splice(0,k).forEach(j=>cur[j]=c);need-=k}
-    // still short: use the squares of other colours inside mixed patches (the patch splits into two groups)
+    // still short: use the squares of other colors inside mixed patches (the patch splits into two groups)
     if(need){const rest=patches.filter(p=>p.left.some(j=>T[j]!==c)).sort((a,b)=>b.left.filter(j=>T[j]!==c).length-a.left.filter(j=>T[j]!==c).length);
       for(const p of rest){if(!need)break;const ok=p.left.filter(j=>T[j]!==c).slice(0,need);ok.forEach(j=>cur[j]=c);need-=ok.length;p.left=p.left.filter(j=>!ok.includes(j))}}
     if(need){for(const p of patches){if(!need)break;const k=Math.min(need,p.left.length);p.left.splice(0,k).forEach(j=>cur[j]=c);need-=k}}}
-  // any gem still on its own colour trades places with a gem elsewhere so both end up wrong (scraps first)
+  // any gem still on its own color trades places with a gem elsewhere so both end up wrong (scraps first)
   const all=[];T.forEach((c,i)=>{if(c>=0)all.push(i)});
   for(const a of all){if(cur[a]!==T[a])continue;
     for(let k=0;k<600;k++){const pool=k<300&&cells.length?cells:all,b=pool[(R()*pool.length)|0];if(cur[b]!==cur[a]&&cur[b]!==T[a]&&cur[a]!==T[b]){[cur[a],cur[b]]=[cur[b],cur[a]];break}}}
@@ -349,7 +349,7 @@ function greedySolve(){let a=cur.slice(),tr=[];for(let step=0;step<3000;step++){
 function traySlotPos(k){const T=L.tray,r=(k/COLS)|0,c=k%COLS;return{x:T.x0+c*(T.ts+2)+T.ts/2,y:T.y+r*(T.ts+3)+T.ts/2}}
 function cellCenter(i){const n=lv.n,s=cs();return{x:view.tx+(i%n+.5)*s,y:view.ty+(((i/n)|0)+.5)*s}}
 function fly(c,from,to,t0,dur){const f={c,fx:from?from.x:0,fy:from?from.y:0,to,t0,dur:dur||520};flights.push(f);return f}
-// picking up: a tap selects the misplaced gem and its same-colour neighbours; they stay put until you say where
+// picking up: a tap selects the misplaced gem and its same-color neighbours; they stay put until you say where
 let bsel=null; // {c, cells:[...], at:index tapped}
 function selectAt(i){
   if(phase!=='play'||i<0||!isWrong(i)){sfx.nope();return false}
@@ -368,7 +368,7 @@ function toTray(){
   checkEnd();dirty=true;return true}
 function toBoard(i){
   if(phase!=='play'||!bsel)return false;const c=bsel.c;
-  if(i<0||cur[i]>=0||lv.cells[i]!==c)return no('That square wants another colour');
+  if(i<0||cur[i]>=0||lv.cells[i]!==c)return no('That square wants another color');
   const n=lv.n,ix=i%n,iy=(i/n)|0,open=[];for(let j=0;j<cur.length;j++)if(cur[j]<0&&lv.cells[j]===c)open.push(j);
   open.sort((a,b)=>((a%n-ix)**2+((a/n|0)-iy)**2)-((b%n-ix)**2+((b/n|0)-iy)**2));
   const k=Math.min(open.length,bsel.cells.length),dst=open.slice(0,k),src=bsel.cells.slice(0,k);
@@ -377,16 +377,16 @@ function toBoard(i){
   sfx.place();busyUntil=now+k*28+1400;keepSel(bsel.cells.slice(k));
   checkEnd();dirty=true;return true}
 function tapCell(i){if(!selectAt(i))return false;return toTray()} // kept for the test hooks
-// placing: pick a colour in the tray, then tap a square of that colour; the gems fill the open squares joined to it
+// placing: pick a color in the tray, then tap a square of that color; the gems fill the open squares joined to it
 let sel=-1;
 function no(msg){shake=performance.now();sfx.nope();if(msg)toast(msg,'',1100);dirty=true;return false}
 function placeAt(i){
   if(phase!=='play')return false;
-  if(sel<0)return no('Pick a colour from the tray');
+  if(sel<0)return no('Pick a color from the tray');
   if(i<0||cur[i]>=0||lv.cells[i]!==sel)return no();
   const items=tray.filter(x=>!x.gone&&x.c===sel);if(!items.length){sel=-1;return no()}
   pushUndo();
-  // the gems fill the open squares of this colour: the tapped one first, then the nearest others
+  // the gems fill the open squares of this color: the tapped one first, then the nearest others
   const n=lv.n,ix=i%n,iy=(i/n)|0,open=[];for(let j=0;j<cur.length;j++)if(cur[j]<0&&lv.cells[j]===sel)open.push(j);
   open.sort((a,b)=>((a%n-ix)**2+((a/n|0)-iy)**2)-((b%n-ix)**2+((b/n|0)-iy)**2));const region=open.slice(0,items.length);
   const now=performance.now();hint=null;moves++;
@@ -419,7 +419,7 @@ let toastT=0;function toast(a,b,ms){const el=$('toast');el.innerHTML='';el.appen
 function spend(n){if(coins<n){sfx.nope();return false}coins-=n;boostersUsed++;save();paintCoins();sfx.boost();return true}
 function addRow(){trayCap+=COLS;rowsBought++;layout();dirty=true}
 $('hintBtn').addEventListener('click',()=>{if(phase!=='play')return;
-  // first: a tray colour that has somewhere to go
+  // first: a tray color that has somewhere to go
   const have=new Set(trayLive().map(t=>t.c));for(let i=0;i<cur.length;i++)if(cur[i]<0&&have.has(lv.cells[i])){if(!spend(10))return;const c=lv.cells[i];sel=c;hint={g:[i],c,t:performance.now()};toast('Tap the glowing square','',1300);
     if(view.z>1){const p=cellCenter(i);view.tx+=L.vp.w/2-p.x;view.ty+=L.vp.h/2-p.y;clampView()}dirty=true;return}
   const g=bestMove();if(!g){toast('No moves left','Add a tray row',1200);return}if(!spend(10))return;hint={g,t:performance.now()};toast('Tap the glowing gems','',1300);
@@ -445,13 +445,13 @@ function boardTap(x,y){
   const i=cellExact(x,y);
   if(i>=0&&isWrong(i))return selectAt(i);                       // a misplaced gem: pick it and its neighbours up
   if(bsel){                                                       // gems in hand: drop them on a matching open square
-    if(i>=0&&cur[i]<0)return lv.cells[i]===bsel.c?toBoard(i):no('That square wants another colour');
+    if(i>=0&&cur[i]<0)return lv.cells[i]===bsel.c?toBoard(i):no('That square wants another color');
     const j=nearestEmpty(x,y,bsel.c);if(j>=0)return toBoard(j);
     const k=cellAt(x,y);if(k>=0)return selectAt(k);
     if(i<0){bsel=null;dirty=true;return false}
     return no();
   }
-  if(i>=0&&cur[i]<0)return sel>=0&&lv.cells[i]===sel?placeAt(i):no(sel<0?'Pick up gems or a tray colour first':''); // an open square
+  if(i>=0&&cur[i]<0)return sel>=0&&lv.cells[i]===sel?placeAt(i):no(sel<0?'Pick up gems or a tray color first':''); // an open square
   if(sel>=0){const j=nearestEmpty(x,y,sel);if(j>=0)return placeAt(j)} // tiny squares: snap to the nearest fitting one
   const j=cellAt(x,y);if(j>=0)return selectAt(j);
   if(i>=0)return no();
@@ -483,7 +483,7 @@ function rr(g,x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
 function star(x,y,s){ctx.beginPath();ctx.moveTo(x,y-s);ctx.quadraticCurveTo(x,y,x+s,y);ctx.quadraticCurveTo(x,y,x,y+s);ctx.quadraticCurveTo(x,y,x-s,y);ctx.quadraticCurveTo(x,y,x,y-s);ctx.fill()}
 const tileCache=new Map();
 function tileCol(c,k){const key=c+'|'+k;let v=tileCache.get(key);if(!v){v=mix(lv.colors[c],PAPER,k);tileCache.set(key,v)}return v}
-// the colour hint on an open square: a solid dot of its gem colour with a dark ring (so pale colours read on their own wash)
+// the color hint on an open square: a solid dot of its gem color with a dark ring (so pale colors read on their own wash)
 function hintDot(t,x,y,s){const r=Math.max(1.3,s*.19);ctx.fillStyle=lv.colors[t];ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
   if(s>=7){ctx.strokeStyle=INK;ctx.globalAlpha=s>=14?.9:.6;ctx.lineWidth=Math.max(.6,s*.045);ctx.stroke();ctx.globalAlpha=1}}
 function drawBoard(now){
@@ -496,13 +496,13 @@ function drawBoard(now){
     const top=y>0&&lv.cells[i-n]>=0,lef=x>0&&lv.cells[i-1]>=0;ctx.fillRect(X-(lef?0:e),Y-(top?0:e),s+(lef?0:e)+(x<n-1&&lv.cells[i+1]>=0?0:e),s+(top?0:e)+(y<n-1&&lv.cells[i+n]>=0?0:e))}
   const incoming=new Set();for(const f of flights)if(f.to.cell!=null&&now<f.t0+f.dur)incoming.add(f.to.cell);
   const hintSet=hint&&now-hint.t<6000?new Set(hint.g):null,gs=s*.97,pad=s>8?Math.max(.5,s*.05):0,want=sel>=0?sel:bsel?bsel.c:-1,held=bsel?new Set(bsel.cells):null;
-  // squares show the colour each spot wants; round gems sit on top
+  // squares show the color each spot wants; round gems sit on top
   for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*n+x,t=lv.cells[i];if(t<0)continue;const X=view.tx+x*s,Y=view.ty+y*s,c=cur[i];
-    if(c<0||incoming.has(i)){ // an open square: a pale wash of the colour that belongs here, plus a little gem-colour dot
+    if(c<0||incoming.has(i)){ // an open square: a pale wash of the color that belongs here, plus a little gem-color dot
       const glow=t===want&&c<0;ctx.fillStyle=glow?tileCol(t,.0+.18*(.5+.5*Math.sin(now/180))):tileCol(t,.16);ctx.fillRect(X+pad,Y+pad,s-2*pad,s-2*pad);
       if(s>=4.5)hintDot(t,X+s/2,Y+s/2,s);continue}
     ctx.fillStyle=tileCol(t,c===t?.0:.22);ctx.fillRect(X+pad,Y+pad,s-2*pad,s-2*pad);
-    if(c!==t&&s>=16){const r=s*.12;ctx.fillStyle=lv.colors[t];ctx.beginPath();ctx.arc(X+pad+r+1,Y+pad+r+1,r,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=Math.max(.6,s*.03);ctx.stroke()} // zoomed in: a wrong gem's square still shows the colour it wants, in the corner
+    if(c!==t&&s>=16){const r=s*.12;ctx.fillStyle=lv.colors[t];ctx.beginPath();ctx.arc(X+pad+r+1,Y+pad+r+1,r,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=Math.max(.6,s*.03);ctx.stroke()} // zoomed in: a wrong gem's square still shows the color it wants, in the corner
     let g=c===t?gs:s*.88;const p=pops.get(i);if(p&&now-p<260)g*=1+.35*Math.sin((now-p)/260*Math.PI);
     if(hintSet&&hintSet.has(i))g*=1+.16*(.5+.5*Math.sin(now/120));
     let lift=0;if(held&&held.has(i)){g=s*.96;lift=s*(.08+.04*Math.sin(now/170));ctx.fillStyle='#f3e6b0';ctx.strokeStyle=INK;ctx.lineWidth=Math.max(1,s*.06);ctx.beginPath();ctx.arc(X+s/2,Y+s/2,s*.56,0,7);ctx.fill();ctx.stroke()}

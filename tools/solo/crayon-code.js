@@ -1,6 +1,6 @@
 INFO.best='low';INFO.bestLabel='Fewest guesses';INFO.winHead='Code cracked!';INFO.loseHead='Out of rows';
 /*SHELL*/
-/* Crayon Code: Mastermind with crayons. Black dot = right colour, right spot. Open dot = right colour, wrong spot. */
+/* Crayon Code: Mastermind with crayons. Black dot = right color, right spot. Open dot = right color, wrong spot. */
 const COLS=[['Red','#c84a3a','#efc4bc'],['Orange','#d9661a','#f0c9a8'],['Yellow','#d4a51c','#f3e6b0'],['Green','#5a9a6a','#dcebdd'],['Blue','#2f6fb5','#d6e4f2'],['Purple','#6f4a9a','#e6dcef']];
 const LV={easy:{slots:3,cols:4,rows:10,rep:false},medium:{slots:4,cols:6,rows:10,rep:false},hard:{slots:4,cols:6,rows:8,rep:true}};
 const $=id=>document.getElementById(id);
@@ -21,11 +21,11 @@ $('check').onclick=()=>{if(!P.active||cur.includes(null))return;const[b,w]=score
   const pegs=[...el.querySelectorAll('.peg')];[...Array(b).fill('b'),...Array(w).fill('w')].forEach((t,i)=>{pegs[i].className='peg ink '+t;pegs[i].style.animationDelay=(i*.12)+'s'});
   el.setAttribute('aria-label',`Guess ${row+1}: ${cur.map(k=>COLS[k][0]).join(', ')}. ${b} right spot, ${w} wrong spot.`);
   if(b===L.slots){P.sfx('good');reveal();P.pop('Cracked!');P.win(row+1,`You cracked it in ${row+1} ${row?'guesses':'guess'}!`);row++;draw();return}
-  P.sfx(b||w?'soft':'bad');P.msg(b+w===0?'None of those colours are in the code.':`${b} right spot${b===1?'':'s'}, ${w} right colour${w===1?'':'s'} in the wrong spot.`);
+  P.sfx(b||w?'soft':'bad');P.msg(b+w===0?'None of those colors are in the code.':`${b} right spot${b===1?'':'s'}, ${w} right color${w===1?'':'s'} in the wrong spot.`);
   row++;cur=Array(L.slots).fill(null);
   if(row>=L.rows){reveal();P.lose('The secret code was '+code.map(k=>COLS[k][0]).join(', ')+'.');}draw()};
 function reveal(){$('secret').innerHTML=code.map(()=>'<span class="slot"></span>').join('');[...$('secret').children].forEach((s,i)=>fill(s,code[i]))}
 addEventListener('keydown',e=>{if(!P.active)return;if(/^[1-6]$/.test(e.key)&&+e.key<=L.cols)add(+e.key-1);else if(e.key==='Enter')$('check').click();else if(e.key==='Backspace'){const i=cur.map(v=>v!=null).lastIndexOf(true);if(i>=0){cur[i]=null;draw()}}});
 const GAME={reset(d){L=LV[d];const pool=[...Array(L.cols).keys()];code=L.rep?[...Array(L.slots)].map(()=>P.rand(L.cols)):P.shuffle(pool).slice(0,L.slots);
     row=0;cur=Array(L.slots).fill(null);$('secret').innerHTML='';buildRows();buildPalette();draw();
-    P.msg(`Find the ${L.slots} secret colours`+(L.rep?' (colours can repeat)':''))}};
+    P.msg(`Find the ${L.slots} secret colors`+(L.rep?' (colors can repeat)':''))}};

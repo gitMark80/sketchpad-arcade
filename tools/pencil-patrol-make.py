@@ -33,7 +33,7 @@ rep('family=Baloo+2:wght@700;800&family=Nunito:wght@600;800&display=swap', 'fami
 CSS = r'''<style>
 /* Pencil Patrol: the Sketchpad Arcade twin of Pearl Patrol. Layout: one portrait column. Title row, HUD card
    (level, score, best + pencils and dots bar), the notebook-page maze, then a dock with pause, the d-pad and sound.
-   Everything is drawn in code: ink outlines with bright coloured-pencil hatching on cream paper. */
+   Everything is drawn in code: ink outlines with bright colored-pencil hatching on cream paper. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -138,7 +138,7 @@ rep('<span id="progTxt">0 pearls left</span>', '<span id="progTxt">0 dots left</
 rep('aria-label="A coral reef maze seen from above. Guide Shelly the hermit crab to collect every pearl while the jellyfish drift around."',
     'aria-label="A maze drawn on a notebook page. Guide Stubby the pencil to collect every dot while the erasers wander around."')
 
-# ---------------------------------------------------------------- script: words, colours, data
+# ---------------------------------------------------------------- script: words, colors, data
 rep("const KEY='bda-pearl-patrol-';", "const KEY='spa-pencil-patrol-';\nconst PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';\nconst C={yellow:'#e0b020',yellowW:'#f6e7a8',orange:'#e8742a',orangeW:'#f5cfae',blue:'#3a7fd0',blueW:'#d4e3f5',green:'#5fae72',greenW:'#dcefdf',purple:'#7a4fb0',purpleW:'#e6daf2',pink:'#e06aa0',pinkW:'#f6d6e5',red:'#d8473c',redW:'#f3c9c4',teal:'#3d9aa8',tealW:'#d2ecef',brown:'#a06a3a',brownW:'#e8d2bd'};")
 rep("/* ---------- the reefs: left halves, mirrored into 19 x 21 mazes ---------- */", "/* ---------- the pages: left halves, mirrored into 19 x 21 mazes ---------- */")
 between("const THEMES=[", "const SPAWN=", """const THEMES=[
@@ -181,7 +181,7 @@ between("function buildMaze(){", "/* ---------- drawing: characters ---------- *
   g.fillStyle=PAPER;g.fillRect(0,0,cw,ch);
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){const c=grid[y*W+x];if(c===3||c===5||c===4)continue;const h=hash(x+maze*7,y);
     if(h<.08){const px=ox+(x+.2+h*4)*cs,py=oy+(y+.85)*cs;g.strokeStyle=PENCIL;g.lineWidth=1;g.beginPath();g.moveTo(px-cs*.12,py);g.lineTo(px+cs*.12,py-cs*.04);g.stroke()}}
-  // the maze walls: coloured-pencil hatching inside a wobbly ink outline, with a pencil shadow
+  // the maze walls: colored-pencil hatching inside a wobbly ink outline, with a pencil shadow
   let w;[wallC,w]=mk(mw,mh);
   const ol=Math.max(1.5,cs*.09); // the outline is a grown ink fill under the body, so overlapping cells still make one clean edge
   w.fillStyle='rgba(46,46,51,.2)';wallPath(w,ol,cs*.12);w.fill();
@@ -213,7 +213,7 @@ between("function buildMaze(){", "/* ---------- drawing: characters ---------- *
 """)
 
 # ---------------------------------------------------------------- characters
-between("/* ---------- drawing: characters ---------- */", "/* ---------- drawing: the scene ---------- */", r"""/* ---------- drawing helpers: ink outlines, coloured-pencil hatching ---------- */
+between("/* ---------- drawing: characters ---------- */", "/* ---------- drawing: the scene ---------- */", r"""/* ---------- drawing helpers: ink outlines, colored-pencil hatching ---------- */
 function hatch(g,pathFn,line,wash,gap=5,ang=-.7,alpha=.85){g.save();g.beginPath();pathFn(g);g.clip();
   g.fillStyle=wash;g.fillRect(-400,-400,800,800);
   g.strokeStyle=line;g.globalAlpha=alpha;g.lineWidth=1.2;g.beginPath();const c=Math.cos(ang),s=Math.sin(ang);
@@ -438,7 +438,7 @@ rep(""".lives svg{width:22px;height:22px}
 .lives img.gone{opacity:.18;filter:grayscale(1)}
 .lives img.new{animation:pop .5s 2}""")
 
-# nothing sea-coloured may remain
+# nothing sea-colored may remain
 for bad in ['#0b4a63','#123a44','#1a8fae','#ff6a4d','#ffb3d1','#fffaf0','#fff','#ffffff','Baloo','Nunito','Shelly the hermit','jellyfish','pearl ']:
     assert bad not in s, f"leftover {bad!r}"
 OUT.write_text(s)

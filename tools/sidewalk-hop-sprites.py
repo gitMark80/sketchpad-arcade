@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Sidewalk Hop sprites: Milo (the curly-haired kid with the backpack) in every hop pose, the street traffic,
-the creek floats, the sidewalk props, the gold star and the three lane tiles, all as coloured-pencil doodles.
+the creek floats, the sidewalk props, the gold star and the three lane tiles, all as colored-pencil doodles.
 
     python3 tools/sidewalk-hop-sprites.py [names...] [--sheet out.png]   # writes src/assets/sidewalk-hop/
 

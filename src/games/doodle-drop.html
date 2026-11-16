@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Doodle Drop: a giant pencil with paper ramp rings, drawn like a 10-year-old's sketchbook. Paper, graphite lines, wobbly
-   hand-drawn borders, and coloured-pencil accents only for the hazards: pink spiky scribbles and purple ink blots. */
+   hand-drawn borders, and colored-pencil accents only for the hazards: pink spiky scribbles and purple ink blots. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --purple:#6f4a9a; --pink:#c45a8a;
@@ -596,7 +596,7 @@ function drawPiece(pc,thick){
     if(pal!==PALS[0]){ctx.globalCompositeOperation='multiply';ctx.globalAlpha=.45;ctx.fillStyle=pal.top;ctx.fillRect(cx-ro,-ro,ro*2,ro*2)}
     ctx.restore();
   }else{ctx.fillStyle=haz?grad.haz:pool?grad.pool:grad.top;ctx.fill();
-    if(haz){ // pink coloured-pencil scribble hatching
+    if(haz){ // pink colored-pencil scribble hatching
       ctx.save();ctx.clip();ctx.strokeStyle='rgba(196,90,138,.45)';ctx.lineWidth=Math.max(1,U*1.1);ctx.beginPath();
       const ro=RO*U;for(let x=-ro;x<ro;x+=7*U){ctx.moveTo(cx+x,-ro*K);ctx.lineTo(cx+x+ro*K*1.4,ro*K)}ctx.stroke();ctx.restore()}}
   // seams between wedges inside a run
@@ -665,7 +665,7 @@ function drawFinish(front){
       const m=(a0+a1)/2;if(Math.cos(m)<-.2)continue;
       const x0=cx+Math.sin(a0)*ro,x1=cx+Math.sin(a1)*ro,y0=Math.cos(a0)*ry,y1=Math.cos(a1)*ry;
       ctx.beginPath();ctx.moveTo(x0,y0+by);ctx.lineTo(x1,y1+by);ctx.lineTo(x1,y1+by+bh);ctx.lineTo(x0,y0+by+bh);ctx.closePath();ctx.fillStyle='rgba(31,31,34,.82)';ctx.fill()}
-    // orange coloured-pencil hatching + graphite shade on the right
+    // orange colored-pencil hatching + graphite shade on the right
     ctx.strokeStyle='rgba(240,138,36,.55)';ctx.lineWidth=Math.max(1,1.1*U);ctx.beginPath();
     for(let x=-ro-thk;x<ro+thk;x+=6*U){ctx.moveTo(cx+x,ry+thk+2);ctx.lineTo(cx+x+thk*1.2,-2)}ctx.stroke();
     ctx.strokeStyle='rgba(85,85,92,.45)';ctx.lineWidth=1;ctx.beginPath();
@@ -678,7 +678,7 @@ function drawFinish(front){
   ctx.save();ctx.beginPath();if(front)ctx.rect(cx-ro-4,0,ro*2+8,ry+4);else ctx.rect(cx-ro-4,-ry-4,ro*2+8,ry+4);ctx.clip();
   finTopPath();ctx.fillStyle=FIN.wash;ctx.fill('evenodd');
   ctx.save();finTopPath();ctx.clip('evenodd');
-  // yellow coloured-pencil hatching in the middle, a second lighter set across it
+  // yellow colored-pencil hatching in the middle, a second lighter set across it
   ctx.strokeStyle='rgba(242,194,48,.75)';ctx.lineWidth=Math.max(1,1.2*U);ctx.beginPath();
   for(let x=-ro*1.5;x<ro;x+=6*U){ctx.moveTo(cx+x,-ry);ctx.lineTo(cx+x+ry*2.2,ry)}ctx.stroke();
   ctx.strokeStyle='rgba(240,138,36,.35)';ctx.beginPath();

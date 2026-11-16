@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Draws the shared classroom icon set (and the scene art around it) for No. 2 Pencil and Drop Swap.
 
-The icons use the same coloured-pencil style as tools/margin-match-art.py (dark ink outline, pale wash, two sets of
+The icons use the same colored-pencil style as tools/margin-match-art.py (dark ink outline, pale wash, two sets of
 diagonal pencil hatching, the second a shade darker) and reuse several of its drawings (pencil, scissors, paperclip,
 eraser, ruler, crayon, paintbrush, notebook, star). Each icon also has a plain graphite version: same drawing, every
-colour turned to pencil grey, a lighter and thinner outline, softer hatching.
+color turned to pencil grey, a lighter and thinner outline, softer hatching.
 
 Writes
-  src/assets/no-2-pencil/icons-color.webp     6x4 sheet of the 24 icons in colour (order = NAMES below) -- only with --icons;
+  src/assets/no-2-pencil/icons-color.webp     6x4 sheet of the 24 icons in color (order = NAMES below) -- only with --icons;
   src/assets/no-2-pencil/icons-graphite.webp  the same sheet in plain graphite                        No. 2 Pencil now uses
                                               Mark's hand-drawn icons, packed by tools/no2-pencil-sheets.py
   src/assets/no-2-pencil/notebook.webp        page background: ruled notebook paper with faint graphite doodles
@@ -31,7 +31,7 @@ const C={red:'#e0453a',orange:'#f08a24',yellow:'#f2c230',lime:'#8bc34a',green:'#
   purple:'#8e5bc9',pink:'#e86aa6',brown:'#9b6a3c',grey:'#9aa0a6',skin:'#f2c9a5',white:'#c9c4b8',ink:'#3a3a44',gold:'#d99a12',paper:'#fbf9f3'};
 function rgb(h){if(Array.isArray(h))return h;if(h[0]==='#')return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
   return h.match(/[\d.]+/g).slice(0,3).map(Number)}
-// S(): colour to CSS, turned into pencil grey in graphite mode
+// S(): color to CSS, turned into pencil grey in graphite mode
 function S(h){let a=rgb(h);if(MODE==='g'){const l=.299*a[0]+.587*a[1]+.114*a[2],g=Math.round(70+l*.72);a=[g-2,g-1,g+3]}return'rgb('+a.map(Math.round).join(',')+')'}
 function mixA(h,k){const a=rgb(h),b=[250,248,241];return a.map((v,i)=>b[i]+(v-b[i])*k)}
 function darkA(h,k){return rgb(h).map(v=>v*(1-(k==null?.25:k)))}
@@ -389,7 +389,7 @@ function room(id){const [w,h,f]=ROOM[id];const k=id==='bg'?1:(id==='umbrella'||i
 function preview(){
   const cell=150,cv=document.createElement('canvas');cv.width=cell*6*2+40;cv.height=cell*4+60;const c=cv.getContext('2d');
   c.fillStyle='#f6f3ea';c.fillRect(0,0,cv.width,cv.height);
-  c.fillStyle='#1f1f22';c.font='22px sans-serif';c.fillText('graphite (untouched)',12,26);c.fillText('colour (touched)',cell*6+52,26);
+  c.fillStyle='#1f1f22';c.font='22px sans-serif';c.fillText('graphite (untouched)',12,26);c.fillText('color (touched)',cell*6+52,26);
   for(const [mode,ox] of [['g',10],['c',cell*6+30]])ICONS.forEach((f,i)=>{const x=ox+(i%6)*cell,y=40+Math.floor(i/6)*cell;
     c.save();c.translate(x+15,y+2);c.scale(1.2,1.2);drawIcon(c,i,mode);c.restore();
     c.fillStyle='#1f1f22';c.font='14px sans-serif';c.textAlign='center';c.fillText(i+' '+NAMES[i],x+cell/2,y+cell-6);c.textAlign='left'});

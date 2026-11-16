@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Four in a Frame, sketchbook edition: the word-group puzzle redrawn as a 10-year-old's pencil sketchbook. Paper, graphite lines, wobbly
-   hand-drawn borders; the four group colours stay as coloured pencil (yellow, green, blue, pink) so they can still be told apart.
+   hand-drawn borders; the four group colors stay as colored pencil (yellow, green, blue, pink) so they can still be told apart.
    Layout: one portrait column. Title row, HUD (stars, score, best), the level strip, then a 4x4 board of word tiles and a row of action buttons. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -98,7 +98,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   border:2px solid var(--ink);box-shadow:2px 2px 0 var(--pencil);color:var(--ink);animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
 .group b{position:relative;font:400 1.05rem/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase}
 .group span{position:relative;font-size:1rem;line-height:1.2;color:var(--ink)}
-/* coloured pencil: a pale wash with a few hatch strokes in the group's pencil colour */
+/* colored pencil: a pale wash with a few hatch strokes in the group's pencil color */
 .g0{--c:var(--yellow);background:repeating-linear-gradient(135deg,rgba(201,154,26,.22) 0 2px,transparent 2px 7px),var(--yellow-wash)}
 .g1{--c:var(--green);background:repeating-linear-gradient(135deg,rgba(90,154,106,.22) 0 2px,transparent 2px 7px),var(--green-wash)}
 .g2{--c:var(--blue);background:repeating-linear-gradient(135deg,rgba(47,111,181,.2) 0 2px,transparent 2px 7px),var(--blue-wash)}
@@ -643,7 +643,7 @@ function setSoundLabel(){$('soundBtn').textContent='Sound: '+(save.sound?'on':'o
 $('soundBtn').onclick=()=>{save.sound=!save.sound;persist();setSoundLabel();audio();sfx.click();if(save.sound)ambStart();else ambStop()};
 setSoundLabel();
 
-/* start-card art: four groups of pencil-doodled tiles bobbing on a sketched wave (coloured pencil, one hue per group) */
+/* start-card art: four groups of pencil-doodled tiles bobbing on a sketched wave (colored pencil, one hue per group) */
 const mc=$('mini').getContext('2d');
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const COLS=['#c99a1a','#5a9a6a','#2f6fb5','#c45a8a'];

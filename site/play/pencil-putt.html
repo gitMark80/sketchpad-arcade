@@ -683,7 +683,7 @@ function drawDeco(d){
   else{ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,4);ctx.lineTo(-5,-2);ctx.quadraticCurveTo(0,-7,5,-2);ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle=PENCIL;ctx.lineWidth=.7;for(let k=-2;k<=2;k++){ctx.beginPath();ctx.moveTo(0,3.5);ctx.lineTo(k*2,-3.5);ctx.stroke()}}
   ctx.restore();
 }
-/* the putting green: a pale green wash with two sets of green coloured-pencil cross-hatching, clipped to the green */
+/* the putting green: a pale green wash with two sets of green colored-pencil cross-hatching, clipped to the green */
 const GRN={wash:'#2e7d4f',h1:'rgba(76,175,80,.62)',h2:'rgba(46,125,50,.42)'}; // dark solid green (Mark, Nov 2 2026); h1/h2 only used by the unused hatch
 function greenHatch(x0,y0,x1,y1,sp1,sp2,lw){
   const w=x1-x0,h=y1-y0;ctx.lineCap='round';

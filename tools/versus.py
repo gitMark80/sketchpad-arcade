@@ -27,7 +27,7 @@ GAMES = {
                   "Hit every square of a boat and it floats away. Find all four boats to win.",
                   "Playing a friend on one phone? Each turn the game asks you to pass it over, so nobody peeks."]},
     "connect-sketch": {"name": "Connect Sketch", "intro": "Drop your crayon counters down the page. Four in a row wins.",
-        "rules": ["Take turns tapping a column to drop a counter. It falls to the lowest empty space.", "Get four of your colour in a row (across, down or corner to corner) to win the round.",
+        "rules": ["Take turns tapping a column to drop a counter. It falls to the lowest empty space.", "Get four of your color in a row (across, down or corner to corner) to win the round.",
                   "Fill the whole page with no four in a row and it's a draw.", "Who goes first swaps every round."]},
     "sketchers": {"name": "Sketchers", "intro": "Checkers on a sketchbook page. Jump your friend's pieces to win.",
         "rules": ["Tap one of your pieces, then tap a highlighted square to move it diagonally forward.", "Jump over the other player's piece into an empty square to capture it. If you can jump, you must, and keep jumping if you can.",
@@ -43,14 +43,14 @@ GAMES = {
     "sketch-with-friends": {"name": "Sketch with Friends", "intro": "Make words on the board with your letter tiles. Highest score wins.",
         "rules": ["Drag tiles from your rack onto the board to make a word across or down. The first word must cover the star in the middle.",
                   "Every new word must join onto words already on the board. Tap Play to score it; tiles you place stay in one line.",
-                  "Each letter has points. Coloured squares double or triple a letter (DL, TL) or the whole word (DW, TW). Use all 7 tiles in one turn for a 35-point bonus.",
+                  "Each letter has points. Colored squares double or triple a letter (DL, TL) or the whole word (DW, TW). Use all 7 tiles in one turn for a 35-point bonus.",
                   "Swap tiles or pass if you're stuck. The game ends when the bag is empty and someone uses their last tile, or after four passes in a row."]},
-    "pencil-pool": {"name": "Pencil Pool", "intro": "8-ball with a No. 2 pencil for a cue. Sink your colour, then the 8.",
+    "pencil-pool": {"name": "Pencil Pool", "intro": "8-ball with a No. 2 pencil for a cue. Sink your color, then the 8.",
         "rules": ["Blue sinks the blue balls and pink sinks the pink ones. Sink all seven of yours, then the 8 ball, to win.",
                   "Touch the page and pull back from the cue ball, like a slingshot: the pencil follows your finger. Pull further back for more power, then let go to shoot.",
                   "Sink one of your balls and you shoot again. Miss, and it's the other player's turn.",
-                  "Scratching the cue ball, hitting the wrong colour first or hitting nothing is a foul: the other player gets ball in hand and can drag the cue ball anywhere.",
-                  "Sink the 8 before your colour is gone, or scratch while sinking it, and you lose the round."]},
+                  "Scratching the cue ball, hitting the wrong color first or hitting nothing is a foul: the other player gets ball in hand and can drag the cue ball anywhere.",
+                  "Sink the 8 before your color is gone, or scratch while sinking it, and you lose the round."]},
 }
 
 def build(slug):

@@ -330,7 +330,7 @@ function pitchBg(){const ink='#2e2e33';
     for(const side of[0,1]){const top=(side===1)!==flip();const im=side===0?ART.bluegoal:ART.pinkgoal;const gw=(GW+2*RPOST+2.6)*sc,gh=gw*im.naturalHeight/im.naturalWidth;
       cx.save();cx.translate(ox+50*sc,top?oy:oy+H*sc);if(!top)cx.scale(1,-1);cx.drawImage(im,-gw/2,-gh+1.5*sc,gw,gh);cx.restore()}
     if(goalFlash>0){cx.fillStyle='rgba(243,230,176,'+(goalFlash*.35)+')';cx.fillRect(0,0,cw,ch)}return}
-  // grass: coloured pencil hatching in mowed stripes
+  // grass: colored pencil hatching in mowed stripes
   const [fx0,fy0]=[ox,oy],fw=W*sc,fh=H*sc;const stripes=8;
   for(let i=0;i<stripes;i++){const y=fy0+fh*i/stripes,h=fh/stripes;cx.fillStyle=i%2?'#dfe9d6':'#e6eedc';cx.fillRect(fx0,y,fw,h);
     hatch(fx0,y,fw,h,i%2?'rgba(90,154,106,.28)':'rgba(90,154,106,.2)',i%2?5:6,-.9+i*.03)}

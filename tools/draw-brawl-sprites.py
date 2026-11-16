@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Draw Brawl sprites: the kids, their paint gear and the backyard props, drawn as
-coloured-pencil doodles (ink outline, pale wash, bright two-way cross-hatching).
+colored-pencil doodles (ink outline, pale wash, bright two-way cross-hatching).
 
     python3 tools/draw-brawl-sprites.py            # writes src/assets/draw-brawl/*.webp
     python3 tools/draw-brawl-sprites.py --sheet x.png   # also a contact sheet for checking
 
 Everything is drawn from code so it can be tweaked and re-run. Kid shirts are drawn in
-purple: the game recolours that hue per player slot (orange / blue / green / yellow).
+purple: the game recolors that hue per player slot (orange / blue / green / yellow).
 """
 import math, os, sys, random
 import numpy as np
@@ -42,7 +42,7 @@ class Pic:
     def __init__(self, w, h, ss=3, line=7.0, hatch=9.0, hw=2.4, seed=1):
         self.w, self.h, self.ss = w, h, ss
         self.W, self.H = w * ss, h * ss
-        self.col = np.zeros((self.H, self.W, 3))  # premultiplied colour
+        self.col = np.zeros((self.H, self.W, 3))  # premultiplied color
         self.a = np.zeros((self.H, self.W))
         self.line, self.hatch, self.hw = line, hatch, hw
         self.rng = random.Random(seed)
@@ -161,7 +161,7 @@ class Pic:
 
 
 # ------------------------------------------------------------------ kids
-SHIRT = '#8f45e6'  # a vivid violet: the game recolours this hue per player slot, keeping its strength
+SHIRT = '#8f45e6'  # a vivid violet: the game recolors this hue per player slot, keeping its strength
 
 
 def kid(name, pose='idle'):

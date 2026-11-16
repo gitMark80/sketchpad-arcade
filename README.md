@@ -71,7 +71,7 @@ Clone Beach Day Arcade next to this repo (`../beach-day-arcade`) or set `BDA_REP
 
 1. `cp ../beach-day-arcade/src/games/<slug>.html src/games/`
 2. `python3 sketchify.py <slug>` (pencil cover and art; add `--inline` if the game embeds base64 images)
-3. Restyle the page and canvas colours per `STYLE.md`
+3. Restyle the page and canvas colors per `STYLE.md`
 4. Add the game's entry to `games.json`, run `python3 build.py`, and push.
 
 ## Two-player games (Versus)

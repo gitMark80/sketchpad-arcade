@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Space Blaster: a Galaga-style shooter drawn in a kid's space sketchbook. Grid paper, ink outlines, wobbly borders and
-   bright coloured-pencil hatching: a rocket fighter, pink laser bolts, UFOs of every shape, green alien goo, a golden power star.
+   bright colored-pencil hatching: a rocket fighter, pink laser bolts, UFOs of every shape, green alien goo, a golden power star.
    Layout: one portrait column. Title row, HUD card (score, level, ships), the playfield, then a dock of buttons. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -143,7 +143,7 @@ let best=store.get('best',0),muted=store.get('muted',false);
 const IMG={};let loaded=0;for(const k in ART){const im=new Image();im.onload=im.onerror=()=>{if(++loaded===Object.keys(ART).length)buildSprites()};im.src=ART[k];IMG[k]=im}
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 /* The UFOs. Ids are the original enemy ids (kept for scoring and sounds); n = name, s = hit size in px (unchanged),
-   v = how big the picture is drawn relative to s, c = the UFO's pencil colour for its zap sparks.
+   v = how big the picture is drawn relative to s, c = the UFO's pencil color for its zap sparks.
    octo = Mothership (2 hits, leads escort dives), jelly = Dome saucer with alien, puffer = Ring UFO,
    seahorse = Classic saucer, dolphin = Triangle ship, dolphin2 = Tiny scout (bonus parades), star = Power star. */
 const KINDS={
@@ -380,7 +380,7 @@ function bg(){
       ctx.beginPath();ctx.moveTo(p.x-r,p.y);ctx.lineTo(p.x+r,p.y);ctx.moveTo(p.x,p.y-r);ctx.lineTo(p.x,p.y+r);ctx.stroke()}
     else{ctx.globalAlpha=.15+p.s*.12;ctx.fillStyle=GRAPH;ctx.beginPath();ctx.arc(p.x,p.y,p.s*.8,0,7);ctx.fill()}}ctx.globalAlpha=1;
 }
-/* A comet that slowly crosses the sky every ~40 seconds: ink head, coloured-pencil tail. */
+/* A comet that slowly crosses the sky every ~40 seconds: ink head, colored-pencil tail. */
 function drawComet(){const per=40,u=((T+12)%per)/per,x=-80+u*(W+200),y=40+u*230;
   ctx.save();ctx.translate(x,y);ctx.rotate(.45);ctx.lineCap='round';
   const tail=[['#f2c230',0,3.2],['#4fb3e8',-6,2.2],['#e86aa6',6,2.2]];
@@ -390,7 +390,7 @@ function drawComet(){const per=40,u=((T+12)%per)/per,x=-80+u*(W+200),y=40+u*230;
   ctx.fillStyle='#fbe9a8';ctx.beginPath();ctx.arc(0,0,7.5,0,7);ctx.fill();
   ctx.save();ctx.clip();ctx.strokeStyle='#f2c230';ctx.lineWidth=1.2;ctx.beginPath();for(let k=-10;k<=10;k+=3.2){ctx.moveTo(k-8,8);ctx.lineTo(k+8,-8)}ctx.stroke();ctx.restore();
   ctx.strokeStyle='#1f1f22';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,0,7.5,0,7);ctx.stroke();ctx.restore()}
-/* The player's rocket, with a flickering coloured-pencil flame under it. */
+/* The player's rocket, with a flickering colored-pencil flame under it. */
 function drawSub(x,y,tilt=0,alpha=1){const im=IMG.sub;if(!im||!im.complete||!im.naturalWidth)return;
   const h=68,w=h*im.naturalWidth/im.naturalHeight;ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y+Math.sin(T*2.2)*1.5);ctx.rotate(tilt*.35);
   const fl=9+Math.sin(T*31)*2.5+Math.sin(T*17)*1.5,fy=h/2-6;
