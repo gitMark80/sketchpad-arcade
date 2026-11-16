@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Art: everything on the board is drawn in code (see "artwork" in the script): a lined notepad page with spiral binding,
-   coloured pencils, ink blots and the eraser sweep. Each piece has its own draw function so it can be swapped for hand-drawn art.
+   colored pencils, ink blots and the eraser sweep. Each piece has its own draw function so it can be swapped for hand-drawn art.
    Layout: one portrait column. Title row, HUD (level, pencils left, hearts), progress bar, the square notepad board, then the button dock.
-   Look: Pencil Path, a kid's sketchbook: cream paper, wobbly borders, vivid coloured pencils with dark ink outlines. */
+   Look: Pencil Path, a kid's sketchbook: cream paper, wobbly borders, vivid colored pencils with dark ink outlines. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -190,7 +190,7 @@ function generate(n){
         const opts=[];for(let d=0;d<4;d++){const L=pathLen(g,size,r,c,d);if(L>=0)opts.push({d,w:Math.pow(L+1,Math.min(3,1.4+n*.04))});}
         if(!opts.length)continue;
         let x=R()*opts.reduce((s,o)=>s+o.w,0),pick=opts[0];for(const o of opts){x-=o.w;if(x<=0){pick=o;break;}}
-        g[r][c]={d:pick.d,hue:Math.floor(R()*3),ph:R()*7};placed++;} // hue is unused now (pencil colours come from dressPencils) but stays so the generator draws the same numbers
+        g[r][c]={d:pick.d,hue:Math.floor(R()*3),ph:R()*7};placed++;} // hue is unused now (pencil colors come from dressPencils) but stays so the generator draws the same numbers
     }
     const depth=solveDepth(g,size);const score=(placed>=target-1?1000:0)+depth*(n<2?-20:12)+placed;
     if(!best||score>best.score)best={g,placed,size,score};
@@ -399,7 +399,7 @@ function syncSound(){syncAmbient();$('soundTx').textContent=muted?'Sound off':'S
 
 /* ---------- artwork ----------
    Pencils, the ink blot and the eraser use Mark's hand-drawn art (src/assets/pencil-path/), with the code drawing as fallback.
-   drawPencil (a coloured pencil, pointing up), drawDoodle (the faint pencil line behind it), drawBlot (ink-blot obstacle),
+   drawPencil (a colored pencil, pointing up), drawDoodle (the faint pencil line behind it), drawBlot (ink-blot obstacle),
    buildPage (desk + lined notepad page with spiral binding), drawEraser (the eraser block), drawSweep (the wiped page under it),
    drawTracks (scribble trail), shaving / swoosh effects, heroImage (card illustration). */
 const OUTLINE='#1f1f22';
@@ -420,12 +420,12 @@ function pencilArt(col){let n=pencilArtCache[col];if(!n){const h=hueOf(col);let 
 function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;const t=amt>0?255:0,a=Math.abs(amt);
   r=r+(t-r)*a|0;g=g+(t-g)*a|0;b=b+(t-b)*a|0;return `rgb(${r},${g},${b})`;}
 function hash(a,b,c){let h=Math.imul(a+1,374761393)^Math.imul(b+7,668265263)^Math.imul(c+13,1274126177);h=Math.imul(h^h>>>13,1274126177);return((h^h>>>16)>>>0)/4294967296;}
-/* cosmetic only: colour, length and doodle shape per pencil, picked from the level and cell (does not touch the level generator) */
+/* cosmetic only: color, length and doodle shape per pencil, picked from the level and cell (does not touch the level generator) */
 function dressPencils(lv){
   for(let r=0;r<size;r++)for(let c=0;c<size;c++){const t=grid[r][c];if(!t||t.blot)continue;
     t.col=PENCILS[Math.floor(hash(lv,r,c)*PENCILS.length)];t.len=.62+hash(c,lv,r)*.18;t.trail=Math.floor(hash(r,c,lv)*4);}
 }
-/* two sets of diagonal coloured-pencil hatching inside the current clip, second set a shade darker */
+/* two sets of diagonal colored-pencil hatching inside the current clip, second set a shade darker */
 function hatch(g,x,y,w,h,col,s,a=1){
   const st=Math.max(2,s*.065),lw=Math.max(.8,s*.022);g.lineCap='round';
   const ga=g.globalAlpha;
@@ -435,7 +435,7 @@ function hatch(g,x,y,w,h,col,s,a=1){
   for(let k=-h+st*.5;k<w+h;k+=st*1.4){g.moveTo(x+k,y);g.lineTo(x+k+h,y+h);}g.stroke();
   g.globalAlpha=ga;
 }
-/* A coloured pencil seen from above, tip pointing up (-y), tip at y=-s*.44. len = share of the cell it covers. */
+/* A colored pencil seen from above, tip pointing up (-y), tip at y=-s*.44. len = share of the cell it covers. */
 function drawPencil(g,s,col,len){
   const L=s*len,w=s*.3,tipY=-s*.44,cone=w*1.15,top=tipY+cone,end=tipY+L,lw=Math.min(3,Math.max(1.6,s*.06)),band=s*.07;
   const art=pencilArt(col);
@@ -459,7 +459,7 @@ function drawPencil(g,s,col,len){
   g.save();g.clip();g.strokeStyle='rgba(155,106,60,.55)';g.lineWidth=Math.max(.7,s*.016);g.beginPath();
   for(let k=-w;k<w;k+=Math.max(2,s*.06)){g.moveTo(k,top+w*.2);g.lineTo(k+w*.5,tipY);}g.stroke();g.restore();
   conePath();g.strokeStyle=OUTLINE;g.lineWidth=lw;g.stroke();
-  // coloured lead
+  // colored lead
   const lt=tipY+cone*.4;g.beginPath();g.moveTo(-w*.2,lt);g.lineTo(w*.2,lt);g.lineTo(0,tipY);g.closePath();g.fillStyle=col;g.fill();g.lineWidth=lw*.75;g.stroke();
 }
 /* the faint pencil line a pencil has just drawn behind itself: straight, wave, zigzag or loop */
@@ -537,7 +537,7 @@ function blitLayer(sx,sy){
   ctx.save();ctx.setTransform(1,0,0,1,sx,sy);ctx.drawImage(lay,0,0);ctx.restore();
 }
 function clearLayer(){lx.setTransform(1,0,0,1,0,0);lx.clearRect(0,0,lay.width,lay.height);lx.setTransform(dpr,0,0,dpr,0,0);}
-/* scribble trails left by departing pencils: coloured zigzags that fade */
+/* scribble trails left by departing pencils: colored zigzags that fade */
 function drawTracks(){
   lx.lineCap='round';lx.lineJoin='round';lx.lineWidth=Math.max(1.4,cell*.05);
   for(const tr of tracks){const a=Math.max(0,Math.min(1,(2.2-tr.age)/1.2));if(a<=0||tr.pts.length<2)continue;

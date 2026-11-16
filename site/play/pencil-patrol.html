@@ -12,7 +12,7 @@
 <style>
 /* Pencil Patrol: the Sketchpad Arcade twin of Pearl Patrol. Layout: one portrait column. Title row, HUD card
    (level, score, best + pencils and dots bar), the notebook-page maze, then a dock with pause, the d-pad and sound.
-   Everything is drawn in code: ink outlines with bright coloured-pencil hatching on cream paper. */
+   Everything is drawn in code: ink outlines with bright colored-pencil hatching on cream paper. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -488,7 +488,7 @@ function buildMaze(){
   g.fillStyle=PAPER;g.fillRect(0,0,cw,ch);
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){const c=grid[y*W+x];if(c===3||c===5||c===4)continue;const h=hash(x+maze*7,y);
     if(h<.08){const px=ox+(x+.2+h*4)*cs,py=oy+(y+.85)*cs;g.strokeStyle=PENCIL;g.lineWidth=1;g.beginPath();g.moveTo(px-cs*.12,py);g.lineTo(px+cs*.12,py-cs*.04);g.stroke()}}
-  // the maze walls: coloured-pencil hatching inside a wobbly ink outline, with a pencil shadow
+  // the maze walls: colored-pencil hatching inside a wobbly ink outline, with a pencil shadow
   let w;[wallC,w]=mk(mw,mh);
   const ol=Math.max(1.5,cs*.09); // the outline is a grown ink fill under the body, so overlapping cells still make one clean edge
   w.fillStyle='rgba(46,46,51,.2)';wallPath(w,ol,cs*.12);w.fill();
@@ -517,7 +517,7 @@ function buildMaze(){
   p.strokeStyle=GRAPH;p.lineWidth=Math.max(1,pr*.5);p.globalAlpha=.6;p.beginPath();p.arc(ps,ps,pr*1.25,-2.2,-.6);p.stroke();
 }
 
-/* ---------- drawing helpers: ink outlines, coloured-pencil hatching ---------- */
+/* ---------- drawing helpers: ink outlines, colored-pencil hatching ---------- */
 function hatch(g,pathFn,line,wash,gap=5,ang=-.7,alpha=.85){g.save();g.beginPath();pathFn(g);g.clip();
   g.fillStyle=wash;g.fillRect(-400,-400,800,800);
   g.strokeStyle=line;g.globalAlpha=alpha;g.lineWidth=1.2;g.beginPath();const c=Math.cos(ang),s=Math.sin(ang);

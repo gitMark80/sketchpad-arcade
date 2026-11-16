@@ -162,7 +162,7 @@
   },
   "paper-gates": {
     "lines": [
-      "Slide each block out through the gate that matches its colour.",
+      "Slide each block out through the gate that matches its color.",
       "Blocks can't overlap, so plan your moves.",
       "A block only fits a gate that's at least as wide as it is.",
       "Clear the board before the timer runs out."
@@ -175,8 +175,8 @@
   },
   "doodle-stacks": {
     "lines": [
-      "Drop a stack and same-colour neighbours hop together.",
-      "Get 10 of one colour on top and they pop.",
+      "Drop a stack and same-color neighbours hop together.",
+      "Get 10 of one color on top and they pop.",
       "One pop can set off another for combo points.",
       "Don't let the board fill up."
     ],
@@ -268,7 +268,7 @@
   "pencil-plunk": {
     "lines": [
       "Pull thumbtacks out of popsicle sticks and sort them into paper cups 📌",
-      "Three tacks of the same colour fill a cup.",
+      "Three tacks of the same color fill a cup.",
       "Pull a stick's last tack and it plunks onto the desk.",
       "Don't let the pencil case fill up."
     ],
@@ -371,7 +371,7 @@
   },
   "word-scribble": {
     "lines": [
-      "Drop letter bubbles. Matching colours unscramble into a hidden word.",
+      "Drop letter bubbles. Matching colors unscramble into a hidden word.",
       "Two of the same letter merge into silver, then gold.",
       "Swipe across bubbles to spell the hidden words.",
       "A merge game and a word game in one."
@@ -398,7 +398,7 @@
   "chibi-chib": {
     "lines": [
       "Every gem starts in the wrong spot. Put them all back 💎",
-      "Pick up touching gems of the same colour all at once.",
+      "Pick up touching gems of the same color all at once.",
       "Stash gems in the tray until you find their spot.",
       "Zoom in and watch the chibi animal rebuild itself."
     ],
@@ -410,7 +410,7 @@
   },
   "space-glass": {
     "lines": [
-      "Pick a colour and fill every numbered square 🎨",
+      "Pick a color and fill every numbered square 🎨",
       "Rockets, planets and UFOs on grid paper 🪐",
       "Hold and drag to fill a bunch at once.",
       "The calmest game on Sketchpad Arcade."
@@ -437,7 +437,7 @@
   "no-2-pencil": {
     "lines": [
       "Link matching classroom icons with a path of no more than two turns.",
-      "Touched icons light up in coloured pencil ✏️",
+      "Touched icons light up in colored pencil ✏️",
       "Every match adds a second back to the clock.",
       "Clear the whole board before time runs out."
     ],

@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Ink Jars, sketchbook edition: the same portrait column (title row, HUD card with level, score, best and the sorted bar, the paper desk
-   playfield with glass ink bottles, then a dock of tool buttons) drawn in pencil on cream paper. Coloured pencil only on the ink itself,
-   which the player has to sort by colour. */
+   playfield with glass ink bottles, then a dock of tool buttons) drawn in pencil on cream paper. Colored pencil only on the ink itself,
+   which the player has to sort by color. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -141,7 +141,7 @@ let best=+store.get('best',0)||0, savedLevel=Math.max(1,+store.get('level',1)||1
 
 /* ---------- paper + graphite palette for everything the canvas draws ---------- */
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
-/* ---------- ink colours (coloured pencil), each with its own doodle for color-blind players ---------- */
+/* ---------- ink colors (colored pencil), each with its own doodle for color-blind players ---------- */
 const COLORS=[
   {c:'#b8433f',n:'cherry red',s:'star'},  {c:'#2f6fb5',n:'pen blue',s:'heart'},   {c:'#c99a1a',n:'mustard yellow',s:'moon'},
   {c:'#5a9a6a',n:'leaf green',s:'flower'},{c:'#6f4a9a',n:'grape purple',s:'bolt'},{c:'#d9661a',n:'orange',s:'sun'},
@@ -159,7 +159,7 @@ const easeInOut=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const easeBack=t=>{const c=1.7;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
 function rngOf(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function shuffle(a,rng){for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-/* coloured-pencil hatching inside a rectangle of ink (clipped by the caller) */
+/* colored-pencil hatching inside a rectangle of ink (clipped by the caller) */
 function inkHatch(g,col,x,y,w,h,seed){if(h<3||w<3)return;g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.strokeStyle=rgba(col,.55);g.lineWidth=1;g.beginPath();
   const step=Math.max(4,w*.11),off=((seed||0)*3)%step;for(let k=x-h+off;k<x+w;k+=step){g.moveTo(k,y+h);g.lineTo(k+h,y)}g.stroke();g.restore()}
 function rrect(g,x,y,w,h,r){r=Math.min(r,w/2,h/2);g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
@@ -322,7 +322,7 @@ function art(n){const im=ART[n];return im&&im.complete&&im.naturalWidth?im:null}
 /* jar.webp: lip+neck+shoulder are the top 80 rows, base the bottom 79; the straight middle stretches to the jar's height */
 const JAR_IMG={w:163,h:294,top:117,bot:72};
 const badgeCache={};
-function badgeSprite(ci,size){ // a colour's badge drawing, cached per size (null when that colour has no drawing; the doodles above are used instead)
+function badgeSprite(ci,size){ // a color's badge drawing, cached per size (null when that color has no drawing; the doodles above are used instead)
   const im=art('badge-'+COLORS[ci].s);if(!im)return null;
   const px=Math.max(8,Math.round(size*dpr)),k=ci+':'+px;if(badgeCache[k])return badgeCache[k];
   const c=document.createElement('canvas');c.width=c.height=px+8;const g=c.getContext('2d');
@@ -341,7 +341,7 @@ function ledgeStrip(w,h){ // the desk ledge tiled to a row's width (inner slice 
   return ledgeCache[k]=c;
 }
 const splashCache={};
-function splashSprite(ci,wpx){ // the splash drawing tinted toward the ink colour
+function splashSprite(ci,wpx){ // the splash drawing tinted toward the ink color
   const im=art('splash');if(!im)return null;
   const px=Math.max(16,Math.round(wpx*dpr)),k=ci+':'+px;if(splashCache[k])return splashCache[k];
   const c=document.createElement('canvas');c.width=px;c.height=Math.round(px*im.naturalHeight/im.naturalWidth);const g=c.getContext('2d');
@@ -416,7 +416,7 @@ function tapJar(i){
   const J=S.J;
   if(sel<0){
     if(!J[i].length){JD[i].wigT=T;sfx.nope();return}
-    if(isDone(J[i],S.cap)){JD[i].bounceT=T;sfx.plip();toastOnce('done','That jar is one colour and corked. Nice!');return}
+    if(isDone(J[i],S.cap)){JD[i].bounceT=T;sfx.plip();toastOnce('done','That jar is one color and corked. Nice!');return}
     sel=i;sfx.lift();return}
   if(sel===i){sel=-1;sfx.drop();return}
   const amt=canPour(J,S.cap,sel,i);
@@ -548,7 +548,7 @@ function drawJar(g,Gm,o,base){
         const y0=y-h-(k===0?0:.5),hh=h+(k===0?t+2:.5);
         g.fillStyle=rgba(col,.42);g.fillRect(-W/2,y0,W,hh);
         inkHatch(g,col,-W/2,y0,W,hh,k+(o.seed||0));
-        // pencil line where one colour meets the next
+        // pencil line where one color meets the next
         g.strokeStyle=rgba(col,.9);g.lineWidth=Math.max(1,W*.03);g.beginPath();g.moveTo(-W/2,y0+.5);g.lineTo(W/2,y0+.5);g.stroke();
         y-=h}
       if(o.symbols!==false){let yy=-t;const sz=Math.min(LH*.66,iw*.66);

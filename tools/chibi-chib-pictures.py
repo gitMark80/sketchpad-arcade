@@ -2,11 +2,11 @@
 """Chibi Chib picture maker.
 
 Draws each chibi animal at high resolution (S px per grid cell) with simple shapes
-(ellipses, polygons, thick lines) using only the game's 15 coloured-pencil gem colours,
+(ellipses, polygons, thick lines) using only the game's 15 colored-pencil gem colors,
 then downsamples to an n x n grid (weighted majority per cell, black outlines and eye
 highlights win ties) and writes them into src/games/chibi-chib.html between the
 /*PICS-BEGIN*/ ... /*PICS-END*/ markers, in the game's own format:
-  {name, n, colors:[hex...], map:"..abba.."}   ("." = not part of the picture, a.. = colour index)
+  {name, n, colors:[hex...], map:"..abba.."}   ("." = not part of the picture, a.. = color index)
 
 Usage: python3 tools/chibi-chib-pictures.py [--preview DIR] [--no-write]
 """
@@ -18,7 +18,7 @@ from scipy.ndimage import distance_transform_edt
 HERE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.join(HERE, '..', 'src', 'games', 'chibi-chib.html')
 
-PAL = {  # the gem colours (vivid coloured pencil)
+PAL = {  # the gem colors (vivid colored pencil)
     'R': '#e0453a', 'O': '#f08a24', 'Y': '#f2c230', 'L': '#8bc34a', 'G': '#4caf50',
     'T': '#2fa7a0', 'S': '#4fb3e8', 'B': '#3a7bd5', 'P': '#8e5bc9', 'K': '#e86aa6',
     'N': '#9b6a3c', 'E': '#9aa0a6', 'X': '#2b2b2f', 'W': '#fbfaf6', 'H': '#f2c9a5',
@@ -98,7 +98,7 @@ class Pic:
         return self.paint(m, col, 0, prio)
 
     def shade(self, m, col, ox, oy, clip=None):
-        """colour the side of shape m facing (ox,oy) (a crescent ox,oy units thick)"""
+        """color the side of shape m facing (ox,oy) (a crescent ox,oy units thick)"""
         r = m & ~self.shift(m, -ox, -oy)
         if clip is not None: r &= clip
         self.fill(r, col)
@@ -666,7 +666,7 @@ if __name__ == '__main__':
     pics = build()
     for p in pics:
         cnt = sum(ch != '.' for ch in p['map'])
-        print(f"{p['name']:<22} n={p['n']} cells={cnt} colours={len(p['colors'])}")
+        print(f"{p['name']:<22} n={p['n']} cells={cnt} colors={len(p['colors'])}")
     if '--preview' in sys.argv:
         preview(pics, sys.argv[sys.argv.index('--preview') + 1])
     if '--no-write' not in sys.argv:

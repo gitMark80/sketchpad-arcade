@@ -1,21 +1,21 @@
 # Sketchpad Arcade style guide
 
-Every game on Sketchpad Arcade is a Beach Day Arcade game redrawn to look like a **10-year-old's pencil sketchbook**: graphite lines on cream paper, a little hatching for shading, wobbly hand-drawn borders, handwriting fonts, and coloured pencil only where a kid would reach for one (the thing you must grab, the thing you must avoid). Gameplay, sounds, save data and layout stay exactly as they are. Only the look changes.
+Every game on Sketchpad Arcade is a Beach Day Arcade game redrawn to look like a **10-year-old's pencil sketchbook**: graphite lines on cream paper, a little hatching for shading, wobbly hand-drawn borders, handwriting fonts, and colored pencil only where a kid would reach for one (the thing you must grab, the thing you must avoid). Gameplay, sounds, save data and layout stay exactly as they are. Only the look changes.
 
 Reference twins, already done: `src/games/seaside-sprint.html` and `src/games/lighthouse-drop.html` (compare with the originals in the Beach Day Arcade repo's `src/games/`; clone it next to this repo as `../beach-day-arcade` or point `BDA_REPO` at it).
 
 ## How to make a twin
 
 1. `cp ../beach-day-arcade/src/games/<slug>.html src/games/<slug>.html` — same file name, same slug.
-2. `python3 sketchify.py <slug>` — makes the pencil cover (`src/img/<slug>.jpg`) and, if the game has `src/assets/<slug>/` in Beach Day Arcade, pencil versions of every image in `src/assets/<slug>/` (sounds and other files are copied through). Asset paths in the game stay unchanged. If something should keep a colour, add it to `TINTS[<slug>]` in `sketchify.py` first (key = file-name prefix, value = pencil colour as 0–1 RGB) and run again.
+2. `python3 sketchify.py <slug>` — makes the pencil cover (`src/img/<slug>.jpg`) and, if the game has `src/assets/<slug>/` in Beach Day Arcade, pencil versions of every image in `src/assets/<slug>/` (sounds and other files are copied through). Asset paths in the game stay unchanged. If something should keep a color, add it to `TINTS[<slug>]` in `sketchify.py` first (key = file-name prefix, value = pencil color as 0–1 RGB) and run again.
 3. If the game embeds `data:image/...;base64` pictures, run `python3 sketchify.py <slug> --inline` after step 1 to sketch them in place.
 4. Restyle the page CSS (see below).
-5. Restyle everything the canvas draws in colour (see below).
+5. Restyle everything the canvas draws in color (see below).
 6. Check it: serve `src/` and screenshot the start screen, mid-game and game-over with Playwright at 390×780 @2x (see "Checking"). No console errors, nothing invisible, nothing still in the old bright palette.
 
 ## Page CSS
 
-Replace the game's `:root` palette, fonts and component styles with the paper system. Keep every selector, layout rule and media query the game already has; change only colours, fonts, borders and shadows. The `<link>` to Google Fonts becomes `family=Gloria+Hallelujah&family=Patrick+Hand`.
+Replace the game's `:root` palette, fonts and component styles with the paper system. Keep every selector, layout rule and media query the game already has; change only colors, fonts, borders and shadows. The `<link>` to Google Fonts becomes `family=Gloria+Hallelujah&family=Patrick+Hand`.
 
 ```css
 :root{
@@ -51,15 +51,15 @@ Define once near the top of the script: `const PAPER='#f6f3ea',INK='#2e2e33',GRA
 
 - Backgrounds and sky: paper. If the game paints a sky/sea gradient, replace it with paper plus a pencil horizon line, a wobbly sun with rays (`ctx.lineWidth 2`, 12 rays) and one or two outlined clouds. See `buildBg` in `seaside-sprint.html` for a ready-made version.
 - Surfaces (boards, grids, decks, sand, water): light paper tones `#f0ece1 #e9e6db #e4e2d8 #dedcd4 #d9d7cf` with ink or `PENCIL` outlines. Water is a slightly darker paper tone with a few short grey ripple lines; sand/wood is paper with pencil seam lines.
-- Outlines everywhere: anything that used to be a solid colour shape gets a paper (or light tone) fill and a `1.5–2px` ink stroke. Shading = a few diagonal hatch lines in `GRAPH` at 0.4–0.6 alpha, not gradients.
+- Outlines everywhere: anything that used to be a solid color shape gets a paper (or light tone) fill and a `1.5–2px` ink stroke. Shading = a few diagonal hatch lines in `GRAPH` at 0.4–0.6 alpha, not gradients.
 - Highlights and gloss (white ellipses, `rgba(255,255,255,…)`, radial glows): remove, or turn into a short grey pencil arc.
 - Shadows: `rgba(46,46,51,.2)` ellipses.
-- Colour accents (coloured pencil, i.e. a mid-saturation line colour with a pale wash fill): yellow `#c99a1a`/`#f3e6b0` for points, coins, gold; orange `#d9661a`/`#f0c9a8` for speed and fire; blue `#2f6fb5`/`#d6e4f2` for water power-ups and bubbles; green `#5a9a6a`/`#dcebdd` for plants and "good"; purple `#6f4a9a`/`#e6dcef` and pink `#c45a8a`/`#f0d5e2` for hazards. Use at most two or three accents per game, only on the things the player has to read fast.
-- Things drawn from colour tables (tile palettes, gem colours, bubble colours, match-3 pieces, word tiles): the game still needs them told apart, so keep one hue per kind but as coloured pencil: line colour from the accent list above (add `#8a3b3b` brick red and `#3d7a8a` teal if you need more than five), fill = that line colour at ~.22 alpha over paper, plus an ink outline. Never leave saturated fills.
-- Particles, confetti, sparkles: coloured-pencil accent colours or `GRAPH`; never white (invisible on paper).
+- Color accents (colored pencil, i.e. a mid-saturation line color with a pale wash fill): yellow `#c99a1a`/`#f3e6b0` for points, coins, gold; orange `#d9661a`/`#f0c9a8` for speed and fire; blue `#2f6fb5`/`#d6e4f2` for water power-ups and bubbles; green `#5a9a6a`/`#dcebdd` for plants and "good"; purple `#6f4a9a`/`#e6dcef` and pink `#c45a8a`/`#f0d5e2` for hazards. Use at most two or three accents per game, only on the things the player has to read fast.
+- Things drawn from color tables (tile palettes, gem colors, bubble colors, match-3 pieces, word tiles): the game still needs them told apart, so keep one hue per kind but as colored pencil: line color from the accent list above (add `#8a3b3b` brick red and `#3d7a8a` teal if you need more than five), fill = that line color at ~.22 alpha over paper, plus an ink outline. Never leave saturated fills.
+- Particles, confetti, sparkles: colored-pencil accent colors or `GRAPH`; never white (invisible on paper).
 - Canvas text: `font:'<size>px "Gloria Hallelujah","Comic Sans MS",cursive'` for scores and pops, `"Patrick Hand"` for small labels; fill `INK`, stroke `PAPER` (lineWidth ≈ size*.25) for a halo. Floating "+10" style text: ink; gold moments can be `#c99a1a`.
 - Fade/flash overlays: `rgba(246,243,234,a)`.
-- Fallback hand-drawn sprites (the ones the game draws when an image hasn't loaded): either recolour them to graphite + accents or leave them; the sketched images replace them on load.
+- Fallback hand-drawn sprites (the ones the game draws when an image hasn't loaded): either recolor them to graphite + accents or leave them; the sketched images replace them on load.
 - Start-card mini illustrations (`drawMini` and the like): redraw as a simple doodle — paper fill, ink outlines, a bit of hatching. See `drawMini` in `lighthouse-drop.html`.
 - Image-based games (sprites from `src/assets/<slug>/`): once sketchify has run they load the pencil versions automatically; you only need to fix the code-drawn parts around them.
 

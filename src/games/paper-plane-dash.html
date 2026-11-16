@@ -12,7 +12,7 @@
 /* Paper Plane Dash: a three-lane dash down the pages of a kid's notebook. Swipe your paper airplane between lanes,
    dodge crumpled paper, erasers, pencil stubs, rulers and ink blots, collect gold star stickers to charge Dart Mode,
    and grab magnet, shield, boost and x2 power-ups across ten sector pages. Everything is drawn in code: ink outlines
-   with bright coloured-pencil hatching. Layout: one portrait column. Title row, HUD card, the playfield, a dock. */
+   with bright colored-pencil hatching. Layout: one portrait column. Title row, HUD card, the playfield, a dock. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -115,7 +115,7 @@ const PLANES=[
   {id:'stunt',n:'Stunt Plane',cost:2300},{id:'delta',n:'Delta Wing',cost:3000}];
 const IMG={};function img(name){if(!IMG[name]){const im=new Image();im.src=ART_DIR+name+'.webp';IMG[name]=im}const im=IMG[name];return im.complete&&im.naturalWidth?im:null}
 for(const k in ITEM_W)img(k);for(const p of PLANES){img(p.id+'-fly');img(p.id+'-up');img(p.id+'-down');img(p.id+'-top')}
-/* paper balls come in construction-paper colours: the grey ball drawing tinted (multiply) once per colour */
+/* paper balls come in construction-paper colors: the grey ball drawing tinted (multiply) once per color */
 const BALL_COLORS=['#ffffff','#ff5e5e','#ff9f3a','#ffe04a','#5fd27a','#4fa9ff','#b57bff','#ff7fc1'];const BALLS={};
 function ballImg(seed){const base=img('ball');if(!base)return null;const i=Math.floor(Math.abs(seed)*7)%BALL_COLORS.length,col=BALL_COLORS[i];
   if(!BALLS[col]){const c=document.createElement('canvas');c.width=base.naturalWidth;c.height=base.naturalHeight;const x=c.getContext('2d');x.drawImage(base,0,0);
@@ -174,7 +174,7 @@ const sfx={
   boost(){noise(.5,600,'bandpass',.06,2400);tone(300,.4,'sawtooth',.03,500)},
 };
 
-/* ---------- drawing helpers: ink outlines, coloured-pencil hatching ---------- */
+/* ---------- drawing helpers: ink outlines, colored-pencil hatching ---------- */
 function hatch(x,pathFn,line,wash,gap=5,ang=-.7,alpha=.85){x.save();x.beginPath();pathFn(x);x.clip();
   x.fillStyle=wash;x.fillRect(-400,-400,800,800);
   x.strokeStyle=line;x.globalAlpha=alpha;x.lineWidth=1.3;x.beginPath();const c=Math.cos(ang),s=Math.sin(ang);
@@ -369,7 +369,7 @@ function drawPaper(x){const S=sector(),r=S.rule,zn=Z_END,zf=Z_FAR;x.save();
   const wallC=r==='dark'?'#1e1e32':r==='vortex'?'#241c2c':'#272729';x.fillStyle=wallC;x.fillRect(0,0,W,H);
   // a little lighter toward the bottom, where the plane flies
   const g=x.createRadialGradient(VX,VY,rAt(zf),VX,VY,rAt(zn));g.addColorStop(0,'rgba(0,0,0,.45)');g.addColorStop(.5,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(255,255,255,.05)');x.fillStyle=g;x.fillRect(0,0,W,H);
-  // sector rulings: depth circles coloured by page, extra lines for graph paper, dots for the map and night pages
+  // sector rulings: depth circles colored by page, extra lines for graph paper, dots for the map and night pages
   x.lineWidth=1;
   if(r==='lined'||r==='music'||r==='grid'){x.strokeStyle='rgba(140,190,255,.3)';x.beginPath();for(let i=0;i<16;i++){const z=zn+((i*2.2-(dist*.6)%2.2+2.2)%(zf-zn));x.moveTo(VX+rAt(z),VY);x.arc(VX,VY,rAt(z),0,TAU)}x.stroke()}
   if(r==='lined'){x.strokeStyle='rgba(255,120,130,.5)';x.lineWidth=2;const a=wrap(SLOT*2.5+rot),p=proj(a,zf),q=proj(a,zn);x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke();x.lineWidth=1}

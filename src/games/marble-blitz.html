@@ -11,7 +11,7 @@
 <style>
 /* Marble Blitz, sketchbook edition: one portrait column. Title row, HUD card (turn, score, best), the board (a sheet of ruled paper with
    numbered paper cups marching down it, a desk edge at the bottom), then a dock of buttons. Everything is pencil on cream paper;
-   coloured pencil only on the cups' numbers-by-size tint, the blue swirl in each marble, the gold star stickers and the pink eraser. */
+   colored pencil only on the cups' numbers-by-size tint, the blue swirl in each marble, the gold star stickers and the pink eraser. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -190,7 +190,7 @@ function load(n){const i=new Image();i.decoding='async';i.onload=()=>{if(n==='de
 ['marble','cup-low','cup-mid','cup-high','buddy','buddy-throw','clip','star','poof','desk','eraser'].forEach(load);
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
 function sprite(im,cx,cy,w,h,rot){ctx.save();ctx.translate(cx,cy);if(rot)ctx.rotate(rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
-// a cup drawing with its tier colour laid over it as a coloured-pencil wash (cached per tier/colour/size)
+// a cup drawing with its tier color laid over it as a colored-pencil wash (cached per tier/color/size)
 const tintCache=new Map();
 function tintedCup(name,im,c,w,h){
   const s=vs*dpr,q=c.map(v=>Math.round(v/8)*8),key=name+'|'+q.join(',')+'|'+s.toFixed(2);let cv2=tintCache.get(key);
@@ -207,7 +207,7 @@ function drawBall(x,y,rot){const im=art('marble');if(im)sprite(im,x,y,2*R+1,2*R+
 
 /* ---------- art ---------- */
 let ballSprite=null,bgCanvas=null;
-// a glass marble in pencil: paper fill, a blue coloured-pencil cat's-eye swirl, ink outline, one short grey highlight arc
+// a glass marble in pencil: paper fill, a blue colored-pencil cat's-eye swirl, ink outline, one short grey highlight arc
 function makeBall(px){
   const c=document.createElement('canvas');c.width=c.height=px;const x=c.getContext('2d'),r=px/2-1.5,cx=px/2,cy=px/2;
   x.fillStyle=BLUE_W;x.beginPath();x.arc(cx,cy,r,0,7);x.fill();
@@ -252,7 +252,7 @@ function pencilStub(x,X,Y){x.save();x.translate(X,Y);x.rotate(-.18);
 function clipDoodle(x,X,Y,k){x.save();x.translate(X,Y);x.scale(k,k);x.rotate(.35);x.strokeStyle=INK;x.lineWidth=1.8;x.lineCap='round';x.lineJoin='round';
   x.beginPath();x.moveTo(-5,-12);x.lineTo(-5,10);x.arc(0,10,5,Math.PI,0,true);x.lineTo(5,-10);x.arc(1.5,-10,3.5,0,Math.PI,true);x.lineTo(-2,6);x.arc(0,6,2,Math.PI,0,true);x.lineTo(2,-6);x.stroke();x.restore()}
 
-// cup tint by hits left: graphite -> yellow -> orange -> pink -> purple (coloured-pencil lines, pale wash fills)
+// cup tint by hits left: graphite -> yellow -> orange -> pink -> purple (colored-pencil lines, pale wash fills)
 const STOPS=[[1,[110,110,118]],[4,[201,154,26]],[10,[217,102,26]],[22,[196,90,138]],[45,[160,70,150]],[85,[111,74,154]],[160,[80,60,140]]];
 function castleRGB(v){
   if(v<=1)return STOPS[0][1];for(let i=1;i<STOPS.length;i++){const[a,ca]=STOPS[i-1],[b,cb]=STOPS[i];if(v<=b){const t=(Math.log(v)-Math.log(a))/(Math.log(b)-Math.log(a));return ca.map((q,k)=>q+(cb[k]-q)*t)}}
@@ -567,7 +567,7 @@ function drawCastle(it,x,y){
     if(it.flash){ctx.fillStyle=`rgba(246,243,234,${it.flash*.6})`;ctx.beginPath();ctx.arc(0,0,h+2,0,7);ctx.fill()}
     const nm=k<=1/3?'cup-low':k<=2/3?'cup-mid':'cup-high',[w,hh]=fitIn(im,BS+4,BS+2);ctx.drawImage(tintedCup(nm,im,c,w,hh),-w/2,h-hh+1,w,hh);
   }else{
-    // cup body: a trapezoid, wider at the rim, paper fill with a coloured-pencil wash
+    // cup body: a trapezoid, wider at the rim, paper fill with a colored-pencil wash
     const tw=h-2,bw=h-9,top=-h+mh,bot=h-4;
     ctx.beginPath();ctx.moveTo(-tw,top);ctx.lineTo(tw,top);ctx.lineTo(bw,bot);ctx.lineTo(-bw,bot);ctx.closePath();
     ctx.fillStyle=PAPER;ctx.fill();ctx.fillStyle=wash;ctx.fill();
@@ -575,7 +575,7 @@ function drawCastle(it,x,y){
     // rim: a rolled lip
     ctx.beginPath();ctx.ellipse(0,top,tw,3.2,0,0,7);ctx.fillStyle=PAPER;ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.stroke();
     ctx.beginPath();ctx.ellipse(0,top,tw-3,1.6,0,0,Math.PI);ctx.strokeStyle=GRAPH;ctx.lineWidth=1;ctx.stroke();
-    // coloured-pencil band and hatching down one side
+    // colored-pencil band and hatching down one side
     ctx.strokeStyle=line;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(-tw+1.5,top+8);ctx.lineTo(tw-1.5,top+8);ctx.stroke();
     ctx.globalAlpha=.55;ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<5;i++){ctx.moveTo(tw-5-i*3,top+12+i*2);ctx.lineTo(bw-2-i*2,bot-2-i*4)}ctx.stroke();ctx.globalAlpha=1;
     // pencil shading along the left edge

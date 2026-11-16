@@ -11,7 +11,7 @@
 <style>
 /* Squiggle Worm, sketchbook edition. Layout: title row, HUD (rank, length, best), then the big graph-paper playfield. The leaderboard and
    mini-map are drawn inside the field; the Zoom button shows on touch screens. Cards sit over everything. Everything is pencil on cream paper;
-   coloured pencil only on the ink dots you eat and the rival squiggles you must tell apart. */
+   colored pencil only on the ink dots you eat and the rival squiggles you must tell apart. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -208,17 +208,17 @@ function rgba(c,al){const a=hex(c);return'rgba('+a[0]+','+a[1]+','+a[2]+','+al+'
 function mkC(w,h){const c=document.createElement('canvas');c.width=w;c.height=h||w;return c}
 let seed=7;function srnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646}
 
-/* ---------- pre-drawn sprites (pencil beads, soft colour washes, desk bits) ---------- */
+/* ---------- pre-drawn sprites (pencil beads, soft color washes, desk bits) ---------- */
 function hatch(g,r,col,step){g.save();g.beginPath();g.arc(0,0,r,0,TAU);g.clip();g.strokeStyle=col;g.lineWidth=1.2;g.beginPath();
   for(let k=-r*2;k<r*2;k+=step||5){g.moveTo(k,-r*2);g.lineTo(k+r*2,r*2)}g.stroke();g.restore()}
-/* a coloured-pencil bead: pale wash fill, ink outline, a little hatching on the shaded side */
+/* a colored-pencil bead: pale wash fill, ink outline, a little hatching on the shaded side */
 function ballSprite(col){const c=mkC(64),g=c.getContext('2d');g.translate(32,32);
   g.fillStyle=rgba(col,.26);g.beginPath();g.arc(0,0,30,0,TAU);g.fill();
   g.save();g.beginPath();g.arc(0,0,30,0,TAU);g.clip();g.translate(10,10);hatch(g,30,rgba(col,.45),5);g.restore();
   g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.arc(0,0,29.5,0,TAU);g.stroke();
   g.strokeStyle='rgba(246,243,234,.9)';g.lineWidth=2.5;g.beginPath();g.arc(0,0,20,-2.4,-1.4);g.stroke();return c}
 function discSprite(col){const c=mkC(64),g=c.getContext('2d');g.fillStyle=col;g.beginPath();g.arc(32,32,32,0,TAU);g.fill();return c}
-/* a soft coloured-pencil smudge instead of a white-hot glow */
+/* a soft colored-pencil smudge instead of a white-hot glow */
 function glowSprite(col){const c=mkC(64),g=c.getContext('2d');const gr=g.createRadialGradient(32,32,0,32,32,32);
   gr.addColorStop(0,rgba(col,.45));gr.addColorStop(.4,rgba(col,.2));gr.addColorStop(1,rgba(col,0));g.fillStyle=gr;g.fillRect(0,0,64,64);return c}
 /* fallback ink blot: an ink-outlined dot with a pencil shine */
@@ -228,12 +228,12 @@ const PEARL=(()=>{const c=mkC(64),g=c.getContext('2d');g.translate(32,32);g.fill
 /* poof puffs: little pencil circles */
 const BUBBLE=(()=>{const c=mkC(64),g=c.getContext('2d');g.strokeStyle=GRAPH;g.lineWidth=3;g.beginPath();g.arc(32,32,28,0,TAU);g.stroke();
   g.lineWidth=2;g.beginPath();g.arc(32,32,19,-2.6,-1.2);g.stroke();return c})();
-/* ink-dot colours: coloured pencils from the tin */
+/* ink-dot colors: colored pencils from the tin */
 const FOODCOLS=['#c99a1a','#2f6fb5','#c45a8a','#5a9a6a','#d9661a','#6f4a9a'];
 const FOODGLOW=FOODCOLS.map(glowSprite),FOODBALL=FOODCOLS.map(c=>ballSprite(c));
 
 
-/* the player is plain graphite with a yellow pencil for its ink blots; rivals are coloured pencils */
+/* the player is plain graphite with a yellow pencil for its ink blots; rivals are colored pencils */
 const PLAYER_PAL=['#c99a1a','#55555c'];
 const BOT_PALS=[['#c45a8a','#f0d5e2'],['#5a9a6a','#dcebdd'],['#6f4a9a','#e6dcef'],['#2f6fb5','#d6e4f2'],['#8a3b3b','#f0d5e2'],['#3d7a8a','#d6e4f2'],
   ['#b0507a','#f0d5e2'],['#4a8a5a','#dcebdd'],['#2a5fa0','#d6e4f2'],['#7a5aa8','#e6dcef'],['#a04868','#f0d5e2'],['#3f7fc0','#d6e4f2']];
@@ -243,7 +243,7 @@ const ART={};
 function loadArt(n){const i=new Image();i.decoding='async';i.src='../assets/squiggle-worm/'+n+'.webp';ART[n]=i}
 ['head-player','body-player','head-pink','body-pink','head-green','body-green','head-purple','body-purple','head-blue','body-blue','plankton','pearl','poof','wall-shavings','wall-eraser','wall-clip','floor-tile'].forEach(loadArt);
 function art(n){const i=ART[n];return i&&i.complete&&i.naturalWidth?i:null}
-/* rival squiggles come in four drawn colours; each bot palette picks the nearest one */
+/* rival squiggles come in four drawn colors; each bot palette picks the nearest one */
 const ART_REF={pink:[196,90,138],green:[90,154,106],purple:[111,74,154],blue:[47,111,181]},ART_COL={pink:'#c45a8a',green:'#5a9a6a',purple:'#6f4a9a',blue:'#2f6fb5'};
 function nearestArt(c){const h=hex(c);let best='pink',bd=1e9;for(const k in ART_REF){const r=ART_REF[k],d=(h[0]-r[0])**2+(h[1]-r[1])**2+(h[2]-r[2])**2;if(d<bd){bd=d;best=k}}return best}
 /* the drawn ink dot is stored in grey; tint it to each FOODCOLS entry, cached once the drawing has loaded */
@@ -267,7 +267,7 @@ let TILEPAT=null;const FLOOR_K=.5; // Mark's graph-paper tile: a whole 16x16 squ
 
 /* desk-side doodads: pencil-shaving curls, erasers and paper clips, all pencil on paper */
 function shavingSprite(col){const c=mkC(128),g=c.getContext('2d');g.translate(64,64);g.lineCap='round';g.lineJoin='round';
-  // a curled shaving: scalloped wood edge with a coloured-pencil rim
+  // a curled shaving: scalloped wood edge with a colored-pencil rim
   g.fillStyle='#e9e6db';g.strokeStyle=INK;g.lineWidth=3;g.beginPath();
   for(let i=0;i<=16;i++){const a=-2.6+i/16*4.2,r=40+(i%2?0:9);g.lineTo(Math.cos(a)*r,Math.sin(a)*r)}
   for(let i=16;i>=0;i--){const a=-2.6+i/16*4.2;g.lineTo(Math.cos(a)*22,Math.sin(a)*22)}g.closePath();g.fill();g.stroke();
@@ -282,7 +282,7 @@ function eraserSprite(col){const c=mkC(128),g=c.getContext('2d');g.translate(64,
 function clipSprite(){const c=mkC(128),g=c.getContext('2d');g.translate(64,64);g.rotate(.6);g.lineCap='round';g.lineJoin='round';g.strokeStyle=INK;g.lineWidth=3.5;
   g.beginPath();g.moveTo(-10,30);g.lineTo(-10,-30);g.arc(0,-30,10,Math.PI,0);g.lineTo(10,36);g.arc(0,36,10,0,Math.PI);g.lineTo(-10,-14);g.arc(-5,-14,5,Math.PI,0);g.lineTo(0,22);g.stroke();return c}
 function pileSprite(col,kind){const c=mkC(128),g=c.getContext('2d');g.translate(64,64);seed=kind*31+5;g.lineJoin='round';g.lineCap='round';
-  // a heap of shavings: overlapping scallops, a coloured-pencil edge on a few
+  // a heap of shavings: overlapping scallops, a colored-pencil edge on a few
   for(let i=0;i<6;i++){const a=srnd()*TAU,d=i?10+srnd()*22:0,x=Math.cos(a)*d,y=Math.sin(a)*d,r=i?16+srnd()*10:24,rot=srnd()*TAU;
     g.save();g.translate(x,y);g.rotate(rot);g.fillStyle=i%2?'#e4e2d8':'#ece9df';g.strokeStyle=INK;g.lineWidth=2.5;g.beginPath();
     for(let k=0;k<=12;k++){const b=k/12*TAU,q=r*(k%2?.8:1);g.lineTo(Math.cos(b)*q,Math.sin(b)*q)}g.closePath();g.fill();g.stroke();

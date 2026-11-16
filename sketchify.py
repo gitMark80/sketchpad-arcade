@@ -13,7 +13,7 @@ The Beach Day Arcade checkout is found at $BDA_REPO, or next to this repo as ../
     python3 sketchify.py sea-merge --inline # also sketch the base64 images embedded in
                                             # sketch/src/games/sea-merge.html, in place
 
-Needs Pillow, numpy and scipy. Add coloured-pencil tints for a game in TINTS.
+Needs Pillow, numpy and scipy. Add colored-pencil tints for a game in TINTS.
 """
 import sys
 import numpy as np
@@ -76,7 +76,7 @@ DST = ROOT / "src/assets" / SLUG
 INK = np.array([.20, .20, .22])       # graphite
 PAPER = np.array([.965, .953, .918])  # sketchbook page
 
-# A few things get coloured-pencil lines so they still read at speed.
+# A few things get colored-pencil lines so they still read at speed.
 TINTS = {
     "seaside-sprint": {
         "ring": [.78, .55, .05], "ring-sparkle": [.78, .55, .05],
@@ -170,7 +170,7 @@ def sketch_sprite(im, tint):
     hatch2 = ((xx - yy) % 9 < 2.2) & (lum < .3) & (al > .5)
     ink = np.clip(edge * .9 + hatch * .35 + hatch2 * .35, 0, 1)
     ink *= np.clip(ndimage.maximum_filter(al, 3) * 1.2, 0, 1)
-    # a light wash of the tint colour inside, graphite stays plain paper
+    # a light wash of the tint color inside, graphite stays plain paper
     wash = PAPER if np.allclose(tint, INK) else PAPER * .55 + np.clip(tint * 1.5, 0, 1) * .45 * .35 + PAPER * .1
     out = np.zeros((H, W, 4))
     out[..., :3] = wash * (1 - ink[..., None]) + tint * ink[..., None]

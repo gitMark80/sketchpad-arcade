@@ -104,7 +104,7 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 
 CSS = """
 /* Sketchpad Arcade: every page is a sketchbook page. Paper with a faint grain, graphite ink, wobbly hand-drawn borders,
-   handwriting fonts, and coloured-pencil accents only where a kid would have reached for one. */
+   handwriting fonts, and colored-pencil accents only where a kid would have reached for one. */
 :root{--paper:#f6f3ea;--paper-2:#efeadd;--ink:#2e2e33;--pencil:#55555c;--muted:#7a7a80;--faint:#c9c6bc;
 --yellow:#c99a1a;--yellow-wash:#f3e6b0;--orange:#d9661a;--blue:#2f6fb5;--blue-wash:#d6e4f2;--green:#5a9a6a;--green-wash:#dcebdd;--pink:#c45a8a;--pink-wash:#f0d5e2;
 --display:"Gloria Hallelujah","Comic Sans MS","Chalkboard SE",cursive;--body:"Patrick Hand","Comic Sans MS","Chalkboard SE",cursive;
@@ -542,7 +542,7 @@ def twin_panel(g):
     """A link to the same game on the sister site (games.json "twin" holds its slug there)."""
     sis = SITE.get("sister")
     if not (sis and g.get("twin")): return ""
-    return (f'<aside class="also twin"><p>Like {E(g["name"])}? Play the painted, full-colour version at {E(sis["name"])}.</p>'
+    return (f'<aside class="also twin"><p>Like {E(g["name"])}? Play the painted, full-color version at {E(sis["name"])}.</p>'
             f'<a class="btn small" href="{E(sis["url"].rstrip("/"))}/{E(g["twin"])}" rel="noopener" data-arc-twin>Play it at {E(sis["short"])}</a></aside>')
 
 def detail(g):
@@ -623,7 +623,7 @@ def home_outro():
 <p>The games fall into {len(genres)} groups: {", ".join(E(x) for x in genres)}. Arcade games are the quick ones about timing and reflexes, puzzle games are about thinking a few moves ahead, and word games are about spelling, guessing and sorting. Each game has its own page with a short guide on how to play, the controls, a few tips and a note on how it was made, so you can see what a game is like before you press play.</p>
 <p>Most of the games began as pencil-sketch twins of the painted games on our sister site, <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and the site has started adding games of its own: sudoku, minesweeper, code-breaking and two-player games you play with a friend by text. The first question about every game is whether we would keep playing it after the first five minutes, and every game stays clean: no gore, no gambling mechanics and no chat with strangers. You can read the full list on the <a href="about.html">About page</a>, and see how a game gets from an idea to the New This Week row in <a href="news/how-we-choose-games.html">how we choose games</a>.</p>
 <h2>Why Sketchpad looks like a notebook</h2>
-<p>Our game covers are meant to look like pages from a well-used sketchbook: graphite construction strokes, textured coloured-pencil shading, a warm cream page and a hand-lettered title. The play pieces keep the same pencil character without putting a spiral notebook edge over the game board. For a bright, painted seaside look, our sister site <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a> offers a different atmosphere. This site also has notebook originals such as Doodle Doku, Blot Sweeper and games for two players.</p>
+<p>Our game covers are meant to look like pages from a well-used sketchbook: graphite construction strokes, textured colored-pencil shading, a warm cream page and a hand-lettered title. The play pieces keep the same pencil character without putting a spiral notebook edge over the game board. For a bright, painted seaside look, our sister site <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a> offers a different atmosphere. This site also has notebook originals such as Doodle Doku, Blot Sweeper and games for two players.</p>
 <h2>Latest from the studio</h2>
 <ul class="newslist">{news}</ul>
 <p><a href="news.html">All news and updates</a></p>
@@ -634,7 +634,7 @@ def about():
     sis = SITE.get("sister", {})
     body = f"""<div class="wrap prose">
 <h1>About {E(SITE["name"])}</h1>
-<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn like a doodle in the back of a notebook: dark pencil outlines on paper, with coloured pencil inside. They are built for a five-minute break between classes or a long evening with a puzzle, and to be pleasant to look at while you do it. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
+<p>{E(SITE["name"])} is a collection of {n} free browser games made by {E(SITE["owner"])}, a small independent studio in {E(SITE.get("location", "Pensacola, Florida"))}. Every game is drawn like a doodle in the back of a notebook: dark pencil outlines on paper, with colored pencil inside. They are built for a five-minute break between classes or a long evening with a puzzle, and to be pleasant to look at while you do it. The site opened on {E(nice_date(min(g["added"] for g in GAMES)))}.</p>
 <h2>Who makes it</h2>
 <p>{E(SITE["name"])} is run by a graphic designer of twenty years who makes games in the evenings. The site grew out of <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if someone had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
 <h2>What you can expect</h2>
@@ -670,7 +670,7 @@ def contact():
 <h2>Business and press</h2>
 <p>For partnership, licensing, press or advertising questions, use the same address with a short note about what you have in mind. {E(SITE["name"])} is owned by {E(SITE["owner"])}, {E(SITE.get("location", "Pensacola, Florida"))}.</p>
 <h2>Elsewhere</h2>
-<p>The painted, full-colour originals of most of these games live at <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and we post short gameplay clips on YouTube at <a href="https://www.youtube.com/@BeachDayArcade" rel="noopener">@BeachDayArcade</a>.</p>
+<p>The painted, full-color originals of most of these games live at <a href="{E(sis.get("url", "#"))}" rel="noopener">{E(sis.get("name", "Beach Day Arcade"))}</a>, and we post short gameplay clips on YouTube at <a href="https://www.youtube.com/@BeachDayArcade" rel="noopener">@BeachDayArcade</a>.</p>
 </div>"""
     return page(f'Contact | {SITE["name"]}', f'How to reach {SITE["name"]} about bugs, game ideas or business inquiries.', body, "contact", canonical="contact")
 

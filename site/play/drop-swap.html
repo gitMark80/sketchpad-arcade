@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
-/* Drop Swap: a classroom match-3 on sketchbook paper. The six pieces are classroom icons in vivid cross-hatched coloured pencil with
+/* Drop Swap: a classroom match-3 on sketchbook paper. The six pieces are classroom icons in vivid cross-hatched colored pencil with
    dark outlines (red apple, yellow pencil, blue book, purple backpack, red crayon, gold star sticker); specials are a ruler (clears
-   a line), scissors (snip around + 3 more) and a paint palette (clears a colour). Scribbled cells must be erased, spilled ink creeps up
-   from the bottom, and stars decorate "My Classroom". Art: ../assets/drop-swap/, hand-drawn by Mark in coloured pencil.
+   a line), scissors (snip around + 3 more) and a paint palette (clears a color). Scribbled cells must be erased, spilled ink creeps up
+   from the bottom, and stars decorate "My Classroom". Art: ../assets/drop-swap/, hand-drawn by Mark in colored pencil.
    Layout: one portrait column — HUD on top, framed board, small dock below. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
@@ -179,7 +179,7 @@ canvas{display:block;width:100%;aspect-ratio:1/1;max-width:100%;touch-action:non
 (()=>{
 const N=8, NT=6;
 const NAMES=['Apple','Pencil','Book','Backpack','Crayon','Star sticker'];
-// coloured pencil, one hue per piece (used for sparkles and the palette's colour dots)
+// colored pencil, one hue per piece (used for sparkles and the palette's color dots)
 const COLORS=['#e0453a','#f2c230','#3a7bd5','#8e5bc9','#c62f3a','#f0b820']; // matches Mark's drawings: red apple, yellow pencil, blue book, purple backpack, red crayon, gold star
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
@@ -198,7 +198,7 @@ const SCRIBBLE='../assets/drop-swap/scribble.webp';
 const SPEC={};for(const n of['scissors','palette','ruler','scribble','ink']){const im=new Image();im.src='../assets/drop-swap/'+n+'.webp';SPEC[n]=im;}
 let artURLs=store.get('art',[]); const artImgs=[];
 const tinted=[],tintURLs=[];
-/* the built-in art is already in coloured pencil, and your own images are drawn as they are */
+/* the built-in art is already in colored pencil, and your own images are drawn as they are */
 function tintArt(t){if(artURLs[t]||DEFAULT_ART[t])return null;if(tinted[t])return tinted[t];const im=artImgs[t];if(!im||!im.complete||!im.naturalWidth)return null;
   const c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;const g=c.getContext('2d');g.drawImage(im,0,0);
   g.globalCompositeOperation='multiply';g.globalAlpha=.5;g.fillStyle=COLORS[t];g.fillRect(0,0,c.width,c.height);
@@ -447,7 +447,7 @@ function closeModal(){$('overlay').hidden=true;}
 function goalText(L){const p=[];if(L.collect)for(const t in L.collect)p.push(`${L.collect[t]} ${NAMES[t].toLowerCase()}s`);if(L.sand)p.push('all the scribbles');return p.join(', ');}
 const TIPS={
   1:'Match in an L or T shape to make scissors. They snip everything around them, then snip 3 more cells.',
-  2:'Match 4 in a row to make a ruler. It clears a whole line. Match 5 for a paint palette that clears a whole colour.',
+  2:'Match 4 in a row to make a ruler. It clears a whole line. Match 5 for a paint palette that clears a whole color.',
   3:'New: spilled ink! Every 5 moves the ink creeps up a row. Pieces in the ink can\'t be moved. Fire a ruler to blot it back.',
 };
 function startLevel(i){
@@ -527,7 +527,7 @@ function canBuild(){const n=nextDecor();return n&&starsFree()>=n.cost;}
 
 const BEACH_ART={bg:'../assets/drop-swap/room-bg.webp',towel:'../assets/drop-swap/room-rug.webp',umbrella:'../assets/drop-swap/room-globe.webp',castle:'../assets/drop-swap/room-bookshelf.webp',palm:'../assets/drop-swap/room-plant.webp',
   hut:'../assets/drop-swap/room-desk.webp',hammock:'../assets/drop-swap/room-beanbag.webp',pier:'../assets/drop-swap/room-chalkboard.webp',lighthouse:'../assets/drop-swap/room-clock.webp',chest:'../assets/drop-swap/room-trophy.webp'};
-/* ---------- my classroom art (coloured-pencil sprites over a classroom background) ---------- */
+/* ---------- my classroom art (colored-pencil sprites over a classroom background) ---------- */
 const BIMG={};for(const k in BEACH_ART){const im=new Image();im.src=BEACH_ART[k];BIMG[k]=im;}
 function bReady(k){const im=BIMG[k];return im&&im.complete&&im.naturalWidth>0;}
 /* x,y = where the item touches the floor (or hangs from the wall), as fractions of the scene; w = width as a fraction;
@@ -632,7 +632,7 @@ function drawScissors(x,y,s){ // scissors piece: a pair of scissors perched on t
   ctx.fillStyle=PAPER;ctx.strokeStyle='#1f1f22';ctx.lineWidth=Math.max(1.2,s*.05);ctx.beginPath();ctx.arc(0,0,s*.44,0,7);ctx.fill();ctx.stroke();
   ctx.rotate(-.6+Math.sin(performance.now()/160)*.16);if(im.complete&&im.naturalWidth)ctx.drawImage(im,-s*.45,-s*.45,s*.9,s*.9);ctx.restore();
 }
-function drawSun(px,py,s){ // paint palette piece: clears every piece of one colour
+function drawSun(px,py,s){ // paint palette piece: clears every piece of one color
   const im=SPEC.palette,ph=performance.now()/900;ctx.save();ctx.translate(px,py);
   for(let i=0;i<6;i++){const q=ph+i*Math.PI/3;ctx.fillStyle=COLORS[i];ctx.beginPath();ctx.arc(Math.cos(q)*s*.43,Math.sin(q)*s*.43,s*.06,0,7);ctx.fill();ctx.strokeStyle='#1f1f22';ctx.lineWidth=1;ctx.stroke();}
   ctx.rotate(Math.sin(performance.now()/500)*.12);if(im.complete&&im.naturalWidth)ctx.drawImage(im,-s*.4,-s*.4,s*.8,s*.8);ctx.restore();

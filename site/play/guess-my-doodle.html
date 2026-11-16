@@ -201,7 +201,7 @@ button.primary:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pe
       <div class="pick" id="pick" hidden></div>
       <div class="cvwrap" id="cvWrap" hidden><canvas id="cv" aria-label="Drawing page"></canvas><div class="cvmsg" id="cvMsg" hidden></div></div>
       <div class="dtools" id="drawTools" hidden>
-        <div class="pal" id="pal" role="radiogroup" aria-label="Pencil colour"></div>
+        <div class="pal" id="pal" role="radiogroup" aria-label="Pencil color"></div>
         <div class="drow">
           <button type="button" id="sizeB" aria-label="Pencil size">✏️ Thin</button>
           <button type="button" id="undoB">↩ Undo</button>
@@ -357,7 +357,7 @@ const S=(()=>{
    words, draws it, and sends it; the guesser watches it redraw line by line and spells the word with letter tiles.
    A right guess scores the word's points for both players. The guesser then draws next. Ten drawings make a game.
    Saved game (for online play): {round, drawer, phase:'pick'|'guess', offers, used, cur:{word,tier,by,d}, hist} where
-   d is the drawing: [[colour, size, gap, base64 points]...], each point being x, y (0-255) and a time step (10 ms). */
+   d is the drawing: [[color, size, gap, base64 points]...], each point being x, y (0-255) and a time step (10 ms). */
 INFO.noBot=true;INFO.endDelay=1600;
 const GD_WORDS=[
  /* easy: 10 points */

@@ -147,7 +147,7 @@ let best=+store.get('best',0)||0, bestLevel=+store.get('bestLevel',0)||0, muted=
 
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 /* ---------- cards: id 0..51 = suit*13 + rank-1, 52+ = wild doodle star ---------- */
-/* each suit is a pencil doodle: c = coloured-pencil line, w = its pale wash */
+/* each suit is a pencil doodle: c = colored-pencil line, w = its pale wash */
 const SUITS=[
   {k:'star',n:'stars',c:'#c99a1a',w:'rgba(201,154,26,.22)'},
   {k:'heart',n:'hearts',c:'#c45a8a',w:'rgba(196,90,138,.22)'},
@@ -274,7 +274,7 @@ function critter(g,suit,R,opts){
   if(opts.rank===11&&S.k==='flower'){g.strokeStyle=INK;g.lineWidth=Math.max(.8,R*.06);g.beginPath();g.ellipse(-R*.14,-R*.02,R*.1,R*.08,0,0,7);g.ellipse(R*.14,-R*.02,R*.1,R*.08,0,0,7);g.stroke()}
   g.restore();
 }
-/* the wild card: a star coloured in with every pencil in the box */
+/* the wild card: a star colored in with every pencil in the box */
 const WILD_COLS=['#d9661a','#c99a1a','#5a9a6a','#2f6fb5','#6f4a9a'];
 function wildStar(g,R){
   g.save();g.lineJoin='round';g.lineCap='round';
@@ -636,7 +636,7 @@ function flagAt(pk){
   const x=Lay.left+(1.5+3*pk)*Lay.step+Lay.w/2,y=Lay.top-Lay.h*.08,done=R&&R.peaks[pk],pt=R?T-R.peakT[pk]:9;
   const hgt=Lay.h*.42,wv=Math.sin(T*4+pk)*Lay.w*.06;let s=1;if(pt<.5)s=1+Math.sin(pt/.5*Math.PI)*.4;
   ctx.save();ctx.translate(x,y);ctx.scale(s,s);
-  // a little pencil-drawn flag on a stick, coloured in only once the peak is cleared
+  // a little pencil-drawn flag on a stick, colored in only once the peak is cleared
   ctx.strokeStyle=INK;ctx.lineWidth=Math.max(1.5,Lay.w*.06);ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-hgt);ctx.stroke();
   ctx.fillStyle=done?'#f3e6b0':PAPER;ctx.beginPath();ctx.moveTo(0,-hgt);ctx.quadraticCurveTo(Lay.w*.3,-hgt+wv,Lay.w*.55,-hgt*.8+wv);ctx.quadraticCurveTo(Lay.w*.3,-hgt*.62,0,-hgt*.58);ctx.closePath();ctx.fill();
   ctx.strokeStyle=done?'#c99a1a':INK;ctx.lineWidth=Math.max(1,Lay.w*.04);ctx.stroke();

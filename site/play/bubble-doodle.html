@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&display=swap">
 <style>
 /* Bubble Doodle, pencil-sketch twin: same portrait playfield and HUD strip, redrawn as a kid's sketchbook page.
-   Graphite on cream paper, wobbly borders, coloured-pencil bubbles (each colour also has its own pattern). */
+   Graphite on cream paper, wobbly borders, colored-pencil bubbles (each color also has its own pattern). */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -173,7 +173,7 @@ return {tone,noise,setMuted,bindButton,get muted(){return muted},get ctx(){retur
 const S=window.SFX;let lastTick=0;
 const W=400,H=640,COLS=10,R=19,D=R*2,RH=R*Math.sqrt(3);
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
-/* Coloured-pencil bubbles: line colour + pale wash + ink outline, and a pattern per colour so they read in pencil too. */
+/* Colored-pencil bubbles: line color + pale wash + ink outline, and a pattern per color so they read in pencil too. */
 const COLORS=["#d9661a","#c99a1a","#5a9a6a","#2f6fb5","#6f4a9a"];
 const PAT={"#d9661a":"plain","#c99a1a":"dots","#5a9a6a":"stripes","#2f6fb5":"hatch","#6f4a9a":"rings"};
 const pcol=c=>PAT[c]?c:GRAPH;
@@ -423,7 +423,7 @@ function bubble(x,y,color,bomb,scale=1){
   else if(pat==="rings"){ctx.lineWidth=1.6*scale;for(const f of [.28,.58]){ctx.beginPath();ctx.arc(x,y,rad*f,0,Math.PI*2);ctx.stroke()}}
   else {ctx.globalAlpha=.55;ctx.lineWidth=1.2*scale;for(let k=0;k<3;k++){ctx.beginPath();ctx.moveTo(x+rad*(.05+k*.2),y+rad*.85);ctx.lineTo(x+rad*(.6+k*.2),y+rad*.2);ctx.stroke()}}
   ctx.restore();
-  // coloured-pencil rim, ink outline, a little sketchy overshoot
+  // colored-pencil rim, ink outline, a little sketchy overshoot
   ctx.strokeStyle=lc;ctx.lineWidth=2.4*scale;ctx.beginPath();ctx.arc(x,y,rad-1.6*scale,0,Math.PI*2);ctx.stroke();
   ctx.strokeStyle=INK;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(x,y,rad,0,Math.PI*2);ctx.stroke();
   ctx.lineWidth=1;ctx.globalAlpha=.5;ctx.beginPath();ctx.arc(x+.8,y-.6,rad+.6,Math.PI*1.05,Math.PI*1.6);ctx.stroke();ctx.globalAlpha=1;

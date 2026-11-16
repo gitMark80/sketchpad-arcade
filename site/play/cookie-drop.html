@@ -12,7 +12,7 @@
 <style>
 /* Cookie Drop, sketchbook edition. Layout: one portrait column. Title row, HUD card (level, score, best + gold stars for this try),
    the corkboard playfield (a fixed 360x640 scene scaled to fit, extra space filled with more cork), then a dock of buttons. Cards sit over everything.
-   Everything is pencil on cream paper; coloured pencil only on the cookie, the gold stars and the bubbles. */
+   Everything is pencil on cream paper; colored pencil only on the cookie, the gold stars and the bubbles. */
 :root{
   --paper:#f6f3ea; --paper-2:#efeadd; --ink:#2e2e33; --pencil:#55555c; --muted:#7a7a80; --faint:#c9c6bc;
   --yellow:#c99a1a; --yellow-wash:#f3e6b0; --orange:#d9661a; --blue:#2f6fb5; --blue-wash:#d6e4f2;
@@ -603,7 +603,7 @@ function drawPuddle(t){
   const X0=-900,X1=W+900;
   ctx.fillStyle=PUDDLE;ctx.beginPath();ctx.moveTo(X0,2000);for(let x=X0;x<=X1;x+=12)ctx.lineTo(x,SEA+Math.sin(x/28+t*2.2)*4+Math.sin(x/11-t*3)*1.5);ctx.lineTo(X1,2000);ctx.closePath();ctx.fill();
   ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();for(let x=X0;x<=X1;x+=12){const y=SEA+Math.sin(x/28+t*2.2)*4+Math.sin(x/11-t*3)*1.5;x===X0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();
-  // a few paper-coloured gleams and little ink drops sitting on the cork
+  // a few paper-colored gleams and little ink drops sitting on the cork
   ctx.strokeStyle='rgba(246,243,234,.35)';ctx.lineWidth=1.5;ctx.beginPath();for(let x=X0+30;x<=X1;x+=90){const y=SEA+12+Math.sin(x/28+t*2.2)*3;ctx.moveTo(x,y);ctx.lineTo(x+22,y+1)}ctx.stroke();
   ctx.fillStyle=PUDDLE;for(let x=X0+((t*14)%24);x<=X1;x+=48){const y=SEA-7+Math.sin(x/28+t*2.2)*3;ctx.beginPath();ctx.ellipse(x,y,2.6+Math.sin(x*.7+t*4)*.8,2,0,0,TAU);ctx.fill()}
 }
@@ -646,7 +646,7 @@ function drawRopes(){
   }
 }
 const CHIPS=[[-7,-5,.4],[5,-7,-.3],[8,3,.9],[-3,6,.2],[-9,3,-.7],[2,-1,.5]];
-function drawCookie(x,y,ang,s){ // a chocolate-chip cookie in coloured pencil
+function drawCookie(x,y,ang,s){ // a chocolate-chip cookie in colored pencil
   ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.scale(s||1,s||1);
   ctx.fillStyle='rgba(46,46,51,.16)';ctx.beginPath();ctx.ellipse(2,4,16,13,0,0,TAU);ctx.fill();
   const ci=art('cookie');if(ci){ctx.drawImage(ci,-18,-18*258/249,36,36*258/249);ctx.restore();return}
@@ -658,7 +658,7 @@ function drawCookie(x,y,ang,s){ // a chocolate-chip cookie in coloured pencil
   ctx.restore();
 }
 function starPath(R,r){ctx.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,q=k%2?r:R;ctx.lineTo(Math.cos(a)*q,Math.sin(a)*q)}ctx.closePath()}
-function drawStar(x,y,t,i){ // a gold star, the coloured-pencil kind a teacher sticks on good work
+function drawStar(x,y,t,i){ // a gold star, the colored-pencil kind a teacher sticks on good work
   const bob=Math.sin(t*2.4+i*1.7)*3,rot=Math.sin(t*1.6+i)*.15;ctx.save();ctx.translate(x,y+bob);ctx.rotate(rot);
   ctx.strokeStyle='rgba(201,154,26,.35)';ctx.lineWidth=1.2;ctx.setLineDash([3,5]);ctx.beginPath();ctx.arc(0,0,24,0,TAU);ctx.stroke();ctx.setLineDash([]);
   const si=art('gold-star');if(si){ctx.drawImage(si,-20,-20,40,40);ctx.restore();return}

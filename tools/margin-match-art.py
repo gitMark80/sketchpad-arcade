@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Draws Margin Match's art in coloured pencil and writes it to src/assets/margin-match/:
+"""Draws Margin Match's art in colored pencil and writes it to src/assets/margin-match/:
 
   icons.webp     4x4 sheet of the 16 tile kinds (same order as NAMES in src/games/margin-match.html)
   tile.webp      the paper tile face the icons sit on
   tray.webp      the 7-slot tray, drawn as a giant pencil (slot holes match the .slot CSS percentages)
   notebook.webp  page background: faint ruled notebook lines, a red margin line and doodles in the corners
 
-Style: dark ink outlines, a pale wash of colour inside and bright coloured-pencil cross-hatching on top
+Style: dark ink outlines, a pale wash of color inside and bright colored-pencil cross-hatching on top
 (two diagonal sets, the second a shade darker). Drawn with <canvas> in headless Chromium, saved with Pillow.
 Usage: python3 tools/margin-match-art.py [--sheet out.png]   (--sheet also writes a labelled preview of every kind)
 """
@@ -105,7 +105,7 @@ const ICONS=[
  // 8 heart (red)
  c=>{pf(c,p=>{p.moveTo(50,88);p.bezierCurveTo(20,66,6,50,8,32);p.bezierCurveTo(10,14,34,8,50,28);p.bezierCurveTo(66,8,90,14,92,32);p.bezierCurveTo(94,50,80,66,50,88);p.closePath()},C.red);
    c.beginPath();c.arc(30,32,10,3.6,4.6);c.lineWidth=3.2;c.strokeStyle=OUT;c.stroke()},
- // 9 rainbow (all colours)
+ // 9 rainbow (all colors)
  c=>{
    const cols=[C.red,C.orange,C.yellow,C.green,C.blue],R0=45,w=6.4;
    cols.forEach((col,i)=>{const r1=R0-i*w,r2=r1-w;pf(c,p=>{p.arc(50,70,r1,Math.PI,0);p.arc(50,70,r2,0,Math.PI,true);p.closePath()},col,{sp:3.6,hl:1.6,ol:2.6,wash:.45})});
@@ -189,7 +189,7 @@ function tray(W,H){
   SP=5.4;HL=2.1;OL=5.6;
   return cv.toDataURL('image/png');
 }
-// page background: ruled notebook paper with a red margin line and a few coloured doodles in the corners (transparent paper)
+// page background: ruled notebook paper with a red margin line and a few colored doodles in the corners (transparent paper)
 function page(W,H){
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
   c.strokeStyle='rgba(58,123,213,.16)';c.lineWidth=2;for(let y=60;y<H;y+=44){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}

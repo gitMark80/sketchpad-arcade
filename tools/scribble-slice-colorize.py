@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""scribble-slice-colorize.py - coloured-pencil + bold ink outline versions of the Scribble Slice sprites.
+"""scribble-slice-colorize.py - colored-pencil + bold ink outline versions of the Scribble Slice sprites.
 
-Reads the original colour art from Beach Day Arcade (src/assets/splash-slice/, or $BDA_REPO) and writes
+Reads the original color art from Beach Day Arcade (src/assets/splash-slice/, or $BDA_REPO) and writes
 src/assets/scribble-slice/<same name>.webp at the size the current file already has (so the game's
 aspect ratios and anchors stay the same). Each sprite gets:
-  * its real colours, flattened (k-means regions blended with a little of the original shading),
-    slightly lightened and with a diagonal coloured-pencil hatching texture,
+  * its real colors, flattened (k-means regions blended with a little of the original shading),
+    slightly lightened and with a diagonal colored-pencil hatching texture,
   * a bold dark ink (#1f1f22) outline round the silhouette (about 3-4 css px at the size the game draws it),
-  * thinner ink contour lines between strongly different colour regions inside.
+  * thinner ink contour lines between strongly different color regions inside.
 
     python3 tools/scribble-slice-colorize.py            # all sprites
     python3 tools/scribble-slice-colorize.py kiwi mango # just these (file stems)
@@ -60,7 +60,7 @@ def process(stem):
         keep = np.zeros(n + 1, bool); keep[1:] = sizes >= max(12, (w * .9) ** 2)
         if stem != 'spray': keep[1:] &= sizes >= sizes.max() * .03   # stray specks next to a single sprite
         m = keep[lab]
-    # ---- flatten the colours ----
+    # ---- flatten the colors ----
     ks = max(3, int(tw / 70) | 1)
     sm = np.stack([ndimage.median_filter(rgb[..., c], ks) for c in range(3)], -1)
     sm = ndimage.gaussian_filter(sm, (1, 1, 0))
@@ -76,7 +76,7 @@ def process(stem):
         flat = cent[lab] * .6 + sm * .4
     else:
         lab = np.zeros((th, tw), int); cent = np.array([px.mean(0) if len(px) else [128, 128, 128]]); flat = sm
-    # a touch more saturation, then lighten like coloured pencil on paper
+    # a touch more saturation, then lighten like colored pencil on paper
     mean = flat.mean(-1, keepdims=True)
     col = np.clip(mean + (flat - mean) * 1.15, 0, 255)
     col = col * .84 + 255 * .16

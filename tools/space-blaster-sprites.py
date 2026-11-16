@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Draws every Space Blaster sprite as a coloured-pencil doodle and writes them to src/assets/space-blaster/.
+"""Draws every Space Blaster sprite as a colored-pencil doodle and writes them to src/assets/space-blaster/.
 
-Style: dark ink outline (#1f1f22), a pale wash of colour inside and bright coloured-pencil cross-hatching
+Style: dark ink outline (#1f1f22), a pale wash of color inside and bright colored-pencil cross-hatching
 (two diagonal line sets, the second a shade darker). Background: cream grid paper with sketched planets.
 
     python3 tools/space-blaster-sprites.py            # writes all PNGs
@@ -33,7 +33,7 @@ def mix(a, b, t):
 
 
 class Pic:
-    """An RGBA canvas we paint coloured-pencil shapes onto. `u` = size of one display pixel in canvas pixels."""
+    """An RGBA canvas we paint colored-pencil shapes onto. `u` = size of one display pixel in canvas pixels."""
 
     def __init__(self, w, h, u, seed=1, bg=None):
         self.w, self.h, self.u = w, h, u
@@ -98,7 +98,7 @@ class Pic:
         self._over(col, m * line * grain * alpha)
 
     def fill(self, m, col, wash=0.30, hatch=True, gap=3.2, lw=1.1, dark=0.22, ang=(45, 135), halpha=1.0):
-        """Pale wash + two sets of coloured-pencil hatching (second one darker)."""
+        """Pale wash + two sets of colored-pencil hatching (second one darker)."""
         c = hx(col) if isinstance(col, str) else col
         self._over(mix(PAPER, c, wash), m)
         if hatch:

@@ -31,11 +31,11 @@ GAMES = {
                   "Turn on Notes to pencil in small guesses. Erase clears a square.", "A wrong number is marked in orange and counts as a mistake. Hints fill in one square for you (three per puzzle).",
                   "Each puzzle has exactly one answer. Fill the grid to win."]},
     "crayon-code": {"name": "Crayon Code", "stat": "Guess",
-        "intro": "Crack the secret row of crayon colours. Each guess tells you how close you are.",
-        "levels": ["3 colours, 4 crayons", "4 colours, 6 crayons", "4 colours, repeats allowed"],
-        "rules": ["Tap crayons to fill the empty spots in your row, then tap Check. Tap a spot to clear it.", "A filled dot means a crayon is the right colour in the right spot.",
-                  "An open dot means the colour is in the code but in a different spot.", "The dots aren't in the same order as your crayons, so you have to work out which is which.",
-                  "Crack the code before you run out of rows. On Hard, a colour can be used more than once."]},
+        "intro": "Crack the secret row of crayon colors. Each guess tells you how close you are.",
+        "levels": ["3 colors, 4 crayons", "4 colors, 6 crayons", "4 colors, repeats allowed"],
+        "rules": ["Tap crayons to fill the empty spots in your row, then tap Check. Tap a spot to clear it.", "A filled dot means a crayon is the right color in the right spot.",
+                  "An open dot means the color is in the code but in a different spot.", "The dots aren't in the same order as your crayons, so you have to work out which is which.",
+                  "Crack the code before you run out of rows. On Hard, a color can be used more than once."]},
 }
 
 def build(slug):
