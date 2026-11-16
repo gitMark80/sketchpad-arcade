@@ -2,6 +2,29 @@
   "_comment": "News posts for /news. Newest first. body is a list of paragraphs; a paragraph starting with '## ' is a heading. Link games with {{slug}}.",
   "posts": [
     {
+      "slug": "arcade-high-score-habits",
+      "title": "Six habits that raise your score in the arcade games",
+      "date": "2026-11-16",
+      "summary": "What Sketch Sprint, Paper Plane Dash, Shoe String Swing, Pencil Patrol and Doodle Drop have in common, and how to use it.",
+      "body": [
+        "The arcade games on Sketchpad Arcade look nothing alike. One is a runner, one flies down a paper tube, one swings from push-pins, one is a maze chase and one drops a ball down a giant pencil. Play them back to back, though, and the same few habits separate a short run from a long one. Here are six, with the game where each is easiest to practice.",
+        "## 1. Look where you are going, not where you are",
+        "In {{sketch-sprint}} your runner stays in the same place on screen, so staring at it tells you nothing new. The useful information is at the far end of the path: the arrow sign before a corner, the wall that fills a whole lane. {{paper-plane-dash}} works the same way. A paper ring shows up as a colored circle deep in the tube long before it reaches you, which is the moment to start heading for its gap.",
+        "## 2. Move earlier than feels necessary",
+        "Several of these games queue or delay your input, and they reward players who use that. In {{pencil-patrol}}, Stubby remembers the direction you asked for and takes the next opening that way, so steer before the turn instead of at it. In Paper Plane Dash the plane always takes the short way round the tube, which makes the spot directly opposite the longest trip. In {{doodle-drop}}, start spinning the pencil while the ball is still in the air; the pencil keeps turning a little after you let go, so small nudges beat big swipes.",
+        "## 3. Learn the one release that matters",
+        "{{shoe-string-swing}} has a single button, and nearly all of the skill is in when you let go of it. Release just after the hero passes under the pin and begins to rise, and you get the longest fling. Too late sends you straight up; too early sends you at the ground. A smooth swing also happens to follow the lines of stars, so good timing pays twice. Soap-bubble pins are the exception to patience: swing once and go before they pop.",
+        "## 4. Save power-ups for a crowd",
+        "A power-up used the second you get it is usually half wasted. The gold star sticker in Pencil Patrol pays 200, 400, 800 and 1600 points for erasers bonked in a row, so it is worth far more when all four are close. In Paper Plane Dash, Dart Mode only pops what is straight ahead, so line up with the busiest column while it lasts, and a boost smashes through rings as well as junk, which makes it the one time to fly into trouble on purpose.",
+        "## 5. Chase the streak, not the single point",
+        "Most of the big numbers come from doing something several times in a row. Doodle Drop pays more for each consecutive ring, and three rings without a bounce makes the ball glow and smash through the next one, scribbles included. Sketch Sprint raises its score multiplier with every 500 meter wave, so the same star is worth more the longer you survive. When a risky move would break a streak, the safe move is often the higher-scoring one.",
+        "## 6. Count a bad run as progress",
+        "Stars carry over between runs in both Sketch Sprint and Paper Plane Dash. They unlock the other seven runners in one and nine more paper plane folds in the other, and they count even if the run ends early. Treat a rough run as a collection trip: pick up every line of stars you can reach and the unlocks arrive whether or not the high score does.",
+        "## Where to start",
+        "If you want one game to practice all of this, Sketch Sprint covers the most ground: looking ahead, early inputs, power-ups and waves. For something slower, try a different kind of planning in {{pencil-putt}}, where a soft, well-placed shot often beats full power."
+      ]
+    },
+    {
       "slug": "which-sketchpad-game",
       "title": "Which Sketchpad Arcade game should you play next?",
       "date": "2026-11-10",
