@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -235,16 +242,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     <h1>Save the Doodle</h1>
     <p class="lead">A friendly spin on hangman. A hidden word is shown as blanks with a clue, like Animal or Food. Guess one letter at a time. Every wrong letter makes the eraser rub out part of the little pencil doodle, so fill in the word before it&#x27;s gone!</p>
     <ul class="facts"><li>Word</li><li>A clue for every word</li><li>Easy, Medium and Hard</li><li>Saves your best on each level</li><li>Builds a streak of words in a row</li></ul>
-    <div><a class="btn" href="/play/save-the-doodle">Play Save the Doodle</a></div>
+    <div class="btnrow"><a class="btn" href="/play/save-the-doodle">Play Save the Doodle</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
   <section class="panel"><h2>How to play</h2><ol><li>Pick a level. Easy has short words and 7 tries, Medium has longer words and 6 tries, and Hard has tricky words and 5 tries.</li><li>Read the clue, then tap a letter.</li><li>If the letter is in the word, it&#x27;s written in every blank where it belongs.</li><li>If it isn&#x27;t, the eraser rubs out part of the doodle.</li><li>Fill in the whole word to save the doodle and add to your streak.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap a letter, or type it on a keyboard.</li><li>New puzzle gives you a new word.</li><li>The Sound button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Start with vowels: A, E, I, O and U.</li><li>Next try common letters like T, N, S, R and L.</li><li>Use the clue! An Animal with three letters and an O in the middle could be DOG or FOX.</li><li>Look at the length. Long words often end in -ING or -ER.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Save the Doodle</h2><p>Save the Doodle is hangman without the hanging. Instead of drawing a scary picture, the eraser rubs out a happy doodle, and your job is to save it.</p><p>The words are grouped into clues like Animal, Food and At school, so every guess starts with a hint.</p></section>
+<section class="panel about" id="strategy"><h2>About Save the Doodle</h2><div><div><p>Save the Doodle is hangman without the hanging. Instead of drawing a scary picture, the eraser rubs out a happy doodle, and your job is to save it.</p><p>The words are grouped into clues like Animal, Food and At school, so every guess starts with a hint.</p></div></div></section>
 
 
 <section><h2 class="sec">If you like Save the Doodle, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -268,6 +274,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Save the Doodle", "description": "A friendly spin on hangman. A hidden word is shown as blanks with a clue, like Animal or Food. Guess one letter at a time. Every wrong letter makes the eraser rub out part of the little pencil doodle, so fill in the word before it's gone!", "url": "https://www.sketchpadarcade.com/save-the-doodle", "image": "https://www.sketchpadarcade.com/img/save-the-doodle.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Save the Doodle", "item": "https://www.sketchpadarcade.com/save-the-doodle"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

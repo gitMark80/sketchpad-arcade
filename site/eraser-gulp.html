@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Eraser Gulp</h1>
-    <p class="lead">A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and gold stars, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.</p>
+    <p class="lead">Paper clips and gold stars are a little eraser’s first meal. Circle back to the big desk supplies as the eraser grows and see how much time you can leave on the clock.</p>
     <ul class="facts"><li>Arcade</li><li>Endless levels</li><li>Grow bigger</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/eraser-gulp">Play Eraser Gulp</a></div>
+    <div class="btnrow"><a class="btn" href="/play/eraser-gulp">Play Eraser Gulp</a><a class="guide-jump" href="#strategy">Make a loop around an oversized item</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Steer your swirling eraser around the desk.</li><li>Glide over things smaller than you to gulp them down. Every gulp makes you a little bigger.</li><li>Things that are too big get a red ring when you touch them. Come back when you&#x27;ve grown.</li><li>Fill the size meter before the timer runs out to clear the level. Time left over becomes bonus points.</li><li>Each new desk is bigger, with a bigger size goal.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Start the first desk with 50 seconds on the clock. Steer the eraser over the smallest supplies and watch the size meter as they disappear.</li><li>Touch the centre of an object you can swallow. A red outline means it is still too large. Keep that spot in mind for the return trip.</li><li>Keep eating until the size meter reaches its goal. Remaining seconds convert into bonus points, and the next desk has a higher growth target.</li><li>Reaching the time limit before reaching the size target ends the run, even if you collected a lot of supplies.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>On a phone or tablet, drag your finger and the eraser follows it.</li><li>With a mouse, move the pointer over the desk and the eraser swirls toward it.</li><li>On a keyboard, use the arrow keys or W, A, S and D.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Gulp lots of little things at the start. They add up fast.</li><li>Pushpin pouches have rulers, tape, pencil cases and glue sticks all close together. Swirl around them for a quick feast.</li><li>Big things are worth lots of points, so head for them as soon as they fit.</li><li>A banner tells you when a new kind of thing fits, so watch for it.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Move your finger farther from the eraser to cover a long stretch quickly. Bring it closer for a tight turn around a small object.</li><li>If the eraser is already large enough, take the bigger of two equally close items. Larger supplies give more points and growth per gulp.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Eraser Gulp</h2><p>Eraser Gulp is an eat-and-grow arcade game drawn in pencil. You start small enough to gulp the littlest things on the page, and every bite makes you a little bigger, until you can swallow things many times your starting size. Fill the size meter before the clock runs out to move on to a bigger, busier page.</p><p>It is silly in the best way. The moment you finally get big enough for the thing that has been in your way all level is the whole point. The banner that tells you when a new kind of thing fits is worth watching.</p></section>
+<section class="panel about" id="strategy"><h2>Make a loop around an oversized item</h2><div><div><p>When a pushpin pouch flashes red, keep moving around its edge. Look for the smaller supplies clustered nearby and scoop up the ones that fit. As the eraser grows, circle back past the pencil cases, rulers and tape dispensers. The size announcement tells you when the next kind is within reach.</p><p>Finishing with six seconds showing can be worth 60 bonus points. Late in a level, several reachable objects nearby can be a better finish than crossing the desk for one large item.</p></div></div></section>
 
 <aside class="also twin"><p>Like Eraser Gulp? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/whirlpool-gulp" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Eraser Gulp, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Sidewalk Hop</h3><p>Hop a kid across busy streets and a creek before the rain catches up.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Eraser Gulp", "description": "A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and gold stars, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.", "url": "https://www.sketchpadarcade.com/eraser-gulp", "image": "https://www.sketchpadarcade.com/img/eraser-gulp.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Eraser Gulp", "description": "Paper clips and gold stars are a little eraser\u2019s first meal. Circle back to the big desk supplies as the eraser grows and see how much time you can leave on the clock.", "url": "https://www.sketchpadarcade.com/eraser-gulp", "image": "https://www.sketchpadarcade.com/img/eraser-gulp.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Eraser Gulp", "item": "https://www.sketchpadarcade.com/eraser-gulp"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

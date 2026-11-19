@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Draw Brawl</h1>
-    <p class="lead">A backyard arena full of cardboard boxes, crates and paint splats where everyone wants the same stars. Choose Max, Ruby or Leo, scoop up gold stars and carry them home to your own fort before a rival splats you. Every 25 seconds the sprinklers soak the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.</p>
+    <p class="lead">Four players share one backyard, but each has a fort of their own. A pocketful of gold stars shows what you stand to lose on the way home.</p>
     <ul class="facts"><li>Arcade</li><li>2-minute rounds</li><li>3 computer rivals</li><li>Phone, tablet and computer</li><li>Saves your personal best</li></ul>
-    <div><a class="btn" href="/play/draw-brawl">Play Draw Brawl</a></div>
+    <div class="btnrow"><a class="btn" href="/play/draw-brawl">Play Draw Brawl</a><a class="guide-jump" href="#strategy">Make the last trip count</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Pick a character. Max is a sturdy close-range brawler with a paint roller, Ruby is fast with rapid paint shots, and Leo is a tank with a cardboard-tube cannon and a box shield.</li><li>Collect the gold stars scattered around the yard. There are plenty in the middle. You can carry up to 15.</li><li>Carry them back to your own fort and stand inside its ring for a moment to bank them. Only banked stars count, and other players&#x27; forts won&#x27;t take yours.</li><li>Bop rivals to splat them: they drop everything they were carrying and jump back in a few seconds later.</li><li>Get really close to a rival and a Showdown ring locks you both in for a few seconds. Splat them before the timer runs out to win bonus stars.</li><li>Watch for the sprinkler warning: water soaks the marked outer lanes and slows anyone running through it. Forts stay dry.</li><li>Highest banked score when the 2-minute timer ends wins. Ties are shared.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose Max for a close-range paint roller, Ruby for quick paint shots, or Leo for a cardboard-tube cannon and a box shield. Find your own fort before heading into the yard.</li><li>Collect loose gold stars, up to 15 at a time. Stay inside your fort’s ring briefly to add them to your score. A rival fort cannot take a deposit.</li><li>A splatted player spills the stars they were carrying and returns after a short delay. Getting close to a rival can start a Showdown. Splat that rival inside the ring before time expires to earn three bonus stars.</li><li>Watch the outer lanes when the sprinkler warning appears. They slow you down while your fort stays dry. After two minutes, the most banked stars wins, and tied leaders share the win.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Computer: WASD or the arrow keys move. J attacks and auto-aims at the nearest rival; hold the mouse button to aim shots yourself. Space dashes, Q uses your special, Esc pauses.</li><li>Phone or tablet: drag the left side of the screen to move. ATTACK auto-aims, or drag the AIM pad to point your shots where you want them. SPECIAL and DASH are next to it.</li><li>The pause button freezes the match. The speaker button turns sound effects on; they start muted.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Bank often. Stars you&#x27;re carrying are worth nothing until they&#x27;re home, and a splat spills them all.</li><li>Fight rivals who are carrying a lot and let the ones with empty hands go.</li><li>Head for your fort when the sprinkler warning appears so you&#x27;re not stuck in the spray.</li><li>Leo&#x27;s box shield blocks every hit for a moment: pop it when two rivals close in.</li><li>Showdown wins pay 3 bonus stars, so pick fights when your health is high.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>If a rival is between you and home, steer wide when protecting a full load. Getting close can start an eight-second Showdown.</li><li>Forts stay dry when the sprinklers run. Plan your return before the outer lane gets wet and slows you down.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Draw Brawl</h2><p>Draw Brawl is a two-minute backyard arena where you and three computer rivals compete for the same gold stars. You pick Max, Ruby or Leo, scoop stars and carry them home to your own cardboard fort, where they are banked and safe. Get splatted by a rival on the way and you drop what you are carrying.</p><p>Every 25 seconds the sprinklers soak the outer lanes, so the shortest route is not always the safest one. The rivals are tuned to feel like other players rather than a rigged clock, and the characters, the forts and the paint-splat arena are our own pencil art.</p></section>
+<section class="panel about" id="strategy"><h2>Make the last trip count</h2><div><div><p>Suppose a rival leads 20 to 16 and you carry five stars. Getting those five back to your fort takes you to 21. Picking up one more star in the middle still leaves your score at 16 until you bank. Leave time to stand inside your fort’s ring for the deposit, which takes just under a second.</p><p>You can carry 15 at most. A detour across a cluster of stars with full pockets buys you nothing and gives other players another chance to catch you.</p></div></div></section>
 
 <aside class="also twin"><p>Like Draw Brawl? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/tide-clash" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Draw Brawl, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Draw Brawl", "description": "A backyard arena full of cardboard boxes, crates and paint splats where everyone wants the same stars. Choose Max, Ruby or Leo, scoop up gold stars and carry them home to your own fort before a rival splats you. Every 25 seconds the sprinklers soak the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.", "url": "https://www.sketchpadarcade.com/draw-brawl", "image": "https://www.sketchpadarcade.com/img/draw-brawl.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Draw Brawl", "description": "Four players share one backyard, but each has a fort of their own. A pocketful of gold stars shows what you stand to lose on the way home.", "url": "https://www.sketchpadarcade.com/draw-brawl", "image": "https://www.sketchpadarcade.com/img/draw-brawl.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Draw Brawl", "item": "https://www.sketchpadarcade.com/draw-brawl"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

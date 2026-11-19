@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -235,16 +242,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     <h1>Sketch with Friends</h1>
     <p class="lead">A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.</p>
     <ul class="facts"><li>Word</li><li>Versus</li><li>Invite a friend by text and take turns whenever</li><li>Easy, Medium and Hard bots</li><li>Clean word list</li></ul>
-    <div><a class="btn" href="/play/sketch-with-friends">Play Sketch with Friends</a></div>
+    <div class="btnrow"><a class="btn" href="/play/sketch-with-friends">Play Sketch with Friends</a><a class="guide-jump" href="#strategy">Which words does the board accept?</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
   <section class="panel"><h2>How to play</h2><ol><li>Pick who to play: invite a friend by text, pass one phone, or play the bot.</li><li>Tap a tile in your rack, then tap a square on the board to place it. Make one word across or down.</li><li>The first word has to cover the star in the middle. After that, every word must join onto a word already on the board.</li><li>Tap Play to score. Letters have points, and coloured squares double or triple a letter or the whole word. Use all seven tiles for a 35-point bonus.</li><li>The game ends when the bag is empty and someone uses their last tile. Highest score wins.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap a tile then a square, or drag a tile onto the board.</li><li>Tap a tile you just placed to take it back. Recall takes them all back, and Shuffle mixes your rack.</li><li>Swap trades tiles for new ones, and Pass skips your turn.</li><li>The Sound button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Look for the coloured squares. A word on a triple-word square can be worth a lot!</li><li>Short words that cross a big word&#x27;s letters can score both ways.</li><li>Keep a mix of vowels and consonants. Swap if your rack is all one kind.</li><li>High-point letters like Q, Z and X are worth the most on a double or triple letter square.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Sketch with Friends</h2><p>Sketch with Friends is our take on the classic crossword tile game, drawn as paper tiles on a sketchbook page.</p><p>The word list is checked to keep out rude words, so it&#x27;s safe to play anywhere, even in class.</p></section>
+<section class="panel about" id="strategy"><h2>Which words does the board accept?</h2><div><div><p>The board checks words against a filtered version of the SCOWL US English dictionary. The game uses words from two to eleven letters and leaves out entries that need capitals or apostrophes. If a name or a contraction gets turned down, try building a shorter word across one already on the board.</p></div></div></section>
 
 
 <section><h2 class="sec">If you like Sketch with Friends, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,10 +272,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch with Friends", "description": "A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.", "url": "https://www.sketchpadarcade.com/sketch-with-friends", "image": "https://www.sketchpadarcade.com/img/sketch-with-friends.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch with Friends", "description": "A crossword-style word game for two. Each player has seven paper letter tiles. Take turns making words on the board that join onto the words already there, and land on the coloured squares to double or triple your points. Play a friend by text, pass one phone around, or take on the bot.", "url": "https://www.sketchpadarcade.com/sketch-with-friends", "image": "https://www.sketchpadarcade.com/img/sketch-with-friends.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": ["MultiPlayer", "SinglePlayer"], "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Sketch with Friends", "item": "https://www.sketchpadarcade.com/sketch-with-friends"}]}</script>
 
-<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/sketch-with-friends?game='+m[1])})();</script></main>
+<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/sketch-with-friends?game='+m[1])})();</script>
+</main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
 <ul><li><a href="/puzzle-games">Puzzle games</a></li><li><a href="/word-games">Word games</a></li><li><a href="/arcade-games">Arcade games</a></li><li><a href="/versus-games">Versus games</a></li><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
 <script>

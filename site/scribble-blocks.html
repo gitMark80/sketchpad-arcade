@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Scribble Blocks</h1>
-    <p class="lead">A relaxing block puzzle with bright coloured-pencil pieces outlined in black. Place shapes on an 8x8 grid, fill a row or column to rub it out and chain clears together for big combos. Gold star blocks are worth bonus points.</p>
+    <p class="lead">Fit three doodle pieces at a time into a square grid. Before dropping the first one, find a home for the awkward shape in the tray and look for lines that cross.</p>
     <ul class="facts"><li>Puzzle</li><li>Drag and drop</li><li>No timer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/scribble-blocks">Play Scribble Blocks</a></div>
+    <div class="btnrow"><a class="btn" href="/play/scribble-blocks">Play Scribble Blocks</a><a class="guide-jump" href="#strategy">Look for the square that clears two lines</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Drag a piece from the tray onto the board.</li><li>Fill a whole row or column to clear it. Lines that are about to clear light up before you drop.</li><li>Place all three pieces to get three new ones.</li><li>The game ends when none of your pieces fit anywhere. Pieces that can&#x27;t fit turn gray.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Look at the three shapes in the tray. Drag one over the grid and find an empty space that fits its exact outline.</li><li>Line up filled squares from edge to edge across one row or down one column. The preview lights the lines that will clear when you release.</li><li>Use the other shapes in whichever order opens the most space. A new tray only arrives after all three have been placed.</li><li>There is no clock. Keep placing pieces until none of the shapes left in the tray fits. A starred square earns a bonus when its line clears.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Drag and drop pieces with a mouse or finger.</li><li>Undo takes back your last move. You get 3 per game.</li><li>New game starts over at any time.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Keep the middle of the board open for the big square pieces.</li><li>Avoid leaving single empty cells that only a 1x1 piece can fill.</li><li>Clearing several lines at once, or on back-to-back moves, multiplies your score.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>If a tray piece turns gray, see whether one of the other two can clear the space it needs. Gray describes the board as it stands.</li><li>Use Undo immediately when you close the only space for a large block. It restores the previous board, tray, score and streak, and spends one of your three undos.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Scribble Blocks</h2><p>Scribble Blocks is a block-placing puzzle with bright coloured-pencil pieces outlined in black. You get three pieces at a time, place them anywhere on the 8x8 grid, and rub out full rows or columns. There is no timer and no falling pieces, so it suits players who like to think before they move.</p><p>The twist is the gold stars. Some pieces carry star blocks that are worth +25 when they clear, and the game ends only when none of your three pieces fit. Learning to keep a corner open for the long bar is the difference between a short game and a very long one.</p></section>
+<section class="panel about" id="strategy"><h2>Look for the square that clears two lines</h2><div><div><p>Suppose a row and a column are full except for the same empty square. A one-cell piece placed at that crossing clears both. On a fresh streak the line bonus is 40 points, plus the point for placing the piece. Any starred square removed adds another 25.</p></div></div></section>
 
 <aside class="also twin"><p>Like Scribble Blocks? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/pearl-blocks" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Scribble Blocks, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Scribble Blocks", "description": "A relaxing block puzzle with bright coloured-pencil pieces outlined in black. Place shapes on an 8x8 grid, fill a row or column to rub it out and chain clears together for big combos. Gold star blocks are worth bonus points.", "url": "https://www.sketchpadarcade.com/scribble-blocks", "image": "https://www.sketchpadarcade.com/img/scribble-blocks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Scribble Blocks", "description": "Fit three doodle pieces at a time into a square grid. Before dropping the first one, find a home for the awkward shape in the tray and look for lines that cross.", "url": "https://www.sketchpadarcade.com/scribble-blocks", "image": "https://www.sketchpadarcade.com/img/scribble-blocks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Scribble Blocks", "item": "https://www.sketchpadarcade.com/scribble-blocks"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

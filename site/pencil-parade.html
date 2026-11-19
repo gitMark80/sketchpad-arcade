@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Pencil Parade</h1>
-    <p class="lead">A pencil-sketch runner where your score is a parade of little pencil stubs with smiley faces. Drag left and right to steer the whole parade down a long sheet of lined paper, through gates that add, multiply, subtract or halve your pencils. Dodge rolling bouncy balls, ink puddles, torn holes and spinning compasses along the way. At the end of each level the parade climbs a stack of books, and the higher it gets, the bigger the bonus.</p>
+    <p class="lead">Steer a crowd of pencil stubs toward the book stack. Your crowd count changes the value of every gate, so the same fork can call for a different turn on the next run.</p>
     <ul class="facts"><li>Arcade game</li><li>Endless levels that get longer and faster</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/pencil-parade">Play Pencil Parade</a></div>
+    <div class="btnrow"><a class="btn" href="/play/pencil-parade">Play Pencil Parade</a><a class="guide-jump" href="#strategy">Do the gate arithmetic before steering</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Your parade walks down the page on its own. Drag left or right to steer it, and the whole parade follows.</li><li>Gates come in pairs across the path. Blue gates add pencils (+5, +10) or multiply them (×2, ×3). Purple gates take pencils away (−5, −10) or halve the parade (÷2). Your parade goes through whichever side you steer into.</li><li>Sometimes both sides are good, so pick the better one. Sometimes both are purple, so pick the one that costs the fewest pencils.</li><li>Pencils that bump a bouncy ball, splash into an ink puddle, step in a torn hole or get swept by a spinning compass hop off back to the pencil case, unhurt.</li><li>At the book stack the parade climbs books marked ×1 up to ×5, leaving a few pencils behind on each book. Your bonus is the pencils you had at the finish, times the highest book reached, times 10.</li><li>Each new level starts with 10 pencils and is longer and faster, with more purple gates and obstacles. If every pencil goes home, the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Start with ten pencil stubs. They move forward on their own. Drag sideways to guide them into one side of each fork.</li><li>Read the sign on that side. Blue gates add or multiply your crowd. Purple gates subtract pencils or divide the count in half.</li><li>Steer around holes, ink, bouncy balls and the compass. A stub that hits one leaves the crowd. Losing the last pencil ends the run.</li><li>Reach the stack and watch the pencils climb. The bonus uses the number that reached the books, multiplied by the highest book reached and then by ten. The next stage starts a fresh crowd.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: drag your finger left or right anywhere on the screen. The parade moves with your finger, so you don&#x27;t need to touch the pencils.</li><li>Computer: click and drag left or right with the mouse.</li><li>Keyboard: hold the Left and Right arrow keys or A and D to steer. Press P or Escape to pause.</li><li>The question mark button shows how to play and pauses the game. The speaker button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>A ×2 or ×3 gate is worth much more once your parade is big. Early on, a +10 can beat a ×2.</li><li>Line up for the next gate early. Big parades are wide, and the whole line needs time to slide across.</li><li>Thread small parades through the gaps between puddles and holes. A big parade is safer passing beside an obstacle than through it.</li><li>The books cost more pencils on later levels, so save your gains for the book stack.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>When both gates subtract pencils, read them even if you have to steer away from a favorite side. Taking the smaller loss protects the count you bring to the books.</li><li>Look one obstacle beyond a good gate. A bonus that drops your whole crowd into an ink puddle is harder to keep.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Pencil Parade</h2><p>Pencil Parade is a quick sketchbook runner about growing the biggest parade you can. Each choice is a small math puzzle: add or multiply, lose five or lose half. Rolling bouncy balls, ink puddles, torn holes and spinning compasses keep you steering all the way to the book stack.</p><p>The book stack finish turns your parade into points. Each book keeps a little tower of pencils behind, and the multiplier on the highest book you reach boosts your bonus. Levels get longer and faster as you go. Nobody gets hurt: pencils that bump into things just hop off to the pencil case for a nap.</p></section>
+<section class="panel about" id="strategy"><h2>Do the gate arithmetic before steering</h2><div><div><p>At a fork marked +10 and ×2, a parade of six can leave with sixteen pencils on the +10 side or twelve on the ×2 side. Arrive with fifteen pencils and +10 gives twenty-five while ×2 gives thirty. At ten pencils the two gates tie, so choose the clearer lane beyond them.</p></div></div></section>
 
 <aside class="also twin"><p>Like Pencil Parade? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/piper-parade" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Pencil Parade, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Sidewalk Hop</h3><p>Hop a kid across busy streets and a creek before the rain catches up.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Parade", "description": "A pencil-sketch runner where your score is a parade of little pencil stubs with smiley faces. Drag left and right to steer the whole parade down a long sheet of lined paper, through gates that add, multiply, subtract or halve your pencils. Dodge rolling bouncy balls, ink puddles, torn holes and spinning compasses along the way. At the end of each level the parade climbs a stack of books, and the higher it gets, the bigger the bonus.", "url": "https://www.sketchpadarcade.com/pencil-parade", "image": "https://www.sketchpadarcade.com/img/pencil-parade.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Parade", "description": "Steer a crowd of pencil stubs toward the book stack. Your crowd count changes the value of every gate, so the same fork can call for a different turn on the next run.", "url": "https://www.sketchpadarcade.com/pencil-parade", "image": "https://www.sketchpadarcade.com/img/pencil-parade.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Pencil Parade", "item": "https://www.sketchpadarcade.com/pencil-parade"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

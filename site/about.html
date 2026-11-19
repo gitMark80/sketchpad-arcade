@@ -10,7 +10,6 @@
 <link rel="icon" type="image/png" sizes="192x192" href="https://www.sketchpadarcade.com/brand/icon-192.png?v=2">
 <link rel="apple-touch-icon" href="https://www.sketchpadarcade.com/brand/apple-touch-icon.png?v=2">
 <meta name="theme-color" content="#f6f3ea">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599" crossorigin="anonymous"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
@@ -103,6 +102,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -164,6 +164,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -189,7 +195,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -230,17 +236,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <p>Sketchpad Arcade is run by a graphic designer of twenty years who makes games in the evenings. The site grew out of <a href="https://www.beachdayarcade.com" rel="noopener">Beach Day Arcade</a>, our site of bright, painted beach games. We redrew one of them in pencil, as if someone had copied it into a sketchbook, liked it so much that we wanted a whole site that looked that way, and here it is. Most games here started as sketch twins of a Beach Day game, and the site has begun adding original games of its own.</p>
 <h2>What you can expect</h2>
 <ul><li>Games that run in your browser on a phone, tablet or computer, with nothing to install.</li>
-<li>No accounts or sign-ups. Your progress and best scores are saved on your own device.</li>
+<li>No account needed. Solo scores stay in your browser. Online matches save the shared board so friends can take turns on separate devices.</li>
 <li>Clean games: no gore, no gambling mechanics and no chat with strangers.</li>
-<li>Original characters, art and word lists, all drawn by hand. We borrow mechanics, because a bubble shooter is a bubble shooter, but never another game's name, art or text.</li>
-<li>A short guide on every game page: how to play, the controls, a few tips and a note on how the game was made.</li>
+<li>Notebook characters and pencil-style artwork. Sketch with Friends checks plays against a filtered US English dictionary from SCOWL.</li>
+<li>A short guide on every game page: how to play, the controls, a few tips and pointers for your next round.</li>
 <li>New games added regularly. The New This Week row on the home page shows what just arrived.</li></ul>
 <h2>Find your kind of game</h2>
 <p>For quiet concentration, start with <a href="/doodle-doku">Doodle Doku</a> or <a href="/ink-jars">Ink Jars</a>. For fast reflexes, try <a href="/sketch-sprint">Sketch Sprint</a> or <a href="/pencil-patrol">Pencil Patrol</a>. To take turns with someone, visit <a href="/versus-games">Versus Games</a>. Our <a href="/news/which-sketchpad-game">game chooser</a> offers more suggestions, and every game page explains how to play before opening the game.</p>
 <h2>How a game gets here</h2>
 <p>New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. We write about the ones that make it, and the thinking behind them, on the <a href="/news">news page</a>.</p>
 <h2>Ads</h2>
-<p>The games are free to play and always will be. To keep them that way we may show a small number of ads on the game pages, never while you are in the middle of a game. Our <a href="/privacy">privacy policy</a> explains what that means for you.</p>
+<p>The games are free to play. Ads may appear on game guides, collections and studio articles. The game itself, including its results screen, stays ad-free. Our <a href="/privacy">privacy policy</a> explains what that means for you.</p>
 <h2>Contact</h2>
 <p>Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com. There is more on the <a href="/contact">contact page</a>.</p>
 </div></main>

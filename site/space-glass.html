@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Space Glass</h1>
-    <p class="lead">A relaxing color-by-number puzzle on a sheet of grid paper. Each level is a detailed pixel picture from outer space, like a rocket, an astronaut, a UFO, a ringed planet or a galaxy. Pick a numbered color, then tap or drag across the matching squares and zoom in for the small details.</p>
+    <p class="lead">A blank numbered mosaic slowly becomes a rocket, a moon rover or a galaxy. One pencil fills only its own numbered squares, so you can sweep across a whole band of mixed colors.</p>
     <ul class="facts"><li>Puzzle</li><li>Tap or drag</li><li>15 space pictures</li><li>Saves your progress</li></ul>
-    <div><a class="btn" href="/play/space-glass">Play Space Glass</a></div>
+    <div class="btnrow"><a class="btn" href="/play/space-glass">Play Space Glass</a><a class="guide-jump" href="#strategy">Find the last square of one color</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Pick a coloured pencil from the tray at the bottom. Every square with its number lights up on the picture.</li><li>Tap a lit square to color it in, or hold and drag across several at once. Zoom in with + or a pinch for small squares.</li><li>When a color is finished it gets a check mark and the next color is picked for you.</li><li>Fill every square to finish the picture and move on to the next level.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Open a picture and pick a numbered pencil from the tray. The matching squares stand out on the grid.</li><li>Tap a matching square for one mark or drag across a group of them. Other colors are skipped as the pencil passes.</li><li>Use the plus button or pinch to enlarge tiny details. Once a color is complete, its pencil gets a check and another open color becomes active.</li><li>Finish every numbered square to add the picture to your collection. Your device saves filled squares between visits.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click a square to fill it. Hold and drag to fill a whole row in one go.</li><li>Tap a color in the tray to switch, or press 1 to 9 on a keyboard.</li><li>The magnifier points out a square you missed, and the Sound button turns sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Dragging is the fastest way to fill big areas. Squares of other colors are skipped, so you can sweep right over them.</li><li>The small number on each color shows how many squares are left.</li><li>Tap a square with a different number and the game shows you which color it needs.</li><li>Finished pictures are saved in the Pictures collection on the start screen.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Keep one finger down to color a broad patch. Lift it and use two fingers to move the zoomed picture without drawing.</li><li>Want to work on a particular part of the picture? Tap an unfinished square there. If another pencil is selected, the game tells you the number you need.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Space Glass</h2><p>Space Glass is a colour-by-number puzzle on grid paper. Every level is a detailed pixel picture from outer space, a rocket, an astronaut, a UFO, a ringed planet, a galaxy, and you fill it in by picking a numbered colour and tapping or dragging across the matching squares, zooming in for the small details.</p><p>It is one of the calmest games on the site and a favourite for anyone who likes to wind down. Dragging skips squares of other colours, so big areas go fast, and finished pictures stay in your collection on your device so you can look back at them.</p></section>
+<section class="panel about" id="strategy"><h2>Find the last square of one color</h2><div><div><p>When a pencil&#x27;s counter drops to one, keep that color selected and tap Hint. The remaining square flashes. If you&#x27;re zoomed in, the board also scrolls to it. Fill it and the tray moves on to the next unfinished pencil.</p></div></div></section>
 
 <aside class="also twin"><p>Like Space Glass? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/sea-glass" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Space Glass, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Space Glass", "description": "A relaxing color-by-number puzzle on a sheet of grid paper. Each level is a detailed pixel picture from outer space, like a rocket, an astronaut, a UFO, a ringed planet or a galaxy. Pick a numbered color, then tap or drag across the matching squares and zoom in for the small details.", "url": "https://www.sketchpadarcade.com/space-glass", "image": "https://www.sketchpadarcade.com/img/space-glass.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Space Glass", "description": "A blank numbered mosaic slowly becomes a rocket, a moon rover or a galaxy. One pencil fills only its own numbered squares, so you can sweep across a whole band of mixed colors.", "url": "https://www.sketchpadarcade.com/space-glass", "image": "https://www.sketchpadarcade.com/img/space-glass.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Space Glass", "item": "https://www.sketchpadarcade.com/space-glass"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

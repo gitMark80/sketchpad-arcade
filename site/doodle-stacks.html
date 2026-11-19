@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Doodle Stacks</h1>
-    <p class="lead">A colour sorting puzzle on a little hexagon board drawn on paper. Three stacks of coloured-pencil discs wait in the wooden tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one disc at a time. Get 10 or more of one colour on top and they pop in a burst of points. Pop enough discs to finish the level, but don&#x27;t let the board fill up. Every level adds a new colour, and later ones have rocks in the way.</p>
+    <p class="lead">A stack can hide its most useful colour under the top few discs. Choose an empty hex where a matching neighbour will uncover what you need next.</p>
     <ul class="facts"><li>Puzzle</li><li>Endless levels</li><li>Combo chains</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/doodle-stacks">Play Doodle Stacks</a></div>
+    <div class="btnrow"><a class="btn" href="/play/doodle-stacks">Play Doodle Stacks</a><a class="guide-jump" href="#strategy">Count the top band, then look underneath</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Drag a stack from the tray onto any empty spot on the board.</li><li>Stacks next to each other with the same top colour hop together onto one stack.</li><li>When 10 or more discs of one colour sit on top of a stack, they pop for points.</li><li>One pop can set off another. Chains score combo points.</li><li>Pop enough discs to finish the level. If the board fills up, the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Pick one of the three tray stacks and drag it to a vacant hex. You get a fresh tray after placing all three.</li><li>Look at the exposed discs once the stack lands. Adjacent stacks with the same top colour transfer their matching top discs together. The colours underneath stay put until uncovered.</li><li>A band of ten or more matching top discs clears for points. Let the board finish moving before planning again. New neighbours can set off a second clear and a combo.</li><li>Reach the disc target to turn the page. On a full board, Wipe can remove a stack if you still have it. A full board with no Wipe ends the run.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Press on a stack in the tray and drag it onto the board. You can also tap a stack and then tap an empty spot.</li><li>Works with a finger on a phone or tablet and with a mouse on a computer.</li><li>On a keyboard, press 1, 2 or 3 to pick a stack, move with the arrow keys and press Enter to drop it. W uses the Wipe.</li><li>The Wipe button clears one stack off the board, once per level.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Keep each colour in its own corner of the board so stacks can grow tall.</li><li>Look under the top colour. When it hops away, the colour below might match a neighbour and start a chain.</li><li>Save the Wipe for when the board is nearly full.</li><li>Don&#x27;t fill every spot. An empty spot or two gives you room to move.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Only an unbroken band at the top can hop. Two yellow discs under a pink disc do not count toward a yellow ten yet.</li><li>Before filling a gap between two tall stacks, compare the top colour of every tray piece. A connecting hex can bring several stacks into the same move.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Doodle Stacks</h2><p>Doodle Stacks is a colour-sorting puzzle on a little hexagon board. You drag a stack of coloured-pencil discs onto an empty space, and any neighbouring stacks with the same colour on top send their discs hopping over one at a time. Build a stack of ten or more of one colour and it pops in a burst of points.</p><p>The board is small, so every placement matters, and later levels add new colours and blockers that get in the way. It is a thoughtful game with a satisfying pop at the end of every good chain. Keeping an empty spot or two free is the habit that separates a short game from a long one.</p></section>
+<section class="panel about" id="strategy"><h2>Count the top band, then look underneath</h2><div><div><p>Say a stack has seven yellow discs showing and three more yellow discs sit on top of your tray stack. Put that tray stack next to the seven. The ten yellow discs can join and pop. If a second colour lies underneath, check whether it will now touch a matching neighbour and set off another move.</p></div></div></section>
 
 <aside class="also twin"><p>Like Doodle Stacks? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/shell-stacks" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Doodle Stacks, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Stacks", "description": "A colour sorting puzzle on a little hexagon board drawn on paper. Three stacks of coloured-pencil discs wait in the wooden tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one disc at a time. Get 10 or more of one colour on top and they pop in a burst of points. Pop enough discs to finish the level, but don't let the board fill up. Every level adds a new colour, and later ones have rocks in the way.", "url": "https://www.sketchpadarcade.com/doodle-stacks", "image": "https://www.sketchpadarcade.com/img/doodle-stacks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Stacks", "description": "A stack can hide its most useful colour under the top few discs. Choose an empty hex where a matching neighbour will uncover what you need next.", "url": "https://www.sketchpadarcade.com/doodle-stacks", "image": "https://www.sketchpadarcade.com/img/doodle-stacks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Doodle Stacks", "item": "https://www.sketchpadarcade.com/doodle-stacks"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

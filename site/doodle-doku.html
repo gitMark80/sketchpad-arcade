@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -235,16 +242,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     <h1>Doodle Doku</h1>
     <p class="lead">Classic sudoku on a pencil grid. Fill every empty square so each row, each column and each 3×3 box has the numbers 1 to 9 exactly once. Every puzzle is new and has exactly one answer, with notes for your pencil guesses and three hints if you get stuck.</p>
     <ul class="facts"><li>Puzzle</li><li>A new puzzle every game</li><li>Notes and 3 hints per puzzle</li><li>Easy, Medium and Hard</li><li>Saves your best on each level</li></ul>
-    <div><a class="btn" href="/play/doodle-doku">Play Doodle Doku</a></div>
+    <div class="btnrow"><a class="btn" href="/play/doodle-doku">Play Doodle Doku</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
   <section class="panel"><h2>How to play</h2><ol><li>Pick a level. Easy starts with about 40 numbers, Medium about 32, and Hard as few as 25.</li><li>Tap an empty square, then tap a number to write it in.</li><li>Each row, column and 3×3 box needs 1 to 9 with no repeats.</li><li>A wrong number turns orange and counts as a mistake. Mistakes never end the game.</li><li>Fill the whole grid to win. Your best time on each level is saved.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap a square, then a number. On a keyboard, use the arrow keys and type 1 to 9.</li><li>Notes lets you pencil in small guesses. Erase clears a square.</li><li>Hint fills in the square you picked (or a random one), three times per puzzle.</li><li>The small number under each button shows how many of that number are still to place.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Look for a row, column or box that&#x27;s almost full first.</li><li>Pick a number and scan for where it can go in each box.</li><li>If a square can only take one number, write it in.</li><li>Use notes when two squares in a box share the same two possible numbers.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Doodle Doku</h2><p>Doodle Doku is sudoku with a sketchbook look. Every puzzle is made fresh when you start and checked to have exactly one answer.</p><p>We count mistakes but never end the game for them, so you can learn a hard grid at your own pace or just play it relaxed.</p></section>
+<section class="panel about" id="strategy"><h2>About Doodle Doku</h2><div><div><p>Doodle Doku is sudoku with a sketchbook look. Every puzzle is made fresh when you start and checked to have exactly one answer.</p><p>We count mistakes but never end the game for them, so you can learn a hard grid at your own pace or just play it relaxed.</p></div></div></section>
 
 
 <section><h2 class="sec">If you like Doodle Doku, try these</h2><div class="grid"><a class="card" href="/blot-sweeper" data-arc-rel data-slug="blot-sweeper" data-added="2026-10-21" data-genre="Puzzle" aria-label="Blot Sweeper, Puzzle game" title="Blot Sweeper">
@@ -268,6 +274,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Doku", "description": "Classic sudoku on a pencil grid. Fill every empty square so each row, each column and each 3\u00d73 box has the numbers 1 to 9 exactly once. Every puzzle is new and has exactly one answer, with notes for your pencil guesses and three hints if you get stuck.", "url": "https://www.sketchpadarcade.com/doodle-doku", "image": "https://www.sketchpadarcade.com/img/doodle-doku.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Doodle Doku", "item": "https://www.sketchpadarcade.com/doodle-doku"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

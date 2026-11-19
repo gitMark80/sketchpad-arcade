@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Paper Peaks</h1>
-    <p class="lead">A cheerful card puzzle drawn on a school desk. Three folded-paper mountains are stacked with hand-doodled index cards, and you clear them by tapping any face-up card one higher or one lower than the card on the notepad. Keep a run going for bigger and bigger points, and when nothing fits, flip a new card from the draw pile. Each level hands out fewer wild doodle stars and a shorter draw pile, so plan your runs.</p>
+    <p class="lead">Clear three peaks of doodle cards by building a run on the notepad. Ranks can climb and fall on the same run, and the deck wraps from king to ace.</p>
     <ul class="facts"><li>Puzzle</li><li>Card game</li><li>3 pencil lives</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/paper-peaks">Play Paper Peaks</a></div>
+    <div class="btnrow"><a class="btn" href="/play/paper-peaks">Play Paper Peaks</a><a class="guide-jump" href="#strategy">Trace the next three ranks before drawing</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap any face-up card that is one higher or one lower than the card on the notepad. King and Ace connect, so you can go K, A, 2 or 2, A, K.</li><li>Cards flip face up when both cards covering them are gone.</li><li>When no card fits, tap the draw pile to flip a new notepad card. The draw pile lights up when it is your only move.</li><li>Every card in an unbroken run scores more: 10, 20, 30 and up. Drawing a card ends the run.</li><li>Clear all three peaks to win the level. Peak tops are worth 100 bonus points, and every card left in the draw pile is worth 25.</li><li>Wild doodle stars in the draw pile, coloured in with every pencil in the box, let any card follow them.</li><li>If the draw pile runs out and nothing fits, you lose a pencil and get a fresh deal. Lose all 3 and the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Use the card lying on the notepad as your starting rank. Tap an uncovered card one rank away. Suits can mix, and an ace connects to both two and king.</li><li>Each card you take becomes the new rank to follow. Removing both cards covering a face-down card turns it over and makes it available.</li><li>When a run ends, tap the stock to change the notepad card. Drawing resets the streak. If you draw a wild star, any exposed card can follow it.</li><li>Clear all three peaks. Each top card adds 100 points and each unused stock card is worth 25 more. A dead end with no stock costs a pencil and brings a fresh deal.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click a card to play it, and tap or click the draw pile to draw.</li><li>On a keyboard, press 1 to 0 to play a face-up card (numbered left to right), or use the arrow keys and Enter. Space or D draws, U undoes and H shows a hint.</li><li>Undo takes back your last move and Hint circles a good card to play. Both are limited each round. The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Before you play, look for the card that keeps your run going longest. Sometimes the lower card opens a longer chain.</li><li>Play cards that are covering face-down cards first. Uncovering new cards gives you more choices.</li><li>Don&#x27;t draw while you still have a move. Every card left in the draw pile is worth bonus points at the end.</li><li>Save your undo for the end of a round, when one wrong pick can leave you stuck.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>When two cards have the same rank, take the one that lifts the last cover from a face-down card. You&#x27;ll have another choice before the run ends.</li><li>A wild doodle star from the stock accepts any exposed card. Pick a starting rank with a visible follow-up so the wild buys more than one move.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Paper Peaks</h2><p>Paper Peaks is a solitaire card puzzle in the tri-peaks family, dealt across three folded-paper mountains on a sketchbook page. The suits are pencil doodles, stars, hearts, moons and flowers, and you clear cards by tapping any face-up card one higher or one lower than the card on the notepad. King and Ace connect, so a run can wrap all the way around.</p><p>The scoring rewards long unbroken runs, and every card left in the draw pile at the end is worth bonus points, so the skill is in not drawing until you have to. Wild doodle stars help, but each level hands out fewer of them and a shorter draw pile. You get three pencils before a game is over.</p></section>
+<section class="panel about" id="strategy"><h2>Trace the next three ranks before drawing</h2><div><div><p>Suppose the notepad shows a king and the ace, two and three are all face up. Take them in that order. From a fresh streak those moves pay 10, 20 and 30 points, and you still have every draw card you started with. Check which covered cards turn over before committing to the three.</p></div></div></section>
 
 <aside class="also twin"><p>Like Paper Peaks? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/sand-peaks" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Paper Peaks, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Ink Jars</h3><p>Pour layers of colored ink between glass jars until every jar holds one color.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Peaks", "description": "A cheerful card puzzle drawn on a school desk. Three folded-paper mountains are stacked with hand-doodled index cards, and you clear them by tapping any face-up card one higher or one lower than the card on the notepad. Keep a run going for bigger and bigger points, and when nothing fits, flip a new card from the draw pile. Each level hands out fewer wild doodle stars and a shorter draw pile, so plan your runs.", "url": "https://www.sketchpadarcade.com/paper-peaks", "image": "https://www.sketchpadarcade.com/img/paper-peaks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Peaks", "description": "Clear three peaks of doodle cards by building a run on the notepad. Ranks can climb and fall on the same run, and the deck wraps from king to ace.", "url": "https://www.sketchpadarcade.com/paper-peaks", "image": "https://www.sketchpadarcade.com/img/paper-peaks.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Paper Peaks", "item": "https://www.sketchpadarcade.com/paper-peaks"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

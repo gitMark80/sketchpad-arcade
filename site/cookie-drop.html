@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Cookie Drop</h1>
-    <p class="lead">A string-snipping puzzle drawn in pencil on a corkboard. A chocolate-chip cookie hangs from strings tied to thumbtacks, and Doodle the doodle monster is waiting at the bottom with his mouth open. Swipe across a string to snip it and the cookie swings and drops. Time your snips so it lands right in Doodle&#x27;s mouth, and swing it through the gold stars on the way for up to 3 stars. Bubbles, bouncy balls, paper-clip hooks and puffing party blowers join in as you go.</p>
+    <p class="lead">Doodle is waiting under a cookie that swings from red thumbtacks. Cut one string and the others decide where the cookie goes. There are 32 corkboard puzzles to solve, each with three gold stars to collect on the way down.</p>
     <ul class="facts"><li>Puzzle</li><li>32 levels</li><li>Phone, tablet and computer</li><li>Saves your stars and best score</li></ul>
-    <div><a class="btn" href="/play/cookie-drop">Play Cookie Drop</a></div>
+    <div class="btnrow"><a class="btn" href="/play/cookie-drop">Play Cookie Drop</a><a class="guide-jump" href="#strategy">Level 6 · Three stars on Tick Tock</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Swipe across a string to snip it. The cookie swings or drops when its strings let go.</li><li>Get the cookie into Doodle&#x27;s mouth to finish the level. If it plops into the ink puddle, just try again.</li><li>Each level has 3 gold stars. Swing the cookie through them for stars and bonus points.</li><li>Bubbles float the cookie up until you tap to pop them. Bouncy balls bounce it, paper-clip hooks grab it with a new string, and party blowers puff it along when you tap them.</li><li>Your score is your best points from every level added up. Feed Doodle to unlock the next level.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Find Doodle on the board and trace a route from the cookie to his mouth. You can clear the level with a catch even if you miss a star.</li><li>Swipe through one string at a time. With a string still attached, the cookie swings around its pin. Cut the last string to release it.</li><li>Collect gold stars by touching them with the cookie. Later boards add bubbles that lift it, paper clips that catch it, balls that bounce it and blowers you can tap for a push.</li><li>Feed Doodle to unlock the next board. If the cookie falls into the ink, retry and change the order or timing of your cuts.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: swipe across a string to snip it. Tap a bubble or a party blower.</li><li>Computer: drag the mouse across a string, or just click it. Click bubbles and party blowers.</li><li>Press R to restart the level and L to pick a level.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Watch the swing first. Snip when the cookie is heading toward Doodle.</li><li>With two or three strings, the order you snip them changes the swing.</li><li>A paper-clip hook only grabs the cookie once, so think about where that new swing will go.</li><li>Pop a bubble right above Doodle and the cookie drops straight into his mouth.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Follow the string back to its thumbtack before cutting. That shows you which pin will still be holding the cookie and which way it can swing.</li><li>On a level with a bubble, pick the spot where you want the cookie to drop. Let the bubble carry it there, then tap to pop it.</li><li>You can return to a cleared board from Levels. Use the first run to find a route to Doodle and the next to pick up the stars you missed.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Cookie Drop</h2><p>Cookie Drop is a string-snipping physics puzzle sketched in pencil. A chocolate-chip cookie hangs from strings tied to thumbtacks on a corkboard, Doodle the doodle monster waits below with his mouth open, and you swipe to cut strings so the cookie swings and drops into him. Three gold stars on each level reward a clever swing.</p><p>The puzzle is in the order and timing of the snips. Bubbles float the cookie up until you pop them, bouncy balls bounce it, paper-clip hooks catch it with a fresh string and party blowers puff it sideways. Nothing is lost by missing; the cookie plops into the ink puddle and you try again.</p></section>
+<section class="panel about" id="strategy"><h2>Level 6 · Three stars on Tick Tock</h2><div class="illustrated-guide"><figure><img src="/assets/cookie-drop/guide-tick-tock.webp" alt="Level 6. An arrow marks the short string below the left red thumbtack. A second string supports the cookie, with three stars between it and Doodle." width="720" height="1280" loading="lazy"><figcaption>Tick Tock before the first cut. The longer string stays attached for the swing.</figcaption></figure><div><p>Let the cookie settle underneath the two red thumbtacks. Cut the short string on the far left, where the arrow points. Leave the longer string attached. It carries the cookie through the middle star and up toward the star on the right.</p><p>For the second cut, watch the cookie instead of the pin. As it reaches the upper-right star and is still travelling right, cut the remaining string. The cookie drops through the lowest star into Doodle’s mouth. All three stars and the catch give you 400 points.</p></div></div></section>
 
 <aside class="also twin"><p>Like Cookie Drop? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/taffy-drop" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Cookie Drop, try these</h2><div class="grid"><a class="card" href="/2048-drop" data-arc-rel data-slug="2048-drop" data-added="2026-10-08" data-genre="Puzzle" aria-label="2048 DROP, Puzzle game" title="2048 DROP">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Margin Merge</h3><p>Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Cookie Drop", "description": "A string-snipping puzzle drawn in pencil on a corkboard. A chocolate-chip cookie hangs from strings tied to thumbtacks, and Doodle the doodle monster is waiting at the bottom with his mouth open. Swipe across a string to snip it and the cookie swings and drops. Time your snips so it lands right in Doodle's mouth, and swing it through the gold stars on the way for up to 3 stars. Bubbles, bouncy balls, paper-clip hooks and puffing party blowers join in as you go.", "url": "https://www.sketchpadarcade.com/cookie-drop", "image": "https://www.sketchpadarcade.com/img/cookie-drop.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Cookie Drop", "description": "Doodle is waiting under a cookie that swings from red thumbtacks. Cut one string and the others decide where the cookie goes. There are 32 corkboard puzzles to solve, each with three gold stars to collect on the way down.", "url": "https://www.sketchpadarcade.com/cookie-drop", "image": "https://www.sketchpadarcade.com/img/cookie-drop.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Cookie Drop", "item": "https://www.sketchpadarcade.com/cookie-drop"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

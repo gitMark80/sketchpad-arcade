@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Letter Links</h1>
-    <p class="lead">Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.</p>
+    <p class="lead">Twelve letters sit on four sides of the chalk path. Where a word ends decides the first step of the next word, so a short word with the right ending can open the board.</p>
     <ul class="facts"><li>Word</li><li>72 puzzles</li><li>Beginner, Intermediate, Advanced</li><li>Phone, tablet and computer</li><li>Saves your best score and progress</li></ul>
-    <div><a class="btn" href="/play/letter-links">Play Letter Links</a></div>
+    <div class="btnrow"><a class="btn" href="/play/letter-links">Play Letter Links</a><a class="guide-jump" href="#strategy">A three-word route through twelve letters</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap letters around the path to spell a word. Each next letter must come from a different side.</li><li>Press Enter to play the word. Your next word starts with its last letter.</li><li>Letters can be used again. Used letters turn gold.</li><li>Turn all 12 letters gold to solve the puzzle. Try to do it in the par number of words.</li><li>Beginner: easy letters, 7 words per puzzle and 4 hints. Intermediate: all 72 puzzles, 6 words, points ×1.5. Advanced: tricky letters, 4+ letter words only, 5 words, points ×2.</li><li>You have 3 heart lives. Running out of words or skipping costs a heart.</li><li>Each difficulty saves its own progress and best score. Change it from the start screen, the ? card or the game-over card.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Read the three letters on each side of the chalk path. Tap a word one letter at a time, changing sides with every tap. A letter can appear again after you visit another side.</li><li>Press Enter to submit a word. Its letters turn gold. The final letter stays in place to begin the next word. Use all twelve letters to clear the board and aim for the displayed par.</li><li>Beginner starts with four hints and allows seven words per puzzle. Intermediate uses the full 72-puzzle set with a six-word limit and 1.5× scoring. Advanced requires words of at least four letters and allows five words for 2× scoring.</li><li>Running out of words or skipping a board costs one of three hearts. Progress and best scores are kept separately for each difficulty, so you can change modes from the start, help or game-over screen.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Computer: click or drag across letters, or type them on the keyboard. Enter plays the word and Backspace deletes a letter.</li><li>Phone or tablet: tap letters or slide your finger from letter to letter, then tap Enter.</li><li>Hint shows the next letter of a good solution. Restart clears your words for this puzzle.</li><li>The sound button turns the sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Long words that use letters from all four sides get you there fastest.</li><li>Think about the last letter: a word ending in a common letter like S, E or T gives you more choices next.</li><li>Deleting the first letter of a word takes back your previous word, so you can try another path.</li><li>Save hints for the hard puzzles. You earn a new hint bulb every three puzzles you solve.</li><li>Under par pays the most: each word you save is worth 150 bonus points.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>An already-gold letter still works as a bridge. SPRINGS uses its first and last S to connect two different words.</li><li>If your last word leaves a poor starting letter, use Delete while only that starting letter is showing. You can revise the previous word.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Letter Links</h2><p>Letter Links is a word-chain puzzle with twelve chalk letters around a path in the park, three on each side. Each word you spell must hop between sides and must start with the last letter of the word before, and you win by turning every letter gold. Finish in par or fewer words for a bonus.</p><p>There are 72 hand-made puzzles across three difficulty levels. Beginner uses easy letters and a shorter list; Intermediate is the full run; Advanced brings in J, Q and Z with a four-letter minimum. It is a thinker&#x27;s game that rewards a good vocabulary.</p></section>
+<section class="panel about" id="strategy"><h2>A three-word route through twelve letters</h2><div><div><p>On the board with sides PCN, ATG, RSL and OIE, try PLANTS. P to L changes sides, L to A changes again, and the same rule holds for the rest of the word. Its final S starts SPRINGS. That also ends in S, letting SCONE cover the last untouched letters. The three words use all twelve letters on this par-four board.</p></div></div></section>
 
 <aside class="also twin"><p>Like Letter Links? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/letter-lagoon" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Letter Links, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Letter Links", "description": "Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.", "url": "https://www.sketchpadarcade.com/letter-links", "image": "https://www.sketchpadarcade.com/img/letter-links.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Letter Links", "description": "Twelve letters sit on four sides of the chalk path. Where a word ends decides the first step of the next word, so a short word with the right ending can open the board.", "url": "https://www.sketchpadarcade.com/letter-links", "image": "https://www.sketchpadarcade.com/img/letter-links.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Letter Links", "item": "https://www.sketchpadarcade.com/letter-links"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

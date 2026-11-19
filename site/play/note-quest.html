@@ -166,7 +166,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Note Quest</h1><button class="sa-share" type="button" aria-label="Share Note Quest" data-share-url="https://www.sketchpadarcade.com/note-quest" data-share-title="Note Quest" data-share-text="Play Note Quest free on Sketchpad Arcade! Guess the secret word in each note in six tries, with colour clues after every guess."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Note Quest</h1><a class="sa-back sa-guide" href="/note-quest" aria-label="Note Quest game guide" title="Game guide">?</a><button class="sa-share" type="button" aria-label="Share Note Quest" data-share-url="https://www.sketchpadarcade.com/note-quest" data-share-title="Note Quest" data-share-text="Play Note Quest free on Sketchpad Arcade! Guess the secret word in each note in six tries, with colour clues after every guess."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
     <button class="iconbtn" id="soundBtn" type="button">Sound: on</button>
   </div>
@@ -445,13 +445,6 @@ function scan(){document.querySelectorAll('.sa-endhome').forEach(h=>{const p=h.p
   b.insertAdjacentElement('afterend',a)})}
 let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class','style','open']});
 addEventListener('load',scan);setTimeout(scan,600)})();
-</script>
-<script>
-/* AdSense on play pages: the loader is only added once the first end screen appears (the Home button next to
-   'Play again' is the signal), so no anchor, vignette or in-page ad can show while a game is being played.
-   Skipped during reel recordings. Which formats run (vignette on page change, anchor, in-page) is set per site
-   in the AdSense dashboard under Auto ads. */
-(()=>{if(window.name==='bda-reel')return;let done=false;function load(){if(done)return;done=true;const s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599';document.head.appendChild(s)}const o=new MutationObserver(()=>{if(document.querySelector('.sa-endhome')){o.disconnect();load()}});o.observe(document.body,{subtree:true,childList:true});})();
 </script>
 <script>window.BDA_GAME={"slug": "note-quest", "name": "Note Quest", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/note-quest", "short": "sketchpadarcade.com/note-quest"};</script>
 <script>(()=>{const s="note-quest";function count(){if(window.name==='bda-reel')return;try{if(localStorage.getItem('arc-nocount')==='1')return;const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>

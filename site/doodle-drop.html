@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Doodle Drop</h1>
-    <p class="lead">A bouncy striped ball sits at the top of a giant pencil, and the only way down is through the gaps in the paper rings around it. Drag to spin the pencil, drop through ring after ring, and steer clear of the spiky pink scribbles and sliding ink blots. Fall through three in a row and your ball glows with a rainbow that smashes right through the next ring.</p>
+    <p class="lead">Spin the giant pencil to line up holes in its paper rings. A single safe bounce gives you time to aim, while a clean string of drops gives the striped ball the power to break a ring.</p>
     <ul class="facts"><li>Arcade</li><li>Endless levels</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/doodle-drop">Play Doodle Drop</a></div>
+    <div class="btnrow"><a class="btn" href="/play/doodle-drop">Play Doodle Drop</a><a class="guide-jump" href="#strategy">Count the gaps before a pink ring</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>The striped ball bounces up and down on its own.</li><li>Drag left or right to spin the pencil and turn a gap under the ball.</li><li>Drop through each ring to score. More rings in a row score more.</li><li>Don&#x27;t land on the pink scribbles or the sliding purple ink blots.</li><li>Fall through three rings without bouncing to glow, then smash the next ring to bits.</li><li>Land on the chequered finish platform at the bottom to clear the level and climb a taller pencil.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>The ball bounces by itself. Drag across the screen to turn the giant pencil and bring an opening underneath it.</li><li>Pass through openings to descend. An ordinary landing resets your streak and gives you another bounce. A pink scribble or a moving ink blot will pop an unprotected ball.</li><li>Connect three drops without landing to light up the ball. It can then break the next solid ring it hits. Longer uninterrupted drops also add more points.</li><li>Reach the chequered platform to clear the pencil. If the ball pops, Retry returns you to the beginning of that level.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Computer: drag with the mouse, or hold the arrow keys or A and D to spin the pencil. Press Esc to pause.</li><li>Phone or tablet: drag left and right anywhere on the pencil.</li><li>The sound button turns the sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Start turning while the ball is still in the air so the gap is ready when it lands.</li><li>Little nudges work better than big swipes. The pencil keeps spinning a bit after you let go.</li><li>Chain drops together for big points and a rainbow smash that even breaks scribbles.</li><li>Watch the ink blots slide before you land near them.</li><li>If you pop, Retry starts the same level again with the score you had when it began.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>If the openings do not line up, steer onto a plain patch and use the next bounce to turn. A bounce resets the streak.</li><li>Watch a moving ink blot for a bounce before crossing its path. A safe spot on the last bounce can be occupied on the next one.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Doodle Drop</h2><p>Doodle Drop is a tower-falling game. A striped ball sits on top of a giant pencil ringed with paper discs, and you drag to spin the pencil so the ball can drop through the gaps. Spiky pink scribbles and sliding ink blots on the rings end your run if you land on them.</p><p>The rainbow mechanic rewards nerve: fall through three rings in a row without touching anything and the ball glows and smashes straight through the next ring, scribbles included. It is a quick game with a very satisfying rhythm once you find it.</p></section>
+<section class="panel about" id="strategy"><h2>Count the gaps before a pink ring</h2><div><div><p>Three gaps in succession score 5, 10 and 15 points and light up the ball. If the next ring has a pink wedge below you, the glowing ball can smash through it. After only two gaps, that same wedge ends the attempt. Look for the glow before aiming for a hazard.</p></div></div></section>
 
 <aside class="also twin"><p>Like Doodle Drop? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/lighthouse-drop" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Doodle Drop, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Drop", "description": "A bouncy striped ball sits at the top of a giant pencil, and the only way down is through the gaps in the paper rings around it. Drag to spin the pencil, drop through ring after ring, and steer clear of the spiky pink scribbles and sliding ink blots. Fall through three in a row and your ball glows with a rainbow that smashes right through the next ring.", "url": "https://www.sketchpadarcade.com/doodle-drop", "image": "https://www.sketchpadarcade.com/img/doodle-drop.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Drop", "description": "Spin the giant pencil to line up holes in its paper rings. A single safe bounce gives you time to aim, while a clean string of drops gives the striped ball the power to break a ring.", "url": "https://www.sketchpadarcade.com/doodle-drop", "image": "https://www.sketchpadarcade.com/img/doodle-drop.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Doodle Drop", "item": "https://www.sketchpadarcade.com/doodle-drop"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

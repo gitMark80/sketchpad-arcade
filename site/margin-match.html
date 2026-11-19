@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Margin Match</h1>
-    <p class="lead">A cheerful tile-matching puzzle piled high with sketchbook doodles. Tap a tile and it hops into your tray. Collect three of the same, like three pencils or three paperclips, and they clear away. Clear the whole pile to win the level, but don&#x27;t let your 7-spot tray fill up.</p>
+    <p class="lead">You get seven spaces to turn a pile of overlapping doodle tiles into trios. Count how many tiles you must uncover before committing a tray space.</p>
     <ul class="facts"><li>Puzzle</li><li>Tap to play</li><li>Endless levels</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/margin-match">Play Margin Match</a></div>
+    <div class="btnrow"><a class="btn" href="/play/margin-match">Play Margin Match</a><a class="guide-jump" href="#strategy">Can the seventh tile rescue this tray?</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap any bright tile on the pile to move it into your tray at the bottom.</li><li>Get three of the same doodle in the tray and they clear away for points. Clear trios quickly one after another for a combo.</li><li>Dark tiles are covered by tiles on top. Clear the tiles above them first.</li><li>Clear every tile from the pile to finish the level. If all 7 tray spots fill up without a trio, the level is over and you can try it again.</li><li>Each level has more tiles, more kinds of doodles and taller stacks.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose a bright tile on the pile and tap it into the seven-place tray. Dark tiles can only be picked after you remove everything overlapping them.</li><li>Collect three copies of one drawing to clear that trio. Finish another trio within three and a half seconds to build a scoring combo.</li><li>Plan to make a trio by the seventh tile. Taking a seventh that cannot complete a set ends the attempt. You can retry that level.</li><li>Clear the pile and finish its trios to advance. Later layouts put more kinds of doodles under taller stacks.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click a tile to move it to the tray.</li><li>Undo puts your last tile back on the pile. Lift moves 3 tiles from your tray up to a holding spot, and you can tap them back in later. Shuffle mixes up the doodles on the pile. You get one of each every level.</li><li>The ? button shows the rules and lets you continue from your last level or start a new game.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Before you tap, look at what&#x27;s already in your tray and pick a tile that matches it.</li><li>Uncover the tall stacks early so the dark tiles don&#x27;t trap you at the end.</li><li>Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.</li><li>Your level is saved, so you can come back later and carry on.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>At five tiles, you have room to remove one cover and then take a third matching tile. Check the tile beneath the cover before spending that first space.</li><li>Lift can send three tray tiles to the holding area. Bring one back when it closes a trio, leaving the others there until you have room.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Margin Match</h2><p>Margin Match is a tile-matching puzzle in the style of the popular triple-match games, piled high with sketchbook doodles. Tiles are stacked in overlapping layers, and only tiles with nothing on top can be picked. Tap one and it hops into a seven-slot tray; collect three of a kind and they clear.</p><p>Clearing the whole pile with a seven-slot tray takes a little planning, because grabbing two of something you cannot finish is the fastest way to run out of room. The pencils, paperclips and other doodles are our own drawings, and your level is saved so you can come back to it.</p></section>
+<section class="panel about" id="strategy"><h2>Can the seventh tile rescue this tray?</h2><div><div><p>At six tiles in the tray, look for a pair already sitting there. If a bright, uncovered tile completes that pair, taking it fills the seventh space for a moment and then clears all three. If its match sits under an unrelated tile, taking the cover first fills the last space with no trio. Use Lift or find another exposed match before touching the cover.</p></div></div></section>
 
 <aside class="also twin"><p>Like Margin Match? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/treasure-trio" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Margin Match, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Margin Match", "description": "A cheerful tile-matching puzzle piled high with sketchbook doodles. Tap a tile and it hops into your tray. Collect three of the same, like three pencils or three paperclips, and they clear away. Clear the whole pile to win the level, but don't let your 7-spot tray fill up.", "url": "https://www.sketchpadarcade.com/margin-match", "image": "https://www.sketchpadarcade.com/img/margin-match.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Margin Match", "description": "You get seven spaces to turn a pile of overlapping doodle tiles into trios. Count how many tiles you must uncover before committing a tray space.", "url": "https://www.sketchpadarcade.com/margin-match", "image": "https://www.sketchpadarcade.com/img/margin-match.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Margin Match", "item": "https://www.sketchpadarcade.com/margin-match"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

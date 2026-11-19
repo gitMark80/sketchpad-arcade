@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Even Sketch</h1>
-    <p class="lead">A calm little logic puzzle drawn on a sheet of graph paper. Tap a square to draw a smiling orange star, tap again for a blue circle. Every row and column needs as many stars as circles, you can never have three of the same side by side, and the little = and × badges between squares tell you which pairs match and which are opposite. Each puzzle has exactly one answer, so careful thinking always wins. Finish the page before the bell timer fills up and the next sheet is waiting.</p>
+    <p class="lead">Half the marks in every graph-paper row and column must be stars, and half circles. A single pencilled clue can settle several squares if you follow it in both directions.</p>
     <ul class="facts"><li>Puzzle</li><li>Endless levels, 4×4 up to 8×8</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/even-sketch">Play Even Sketch</a></div>
+    <div class="btnrow"><a class="btn" href="/play/even-sketch">Play Even Sketch</a><a class="guide-jump" href="#strategy">Finish a four-square row in two steps</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap a graph-paper square to draw a star, tap it again for a circle, and once more to erase it. Shaded squares with a pencil mark are already filled in and can&#x27;t be changed.</li><li>Every row and every column must have the same number of stars and circles.</li><li>Never put more than two of the same doodle next to each other, across or down.</li><li>An = badge between two squares means they match. A × badge means one is a star and the other is a circle.</li><li>Break a rule and the squares turn pink and wiggle so you can spot it. Fill the whole grid correctly to solve the page.</li><li>Each level scores points for solving, 5 points for every second left before the bell and a bonus for not using a hint. If the bell bar fills up first, the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>On the first four-by-four page, leave the shaded clues in place. Tap an empty cell once for a star, twice for a circle, and a third time to clear it.</li><li>Fill half of each row and half of each column with each mark. Check both directions as you work. A run of three equal marks breaks the rule.</li><li>Read the signs between cells. An equals sign connects two of the same mark. A multiplication sign connects opposite marks. Pink highlights show which entries conflict.</li><li>Finish the grid before the bell. Each remaining second adds five points to the solve bonus, and a page finished without a hint earns an extra bonus.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: tap a square to cycle star, circle and empty.</li><li>Computer: click a square to cycle star, circle and empty.</li><li>Keyboard: arrow keys move, Space or Enter cycles, 1 draws a star, 2 a circle and 0 erases. U undoes and H gives a hint.</li><li>Undo takes back your last move, Hint reveals one correct square for 10 seconds off the bell timer, and Erase clears the sheet.</li><li>The speaker button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Look for two of the same side by side. The squares on both ends must be the other doodle.</li><li>A gap between two matching doodles, like star, empty, star, has to be a circle.</li><li>Once a row has its full half of stars, every empty square left in it is a circle.</li><li>Follow the signs: once one square next to an = or × is known, its partner is too.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>On six-square pages, count to three of each mark. On eight-square pages, count to four.</li><li>Look for two known squares with one blank between them before trying a guess. Two matching endpoints force the opposite mark into the gap.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Even Sketch</h2><p>Even Sketch is a balancing logic puzzle. You fill a grid with stars and circles so that each row and column holds the same number of both, no three of a kind ever line up, and every = and × sign between squares is respected. Every puzzle is freshly made and checked to have exactly one solution.</p><p>The first levels are small 4×4 sheets with plenty of doodles already pencilled in. Then the grid grows to 6×6, the helpful shaded squares get fewer, more signs appear, and later pages alternate with big 8×8 sheets. A bell timer keeps gentle time pressure on, and your total score carries from page to page until the bell finally rings.</p></section>
+<section class="panel about" id="strategy"><h2>Finish a four-square row in two steps</h2><div><div><p>Start with a four-square row showing star, blank, star, blank. The middle blank must be a circle because three stars in a row would break the rule. There are already two stars, so the last blank must also be a circle. Now look down the columns under both new marks. If a × badge connects a circle to an empty square below, that square must be a star.</p></div></div></section>
 
 <aside class="also twin"><p>Like Even Sketch? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/even-tide" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Even Sketch, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Ink Jars</h3><p>Pour layers of colored ink between glass jars until every jar holds one color.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Even Sketch", "description": "A calm little logic puzzle drawn on a sheet of graph paper. Tap a square to draw a smiling orange star, tap again for a blue circle. Every row and column needs as many stars as circles, you can never have three of the same side by side, and the little = and \u00d7 badges between squares tell you which pairs match and which are opposite. Each puzzle has exactly one answer, so careful thinking always wins. Finish the page before the bell timer fills up and the next sheet is waiting.", "url": "https://www.sketchpadarcade.com/even-sketch", "image": "https://www.sketchpadarcade.com/img/even-sketch.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Even Sketch", "description": "Half the marks in every graph-paper row and column must be stars, and half circles. A single pencilled clue can settle several squares if you follow it in both directions.", "url": "https://www.sketchpadarcade.com/even-sketch", "image": "https://www.sketchpadarcade.com/img/even-sketch.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Even Sketch", "item": "https://www.sketchpadarcade.com/even-sketch"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

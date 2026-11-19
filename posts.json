@@ -154,9 +154,9 @@
         "## The rules",
         "Clean, always. No gore, no gambling mechanics and nothing you would not want on your screen in a library or a lecture hall.",
         "No gambling mechanics. No loot boxes, no spinning wheels, no fake currencies you buy with real money. Progress is earned by playing.",
-        "Nothing to install and nobody to sign up. Every game runs in the browser, and your scores and progress are saved on your own device, not on our servers.",
-        "Original work. We happily borrow mechanics, because a bubble shooter is a bubble shooter, but every character, drawing and word list on the site is ours. We never use another game's name, art or text.",
-        "Drawn by hand. The whole site is meant to look like a page from a sketchbook, so every game's art is pencil on paper, with dark outlines and coloured-pencil inside.",
+        "Open a game in your browser and it is ready to play. Solo scores stay on the device. Invite a friend and the game saves your shared turns so each of you can play when you have time.",
+        "Familiar rules leave room for a new setting. In Pencil Patrol a stubby pencil eats dots and four erasers chase it around the notebook. For Sketch with Friends we adapt an existing US English dictionary so the board can check a player's word as soon as they submit it.",
+        "The first test for a cover is whether you can recognise the game at thumbnail size. Its notebook paper, pencil outlines and coloured hatching should still leave the ball, board or character easy to pick out.",
         "## How a game gets here",
         "New games start on a private preview where we play them ourselves for a few days. Most get changes, some get sent back, and the ones that stick around get their own pencil cover before they go live. The games you see in the New This Week row are the survivors.",
         "If you think something on the site breaks one of these rules, tell us from the contact page. We would rather hear about it than not."
@@ -174,7 +174,7 @@
         "## What is here",
         "The site opened with sketch twins of the Beach Day games, like {{sketch-sprint}}, {{doodle-drop}}, {{draw-brawl}} and {{margin-merge}}, and has started adding games of its own, beginning with {{paper-plane-dash}}. Every game has its own page with a short guide on how to play, the controls, a few tips and a bit about how it was made.",
         "## What to expect",
-        "Clean, always. Hand-drawn art and characters. Progress saved on your device, not ours. And a site that keeps getting a little better every week. If you have an idea for a game, or you found a bug, the contact page is the place to tell us."
+        "Solo progress saves in your browser. For invited games, the match link lets friends take turns from different devices. If you have an idea for a game or a bug to report, the contact page is the place to tell us."
       ]
     }
   ]

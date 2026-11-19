@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Scribble Slice</h1>
-    <p class="lead">A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the inky black bombs. The fruit comes faster and in bigger bunches the longer you last.</p>
+    <p class="lead">Fruit flies up through your drawing of a cutting board. Watch where the fruit paths meet, then cut across them while there is clear paper between your finger and the ink bomb.</p>
     <ul class="facts"><li>Arcade</li><li>Endless play</li><li>Combo bonuses</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/scribble-slice">Play Scribble Slice</a></div>
+    <div class="btnrow"><a class="btn" href="/play/scribble-slice">Play Scribble Slice</a><a class="guide-jump" href="#strategy">Decide whether the third fruit is worth the swipe</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Fruit leaps up from the bottom of the cutting board.</li><li>Swipe across a fruit to slice it and score 10 points.</li><li>Slice two or more fruit in one swipe for a combo bonus.</li><li>Swiping an inky bomb costs a star, and so does letting a fruit fall back down off the board.</li><li>Lose all 3 stars and the game is over. Every 500 points gives you a lost star back.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Watch the first fruit come up from the bottom. Swipe through it with a finger or drag the mouse across it to split it for ten points.</li><li>Keep a single stroke moving through nearby fruit to add a combo when the stroke finishes. Lift before crossing an ink bomb.</li><li>A missed fruit costs a star when it drops out of sight, and slicing a bomb costs one too. Cutting the special bouncy ball briefly slows the action.</li><li>Start with three stars and see how long you can last. Passing a 500-point mark restores a missing star.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Press and drag your finger across the screen to slice. With a mouse, hold the button down and drag.</li><li>Works with a finger on a phone or tablet and with a mouse on a computer.</li><li>Press Enter or Space to start a new game.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Wait for the fruit to rise to the top of its jump, where it moves slowest, then slice.</li><li>Long sweeping swipes through a bunch of fruit score big combos.</li><li>Swipe around the inky bombs, not through them. Lift your finger if one is in the way.</li><li>A shiny golden apple is worth 50 points, and a bouncy ball slows everything down for a few seconds.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>The golden apple gives 50 points by itself. When it is on the opposite side from a pair of ordinary fruit, picking it off with a short stroke is still worthwhile.</li><li>Slice the bouncy ball for four and a half seconds of slow motion. Use the extra time to spot the bomb&#x27;s path before lining up another combo.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Scribble Slice</h2><p>Scribble Slice is a fruit-slicing arcade game drawn in pencil. Fruit leaps up into the frame and you swipe across it to cut it in half. Slice several in one stroke for a combo bonus, and steer clear of the inky bombs that come up with it.</p><p>Rounds get faster and the fruit comes in bigger bunches the longer you last, so a good run turns into a flurry of swipes. It works especially well on a phone or tablet where you can swipe with a finger, and it is one of the quickest games on the site to pick up.</p></section>
+<section class="panel about" id="strategy"><h2>Decide whether the third fruit is worth the swipe</h2><div><div><p>Two ordinary fruit cut together earn 30 points, ten each plus a ten-point double. Catch three in the same stroke and the total rises to 60. If an ink bomb is between the second and third pieces, lift your finger and start a clean cut on the far side to protect a star.</p></div></div></section>
 
 <aside class="also twin"><p>Like Scribble Slice? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/splash-slice" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Scribble Slice, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Scribble Slice", "description": "A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the inky black bombs. The fruit comes faster and in bigger bunches the longer you last.", "url": "https://www.sketchpadarcade.com/scribble-slice", "image": "https://www.sketchpadarcade.com/img/scribble-slice.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Scribble Slice", "description": "Fruit flies up through your drawing of a cutting board. Watch where the fruit paths meet, then cut across them while there is clear paper between your finger and the ink bomb.", "url": "https://www.sketchpadarcade.com/scribble-slice", "image": "https://www.sketchpadarcade.com/img/scribble-slice.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Scribble Slice", "item": "https://www.sketchpadarcade.com/scribble-slice"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Bubble Doodle</h1>
-    <p class="lead">A bubble shooter drawn in coloured pencil, with a dotted aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the dashed line.</p>
+    <p class="lead">One well-placed pencil bubble can take down a whole branch of colours. Aim for the point holding the branch to the ceiling and use the side walls to reach it.</p>
     <ul class="facts"><li>Arcade</li><li>Drag to aim</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/bubble-doodle">Play Bubble Doodle</a></div>
+    <div class="btnrow"><a class="btn" href="/play/bubble-doodle">Play Bubble Doodle</a><a class="guide-jump" href="#strategy">Read a six-bubble drop</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Drag to aim. The dotted pencil line shows exactly where your shot will go, including bounces off the walls.</li><li>Release to shoot. Hitting a bubble of the same color pops the whole connected group.</li><li>Bubbles left hanging with nothing above them fall off for bonus points.</li><li>Pop every bubble to clear the level. Each level only sends a few new rows, so the board can be beaten, and each level adds rows and colors. The game ends if bubbles cross the red dashed line.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Drag until the dotted path ends beside a bubble the same colour as your shot. The dots show side-wall rebounds too. Lift your finger to fire.</li><li>One matching neighbour is enough. Every touching bubble of that colour in the group pops, and any bubbles cut off from the ceiling fall. Six successful pops charge a bomb for an upcoming shot.</li><li>Count shots as well as colours. Level one can add two rows, one per seven shots. Later pages bring more colours and more frequent rows.</li><li>Empty the board to move on. If the bottom of the cluster crosses the dashed danger line, the run ends.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Drag and release with a mouse or finger to aim and shoot.</li><li>Tap the waiting bubble to swap it with your current one.</li><li>On a keyboard, use the arrow keys to aim and Space to shoot.</li><li>Every 6 pops charges a bomb that clears everything around where it lands.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Bank shots off the walls to reach gaps you can&#x27;t hit directly.</li><li>Dropping a big hanging cluster is worth far more than popping.</li><li>Watch the new-row counter and clear the lowest rows first.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>A shot only needs one neighbour of its colour to start a pop. Use the aiming dots to touch that neighbour from the side.</li><li>If two shots can reach the same colour, choose the one that removes support from the lowest branch before the next row arrives.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Bubble Doodle</h2><p>Bubble Doodle is Sketchpad Arcade&#x27;s bubble shooter. The dotted aim line shows exactly where your shot will land, including after a bounce off the wall, which makes it easy to pick up while still rewarding the tricky bank shots that make it worth playing.</p><p>Popping a group of three or more clears it, but the real points come from the bubbles left hanging underneath, which drop away in a cascade. The rows creep down a little at a time, so there is always a reason to plan two or three shots ahead.</p></section>
+<section class="panel about" id="strategy"><h2>Read a six-bubble drop</h2><div><div><p>Suppose six bubbles of assorted colours hang from one red bubble, with no other path to the ceiling. One red shot touching that red bubble makes a pair worth 20 points. The six loose bubbles then fall for 240 more. You can leave all six colours alone and earn 260 points with that shot.</p><p>Trace both sides of the cluster before firing. Even a thin diagonal connection to the ceiling can hold the whole branch up.</p></div></div></section>
 
 <aside class="also twin"><p>Like Bubble Doodle? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/tide-pop" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Bubble Doodle, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Bubble Doodle", "description": "A bubble shooter drawn in coloured pencil, with a dotted aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the dashed line.", "url": "https://www.sketchpadarcade.com/bubble-doodle", "image": "https://www.sketchpadarcade.com/img/bubble-doodle.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Bubble Doodle", "description": "One well-placed pencil bubble can take down a whole branch of colours. Aim for the point holding the branch to the ceiling and use the side walls to reach it.", "url": "https://www.sketchpadarcade.com/bubble-doodle", "image": "https://www.sketchpadarcade.com/img/bubble-doodle.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Bubble Doodle", "item": "https://www.sketchpadarcade.com/bubble-doodle"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

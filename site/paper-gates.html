@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Paper Gates</h1>
-    <p class="lead">A sliding block puzzle on a sheet of graph paper. The board is packed with cute blocks in bright coloured pencil, each with its own pattern, and the edges have matching gates. Drag each block around the others and slide it into its gate to send it zooming off the page. Clear the whole board before time runs out.</p>
+    <p class="lead">Each patterned block has an exit somewhere around the paper frame. Work backward from the opening to find where the whole shape needs to stand.</p>
     <ul class="facts"><li>Puzzle</li><li>Endless levels</li><li>Always solvable</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/paper-gates">Play Paper Gates</a></div>
+    <div class="btnrow"><a class="btn" href="/play/paper-gates">Play Paper Gates</a><a class="guide-jump" href="#strategy">Measure the block across the opening</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Drag a block to slide it. Blocks move around each other but can&#x27;t overlap.</li><li>Slide a block into a gate of the same colour and it leaves the board.</li><li>A block only fits through a gate that is at least as wide as the block.</li><li>Clear every block before the timer runs out. Time left over becomes bonus points.</li><li>Run out of time and you lose a heart and get a new board. Lose all 3 hearts and the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose a piece and find an opening with the same color along the frame. Check that the opening can take the whole side of the piece.</li><li>Hold the piece and drag it through empty squares. If a corner catches, move the obstruction or approach along a different row.</li><li>Bring the piece against its matching gate. Once the shape lines up, it slips out and earns ten points for each square it occupied.</li><li>Empty the frame before the clock runs down for a bonus of five points per remaining second, rounded up. A timeout costs one of your three hearts.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Press on a block and drag. It slides straight toward your finger, one square at a time, and stops when something is in the way.</li><li>Works with a finger on a phone or tablet and with a mouse on a computer.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Look for blocks that already have a clear path to their gate and send them out first.</li><li>Clearing one block often opens up room for the ones behind it.</li><li>Long blocks need wide gates, so check the gate sizes before you start sliding.</li><li>Every board can be solved, so if you feel stuck, try moving a different block out of the way.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>For a top or bottom gate, line up the block&#x27;s full width with the opening. For a side gate, compare its height instead.</li><li>If a wide piece will not pass a corner, park the smaller obstruction in an empty side pocket. The path must fit the whole block at each step of the drag.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Paper Gates</h2><p>Paper Gates is a sliding-block puzzle on a sheet of graph paper. The board is packed with patterned coloured-pencil blocks, and the edges have matching gates; you drag each block past the others and out through its gate. Clear the whole board before the timer runs out to move on.</p><p>Every level is a freshly generated board, so there is nothing to memorise, and the boards grow as you progress. It sits somewhere between a sliding puzzle and a parking puzzle, and it is a good one for players who like to see the whole solution before they touch anything.</p></section>
+<section class="panel about" id="strategy"><h2>Measure the block across the opening</h2><div><div><p>A bar three squares tall and one square wide can slip through a one-square opening at the top if its column is clear. To slide the very same bar out the right edge, you need a matching opening three squares tall. Check that measurement before moving another block out of its way.</p></div></div></section>
 
 <aside class="also twin"><p>Like Paper Gates? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/tide-gates" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Paper Gates, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Gates", "description": "A sliding block puzzle on a sheet of graph paper. The board is packed with cute blocks in bright coloured pencil, each with its own pattern, and the edges have matching gates. Drag each block around the others and slide it into its gate to send it zooming off the page. Clear the whole board before time runs out.", "url": "https://www.sketchpadarcade.com/paper-gates", "image": "https://www.sketchpadarcade.com/img/paper-gates.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Paper Gates", "description": "Each patterned block has an exit somewhere around the paper frame. Work backward from the opening to find where the whole shape needs to stand.", "url": "https://www.sketchpadarcade.com/paper-gates", "image": "https://www.sketchpadarcade.com/img/paper-gates.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Paper Gates", "item": "https://www.sketchpadarcade.com/paper-gates"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Word Workshop</h1>
-    <p class="lead">A relaxing word puzzle drawn in pencil on a sketchbook page. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words earn big rewards.</p>
+    <p class="lead">A wheel of pencil letters supplies a whole crossword. Changing the order of the same letters can fill an entirely different slot without adding anything to the wheel.</p>
     <ul class="facts"><li>Word puzzle</li><li>Beginner, Intermediate and Advanced</li><li>88 levels</li><li>Saves your progress</li></ul>
-    <div><a class="btn" href="/play/word-workshop">Play Word Workshop</a></div>
+    <div class="btnrow"><a class="btn" href="/play/word-workshop">Play Word Workshop</a><a class="guide-jump" href="#strategy">Try two readings of the DRAW wheel</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Drag across the letters on the wheel to spell a word, then let go.</li><li>Words that fit the crossword drop into the board. Fill every square to finish the level.</li><li>Any other real word is a Bonus Word. It earns points and fills the Bonus meter under the board, and every 6 bonus words pays 30 stickers.</li><li>Find words within a few seconds of each other to build a combo, up to 5X points. Longer words score much more.</li><li>On Beginner, after five misses in a row the first two letters of an unsolved word light up as a clue (eight misses on Intermediate, no free clues on Advanced). Solve a level without hints for 3 stars.</li><li>Pick a difficulty. Beginner has 28 relaxed levels with short words. Intermediate has 30 levels with 6 and 7 letter wheels, bigger grids and 1.5X points. Advanced has 30 levels with 7 and 8 letter wheels, only counts words of 4 or more letters, and gives you 4 minutes plus 10 seconds per grid word, for 2X points.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose a difficulty. Begin a swipe at a letter on the wheel, trace a word in order and lift. A crossword answer appears in its slot and reveals letters in any slots that cross it.</li><li>Use each wheel tile once per swipe. An accepted word outside the crossword earns a bonus the first time you find it. Every six bonus words pays thirty stickers.</li><li>Follow one successful word quickly with another to build the multiplier up to five. Beginner and Intermediate offer a two-letter clue after repeated misses. Advanced counts words of at least four letters and gives four minutes plus ten seconds for each grid word found.</li><li>Finish all the crossword entries to open the next page. Completing a level without purchasing a hint earns three stars.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Drag with your finger or mouse across the letters. Slide back to the previous letter to undo it.</li><li>Shuffle mixes up the letters. The lightbulb costs stickers per step (10 on Beginner, 15 on Intermediate, 25 on Advanced): first it lights up a starting letter, then the next letter, then shows the word&#x27;s first letters in the grid.</li><li>The star shows your bonus words and personal bests, the bars button lets you switch difficulty or start over, and the speaker button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Look for short three-letter words first. They often unlock the crossing letters for longer words.</li><li>Shuffle when you feel stuck. Seeing the letters in a new order often shows you a word right away.</li><li>Try every word you can see. Real words that don&#x27;t fit the grid still earn bonus points and fill the Bonus meter.</li><li>The level&#x27;s name is always one of the answers, and it uses every letter on the wheel.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>When a wheel is hard to read, shuffle and look at the new neighbors. Shuffling changes the arrangement of the letters, so every word you could make before is still there.</li><li>On Advanced, a three-letter guess is too short even if it is a real word. Use a revealed crossing letter to start looking for a four-letter answer.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Word Workshop</h2><p>Word Workshop is a letter-wheel crossword game. Each level gives you a handful of letters on a wheel and a small crossword above it; drag across letters to spell words, and the ones in the puzzle drop into place. Any real word you find counts, so extra words still earn points.</p><p>We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device.</p></section>
+<section class="panel about" id="strategy"><h2>Try two readings of the DRAW wheel</h2><div><div><p>On the Beginner page called Draw, swipe D–R–A–W, lift, then swipe W–A–R–D. DRAW fills the bottom row and WARD runs down the left edge. They share the D in the bottom-left corner. For the shorter entries, try R–A–W down the right or W–A–D across the top.</p></div></div></section>
 
 <aside class="also twin"><p>Like Word Workshop? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/word-waves" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Word Workshop, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Letter Links</h3><p>Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Word Workshop", "description": "A relaxing word puzzle drawn in pencil on a sketchbook page. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words earn big rewards.", "url": "https://www.sketchpadarcade.com/word-workshop", "image": "https://www.sketchpadarcade.com/img/word-workshop.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Word Workshop", "description": "A wheel of pencil letters supplies a whole crossword. Changing the order of the same letters can fill an entirely different slot without adding anything to the wheel.", "url": "https://www.sketchpadarcade.com/word-workshop", "image": "https://www.sketchpadarcade.com/img/word-workshop.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Word Workshop", "item": "https://www.sketchpadarcade.com/word-workshop"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

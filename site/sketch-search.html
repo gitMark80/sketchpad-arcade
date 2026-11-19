@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Sketch Search</h1>
-    <p class="lead">A cheerful word search on a notebook page. Every level has a theme, like Pets, Art Class or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.</p>
+    <p class="lead">This word search lets you mark an answer in either direction. If an unusual last letter catches your eye, follow the word backward from there.</p>
     <ul class="facts"><li>Word</li><li>Beginner, Intermediate and Advanced</li><li>Over 25 themes</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/sketch-search">Play Sketch Search</a></div>
+    <div class="btnrow"><a class="btn" href="/play/sketch-search">Play Sketch Search</a><a class="guide-jump" href="#strategy">Drag the word from whichever end you spot</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Pick Beginner, Intermediate or Advanced. Each one keeps its own best score.</li><li>Each level has a fun theme and a list of words to find.</li><li>Drag in a straight line from the first letter of a word to its last letter.</li><li>Beginner words only go across and down, with small boards and plenty of time. Intermediate adds slanted words, then backwards ones. Advanced has big boards with words hiding in every direction from the start, a tighter clock and double points.</li><li>Longer words score more, quick finds earn a bonus, and time left over is added at the end of the level.</li><li>Run out of time and you lose a star and get a fresh puzzle. Lose all 3 stars and the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose a difficulty, read the theme, then pick a word from the list beside the letter board.</li><li>Touch one end of the word and drag along a straight line to the other end. Let go to mark it. Found words are crossed off the list.</li><li>Find the remaining words before the clock expires. Hint pairs a word in the list with its flashing first letter on the grid.</li><li>Clearing a puzzle earns a time bonus and replenishes a hint up to the limit. Running out of time costs a star and gives you a fresh puzzle if you have a star left.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Press on the first letter of a word and drag to the last letter, then let go.</li><li>Works with a finger on a phone or tablet and with a mouse on a computer.</li><li>Tap Hint (or press H) to flash the first letter of a word you haven&#x27;t found.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Look for unusual letters like K, Y, W or Z first. They are easy to spot and often start a word.</li><li>Find the longest words early, while the board is still full of letters to check.</li><li>Find words quickly one after another for bonus points.</li><li>You get one extra hint for every level you clear, so don&#x27;t be afraid to use them.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Intermediate adds a downward diagonal in level two, an upward diagonal in level three, and backward placements from level four. Only scan the directions your level uses.</li><li>An eight-letter find starts at 100 points before speed or difficulty bonuses. Look for the longest distinctive sequence when two possible words catch your eye.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Sketch Search</h2><p>Sketch Search is a word search with a theme on every board and a list of words hidden in a grid of letter tiles. Drag from the first letter of a word to the last and it lights up and gets crossed off. Find every word before the timer runs out to move to the next board.</p><p>Boards start small with words running left to right and grow into larger grids with words hidden diagonally and backwards. It is a relaxed game that still gives you a reason to hurry, and the themed lists make it a good one to wind down with.</p></section>
+<section class="panel about" id="strategy"><h2>Drag the word from whichever end you spot</h2><div><div><p>On Beginner, words are placed left to right or top to bottom. Find a word&#x27;s last letter and check left and above for the letter that comes before it. Once you can trace the whole word in reverse, drag from the last letter to the first. The game accepts the swipe from either end.</p></div></div></section>
 
 <aside class="also twin"><p>Like Sketch Search? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/shore-search" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Sketch Search, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch Search", "description": "A cheerful word search on a notebook page. Every level has a theme, like Pets, Art Class or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.", "url": "https://www.sketchpadarcade.com/sketch-search", "image": "https://www.sketchpadarcade.com/img/sketch-search.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sketch Search", "description": "This word search lets you mark an answer in either direction. If an unusual last letter catches your eye, follow the word backward from there.", "url": "https://www.sketchpadarcade.com/sketch-search", "image": "https://www.sketchpadarcade.com/img/sketch-search.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Sketch Search", "item": "https://www.sketchpadarcade.com/sketch-search"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

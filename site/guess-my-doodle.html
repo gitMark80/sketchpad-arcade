@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -235,16 +242,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     <h1>Guess My Doodle</h1>
     <p class="lead">A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.</p>
     <ul class="facts"><li>Versus</li><li>Play together as a team</li><li>Invite a friend by text and take turns whenever</li><li>Or pass one phone back and forth</li></ul>
-    <div><a class="btn" href="/play/guess-my-doodle">Play Guess My Doodle</a></div>
+    <div class="btnrow"><a class="btn" href="/play/guess-my-doodle">Play Guess My Doodle</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
   <section class="panel"><h2>How to play</h2><ol><li>Pick who to play: invite a friend by text, or pass one phone back and forth.</li><li>On your turn, choose one of three words. Harder words are worth more.</li><li>Draw it with the coloured pencils. No letters or numbers allowed!</li><li>Your friend watches your drawing replay and taps letters to spell the word.</li><li>Guess it and you both score. Then it&#x27;s the guesser&#x27;s turn to draw. Ten drawings make a game.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Draw with your finger or mouse. Undo takes back your last line, and Clear starts over.</li><li>Tap letters to fill the blanks, and tap a filled letter to take it back.</li><li>Skip shows the word if you&#x27;re stuck.</li><li>The Sound button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Draw the biggest, simplest shape first. A sun is just a circle with lines.</li><li>Add one clue that makes it different: a cat needs whiskers, a dog needs a wagging tail.</li><li>Colour helps. A green circle and a red circle say very different things!</li><li>Guessing? Count the blanks, then try the letters that look most likely.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Guess My Doodle</h2><p>Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is quick to draw and fun to get wrong, from cat and pizza to volcano and lighthouse.</p><p>There are no accounts, names or chat. Only the friend you send the link to can see your drawings.</p></section>
+<section class="panel about" id="strategy"><h2>About Guess My Doodle</h2><div><div><p>Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is quick to draw and fun to get wrong, from cat and pizza to volcano and lighthouse.</p><p>There are no accounts, names or chat. Only the friend you send the link to can see your drawings.</p></div></div></section>
 
 
 <section><h2 class="sec">If you like Guess My Doodle, try these</h2><div class="grid"><a class="card" href="/connect-sketch" data-arc-rel data-slug="connect-sketch" data-added="2026-10-22" data-genre="Versus" aria-label="Connect Sketch, Versus game" title="Connect Sketch">
@@ -266,10 +272,11 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag versus">Versus</span><h3>Paper Boats</h3><p>Find all four hidden paper boats before they find yours.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Guess My Doodle", "description": "A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.", "url": "https://www.sketchpadarcade.com/guess-my-doodle", "image": "https://www.sketchpadarcade.com/img/guess-my-doodle.jpg", "genre": "Versus", "gamePlatform": ["Web browser", "Mobile web"], "playMode": ["MultiPlayer", "SinglePlayer"], "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Guess My Doodle", "description": "A draw-and-guess game for two. Pick a word, draw it on the sketchbook page, and send it to a friend. They watch your drawing appear line by line and try to guess the word, then draw one for you. Every word you get right adds to your team score.", "url": "https://www.sketchpadarcade.com/guess-my-doodle", "image": "https://www.sketchpadarcade.com/img/guess-my-doodle.jpg", "genre": "Versus", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "MultiPlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Versus games", "item": "https://www.sketchpadarcade.com/versus-games"}, {"@type": "ListItem", "position": 3, "name": "Guess My Doodle", "item": "https://www.sketchpadarcade.com/guess-my-doodle"}]}</script>
 
-<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/guess-my-doodle?game='+m[1])})();</script></main>
+<script>(()=>{const m=location.search.match(/[?&]game=([A-Za-z0-9]{4,10})/);if(m)location.replace('play/guess-my-doodle?game='+m[1])})();</script>
+</main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
 <ul><li><a href="/puzzle-games">Puzzle games</a></li><li><a href="/word-games">Word games</a></li><li><a href="/arcade-games">Arcade games</a></li><li><a href="/versus-games">Versus games</a></li><li><a href="/about">About</a></li><li><a href="/news">News</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div></footer>
 <script>

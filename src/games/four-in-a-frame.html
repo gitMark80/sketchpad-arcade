@@ -350,7 +350,7 @@ const DAILY_START=Date.UTC(2026,9,5);
 const DAILY_LIST=(()=>{const L=[MODES.int.list,MODES.adv.list,MODES.beg.list],out=[];for(let i=0;out.length<ALL.length;i++)for(const l of L)if(i<l.length)out.push(l[i]);return out})();
 function todayNum(){const d=new Date();return Math.max(1,Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-DAILY_START)/864e5)+1)}
 let DAY=todayNum();
-const DAILY_URL='https://www.sketchpadarcade.com/four-in-a-frame?daily';
+const DAILY_URL='https://www.sketchpadarcade.com/play/four-in-a-frame?daily';
 const CAL_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>';
 function track(name,data){try{if(window.va)window.va('event',{name,data})}catch(e){}}
 

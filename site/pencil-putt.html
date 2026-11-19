@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Pencil Putt</h1>
-    <p class="lead">A mini golf game on a wooden school desk, seen from above. Each hole is a patch of green on the desktop, with ruler walls, pencil sharpeners and thumbtacks all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for pencil shavings, spilled ink, pushy blue arrows, bouncy balls, a busy wind-up mouse, a spinning coffee mug and a sliding tape gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.</p>
+    <p class="lead">The rulers, sharpeners and spilled ink on this school desk form 36 mini-golf holes. A useful first putt often changes the angle of your second one.</p>
     <ul class="facts"><li>Arcade</li><li>36 holes plus endless tour</li><li>Every hole has a par</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/pencil-putt">Play Pencil Putt</a></div>
+    <div class="btnrow"><a class="btn" href="/play/pencil-putt">Play Pencil Putt</a><a class="guide-jump" href="#strategy">Play the open side of Shavings Gate</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Press anywhere on the course and pull back. The dotted line shows where the ball will go.</li><li>Pull further for a harder putt, then let go to hit the ball.</li><li>Sink the ball in the cup. Beat the par for big points, and a hole in one is worth 1000.</li><li>Pencil shavings slow the ball, blue arrows and slopes push it, bouncy balls bounce it and spilled ink costs a stroke.</li><li>Finish a hole over par and you lose a star. Lose all 3 stars and the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Press anywhere on the course and drag backward. The dotted line previews your aim, and a longer pull adds power. Release to putt.</li><li>Work around the desk objects. Shavings slow a rolling ball. Blue arrows and slopes can bend your line, and spilled ink adds a penalty stroke.</li><li>Sink the ball and compare your stroke count with the hole&#x27;s par. Staying on par keeps your stars. Going over costs one, and an ace can restore a missing star.</li><li>Play through the 36-hole course while you have stars left. The next tour mirrors the layout and speeds up the moving hazards.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Press anywhere, pull back to aim and set the power, then let go to putt.</li><li>Works with a finger on a phone or tablet and with a mouse on a computer.</li><li>On a keyboard, the left and right arrows aim, up and down set the power and Space putts.</li><li>The Sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>A soft putt that stops near the cup is often better than a big whack. A fast ball can roll right over the hole.</li><li>Use the walls! A bank shot off the rulers is often the only way round a corner.</li><li>Wait for the wind-up mouse and the spinning coffee mug to move out of the way before you putt.</li><li>A hole in one wins back a lost star, so it is worth going for it on the short holes.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>On hole one, Welcome Walk, the tee and cup line up down the center. Use that straight approach to learn how far a medium pull rolls.</li><li>Each hole scores separately. On the first tour a par earns 300 points, one under par earns 450, and a hole in one earns 1,000.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Pencil Putt</h2><p>Pencil Putt is a top-down mini golf game with 36 holes on a school desk. Pull back like a slingshot to aim and let go to putt, and try to finish each hole in as few strokes as you can. Ruler walls, pencil sharpeners, shavings and spilled ink make up the basic course, and moving obstacles keep the later holes interesting.</p><p>After the full 36, the Back Nine Tour replays the course with everything moving faster. Your best scores per hole are saved on your device, so there is always a stroke or two left to shave off, and a well-judged bank shot off a wall is often the only way round a corner.</p></section>
+<section class="panel about" id="strategy"><h2>Play the open side of Shavings Gate</h2><div><div><p>On the first tour, hole four is Shavings Gate, a par three. A ruler reaches from the left wall past the center of the green. From the tee, look up the right side for the gap between the ruler&#x27;s tip and the outer rail. Set up a shot through that gap before turning back toward the cup on the left.</p></div></div></section>
 
 <aside class="also twin"><p>Like Pencil Putt? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/tiki-putt" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Pencil Putt, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Putt", "description": "A mini golf game on a wooden school desk, seen from above. Each hole is a patch of green on the desktop, with ruler walls, pencil sharpeners and thumbtacks all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for pencil shavings, spilled ink, pushy blue arrows, bouncy balls, a busy wind-up mouse, a spinning coffee mug and a sliding tape gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.", "url": "https://www.sketchpadarcade.com/pencil-putt", "image": "https://www.sketchpadarcade.com/img/pencil-putt.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Putt", "description": "The rulers, sharpeners and spilled ink on this school desk form 36 mini-golf holes. A useful first putt often changes the angle of your second one.", "url": "https://www.sketchpadarcade.com/pencil-putt", "image": "https://www.sketchpadarcade.com/img/pencil-putt.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Pencil Putt", "item": "https://www.sketchpadarcade.com/pencil-putt"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

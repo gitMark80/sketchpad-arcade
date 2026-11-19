@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Chibi Chib</h1>
-    <p class="lead">A calm, colourful sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour. Each square shows the colour it wants, so zoom in, pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.</p>
+    <p class="lead">Kitty’s picture starts as a jumble of coloured gems. A tap picks up a patch, and the tiny dots underneath show which colours belong in the spaces you uncover.</p>
     <ul class="facts"><li>Puzzle</li><li>17 chibi pictures</li><li>Zoom in for detail</li><li>Saves your progress</li></ul>
-    <div><a class="btn" href="/play/chibi-chib">Play Chibi Chib</a></div>
+    <div class="btnrow"><a class="btn" href="/play/chibi-chib">Play Chibi Chib</a><a class="guide-jump" href="#strategy">Use one tray trip to free two patches</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Each square shows the colour it wants with a small coloured dot. Every gem starts on a square of the wrong colour.</li><li>Tap a misplaced gem to pick up its little patch of matching gems. Tap it again to put them back down.</li><li>Tap the tray to stash the gems you&#x27;re holding, or tap an open square of their colour to drop them straight into the picture.</li><li>Fill every square to finish the picture. The pictures get bigger and more detailed as you go.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Open a picture and find a gem on the wrong colour. Tap it to lift the connected patch it belongs to. Tap the selection again to put it back.</li><li>Look for an empty square with a dot matching the gems in your hand. Tap there to fill as many matching spaces as are available. If there is no opening yet, use the tray to make one.</li><li>To retrieve a colour, select it in the tray and tap its dotted square on the picture. You can zoom in when the dots are close together.</li><li>Fill all the coloured squares and empty the tray to save the finished picture. If the tray fills and no gems can move, the round gets stuck.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap or click gems, the tray, tray colours and squares.</li><li>Pinch, scroll the mouse wheel or use the + and − buttons to zoom. Drag to move around, and double-tap to zoom in or out.</li><li>Hint (10 coins) shows a good move, +1 Row (30 coins) adds 16 tray spots, and Undo (15 coins) takes back your last move.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Before stashing gems in the tray, check whether there&#x27;s already an open square of their colour you can drop them on.</li><li>Zoom in on busy spots so it&#x27;s easier to tap exactly the square you want.</li><li>Finish a picture without boosters for 5 bonus coins.</li><li>Finished pictures are saved in My pictures on the start screen.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Tap a dot near the part of the picture you want to finish. The game fills that square first and then the nearest open squares of that colour.</li><li>A completed picture earns 10 coins. Finish without a booster for 15, so try a direct swap before spending one.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Chibi Chib</h2><p>Chibi Chib is a sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour, and each square shows the colour it wants. You pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.</p><p>The small tray is the whole strategy. It has only a few slots, so you cannot simply scoop everything up; you have to plan a route that frees the right squares in the right order. Finish a picture without boosters for bonus coins, and finished pictures are saved in My Pictures.</p></section>
+<section class="panel about" id="strategy"><h2>Use one tray trip to free two patches</h2><div><div><p>Find two patches whose colours belong in each other’s spaces. Lift the first patch into the tray. Pick up the second and tap a newly exposed dot of its colour. Those gems move straight across the picture, opening spaces for the gems you parked. Bring the first colour back from the tray to finish the exchange.</p><p>If the patches have different sizes, only as many gems move as there are open matching squares. Look for another matching dot before sending the leftovers to the tray.</p></div></div></section>
 
 <aside class="also twin"><p>Like Chibi Chib? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/gem-cove" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Chibi Chib, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Chibi Chib", "description": "A calm, colourful sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour. Each square shows the colour it wants, so zoom in, pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.", "url": "https://www.sketchpadarcade.com/chibi-chib", "image": "https://www.sketchpadarcade.com/img/chibi-chib.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Chibi Chib", "description": "Kitty\u2019s picture starts as a jumble of coloured gems. A tap picks up a patch, and the tiny dots underneath show which colours belong in the spaces you uncover.", "url": "https://www.sketchpadarcade.com/chibi-chib", "image": "https://www.sketchpadarcade.com/img/chibi-chib.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Chibi Chib", "item": "https://www.sketchpadarcade.com/chibi-chib"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

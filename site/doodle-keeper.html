@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Doodle Keeper</h1>
-    <p class="lead">A letter-guessing word game drawn in a sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.</p>
+    <p class="lead">The house loses a piece with each wrong guess. Read the clue and use the pattern of filled tiles to find letters that can do more than one job.</p>
     <ul class="facts"><li>Word game</li><li>Endless levels, one word each</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/doodle-keeper">Play Doodle Keeper</a></div>
+    <div class="btnrow"><a class="btn" href="/play/doodle-keeper">Play Doodle Keeper</a><a class="guide-jump" href="#strategy">Two Es for one guess</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Read the clue, then guess the hidden word one letter at a time. Every right letter fills in its paper tiles and scores 10 points for each time it appears.</li><li>Each wrong letter sends an eraser that rubs out one piece of your doodle house. The doodle starts with 6 pieces, then 5 from level 9 and 4 from level 16.</li><li>Solve the word to save the doodle and move up a level. Your bonus is 50 points for every piece still drawn plus 10 points per level.</li><li>Solve words with no wrong letters in a row to build a streak. The streak multiplies your bonus, up to three times.</li><li>If the doodle is rubbed out, the word is shown and you lose one of your 3 pencils. You carry on at the same level with a new word. When the last pencil is gone, the game is over.</li><li>Peek shows one letter for the price of one doodle piece. Every 5 words you solve earns a free Peek.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Read the category clue and count the blank tiles. Pick a letter. All of its appearances fill in at once for ten points apiece.</li><li>A wrong guess lets the eraser take one piece of the house. You have six pieces through level eight, five on levels nine through fifteen, and four after that.</li><li>Use Peek if the clue has you stuck. It uncovers a remaining letter for one house piece, or uses a free Peek if you have one. Solving five words earns another free Peek.</li><li>Finish the word for 50 points per surviving piece plus ten per level. A streak of words without a wrong guess multiplies that bonus, up to three times.</li><li>Losing the whole house reveals the answer and costs a pencil. With a pencil left, try a new word at the same level. The third lost pencil ends the run.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: tap the sticky-note keys to guess a letter. Tap Peek to reveal a letter.</li><li>Computer: click the sticky-note keys.</li><li>Keyboard: type any letter to guess it. Press Enter to start, to get a new word, or to play again.</li><li>The speaker button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Start with common vowels like E and A, then try S, T, R and N.</li><li>Think about the clue. A People at school word often ends in TEACHER, and Action words often end in ING or are short and snappy.</li><li>Save Peek for when the doodle still has a few pieces left. It cannot be used on the very last piece unless it is free.</li><li>Long words and phrases have more letters to find, so they are often easier than short ones.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Count spaces as well as letters. A school supply in two words can be PAPER CLIP or GLUE STICK, and their two word lengths differ.</li><li>A paid Peek uses one piece and reveals every copy of one remaining letter. With one piece left, only a free Peek will work.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Doodle Keeper</h2><p>Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.</p><p>Instead of a timer, your doodle house is the countdown. Each wrong guess brings in a cheeky eraser that rubs one piece into a little pile of crumbs, and later levels start with a smaller doodle. Perfect words build a streak that multiplies your bonus, and three pencils give you a few second chances before the page goes blank.</p></section>
+<section class="panel about" id="strategy"><h2>Two Es for one guess</h2><div><div><p>Consider ERASER, one of the school-supply words. Guessing E fills the first and fifth tiles for 20 points. R then fills the second and last for another 20. Only A and S remain. Repeated letters are especially useful when the house is down to its last few pieces.</p></div></div></section>
 
 <aside class="also twin"><p>Like Doodle Keeper? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/castle-keeper" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Doodle Keeper, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Keeper", "description": "A letter-guessing word game drawn in a sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.", "url": "https://www.sketchpadarcade.com/doodle-keeper", "image": "https://www.sketchpadarcade.com/img/doodle-keeper.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Doodle Keeper", "description": "The house loses a piece with each wrong guess. Read the clue and use the pattern of filled tiles to find letters that can do more than one job.", "url": "https://www.sketchpadarcade.com/doodle-keeper", "image": "https://www.sketchpadarcade.com/img/doodle-keeper.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Doodle Keeper", "item": "https://www.sketchpadarcade.com/doodle-keeper"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

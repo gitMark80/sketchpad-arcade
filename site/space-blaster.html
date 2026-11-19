@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag arcade">Arcade</span>
     <h1>Space Blaster</h1>
-    <p class="lead">A retro arcade shooter drawn on grid paper. UFOs of every shape and size, from tiny scouts to a shielded mothership, line up in formation and swoop down at your little rocket. Fire rapid laser bolts to zap them, dodge their alien goo, and see how many levels you can clear.</p>
+    <p class="lead">Slide a pencil-drawn rocket beneath flights of UFOs. Its firing pattern changes as you advance, so the same aim that works in the first formation feels different in level five.</p>
     <ul class="facts"><li>Arcade</li><li>Hold and drag</li><li>Endless levels</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/space-blaster">Play Space Blaster</a></div>
+    <div class="btnrow"><a class="btn" href="/play/space-blaster">Play Space Blaster</a><a class="guide-jump" href="#strategy">Aim with the gap between twin lasers</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Hold and drag to steer your rocket along the bottom of the page. It fires a rapid stream of lasers while you hold.</li><li>Each hit zaps a UFO. The big mothership has a shield and takes two hits.</li><li>UFOs swoop down at you and drop alien goo. Get bumped or gooed and you lose a ship. You start with 3.</li><li>Clear every UFO to finish the level. Each level they swoop faster, dive more often and drop more goo.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Press and hold to fire while dragging the rocket from side to side. Line up your lasers with the incoming UFOs.</li><li>The larger mothership takes two hits. Watch for falling alien goo while firing and avoid a collision with a diving ship.</li><li>Clear the formation to reach the next level. Ordinary diving UFOs pay double their formation value, and a gold power star adds a beam for twelve seconds.</li><li>You start with three ships. A collision or goo hit costs one. Your first extra ship comes at 20,000 points and another at 70,000.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Hold and drag on the screen to steer and fire. With a mouse, move to steer and hold the button down to fire.</li><li>On a keyboard, use the arrow keys or A and D to move, Space to fire and P to pause.</li><li>Pause stops the action, and the Sound button turns sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>UFOs are worth double while they&#x27;re diving, so stay brave.</li><li>Your lasers fire a little faster every level and come out in two streams from level 5.</li><li>Zap the power star for 12 seconds of an extra laser stream.</li><li>Watch for goo and slide out of the way. It falls toward where you were.</li><li>You earn an extra ship at 20,000 points and again at 70,000.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>When a mothership flashes on the first hit, keep a beam on its route for the second. That first flash signals damage to its shield.</li><li>A power star lasts twelve seconds. During the early levels it changes your single stream into two, so realign for the new spread before aiming at one small UFO.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Space Blaster</h2><p>Space Blaster is a nod to the fixed-screen arcade shooters of the early 1980s, drawn on grid paper. UFOs of every shape and size line up in formation and then peel off to dive at your little rocket, and you answer with rapid laser bolts while dodging their alien goo.</p><p>Each level adds faster dives and a shielded mothership to crack, and your lasers get a little quicker as you go. It is a game of pattern reading: learn when each UFO breaks formation and you can clear whole squadrons without a scratch, and diving UFOs are worth double for the brave.</p></section>
+<section class="panel about" id="strategy"><h2>Aim with the gap between twin lasers</h2><div><div><p>From level five the regular twin beams leave a gap directly above the rocket. If a narrow target is lined up with your nose and the shots pass either side, slide a little left or right until one stream cuts through it. The power star temporarily adds a third beam down the middle.</p></div></div></section>
 
 <aside class="also twin"><p>Like Space Blaster? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/sonar-sub" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Space Blaster, try these</h2><div class="grid"><a class="card" href="/paper-plane-dash" data-arc-rel data-slug="paper-plane-dash" data-added="2026-10-13" data-genre="Arcade" aria-label="Paper Plane Dash, Arcade game" title="Paper Plane Dash">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag arcade">Arcade</span><h3>Eraser Gulp</h3><p>Steer a hungry little eraser and gulp up the desk to grow.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Space Blaster", "description": "A retro arcade shooter drawn on grid paper. UFOs of every shape and size, from tiny scouts to a shielded mothership, line up in formation and swoop down at your little rocket. Fire rapid laser bolts to zap them, dodge their alien goo, and see how many levels you can clear.", "url": "https://www.sketchpadarcade.com/space-blaster", "image": "https://www.sketchpadarcade.com/img/space-blaster.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Space Blaster", "description": "Slide a pencil-drawn rocket beneath flights of UFOs. Its firing pattern changes as you advance, so the same aim that works in the first formation feels different in level five.", "url": "https://www.sketchpadarcade.com/space-blaster", "image": "https://www.sketchpadarcade.com/img/space-blaster.jpg", "genre": "Arcade", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Arcade games", "item": "https://www.sketchpadarcade.com/arcade-games"}, {"@type": "ListItem", "position": 3, "name": "Space Blaster", "item": "https://www.sketchpadarcade.com/space-blaster"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

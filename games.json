@@ -9,8 +9,8 @@
     "description": "Free online games drawn in pencil: sudoku, minesweeper, word puzzles, arcade runs and two-player games to play with a friend by text. No downloads, no sign-ups.",
     "contact_text": "Questions, feedback or business inquiries? Email us at hello@sketchpadarcade.com.",
     "contact_email": "hello@sketchpadarcade.com",
-    "policy_date": "October 23, 2026",
-    "terms_date": "October 15, 2026",
+    "policy_date": "November 19, 2026",
+    "terms_date": "November 19, 2026",
     "paper": "grid",
     "picks": [
       "doodle-doku",
@@ -38,7 +38,24 @@
       "url": "https://wzckjgrrjrborkojymbp.supabase.co",
       "key": "sb_publishable_OsCMfCQ4-TTryl5Uoc20Bw_gCnLUM8l",
       "note": "Supabase project sketchpad-arcade (invite-a-friend games). The publishable key is meant to be public; the database only allows the vs_* functions."
-    }
+    },
+    "originals": [
+      "doodle-doku",
+      "paper-plane-dash",
+      "guess-my-doodle",
+      "blot-sweeper",
+      "doodle-kick",
+      "sketch-with-friends",
+      "pencil-pool",
+      "crayon-code",
+      "box-doodles",
+      "save-the-doodle",
+      "connect-sketch",
+      "sketchers",
+      "paper-boats",
+      "doodle-sos",
+      "tic-tac-doodle"
+    ]
   },
   "games": [
     {
@@ -161,7 +178,8 @@
       "about": [
         "Guess My Doodle is a draw-and-guess game made for a sketchbook. Every word is quick to draw and fun to get wrong, from cat and pizza to volcano and lighthouse.",
         "There are no accounts, names or chat. Only the friend you send the link to can see your drawings."
-      ]
+      ],
+      "play_modes": "MultiPlayer"
     },
     {
       "slug": "sketch-with-friends",
@@ -200,9 +218,9 @@
         "High-point letters like Q, Z and X are worth the most on a double or triple letter square."
       ],
       "about": [
-        "Sketch with Friends is our take on the classic crossword tile game, drawn as paper tiles on a sketchbook page.",
-        "The word list is checked to keep out rude words, so it's safe to play anywhere, even in class."
-      ]
+        "The board checks words against a filtered version of the SCOWL US English dictionary. The game uses words from two to eleven letters and leaves out entries that need capitals or apostrophes. If a name or a contraction gets turned down, try building a shorter word across one already on the board."
+      ],
+      "guide_title": "Which words does the board accept?"
     },
     {
       "slug": "sketchers",
@@ -607,7 +625,7 @@
       "tagline": "Steer a growing parade of little pencil stubs through number gates down a page of lined paper, then climb the book stack for a big bonus.",
       "title": "Pencil Parade: Free Number Gate Runner Game | Sketchpad Arcade",
       "meta": "Play Pencil Parade free online: steer a parade of pencil stubs through number gates, dodge bouncy balls and climb the book stack for a bonus.",
-      "lead": "A pencil-sketch runner where your score is a parade of little pencil stubs with smiley faces. Drag left and right to steer the whole parade down a long sheet of lined paper, through gates that add, multiply, subtract or halve your pencils. Dodge rolling bouncy balls, ink puddles, torn holes and spinning compasses along the way. At the end of each level the parade climbs a stack of books, and the higher it gets, the bigger the bonus.",
+      "lead": "Steer a crowd of pencil stubs toward the book stack. Your crowd count changes the value of every gate, so the same fork can call for a different turn on the next run.",
       "facts": [
         "Arcade game",
         "Endless levels that get longer and faster",
@@ -615,12 +633,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Your parade walks down the page on its own. Drag left or right to steer it, and the whole parade follows.",
-        "Gates come in pairs across the path. Blue gates add pencils (+5, +10) or multiply them (×2, ×3). Purple gates take pencils away (−5, −10) or halve the parade (÷2). Your parade goes through whichever side you steer into.",
-        "Sometimes both sides are good, so pick the better one. Sometimes both are purple, so pick the one that costs the fewest pencils.",
-        "Pencils that bump a bouncy ball, splash into an ink puddle, step in a torn hole or get swept by a spinning compass hop off back to the pencil case, unhurt.",
-        "At the book stack the parade climbs books marked ×1 up to ×5, leaving a few pencils behind on each book. Your bonus is the pencils you had at the finish, times the highest book reached, times 10.",
-        "Each new level starts with 10 pencils and is longer and faster, with more purple gates and obstacles. If every pencil goes home, the game is over."
+        "Start with ten pencil stubs. They move forward on their own. Drag sideways to guide them into one side of each fork.",
+        "Read the sign on that side. Blue gates add or multiply your crowd. Purple gates subtract pencils or divide the count in half.",
+        "Steer around holes, ink, bouncy balls and the compass. A stub that hits one leaves the crowd. Losing the last pencil ends the run.",
+        "Reach the stack and watch the pencils climb. The bonus uses the number that reached the books, multiplied by the highest book reached and then by ten. The next stage starts a fresh crowd."
       ],
       "controls": [
         "Phone or tablet: drag your finger left or right anywhere on the screen. The parade moves with your finger, so you don't need to touch the pencils.",
@@ -629,15 +645,13 @@
         "The question mark button shows how to play and pauses the game. The speaker button turns sound on or off."
       ],
       "tips": [
-        "A ×2 or ×3 gate is worth much more once your parade is big. Early on, a +10 can beat a ×2.",
-        "Line up for the next gate early. Big parades are wide, and the whole line needs time to slide across.",
-        "Thread small parades through the gaps between puddles and holes. A big parade is safer passing beside an obstacle than through it.",
-        "The books cost more pencils on later levels, so save your gains for the book stack."
+        "When both gates subtract pencils, read them even if you have to steer away from a favorite side. Taking the smaller loss protects the count you bring to the books.",
+        "Look one obstacle beyond a good gate. A bonus that drops your whole crowd into an ink puddle is harder to keep."
       ],
       "about": [
-        "Pencil Parade is a quick sketchbook runner about growing the biggest parade you can. Each choice is a small math puzzle: add or multiply, lose five or lose half. Rolling bouncy balls, ink puddles, torn holes and spinning compasses keep you steering all the way to the book stack.",
-        "The book stack finish turns your parade into points. Each book keeps a little tower of pencils behind, and the multiplier on the highest book you reach boosts your bonus. Levels get longer and faster as you go. Nobody gets hurt: pencils that bump into things just hop off to the pencil case for a nap."
-      ]
+        "At a fork marked +10 and ×2, a parade of six can leave with sixteen pencils on the +10 side or twelve on the ×2 side. Arrive with fifteen pencils and +10 gives twenty-five while ×2 gives thirty. At ten pencils the two gates tie, so choose the clearer lane beyond them."
+      ],
+      "guide_title": "Do the gate arithmetic before steering"
     },
     {
       "slug": "squiggle-worm",
@@ -648,7 +662,7 @@
       "tagline": "Steer a hand-drawn striped squiggle worm around a page of graph paper, gobble glowing ink dots and grow the longest.",
       "title": "Squiggle Worm: Free Online Snake Game | Sketchpad Arcade",
       "meta": "Play Squiggle Worm free online: a pencil-doodle snake game on graph paper. Eat glowing ink dots, grow the longest and out-squiggle the other doodles.",
-      "lead": "A wiggly arcade game doodled on a page of graph paper. You steer a happy striped squiggle worm across the squares, gobbling glowing ink dots to grow longer and longer. Other coloured-pencil squiggles roam the page too. If one bumps its nose into your body, it goes poof into a puff of pencil scribbles and leaves a trail of ink blots for you to eat. Can you become the longest squiggle on the page?",
+      "lead": "Follow the glowing ink across the page and try to become the longest striped worm. A dash spends some of the very length you're trying to keep.",
       "facts": [
         "Arcade",
         "Endless play",
@@ -656,11 +670,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Your worm always squiggles forward. Steer it toward the glowing ink dots to eat them and grow longer.",
-        "Your score is your length. The live board in the corner shows the five longest squiggles, and you are in yellow.",
-        "If your worm's head bumps into another squiggle's body or the edge of the page, it's bonk and the game is over.",
-        "When another squiggle bumps into your body, it goes poof and drops a trail of ink blots. Ink blots are worth extra length!",
-        "Hold Zoom to dash. It costs a little length, so use it to grab ink blots or slip past other squiggles. The other squiggles get bigger and bolder the longer you play."
+        "Guide the moving worm toward clusters of ink dots. Eating them lengthens your body and raises the score shown on the leaderboard.",
+        "Keep your head clear of other worms' bodies and the edge of the page. When a rival hits your body, follow its trail of dropped ink for extra length.",
+        "Use Zoom for a short dash. Your body gets shorter while boosted, so release it when you have reached the opening or the food you were chasing.",
+        "The board lists the five longest worms and shows your rank underneath if you haven't made the top five. See how high you can climb before a collision ends the run."
       ],
       "controls": [
         "Phone or tablet: drag anywhere to steer, like a joystick. Hold the Zoom button (or a second finger) to dash.",
@@ -669,15 +682,13 @@
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Squiggle around the edge of big groups of doodles instead of through them.",
-        "Watch the mini-map for the edge of the page and for big squiggles nearby.",
-        "Curl around a smaller squiggle so it bumps into you. Then eat its ink blots!",
-        "Only dash when you need to. Every dash makes you a little shorter."
+        "Zoom stops working as your length drops to eleven. At that size, leave room to steer clear of other worms without relying on a burst of speed.",
+        "The dangerous end of a crossing is your head. Let a rival's head run into your trailing body, then look for the dropped ink after the path opens."
       ],
       "about": [
-        "Squiggle Worm is a grow-the-worm arcade game. You steer a pencil-drawn striped worm across a page of graph paper, eating glowing ink dots to get longer, while other coloured-pencil squiggles roam the same page. If one bumps its nose into your body it goes poof into pencil scribbles and leaves a trail of ink blots; if you bump into theirs, it is game over.",
-        "The other squiggles are computer-controlled and get bigger and bolder the longer you survive, so the live leaderboard in the corner is a real race. The Zoom dash costs a little length, which makes every escape a trade. The mini-map is worth a glance before you commit to a turn, especially near the pencil shavings, erasers and paper clips heaped around the page's edge."
-      ]
+        "When a rival bursts near the page edge, aim along the trail of ink blots with room to turn back toward the middle. Hold Zoom for the straight part and release before the bend. Dashing almost doubles your speed and makes your turning arc wider, so a late turn can carry you off the page."
+      ],
+      "guide_title": "Plan the turn before you press Zoom"
     },
     {
       "slug": "cookie-drop",
@@ -695,7 +706,7 @@
       ],
       "title": "Cookie Drop: Free Cut-the-Rope Physics Puzzle | Sketchpad Arcade",
       "meta": "Play Cookie Drop free online: swipe to snip strings and swing a cookie to Doodle the hungry monster. 32 pencil-drawn physics puzzles on a corkboard.",
-      "lead": "A string-snipping puzzle drawn in pencil on a corkboard. A chocolate-chip cookie hangs from strings tied to thumbtacks, and Doodle the doodle monster is waiting at the bottom with his mouth open. Swipe across a string to snip it and the cookie swings and drops. Time your snips so it lands right in Doodle's mouth, and swing it through the gold stars on the way for up to 3 stars. Bubbles, bouncy balls, paper-clip hooks and puffing party blowers join in as you go.",
+      "lead": "Doodle is waiting under a cookie that swings from red thumbtacks. Cut one string and the others decide where the cookie goes. There are 32 corkboard puzzles to solve, each with three gold stars to collect on the way down.",
       "facts": [
         "Puzzle",
         "32 levels",
@@ -703,11 +714,10 @@
         "Saves your stars and best score"
       ],
       "how": [
-        "Swipe across a string to snip it. The cookie swings or drops when its strings let go.",
-        "Get the cookie into Doodle's mouth to finish the level. If it plops into the ink puddle, just try again.",
-        "Each level has 3 gold stars. Swing the cookie through them for stars and bonus points.",
-        "Bubbles float the cookie up until you tap to pop them. Bouncy balls bounce it, paper-clip hooks grab it with a new string, and party blowers puff it along when you tap them.",
-        "Your score is your best points from every level added up. Feed Doodle to unlock the next level."
+        "Find Doodle on the board and trace a route from the cookie to his mouth. You can clear the level with a catch even if you miss a star.",
+        "Swipe through one string at a time. With a string still attached, the cookie swings around its pin. Cut the last string to release it.",
+        "Collect gold stars by touching them with the cookie. Later boards add bubbles that lift it, paper clips that catch it, balls that bounce it and blowers you can tap for a push.",
+        "Feed Doodle to unlock the next board. If the cookie falls into the ink, retry and change the order or timing of your cuts."
       ],
       "controls": [
         "Phone or tablet: swipe across a string to snip it. Tap a bubble or a party blower.",
@@ -716,15 +726,22 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Watch the swing first. Snip when the cookie is heading toward Doodle.",
-        "With two or three strings, the order you snip them changes the swing.",
-        "A paper-clip hook only grabs the cookie once, so think about where that new swing will go.",
-        "Pop a bubble right above Doodle and the cookie drops straight into his mouth."
+        "Follow the string back to its thumbtack before cutting. That shows you which pin will still be holding the cookie and which way it can swing.",
+        "On a level with a bubble, pick the spot where you want the cookie to drop. Let the bubble carry it there, then tap to pop it.",
+        "You can return to a cleared board from Levels. Use the first run to find a route to Doodle and the next to pick up the stars you missed."
       ],
       "about": [
-        "Cookie Drop is a string-snipping physics puzzle sketched in pencil. A chocolate-chip cookie hangs from strings tied to thumbtacks on a corkboard, Doodle the doodle monster waits below with his mouth open, and you swipe to cut strings so the cookie swings and drops into him. Three gold stars on each level reward a clever swing.",
-        "The puzzle is in the order and timing of the snips. Bubbles float the cookie up until you pop them, bouncy balls bounce it, paper-clip hooks catch it with a fresh string and party blowers puff it sideways. Nothing is lost by missing; the cookie plops into the ink puddle and you try again."
-      ]
+        "Let the cookie settle underneath the two red thumbtacks. Cut the short string on the far left, where the arrow points. Leave the longer string attached. It carries the cookie through the middle star and up toward the star on the right.",
+        "For the second cut, watch the cookie instead of the pin. As it reaches the upper-right star and is still travelling right, cut the remaining string. The cookie drops through the lowest star into Doodle’s mouth. All three stars and the catch give you 400 points."
+      ],
+      "guide_title": "Level 6 · Three stars on Tick Tock",
+      "guide_image": {
+        "src": "/assets/cookie-drop/guide-tick-tock.webp",
+        "width": 720,
+        "height": 1280,
+        "alt": "Level 6. An arrow marks the short string below the left red thumbtack. A second string supports the cookie, with three stars between it and Doodle.",
+        "caption": "Tick Tock before the first cut. The longer string stays attached for the swing."
+      }
     },
     {
       "slug": "desk-strikes",
@@ -735,7 +752,7 @@
       "tagline": "Swipe a pink eraser down a long wooden ruler and knock over ten smiley pencil stubs.",
       "title": "Desk Strikes: Free Online Bowling Game | Sketchpad Arcade",
       "meta": "Play Desk Strikes free online: a desk bowling game. Roll a pink eraser down a ruler lane, curve it for strikes and play 10 frames with real scoring.",
-      "lead": "Ten-pin bowling on a school desk. Swipe up from the eraser to roll it along a long wooden ruler toward ten cheerful pencil stubs with little smiley faces, with a pencil cup and sticky notes doodled behind them. The direction of your swipe aims the eraser, a faster flick rolls it harder, and a bend in your swipe makes it curve. Pencils scatter, tumble into each other and drop off the end of the ruler, and a full 10-frame scoresheet keeps track of every strike and spare. From frame 4 a window draft nudges the eraser, and from frame 7 a friendly doodle bug wanders across the ruler.",
+      "lead": "Bowl a pink eraser down a wooden ruler. The first three frames give you a calm lane to practise your release before a window draft and a wandering doodle bug complicate the shot.",
       "facts": [
         "Arcade",
         "10 frames per game",
@@ -743,11 +760,10 @@
         "Saves your best score and strike streak"
       ],
       "how": [
-        "Swipe up from the eraser to bowl. Where you start the swipe sets the eraser's spot on the ruler, the direction of the swipe aims it, and a faster swipe rolls it harder.",
-        "Bend your swipe partway through to curve the eraser. A faint dotted line shows your aim while you drag.",
-        "Hit just beside the front pencil, in the pocket, for your best chance at a strike. Each frame gives you two rolls to knock down all ten.",
-        "Scoring is real bowling scoring: a strike adds your next two rolls as a bonus and a spare adds your next one. Strikes and spares in frame 10 earn extra rolls, and a perfect game is 300.",
-        "Frames 1 to 3 are calm. From frame 4 a window draft pushes the eraser sideways, so check the draft arrow, and from frame 7 a doodle bug scurries across the ruler. Bonk it and your eraser bounces off course, but the bug is fine."
+        "Choose your starting spot across the ruler. Swipe upward toward one side of the front pencil. The dotted preview shows your aim, a quicker swipe adds speed, and a bend in the swipe adds curve.",
+        "Knock over the ten pencils in up to two rolls. Clearing them on the first roll is a strike. Finishing them on the second is a spare.",
+        "After three calm frames, check the draft before you bowl. A doodle bug starts crossing the ruler in frame seven and can knock the eraser sideways.",
+        "Bowl ten frames. A strike counts ten plus your next two rolls. A spare counts ten plus the next roll. In the last frame, roll the bonuses you earned to finish your score out of 300."
       ],
       "controls": [
         "Phone or tablet: put your finger on the eraser and swipe up toward the pencils. Tap during the replay to skip ahead.",
@@ -756,15 +772,14 @@
         "The speaker button turns sound on or off."
       ],
       "tips": [
-        "Aim for the pocket, just beside the front pencil. A dead-center hit often leaves pencils standing on both sides.",
-        "A small curve into the pocket knocks more pencils than a perfectly straight roll.",
-        "In a draft, aim a little into the wind. More bars on the draft meter means a bigger push.",
-        "Watch the doodle bug before you swipe and roll when it has walked out of your path."
+        "Use the dotted preview to check the opening direction of your swipe. Bending the latter part adds curve.",
+        "Read the draft arrow from frame four onward. From frame seven, wait for the bug to leave your intended line before starting the swipe."
       ],
       "about": [
-        "Desk Strikes is a swipe-to-bowl game on a long wooden ruler laid across a school desk, drawn in pencil on sketchbook paper. You roll a round pink eraser at ten cheerful pencil-stub pins, and the pencils really knock into each other, so a good pocket hit sends them tumbling for a strike. Swipe direction, speed and curve all change the roll.",
-        "Each game is a full 10 frames with proper strikes, spares and frame 10 bonus rolls on a classic scoresheet. The game gets trickier as you go, with a window draft from frame 4 and a wandering doodle bug from frame 7. Your best game and your longest strike streak are saved on your device."
-      ]
+        "Suppose you knock over seven pencils and pick up the other three. The score for that frame stays open. If the next eraser knocks over eight, the spare is worth 18. If you had started with a strike instead, both rolls from the next frame would count toward the strike bonus.",
+        "For a single pencil left standing, slide your starting point into line with it and use a straight swipe. A curve that spreads a full rack can carry an eraser past a narrow spare."
+      ],
+      "guide_title": "Why a spare changes the next roll"
     },
     {
       "slug": "marble-blitz",
@@ -775,7 +790,7 @@
       "tagline": "Aim, let go, and send a stream of glass marbles bouncing into numbered paper cups before they slide off the desk.",
       "title": "Marble Blitz: Free Marble Shooter Game Online | Sketchpad Arcade",
       "meta": "Play Marble Blitz free online: aim a stream of glass marbles at numbered paper cups, knock their numbers down and keep the cups on the desk.",
-      "lead": "A bouncy marble-volley game drawn in pencil on a sheet of notebook paper. Rows of numbered paper cups slide down the page one turn at a time, and your little doodle buddy flicks a whole stream of glass marbles to knock them down. Every bump takes one off a cup's number, and at zero it crumples up. Grab paper clips for more marbles, collect gold star stickers for bonus points, and see how many turns you can last before a cup slides off the edge of the desk.",
+      "lead": "Every hit knocks one off a numbered paper cup. With a row about to slide off the desk, the best shot can be the one that hits a pink eraser just once.",
       "facts": [
         "Arcade",
         "Endless turns",
@@ -783,11 +798,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Drag anywhere on the page to aim. The pencil-dotted line shows where your first bounce will land.",
-        "Let go and your doodle buddy flicks all its marbles in a quick stream. They bounce off the walls and the paper cups.",
-        "Each hit knocks 1 off a cup's number, and a cup crumples when it reaches 0. Paper clips give you an extra marble, gold stars are worth 3 bonus points, and a pink eraser rubs out its whole row.",
-        "The first marble to roll back onto the desk sets where your buddy flicks from next. Then every cup slides down one row and a new, tougher row appears at the top.",
-        "Your score is the turn you reach plus your bonuses. The game ends when a cup slides off the desk."
+        "Drag to aim from your doodle buddy’s position. Use the dotted path to preview the first bounce, then release to send the entire stream of marbles.",
+        "Each strike subtracts one from a cup’s printed number. At zero, the cup crumples. A paper clip adds a marble for the next turn, a star adds three points, and an eraser clears the cups in its row.",
+        "Watch where the first returning marble lands. That is your next starting position. When the volley finishes, the cups step down and a new row enters from the top.",
+        "Keep every cup from sliding off the lower edge. Your score is the turn you reached plus the bonuses you collected along the way."
       ],
       "controls": [
         "Phone or tablet: drag to aim and lift your finger to flick. Tap the page during a volley to speed it up.",
@@ -796,15 +810,13 @@
         "The Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Bounce your shot off a side wall to get marbles behind a row of cups, where they rattle around and score lots of hits.",
-        "Grab the paper clips early. More marbles make every turn stronger.",
-        "Clear the cups closest to the desk edge first, especially when they're circled in orange.",
-        "Save a pink eraser for a row of big numbers."
+        "A marble that slips behind a cup can hit it on multiple bounces. Aim through a gap when the bottom row is safe.",
+        "Speed up lets useful marbles keep bouncing. Recall ends their work early. Use Speed up if a ball is still chipping away at a cup."
       ],
       "about": [
-        "Marble Blitz is a marble-volley game in the brick-breaker tradition, sketched in graphite on ruled paper. Numbered paper cups slide down one row per turn, and your doodle buddy flicks a stream of glass marbles that bounce off the walls and the cups, knocking one off a number with every hit. When a cup reaches zero it crumples into a puff of paper scraps.",
-        "The game is about angles. A shot bounced off a side wall can get your marbles behind a row, where they rattle around and score dozens of hits. Paper clips add marbles, gold stars add points and a pink eraser rubs out a whole row. It ends when a cup slides off the desk, so the cups nearest the edge always come first."
-      ]
+        "Suppose the bottom row contains a cup marked 12, and you can reach a pink eraser on that same row. One hit on the eraser clears the cup outright. A paper clip elsewhere adds one marble to your next volley, which comes too late if the 12 slides off the desk this turn. A gold star adds three points but leaves the cup in place."
+      ],
+      "guide_title": "Choose between an eraser and a paper clip"
     },
     {
       "slug": "paper-peaks",
@@ -815,7 +827,7 @@
       "tagline": "Clear three folded-paper peaks of doodle cards by playing one higher or one lower.",
       "title": "Paper Peaks: Free Tri Peaks Solitaire Online | Sketchpad Arcade",
       "meta": "Play Paper Peaks free online: a pencil-sketched Tri Peaks solitaire. Tap cards one higher or lower, build streaks and clear all three paper peaks.",
-      "lead": "A cheerful card puzzle drawn on a school desk. Three folded-paper mountains are stacked with hand-doodled index cards, and you clear them by tapping any face-up card one higher or one lower than the card on the notepad. Keep a run going for bigger and bigger points, and when nothing fits, flip a new card from the draw pile. Each level hands out fewer wild doodle stars and a shorter draw pile, so plan your runs.",
+      "lead": "Clear three peaks of doodle cards by building a run on the notepad. Ranks can climb and fall on the same run, and the deck wraps from king to ace.",
       "facts": [
         "Puzzle",
         "Card game",
@@ -823,13 +835,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap any face-up card that is one higher or one lower than the card on the notepad. King and Ace connect, so you can go K, A, 2 or 2, A, K.",
-        "Cards flip face up when both cards covering them are gone.",
-        "When no card fits, tap the draw pile to flip a new notepad card. The draw pile lights up when it is your only move.",
-        "Every card in an unbroken run scores more: 10, 20, 30 and up. Drawing a card ends the run.",
-        "Clear all three peaks to win the level. Peak tops are worth 100 bonus points, and every card left in the draw pile is worth 25.",
-        "Wild doodle stars in the draw pile, coloured in with every pencil in the box, let any card follow them.",
-        "If the draw pile runs out and nothing fits, you lose a pencil and get a fresh deal. Lose all 3 and the game is over."
+        "Use the card lying on the notepad as your starting rank. Tap an uncovered card one rank away. Suits can mix, and an ace connects to both two and king.",
+        "Each card you take becomes the new rank to follow. Removing both cards covering a face-down card turns it over and makes it available.",
+        "When a run ends, tap the stock to change the notepad card. Drawing resets the streak. If you draw a wild star, any exposed card can follow it.",
+        "Clear all three peaks. Each top card adds 100 points and each unused stock card is worth 25 more. A dead end with no stock costs a pencil and brings a fresh deal."
       ],
       "controls": [
         "Tap or click a card to play it, and tap or click the draw pile to draw.",
@@ -837,15 +846,13 @@
         "Undo takes back your last move and Hint circles a good card to play. Both are limited each round. The Sound button turns sound on or off."
       ],
       "tips": [
-        "Before you play, look for the card that keeps your run going longest. Sometimes the lower card opens a longer chain.",
-        "Play cards that are covering face-down cards first. Uncovering new cards gives you more choices.",
-        "Don't draw while you still have a move. Every card left in the draw pile is worth bonus points at the end.",
-        "Save your undo for the end of a round, when one wrong pick can leave you stuck."
+        "When two cards have the same rank, take the one that lifts the last cover from a face-down card. You'll have another choice before the run ends.",
+        "A wild doodle star from the stock accepts any exposed card. Pick a starting rank with a visible follow-up so the wild buys more than one move."
       ],
       "about": [
-        "Paper Peaks is a solitaire card puzzle in the tri-peaks family, dealt across three folded-paper mountains on a sketchbook page. The suits are pencil doodles, stars, hearts, moons and flowers, and you clear cards by tapping any face-up card one higher or one lower than the card on the notepad. King and Ace connect, so a run can wrap all the way around.",
-        "The scoring rewards long unbroken runs, and every card left in the draw pile at the end is worth bonus points, so the skill is in not drawing until you have to. Wild doodle stars help, but each level hands out fewer of them and a shorter draw pile. You get three pencils before a game is over."
-      ]
+        "Suppose the notepad shows a king and the ace, two and three are all face up. Take them in that order. From a fresh streak those moves pay 10, 20 and 30 points, and you still have every draw card you started with. Check which covered cards turn over before committing to the three."
+      ],
+      "guide_title": "Trace the next three ranks before drawing"
     },
     {
       "slug": "even-sketch",
@@ -856,7 +863,7 @@
       "tagline": "Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.",
       "title": "Even Sketch: Free Binary Logic Puzzle Online | Sketchpad Arcade",
       "meta": "Play Even Sketch free online: fill graph paper with stars and circles so every row and column balances. Endless logic puzzles from 4x4 to 8x8.",
-      "lead": "A calm little logic puzzle drawn on a sheet of graph paper. Tap a square to draw a smiling orange star, tap again for a blue circle. Every row and column needs as many stars as circles, you can never have three of the same side by side, and the little = and × badges between squares tell you which pairs match and which are opposite. Each puzzle has exactly one answer, so careful thinking always wins. Finish the page before the bell timer fills up and the next sheet is waiting.",
+      "lead": "Half the marks in every graph-paper row and column must be stars, and half circles. A single pencilled clue can settle several squares if you follow it in both directions.",
       "facts": [
         "Puzzle",
         "Endless levels, 4×4 up to 8×8",
@@ -864,12 +871,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap a graph-paper square to draw a star, tap it again for a circle, and once more to erase it. Shaded squares with a pencil mark are already filled in and can't be changed.",
-        "Every row and every column must have the same number of stars and circles.",
-        "Never put more than two of the same doodle next to each other, across or down.",
-        "An = badge between two squares means they match. A × badge means one is a star and the other is a circle.",
-        "Break a rule and the squares turn pink and wiggle so you can spot it. Fill the whole grid correctly to solve the page.",
-        "Each level scores points for solving, 5 points for every second left before the bell and a bonus for not using a hint. If the bell bar fills up first, the game is over."
+        "On the first four-by-four page, leave the shaded clues in place. Tap an empty cell once for a star, twice for a circle, and a third time to clear it.",
+        "Fill half of each row and half of each column with each mark. Check both directions as you work. A run of three equal marks breaks the rule.",
+        "Read the signs between cells. An equals sign connects two of the same mark. A multiplication sign connects opposite marks. Pink highlights show which entries conflict.",
+        "Finish the grid before the bell. Each remaining second adds five points to the solve bonus, and a page finished without a hint earns an extra bonus."
       ],
       "controls": [
         "Phone or tablet: tap a square to cycle star, circle and empty.",
@@ -879,15 +884,13 @@
         "The speaker button turns sound on or off."
       ],
       "tips": [
-        "Look for two of the same side by side. The squares on both ends must be the other doodle.",
-        "A gap between two matching doodles, like star, empty, star, has to be a circle.",
-        "Once a row has its full half of stars, every empty square left in it is a circle.",
-        "Follow the signs: once one square next to an = or × is known, its partner is too."
+        "On six-square pages, count to three of each mark. On eight-square pages, count to four.",
+        "Look for two known squares with one blank between them before trying a guess. Two matching endpoints force the opposite mark into the gap."
       ],
       "about": [
-        "Even Sketch is a balancing logic puzzle. You fill a grid with stars and circles so that each row and column holds the same number of both, no three of a kind ever line up, and every = and × sign between squares is respected. Every puzzle is freshly made and checked to have exactly one solution.",
-        "The first levels are small 4×4 sheets with plenty of doodles already pencilled in. Then the grid grows to 6×6, the helpful shaded squares get fewer, more signs appear, and later pages alternate with big 8×8 sheets. A bell timer keeps gentle time pressure on, and your total score carries from page to page until the bell finally rings."
-      ]
+        "Start with a four-square row showing star, blank, star, blank. The middle blank must be a circle because three stars in a row would break the rule. There are already two stars, so the last blank must also be a circle. Now look down the columns under both new marks. If a × badge connects a circle to an empty square below, that square must be a star."
+      ],
+      "guide_title": "Finish a four-square row in two steps"
     },
     {
       "slug": "doodle-keeper",
@@ -898,7 +901,7 @@
       "tagline": "Guess the hidden word one letter at a time before a bouncing eraser rubs your doodle house off the page.",
       "title": "Doodle Keeper: Free Word Guessing Game Online | Sketchpad Arcade",
       "meta": "Play Doodle Keeper free online: guess hidden words letter by letter from a clue before a cheeky eraser rubs out your doodle house. Over 900 words.",
-      "lead": "A letter-guessing word game drawn in a sketchbook. A clue tells you what kind of word is hidden, like Pencil case, Snacks or Recess fun, and the word sits under a row of paper tiles. Tap the sticky-note keys to guess letters. Right letters flip over with a sparkle, but every wrong letter sends a grinning eraser bouncing across the page to rub out one piece of your doodle house. Solve the word before the doodle is gone to save it, earn a big bonus and move up a level.",
+      "lead": "The house loses a piece with each wrong guess. Read the clue and use the pattern of filled tiles to find letters that can do more than one job.",
       "facts": [
         "Word game",
         "Endless levels, one word each",
@@ -906,12 +909,11 @@
         "Saves your best score"
       ],
       "how": [
-        "Read the clue, then guess the hidden word one letter at a time. Every right letter fills in its paper tiles and scores 10 points for each time it appears.",
-        "Each wrong letter sends an eraser that rubs out one piece of your doodle house. The doodle starts with 6 pieces, then 5 from level 9 and 4 from level 16.",
-        "Solve the word to save the doodle and move up a level. Your bonus is 50 points for every piece still drawn plus 10 points per level.",
-        "Solve words with no wrong letters in a row to build a streak. The streak multiplies your bonus, up to three times.",
-        "If the doodle is rubbed out, the word is shown and you lose one of your 3 pencils. You carry on at the same level with a new word. When the last pencil is gone, the game is over.",
-        "Peek shows one letter for the price of one doodle piece. Every 5 words you solve earns a free Peek."
+        "Read the category clue and count the blank tiles. Pick a letter. All of its appearances fill in at once for ten points apiece.",
+        "A wrong guess lets the eraser take one piece of the house. You have six pieces through level eight, five on levels nine through fifteen, and four after that.",
+        "Use Peek if the clue has you stuck. It uncovers a remaining letter for one house piece, or uses a free Peek if you have one. Solving five words earns another free Peek.",
+        "Finish the word for 50 points per surviving piece plus ten per level. A streak of words without a wrong guess multiplies that bonus, up to three times.",
+        "Losing the whole house reveals the answer and costs a pencil. With a pencil left, try a new word at the same level. The third lost pencil ends the run."
       ],
       "controls": [
         "Phone or tablet: tap the sticky-note keys to guess a letter. Tap Peek to reveal a letter.",
@@ -920,15 +922,13 @@
         "The speaker button turns sound on or off."
       ],
       "tips": [
-        "Start with common vowels like E and A, then try S, T, R and N.",
-        "Think about the clue. A People at school word often ends in TEACHER, and Action words often end in ING or are short and snappy.",
-        "Save Peek for when the doodle still has a few pieces left. It cannot be used on the very last piece unless it is free.",
-        "Long words and phrases have more letters to find, so they are often easier than short ones."
+        "Count spaces as well as letters. A school supply in two words can be PAPER CLIP or GLUE STICK, and their two word lengths differ.",
+        "A paid Peek uses one piece and reveals every copy of one remaining letter. With one piece left, only a free Peek will work."
       ],
       "about": [
-        "Doodle Keeper is a classic letter-guessing game drawn in pencil on a sketchbook page. Every hidden word comes with a clue, and there are more than 900 answers across 17 categories, from pencil case and classroom things to snacks, pets, recess games, art class and field trips. Words start short and simple, then grow into longer words and phrases like STICKY NOTE and CROSSING GUARD.",
-        "Instead of a timer, your doodle house is the countdown. Each wrong guess brings in a cheeky eraser that rubs one piece into a little pile of crumbs, and later levels start with a smaller doodle. Perfect words build a streak that multiplies your bonus, and three pencils give you a few second chances before the page goes blank."
-      ]
+        "Consider ERASER, one of the school-supply words. Guessing E fills the first and fifth tiles for 20 points. R then fills the second and last for another 20. Only A and S remain. Repeated letters are especially useful when the house is down to its last few pieces."
+      ],
+      "guide_title": "Two Es for one guess"
     },
     {
       "slug": "letter-scramble",
@@ -939,7 +939,7 @@
       "tagline": "Swipe across a tray of paper letter tiles to find as many words as you can before the timer runs out.",
       "title": "Letter Scramble: Free Word Search Swipe Game | Sketchpad Arcade",
       "meta": "Play Letter Scramble free online: swipe across paper letter tiles to spell words, hit the target score in 80 seconds and turn the page to new levels.",
-      "lead": "A fast word search on a desk tray of 16 torn-notebook letter tiles. Swipe from tile to tile, even corner to corner, to spell words of three letters or more. Longer words score much more, and any word that uses the gold-star tile scores double. Reach the target score before the 80-second timer runs out and the next page comes with a bigger target.",
+      "lead": "Look for a turn, not just a straight line. A word can snake diagonally through the tray, and taking it through the gold-star tile doubles its score.",
       "facts": [
         "Word game",
         "80-second rounds",
@@ -947,11 +947,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Swipe across tiles that touch, including diagonals, to spell a word of 3 or more letters. Let go to score it.",
-        "Each tile can be used once per word. The bar above the tray turns green for a new word, yellow for a word you already found, and gray if it isn't a word.",
-        "Words score 100 points for 3 letters, 300 for 4, 600 for 5, 1,000 for 6, 1,500 for 7 and 2,200 for 8. A word that uses the gold-star tile scores double.",
-        "Reach the page's target score before the 80 seconds run out to turn to the next page. Your total score carries over.",
-        "Each new page has a higher target. Miss it and it's pencils down."
+        "Start on any letter in the four-by-four tray. Draw a path through touching tiles, diagonals included, to make a word of at least three letters. Each tile gets one visit per word.",
+        "Look at the preview before lifting your finger. Green means the word will score. Yellow marks one already found this round. Gray means the game does not recognise it.",
+        "From three letters up to eight, the scores are 100, 300, 600, 1,000, 1,500 and 2,200. Longer words also earn 2,200. Include the gold-star tile to double any of those totals.",
+        "Page one needs 1,500 points by the end of its 80 seconds. Later pages set higher targets. Your overall score carries over, and each fresh tray has its own target to meet."
       ],
       "controls": [
         "Phone or tablet: swipe your finger across the tiles, then lift it to score the word. Slide back one tile to undo it.",
@@ -961,15 +960,13 @@
         "The speaker button turns sound on or off."
       ],
       "tips": [
-        "Look for endings like S, ED and ING. Adding them to a word you just found is a quick way to score again.",
-        "Start your search from the gold-star tile. Even a short word through it is worth double.",
-        "Three-letter words add up fast early on, but one long word can be worth ten short ones.",
-        "Vowels in the middle of the tray connect to the most neighbors, so build words around them."
+        "Plan the final tile before releasing. An adjacent S or D can turn an existing path into a second scoring word.",
+        "On a keyboard, type a word you can see. When it has several valid paths, the game automatically prefers one through the gold-star tile."
       ],
       "about": [
-        "Letter Scramble is a timed word search on a four-by-four tray of paper letter tiles, each one a little torn notebook square with a pencil letter on it. Swipe across touching tiles, including diagonals, to spell words of three letters or more. Longer words are worth far more than short ones, and any word through the gold-star sticker tile scores double.",
-        "Each page gives you 80 seconds to hit a target score, and the target climbs with every page you turn. The word list is checked for real words. It is a quick, repeatable game that rewards vocabulary and a good eye for endings like S, ED and ING."
-      ]
+        "Imagine C, A and T touching in sequence, with an unused gold-star S next to T. Submit CAT for 100 points. Follow the same path again and finish on S. CATS is a new four-letter word worth 300, doubled to 600 by the star. Together the two swipes earn 700 points."
+      ],
+      "guide_title": "Take CAT twice as far"
     },
     {
       "slug": "ink-jars",
@@ -980,7 +977,7 @@
       "tagline": "Pour layers of colored ink between glass jars until every jar holds one color.",
       "title": "Ink Jars: Free Water Sort Puzzle Game Online | Sketchpad Arcade",
       "meta": "Play Ink Jars free online: pour layers of coloured ink between glass jars until every jar holds one colour. Endless calm sorting puzzles.",
-      "lead": "A calm pouring puzzle on a pencil-sketched desk. Glass ink jars sit on a sheet of paper, each one filled with mixed layers of colored ink. Tap a jar to lift it and tap another to pour. Ink only pours onto the same color or into an empty jar. Fill a jar with one color and it gets a cork with a happy sparkle. Every level is checked by a solver, so it can always be sorted.",
+      "lead": "Each ink colour has a doodle of its own. Follow red stars, blue hearts and yellow moons from jar to jar until every full jar earns a cork.",
       "facts": [
         "Puzzle",
         "Endless levels",
@@ -988,11 +985,10 @@
         "Saves your level and best score"
       ],
       "how": [
-        "Tap a jar to lift it, then tap another jar to pour into it.",
-        "Ink only pours onto the same color, or into an empty jar. The whole top color pours over, as much as fits.",
-        "When a jar is full of one color, it gets a cork. Later levels have taller jars with five layers. Cork every color to finish the level.",
-        "Each color has its own little doodle, like a star, heart or moon, so you can tell them apart.",
-        "Levels start with 3 colors and grow to 12. Finish in fewer moves for a bigger bonus and three stars."
+        "Start with three colours of ink. Read the little symbols on the layers to tell similar colours apart, then tap a source jar and its destination.",
+        "Pour into an empty jar or onto ink matching the source’s top layer. Matching layers travel together until the destination fills or the next colour in the source changes.",
+        "A full jar of one colour gets a cork. Finish every colour to complete the level. Later pages introduce up to twelve colours and jars that hold five layers.",
+        "Compare your move count with par. Finishing at par or below earns three stars, and a shorter solution increases the move bonus."
       ],
       "controls": [
         "Phone or tablet: tap a jar to lift it, then tap where to pour.",
@@ -1001,15 +997,13 @@
         "Restart starts the level over. The speaker button turns sound on or off."
       ],
       "tips": [
-        "Look for jars whose top color matches another jar's top before using an empty jar.",
-        "Try to keep one jar empty for as long as you can. It gives you room to sort.",
-        "Save + Jar for the big levels with lots of colors.",
-        "Beat the par number of moves to earn three stars and the biggest move bonus."
+        "A jar with room for the entire top band can expose the colour underneath in one move. Count spaces in both possible destinations.",
+        "Matching the par move count earns three stars. Trying to beat par gives an extra ten bonus points for each further move you save."
       ],
       "about": [
-        "Ink Jars is an ink-sorting puzzle. Jars on a sketchbook desk hold mixed layers of colored ink, and you pour from one into another until every jar holds a single color and earns its cork. Ink only pours onto a matching color or into an empty jar, so the empty jar is your most valuable piece.",
-        "Every level is checked by a solver before it reaches you, so there is always a way through. Each color has its own little doodle so they are easy to tell apart, and levels grow from three colors to twelve, with taller five-layer jars later on. Beat the par number of moves for three stars."
-      ]
+        "Suppose a four-layer jar has two blue hearts over two red stars. A second jar holds three blue hearts. Pouring into that second jar moves exactly one blue layer and corks the jar. One blue layer still covers the red. If you need the red for your next pour, plan a home for that last blue before you start."
+      ],
+      "guide_title": "Check how much blue actually fits"
     },
     {
       "slug": "pencil-patrol",
@@ -1020,7 +1014,7 @@
       "tagline": "Scribble through a notebook-page maze collecting pencil dots while silly erasers chase you.",
       "title": "Pencil Patrol: Free Pac-Man Style Maze Game | Sketchpad Arcade",
       "meta": "Play Pencil Patrol free online: guide Stubby the pencil through notebook mazes, collect every dot, dodge giggly erasers and grab a gold star to bonk them.",
-      "lead": "A maze chase drawn on a notebook page. Stubby the stubby little pencil scribbles through coloured-pencil mazes collecting pencil dots, while four googly-eyed erasers wander around trying to rub him out. Each eraser has its own way of moving, so you can learn to dodge them. Grab a gold star sticker and the erasers go pale and wobbly, and for a few seconds Stubby can bonk them back into the pencil case for bonus points. Clear every dot to turn to the next page, where everything moves a little faster.",
+      "lead": "Stubby races four erasers through a maze of pencil dots. Pinky follows Stubby, while purple Smudge tries to meet him up ahead.",
       "facts": [
         "Arcade",
         "4 pages that repeat and speed up",
@@ -1028,11 +1022,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Guide Stubby around the page and collect every pencil dot to clear the level.",
-        "Steer before you reach a turn. Stubby remembers your move and takes the next opening that way.",
-        "If an eraser touches Stubby, he gets rubbed dizzy and loses a pencil. Lose all 3 pencils and the game is over.",
-        "Grab a gold star sticker in a corner and the erasers turn pale for a few seconds. Bonk them for 200, 400, 800 and 1600 points.",
-        "Watch for an apple, glue stick or crayon below the pencil case for bonus points. Score 10,000 to earn an extra pencil."
+        "Steer Stubby along the corridors and scribble over the dots. Press a direction slightly before a junction to take the turn as soon as it opens.",
+        "Keep clear of the four erasers until you reach a gold sticker. While the erasers are pale, bump into them to score an increasing bonus from that sticker.",
+        "Collect the occasional snack or school supply below the pencil case for extra points. Reaching 10,000 points earns one extra pencil.",
+        "Gather every dot to turn the page. The four mazes cycle and get faster. Touching an active eraser costs a pencil, and losing your last pencil ends the run."
       ],
       "controls": [
         "Phone or tablet: swipe anywhere on the page to steer, or use the arrow pad below the maze.",
@@ -1041,15 +1034,13 @@
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Use the side tunnels. Erasers slow down in them, but Stubby doesn't.",
-        "Save the gold star until erasers are close, then bonk as many as you can in a row.",
-        "Pinky chases you, Smudge tries to get ahead of you, Zigzag zigzags and Dozer gets shy up close.",
-        "Every so often the erasers drift back to their own corners, which gives you room to grab dots."
+        "Use the side tunnel when an eraser is right on your tail. Stubby keeps his pace there while the pursuing eraser slows.",
+        "A single gold sticker starts one scoring chain. Catching two pale erasers during the same sticker pays 200 and then 400 points."
       ],
       "about": [
-        "Pencil Patrol is a maze-chase game in the spirit of the arcade classics, drawn on a notebook page. Stubby the pencil scribbles through coloured-pencil mazes collecting dots while four googly-eyed erasers try to rub him out, and each eraser has its own habit: Pinky chases, Smudge cuts you off, Zigzag zigzags and Dozer gets shy up close. Learning those habits is the whole game.",
-        "The gold star sticker turns the tables for a few seconds, letting Stubby bonk the erasers back into the pencil case for climbing bonus points. Nothing here is scary, just a lot of googly eyes, and every page you clear is a little faster than the last. Stubby, the erasers and the mazes are all our own pencil art."
-      ]
+        "In chase mode, Smudge aims four squares ahead of the direction Stubby is facing. If you're going right toward a junction and Smudge is already heading there, queue a turn just before an earlier opening. Turning changes the target, and Pinky still has to follow where you actually went."
+      ],
+      "guide_title": "Turn away from Smudge's ambush"
     },
     {
       "slug": "paper-plane-dash",
@@ -1105,7 +1096,7 @@
       "tagline": "Drop smiling doodle balls into a glass jar and merge matching pairs, all the way up to a Super Doodle.",
       "title": "Margin Merge: Free Suika-Style Merge Game Online | Sketchpad Arcade",
       "meta": "Play Margin Merge free online: drop doodle balls into a glass jar and merge matching pairs into bigger doodles, all the way up to a Super Doodle.",
-      "lead": "A relaxing merge puzzle in a glass jar drawn on notebook paper. Drop doodle balls from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny Dot all the way to a big gold Super Doodle, but don't let the jar overflow.",
+      "lead": "Read the pencil patterns on the balls as they settle. Two Dots grow into a Stripe, and a well-placed Stripe can carry that first merge into a Zigzag.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -1113,11 +1104,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Move to aim, then let go to drop a doodle ball into the jar.",
-        "When two of the same kind touch, they merge into the next doodle and you score points.",
-        "Merges climb from Dot to Stripe, Zigzag, Swirl, Checkers, Sprinkles, Wiggles, Starry, Confetti, Rainbow and Super Doodle.",
-        "Two Super Doodles bounce off together for a 100 point bonus.",
-        "The game ends when the stack stays above the dotted line at the top of the jar."
+        "Slide the waiting doodle over the jar, then release to drop it. Two balls need the same pattern and must physically touch to merge.",
+        "Learn the pictures in order as the jar fills. Dot becomes Stripe, then Zigzag, Swirl, Checkers and Sprinkles. The upper tiers are Wiggles, Starry, Confetti, Rainbow and Super Doodle.",
+        "Each ordinary merge creates one ball of the next pattern and scores points. Two Super Doodles collect a final 100-point bonus and leave the jar.",
+        "Watch balls at the dotted top line. A quick hop can settle safely, but a pile that stays over the line for about two and a half seconds finishes the run."
       ],
       "controls": [
         "Drag or move your mouse to aim, then release or click to drop. On a keyboard, use the arrow keys and Space.",
@@ -1125,15 +1115,13 @@
         "New game starts over, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Keep small doodles together and big ones along the bottom or sides.",
-        "Check the Next window before you drop so you can plan where the following piece will go.",
-        "A merge can bump into a matching neighbor and set off a combo, so line up chains when you can.",
-        "Save your Pop for a small piece stuck between two big ones."
+        "Put a small waiting ball on the lower side of a slope. Its matching partner can roll down to it even when you cannot drop straight onto the pair.",
+        "When an unmatched doodle is all that separates two large matching balls, tap Pop and select that blocker. Let the balls settle before taking your next drop."
       ],
       "about": [
-        "Margin Merge is the pencil-sketch twin of one of the most played merge games on our sister site. Two identical pieces that touch combine into the next one up the chain, and the physics are loose and bouncy, so every drop shifts the pile. Here the pieces are smiling doodle balls in a glass jar on a desk, each one fancier than the last, drawn in pencil and coloured pencil.",
-        "It is a game about patience more than reflexes. Dropping a small piece next to its match is easy; keeping the big ones from getting buried under the small ones is the skill. Your best score is saved on your device, and the Next window is worth a glance before every drop."
-      ]
+        "Suppose a Dot rests against a Stripe on the jar floor. Drop your next Dot against the first one, on the side closest to the Stripe. The Dots combine into another Stripe. If that new ball touches the waiting Stripe, the pair becomes a Zigzag. Leaving a different doodle between them interrupts the chain."
+      ],
+      "guide_title": "Give the new Stripe somewhere to roll"
     },
     {
       "slug": "2048-drop",
@@ -1150,7 +1138,7 @@
       ],
       "title": "2048 Drop: Free Number Merge Game Online | Sketchpad Arcade",
       "meta": "Play 2048 Drop free online: drop numbered balls into a pencil-sketched jar, merge matching numbers and reach 2048 before the jar fills.",
-      "lead": "Number merging, drawn by hand. A pencil-sketched glass jar sits on a school desk among rulers and crumpled paper, and every numbered ball is coloured in like a doodle in the back of a notebook. Slide the dropper, let a ball fall, and when two of the same number touch they squash into one worth double. Chain the merges, keep the pile under the dashed red line at the neck, and see how far past 2048 you can go.",
+      "lead": "A blue 2 is only a small drop until it nudges another 2 into a green 4. Pick the landing spot for each numbered ball and see how far one drop can carry through the jar.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -1158,11 +1146,10 @@
         "Saves your best and daily scores"
       ],
       "how": [
-        "Move your mouse or drag your finger to slide the waiting ball left and right above the jar.",
-        "Click, or let go of the screen, to drop it. Gravity takes over, and the ball rolls and settles on the pile.",
-        "When two balls with the same number touch, they merge into one ball worth double. Merges can set off chain reactions.",
-        "Every merge scores the value of the new ball, and chain merges earn a bonus. Bigger merges are worth far more.",
-        "Keep the pile below the dashed red danger line. If a ball sits above it for about two and a half seconds, the game ends."
+        "Look at the number above the jar. Slide it over the place you want it to land, then release your finger or click the mouse.",
+        "Let the ball roll. Matching numbers combine on contact and double in value. A 16 made from two 8s adds 16 points before any chain bonus.",
+        "Use the two preview balls to decide what space to leave on the surface. Quick consecutive merges score extra, and play continues beyond 2048.",
+        "Watch the dashed line when the pile gets high. You have about two and a half seconds of danger time to bring it down."
       ],
       "controls": [
         "Computer: move the mouse to aim and click to drop. Arrow keys aim and Space drops.",
@@ -1171,17 +1158,14 @@
       ],
       "tips_title": "Strategy tips",
       "tips": [
-        "Keep your biggest numbers together in one corner so they can merge with each other as they grow.",
-        "Check NEXT before every drop and leave a spot for it beside a matching number.",
-        "Avoid stranding small balls between big ones. A lonely 2 at the bottom can block a whole column.",
-        "Keep open space in the middle of the jar so new balls have room to land and roll.",
-        "Chain merges score extra, so line up pairs that will set each other off.",
-        "A ball crossing the danger line for a moment is fine. Watch the countdown and clear the top before it runs out."
+        "Check both preview balls. If a matching number is two drops away, keep a clear route to its partner while you place the intervening ball.",
+        "When the red line is crowded, work on an exposed pair at the top. A promising pair buried at the bottom cannot help until the balls above it move."
       ],
       "about": [
-        "2048 DROP is the sketchbook version of a number-merging physics game: numbered balls fall into a jar drawn on a school desk, roll into place and squash together when two of the same value touch. Every drop shifts the whole pile, so it plays more like stacking than sliding tiles.",
-        "Each ball from 2 to 4096 has its own coloured-pencil shade, so you can read the pile at a glance. Your best score, today's best and lifetime stats stay on your device, with no account needed."
-      ]
+        "Look for a loose 2 resting against a 4. Drop another 2 on the side nearest the 4. The first pair makes a 4 at the point where the two balls met. If that new 4 touches its neighbour promptly, the pair becomes an 8 and earns a chain bonus.",
+        "The same drop on the far side can leave you with two 4s and a hill between them. Watch where the first ball actually rolls before choosing your next release."
+      ],
+      "guide_title": "Turn a dropped 2 into an 8"
     },
     {
       "slug": "shoe-string-swing",
@@ -1192,7 +1176,7 @@
       "tagline": "Lasso push-pins with a shoestring and swing a caped kid through the city, the mountains, the farm and beyond.",
       "title": "Shoe String Swing: Free Swinging Superhero Game | Sketchpad Arcade",
       "meta": "Play Shoe String Swing free online: lasso push-pins with a shoestring and swing a caped kid through the city, mountains and farm. See how far you can go.",
-      "lead": "A one-button swinging game starring a caped kid in a mask and a very long shoestring. Hold to lasso the nearest push-pin, swing down and up, then let go to fling forward. Every 1000 meters the scenery changes, from the city to the city at night with a flashlight, then the beach, the snowy mountains and the farm. Catch the next pin before you tumble to the ground, collect stars along the way and see how far you can go.",
+      "lead": "A caped kid, a shoestring and a line of push-pins are all you need to cross the skyline. The direction you're already traveling when you let go shapes the next jump.",
       "facts": [
         "Arcade",
         "One button",
@@ -1200,12 +1184,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Press and hold to grab the nearest push-pin with your shoestring. The dashed ring shows which pin you'll grab.",
-        "Swing down and back up, then let go to fling forward through the air.",
-        "Hold again to catch the next pin. If you tumble to the ground, the game is over.",
-        "Your score is the distance you swing plus 5 points for every star.",
-        "Every 1000 meters you swing into a new place: the city, the city at night (where your flashlight lights the way), the beach, the mountains and the farm.",
-        "The farther you go, the farther apart the pins get. Pink balloons bob up and down, and soap bubbles pop soon after you grab them."
+        "Hold down while a push-pin has a dashed ring around it. The kid attaches a shoestring to that anchor and begins to swing.",
+        "Release to fly. As another anchor comes within reach, hold again to catch it and start the next arc.",
+        "Collect stars suspended between the pins for five points each. An occasional bouncy ball can send you back up if you are low.",
+        "Keep the kid off the ground to extend the run. Distance counts toward the score, and each thousand meters takes you to a new scene with more pins ahead."
       ],
       "controls": [
         "Press and hold anywhere on the playfield to grab, and let go to fling. On a keyboard, hold Space or the Up arrow.",
@@ -1213,15 +1195,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Let go just after you pass under the pin and starts to rise. That gives the biggest fling.",
-        "Letting go too late sends you straight up. Letting go too early sends you down toward the ground.",
-        "Stars follow the swing paths, so a nice smooth swing usually scoops them up.",
-        "On a soap bubble, swing once and let go fast before it pops."
+        "A soap bubble lasts less than a second after you first grab it. Use it for a short change of direction instead of waiting for a full swing.",
+        "A target ring is a better guide than screen position. The game favors reachable pins ahead of you, so crossing close to an old pin doesn't necessarily make it the next catch."
       ],
       "about": [
-        "Shoe String Swing is a one-button swinging game starring a caped kid in a mask with a very long shoestring. Hold to lasso the nearest push-pin, swing under it, and let go at the right moment to fling forward. The scenery changes every 1000 meters, from the city by day to the city at night by flashlight, then the beach, the snowy mountains and the farm.",
-        "It is built around rhythm. Once you feel the swing, you can chain pin after pin and scoop up the stars that sit along the swing paths. The hero, the push-pins and all five scenes are our own hand-drawn art, and your best distance is saved on your device."
-      ]
+        "On a fixed pin, hold as the kid drops toward the bottom of the arc. Release as the kid starts moving up and forward on the far side. From there, look for the dashed target ring on a pin ahead. Releasing on the way down leaves less height to reach it."
+      ],
+      "guide_title": "Let the shoestring carry you past the pin"
     },
     {
       "slug": "note-quest",
@@ -1232,7 +1212,7 @@
       "tagline": "Guess the secret word in each note in six tries, with colour clues after every guess.",
       "title": "Note Quest: Free Wordle-Style Word Game Online | Sketchpad Arcade",
       "meta": "Play Note Quest free online: guess the secret word in six tries with green and yellow letter clues. Beginner, Intermediate and Advanced levels.",
-      "lead": "A friendly word-guessing game in a sunny classroom. Every note passed your way hides a secret word. Type a guess and the letters light up to show which ones are right. Solve note after note as the words grow from 4 letters to 6, and see how many you can find before you run out of gold stars.",
+      "lead": "A note hides a word. Type a guess to learn which letters belong, which seats they belong in, and whether a repeated letter is using up a guess you could spend on something new.",
       "facts": [
         "Word puzzle",
         "Beginner, Intermediate and Advanced",
@@ -1240,11 +1220,11 @@
         "Saves your best score"
       ],
       "how": [
-        "Pick Beginner, Intermediate or Advanced, then type a real word and press Enter.",
-        "After each guess the letters change colour. Green means the letter is in the right spot. Yellow means it's in the word but in a different spot. Grey means it isn't in the word.",
-        "Solve in fewer guesses for more points, and solve notes in a row for a streak bonus.",
-        "Miss a word and you lose one of your 3 gold stars. Solve words in a row to win a star back.",
-        "Beginner has 4 and 5-letter words, 7 tries and 2 hints. Intermediate grows from 4 to 6 letters with 6 tries and 1 hint. Advanced has 5 and 6-letter words, 5 tries and no hints."
+        "Choose a difficulty, fill one row with a real word, and press Enter. Beginner starts with four-letter notes and seven guesses per note.",
+        "Keep green letters in place. Move yellow letters to another position. A gray tile means there is no unused copy of that letter left in the answer after the other colored tiles are counted.",
+        "Beginner allows two hints per note. Intermediate gives one hint and six guesses, dropping to five guesses from note sixteen. Advanced allows five guesses with no hints.",
+        "Solve early for a higher score. Using a hint halves the base points for that note. Running out of guesses costs a star and breaks your streak.",
+        "You begin with three stars. If you have lost one, a streak of three solved notes on Beginner or five on the other modes earns one back."
       ],
       "controls": [
         "Tap the letters on the on-screen keyboard, or type on your computer keyboard.",
@@ -1252,15 +1232,13 @@
         "Hint shows you one letter of the secret word for half points. Beginner gets 2 hints per note, Intermediate 1, Advanced none."
       ],
       "tips": [
-        "Start with a word that uses lots of different common letters, like a word with A, E and S in it.",
-        "Grey keys on the keyboard are letters you can skip.",
-        "A yellow letter is in the word, so try it in a new spot on your next guess.",
-        "Save your hint for when you're down to your last couple of tries."
+        "A yellow letter needs a different seat. Before submitting, check that your new word actually moves it away from every position where it was yellow.",
+        "On Beginner you start each note with two hints. If two plausible endings fit the same green letters, a revealed position can save a guess."
       ],
       "about": [
-        "Note Quest is a word-guessing game in the style of the daily word puzzles everyone compares scores on, drawn in pencil. Each note hides a secret word; type a guess and the letters light up to show which are right and in place, right but in the wrong spot, or not in the word at all.",
-        "Unlike a once-a-day puzzle, Note Quest keeps going. Words start at four letters and grow to six, and you have a limited supply of tries to spend on wrong guesses. All the words are ones you would actually use."
-      ]
+        "Imagine guessing BELL when the hidden word is BELT. B, E and the first L turn green. The last L turns gray because the one L in BELT has already been accounted for. Keep BEL, then spend the last space testing another ending."
+      ],
+      "guide_title": "Read the two Ls in BELL"
     },
     {
       "slug": "eraser-gulp",
@@ -1271,7 +1249,7 @@
       "tagline": "Steer a hungry little eraser and gulp up the desk to grow.",
       "title": "Eraser Gulp: Free Grow-and-Eat Arcade Game | Sketchpad Arcade",
       "meta": "Play Eraser Gulp free online: steer a hungry eraser around a school desk, gulp paper clips, pencils and backpacks, and grow before time runs out.",
-      "lead": "A swirly arcade game starring a very hungry little eraser. Glide around a busy school desk and gulp down anything smaller than you. Start with paper clips and gold stars, grow big enough for glue sticks and marbles, then pencil cases, rulers, staplers, desk lamps and backpacks. Fill the size meter before the clock runs out to reach the next, bigger desk.",
+      "lead": "Paper clips and gold stars are a little eraser’s first meal. Circle back to the big desk supplies as the eraser grows and see how much time you can leave on the clock.",
       "facts": [
         "Arcade",
         "Endless levels",
@@ -1279,11 +1257,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Steer your swirling eraser around the desk.",
-        "Glide over things smaller than you to gulp them down. Every gulp makes you a little bigger.",
-        "Things that are too big get a red ring when you touch them. Come back when you've grown.",
-        "Fill the size meter before the timer runs out to clear the level. Time left over becomes bonus points.",
-        "Each new desk is bigger, with a bigger size goal."
+        "Start the first desk with 50 seconds on the clock. Steer the eraser over the smallest supplies and watch the size meter as they disappear.",
+        "Touch the centre of an object you can swallow. A red outline means it is still too large. Keep that spot in mind for the return trip.",
+        "Keep eating until the size meter reaches its goal. Remaining seconds convert into bonus points, and the next desk has a higher growth target.",
+        "Reaching the time limit before reaching the size target ends the run, even if you collected a lot of supplies."
       ],
       "controls": [
         "On a phone or tablet, drag your finger and the eraser follows it.",
@@ -1292,15 +1269,14 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Gulp lots of little things at the start. They add up fast.",
-        "Pushpin pouches have rulers, tape, pencil cases and glue sticks all close together. Swirl around them for a quick feast.",
-        "Big things are worth lots of points, so head for them as soon as they fit.",
-        "A banner tells you when a new kind of thing fits, so watch for it."
+        "Move your finger farther from the eraser to cover a long stretch quickly. Bring it closer for a tight turn around a small object.",
+        "If the eraser is already large enough, take the bigger of two equally close items. Larger supplies give more points and growth per gulp."
       ],
       "about": [
-        "Eraser Gulp is an eat-and-grow arcade game drawn in pencil. You start small enough to gulp the littlest things on the page, and every bite makes you a little bigger, until you can swallow things many times your starting size. Fill the size meter before the clock runs out to move on to a bigger, busier page.",
-        "It is silly in the best way. The moment you finally get big enough for the thing that has been in your way all level is the whole point. The banner that tells you when a new kind of thing fits is worth watching."
-      ]
+        "When a pushpin pouch flashes red, keep moving around its edge. Look for the smaller supplies clustered nearby and scoop up the ones that fit. As the eraser grows, circle back past the pencil cases, rulers and tape dispensers. The size announcement tells you when the next kind is within reach.",
+        "Finishing with six seconds showing can be worth 60 bonus points. Late in a level, several reachable objects nearby can be a better finish than crossing the desk for one large item."
+      ],
+      "guide_title": "Make a loop around an oversized item"
     },
     {
       "slug": "sidewalk-hop",
@@ -1318,7 +1294,7 @@
       ],
       "title": "Sidewalk Hop: Free Crossy Road-Style Game Online | Sketchpad Arcade",
       "meta": "Play Sidewalk Hop free online: hop Milo across busy streets and a creek, dodge cars and scooters, ride logs and stay ahead of the rainstorm.",
-      "lead": "An endless hopping game starring Milo, a curly-haired kid with a red backpack. Hop forward one step at a time, dodge the cars, ice-cream vans and bikes on the streets, and ride logs, planks and crates across the creek. Keep moving, because a rainstorm is chasing you up the street.",
+      "lead": "Milo can hop in all four directions. At the creek, floating logs and planks carry him sideways even when your finger is off the controls.",
       "facts": [
         "Arcade",
         "Endless",
@@ -1326,12 +1302,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Hop forward, left, right or back with the arrow buttons under the street. Step sideways or back to dodge traffic and get out of trouble.",
-        "Cars, bikes, scooters and skateboards zoom along the streets. Wait for a gap, then hop.",
-        "Cross the creek by hopping onto floating logs, planks and crates. Hopping into the water ends the game.",
-        "Logs, planks and crates drift along, so hop off before Milo rides off the edge.",
-        "A rainstorm creeps up from behind. If it catches up, you are rained out.",
-        "You score 1 point for every row forward and 5 points for every gold star."
+        "Use the directional controls to hop one square. Milo can move sideways along the sidewalk or step back to wait for a better opening.",
+        "Cross traffic one lane at a time. Trees, benches and other sidewalk objects block their squares, so check where your hop will finish.",
+        "At the creek, land on a log, crate or plank. It carries you along. Hop to the next support or the bank before it floats off the page.",
+        "Keep ahead of the rain. A new farthest row earns one point and a gold star adds five. Traffic, open water and the storm can all end the run."
       ],
       "controls": [
         "Tap the arrow buttons under the street to hop forward, left, right or back.",
@@ -1340,15 +1314,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "You can hop sideways on a street or a floating log to line up a safer path.",
-        "Long logs are the easiest to land on. Little crates need good timing.",
-        "Trees, benches, bushes, fire hydrants and trash cans block the way, so plan around them.",
-        "Don't wait too long. A few quick hops keep you well ahead of the rain."
+        "Backtracking can keep Milo safe from a car. Row points come from the farthest row reached, so hopping back and forth across the same line won't pad the score.",
+        "A star is worth five new rows. Take one on a safe landing, but check the rain and the side of the screen before riding a log after it."
       ],
       "about": [
-        "Sidewalk Hop is an endless hopping game in the tradition of road-crossing arcade games, starring Milo, a curly-haired kid with a red backpack. Hop one step at a time, dodge the cars, ice-cream vans and bikes, ride logs and crates across the creek, and keep moving, because a rainstorm is chasing you up the street.",
-        "Every run is different because the streets and creeks are generated as you go, and stars scattered along the way give you a reason to take the risky lane. Milo and his neighbourhood are our own pencil art, and your best distance is saved on your device."
-      ]
+        "From the bank, look where a long log is drifting and check the next row for a place to land. If the openings don't line up yet, ride the log a little farther before hopping forward. A long log gives you up to three squares of landing space, a plank two, and a crate just one."
+      ],
+      "guide_title": "Use the creek current to pick a landing"
     },
     {
       "slug": "paper-gates",
@@ -1359,7 +1331,7 @@
       "tagline": "Slide patterned blocks out through the gates that match their colour.",
       "title": "Paper Gates: Free Block Sliding Puzzle Game | Sketchpad Arcade",
       "meta": "Play Paper Gates free online: drag patterned blocks around a graph-paper board and slide each one out through the gate that matches its colour.",
-      "lead": "A sliding block puzzle on a sheet of graph paper. The board is packed with cute blocks in bright coloured pencil, each with its own pattern, and the edges have matching gates. Drag each block around the others and slide it into its gate to send it zooming off the page. Clear the whole board before time runs out.",
+      "lead": "Each patterned block has an exit somewhere around the paper frame. Work backward from the opening to find where the whole shape needs to stand.",
       "facts": [
         "Puzzle",
         "Endless levels",
@@ -1367,11 +1339,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Drag a block to slide it. Blocks move around each other but can't overlap.",
-        "Slide a block into a gate of the same colour and it leaves the board.",
-        "A block only fits through a gate that is at least as wide as the block.",
-        "Clear every block before the timer runs out. Time left over becomes bonus points.",
-        "Run out of time and you lose a heart and get a new board. Lose all 3 hearts and the game is over."
+        "Choose a piece and find an opening with the same color along the frame. Check that the opening can take the whole side of the piece.",
+        "Hold the piece and drag it through empty squares. If a corner catches, move the obstruction or approach along a different row.",
+        "Bring the piece against its matching gate. Once the shape lines up, it slips out and earns ten points for each square it occupied.",
+        "Empty the frame before the clock runs down for a bonus of five points per remaining second, rounded up. A timeout costs one of your three hearts."
       ],
       "controls": [
         "Press on a block and drag. It slides straight toward your finger, one square at a time, and stops when something is in the way.",
@@ -1379,15 +1350,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Look for blocks that already have a clear path to their gate and send them out first.",
-        "Clearing one block often opens up room for the ones behind it.",
-        "Long blocks need wide gates, so check the gate sizes before you start sliding.",
-        "Every board can be solved, so if you feel stuck, try moving a different block out of the way."
+        "For a top or bottom gate, line up the block's full width with the opening. For a side gate, compare its height instead.",
+        "If a wide piece will not pass a corner, park the smaller obstruction in an empty side pocket. The path must fit the whole block at each step of the drag."
       ],
       "about": [
-        "Paper Gates is a sliding-block puzzle on a sheet of graph paper. The board is packed with patterned coloured-pencil blocks, and the edges have matching gates; you drag each block past the others and out through its gate. Clear the whole board before the timer runs out to move on.",
-        "Every level is a freshly generated board, so there is nothing to memorise, and the boards grow as you progress. It sits somewhere between a sliding puzzle and a parking puzzle, and it is a good one for players who like to see the whole solution before they touch anything."
-      ]
+        "A bar three squares tall and one square wide can slip through a one-square opening at the top if its column is clear. To slide the very same bar out the right edge, you need a matching opening three squares tall. Check that measurement before moving another block out of its way."
+      ],
+      "guide_title": "Measure the block across the opening"
     },
     {
       "slug": "doodle-stacks",
@@ -1398,7 +1367,7 @@
       "tagline": "Stack coloured-pencil discs by colour and pop them in tens.",
       "title": "Doodle Stacks: Free Hexa Stack Sort Puzzle | Sketchpad Arcade",
       "meta": "Play Doodle Stacks free online: drag stacks of coloured-pencil discs onto a hexagon board, match top colours and pop ten of a kind for combos.",
-      "lead": "A colour sorting puzzle on a little hexagon board drawn on paper. Three stacks of coloured-pencil discs wait in the wooden tray. Drag one onto an empty spot and any neighbours with the same top colour hop across, one disc at a time. Get 10 or more of one colour on top and they pop in a burst of points. Pop enough discs to finish the level, but don't let the board fill up. Every level adds a new colour, and later ones have rocks in the way.",
+      "lead": "A stack can hide its most useful colour under the top few discs. Choose an empty hex where a matching neighbour will uncover what you need next.",
       "facts": [
         "Puzzle",
         "Endless levels",
@@ -1406,11 +1375,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Drag a stack from the tray onto any empty spot on the board.",
-        "Stacks next to each other with the same top colour hop together onto one stack.",
-        "When 10 or more discs of one colour sit on top of a stack, they pop for points.",
-        "One pop can set off another. Chains score combo points.",
-        "Pop enough discs to finish the level. If the board fills up, the game is over."
+        "Pick one of the three tray stacks and drag it to a vacant hex. You get a fresh tray after placing all three.",
+        "Look at the exposed discs once the stack lands. Adjacent stacks with the same top colour transfer their matching top discs together. The colours underneath stay put until uncovered.",
+        "A band of ten or more matching top discs clears for points. Let the board finish moving before planning again. New neighbours can set off a second clear and a combo.",
+        "Reach the disc target to turn the page. On a full board, Wipe can remove a stack if you still have it. A full board with no Wipe ends the run."
       ],
       "controls": [
         "Press on a stack in the tray and drag it onto the board. You can also tap a stack and then tap an empty spot.",
@@ -1420,15 +1388,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Keep each colour in its own corner of the board so stacks can grow tall.",
-        "Look under the top colour. When it hops away, the colour below might match a neighbour and start a chain.",
-        "Save the Wipe for when the board is nearly full.",
-        "Don't fill every spot. An empty spot or two gives you room to move."
+        "Only an unbroken band at the top can hop. Two yellow discs under a pink disc do not count toward a yellow ten yet.",
+        "Before filling a gap between two tall stacks, compare the top colour of every tray piece. A connecting hex can bring several stacks into the same move."
       ],
       "about": [
-        "Doodle Stacks is a colour-sorting puzzle on a little hexagon board. You drag a stack of coloured-pencil discs onto an empty space, and any neighbouring stacks with the same colour on top send their discs hopping over one at a time. Build a stack of ten or more of one colour and it pops in a burst of points.",
-        "The board is small, so every placement matters, and later levels add new colours and blockers that get in the way. It is a thoughtful game with a satisfying pop at the end of every good chain. Keeping an empty spot or two free is the habit that separates a short game from a long one."
-      ]
+        "Say a stack has seven yellow discs showing and three more yellow discs sit on top of your tray stack. Put that tray stack next to the seven. The ten yellow discs can join and pop. If a second colour lies underneath, check whether it will now touch a matching neighbour and set off another move."
+      ],
+      "guide_title": "Count the top band, then look underneath"
     },
     {
       "slug": "scribble-slice",
@@ -1439,7 +1405,7 @@
       "tagline": "Swipe to slice the juicy fruit that leaps up over the cutting board.",
       "title": "Scribble Slice: Free Fruit Slicing Game Online | Sketchpad Arcade",
       "meta": "Play Scribble Slice free online: swipe to slice juicy watermelons, pineapples and mangoes over a cutting board, chain combos and dodge inky bombs.",
-      "lead": "A juicy slicing game on a big wooden cutting board, drawn in coloured pencil. Watermelons, pineapples, coconuts, mangoes, kiwis and more come leaping up from the bottom of the board. Swipe across them to slice them in half with a big splash of juice. Slice a few in one swipe for a combo bonus, but steer clear of the inky black bombs. The fruit comes faster and in bigger bunches the longer you last.",
+      "lead": "Fruit flies up through your drawing of a cutting board. Watch where the fruit paths meet, then cut across them while there is clear paper between your finger and the ink bomb.",
       "facts": [
         "Arcade",
         "Endless play",
@@ -1447,11 +1413,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Fruit leaps up from the bottom of the cutting board.",
-        "Swipe across a fruit to slice it and score 10 points.",
-        "Slice two or more fruit in one swipe for a combo bonus.",
-        "Swiping an inky bomb costs a star, and so does letting a fruit fall back down off the board.",
-        "Lose all 3 stars and the game is over. Every 500 points gives you a lost star back."
+        "Watch the first fruit come up from the bottom. Swipe through it with a finger or drag the mouse across it to split it for ten points.",
+        "Keep a single stroke moving through nearby fruit to add a combo when the stroke finishes. Lift before crossing an ink bomb.",
+        "A missed fruit costs a star when it drops out of sight, and slicing a bomb costs one too. Cutting the special bouncy ball briefly slows the action.",
+        "Start with three stars and see how long you can last. Passing a 500-point mark restores a missing star."
       ],
       "controls": [
         "Press and drag your finger across the screen to slice. With a mouse, hold the button down and drag.",
@@ -1460,15 +1425,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Wait for the fruit to rise to the top of its jump, where it moves slowest, then slice.",
-        "Long sweeping swipes through a bunch of fruit score big combos.",
-        "Swipe around the inky bombs, not through them. Lift your finger if one is in the way.",
-        "A shiny golden apple is worth 50 points, and a bouncy ball slows everything down for a few seconds."
+        "The golden apple gives 50 points by itself. When it is on the opposite side from a pair of ordinary fruit, picking it off with a short stroke is still worthwhile.",
+        "Slice the bouncy ball for four and a half seconds of slow motion. Use the extra time to spot the bomb's path before lining up another combo."
       ],
       "about": [
-        "Scribble Slice is a fruit-slicing arcade game drawn in pencil. Fruit leaps up into the frame and you swipe across it to cut it in half. Slice several in one stroke for a combo bonus, and steer clear of the inky bombs that come up with it.",
-        "Rounds get faster and the fruit comes in bigger bunches the longer you last, so a good run turns into a flurry of swipes. It works especially well on a phone or tablet where you can swipe with a finger, and it is one of the quickest games on the site to pick up."
-      ]
+        "Two ordinary fruit cut together earn 30 points, ten each plus a ten-point double. Catch three in the same stroke and the total rises to 60. If an ink bomb is between the second and third pieces, lift your finger and start a clean cut on the far side to protect a star."
+      ],
+      "guide_title": "Decide whether the third fruit is worth the swipe"
     },
     {
       "slug": "sketch-search",
@@ -1479,7 +1442,7 @@
       "tagline": "Find the hidden words in a board of graph-paper letter tiles.",
       "title": "Sketch Search: Free Online Word Search Puzzles | Sketchpad Arcade",
       "meta": "Play Sketch Search free online: a sketchbook word search with a new theme every round and Beginner to Advanced levels. Drag across tiles to find words.",
-      "lead": "A cheerful word search on a notebook page. Every level has a theme, like Pets, Art Class or Ice Cream Shop, and a list of words on a sticky note, hidden in a framed board of graph-paper letter tiles. Drag across a word from its first letter to its last and it lights up in a bright colour and gets crossed off your list. Find them all before time runs out. The boards get bigger as you go, and the words start hiding on a slant and even backwards.",
+      "lead": "This word search lets you mark an answer in either direction. If an unusual last letter catches your eye, follow the word backward from there.",
       "facts": [
         "Word",
         "Beginner, Intermediate and Advanced",
@@ -1487,12 +1450,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Pick Beginner, Intermediate or Advanced. Each one keeps its own best score.",
-        "Each level has a fun theme and a list of words to find.",
-        "Drag in a straight line from the first letter of a word to its last letter.",
-        "Beginner words only go across and down, with small boards and plenty of time. Intermediate adds slanted words, then backwards ones. Advanced has big boards with words hiding in every direction from the start, a tighter clock and double points.",
-        "Longer words score more, quick finds earn a bonus, and time left over is added at the end of the level.",
-        "Run out of time and you lose a star and get a fresh puzzle. Lose all 3 stars and the game is over."
+        "Choose a difficulty, read the theme, then pick a word from the list beside the letter board.",
+        "Touch one end of the word and drag along a straight line to the other end. Let go to mark it. Found words are crossed off the list.",
+        "Find the remaining words before the clock expires. Hint pairs a word in the list with its flashing first letter on the grid.",
+        "Clearing a puzzle earns a time bonus and replenishes a hint up to the limit. Running out of time costs a star and gives you a fresh puzzle if you have a star left."
       ],
       "controls": [
         "Press on the first letter of a word and drag to the last letter, then let go.",
@@ -1501,15 +1462,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Look for unusual letters like K, Y, W or Z first. They are easy to spot and often start a word.",
-        "Find the longest words early, while the board is still full of letters to check.",
-        "Find words quickly one after another for bonus points.",
-        "You get one extra hint for every level you clear, so don't be afraid to use them."
+        "Intermediate adds a downward diagonal in level two, an upward diagonal in level three, and backward placements from level four. Only scan the directions your level uses.",
+        "An eight-letter find starts at 100 points before speed or difficulty bonuses. Look for the longest distinctive sequence when two possible words catch your eye."
       ],
       "about": [
-        "Sketch Search is a word search with a theme on every board and a list of words hidden in a grid of letter tiles. Drag from the first letter of a word to the last and it lights up and gets crossed off. Find every word before the timer runs out to move to the next board.",
-        "Boards start small with words running left to right and grow into larger grids with words hidden diagonally and backwards. It is a relaxed game that still gives you a reason to hurry, and the themed lists make it a good one to wind down with."
-      ]
+        "On Beginner, words are placed left to right or top to bottom. Find a word's last letter and check left and above for the letter that comes before it. Once you can trace the whole word in reverse, drag from the last letter to the first. The game accepts the swipe from either end."
+      ],
+      "guide_title": "Drag the word from whichever end you spot"
     },
     {
       "slug": "pencil-putt",
@@ -1520,7 +1479,7 @@
       "tagline": "Pull back, aim and putt your way round a mini golf course on a school desk.",
       "title": "Pencil Putt: Free Online Mini Golf Game | Sketchpad Arcade",
       "meta": "Play Pencil Putt free online: a top-down mini golf game on a school desk. Pull back, aim and putt past ink spills and a wind-up mouse. 36 holes plus endless.",
-      "lead": "A mini golf game on a wooden school desk, seen from above. Each hole is a patch of green on the desktop, with ruler walls, pencil sharpeners and thumbtacks all around. Pull back like a slingshot to aim, let go to putt, and try to sink the ball in as few strokes as you can. Watch out for pencil shavings, spilled ink, pushy blue arrows, bouncy balls, a busy wind-up mouse, a spinning coffee mug and a sliding tape gate. Play all 36 holes, then keep going on the Back Nine Tour, where everything moves faster.",
+      "lead": "The rulers, sharpeners and spilled ink on this school desk form 36 mini-golf holes. A useful first putt often changes the angle of your second one.",
       "facts": [
         "Arcade",
         "36 holes plus endless tour",
@@ -1528,11 +1487,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Press anywhere on the course and pull back. The dotted line shows where the ball will go.",
-        "Pull further for a harder putt, then let go to hit the ball.",
-        "Sink the ball in the cup. Beat the par for big points, and a hole in one is worth 1000.",
-        "Pencil shavings slow the ball, blue arrows and slopes push it, bouncy balls bounce it and spilled ink costs a stroke.",
-        "Finish a hole over par and you lose a star. Lose all 3 stars and the game is over."
+        "Press anywhere on the course and drag backward. The dotted line previews your aim, and a longer pull adds power. Release to putt.",
+        "Work around the desk objects. Shavings slow a rolling ball. Blue arrows and slopes can bend your line, and spilled ink adds a penalty stroke.",
+        "Sink the ball and compare your stroke count with the hole's par. Staying on par keeps your stars. Going over costs one, and an ace can restore a missing star.",
+        "Play through the 36-hole course while you have stars left. The next tour mirrors the layout and speeds up the moving hazards."
       ],
       "controls": [
         "Press anywhere, pull back to aim and set the power, then let go to putt.",
@@ -1541,15 +1499,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "A soft putt that stops near the cup is often better than a big whack. A fast ball can roll right over the hole.",
-        "Use the walls! A bank shot off the rulers is often the only way round a corner.",
-        "Wait for the wind-up mouse and the spinning coffee mug to move out of the way before you putt.",
-        "A hole in one wins back a lost star, so it is worth going for it on the short holes."
+        "On hole one, Welcome Walk, the tee and cup line up down the center. Use that straight approach to learn how far a medium pull rolls.",
+        "Each hole scores separately. On the first tour a par earns 300 points, one under par earns 450, and a hole in one earns 1,000."
       ],
       "about": [
-        "Pencil Putt is a top-down mini golf game with 36 holes on a school desk. Pull back like a slingshot to aim and let go to putt, and try to finish each hole in as few strokes as you can. Ruler walls, pencil sharpeners, shavings and spilled ink make up the basic course, and moving obstacles keep the later holes interesting.",
-        "After the full 36, the Back Nine Tour replays the course with everything moving faster. Your best scores per hole are saved on your device, so there is always a stroke or two left to shave off, and a well-judged bank shot off a wall is often the only way round a corner."
-      ]
+        "On the first tour, hole four is Shavings Gate, a par three. A ruler reaches from the left wall past the center of the green. From the tee, look up the right side for the gap between the ruler's tip and the outer rail. Set up a shot through that gap before turning back toward the cup on the left."
+      ],
+      "guide_title": "Play the open side of Shavings Gate"
     },
     {
       "slug": "letter-links",
@@ -1560,7 +1516,7 @@
       "tagline": "Link words around a chalk path in the park and turn all twelve letters gold. Three difficulties.",
       "title": "Letter Links: Free Word Link Puzzle Game Online | Sketchpad Arcade",
       "meta": "Play Letter Links free online: tap chalk letters around a park path to make linked words, use all twelve letters in as few words as you can and beat par.",
-      "lead": "Twelve chalk letters sit around a path in the park, three on each side. Spell words by hopping from side to side, and each new word starts with the last letter of the one before. Turn every letter gold to solve the puzzle, and do it in par or fewer words for big bonus points. There are 72 puzzles, from easy warm-ups to tricky ones with J, Q and Z. Pick Beginner for easy letters and extra words, Intermediate for the full run, or Advanced for the trickiest puzzles with 4-letter-minimum words and double points.",
+      "lead": "Twelve letters sit on four sides of the chalk path. Where a word ends decides the first step of the next word, so a short word with the right ending can open the board.",
       "facts": [
         "Word",
         "72 puzzles",
@@ -1569,13 +1525,10 @@
         "Saves your best score and progress"
       ],
       "how": [
-        "Tap letters around the path to spell a word. Each next letter must come from a different side.",
-        "Press Enter to play the word. Your next word starts with its last letter.",
-        "Letters can be used again. Used letters turn gold.",
-        "Turn all 12 letters gold to solve the puzzle. Try to do it in the par number of words.",
-        "Beginner: easy letters, 7 words per puzzle and 4 hints. Intermediate: all 72 puzzles, 6 words, points ×1.5. Advanced: tricky letters, 4+ letter words only, 5 words, points ×2.",
-        "You have 3 heart lives. Running out of words or skipping costs a heart.",
-        "Each difficulty saves its own progress and best score. Change it from the start screen, the ? card or the game-over card."
+        "Read the three letters on each side of the chalk path. Tap a word one letter at a time, changing sides with every tap. A letter can appear again after you visit another side.",
+        "Press Enter to submit a word. Its letters turn gold. The final letter stays in place to begin the next word. Use all twelve letters to clear the board and aim for the displayed par.",
+        "Beginner starts with four hints and allows seven words per puzzle. Intermediate uses the full 72-puzzle set with a six-word limit and 1.5× scoring. Advanced requires words of at least four letters and allows five words for 2× scoring.",
+        "Running out of words or skipping a board costs one of three hearts. Progress and best scores are kept separately for each difficulty, so you can change modes from the start, help or game-over screen."
       ],
       "controls": [
         "Computer: click or drag across letters, or type them on the keyboard. Enter plays the word and Backspace deletes a letter.",
@@ -1584,16 +1537,13 @@
         "The sound button turns the sound effects on or off."
       ],
       "tips": [
-        "Long words that use letters from all four sides get you there fastest.",
-        "Think about the last letter: a word ending in a common letter like S, E or T gives you more choices next.",
-        "Deleting the first letter of a word takes back your previous word, so you can try another path.",
-        "Save hints for the hard puzzles. You earn a new hint bulb every three puzzles you solve.",
-        "Under par pays the most: each word you save is worth 150 bonus points."
+        "An already-gold letter still works as a bridge. SPRINGS uses its first and last S to connect two different words.",
+        "If your last word leaves a poor starting letter, use Delete while only that starting letter is showing. You can revise the previous word."
       ],
       "about": [
-        "Letter Links is a word-chain puzzle with twelve chalk letters around a path in the park, three on each side. Each word you spell must hop between sides and must start with the last letter of the word before, and you win by turning every letter gold. Finish in par or fewer words for a bonus.",
-        "There are 72 hand-made puzzles across three difficulty levels. Beginner uses easy letters and a shorter list; Intermediate is the full run; Advanced brings in J, Q and Z with a four-letter minimum. It is a thinker's game that rewards a good vocabulary."
-      ]
+        "On the board with sides PCN, ATG, RSL and OIE, try PLANTS. P to L changes sides, L to A changes again, and the same rule holds for the rest of the word. Its final S starts SPRINGS. That also ends in S, letting SCONE cover the last untouched letters. The three words use all twelve letters on this par-four board."
+      ],
+      "guide_title": "A three-word route through twelve letters"
     },
     {
       "slug": "sketch-sprint",
@@ -1604,7 +1554,7 @@
       "tagline": "Race a twisting sketchbook path through downtown, the backyard, the park, the creek and the woods. Swipe to turn, jump and slide.",
       "title": "Sketch Sprint: Free Endless Runner Game Online | Sketchpad Arcade",
       "meta": "Play Sketch Sprint free online: a fast endless runner drawn in pencil. Pick a runner, swipe to turn, jump and slide through downtown, the park and the woods.",
-      "lead": "A fast endless runner with sharp corners, drawn like a page from a sketchbook. Pick your runner from eight kids, then race a path that twists left and right through five places: downtown, the backyard, the park, a creek and the woods. Swipe the way the arrow points to take each corner, jump logs and gaps, slide under nets and branches, and grab gold stars for points. Catch a paper plane to fly, a magnet to pull stars in, a bubble that saves you once, or a skateboard to zoom through anything. Every 500 meters a new wave starts: faster, with a bigger multiplier. Stars you collect add up between runs and unlock new runners.",
+      "lead": "A fallen log calls for a jump, an overhead net for a slide, and the sign at a corner points down a whole new stretch of track.",
       "facts": [
         "Arcade",
         "Endless running with corners",
@@ -1613,13 +1563,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Your runner races down the path on their own and gets faster the longer you last.",
-        "The path turns 90 degrees left and right. An arrow sign and a rail mark each corner: swipe that way just before you reach it. Miss it and you run into the rail.",
-        "Change lanes to get around walls, hot dog carts, lookout towers and fallen trees. Tall walls block a whole lane, so go around them.",
-        "Jump over low things like logs, sandbox castles and ducks, and over gaps in the path. Slide under branches, picnic blankets and nets.",
-        "Grab gold stars for 10 points each. You also score for every meter you run and a bonus for every corner.",
-        "Bump into something head on and the run is over. Bump the side of something and you stumble, but a second stumble soon after ends the run.",
-        "Every 500 meters is a new wave: faster, with a bigger score multiplier. Stars add up between runs: Clare unlocks at 150, George at 400, Joan at 800, then John, Catherine, Joseph and Thérèse."
+        "Your runner moves forward automatically. Swipe sideways on straight stretches to change lanes and collect stars. Stars start at ten points each.",
+        "Swipe up for low obstacles and gaps, or swipe down to pass under an overhang. A tall wall requires an open lane alongside it.",
+        "Look for the sign and rail at a ninety-degree corner. Swipe in the sign's direction shortly before reaching the turn to keep running.",
+        "Stars add to your runner unlocks between attempts. During a run, each 500-meter wave raises the pace and score multiplier. A head-on collision can end the run."
       ],
       "controls": [
         "Computer: use the arrow keys or A and D to change lanes and turn corners, Up, W or Space to jump, and Down or S to slide. You can also drag with the mouse.",
@@ -1628,16 +1575,13 @@
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Look ahead, not at your runner. Big things in the distance give you lots of time to pick a lane.",
-        "Swipe down while you're in the air to drop fast, then slide straight under the next net.",
-        "Wait until you're past something before you switch lanes, or you'll bump its side.",
-        "A paper plane lets you fly over everything and grab a line of stars in the sky.",
-        "A magnet pulls stars to you, and a bubble saves you from one bump."
+        "A full-height wall takes an entire lane. Move into a clear lane early enough to finish the sideways step before you reach the wall's edge.",
+        "After a side bump, take the next clear stretch carefully. The stumble lasts four seconds, and another side hit during that window can end the run."
       ],
       "about": [
-        "Sketch Sprint is the game that started Sketchpad Arcade. It began as a request to redraw a runner from our sister site to look like it had been sketched in the back of a notebook, and the result was so much fun that we built a whole site around the idea. It is a fast endless runner with hard 90-degree corners through downtown, the backyard, the park, a creek and the woods.",
-        "Stars carry over between runs and unlock new runners, so there is always something to work toward. Power-ups like the paper plane, magnet, bubble and skateboard change how each run feels, and every 500 meters a new wave arrives, faster and worth more. The eight kids, the scenery and the power-ups are all our own pencil art."
-      ]
+        "A log followed closely by an overhead net makes a good two-swipe sequence. Swipe up before the log. Once the runner has cleared it, swipe down while still in the air. The runner drops quickly and starts sliding on landing, ready to pass under the net."
+      ],
+      "guide_title": "Turn a jump into a low slide"
     },
     {
       "slug": "doodle-drop",
@@ -1648,7 +1592,7 @@
       "tagline": "Spin a giant pencil and drop a bouncy striped ball down to the finish platform.",
       "title": "Doodle Drop: Free Helix Jump-Style Ball Game | Sketchpad Arcade",
       "meta": "Play Doodle Drop free online: spin a giant pencil to line up gaps and bounce a striped ball down ring by ring, dodging scribbles and ink blots.",
-      "lead": "A bouncy striped ball sits at the top of a giant pencil, and the only way down is through the gaps in the paper rings around it. Drag to spin the pencil, drop through ring after ring, and steer clear of the spiky pink scribbles and sliding ink blots. Fall through three in a row and your ball glows with a rainbow that smashes right through the next ring.",
+      "lead": "Spin the giant pencil to line up holes in its paper rings. A single safe bounce gives you time to aim, while a clean string of drops gives the striped ball the power to break a ring.",
       "facts": [
         "Arcade",
         "Endless levels",
@@ -1656,12 +1600,10 @@
         "Saves your best score"
       ],
       "how": [
-        "The striped ball bounces up and down on its own.",
-        "Drag left or right to spin the pencil and turn a gap under the ball.",
-        "Drop through each ring to score. More rings in a row score more.",
-        "Don't land on the pink scribbles or the sliding purple ink blots.",
-        "Fall through three rings without bouncing to glow, then smash the next ring to bits.",
-        "Land on the chequered finish platform at the bottom to clear the level and climb a taller pencil."
+        "The ball bounces by itself. Drag across the screen to turn the giant pencil and bring an opening underneath it.",
+        "Pass through openings to descend. An ordinary landing resets your streak and gives you another bounce. A pink scribble or a moving ink blot will pop an unprotected ball.",
+        "Connect three drops without landing to light up the ball. It can then break the next solid ring it hits. Longer uninterrupted drops also add more points.",
+        "Reach the chequered platform to clear the pencil. If the ball pops, Retry returns you to the beginning of that level."
       ],
       "controls": [
         "Computer: drag with the mouse, or hold the arrow keys or A and D to spin the pencil. Press Esc to pause.",
@@ -1669,16 +1611,13 @@
         "The sound button turns the sound effects on or off."
       ],
       "tips": [
-        "Start turning while the ball is still in the air so the gap is ready when it lands.",
-        "Little nudges work better than big swipes. The pencil keeps spinning a bit after you let go.",
-        "Chain drops together for big points and a rainbow smash that even breaks scribbles.",
-        "Watch the ink blots slide before you land near them.",
-        "If you pop, Retry starts the same level again with the score you had when it began."
+        "If the openings do not line up, steer onto a plain patch and use the next bounce to turn. A bounce resets the streak.",
+        "Watch a moving ink blot for a bounce before crossing its path. A safe spot on the last bounce can be occupied on the next one."
       ],
       "about": [
-        "Doodle Drop is a tower-falling game. A striped ball sits on top of a giant pencil ringed with paper discs, and you drag to spin the pencil so the ball can drop through the gaps. Spiky pink scribbles and sliding ink blots on the rings end your run if you land on them.",
-        "The rainbow mechanic rewards nerve: fall through three rings in a row without touching anything and the ball glows and smashes straight through the next ring, scribbles included. It is a quick game with a very satisfying rhythm once you find it."
-      ]
+        "Three gaps in succession score 5, 10 and 15 points and light up the ball. If the next ring has a pink wedge below you, the glowing ball can smash through it. After only two gaps, that same wedge ends the attempt. Look for the glow before aiming for a hazard."
+      ],
+      "guide_title": "Count the gaps before a pink ring"
     },
     {
       "slug": "pencil-plunk",
@@ -1689,7 +1628,7 @@
       "tagline": "Pull thumbtacks out of popsicle sticks on a corkboard and sort them into paper cups.",
       "title": "Pencil Plunk: Free Tack Sorting Puzzle Game | Sketchpad Arcade",
       "meta": "Play Pencil Plunk free online: pull thumbtacks out of popsicle sticks on a corkboard, fill paper cups by colour and plunk every stick onto the desk.",
-      "lead": "A pin-pulling puzzle on a corkboard. Popsicle sticks are pinned to the board with bright thumbtacks. Tap a tack that no stick is lying on and it pops out and flies into the paper cup of its color. Tacks with no cup wait in the pencil case, so plan ahead before it fills up. Pull the last tack from a stick and it plunks onto the desk, while a little gold star buddy cheers you on.",
+      "lead": "The paper cups each want three matching thumbtacks. A loose tack can finish a cup, wait in the pencil case, or let a popsicle stick swing over a tack you were about to pull.",
       "facts": [
         "Puzzle",
         "Endless levels",
@@ -1697,11 +1636,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap a thumbtack that no popsicle stick is lying on. Tacks under a stick look darker and can't be pulled yet.",
-        "The tack flies into the paper cup of the same color. Three tacks fill a cup, and the next cup drops in.",
-        "If no cup wants that color, the tack waits in the pencil case. A new cup scoops up its color from there.",
-        "A stick with one tack left swings down, and it can cover other tacks. Pull its last tack and it plunks onto the desk.",
-        "Clear every stick to finish the level. If the pencil case is full and no tack fits a cup, the game is over."
+        "Look at the open paper cups and tap a matching exposed thumbtack. A tack shaded beneath another stick has to wait.",
+        "Three matching tacks fill a cup. A tack without an open cup goes into the pencil case, where it waits for its color to appear.",
+        "A stick can swing once it hangs from just one tack. Remove the last tack to drop the stick and see what it was covering.",
+        "Finish by clearing the sticks. If the case fills, a legal pull must match an open cup. The round ends when the case is full and no such tack is accessible."
       ],
       "controls": [
         "Phone or tablet: tap a tack to pull it.",
@@ -1710,16 +1648,13 @@
         "The sound button turns sound on or off."
       ],
       "tips": [
-        "Pull tacks that match a waiting cup first. They don't use up pencil case space.",
-        "Check the Next note at the top to see which cup colors are coming.",
-        "Look before you pull a stick's second-to-last tack. It will swing down and may cover tacks below it.",
-        "Every cup shows its tack's symbol, so you can match by shape as well as color.",
-        "Save +1 slot for when the pencil case is almost full."
+        "With the case full, look for an exposed tack that goes straight to an open cup. It can still be pulled even with no spare space in the case.",
+        "Before leaving a stick on a single tack, look underneath it. Pull an accessible cup match first if it sits in the stick's swing path."
       ],
       "about": [
-        "Pencil Plunk is a pin-pulling puzzle on a corkboard. Popsicle sticks are pinned down with bright thumbtacks; tap a tack that no stick is lying on and it pops out and flies into the paper cup of its colour. When a stick loses its last tack it plunks onto the desk, and a little gold star buddy cheers.",
-        "Tacks with no cup wait in the pencil case, and if the case fills up the level is lost, so the whole game is about choosing the right order. Early boards are gentle; later ones stack sticks several deep and need a careful look before the first tap."
-      ]
+        "Suppose your open cup holds two tacks and the Next note matches two tacks waiting in the case. Pull the accessible third tack for the open cup. When the next cup arrives it collects its two matching tacks automatically, opening two spaces without another pull."
+      ],
+      "guide_title": "Spend a tack to empty the pencil case"
     },
     {
       "slug": "draw-brawl",
@@ -1730,7 +1665,7 @@
       "tagline": "Grab gold stars, fill your fort and dodge the sprinklers against three computer rivals in a backyard brawl.",
       "title": "Draw Brawl: Free Backyard Arcade Battle Game | Sketchpad Arcade",
       "meta": "Play Draw Brawl free online: pick Max, Ruby or Leo, grab gold stars, fill your fort and splat three computer rivals before the sprinklers come on.",
-      "lead": "A backyard arena full of cardboard boxes, crates and paint splats where everyone wants the same stars. Choose Max, Ruby or Leo, scoop up gold stars and carry them home to your own fort before a rival splats you. Every 25 seconds the sprinklers soak the outer lanes, so plan your route. Highest banked score after two minutes wins. You play against three computer rivals, right in your browser.",
+      "lead": "Four players share one backyard, but each has a fort of their own. A pocketful of gold stars shows what you stand to lose on the way home.",
       "facts": [
         "Arcade",
         "2-minute rounds",
@@ -1739,13 +1674,10 @@
         "Saves your personal best"
       ],
       "how": [
-        "Pick a character. Max is a sturdy close-range brawler with a paint roller, Ruby is fast with rapid paint shots, and Leo is a tank with a cardboard-tube cannon and a box shield.",
-        "Collect the gold stars scattered around the yard. There are plenty in the middle. You can carry up to 15.",
-        "Carry them back to your own fort and stand inside its ring for a moment to bank them. Only banked stars count, and other players' forts won't take yours.",
-        "Bop rivals to splat them: they drop everything they were carrying and jump back in a few seconds later.",
-        "Get really close to a rival and a Showdown ring locks you both in for a few seconds. Splat them before the timer runs out to win bonus stars.",
-        "Watch for the sprinkler warning: water soaks the marked outer lanes and slows anyone running through it. Forts stay dry.",
-        "Highest banked score when the 2-minute timer ends wins. Ties are shared."
+        "Choose Max for a close-range paint roller, Ruby for quick paint shots, or Leo for a cardboard-tube cannon and a box shield. Find your own fort before heading into the yard.",
+        "Collect loose gold stars, up to 15 at a time. Stay inside your fort’s ring briefly to add them to your score. A rival fort cannot take a deposit.",
+        "A splatted player spills the stars they were carrying and returns after a short delay. Getting close to a rival can start a Showdown. Splat that rival inside the ring before time expires to earn three bonus stars.",
+        "Watch the outer lanes when the sprinkler warning appears. They slow you down while your fort stays dry. After two minutes, the most banked stars wins, and tied leaders share the win."
       ],
       "controls": [
         "Computer: WASD or the arrow keys move. J attacks and auto-aims at the nearest rival; hold the mouse button to aim shots yourself. Space dashes, Q uses your special, Esc pauses.",
@@ -1753,16 +1685,14 @@
         "The pause button freezes the match. The speaker button turns sound effects on; they start muted."
       ],
       "tips": [
-        "Bank often. Stars you're carrying are worth nothing until they're home, and a splat spills them all.",
-        "Fight rivals who are carrying a lot and let the ones with empty hands go.",
-        "Head for your fort when the sprinkler warning appears so you're not stuck in the spray.",
-        "Leo's box shield blocks every hit for a moment: pop it when two rivals close in.",
-        "Showdown wins pay 3 bonus stars, so pick fights when your health is high."
+        "If a rival is between you and home, steer wide when protecting a full load. Getting close can start an eight-second Showdown.",
+        "Forts stay dry when the sprinklers run. Plan your return before the outer lane gets wet and slows you down."
       ],
       "about": [
-        "Draw Brawl is a two-minute backyard arena where you and three computer rivals compete for the same gold stars. You pick Max, Ruby or Leo, scoop stars and carry them home to your own cardboard fort, where they are banked and safe. Get splatted by a rival on the way and you drop what you are carrying.",
-        "Every 25 seconds the sprinklers soak the outer lanes, so the shortest route is not always the safest one. The rivals are tuned to feel like other players rather than a rigged clock, and the characters, the forts and the paint-splat arena are our own pencil art."
-      ]
+        "Suppose a rival leads 20 to 16 and you carry five stars. Getting those five back to your fort takes you to 21. Picking up one more star in the middle still leaves your score at 16 until you bank. Leave time to stand inside your fort’s ring for the deposit, which takes just under a second.",
+        "You can carry 15 at most. A detour across a cluster of stars with full pockets buys you nothing and gives other players another chance to catch you."
+      ],
+      "guide_title": "Make the last trip count"
     },
     {
       "slug": "doodle-darts",
@@ -1773,7 +1703,7 @@
       "tagline": "Tap at just the right moment to blast the target and nail the gold bullseye.",
       "title": "Doodle Darts: Free One-Tap Darts Game Online | Sketchpad Arcade",
       "meta": "Play Doodle Darts free online: a one-tap timing darts game. Throw when your aim drifts over the target, chain bullseyes and unlock new backdrops.",
-      "lead": "A fast one-tap darts game drawn in pencil on a sketchbook page. Your aim drifts left, right, up and down over a sketched dartboard. Tap at the right moment and your dart smashes the target to pieces, then a new one pops up somewhere else. Hit the gold star for a bullseye, build combos, and see how many doodled desk friends you can beat.",
+      "lead": "The aiming mark wanders across the drawing while your dart waits. Tap for an ordinary hit, or wait for the gold centre and start a run of bullseyes.",
       "facts": [
         "Arcade",
         "One tap",
@@ -1781,10 +1711,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Watch your aim drift over the target. Tap when it's on the target to throw. Every hit is worth a point.",
-        "Hit the gold star in the middle for a Bullseye. Bullseyes in a row build a combo worth more and more points.",
-        "Miss the target and you lose a dart. You have 3. Never hit a spiky blob, or your game is over.",
-        "Smash the big bonus gold stars when they appear for extra points and coins."
+        "Watch the aiming mark move, then tap once to throw at its current position. An ordinary hit scores one point and one coin.",
+        "Aim for the gold centre to earn a bullseye. Consecutive centres build a scoring streak. When the large bonus star appears, hit it for five points and ten coins.",
+        "You start with three darts. An ordinary miss costs one. Hitting a spiky blob ends the run immediately, even if you have darts left.",
+        "Check your score against the desk friends after a run. Pencil is the first milestone at ten points."
       ],
       "controls": [
         "Tap or click anywhere on the page to throw. On a keyboard, press Space.",
@@ -1792,15 +1722,13 @@
         "Use the Shop on the start screen to spend coins on new backdrops and new things to throw, like a feather or an ice pop."
       ],
       "tips": [
-        "Your aim speeds up as your score climbs, so save the Slowpoke power-up for later in a run.",
-        "Coins come from every hit, with bullseyes and big bonus gold stars paying the most.",
-        "Out of darts? Keep playing for 50 coins gives you one more dart, once per game.",
-        "Beat Pencil, Eraser, Crayon and the rest of the doodled desk friends on the way to the Backpack."
+        "A spiky blob can finish the run while you still have darts left. Keep your eye on the aiming mark and the blob together.",
+        "The large bonus star pays five points and ten coins when hit. Its whole target counts, so you can take a wider shot than you would for a bullseye."
       ],
       "about": [
-        "Doodle Darts is a one-tap timing game that we built to be played in short bursts. Your aim never stops moving over the target, so the whole game lives in the moment you tap. Hit near the centre and the target shatters; hit the gold spot for a bullseye and a combo boost.",
-        "A row of opponents each has a score to beat, and knocking them off one by one gives the game a sense of progress beyond the raw number. It is easy to learn in ten seconds and hard to put down, which is exactly what we were after."
-      ]
+        "Three ordinary hits earn three points. Three consecutive bullseyes earn 2, then 4, then 6, for 12 points. An ordinary hit breaks that chain. If the spiky blob sits along the approach to the centre, watch the mark come around again before committing to a throw."
+      ],
+      "guide_title": "What three bullseyes are worth"
     },
     {
       "slug": "word-workshop",
@@ -1811,7 +1739,7 @@
       "tagline": "Drag across the letters to spell words and fill a sketchbook crossword.",
       "title": "Word Workshop: Free Crossword Word Game Online | Sketchpad Arcade",
       "meta": "Play Word Workshop free online: drag across a ring of letters to spell words and fill a sketchbook crossword. 88 levels from Beginner to Advanced.",
-      "lead": "A relaxing word puzzle drawn in pencil on a sketchbook page. Drag across the letters on the wheel to spell words, and each one you find drops into the crossword above. Fill every square to finish the level. Every real word counts: extra words earn bonus points, quick words build combos, and long words earn big rewards.",
+      "lead": "A wheel of pencil letters supplies a whole crossword. Changing the order of the same letters can fill an entirely different slot without adding anything to the wheel.",
       "facts": [
         "Word puzzle",
         "Beginner, Intermediate and Advanced",
@@ -1819,12 +1747,10 @@
         "Saves your progress"
       ],
       "how": [
-        "Drag across the letters on the wheel to spell a word, then let go.",
-        "Words that fit the crossword drop into the board. Fill every square to finish the level.",
-        "Any other real word is a Bonus Word. It earns points and fills the Bonus meter under the board, and every 6 bonus words pays 30 stickers.",
-        "Find words within a few seconds of each other to build a combo, up to 5X points. Longer words score much more.",
-        "On Beginner, after five misses in a row the first two letters of an unsolved word light up as a clue (eight misses on Intermediate, no free clues on Advanced). Solve a level without hints for 3 stars.",
-        "Pick a difficulty. Beginner has 28 relaxed levels with short words. Intermediate has 30 levels with 6 and 7 letter wheels, bigger grids and 1.5X points. Advanced has 30 levels with 7 and 8 letter wheels, only counts words of 4 or more letters, and gives you 4 minutes plus 10 seconds per grid word, for 2X points."
+        "Choose a difficulty. Begin a swipe at a letter on the wheel, trace a word in order and lift. A crossword answer appears in its slot and reveals letters in any slots that cross it.",
+        "Use each wheel tile once per swipe. An accepted word outside the crossword earns a bonus the first time you find it. Every six bonus words pays thirty stickers.",
+        "Follow one successful word quickly with another to build the multiplier up to five. Beginner and Intermediate offer a two-letter clue after repeated misses. Advanced counts words of at least four letters and gives four minutes plus ten seconds for each grid word found.",
+        "Finish all the crossword entries to open the next page. Completing a level without purchasing a hint earns three stars."
       ],
       "controls": [
         "Drag with your finger or mouse across the letters. Slide back to the previous letter to undo it.",
@@ -1832,15 +1758,13 @@
         "The star shows your bonus words and personal bests, the bars button lets you switch difficulty or start over, and the speaker button turns sound on or off."
       ],
       "tips": [
-        "Look for short three-letter words first. They often unlock the crossing letters for longer words.",
-        "Shuffle when you feel stuck. Seeing the letters in a new order often shows you a word right away.",
-        "Try every word you can see. Real words that don't fit the grid still earn bonus points and fill the Bonus meter.",
-        "The level's name is always one of the answers, and it uses every letter on the wheel."
+        "When a wheel is hard to read, shuffle and look at the new neighbors. Shuffling changes the arrangement of the letters, so every word you could make before is still there.",
+        "On Advanced, a three-letter guess is too short even if it is a real word. Use a revealed crossing letter to start looking for a four-letter answer."
       ],
       "about": [
-        "Word Workshop is a letter-wheel crossword game. Each level gives you a handful of letters on a wheel and a small crossword above it; drag across letters to spell words, and the ones in the puzzle drop into place. Any real word you find counts, so extra words still earn points.",
-        "We tuned it so that a quick player and a thorough player both have fun: combos reward speed, and long words earn a bonus. Levels are saved on your device."
-      ]
+        "On the Beginner page called Draw, swipe D–R–A–W, lift, then swipe W–A–R–D. DRAW fills the bottom row and WARD runs down the left edge. They share the D in the bottom-left corner. For the shorter entries, try R–A–W down the right or W–A–D across the top."
+      ],
+      "guide_title": "Try two readings of the DRAW wheel"
     },
     {
       "slug": "bubble-doodle",
@@ -1851,7 +1775,7 @@
       "tagline": "Aim, bounce and pop bubbles before they reach the dashed line.",
       "title": "Bubble Doodle: Free Bubble Shooter Game Online | Sketchpad Arcade",
       "meta": "Play Bubble Doodle free online: a pencil-drawn bubble shooter. Aim with the dotted guide, bank shots off the walls and pop matches before the dashed line.",
-      "lead": "A bubble shooter drawn in coloured pencil, with a dotted aim line. Bounce shots off the walls, pop bubbles of the same color and knock loose whole clusters before the rows reach the dashed line.",
+      "lead": "One well-placed pencil bubble can take down a whole branch of colours. Aim for the point holding the branch to the ceiling and use the side walls to reach it.",
       "facts": [
         "Arcade",
         "Drag to aim",
@@ -1859,10 +1783,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Drag to aim. The dotted pencil line shows exactly where your shot will go, including bounces off the walls.",
-        "Release to shoot. Hitting a bubble of the same color pops the whole connected group.",
-        "Bubbles left hanging with nothing above them fall off for bonus points.",
-        "Pop every bubble to clear the level. Each level only sends a few new rows, so the board can be beaten, and each level adds rows and colors. The game ends if bubbles cross the red dashed line."
+        "Drag until the dotted path ends beside a bubble the same colour as your shot. The dots show side-wall rebounds too. Lift your finger to fire.",
+        "One matching neighbour is enough. Every touching bubble of that colour in the group pops, and any bubbles cut off from the ceiling fall. Six successful pops charge a bomb for an upcoming shot.",
+        "Count shots as well as colours. Level one can add two rows, one per seven shots. Later pages bring more colours and more frequent rows.",
+        "Empty the board to move on. If the bottom of the cluster crosses the dashed danger line, the run ends."
       ],
       "controls": [
         "Drag and release with a mouse or finger to aim and shoot.",
@@ -1871,14 +1795,14 @@
         "Every 6 pops charges a bomb that clears everything around where it lands."
       ],
       "tips": [
-        "Bank shots off the walls to reach gaps you can't hit directly.",
-        "Dropping a big hanging cluster is worth far more than popping.",
-        "Watch the new-row counter and clear the lowest rows first."
+        "A shot only needs one neighbour of its colour to start a pop. Use the aiming dots to touch that neighbour from the side.",
+        "If two shots can reach the same colour, choose the one that removes support from the lowest branch before the next row arrives."
       ],
       "about": [
-        "Bubble Doodle is Sketchpad Arcade's bubble shooter. The dotted aim line shows exactly where your shot will land, including after a bounce off the wall, which makes it easy to pick up while still rewarding the tricky bank shots that make it worth playing.",
-        "Popping a group of three or more clears it, but the real points come from the bubbles left hanging underneath, which drop away in a cascade. The rows creep down a little at a time, so there is always a reason to plan two or three shots ahead."
-      ]
+        "Suppose six bubbles of assorted colours hang from one red bubble, with no other path to the ceiling. One red shot touching that red bubble makes a pair worth 20 points. The six loose bubbles then fall for 240 more. You can leave all six colours alone and earn 260 points with that shot.",
+        "Trace both sides of the cluster before firing. Even a thin diagonal connection to the ceiling can hold the whole branch up."
+      ],
+      "guide_title": "Read a six-bubble drop"
     },
     {
       "slug": "four-in-a-frame",
@@ -1889,7 +1813,7 @@
       "tagline": "Sort sixteen words into four secret groups of four.",
       "title": "Four in a Frame: Free Connections Word Puzzle | Sketchpad Arcade",
       "meta": "Play Four in a Frame free online: sort sixteen words into four secret groups of four. A new Daily Puzzle every day, plus Beginner to Advanced levels.",
-      "lead": "A word-sorting puzzle in the style of the daily connections games. Sixteen paper word tiles are pinned to a corkboard, and they hide four secret groups of four. Tap four that belong together and check your guess. Groups start easy, like fruits and colours, and get sneakier as you go, with words that seem to fit two groups at once.",
+      "lead": "Sixteen words can hide four ordinary-looking groups. The hard part is deciding which meaning of a word belongs on this particular page.",
       "facts": [
         "Word",
         "New Daily Puzzle every day",
@@ -1898,12 +1822,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap four words you think belong together, then tap Check.",
-        "Get it right and the group lifts to the top in its colour. Yellow groups are the easiest and pink groups are the trickiest.",
-        "If you're one word off, it tells you you're one away. Run out of tries and the groups are shown, and you lose a star. Lose all 3 stars and the game ends.",
-        "Pick a level. Beginner has simple groups with 5 tries and 2 hints per puzzle. Intermediate adds wordplay like SUN___ with 4 tries, 1 hint and 1.5X points. Advanced is full of red herrings, with 3 tries, no hints and 2X points. Each level remembers where you got to.",
-        "Play the Daily Puzzle from the yellow Daily button. Everyone gets the same puzzle that day, the clock only runs while you're playing, and solving one each day builds your streak. Share your result to challenge friends.",
-        "Each group you find scores points, plus a bonus for every try you had left."
+        "Look over all sixteen words. Select four you could give the same label, then press Check. A solved set moves above the remaining tiles. Yellow is the easiest group and pink the trickiest.",
+        "Use the feedback on a miss. “One away” means three belong together. Complete all four groups to earn a bonus for unused tries, on top of the points for each group.",
+        "Beginner gives five tries and two hints per puzzle. Intermediate allows four tries, one hint and scores at 1.5×. Advanced allows three tries, no hints and scores at 2×. Each mode keeps its own progress.",
+        "In those modes, using up the tries reveals the groups and costs one of three stars. The yellow Daily button opens a separate shared puzzle with an active-play timer, a daily streak and a result you can share."
       ],
       "controls": [
         "Tap or click a word to pick it, and tap it again to put it back.",
@@ -1912,15 +1834,13 @@
         "The Sound button turns sound on or off."
       ],
       "tips": [
-        "Find the easiest group first. Fewer words left makes the tricky groups easier to spot.",
-        "If a word fits two groups, save it for last and work out which group needs it.",
-        "Some groups are word puzzles, like words that go before BOOK or words that sound like letters.",
-        "Use Shuffle when you feel stuck. Seeing the words in a new order often helps."
+        "Shuffling changes where the tiles sit without changing their groups. Use it to break an association formed just because two words were next to each other.",
+        "A hint marks two members of a group together. Use those marks as anchors and test what links both words before spending another try."
       ],
       "about": [
-        "Four in a Frame is a word-grouping puzzle. Sixteen words hide four groups of four; your job is to find the groups. Some are obvious, like animals or colours, and some are sneaky, with words that seem to belong in two groups at once or groups that are really word puzzles in disguise.",
-        "It works on your own or passed around a table with friends calling out guesses. Each puzzle is hand-built rather than random, so the tricky ones are tricky on purpose, and the easy groups give you a way in."
-      ]
+        "A “one away” result means exactly three of your four words belong together. Keep that set in mind and inspect the other twelve. If a word seems to fit both your guess and another category, look for three convincing partners for it in the other category. Lock in that group first, then return to the original guess with fewer choices."
+      ],
+      "guide_title": "Work backward from “one away”"
     },
     {
       "slug": "margin-match",
@@ -1931,7 +1851,7 @@
       "tagline": "Tap doodle tiles off the pile and collect three of a kind in your tray.",
       "title": "Margin Match: Free Tile Matching Puzzle Game | Sketchpad Arcade",
       "meta": "Play Margin Match free online: tap doodle tiles off a stacked pile, collect three of a kind in your 7-spot tray and clear the whole pile to win.",
-      "lead": "A cheerful tile-matching puzzle piled high with sketchbook doodles. Tap a tile and it hops into your tray. Collect three of the same, like three pencils or three paperclips, and they clear away. Clear the whole pile to win the level, but don't let your 7-spot tray fill up.",
+      "lead": "You get seven spaces to turn a pile of overlapping doodle tiles into trios. Count how many tiles you must uncover before committing a tray space.",
       "facts": [
         "Puzzle",
         "Tap to play",
@@ -1939,11 +1859,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap any bright tile on the pile to move it into your tray at the bottom.",
-        "Get three of the same doodle in the tray and they clear away for points. Clear trios quickly one after another for a combo.",
-        "Dark tiles are covered by tiles on top. Clear the tiles above them first.",
-        "Clear every tile from the pile to finish the level. If all 7 tray spots fill up without a trio, the level is over and you can try it again.",
-        "Each level has more tiles, more kinds of doodles and taller stacks."
+        "Choose a bright tile on the pile and tap it into the seven-place tray. Dark tiles can only be picked after you remove everything overlapping them.",
+        "Collect three copies of one drawing to clear that trio. Finish another trio within three and a half seconds to build a scoring combo.",
+        "Plan to make a trio by the seventh tile. Taking a seventh that cannot complete a set ends the attempt. You can retry that level.",
+        "Clear the pile and finish its trios to advance. Later layouts put more kinds of doodles under taller stacks."
       ],
       "controls": [
         "Tap or click a tile to move it to the tray.",
@@ -1951,15 +1870,13 @@
         "The ? button shows the rules and lets you continue from your last level or start a new game."
       ],
       "tips": [
-        "Before you tap, look at what's already in your tray and pick a tile that matches it.",
-        "Uncover the tall stacks early so the dark tiles don't trap you at the end.",
-        "Save Lift for when your tray has 5 or 6 tiles. It frees up room right away.",
-        "Your level is saved, so you can come back later and carry on."
+        "At five tiles, you have room to remove one cover and then take a third matching tile. Check the tile beneath the cover before spending that first space.",
+        "Lift can send three tray tiles to the holding area. Bring one back when it closes a trio, leaving the others there until you have room."
       ],
       "about": [
-        "Margin Match is a tile-matching puzzle in the style of the popular triple-match games, piled high with sketchbook doodles. Tiles are stacked in overlapping layers, and only tiles with nothing on top can be picked. Tap one and it hops into a seven-slot tray; collect three of a kind and they clear.",
-        "Clearing the whole pile with a seven-slot tray takes a little planning, because grabbing two of something you cannot finish is the fastest way to run out of room. The pencils, paperclips and other doodles are our own drawings, and your level is saved so you can come back to it."
-      ]
+        "At six tiles in the tray, look for a pair already sitting there. If a bright, uncovered tile completes that pair, taking it fills the seventh space for a moment and then clears all three. If its match sits under an unrelated tile, taking the cover first fills the last space with no trio. Use Lift or find another exposed match before touching the cover."
+      ],
+      "guide_title": "Can the seventh tile rescue this tray?"
     },
     {
       "slug": "no-2-pencil",
@@ -1970,7 +1887,7 @@
       "tagline": "Link matching classroom doodles before the timer runs out.",
       "title": "No. 2 Pencil: Free Tile Connect Puzzle Game | Sketchpad Arcade",
       "meta": "Play No. 2 Pencil free online: a tile connect puzzle. Link matching classroom doodles with a path of up to two turns and clear the desk before time runs out.",
-      "lead": "A tile-matching puzzle drawn in plain No. 2 pencil. Every tile is a classroom doodle, like an apple, a globe, a school bus or a trophy, and it colours in when you tap it. Connect two matching tiles with a path of no more than two turns and clear the whole desk before the timer runs out.",
+      "lead": "Two matching classroom doodles can see each other around corners. Look for a route with at most two bends, tap both ends, and watch the pencil trace the connection.",
       "facts": [
         "Puzzle",
         "Tap or click",
@@ -1978,10 +1895,10 @@
         "Saves your level"
       ],
       "how": [
-        "Tap a tile to select it and it colours in.",
-        "Tap a matching tile. If a path with no more than two turns joins them, both tiles clear.",
-        "Paths can run around the outside edge of the board, but not through other tiles or blocked squares.",
-        "Clear every tile before the timer empties to finish the level. Each match adds a second back."
+        "Pick one classroom doodle, then tap a second tile showing the same drawing. You only need to select the two ends.",
+        "The pencil line travels horizontally or vertically through open space, including the blank border. It can bend twice on its way to the second tile.",
+        "After a match, the remaining tiles slide in the direction of the board's arrow. Level one slides down, level two left, level three up and level four right.",
+        "Empty the board before time runs out. Each pair restores up to one second. Use Hint to reveal a pair or Shuffle to rearrange the remaining tiles."
       ],
       "controls": [
         "Tap or click a tile to select it, and tap it again to deselect.",
@@ -1990,15 +1907,13 @@
         "The Sound button mutes all sound effects."
       ],
       "tips": [
-        "Linking tiles that are far apart earns more stars.",
-        "Matching quickly builds a combo multiplier up to x5.",
-        "From level 4, tiles slide after each match, so think one move ahead.",
-        "Save your hints for the bigger boards."
+        "For a high score, look across the board before taking an adjacent pair. A route of six steps earns two stars, and eleven steps earns three.",
+        "When a pair shakes, the second tile stays selected. If you see another copy with a clear route, tap it to try again."
       ],
       "about": [
-        "No. 2 Pencil is our take on the classic tile-connecting puzzle, sometimes called a link-link or mahjong-connect game, drawn entirely in plain pencil. Every tile is a classroom doodle, an apple, a globe, a school bus, a trophy, and it colours in when you tap it. Two matching tiles clear if a path with no more than two turns joins them.",
-        "We built it with a short timer and a quick restart so it works as well in a two-minute wait as in a longer sitting. From level 4 the tiles slide after each match, which turns a relaxed game into a sharper one, and linking tiles that are far apart earns extra stars."
-      ]
+        "Suppose two matching tiles sit on the top edge with a solid row of tiles between them. Imagine moving one square up from the first tile, across the blank margin, then down onto its twin. That route has exactly two bends, so the pair clears even though neither tile can move sideways."
+      ],
+      "guide_title": "Use the blank margin to join a pair"
     },
     {
       "slug": "scribble-blocks",
@@ -2009,7 +1924,7 @@
       "tagline": "Drag shapes onto the board and clear rows and columns.",
       "title": "Scribble Blocks: Free Block Puzzle Game Online | Sketchpad Arcade",
       "meta": "Play Scribble Blocks free online: drag coloured-pencil shapes onto an 8x8 grid, fill rows and columns to rub them out and chain combos for big scores.",
-      "lead": "A relaxing block puzzle with bright coloured-pencil pieces outlined in black. Place shapes on an 8x8 grid, fill a row or column to rub it out and chain clears together for big combos. Gold star blocks are worth bonus points.",
+      "lead": "Fit three doodle pieces at a time into a square grid. Before dropping the first one, find a home for the awkward shape in the tray and look for lines that cross.",
       "facts": [
         "Puzzle",
         "Drag and drop",
@@ -2017,10 +1932,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Drag a piece from the tray onto the board.",
-        "Fill a whole row or column to clear it. Lines that are about to clear light up before you drop.",
-        "Place all three pieces to get three new ones.",
-        "The game ends when none of your pieces fit anywhere. Pieces that can't fit turn gray."
+        "Look at the three shapes in the tray. Drag one over the grid and find an empty space that fits its exact outline.",
+        "Line up filled squares from edge to edge across one row or down one column. The preview lights the lines that will clear when you release.",
+        "Use the other shapes in whichever order opens the most space. A new tray only arrives after all three have been placed.",
+        "There is no clock. Keep placing pieces until none of the shapes left in the tray fits. A starred square earns a bonus when its line clears."
       ],
       "controls": [
         "Drag and drop pieces with a mouse or finger.",
@@ -2028,14 +1943,13 @@
         "New game starts over at any time."
       ],
       "tips": [
-        "Keep the middle of the board open for the big square pieces.",
-        "Avoid leaving single empty cells that only a 1x1 piece can fill.",
-        "Clearing several lines at once, or on back-to-back moves, multiplies your score."
+        "If a tray piece turns gray, see whether one of the other two can clear the space it needs. Gray describes the board as it stands.",
+        "Use Undo immediately when you close the only space for a large block. It restores the previous board, tray, score and streak, and spends one of your three undos."
       ],
       "about": [
-        "Scribble Blocks is a block-placing puzzle with bright coloured-pencil pieces outlined in black. You get three pieces at a time, place them anywhere on the 8x8 grid, and rub out full rows or columns. There is no timer and no falling pieces, so it suits players who like to think before they move.",
-        "The twist is the gold stars. Some pieces carry star blocks that are worth +25 when they clear, and the game ends only when none of your three pieces fit. Learning to keep a corner open for the long bar is the difference between a short game and a very long one."
-      ]
+        "Suppose a row and a column are full except for the same empty square. A one-cell piece placed at that crossing clears both. On a fresh streak the line bonus is 40 points, plus the point for placing the piece. Any starred square removed adds another 25."
+      ],
+      "guide_title": "Look for the square that clears two lines"
     },
     {
       "slug": "drop-swap",
@@ -2046,7 +1960,7 @@
       "tagline": "Swap classroom doodles, match three and clear the scribbles.",
       "title": "Drop Swap: Free Match-3 Puzzle Game Online | Sketchpad Arcade",
       "meta": "Play Drop Swap free online: a match-3 puzzle with apples, pencils, books and star stickers. Swap, match three, build power-ups and beat 30 levels.",
-      "lead": "A bright match-3 puzzle with 30 levels, drawn in coloured pencil. Swap neighboring tiles to line up three or more apples, pencils, books, backpacks, crayons or star stickers. Each level has its own goal and a limited number of moves, and your stars decorate your classroom.",
+      "lead": "Match apples, pencils and other classroom pieces to clear each page’s assignment. A four-piece line can build a ruler that reaches a stubborn scribble several squares away.",
       "facts": [
         "Puzzle",
         "30 levels",
@@ -2054,10 +1968,10 @@
         "Saves your progress"
       ],
       "how": [
-        "Swap two neighboring tiles to line up three or more of the same kind.",
-        "Finish the level's goals before you run out of moves. Some levels ask you to collect certain tiles, and others ask you to clear every scribble.",
-        "Scribbles clear when you make a match on top of them. Darker scribbles take two matches.",
-        "Moves you have left at the end turn into bonus points and can earn you up to 3 stars."
+        "Read the assignment above the board before making the first swap. Some pages count particular classroom pieces, while others ask you to erase the scribbles underneath them.",
+        "Trade two side-by-side pieces to form a straight line of three or more matching items. Pieces fall into the spaces they leave and can make further matches on the same move.",
+        "Work directly on a scribbled square to remove a layer. Dark scribbles need two hits. Rulers and other special pieces can also reach those squares.",
+        "Complete the assignment within the move budget. Each unused move adds 250 points at the finish, and the final score determines whether you take home one, two or three stars."
       ],
       "controls": [
         "Drag a tile toward its neighbor to swap them, or tap one tile and then the tile next to it.",
@@ -2066,15 +1980,14 @@
         "The Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Match 4 in a line to make a ruler that clears a whole row or column.",
-        "Make an L or T shape to make scissors that snip the tiles around them.",
-        "Match 5 in a line to make a paint palette. Swap it with any tile to clear every tile of that kind.",
-        "Wait a few seconds and two tiles will pulse to show you a move."
+        "A dark scribble needs two hits. A ruler can take off the first layer even if you cannot yet make a normal match on the square.",
+        "The paint palette clears a chosen tile kind when swapped with it. Check which kind sits on the most remaining goal squares before choosing a neighbour."
       ],
       "about": [
-        "Drop Swap is a 30-level match-3 puzzle with a different goal on every board, drawn in coloured pencil with classroom tiles: apples, pencils, books, backpacks, crayons and star stickers. Each level gives you a fixed number of moves, so it rewards planning over fast swiping.",
-        "Lining up four or five tiles makes special pieces, a ruler that clears a line, scissors that snip the tiles around them, a paint palette that clears every tile of one kind. The stars you earn decorate your classroom, and progress is saved on your device."
-      ]
+        "Look above the scribble for a horizontal line of four you can complete. That line makes a vertical ruler. In a simple four-match, the ruler appears on the swapped square that joins the line. Line that square up with the scribble’s column, then trigger the ruler in a later match to sweep down the column.",
+        "A vertical four works the other way and makes a horizontal ruler. Check the stripe before spending a move to set it off."
+      ],
+      "guide_title": "Build a ruler over a hard-to-reach scribble"
     },
     {
       "slug": "pencil-path",
@@ -2085,7 +1998,7 @@
       "tagline": "Tap pencils to send them off the notepad, one clear path at a time.",
       "title": "Pencil Path: Free Unblock Logic Puzzle Game | Sketchpad Arcade",
       "meta": "Play Pencil Path free online: tap coloured pencils to slide them off a lined notepad, but only when their path is clear. 60 relaxing logic levels.",
-      "lead": "A calm logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so tap the ones with a clear path off the page first and open the way for the rest. Bump into another pencil and you lose a heart.",
+      "lead": "A pencil leaves the notebook in one straight line. Find a clear exit for one pencil and its empty square can free the next one in the chain.",
       "facts": [
         "Puzzle",
         "Tap or click",
@@ -2093,25 +2006,24 @@
         "Saves your progress"
       ],
       "how": [
-        "Tap a pencil to send it sliding straight the way its tip points.",
-        "It only gets off the page if nothing is in its way. If it bumps another pencil, you lose one of your 3 hearts.",
-        "Every pencil that leaves opens a path for others. Clear the whole page to finish the level.",
-        "Ink blots appear in later levels. They never move, but every pencil can still get off the page."
+        "Pick a pencil and follow its tip all the way to the notebook edge. When the full route is open, tap it once to send it out.",
+        "Each departing pencil leaves a gap. Check which other tips now point through that gap, then send the next pencil.",
+        "A blocked tap costs one of three hearts. Later boards include fixed ink blots that stay where they are as the other pieces leave.",
+        "Clear the last pencil to finish the page. Remaining hearts determine the star rating. The score also rewards how quickly you finished."
       ],
       "controls": [
         "Tap or click a pencil to send it off the page.",
-        "Hint glows on a pencil that can leave safely. You get 3 per level.",
+        "Hint glows on a pencil that can leave safely. Tap it again whenever you need another hint.",
         "Restart level starts the page over, and Levels lets you replay any level you've unlocked."
       ],
       "tips": [
-        "Start with pencils on the edges pointing out. They always have a clear path.",
-        "Before tapping, trace the pencil's line all the way to the edge of the page.",
-        "Finish without any bumps to earn all 3 stars."
+        "Follow the entire row or column. One empty square just ahead of the tip gives you room to look, but a pencil farther along can still cost a heart.",
+        "To earn three stars, finish with all three hearts. Speed adds points separately, so you can take your time when collecting stars."
       ],
       "about": [
-        "Pencil Path is a gentle logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so the whole puzzle is about order: which pencil can slide off the page right now, and which ones are blocking each other.",
-        "There is no time limit. You can study the page as long as you like, but you only have a few hearts, and every bump costs one. Early pages have a handful of pencils; later ones pack the paper with crisscrossing lines that take real thought to untangle, and a clean solve earns all three stars."
-      ]
+        "Start with a right-pointing pencil that has another pencil between its tip and the edge. Leave the first one alone and trace the blocker from its own tip. If that line is clear, send the blocker off first. Now trace the first pencil again in case there was a second blocker behind it."
+      ],
+      "guide_title": "Follow the pencil that's blocking your pencil"
     },
     {
       "slug": "space-blaster",
@@ -2122,7 +2034,7 @@
       "tagline": "Fly a little rocket and blast the UFOs swooping down from space.",
       "title": "Space Blaster: Free Retro Space Shooter Online | Sketchpad Arcade",
       "meta": "Play Space Blaster free online: steer a little rocket across grid-paper space and zap saucers, ring ships and a shielded mothership in a retro shooter.",
-      "lead": "A retro arcade shooter drawn on grid paper. UFOs of every shape and size, from tiny scouts to a shielded mothership, line up in formation and swoop down at your little rocket. Fire rapid laser bolts to zap them, dodge their alien goo, and see how many levels you can clear.",
+      "lead": "Slide a pencil-drawn rocket beneath flights of UFOs. Its firing pattern changes as you advance, so the same aim that works in the first formation feels different in level five.",
       "facts": [
         "Arcade",
         "Hold and drag",
@@ -2130,10 +2042,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Hold and drag to steer your rocket along the bottom of the page. It fires a rapid stream of lasers while you hold.",
-        "Each hit zaps a UFO. The big mothership has a shield and takes two hits.",
-        "UFOs swoop down at you and drop alien goo. Get bumped or gooed and you lose a ship. You start with 3.",
-        "Clear every UFO to finish the level. Each level they swoop faster, dive more often and drop more goo."
+        "Press and hold to fire while dragging the rocket from side to side. Line up your lasers with the incoming UFOs.",
+        "The larger mothership takes two hits. Watch for falling alien goo while firing and avoid a collision with a diving ship.",
+        "Clear the formation to reach the next level. Ordinary diving UFOs pay double their formation value, and a gold power star adds a beam for twelve seconds.",
+        "You start with three ships. A collision or goo hit costs one. Your first extra ship comes at 20,000 points and another at 70,000."
       ],
       "controls": [
         "Hold and drag on the screen to steer and fire. With a mouse, move to steer and hold the button down to fire.",
@@ -2141,16 +2053,13 @@
         "Pause stops the action, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "UFOs are worth double while they're diving, so stay brave.",
-        "Your lasers fire a little faster every level and come out in two streams from level 5.",
-        "Zap the power star for 12 seconds of an extra laser stream.",
-        "Watch for goo and slide out of the way. It falls toward where you were.",
-        "You earn an extra ship at 20,000 points and again at 70,000."
+        "When a mothership flashes on the first hit, keep a beam on its route for the second. That first flash signals damage to its shield.",
+        "A power star lasts twelve seconds. During the early levels it changes your single stream into two, so realign for the new spread before aiming at one small UFO."
       ],
       "about": [
-        "Space Blaster is a nod to the fixed-screen arcade shooters of the early 1980s, drawn on grid paper. UFOs of every shape and size line up in formation and then peel off to dive at your little rocket, and you answer with rapid laser bolts while dodging their alien goo.",
-        "Each level adds faster dives and a shielded mothership to crack, and your lasers get a little quicker as you go. It is a game of pattern reading: learn when each UFO breaks formation and you can clear whole squadrons without a scratch, and diving UFOs are worth double for the brave."
-      ]
+        "From level five the regular twin beams leave a gap directly above the rocket. If a narrow target is lined up with your nose and the shots pass either side, slide a little left or right until one stream cuts through it. The power star temporarily adds a third beam down the middle."
+      ],
+      "guide_title": "Aim with the gap between twin lasers"
     },
     {
       "slug": "space-glass",
@@ -2161,7 +2070,7 @@
       "tagline": "Colour space pictures by number, one pencil colour at a time.",
       "title": "Space Glass: Free Color by Number Game Online | Sketchpad Arcade",
       "meta": "Play Space Glass free online: a relaxing colour-by-number puzzle on grid paper. Fill pixel pictures of rockets, astronauts, UFOs, planets and galaxies.",
-      "lead": "A relaxing color-by-number puzzle on a sheet of grid paper. Each level is a detailed pixel picture from outer space, like a rocket, an astronaut, a UFO, a ringed planet or a galaxy. Pick a numbered color, then tap or drag across the matching squares and zoom in for the small details.",
+      "lead": "A blank numbered mosaic slowly becomes a rocket, a moon rover or a galaxy. One pencil fills only its own numbered squares, so you can sweep across a whole band of mixed colors.",
       "facts": [
         "Puzzle",
         "Tap or drag",
@@ -2169,10 +2078,10 @@
         "Saves your progress"
       ],
       "how": [
-        "Pick a coloured pencil from the tray at the bottom. Every square with its number lights up on the picture.",
-        "Tap a lit square to color it in, or hold and drag across several at once. Zoom in with + or a pinch for small squares.",
-        "When a color is finished it gets a check mark and the next color is picked for you.",
-        "Fill every square to finish the picture and move on to the next level."
+        "Open a picture and pick a numbered pencil from the tray. The matching squares stand out on the grid.",
+        "Tap a matching square for one mark or drag across a group of them. Other colors are skipped as the pencil passes.",
+        "Use the plus button or pinch to enlarge tiny details. Once a color is complete, its pencil gets a check and another open color becomes active.",
+        "Finish every numbered square to add the picture to your collection. Your device saves filled squares between visits."
       ],
       "controls": [
         "Tap or click a square to fill it. Hold and drag to fill a whole row in one go.",
@@ -2180,15 +2089,13 @@
         "The magnifier points out a square you missed, and the Sound button turns sound effects on or off."
       ],
       "tips": [
-        "Dragging is the fastest way to fill big areas. Squares of other colors are skipped, so you can sweep right over them.",
-        "The small number on each color shows how many squares are left.",
-        "Tap a square with a different number and the game shows you which color it needs.",
-        "Finished pictures are saved in the Pictures collection on the start screen."
+        "Keep one finger down to color a broad patch. Lift it and use two fingers to move the zoomed picture without drawing.",
+        "Want to work on a particular part of the picture? Tap an unfinished square there. If another pencil is selected, the game tells you the number you need."
       ],
       "about": [
-        "Space Glass is a colour-by-number puzzle on grid paper. Every level is a detailed pixel picture from outer space, a rocket, an astronaut, a UFO, a ringed planet, a galaxy, and you fill it in by picking a numbered colour and tapping or dragging across the matching squares, zooming in for the small details.",
-        "It is one of the calmest games on the site and a favourite for anyone who likes to wind down. Dragging skips squares of other colours, so big areas go fast, and finished pictures stay in your collection on your device so you can look back at them."
-      ]
+        "When a pencil's counter drops to one, keep that color selected and tap Hint. The remaining square flashes. If you're zoomed in, the board also scrolls to it. Fill it and the tray moves on to the next unfinished pencil."
+      ],
+      "guide_title": "Find the last square of one color"
     },
     {
       "slug": "chibi-chib",
@@ -2199,7 +2106,7 @@
       "tagline": "Pick up scrambled gems and put each colour back to rebuild cute chibi animals.",
       "title": "Chibi Chib: Free Gem Sorting Puzzle Game | Sketchpad Arcade",
       "meta": "Play Chibi Chib free online: a relaxing gem sorting puzzle. Pick up misplaced gems and drop them on their coloured squares to finish 17 chibi animal pictures.",
-      "lead": "A calm, colourful sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour. Each square shows the colour it wants, so zoom in, pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.",
+      "lead": "Kitty’s picture starts as a jumble of coloured gems. A tap picks up a patch, and the tiny dots underneath show which colours belong in the spaces you uncover.",
       "facts": [
         "Puzzle",
         "17 chibi pictures",
@@ -2207,10 +2114,10 @@
         "Saves your progress"
       ],
       "how": [
-        "Each square shows the colour it wants with a small coloured dot. Every gem starts on a square of the wrong colour.",
-        "Tap a misplaced gem to pick up its little patch of matching gems. Tap it again to put them back down.",
-        "Tap the tray to stash the gems you're holding, or tap an open square of their colour to drop them straight into the picture.",
-        "Fill every square to finish the picture. The pictures get bigger and more detailed as you go."
+        "Open a picture and find a gem on the wrong colour. Tap it to lift the connected patch it belongs to. Tap the selection again to put it back.",
+        "Look for an empty square with a dot matching the gems in your hand. Tap there to fill as many matching spaces as are available. If there is no opening yet, use the tray to make one.",
+        "To retrieve a colour, select it in the tray and tap its dotted square on the picture. You can zoom in when the dots are close together.",
+        "Fill all the coloured squares and empty the tray to save the finished picture. If the tray fills and no gems can move, the round gets stuck."
       ],
       "controls": [
         "Tap or click gems, the tray, tray colours and squares.",
@@ -2218,15 +2125,14 @@
         "Hint (10 coins) shows a good move, +1 Row (30 coins) adds 16 tray spots, and Undo (15 coins) takes back your last move."
       ],
       "tips": [
-        "Before stashing gems in the tray, check whether there's already an open square of their colour you can drop them on.",
-        "Zoom in on busy spots so it's easier to tap exactly the square you want.",
-        "Finish a picture without boosters for 5 bonus coins.",
-        "Finished pictures are saved in My pictures on the start screen."
+        "Tap a dot near the part of the picture you want to finish. The game fills that square first and then the nearest open squares of that colour.",
+        "A completed picture earns 10 coins. Finish without a booster for 15, so try a direct swap before spending one."
       ],
       "about": [
-        "Chibi Chib is a sorting puzzle starring big-eyed chibi animals. Every picture starts scrambled, with gems sitting on squares of the wrong colour, and each square shows the colour it wants. You pick up gems and drop them where they belong until the kitty, puppy, panda, fox and friends are complete.",
-        "The small tray is the whole strategy. It has only a few slots, so you cannot simply scoop everything up; you have to plan a route that frees the right squares in the right order. Finish a picture without boosters for bonus coins, and finished pictures are saved in My Pictures."
-      ]
+        "Find two patches whose colours belong in each other’s spaces. Lift the first patch into the tray. Pick up the second and tap a newly exposed dot of its colour. Those gems move straight across the picture, opening spaces for the gems you parked. Bring the first colour back from the tray to finish the exchange.",
+        "If the patches have different sizes, only as many gems move as there are open matching squares. Look for another matching dot before sending the leftovers to the tray."
+      ],
+      "guide_title": "Use one tray trip to free two patches"
     },
     {
       "slug": "word-scribble",
@@ -2237,7 +2143,7 @@
       "tagline": "Drop letter bubbles into a pencil box, merge matching letters and swipe to spell words.",
       "title": "Word Scribble: Free Letter Merge Word Game | Sketchpad Arcade",
       "meta": "Play Word Scribble free online: drop letter bubbles into a pencil box, merge matching letters and swipe across nearby bubbles to spell words.",
-      "lead": "A merge game and a word game in one pencil box. Letters drop in color-coded sets that each spell a hidden word, and when two of the same letter touch they merge into a bigger letter worth more points. Swipe across nearby bubbles to spell words, which pops them and makes room for more. Spell enough words to clear the level before the box fills up.",
+      "lead": "The letter bubbles do two jobs. Some form a hidden word that empties part of your pencil box. Others can spell a bonus word for points while staying right where they landed.",
       "facts": [
         "Word + merge",
         "Levels",
@@ -2245,12 +2151,10 @@
         "Saves your best score"
       ],
       "how": [
-        "Tap or drag above the bubbles, then let go to drop a letter into the pencil box. Every letter of a hidden word drops in the same color, so matching colors can be unscrambled into a word.",
-        "When two of the same letter touch, in any color, they merge into a bigger silver letter worth double, then a gold one worth triple. Silver and gold letters fit any word, and two gold letters make a wild gold star that can stand for any letter.",
-        "Swipe across bubbles in order to spell one of the hidden words. They don't have to touch, just be close together. A hidden word pops, frees up room and counts toward the level, and spelled in a single color it scores double.",
-        "Any other real word of three or more letters is a Bonus Word: it earns bonus points and the letters stay in the box. Each bonus word counts once per level.",
-        "Spell the number of hidden words shown at the top to clear the level. The star word counts double, pays a big bonus and starts Star Mode.",
-        "The game ends if the bubbles stay above the dotted line."
+        "Release letters into the pencil box from above the pile. Each hidden word has its own color. Bubbles can join on contact into chunks such as TH or ING.",
+        "Swipe through nearby bubbles in spelling order or let a chunk complete a word on its own. A hidden word pops, and using its own plain color earns double.",
+        "Matching copies of the same letter can merge to silver and then gold. Matching gold copies become a wildcard. Extra real words of three or more letters score once each per level and leave the bubbles in play.",
+        "Meet the hidden-word goal at the top to advance. The star word counts twice and starts eight seconds of double scoring. If the stack rises to the dotted line, you have three seconds to clear a hidden word for a Clutch Save."
       ],
       "controls": [
         "Start a swipe on a bubble to spell. Slide back to the previous bubble to undo a letter.",
@@ -2258,15 +2162,14 @@
         "Pop removes one bubble you choose. You get another Pop each level."
       ],
       "tips": [
-        "Drop each color's letters close together so you can swipe its hidden word in one go for double points.",
-        "Keep vowels spread around the box so every group of letters has something to spell with.",
-        "Longer words score much more than short ones, so build up before you cash in.",
-        "Save your wild gold star for the star word or a long word."
+        "A fresh bonus word can help when the board is still low. Spell it before a hidden word uses up one of its letters, and both can contribute to the timed word streak.",
+        "Letters of one target share a color. Put that color's next drop close to the others so you can trace the entire word even after the bubbles settle."
       ],
       "about": [
-        "Word Scribble mixes two things we love, merge games and word games, in a single pencil box. Letters fall in colour-coded groups that each spell a hidden word, and matching letters that touch merge into a bigger letter worth more points. You clear space by swiping across nearby letters to spell words.",
-        "The tension comes from the fill line. Spell enough words and the level clears; let the box fill and the game ends. It rewards both vocabulary and a sharp eye for where the next letter will land."
-      ]
+        "When a pile reaches the dotted line, look for the letters of a hidden word first. Swipe through those bubbles in order to remove them. An ordinary bonus word can score using the same crowded patch, but its bubbles return to the pile afterward."
+      ],
+      "guide_title": "Choose the word that buys more space",
+      "twin_retired": true
     }
   ]
 }

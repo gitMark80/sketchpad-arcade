@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Drop Swap</h1>
-    <p class="lead">A bright match-3 puzzle with 30 levels, drawn in coloured pencil. Swap neighboring tiles to line up three or more apples, pencils, books, backpacks, crayons or star stickers. Each level has its own goal and a limited number of moves, and your stars decorate your classroom.</p>
+    <p class="lead">Match apples, pencils and other classroom pieces to clear each page’s assignment. A four-piece line can build a ruler that reaches a stubborn scribble several squares away.</p>
     <ul class="facts"><li>Puzzle</li><li>30 levels</li><li>Phone, tablet and computer</li><li>Saves your progress</li></ul>
-    <div><a class="btn" href="/play/drop-swap">Play Drop Swap</a></div>
+    <div class="btnrow"><a class="btn" href="/play/drop-swap">Play Drop Swap</a><a class="guide-jump" href="#strategy">Build a ruler over a hard-to-reach scribble</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Swap two neighboring tiles to line up three or more of the same kind.</li><li>Finish the level&#x27;s goals before you run out of moves. Some levels ask you to collect certain tiles, and others ask you to clear every scribble.</li><li>Scribbles clear when you make a match on top of them. Darker scribbles take two matches.</li><li>Moves you have left at the end turn into bonus points and can earn you up to 3 stars.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Read the assignment above the board before making the first swap. Some pages count particular classroom pieces, while others ask you to erase the scribbles underneath them.</li><li>Trade two side-by-side pieces to form a straight line of three or more matching items. Pieces fall into the spaces they leave and can make further matches on the same move.</li><li>Work directly on a scribbled square to remove a layer. Dark scribbles need two hits. Rulers and other special pieces can also reach those squares.</li><li>Complete the assignment within the move budget. Each unused move adds 250 points at the finish, and the final score determines whether you take home one, two or three stars.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Drag a tile toward its neighbor to swap them, or tap one tile and then the tile next to it.</li><li>Levels lets you replay any level you have unlocked.</li><li>Restart level starts the current level over.</li><li>The Sound button turns sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Match 4 in a line to make a ruler that clears a whole row or column.</li><li>Make an L or T shape to make scissors that snip the tiles around them.</li><li>Match 5 in a line to make a paint palette. Swap it with any tile to clear every tile of that kind.</li><li>Wait a few seconds and two tiles will pulse to show you a move.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>A dark scribble needs two hits. A ruler can take off the first layer even if you cannot yet make a normal match on the square.</li><li>The paint palette clears a chosen tile kind when swapped with it. Check which kind sits on the most remaining goal squares before choosing a neighbour.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Drop Swap</h2><p>Drop Swap is a 30-level match-3 puzzle with a different goal on every board, drawn in coloured pencil with classroom tiles: apples, pencils, books, backpacks, crayons and star stickers. Each level gives you a fixed number of moves, so it rewards planning over fast swiping.</p><p>Lining up four or five tiles makes special pieces, a ruler that clears a line, scissors that snip the tiles around them, a paint palette that clears every tile of one kind. The stars you earn decorate your classroom, and progress is saved on your device.</p></section>
+<section class="panel about" id="strategy"><h2>Build a ruler over a hard-to-reach scribble</h2><div><div><p>Look above the scribble for a horizontal line of four you can complete. That line makes a vertical ruler. In a simple four-match, the ruler appears on the swapped square that joins the line. Line that square up with the scribble’s column, then trigger the ruler in a later match to sweep down the column.</p><p>A vertical four works the other way and makes a horizontal ruler. Check the stripe before spending a move to set it off.</p></div></div></section>
 
 <aside class="also twin"><p>Like Drop Swap? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/shell-swap" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Drop Swap, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Drop Swap", "description": "A bright match-3 puzzle with 30 levels, drawn in coloured pencil. Swap neighboring tiles to line up three or more apples, pencils, books, backpacks, crayons or star stickers. Each level has its own goal and a limited number of moves, and your stars decorate your classroom.", "url": "https://www.sketchpadarcade.com/drop-swap", "image": "https://www.sketchpadarcade.com/img/drop-swap.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Drop Swap", "description": "Match apples, pencils and other classroom pieces to clear each page\u2019s assignment. A four-piece line can build a ruler that reaches a stubborn scribble several squares away.", "url": "https://www.sketchpadarcade.com/drop-swap", "image": "https://www.sketchpadarcade.com/img/drop-swap.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Drop Swap", "item": "https://www.sketchpadarcade.com/drop-swap"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

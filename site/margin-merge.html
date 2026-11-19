@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Margin Merge</h1>
-    <p class="lead">A relaxing merge puzzle in a glass jar drawn on notebook paper. Drop doodle balls from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny Dot all the way to a big gold Super Doodle, but don&#x27;t let the jar overflow.</p>
+    <p class="lead">Read the pencil patterns on the balls as they settle. Two Dots grow into a Stripe, and a well-placed Stripe can carry that first merge into a Zigzag.</p>
     <ul class="facts"><li>Puzzle</li><li>Drag and drop</li><li>Endless high-score play</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/margin-merge">Play Margin Merge</a></div>
+    <div class="btnrow"><a class="btn" href="/play/margin-merge">Play Margin Merge</a><a class="guide-jump" href="#strategy">Give the new Stripe somewhere to roll</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Move to aim, then let go to drop a doodle ball into the jar.</li><li>When two of the same kind touch, they merge into the next doodle and you score points.</li><li>Merges climb from Dot to Stripe, Zigzag, Swirl, Checkers, Sprinkles, Wiggles, Starry, Confetti, Rainbow and Super Doodle.</li><li>Two Super Doodles bounce off together for a 100 point bonus.</li><li>The game ends when the stack stays above the dotted line at the top of the jar.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Slide the waiting doodle over the jar, then release to drop it. Two balls need the same pattern and must physically touch to merge.</li><li>Learn the pictures in order as the jar fills. Dot becomes Stripe, then Zigzag, Swirl, Checkers and Sprinkles. The upper tiers are Wiggles, Starry, Confetti, Rainbow and Super Doodle.</li><li>Each ordinary merge creates one ball of the next pattern and scores points. Two Super Doodles collect a final 100-point bonus and leave the jar.</li><li>Watch balls at the dotted top line. A quick hop can settle safely, but a pile that stays over the line for about two and a half seconds finishes the run.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Drag or move your mouse to aim, then release or click to drop. On a keyboard, use the arrow keys and Space.</li><li>Pop removes one doodle of your choice. You start with one and earn another every 500 points.</li><li>New game starts over, and the Sound button turns sound effects on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Keep small doodles together and big ones along the bottom or sides.</li><li>Check the Next window before you drop so you can plan where the following piece will go.</li><li>A merge can bump into a matching neighbor and set off a combo, so line up chains when you can.</li><li>Save your Pop for a small piece stuck between two big ones.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Put a small waiting ball on the lower side of a slope. Its matching partner can roll down to it even when you cannot drop straight onto the pair.</li><li>When an unmatched doodle is all that separates two large matching balls, tap Pop and select that blocker. Let the balls settle before taking your next drop.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Margin Merge</h2><p>Margin Merge is the pencil-sketch twin of one of the most played merge games on our sister site. Two identical pieces that touch combine into the next one up the chain, and the physics are loose and bouncy, so every drop shifts the pile. Here the pieces are smiling doodle balls in a glass jar on a desk, each one fancier than the last, drawn in pencil and coloured pencil.</p><p>It is a game about patience more than reflexes. Dropping a small piece next to its match is easy; keeping the big ones from getting buried under the small ones is the skill. Your best score is saved on your device, and the Next window is worth a glance before every drop.</p></section>
+<section class="panel about" id="strategy"><h2>Give the new Stripe somewhere to roll</h2><div><div><p>Suppose a Dot rests against a Stripe on the jar floor. Drop your next Dot against the first one, on the side closest to the Stripe. The Dots combine into another Stripe. If that new ball touches the waiting Stripe, the pair becomes a Zigzag. Leaving a different doodle between them interrupts the chain.</p></div></div></section>
 
 <aside class="also twin"><p>Like Margin Merge? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/sea-merge" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Margin Merge, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Ink Jars</h3><p>Pour layers of colored ink between glass jars until every jar holds one color.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Margin Merge", "description": "A relaxing merge puzzle in a glass jar drawn on notebook paper. Drop doodle balls from the top, and when two of the same kind touch, they merge into the next one up. Climb from a tiny Dot all the way to a big gold Super Doodle, but don't let the jar overflow.", "url": "https://www.sketchpadarcade.com/margin-merge", "image": "https://www.sketchpadarcade.com/img/margin-merge.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Margin Merge", "description": "Read the pencil patterns on the balls as they settle. Two Dots grow into a Stripe, and a well-placed Stripe can carry that first merge into a Zigzag.", "url": "https://www.sketchpadarcade.com/margin-merge", "image": "https://www.sketchpadarcade.com/img/margin-merge.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Margin Merge", "item": "https://www.sketchpadarcade.com/margin-merge"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

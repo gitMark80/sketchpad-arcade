@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -235,16 +242,15 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
     <h1>Crayon Code</h1>
     <p class="lead">A code-breaking puzzle with crayons. There&#x27;s a secret row of colours and you have to work it out. After each guess, dots tell you how close you are: a filled dot for every crayon in the right spot, and an open dot for every right colour in the wrong spot.</p>
     <ul class="facts"><li>Puzzle</li><li>Logic for all ages</li><li>Easy, Medium and Hard</li><li>Saves your best on each level</li><li>Saves your fewest guesses</li></ul>
-    <div><a class="btn" href="/play/crayon-code">Play Crayon Code</a></div>
+    <div class="btnrow"><a class="btn" href="/play/crayon-code">Play Crayon Code</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
   <section class="panel"><h2>How to play</h2><ol><li>Pick a level. Easy is 3 colours from 4 crayons. Medium is 4 colours from 6. Hard is 4 colours from 6, and a colour can be used more than once.</li><li>Tap crayons to fill your row, then tap Check. Tap a filled spot to clear it.</li><li>A filled dot means a crayon is the right colour in the right spot.</li><li>An open dot means that colour is in the code, but in a different spot.</li><li>The dots don&#x27;t line up with your crayons, so you have to work out which crayon each dot is about. Crack the code before you run out of rows.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap a crayon to add it to the next empty spot.</li><li>Tap a spot in your row to clear it, or tap Clear to start the row again.</li><li>On a keyboard, press 1 to 6 for crayons, Backspace to undo and Enter to check.</li><li>The Sound button turns sound on or off.</li></ul></section>
   <section class="panel"><h2>Tips</h2><ul><li>Use your first guesses to find out which colours are in the code at all.</li><li>If a guess gets no dots, none of those colours are in the code.</li><li>Keep one crayon in the same spot and move the others to see which dot changes.</li><li>Your fewest guesses on each level is saved. Try to beat it!</li></ul></section>
 </div>
-<section class="panel about"><h2>About Crayon Code</h2><p>Crayon Code is our version of the classic code-breaking game, often played with pegs, redrawn with a box of crayons.</p><p>It&#x27;s a great first logic puzzle: Easy is short and simple, and Hard, with repeated colours, will make grown-ups think too.</p></section>
+<section class="panel about" id="strategy"><h2>About Crayon Code</h2><div><div><p>Crayon Code is our version of the classic code-breaking game, often played with pegs, redrawn with a box of crayons.</p><p>It&#x27;s a great first logic puzzle: Easy is short and simple, and Hard, with repeated colours, will make grown-ups think too.</p></div></div></section>
 
 
 <section><h2 class="sec">If you like Crayon Code, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -268,6 +274,7 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 </div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Crayon Code", "description": "A code-breaking puzzle with crayons. There's a secret row of colours and you have to work it out. After each guess, dots tell you how close you are: a filled dot for every crayon in the right spot, and an open dot for every right colour in the wrong spot.", "url": "https://www.sketchpadarcade.com/crayon-code", "image": "https://www.sketchpadarcade.com/img/crayon-code.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Crayon Code", "item": "https://www.sketchpadarcade.com/crayon-code"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

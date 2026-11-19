@@ -80,7 +80,6 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 .pow{position:relative;appearance:none;border:2px solid var(--ink);display:flex;align-items:center;gap:6px;padding:5px 14px 5px 9px;border-radius:var(--wob);background:var(--paper);box-shadow:3px 3px 0 var(--pencil);font:400 1.05rem var(--display);color:var(--ink);white-space:nowrap}
 .pow:nth-child(2){border-radius:var(--wob2)}
 .pow svg{width:24px;height:24px;flex:none}
-.pow .n{position:absolute;top:-9px;right:-9px;min-width:22px;height:22px;border-radius:var(--wob2);border:2px solid var(--ink);background:var(--yellow-wash);color:var(--ink);font:400 .8rem/18px var(--display);text-align:center;padding:0 4px}
 .pow:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--pencil)}
 .cover{position:fixed;inset:0;display:grid;place-items:center;padding:16px;background:rgba(246,243,234,.55);overflow:auto;z-index:30}
 .card{position:relative;overflow:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob);padding:20px 18px 18px;width:100%;max-width:360px;text-align:center;box-shadow:4px 4px 0 var(--pencil);animation:rise .35s cubic-bezier(.2,1.4,.4,1);max-height:92vh;overflow-y:auto}
@@ -157,7 +156,7 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
 <body>
 <div class="app">
   <div class="top">
-    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Pencil Path</h1><button class="sa-share" type="button" aria-label="Share Pencil Path" data-share-url="https://www.sketchpadarcade.com/pencil-path" data-share-title="Pencil Path" data-share-text="Play Pencil Path free on Sketchpad Arcade! Tap pencils to send them off the notepad, one clear path at a time."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
+    <div class="sa-head"><a class="sa-back sa-homeic" href="/" aria-label="Home: all Sketchpad Arcade games" title="Home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h5v-5.5h3V20h5V9.5"/></svg></a><h1 class="brand">Pencil Path</h1><a class="sa-back sa-guide" href="/pencil-path" aria-label="Pencil Path game guide" title="Game guide">?</a><button class="sa-share" type="button" aria-label="Share Pencil Path" data-share-url="https://www.sketchpadarcade.com/pencil-path" data-share-title="Pencil Path" data-share-text="Play Pencil Path free on Sketchpad Arcade! Tap pencils to send them off the notepad, one clear path at a time."><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></svg></button></div>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
     <button class="iconbtn" id="menuBtn" type="button">Levels</button>
   </div>
@@ -173,7 +172,7 @@ canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display
     <div class="banner" id="banner" hidden></div>
   </div>
   <div class="dock">
-    <button class="pow" id="hintBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="10" r="6.5" fill="#f3e6b0" stroke="#2e2e33" stroke-width="1.6"/><path d="M9.3 16.4h5.4v2.4a1.6 1.6 0 0 1-1.6 1.6h-2.2a1.6 1.6 0 0 1-1.6-1.6z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="1.4"/><path d="M9.6 7.6a3 3 0 0 1 2.6-1.4" stroke="#2e2e33" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>Hint<span class="n" id="hintN">3</span></button>
+    <button class="pow" id="hintBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="10" r="6.5" fill="#f3e6b0" stroke="#2e2e33" stroke-width="1.6"/><path d="M9.3 16.4h5.4v2.4a1.6 1.6 0 0 1-1.6 1.6h-2.2a1.6 1.6 0 0 1-1.6-1.6z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="1.4"/><path d="M9.6 7.6a3 3 0 0 1 2.6-1.4" stroke="#2e2e33" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>Hint</button>
     <button class="pow" id="restartBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12a6.5 6.5 0 1 0 2-4.7" fill="none" stroke="#2e2e33" stroke-width="2.8" stroke-linecap="round"/><path d="M4.2 3.8v5.4h5.4" fill="none" stroke="#2e2e33" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Restart</button>
     <button class="pow" id="soundBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.2h3.6L12.4 5v14l-4.8-4.2H4z" fill="#f6f3ea" stroke="#2e2e33" stroke-width="1.4" stroke-linejoin="round"/><path id="soundWave" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8" fill="none" stroke="#2e2e33" stroke-width="2" stroke-linecap="round"/><path id="soundOff" d="M15.5 9.5l5 5m0-5-5 5" stroke="#d9661a" stroke-width="2.2" stroke-linecap="round" hidden/></svg><span id="soundTx">Sound</span></button>
   </div>
@@ -187,7 +186,7 @@ const cv=$('cv'),ctx=cv.getContext('2d');
 const lay=document.createElement('canvas'),lx=lay.getContext('2d'); // scribble trails + eraser sweep, clipped to the notepad page
 const PAPER='#f6f3ea',INK='#2e2e33',GRAPH='#55555c',PENCIL='rgba(46,46,51,.55)';
 const DIRS=[[-1,0],[0,1],[1,0],[0,-1]]; // up, right, down, left
-const LEVEL_COUNT=60, HEARTS=3, HINTS=3;
+const LEVEL_COUNT=60, HEARTS=3;
 const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- storage ---------- */
@@ -239,7 +238,7 @@ function generate(n){
 }
 
 /* ---------- state ---------- */
-let level=0,size=4,grid=[],hearts=HEARTS,hints=HINTS,state='idle',total=0,rescued=false,elapsed=0;
+let level=0,size=4,grid=[],hearts=HEARTS,state='idle',total=0,rescued=false,elapsed=0;
 let exits=[],fx=[],hint=null,shake=0,tracks=[],smudge=1;
 /* The eraser sweep: 'in' rubs up the page and wipes it clean, 'covered' sits on it, 'out' pulls back to reveal the pencils.
    The game opens covered and sweeps out. (Same timing and rules as before; only the picture changed.) */
@@ -294,8 +293,6 @@ function updateHUD(hit){
   const h=$('heartsEl');h.innerHTML=Array.from({length:HEARTS},(_,i)=>`<span class="${i<hearts?'':'off'}" aria-hidden="true">♥</span>`).join('');
   h.setAttribute('aria-label',hearts+' hearts left');
   if(hit){h.classList.remove('hit');void h.offsetWidth;h.classList.add('hit');}
-  $('hintN').textContent=hints>0?hints:'Ad';
-  $('hintBtn').setAttribute('aria-label',hints>0?`Hint, ${hints} left`:'Hint, watch an ad');
 }
 let toastT;function toast(s){const t=$('toast');t.textContent=s;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,1400);}
 
@@ -310,7 +307,7 @@ const TIPS={
 };
 function setupLevel(i){
   level=i;const lv=generate(i);size=lv.size;grid=lv.g;total=pencilsLeft();
-  hearts=HEARTS;hints=HINTS;rescued=false;elapsed=0;exits=[];fx=[];hint=null;shake=0;tracks=[];lastLeft=-1;
+  hearts=HEARTS;rescued=false;elapsed=0;exits=[];fx=[];hint=null;shake=0;tracks=[];lastLeft=-1;
   dressPencils(i);
   resize();updateHUD();$('clockEl').textContent='⏱ 0:00';
 }
@@ -364,15 +361,12 @@ function showWin(stars,res){
   window.BDA&&BDA.shareScore({lead:'I scored',score:res.score,line:'Level '+(level+1)+' in '+fmtTime(res.time),into:'#card',after:'p'});
   $('againBtn').onclick=()=>startLevel(level);if(!last)$('nextBtn').onclick=()=>startLevel(level+1);
 }
-/* Rewarded-ad hook. Swap the body for your portal SDK's rewarded ad
-   (CrazyGames, GameDistribution, GameMonetize). Resolve true only if the ad finished. */
-function rewardedAd(){return Promise.resolve(true);}
 function showLose(){
-  const offer=!rescued?`<button class="big warn" id="rescueBtn" type="button">+1 heart (watch ad)</button>`:'';
+  const offer=!rescued?`<button class="big warn" id="rescueBtn" type="button">Take an extra heart</button>`:'';
   modal(`<h2>Out of hearts</h2><p>${pencilsLeft()} pencil${pencilsLeft()===1?' is':'s are'} still on the page.</p>
   ${offer}<button class="big ${offer?'alt':''}" id="retryBtn" type="button">Retry</button><button class="big alt" id="lvBtn" type="button">Levels</button>`);
   $('retryBtn').onclick=()=>startLevel(level,{wash:true});$('lvBtn').onclick=showMenu;
-  if(offer)$('rescueBtn').onclick=async()=>{if(!await rewardedAd())return;rescued=true;hearts=1;state='play';closeModal();updateHUD();toast('+1 heart!');};
+  if(offer)$('rescueBtn').onclick=()=>{rescued=true;hearts=1;state='play';closeModal();updateHUD();toast('+1 heart!');};
 }
 function showMenu(){
   if(state==='erase')return;
@@ -384,10 +378,9 @@ function showMenu(){
   document.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>startLevel(+b.dataset.l,{wash:true}));
   $('closeMenu').onclick=()=>{closeModal();resume(was);};
 }
-async function useHint(){
+function useHint(){
   if(state!=='play')return;
-  if(hints<=0){if(!await rewardedAd())return;hints++;}
-  const f=freePencil();if(!f)return;hints--;hint={...f,t:performance.now()};updateHUD();sfx('hint');
+  const f=freePencil();if(!f)return;hint={...f,t:performance.now()};updateHUD();sfx('hint');
 }
 
 /* ---------- audio ---------- */
@@ -710,13 +703,6 @@ function scan(){document.querySelectorAll('.sa-endhome').forEach(h=>{const p=h.p
   b.insertAdjacentElement('afterend',a)})}
 let t;new MutationObserver(()=>{clearTimeout(t);t=setTimeout(scan,150)}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class','style','open']});
 addEventListener('load',scan);setTimeout(scan,600)})();
-</script>
-<script>
-/* AdSense on play pages: the loader is only added once the first end screen appears (the Home button next to
-   'Play again' is the signal), so no anchor, vignette or in-page ad can show while a game is being played.
-   Skipped during reel recordings. Which formats run (vignette on page change, anchor, in-page) is set per site
-   in the AdSense dashboard under Auto ads. */
-(()=>{if(window.name==='bda-reel')return;let done=false;function load(){if(done)return;done=true;const s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6837573645630599';document.head.appendChild(s)}const o=new MutationObserver(()=>{if(document.querySelector('.sa-endhome')){o.disconnect();load()}});o.observe(document.body,{subtree:true,childList:true});})();
 </script>
 <script>window.BDA_GAME={"slug": "pencil-path", "name": "Pencil Path", "site": "Sketchpad Arcade", "url": "https://www.sketchpadarcade.com/pencil-path", "short": "sketchpadarcade.com/pencil-path"};</script>
 <script>(()=>{const s="pencil-path";function count(){if(window.name==='bda-reel')return;try{if(localStorage.getItem('arc-nocount')==='1')return;const k='bda-played-'+s,d=new Date().toISOString().slice(0,10);if(localStorage.getItem(k)===d)return;localStorage.setItem(k,d)}catch(e){}try{fetch('/api/play?game='+encodeURIComponent(s),{method:'POST',keepalive:true}).catch(()=>{})}catch(e){}}count();})();</script>

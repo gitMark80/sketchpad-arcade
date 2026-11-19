@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Letter Scramble</h1>
-    <p class="lead">A fast word search on a desk tray of 16 torn-notebook letter tiles. Swipe from tile to tile, even corner to corner, to spell words of three letters or more. Longer words score much more, and any word that uses the gold-star tile scores double. Reach the target score before the 80-second timer runs out and the next page comes with a bigger target.</p>
+    <p class="lead">Look for a turn, not just a straight line. A word can snake diagonally through the tray, and taking it through the gold-star tile doubles its score.</p>
     <ul class="facts"><li>Word game</li><li>80-second rounds</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/letter-scramble">Play Letter Scramble</a></div>
+    <div class="btnrow"><a class="btn" href="/play/letter-scramble">Play Letter Scramble</a><a class="guide-jump" href="#strategy">Take CAT twice as far</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Swipe across tiles that touch, including diagonals, to spell a word of 3 or more letters. Let go to score it.</li><li>Each tile can be used once per word. The bar above the tray turns green for a new word, yellow for a word you already found, and gray if it isn&#x27;t a word.</li><li>Words score 100 points for 3 letters, 300 for 4, 600 for 5, 1,000 for 6, 1,500 for 7 and 2,200 for 8. A word that uses the gold-star tile scores double.</li><li>Reach the page&#x27;s target score before the 80 seconds run out to turn to the next page. Your total score carries over.</li><li>Each new page has a higher target. Miss it and it&#x27;s pencils down.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Start on any letter in the four-by-four tray. Draw a path through touching tiles, diagonals included, to make a word of at least three letters. Each tile gets one visit per word.</li><li>Look at the preview before lifting your finger. Green means the word will score. Yellow marks one already found this round. Gray means the game does not recognise it.</li><li>From three letters up to eight, the scores are 100, 300, 600, 1,000, 1,500 and 2,200. Longer words also earn 2,200. Include the gold-star tile to double any of those totals.</li><li>Page one needs 1,500 points by the end of its 80 seconds. Later pages set higher targets. Your overall score carries over, and each fresh tray has its own target to meet.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: swipe your finger across the tiles, then lift it to score the word. Slide back one tile to undo it.</li><li>Computer: click and drag across the tiles, then let go.</li><li>Keyboard: type a word to light up its path, press Enter to score it, Backspace to delete a letter and Escape to clear.</li><li>The Qu tile counts as two letters, Q and U.</li><li>The speaker button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Look for endings like S, ED and ING. Adding them to a word you just found is a quick way to score again.</li><li>Start your search from the gold-star tile. Even a short word through it is worth double.</li><li>Three-letter words add up fast early on, but one long word can be worth ten short ones.</li><li>Vowels in the middle of the tray connect to the most neighbors, so build words around them.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Plan the final tile before releasing. An adjacent S or D can turn an existing path into a second scoring word.</li><li>On a keyboard, type a word you can see. When it has several valid paths, the game automatically prefers one through the gold-star tile.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Letter Scramble</h2><p>Letter Scramble is a timed word search on a four-by-four tray of paper letter tiles, each one a little torn notebook square with a pencil letter on it. Swipe across touching tiles, including diagonals, to spell words of three letters or more. Longer words are worth far more than short ones, and any word through the gold-star sticker tile scores double.</p><p>Each page gives you 80 seconds to hit a target score, and the target climbs with every page you turn. The word list is checked for real words. It is a quick, repeatable game that rewards vocabulary and a good eye for endings like S, ED and ING.</p></section>
+<section class="panel about" id="strategy"><h2>Take CAT twice as far</h2><div><div><p>Imagine C, A and T touching in sequence, with an unused gold-star S next to T. Submit CAT for 100 points. Follow the same path again and finish on S. CATS is a new four-letter word worth 300, doubled to 600 by the star. Together the two swipes earn 700 points.</p></div></div></section>
 
 <aside class="also twin"><p>Like Letter Scramble? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/shell-scramble" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Letter Scramble, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Letter Scramble", "description": "A fast word search on a desk tray of 16 torn-notebook letter tiles. Swipe from tile to tile, even corner to corner, to spell words of three letters or more. Longer words score much more, and any word that uses the gold-star tile scores double. Reach the target score before the 80-second timer runs out and the next page comes with a bigger target.", "url": "https://www.sketchpadarcade.com/letter-scramble", "image": "https://www.sketchpadarcade.com/img/letter-scramble.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Letter Scramble", "description": "Look for a turn, not just a straight line. A word can snake diagonally through the tray, and taking it through the gold-star tile doubles its score.", "url": "https://www.sketchpadarcade.com/letter-scramble", "image": "https://www.sketchpadarcade.com/img/letter-scramble.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Letter Scramble", "item": "https://www.sketchpadarcade.com/letter-scramble"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

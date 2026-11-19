@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag word">Word</span>
     <h1>Note Quest</h1>
-    <p class="lead">A friendly word-guessing game in a sunny classroom. Every note passed your way hides a secret word. Type a guess and the letters light up to show which ones are right. Solve note after note as the words grow from 4 letters to 6, and see how many you can find before you run out of gold stars.</p>
+    <p class="lead">A note hides a word. Type a guess to learn which letters belong, which seats they belong in, and whether a repeated letter is using up a guess you could spend on something new.</p>
     <ul class="facts"><li>Word puzzle</li><li>Beginner, Intermediate and Advanced</li><li>Hints</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/note-quest">Play Note Quest</a></div>
+    <div class="btnrow"><a class="btn" href="/play/note-quest">Play Note Quest</a><a class="guide-jump" href="#strategy">Read the two Ls in BELL</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Pick Beginner, Intermediate or Advanced, then type a real word and press Enter.</li><li>After each guess the letters change colour. Green means the letter is in the right spot. Yellow means it&#x27;s in the word but in a different spot. Grey means it isn&#x27;t in the word.</li><li>Solve in fewer guesses for more points, and solve notes in a row for a streak bonus.</li><li>Miss a word and you lose one of your 3 gold stars. Solve words in a row to win a star back.</li><li>Beginner has 4 and 5-letter words, 7 tries and 2 hints. Intermediate grows from 4 to 6 letters with 6 tries and 1 hint. Advanced has 5 and 6-letter words, 5 tries and no hints.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Choose a difficulty, fill one row with a real word, and press Enter. Beginner starts with four-letter notes and seven guesses per note.</li><li>Keep green letters in place. Move yellow letters to another position. A gray tile means there is no unused copy of that letter left in the answer after the other colored tiles are counted.</li><li>Beginner allows two hints per note. Intermediate gives one hint and six guesses, dropping to five guesses from note sixteen. Advanced allows five guesses with no hints.</li><li>Solve early for a higher score. Using a hint halves the base points for that note. Running out of guesses costs a star and breaks your streak.</li><li>You begin with three stars. If you have lost one, a streak of three solved notes on Beginner or five on the other modes earns one back.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Tap the letters on the on-screen keyboard, or type on your computer keyboard.</li><li>Enter checks your guess and the delete key removes a letter.</li><li>Hint shows you one letter of the secret word for half points. Beginner gets 2 hints per note, Intermediate 1, Advanced none.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Start with a word that uses lots of different common letters, like a word with A, E and S in it.</li><li>Grey keys on the keyboard are letters you can skip.</li><li>A yellow letter is in the word, so try it in a new spot on your next guess.</li><li>Save your hint for when you&#x27;re down to your last couple of tries.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>A yellow letter needs a different seat. Before submitting, check that your new word actually moves it away from every position where it was yellow.</li><li>On Beginner you start each note with two hints. If two plausible endings fit the same green letters, a revealed position can save a guess.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Note Quest</h2><p>Note Quest is a word-guessing game in the style of the daily word puzzles everyone compares scores on, drawn in pencil. Each note hides a secret word; type a guess and the letters light up to show which are right and in place, right but in the wrong spot, or not in the word at all.</p><p>Unlike a once-a-day puzzle, Note Quest keeps going. Words start at four letters and grow to six, and you have a limited supply of tries to spend on wrong guesses. All the words are ones you would actually use.</p></section>
+<section class="panel about" id="strategy"><h2>Read the two Ls in BELL</h2><div><div><p>Imagine guessing BELL when the hidden word is BELT. B, E and the first L turn green. The last L turns gray because the one L in BELT has already been accounted for. Keep BEL, then spend the last space testing another ending.</p></div></div></section>
 
 <aside class="also twin"><p>Like Note Quest? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/bottle-words" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Note Quest, try these</h2><div class="grid"><a class="card" href="/four-in-a-frame" data-arc-rel data-slug="four-in-a-frame" data-added="2026-10-08" data-genre="Word" aria-label="Four in a Frame, Word game" title="Four in a Frame">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag word">Word</span><h3>Word Workshop</h3><p>Drag across the letters to spell words and fill a sketchbook crossword.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Note Quest", "description": "A friendly word-guessing game in a sunny classroom. Every note passed your way hides a secret word. Type a guess and the letters light up to show which ones are right. Solve note after note as the words grow from 4 letters to 6, and see how many you can find before you run out of gold stars.", "url": "https://www.sketchpadarcade.com/note-quest", "image": "https://www.sketchpadarcade.com/img/note-quest.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Note Quest", "description": "A note hides a word. Type a guess to learn which letters belong, which seats they belong in, and whether a repeated letter is using up a guess you could spend on something new.", "url": "https://www.sketchpadarcade.com/note-quest", "image": "https://www.sketchpadarcade.com/img/note-quest.jpg", "genre": "Word", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Word games", "item": "https://www.sketchpadarcade.com/word-games"}, {"@type": "ListItem", "position": 3, "name": "Note Quest", "item": "https://www.sketchpadarcade.com/note-quest"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

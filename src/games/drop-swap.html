@@ -434,16 +434,13 @@ function showWin(stars){
   window.BDA&&BDA.shareScore({score,line:'Level '+(level+1)+' · '+'★'.repeat(stars),into:'#card',after:'p'});
   $('againBtn').onclick=()=>startLevel(level);if(!last)$('nextBtn').onclick=()=>startLevel(level+1);
 }
-/* Rewarded-ad hook. Swap the body for your portal SDK's rewarded ad
-   (CrazyGames, GameDistribution, GameMonetize). Resolve true only if the ad finished. */
-function rewardedAd(){return Promise.resolve(true);}
 function showLose(){
-  const offer=!rescued?`<button class="btn" id="rescueBtn" type="button">+5 moves (watch ad)</button>`:'';
+  const offer=!rescued?`<button class="btn" id="rescueBtn" type="button">Take 5 extra moves</button>`:'';
   modal(`<h2>Out of moves</h2><p>So close. Sharpen your pencil and try again.</p>
   <div class="row">${offer}</div>
   <div class="row" style="margin-top:10px"><button class="btn alt" id="lvBtn" type="button">Levels</button><button class="btn ${offer?'alt':''}" id="retryBtn" type="button">Retry</button></div>`);
   $('retryBtn').onclick=()=>startLevel(level);$('lvBtn').onclick=showMenu;
-  if(offer)$('rescueBtn').onclick=async()=>{const ok=await rewardedAd();if(!ok)return;
+  if(offer)$('rescueBtn').onclick=()=>{
     rescued=true;moves+=5;state='play';closeModal();updateHUD();lastAct=performance.now();toast('+5 moves!');};
 }
 function showMenu(){

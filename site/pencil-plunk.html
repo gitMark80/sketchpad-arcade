@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Pencil Plunk</h1>
-    <p class="lead">A pin-pulling puzzle on a corkboard. Popsicle sticks are pinned to the board with bright thumbtacks. Tap a tack that no stick is lying on and it pops out and flies into the paper cup of its color. Tacks with no cup wait in the pencil case, so plan ahead before it fills up. Pull the last tack from a stick and it plunks onto the desk, while a little gold star buddy cheers you on.</p>
+    <p class="lead">The paper cups each want three matching thumbtacks. A loose tack can finish a cup, wait in the pencil case, or let a popsicle stick swing over a tack you were about to pull.</p>
     <ul class="facts"><li>Puzzle</li><li>Endless levels</li><li>Phone, tablet and computer</li><li>Saves your best score</li></ul>
-    <div><a class="btn" href="/play/pencil-plunk">Play Pencil Plunk</a></div>
+    <div class="btnrow"><a class="btn" href="/play/pencil-plunk">Play Pencil Plunk</a><a class="guide-jump" href="#strategy">Spend a tack to empty the pencil case</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap a thumbtack that no popsicle stick is lying on. Tacks under a stick look darker and can&#x27;t be pulled yet.</li><li>The tack flies into the paper cup of the same color. Three tacks fill a cup, and the next cup drops in.</li><li>If no cup wants that color, the tack waits in the pencil case. A new cup scoops up its color from there.</li><li>A stick with one tack left swings down, and it can cover other tacks. Pull its last tack and it plunks onto the desk.</li><li>Clear every stick to finish the level. If the pencil case is full and no tack fits a cup, the game is over.</li></ol></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Look at the open paper cups and tap a matching exposed thumbtack. A tack shaded beneath another stick has to wait.</li><li>Three matching tacks fill a cup. A tack without an open cup goes into the pencil case, where it waits for its color to appear.</li><li>A stick can swing once it hangs from just one tack. Remove the last tack to drop the stick and see what it was covering.</li><li>Finish by clearing the sticks. If the case fills, a legal pull must match an open cup. The round ends when the case is full and no such tack is accessible.</li></ol></section>
   <section class="panel"><h2>Controls</h2><ul><li>Phone or tablet: tap a tack to pull it.</li><li>Computer: click a tack. On a keyboard, the arrow keys pick a free tack, Enter or Space pulls it, and + adds a slot.</li><li>The +1 slot button adds a sixth spot to the pencil case, once per level. Restart level tries the level again.</li><li>The sound button turns sound on or off.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Pull tacks that match a waiting cup first. They don&#x27;t use up pencil case space.</li><li>Check the Next note at the top to see which cup colors are coming.</li><li>Look before you pull a stick&#x27;s second-to-last tack. It will swing down and may cover tacks below it.</li><li>Every cup shows its tack&#x27;s symbol, so you can match by shape as well as color.</li><li>Save +1 slot for when the pencil case is almost full.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>With the case full, look for an exposed tack that goes straight to an open cup. It can still be pulled even with no spare space in the case.</li><li>Before leaving a stick on a single tack, look underneath it. Pull an accessible cup match first if it sits in the stick&#x27;s swing path.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Pencil Plunk</h2><p>Pencil Plunk is a pin-pulling puzzle on a corkboard. Popsicle sticks are pinned down with bright thumbtacks; tap a tack that no stick is lying on and it pops out and flies into the paper cup of its colour. When a stick loses its last tack it plunks onto the desk, and a little gold star buddy cheers.</p><p>Tacks with no cup wait in the pencil case, and if the case fills up the level is lost, so the whole game is about choosing the right order. Early boards are gentle; later ones stack sticks several deep and need a careful look before the first tap.</p></section>
+<section class="panel about" id="strategy"><h2>Spend a tack to empty the pencil case</h2><div><div><p>Suppose your open cup holds two tacks and the Next note matches two tacks waiting in the case. Pull the accessible third tack for the open cup. When the next cup arrives it collects its two matching tacks automatically, opening two spaces without another pull.</p></div></div></section>
 
 <aside class="also twin"><p>Like Pencil Plunk? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/plank-plunk" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Pencil Plunk, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Plunk", "description": "A pin-pulling puzzle on a corkboard. Popsicle sticks are pinned to the board with bright thumbtacks. Tap a tack that no stick is lying on and it pops out and flies into the paper cup of its color. Tacks with no cup wait in the pencil case, so plan ahead before it fills up. Pull the last tack from a stick and it plunks onto the desk, while a little gold star buddy cheers you on.", "url": "https://www.sketchpadarcade.com/pencil-plunk", "image": "https://www.sketchpadarcade.com/img/pencil-plunk.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Plunk", "description": "The paper cups each want three matching thumbtacks. A loose tack can finish a cup, wait in the pencil case, or let a popsicle stick swing over a tack you were about to pull.", "url": "https://www.sketchpadarcade.com/pencil-plunk", "image": "https://www.sketchpadarcade.com/img/pencil-plunk.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Pencil Plunk", "item": "https://www.sketchpadarcade.com/pencil-plunk"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>

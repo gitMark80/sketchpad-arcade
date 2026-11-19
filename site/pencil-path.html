@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .tag.versus{border-color:var(--pink);background:var(--pink-wash)}
 .also{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:var(--paper);border:2px dashed var(--pencil);border-radius:var(--wob2);padding:18px 20px}
 .also p{margin:0}
+
 /* Editorial game guidance shares the notebook's imperfect paper, pencil borders and muted colored strokes. */
 .card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:0}
 .card .body .tag{align-self:flex-start}
@@ -167,6 +168,12 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:b
 .panel{background:var(--paper);border:2px solid var(--ink);border-radius:var(--wob2);padding:18px 22px;box-shadow:3px 3px 0 var(--pencil)}
 .panel:nth-child(2n){border-radius:var(--wob)}
 .panel.about{margin:0 0 28px}
+.guide-jump{text-underline-offset:.2em;color:var(--ink)}
+.illustrated-guide{display:grid;gap:1rem;align-items:start}
+@media(min-width:650px){.illustrated-guide{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);gap:1.5rem}}
+.panel.about figure{margin:0;max-width:18rem}
+.panel.about figure img{width:auto;max-width:100%;height:auto;max-height:32rem}
+.panel.about figcaption{margin-top:.4rem;font-size:1rem;color:var(--pencil)}
 .panel.about p{margin:0 0 10px;line-height:1.5;max-width:70ch}
 .panel h2{font-size:1.5rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.03em}
 .panel ol,.panel ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
@@ -192,7 +199,7 @@ section>h2.sec{font-size:1.8rem;margin:10px 0 16px;text-transform:uppercase;lett
 footer{margin-top:40px;border-top:2px solid var(--ink);color:var(--pencil)}
 footer a{color:var(--ink)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:1rem}
-footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+footer ul{display:flex;flex-wrap:wrap;gap:10px 16px;list-style:none;margin:0;padding:0}
 @media (max-width:720px){.hero{grid-template-columns:1fr;gap:20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{font-size:1.1rem}.card p{font-size:.85rem}.card .body{padding:6px 10px 8px}.nav{flex-wrap:wrap}}
 @media (max-width:360px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
@@ -233,18 +240,17 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
   <div class="info">
     <span class="tag puzzle">Puzzle</span>
     <h1>Pencil Path</h1>
-    <p class="lead">A calm logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so tap the ones with a clear path off the page first and open the way for the rest. Bump into another pencil and you lose a heart.</p>
+    <p class="lead">A pencil leaves the notebook in one straight line. Find a clear exit for one pencil and its empty square can free the next one in the chain.</p>
     <ul class="facts"><li>Puzzle</li><li>Tap or click</li><li>60 levels</li><li>Saves your progress</li></ul>
-    <div><a class="btn" href="/play/pencil-path">Play Pencil Path</a></div>
+    <div class="btnrow"><a class="btn" href="/play/pencil-path">Play Pencil Path</a><a class="guide-jump" href="#strategy">Follow the pencil that&#x27;s blocking your pencil</a></div>
   </div>
 </div>
-<!-- Ad slot: paste an AdSense display unit here once the site is approved -->
 <div class="cols">
-  <section class="panel"><h2>How to play</h2><ol><li>Tap a pencil to send it sliding straight the way its tip points.</li><li>It only gets off the page if nothing is in its way. If it bumps another pencil, you lose one of your 3 hearts.</li><li>Every pencil that leaves opens a path for others. Clear the whole page to finish the level.</li><li>Ink blots appear in later levels. They never move, but every pencil can still get off the page.</li></ol></section>
-  <section class="panel"><h2>Controls</h2><ul><li>Tap or click a pencil to send it off the page.</li><li>Hint glows on a pencil that can leave safely. You get 3 per level.</li><li>Restart level starts the page over, and Levels lets you replay any level you&#x27;ve unlocked.</li></ul></section>
-  <section class="panel"><h2>Tips</h2><ul><li>Start with pencils on the edges pointing out. They always have a clear path.</li><li>Before tapping, trace the pencil&#x27;s line all the way to the edge of the page.</li><li>Finish without any bumps to earn all 3 stars.</li></ul></section>
+  <section class="panel"><h2>How to play</h2><ol><li>Pick a pencil and follow its tip all the way to the notebook edge. When the full route is open, tap it once to send it out.</li><li>Each departing pencil leaves a gap. Check which other tips now point through that gap, then send the next pencil.</li><li>A blocked tap costs one of three hearts. Later boards include fixed ink blots that stay where they are as the other pieces leave.</li><li>Clear the last pencil to finish the page. Remaining hearts determine the star rating. The score also rewards how quickly you finished.</li></ol></section>
+  <section class="panel"><h2>Controls</h2><ul><li>Tap or click a pencil to send it off the page.</li><li>Hint glows on a pencil that can leave safely. Tap it again whenever you need another hint.</li><li>Restart level starts the page over, and Levels lets you replay any level you&#x27;ve unlocked.</li></ul></section>
+  <section class="panel"><h2>Tips</h2><ul><li>Follow the entire row or column. One empty square just ahead of the tip gives you room to look, but a pencil farther along can still cost a heart.</li><li>To earn three stars, finish with all three hearts. Speed adds points separately, so you can take your time when collecting stars.</li></ul></section>
 </div>
-<section class="panel about"><h2>About Pencil Path</h2><p>Pencil Path is a gentle logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so the whole puzzle is about order: which pencil can slide off the page right now, and which ones are blocking each other.</p><p>There is no time limit. You can study the page as long as you like, but you only have a few hearts, and every bump costs one. Early pages have a handful of pencils; later ones pack the paper with crisscrossing lines that take real thought to untangle, and a clean solve earns all three stars.</p></section>
+<section class="panel about" id="strategy"><h2>Follow the pencil that&#x27;s blocking your pencil</h2><div><div><p>Start with a right-pointing pencil that has another pencil between its tip and the edge. Leave the first one alone and trace the blocker from its own tip. If that line is clear, send the blocker off first. Now trace the first pencil again in case there was a second blocker behind it.</p></div></div></section>
 
 <aside class="also twin"><p>Like Pencil Path? Play the painted, full-colour version at Beach Day Arcade.</p><a class="btn small" href="https://www.beachdayarcade.com/turtle-dash" rel="noopener" data-arc-twin>Play it at Beach Day</a></aside>
 <section><h2 class="sec">If you like Pencil Path, try these</h2><div class="grid"><a class="card" href="/doodle-doku" data-arc-rel data-slug="doodle-doku" data-added="2026-10-21" data-genre="Puzzle" aria-label="Doodle Doku, Puzzle game" title="Doodle Doku">
@@ -266,8 +272,9 @@ footer ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
 <div class="body"><span class="tag puzzle">Puzzle</span><h3>Even Sketch</h3><p>Fill a sheet of graph paper with stars and circles so every row and column balances before the bell rings.</p></div></a></div>
 <p class="allgames"><a class="btn small" href="/#games-head">See all 55 games</a></p></section>
 </div>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Path", "description": "A calm logic puzzle on a lined notepad. Each pencil slides straight the way its tip is pointing, so tap the ones with a clear path off the page first and open the way for the rest. Bump into another pencil and you lose a heart.", "url": "https://www.sketchpadarcade.com/pencil-path", "image": "https://www.sketchpadarcade.com/img/pencil-path.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Pencil Path", "description": "A pencil leaves the notebook in one straight line. Find a clear exit for one pencil and its empty square can free the next one in the chain.", "url": "https://www.sketchpadarcade.com/pencil-path", "image": "https://www.sketchpadarcade.com/img/pencil-path.jpg", "genre": "Puzzle", "gamePlatform": ["Web browser", "Mobile web"], "playMode": "SinglePlayer", "inLanguage": "en", "applicationCategory": "Game", "operatingSystem": "Any", "isAccessibleForFree": true, "publisher": {"@type": "Organization", "name": "Restless Faith Media LLC", "url": "https://www.sketchpadarcade.com"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Games", "item": "https://www.sketchpadarcade.com/"}, {"@type": "ListItem", "position": 2, "name": "Puzzle games", "item": "https://www.sketchpadarcade.com/puzzle-games"}, {"@type": "ListItem", "position": 3, "name": "Pencil Path", "item": "https://www.sketchpadarcade.com/pencil-path"}]}</script>
+
 
 </main>
 <footer><div class="wrap"><span>© 2026 Restless Faith Media LLC. Pensacola, Florida<br>Free games, no downloads.</span>
